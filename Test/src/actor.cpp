@@ -82,6 +82,9 @@ void Actor::DrawShadowMap(Transformation& p)
 
 void Actor::Draw()
 {
+	//m_modelMat.SetScale(Vector3f(0.25f, 0.25f, 0.25f));
+	//m_modelMat.SetScale(Vector3f(0.5f, 0.5f, 0.5f));
+	glDisable(GL_DEPTH_TEST);
 	BasicEffect::GetInstance().Enable();
 	BasicEffect::GetInstance().SetModelPosition(&m_modelMat.GetWorldTrans().m[0][0]);
 
@@ -90,6 +93,8 @@ void Actor::Draw()
 
 	Drawable::Draw();
 }
+
+
 void Actor::SetProperties()
 {
 	AddProp(Ent_Props::P_Player);

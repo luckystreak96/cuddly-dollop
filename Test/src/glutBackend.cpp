@@ -54,6 +54,10 @@ void GLUTBackendInit(int argc, char** argv, bool withDepth, bool withStencil)
 
     //Double buffering and RGBA color buffer
     glutInitDisplayMode(displayMode);
+	glEnable(GL_BLEND);
+	glEnable(GL_DEPTH_TEST);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 
     //Return main loop if the window closes
     glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_GLUTMAINLOOP_RETURNS);

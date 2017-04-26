@@ -53,6 +53,7 @@ class Drawable : public Entity, public ResourceUser
 		bool UnloadExternalResources();
 		bool LoadGLResources();
 		bool UnloadGLResources();
+		static inline bool SortFunc(Drawable* d, Drawable* d2) { return d->Position().z > d2->Position().z; }
 
 public:
 		bool mustDraw = true;

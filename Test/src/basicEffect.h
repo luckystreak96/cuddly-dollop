@@ -14,6 +14,7 @@ public:
 	bool Init();
 	void SetWorldPosition(float* mat);
 	void SetModelPosition(float* mat);
+	void SetSize(float* mat);
 private:
 	BasicEffect();
 };

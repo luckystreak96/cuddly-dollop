@@ -21,25 +21,25 @@ bool SceneWorld::Init()
 	Model::GetInstance().init("res/models.data");
 
 
-	m_player = new Actor(Vector3f(0, 0, 0.0f), "TILE", "res/mushroom.png");
-	//m_map = new Map();
+	m_player = new Actor(Vector3f(0, 0, 4.0f), "TILE", "res/mushroom.png");
+	m_map = new Map();
 
 	//Lists
 	m_objList = new std::vector<Drawable*>();
 	std::vector<ResourceUser*> temp = std::vector<ResourceUser*>();
-
 	m_objList->push_back(m_player);
 	temp.push_back(m_player);
-	//m_objList->push_back(m_map);
-	//temp.push_back(m_map);
-	/*for (int i = 0; i < m_map->Size(); i++) 
+	m_objList->push_back(m_map);
+	temp.push_back(m_map);
+	for (int i = 0; i < m_map->Size(); i++) 
 	{
 		if (m_map->Tiles().Get(i)->GetName() != "NONE")
 		{
 			m_objList->push_back(m_map->Tiles().Get(i));
 			temp.push_back(m_map->Tiles().Get(i));
 		}
-	}*/
+	}
+
 
 
 	ResourceManager::GetInstance().LoadAllExternalResources(&temp);
@@ -143,6 +143,13 @@ void SceneWorld::Update()
 	std::cout << m_player->Position().x << ", " << m_player->Position().y << ", " << m_player->Position().z << std::endl;
 
 	m_camera->Update(m_player->Position());//this needs to change LOLOLOLOL
+
+	std::sort(m_objList->begin(), m_objList->end(), Drawable::SortFunc);
+	for (auto a : *m_objList)
+	{
+		std::cout << a->Position().z << std::endl;
+	}
+	return;
 }
 
 void SceneWorld::ShadowMapPass()
@@ -190,9 +197,8 @@ void SceneWorld::RenderPass()
 	//glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glEnable(GL_BLEND);
-	glEnable(GL_TEXTURE_2D);
+	glAlphaFunc(GL_GREATER, 0.1);
+	glEnable(GL_ALPHA_TEST);
 
 	//PointLightShadowEffect::GetInstance().Enable();
 	//ShadowMapFBO::GetInstance().BindForReading(SHADOW_TEXTURE_UNIT);

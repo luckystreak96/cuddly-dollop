@@ -21,14 +21,14 @@ class Map : public Drawable
 		void Draw();
 		void DrawShadowMap(Transformation& p);
         void Update(double elapsedTime);
-		Array3d<Tile*> Tiles();
+		Array2d<Tile*> Tiles();
 		unsigned int Size();
 		void SetupMesh();
 
     private:
         Vector3f m_pos = Vector3f(0, 0, 0);//camera movement and rotation needs to be handled in the gWorld matrix in game.cpp
         Vector3f m_rot = Vector3f(0, 0, 0);
-		Array3d<Tile*> m_tiles = Array3d<Tile*>(5, 5, 3);
+		Array2d<Tile*> m_tiles = Array2d<Tile*>(5, 5);
 		Mesh m_mesh;
 };
 

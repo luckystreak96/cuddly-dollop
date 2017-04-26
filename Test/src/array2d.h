@@ -13,6 +13,7 @@ class Array2d
         void Set(int x, int y, T valeur);
 		void Add(int x, int y, T valeur);
         T Get(int x, int y) const;
+		T Get(int v) const;
 
 		int Count();
 		int CountX();
@@ -46,10 +47,8 @@ Array2d<T>::Array2d(const Array2d& array) : m_x(array.m_x), m_y(array.m_y)
 	m_values = new T[m_x * m_y];
 	for (int i = 0; i < m_x * m_y; ++i)
 	{
-		float x = array.Get(i, 0);
+		T x = array.Get(i, 0);
 		Set(i, 0, x);
-		float test = Get(i, 0);
-		test = test;
 	}
 }
 
@@ -86,6 +85,12 @@ template <class T>
 T Array2d<T>::Get(int x, int y) const
 {
 	return m_values[To2dIndex(x, y)];
+}
+
+template <class T>
+T Array2d<T>::Get(int v) const
+{
+	return m_values[v];
 }
 
 template <class T>
