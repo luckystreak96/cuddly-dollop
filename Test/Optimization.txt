@@ -1,0 +1,2 @@
+Remove GLUT_DEBUG from glutbackend.cpp
+VERTEX SHADER -- make (world * model) be done on cpu??
