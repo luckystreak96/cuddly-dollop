@@ -11,6 +11,7 @@
 #include "math.h"
 #include "gameObjects.h"
 #include "mesh.h"
+#include <vector>
 
 class Map : public Drawable
 {
@@ -21,14 +22,14 @@ class Map : public Drawable
 		void Draw();
 		void DrawShadowMap(Transformation& p);
         void Update(double elapsedTime);
-		Array2d<Tile*> Tiles();
+		std::vector<Drawable*> Tiles();
 		unsigned int Size();
 		void SetupMesh();
 
     private:
         Vector3f m_pos = Vector3f(0, 0, 0);//camera movement and rotation needs to be handled in the gWorld matrix in game.cpp
         Vector3f m_rot = Vector3f(0, 0, 0);
-		Array2d<Tile*> m_tiles = Array2d<Tile*>(5, 5);
+		std::vector<Drawable*> m_tiles = std::vector<Drawable*>();
 		Mesh m_mesh;
 };
 

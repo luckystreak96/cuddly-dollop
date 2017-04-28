@@ -12,7 +12,6 @@
 #include "entity.h"
 #include "array2d.h"
 #include "define.h"
-#include "queue.h"
 #include "pointLightShadowEffect.h"
 #include "basicEffect.h"
 #include "shadowMapEffect.h"

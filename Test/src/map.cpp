@@ -1,16 +1,16 @@
 #include "map.h"
 
-#define COMPOSITION "TILE_CUBE"
+#define COMPOSITION "TILE"
 
-Map::Map() : m_mesh(Mesh()), Drawable(Vector3f(0, 0, 5), std::string(COMPOSITION))
+Map::Map() : m_mesh(Mesh()), Drawable(Vector3f(0, 0, 0), std::string(COMPOSITION))
 {
 	mustCollide = false;
 
-	for (int x = 0; x < m_tiles.CountX(); x++)
-		for (int y = 0; y < m_tiles.CountY(); y++)
-		{
-			m_tiles.Set(x, y, new Tile(Vector3f(x, y, 5.f), COMPOSITION));
-		}
+	for (int x = 0; x < 32; x++)
+		for (int y = 0; y < 18; y++)
+			m_tiles.push_back(new Tile(Vector3f(x, y, 5), COMPOSITION, "res/grass.png"));
+
+	m_tiles.push_back(new Tile(Vector3f(2, 4, 4), COMPOSITION, "res/orb.png"));
 
 	SetupMesh();
 }
@@ -26,35 +26,33 @@ Map::Map(const std::string& filePath)
 void Map::SetupMesh()
 {
 	m_mesh.Reset();
-	for (int x = 0; x < m_tiles.CountX(); x++)
-		for (int y = 0; y < m_tiles.CountY(); y++)
-		{
-			Tile* temp = m_tiles.Get(x, y);
-			if (temp->GetName() != "NONE")
-			{
-				m_mesh.AddToMesh(temp->GetVertices(), temp->GetIndices(), temp->GetHighestIndex(), temp->Position(), temp->GetTexture());
-				temp->mustDraw = false;
-			}
-		}
+	for(auto t : m_tiles)
+	{
+		Drawable* temp = t;
+		m_mesh.AddToMesh(temp->GetVertices(), temp->GetIndices(), temp->GetHighestIndex(), temp->Position(), temp->GetTexture());
+		temp->mustDraw = false;
+	}
 
 	m_texture = "res/map01.png";
 	m_mesh.Finalize(m_texture);
 	m_vertices = m_mesh.GetMeshVertices();
 	m_indices = m_mesh.GetMeshIndices();
-	//SetBuffers();
 }
 
 void Map::Update(double elapsedTime)
 {
-	for (int x = 0; x < m_tiles.CountX(); x++)
-		for (int y = 0; y < m_tiles.CountY(); y++)
-			m_tiles.Get(x, y)->Update();
+	for(auto d : m_tiles)
+		d->Update();
 
 	Drawable::Update();
 }
 
 void Map::Draw()
 {
+	//Set to 0 so the mesh doesnt move all the objects as well.
+	//This should only be modified if the whole mesh is moving, 
+	//otherwise each individual object inside it has its own coords set in the vertices.
+	m_modelMat.SetTranslation(Vector3f(0, 0, 0));
 	
 	BasicEffect::GetInstance().Enable();
 	BasicEffect::GetInstance().SetModelPosition(&m_modelMat.GetWorldTrans().m[0][0]);
@@ -72,12 +70,12 @@ void Map::DrawShadowMap(Transformation& p)
 	Drawable::Draw();
 }
 
-Array2d<Tile*> Map::Tiles()
+std::vector<Drawable*> Map::Tiles()
 {
 	return m_tiles;
 }
 
 unsigned int Map::Size()
 {
-	return m_tiles.Count();
+	return m_tiles.size();
 }

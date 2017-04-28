@@ -186,7 +186,6 @@
     <ClInclude Include="src\actor.h" />
     <ClInclude Include="src\pointLightEffect.h" />
     <ClInclude Include="src\pointLightShadowEffect.h" />
-    <ClInclude Include="src\queue.h" />
     <ClInclude Include="src\resource_loader.h" />
     <ClInclude Include="src\resource_manager.h" />
     <ClInclude Include="src\resource_user.h" />
@@ -226,7 +225,6 @@
     <ClCompile Include="src\actor.cpp" />
     <ClCompile Include="src\pointLightEffect.cpp" />
     <ClCompile Include="src\pointLightShadowEffect.cpp" />
-    <ClCompile Include="src\queue.cpp" />
     <ClCompile Include="src\resource_loader.cpp" />
     <ClCompile Include="src\resource_manager.cpp" />
     <ClCompile Include="src\scene_manager.cpp" />

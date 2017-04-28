@@ -7,7 +7,7 @@ int main(int argc, char** argv)
 {
     GLUTBackendInit(argc, argv, true, false);
 
-    if(!GLUTBackendCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, true, "Test :)"))
+    if(!GLUTBackendCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, IS_FULLSCREEN, "Game Title Here"))
     {
         std::cout << "Failed to create window" << std::endl;
         return 1;

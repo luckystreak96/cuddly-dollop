@@ -7,6 +7,10 @@ SceneWorld::SceneWorld() : m_acceptInput(false)
 
 bool SceneWorld::Init()
 {
+	//Setup viewport to fit the window size
+	float ratio = WINDOW_WIDTH / WINDOW_HEIGHT;
+	glViewport(0, 0, WINDOW_WIDTH * ratio, WINDOW_HEIGHT * ratio);
+
 	m_shadowMapSize = glutGet(GLUT_WINDOW_WIDTH) > glutGet(GLUT_WINDOW_HEIGHT) ? glutGet(GLUT_WINDOW_WIDTH) : glutGet(GLUT_WINDOW_HEIGHT);
 
 	m_camera = new Camera(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
@@ -31,17 +35,12 @@ bool SceneWorld::Init()
 	temp.push_back(m_player);
 	m_objList->push_back(m_map);
 	temp.push_back(m_map);
-	for (int i = 0; i < m_map->Size(); i++) 
+	for (auto t : m_map->Tiles())
 	{
-		if (m_map->Tiles().Get(i)->GetName() != "NONE")
-		{
-			m_objList->push_back(m_map->Tiles().Get(i));
-			temp.push_back(m_map->Tiles().Get(i));
-		}
+		m_objList->push_back(t);
+		temp.push_back(t);
 	}
-
-
-
+		
 	ResourceManager::GetInstance().LoadAllExternalResources(&temp);
 	LoadAllResources();
 
@@ -134,22 +133,15 @@ void SceneWorld::Update()
 		it->DesiredMove();
 
 	//Collision
-	Physics_Vertex::VertexCollision(m_objList);
+	//Physics_Vertex::VertexCollision(m_objList);
 
 	//Update
 	for(auto it : *m_objList)
 		it->Update();
 
-	std::cout << m_player->Position().x << ", " << m_player->Position().y << ", " << m_player->Position().z << std::endl;
+	//std::cout << m_player->Position().x << ", " << m_player->Position().y << ", " << m_player->Position().z << std::endl;
 
 	m_camera->Update(m_player->Position());//this needs to change LOLOLOLOL
-
-	std::sort(m_objList->begin(), m_objList->end(), Drawable::SortFunc);
-	for (auto a : *m_objList)
-	{
-		std::cout << a->Position().z << std::endl;
-	}
-	return;
 }
 
 void SceneWorld::ShadowMapPass()
@@ -197,8 +189,6 @@ void SceneWorld::RenderPass()
 	//glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glAlphaFunc(GL_GREATER, 0.1);
-	glEnable(GL_ALPHA_TEST);
 
 	//PointLightShadowEffect::GetInstance().Enable();
 	//ShadowMapFBO::GetInstance().BindForReading(SHADOW_TEXTURE_UNIT);
@@ -209,8 +199,8 @@ void SceneWorld::RenderPass()
 	//m_camera->Up = Vector3f(0, 1, 0);
 	//m_World->SetCamera(*m_camera);
 	m_World->SetOrthoProj(&OrthoProjInfo::GetRegularInstance());
-	m_World->SetTranslation(0, 0, 0);
-	m_World->SetRotation(m_camAngle, 0.0f, 0.0f);
+	m_World->SetTranslation(OrthoProjInfo::GetRegularInstance().Left, OrthoProjInfo::GetRegularInstance().Bottom, 0);
+	//m_World->SetRotation(m_camAngle, 0.0f, 0.0f);
 
 	//PointLightShadowEffect::GetInstance().Move(&m_World->GetWorldTrans());
 	//PointLightShadowEffect::GetInstance().SetWorldPosition(*m_World->GetTrans().m);

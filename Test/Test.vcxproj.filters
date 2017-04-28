@@ -142,9 +142,6 @@
     <ClInclude Include="src\shadowMapFBO.h">
       <Filter>Header Files\Engine\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="src\queue.h">
-      <Filter>Header Files\Utils</Filter>
-    </ClInclude>
     <ClInclude Include="src\glutBackend.h">
       <Filter>Header Files\Engine</Filter>
     </ClInclude>
@@ -275,9 +272,6 @@
     </ClCompile>
     <ClCompile Include="src\mathutils.cpp">
       <Filter>Source Files\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="src\queue.cpp">
-      <Filter>Source Files\Utils</Filter>
     </ClCompile>
     <ClCompile Include="src\vertex.cpp">
       <Filter>Source Files\Engine\Graphics</Filter>

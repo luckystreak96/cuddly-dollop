@@ -11,7 +11,6 @@
 #include "entity.h"
 #include "array2d.h"
 #include "define.h"
-#include "queue.h"
 #include "drawable.h"
 #include <vector>
 #include <map>

@@ -176,7 +176,7 @@ void Mat4f::InitOrthoProj(OrthoProjInfo o)
 	m[0][3] = 0.0f;
 
 	m[1][0] = 0.0f;
-	m[1][1] = 2.0f / (top - bottom);
+	m[1][1] = 2.f / (top - bottom);
 	m[1][2] = 0.0f;
 	m[1][3] = 0.0f;
 

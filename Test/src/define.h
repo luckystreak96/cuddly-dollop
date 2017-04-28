@@ -1,8 +1,16 @@
 #ifndef DEFINE_H__
 #define DEFINE_H__
 
+//#define HD
+#define IS_FULLSCREEN true
+
+#ifdef HD
 #define WINDOW_WIDTH 1920
-#define WINDOW_HEIGHT 1024
+#define WINDOW_HEIGHT 1080
+#else
+#define WINDOW_WIDTH 960
+#define WINDOW_HEIGHT 512
+#endif
 
 #define SHADOW_CUBE_SIZE 500
 #define NUM_OF_LAYERS 6

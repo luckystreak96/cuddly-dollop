@@ -2,6 +2,7 @@
 
 Actor::Actor(Vector3f position, std::string modelName, std::string texPath) : Drawable(position, modelName, texPath), m_speed(4.f)
 {
+	m_modelMat.SetScale(1, 1, 1);
 	SetProperties();
 }
 
@@ -21,14 +22,22 @@ void Actor::Jump(bool released)
 void Actor::Move(bool up, bool down, bool left, bool right)
 {
 	if (left)
+	{
 		m_velocity.x -= m_speed;
 		//m_velocity.x -= m_was_on_ground ? m_speed : SlowSpeed();
+	}
 	if (right)
+	{
 		m_velocity.x += m_speed;
+	}
 	if (up)
+	{
 		m_velocity.y += m_speed;
+	}
 	if (down)
+	{
 		m_velocity.y -= m_speed;
+	}
 }
 
 void Actor::DesiredMove()
@@ -84,7 +93,6 @@ void Actor::Draw()
 {
 	//m_modelMat.SetScale(Vector3f(0.25f, 0.25f, 0.25f));
 	//m_modelMat.SetScale(Vector3f(0.5f, 0.5f, 0.5f));
-	glDisable(GL_DEPTH_TEST);
 	BasicEffect::GetInstance().Enable();
 	BasicEffect::GetInstance().SetModelPosition(&m_modelMat.GetWorldTrans().m[0][0]);
 

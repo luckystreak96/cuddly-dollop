@@ -30,6 +30,11 @@ static void SpecialKeyboardUpCB(int key, int x, int y)
 	s_callBacks->specialKeyboardUpCB(key, x, y);
 }
 
+static void WindowResizeCB(int x, int y)
+{
+	s_callBacks->windowResizeCB(x, y);
+}
+
 static void InitializeGlutCallbacks(){
     //Setting the main loop function for the window
     glutDisplayFunc(RenderSceneCB);//...re-iterates when the window state changes(ex:minimize, maximize,...)
@@ -38,6 +43,7 @@ static void InitializeGlutCallbacks(){
     glutKeyboardFunc(KeyboardCB);
 	glutKeyboardUpFunc(KeyboardUpCB);
 	glutSpecialUpFunc(SpecialKeyboardUpCB);
+	glutReshapeFunc(WindowResizeCB);
 }
 
 
@@ -54,10 +60,6 @@ void GLUTBackendInit(int argc, char** argv, bool withDepth, bool withStencil)
 
     //Double buffering and RGBA color buffer
     glutInitDisplayMode(displayMode);
-	glEnable(GL_BLEND);
-	glEnable(GL_DEPTH_TEST);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
 
     //Return main loop if the window closes
     glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_GLUTMAINLOOP_RETURNS);

@@ -34,6 +34,7 @@ class Game : public ICallBacks
 		float m_shadowMapSize;
 		int m_numFrames;
 		bool m_exit;
+		bool m_isFullscreen = IS_FULLSCREEN;
 };
 
 #endif

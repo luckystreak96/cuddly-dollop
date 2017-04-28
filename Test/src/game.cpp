@@ -16,12 +16,12 @@ bool Game::init(float width, float height)
 	if (!ShadowMapFBO::GetInstance().Init(m_shadowMapSize, m_shadowMapSize))
 		return false;
 
-	OrthoProjInfo::GetRegularInstance().Bottom = -9;
-	OrthoProjInfo::GetRegularInstance().Top = 9;// glutGet(GLUT_WINDOW_HEIGHT);
-	OrthoProjInfo::GetRegularInstance().Left = -16;
-	OrthoProjInfo::GetRegularInstance().Right = 16;// glutGet(GLUT_WINDOW_WIDTH);
-	OrthoProjInfo::GetRegularInstance().zNear = -10;
-	OrthoProjInfo::GetRegularInstance().zFar = 10;
+	OrthoProjInfo::GetRegularInstance().Bottom = -8.4375;
+	OrthoProjInfo::GetRegularInstance().Top = 8.4375;// glutGet(GLUT_WINDOW_HEIGHT);
+	OrthoProjInfo::GetRegularInstance().Left = -15;
+	OrthoProjInfo::GetRegularInstance().Right = 15;// glutGet(GLUT_WINDOW_WIDTH);
+	OrthoProjInfo::GetRegularInstance().zNear = 10;
+	OrthoProjInfo::GetRegularInstance().zFar = -10;
 
 	PersProjInfo::GetRegularInstance().FOV = 30.0f;
 	PersProjInfo::GetRegularInstance().Width = width;
@@ -75,6 +75,18 @@ void Game::specialKeyboardCB(int key, int x, int y)
 	case GLUT_KEY_F1://ESC
 		Globals::DEBUG_DRAW_NORMALS = !Globals::DEBUG_DRAW_NORMALS;
 		break;
+	case GLUT_KEY_F11:
+		if (m_isFullscreen)
+		{
+			glutReshapeWindow(WINDOW_WIDTH, WINDOW_HEIGHT);
+			glutPositionWindow(0, 0);
+			m_isFullscreen = false;
+		}
+		else
+		{
+			glutFullScreen();
+			m_isFullscreen = true;
+		}
 	default:
 		break;
 	}
@@ -137,8 +149,11 @@ void Game::specialKeyboardUpCB(int key, int x, int y)
 
 void Game::windowResizeCB(int w, int h)
 {
-	PersProjInfo::GetRegularInstance().Width = glutGet(GLUT_WINDOW_WIDTH);
-	PersProjInfo::GetRegularInstance().Height = glutGet(GLUT_WINDOW_HEIGHT);
-	m_shadowMapSize = glutGet(GLUT_WINDOW_WIDTH) > glutGet(GLUT_WINDOW_HEIGHT) ? glutGet(GLUT_WINDOW_WIDTH) : glutGet(GLUT_WINDOW_HEIGHT);
-	ShadowMapFBO::GetInstance().Init(m_shadowMapSize, m_shadowMapSize);
+	float ratio = WINDOW_WIDTH / WINDOW_HEIGHT;
+
+		//Prevents stretching
+	//glViewport(0, 0, WINDOW_WIDTH * ratio, WINDOW_HEIGHT * ratio);
+
+	//Stretches to fit window size
+	glViewport(0, 0, w * ratio, h * ratio);
 }
