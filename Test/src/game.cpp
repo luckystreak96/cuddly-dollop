@@ -72,8 +72,11 @@ void Game::specialKeyboardCB(int key, int x, int y)
 {	
 	switch (key)
 	{
-	case GLUT_KEY_F1://ESC
+	case GLUT_KEY_F1:
 		Globals::DEBUG_DRAW_NORMALS = !Globals::DEBUG_DRAW_NORMALS;
+		break;
+	case GLUT_KEY_F2:
+		Globals::DEBUG_DRAW_TILE_OUTLINES = !Globals::DEBUG_DRAW_TILE_OUTLINES;
 		break;
 	case GLUT_KEY_F11:
 		if (m_isFullscreen)

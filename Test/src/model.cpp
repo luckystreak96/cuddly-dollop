@@ -86,7 +86,7 @@ void Model::loadModel(std::string model_name)
 			std::string currentFloat;
 			m_lastVertices = std::vector<float>();
 			m_lastIndices = std::vector<GLuint>();
-			m_lastTex = std::vector<GLuint>();
+			m_lastTex = std::vector<float>();
 
 			while (std::getline(stream, currentFloat, ','))
 			{
@@ -104,7 +104,7 @@ void Model::loadModel(std::string model_name)
 
 			while (std::getline(stream, currentFloat, ','))
 			{
-				m_lastTex.push_back(::atoi(currentFloat.c_str()));//convert string to float and add
+				m_lastTex.push_back(::atof(currentFloat.c_str()));//convert string to float and add
 			}
 
 			return;
@@ -127,7 +127,7 @@ std::vector<GLuint> Model::getIndices()
 	return m_lastIndices;
 }
 
-std::vector<GLuint> Model::GetTex()
+std::vector<float> Model::GetTex()
 {
 	return m_lastTex;
 }

@@ -27,7 +27,7 @@ class Drawable : public Entity, public ResourceUser
 		std::string GetName();
 		virtual void Draw();
 		virtual void DrawShadowMap(Transformation& p) {};
-        void Update();
+        virtual void Update();
 		void Move();
 		void MoveBB(Vector3f distance);
 		void SetBoundingBox();
@@ -52,7 +52,7 @@ class Drawable : public Entity, public ResourceUser
 		bool UnloadExternalResources();
 		bool LoadGLResources();
 		bool UnloadGLResources();
-		static inline bool SortFunc(Drawable* d, Drawable* d2) { return d->Position().z > d2->Position().z; }
+		static inline bool SortFunc(Drawable* d, Drawable* d2) { return d->Position().z < d2->Position().z; }
 
 public:
 		bool mustDraw = true;
@@ -65,6 +65,7 @@ public:
         std::vector<GLuint> m_indices;
         std::vector<Vertex> m_vertices;
 		std::vector<Vertex> m_translatedVertices;
+		std::vector<Vertex> m_originalVertices;
 		Vector3f m_size = Vector3f();
 		//Texture m_texture;
 		std::string m_texture;

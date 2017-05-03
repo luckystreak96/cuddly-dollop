@@ -31,6 +31,7 @@ enum Ent_Props {P_Slope_High_N, P_Slope_High_E, P_Slope_High_S, P_Slope_High_W, 
 namespace Globals
 {
 	extern bool DEBUG_DRAW_NORMALS;
+	extern bool DEBUG_DRAW_TILE_OUTLINES;
 }
 
 #endif

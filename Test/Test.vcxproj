@@ -160,6 +160,7 @@
     <Text Include="TODO.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\animation.h" />
     <ClInclude Include="src\array2d.h" />
     <ClInclude Include="src\array3d.h" />
     <ClInclude Include="src\basicEffect.h" />
@@ -182,6 +183,7 @@
     <ClInclude Include="src\mesh.h" />
     <ClInclude Include="src\model.h" />
     <ClInclude Include="src\physics.h" />
+    <ClInclude Include="src\physics_2d.h" />
     <ClInclude Include="src\physics_vertex.h" />
     <ClInclude Include="src\actor.h" />
     <ClInclude Include="src\pointLightEffect.h" />
@@ -204,6 +206,7 @@
     <ClInclude Include="src\vertex.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\animation.cpp" />
     <ClCompile Include="src\basicEffect.cpp" />
     <ClCompile Include="src\define.cpp" />
     <ClCompile Include="src\directionalLightEffect.cpp" />
@@ -221,6 +224,7 @@
     <ClCompile Include="src\mesh.cpp" />
     <ClCompile Include="src\model.cpp" />
     <ClCompile Include="src\physics.cpp" />
+    <ClCompile Include="src\physics_2d.cpp" />
     <ClCompile Include="src\physics_vertex.cpp" />
     <ClCompile Include="src\actor.cpp" />
     <ClCompile Include="src\pointLightEffect.cpp" />

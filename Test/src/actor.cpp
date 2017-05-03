@@ -8,6 +8,10 @@ Actor::Actor(Vector3f position, std::string modelName, std::string texPath) : Dr
 
 void Actor::Update()
 {
+	//use the backup to reset the texture coordinates for proper analysis from the animator
+	m_vertices = std::vector<Vertex>(m_originalVertices);
+	SetTileModelTC(&m_vertices);
+	SetBuffers();
 	Drawable::Update();
 }
 

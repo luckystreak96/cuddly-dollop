@@ -143,21 +143,23 @@ void Drawable::SetDefaults(std::string name)
 	Model::GetInstance().loadModel(name);
 	m_modelName = Model::GetInstance().GetName();
 	std::vector<float> verts = Model::GetInstance().getVertices();
-	std::vector<GLuint> tex = Model::GetInstance().GetTex();
+	std::vector<float> tex = Model::GetInstance().GetTex();
 
 	assert(verts.size() % 3 == 0);//full vertices only plz
 	//assert(tex.size() == (verts.size() % 3) * 2);//2 texcoords per vertex
 
 	int numVertex = verts.size() / 3;
 
-	m_vertices = std::vector<Vertex>();
+	m_originalVertices = std::vector<Vertex>();
 
 	for (int x = 0; x < numVertex; x++)
 	{
-		m_vertices.push_back(
+		m_originalVertices.push_back(
 			Vertex(Vector3f(verts[x * 3], verts[x * 3 + 1], verts[x * 3 + 2]), 
 				Vector2f(x * 2 < tex.size() ? tex[x * 2] : 0, x * 2 + 1 < tex.size() ? tex[x * 2 + 1] : 0)));//TEXCOORD MOD HERE PLZ
 	}
+
+	m_vertices = std::vector<Vertex>(m_originalVertices);
 
 	{
 		std::vector<GLuint> indices = Model::GetInstance().getIndices();

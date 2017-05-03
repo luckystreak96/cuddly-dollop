@@ -8,7 +8,12 @@ Map::Map() : m_mesh(Mesh()), Drawable(Vector3f(0, 0, 0), std::string(COMPOSITION
 
 	for (int x = 0; x < 32; x++)
 		for (int y = 0; y < 18; y++)
-			m_tiles.push_back(new Tile(Vector3f(x, y, 5), COMPOSITION, "res/grass.png"));
+		{
+			m_tiles.push_back(new Tile(Vector3f(x, y, 5), COMPOSITION, "res/sand.png"));
+			//int num = rand() % 20 + 1;
+			//num = num > 4 ? 1 : num;
+			//m_tiles.push_back(new Tile(Vector3f(x, y, 5), COMPOSITION, "res/grass_0" + std::to_string(num) + ".png"));
+		}
 
 	m_tiles.push_back(new Tile(Vector3f(2, 4, 4), COMPOSITION, "res/orb.png"));
 
@@ -26,6 +31,7 @@ Map::Map(const std::string& filePath)
 void Map::SetupMesh()
 {
 	m_mesh.Reset();
+	std::sort(m_tiles.begin(), m_tiles.end(), Drawable::SortFunc);
 	for(auto t : m_tiles)
 	{
 		Drawable* temp = t;

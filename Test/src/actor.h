@@ -4,10 +4,11 @@
 #include "vector3f.h"
 #include "drawable.h"
 #include "define.h"
+#include "animation.h"
 #include <string>
 #include <gl/freeglut.h>
 
-class Actor : public Drawable
+class Actor : public Drawable, public Animation
 {
 public:
 	Actor(Vector3f Position = Vector3f(0, 0, -5), std::string modelName = "NONE", std::string texPath = "res/whitebunny.png");

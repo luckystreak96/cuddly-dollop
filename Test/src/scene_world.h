@@ -11,11 +11,13 @@
 #include "array2d.h"
 #include "elapsedTime.h"
 #include "glutBackend.h"
-#include "physics_vertex.h"
+#include "physics_2d.h"
 #include "resource_manager.h"
 #include "input_manager.h"
 #include <gl/freeglut.h>
 #include "basicEffect.h"
+#include "animation.h"
+#include "define.h"
 
 struct CameraDirection
 {

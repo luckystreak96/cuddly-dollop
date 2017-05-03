@@ -25,7 +25,7 @@ bool SceneWorld::Init()
 	Model::GetInstance().init("res/models.data");
 
 
-	m_player = new Actor(Vector3f(0, 0, 4.0f), "TILE", "res/mushroom.png");
+	m_player = new Actor(Vector3f(0, 0, 4.0f), "TILE", "res/player.png");
 	m_map = new Map();
 
 	//Lists
@@ -35,11 +35,6 @@ bool SceneWorld::Init()
 	temp.push_back(m_player);
 	m_objList->push_back(m_map);
 	temp.push_back(m_map);
-	for (auto t : m_map->Tiles())
-	{
-		m_objList->push_back(t);
-		temp.push_back(t);
-	}
 		
 	ResourceManager::GetInstance().LoadAllExternalResources(&temp);
 	LoadAllResources();
@@ -128,12 +123,13 @@ void SceneWorld::Draw()
 
 void SceneWorld::Update()
 {
+	Animation::AnimationCounter(ElapsedTime::GetInstance().GetElapsedTime());
 	//DesiredMove
 	for(auto it : *m_objList)
 		it->DesiredMove();
 
 	//Collision
-	//Physics_Vertex::VertexCollision(m_objList);
+	//Physics_2D::Collision(m_objList);
 
 	//Update
 	for(auto it : *m_objList)
@@ -211,6 +207,23 @@ void SceneWorld::RenderPass()
 
 	for (auto it : *m_objList)
 		it->Draw();
+
+	if (Globals::DEBUG_DRAW_TILE_OUTLINES)
+	{
+		glBegin(GL_LINES);
+		glColor3f(1.0, 0.0, 0.0);
+		for(int x = 1; x < 32; x++)
+		{
+			glVertex3f(x, 0, -8);
+			glVertex3f(x, 18, -8);
+		}
+		for (int y = 1; y < 18; y++)
+		{
+			glVertex3f(0, y, -8);
+			glVertex3f(32, y, -8);
+		}
+		glEnd();
+	}
 
 	GLUTBackendSwapBuffers();
 }

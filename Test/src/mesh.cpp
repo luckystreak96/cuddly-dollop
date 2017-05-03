@@ -1,6 +1,6 @@
 #include "mesh.h"
 
-Mesh::Mesh() : m_texAtlas(TextureAtlas(4))
+Mesh::Mesh() : m_texAtlas(TextureAtlas(8))
 {
 	m_IBO = 0;
 	m_VBO = 0;
