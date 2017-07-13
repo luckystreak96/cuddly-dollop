@@ -4,6 +4,7 @@
 #include "vector3f.h"
 #include "mat4f.h"
 #include "mathutils.h"
+#include "define_gl.h"
 
 class Transformation
 {
@@ -20,6 +21,8 @@ class Transformation
         void SetCamera(Vector3f up, Vector3f pos, Vector3f target);
         void SetPersProjInfo(PersProjInfo* p);
 		void SetOrthoProj(OrthoProjInfo* o);
+		void SetFollowSpeed(float percentSpeed);
+		void Follow(Vector3f target, Vector3f upperRightLimit);
 
         Mat4f GetWorldTrans();
 		Mat4f GetWOTrans();
@@ -28,6 +31,7 @@ class Transformation
 		Camera& GetCamera();
 
     private:
+		float m_followSpeed = 1;
         Mat4f m_WTrans;
         Mat4f m_Proj;
         Mat4f m_WPTrans;

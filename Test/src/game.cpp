@@ -10,18 +10,23 @@ Game::~Game()
 
 bool Game::init(float width, float height)
 {
+	Model::GetInstance().init("res/models.data");
+
 	SceneManager::GetInstance().SetScene(&SceneWorld::GetInstance());
 
-	m_shadowMapSize = glutGet(GLUT_WINDOW_WIDTH) > glutGet(GLUT_WINDOW_HEIGHT) ? glutGet(GLUT_WINDOW_WIDTH) : glutGet(GLUT_WINDOW_HEIGHT);
-	if (!ShadowMapFBO::GetInstance().Init(m_shadowMapSize, m_shadowMapSize))
+	int hheight = glutGet(GLUT_WINDOW_HEIGHT);
+	int wwidth = glutGet(GLUT_WINDOW_WIDTH);
+
+	m_shadowMapSize = (float)(wwidth > hheight ? wwidth : hheight);
+	if (!ShadowMapFBO::GetInstance().Init((unsigned int)m_shadowMapSize, (unsigned int)m_shadowMapSize))
 		return false;
 
-	OrthoProjInfo::GetRegularInstance().Bottom = -8.4375;
-	OrthoProjInfo::GetRegularInstance().Top = 8.4375;// glutGet(GLUT_WINDOW_HEIGHT);
-	OrthoProjInfo::GetRegularInstance().Left = -15;
-	OrthoProjInfo::GetRegularInstance().Right = 15;// glutGet(GLUT_WINDOW_WIDTH);
-	OrthoProjInfo::GetRegularInstance().zNear = 10;
-	OrthoProjInfo::GetRegularInstance().zFar = -10;
+	OrthoProjInfo::GetRegularInstance().Bottom = ORTHO_BOTTOM;//-(hheight / 64 / 2);// divide by 2 cuz yeah
+	OrthoProjInfo::GetRegularInstance().Top = ORTHO_TOP;//(hheight / 64 / 2);
+	OrthoProjInfo::GetRegularInstance().Left = ORTHO_LEFT;//-(wwidth / 64 / 2);
+	OrthoProjInfo::GetRegularInstance().Right = ORTHO_RIGHT;//(wwidth / 64 / 2);
+	OrthoProjInfo::GetRegularInstance().zNear = ORTHO_NEAR;
+	OrthoProjInfo::GetRegularInstance().zFar = ORTHO_FAR;
 
 	PersProjInfo::GetRegularInstance().FOV = 30.0f;
 	PersProjInfo::GetRegularInstance().Width = width;
@@ -31,7 +36,7 @@ bool Game::init(float width, float height)
 	PersProjInfo::GetShadowInstance().Width = m_shadowMapSize;
 	PersProjInfo::GetShadowInstance().Height = m_shadowMapSize;
 
-	glEnable(GL_TEXTURE_CUBE_MAP);
+	//glEnable(GL_TEXTURE_CUBE_MAP);
 
 	return true;
 }
@@ -51,19 +56,7 @@ void Game::renderSceneCB()
 	if (ElapsedTime::GetInstance().GetElapsedTime() == -1)
 		return;
 
-	///If ever i want to set up frame by frame again...
-	////RENDER SETUP
-	//if (!m_pause || m_numFrames > 0)
-	//{
-	//	//If we pause to slowly pass frames...
-	//	if (m_numFrames > 0)
-	//	{
-	//		m_numFrames--;
-	//		//...then set the elapsedtime to a reasonable amount (60 fps)
-	//		ElapsedTime::GetInstance().SetBufferElapsedTime();
-	//	}
-	//	Update();
-	//}
+	//std::cout << ElapsedTime::GetInstance().GetFPS() << std::endl;
 
 	SceneManager::GetInstance().Act();
 }
@@ -152,11 +145,19 @@ void Game::specialKeyboardUpCB(int key, int x, int y)
 
 void Game::windowResizeCB(int w, int h)
 {
-	float ratio = WINDOW_WIDTH / WINDOW_HEIGHT;
-
+	//float w = (float)glutGet(GLUT_WINDOW_WIDTH);
+	//float h = (float)glutGet(GLUT_WINDOW_HEIGHT);
+	//float r = (float)w / (float)h;
 		//Prevents stretching
 	//glViewport(0, 0, WINDOW_WIDTH * ratio, WINDOW_HEIGHT * ratio);
 
 	//Stretches to fit window size
-	glViewport(0, 0, w * ratio, h * ratio);
+	glViewport(0, 0, (GLsizei)w, (GLsizei)h);
+	//glViewport(0, 0, (GLsizei)(WINDOW_WIDTH * RATIO), (GLsizei)(WINDOW_HEIGHT * RATIO));
+
+	//OrthoProjInfo::GetRegularInstance().Bottom = -(h);
+	//OrthoProjInfo::GetRegularInstance().Top = (h);
+	//OrthoProjInfo::GetRegularInstance().Left = -(w * r);
+	//OrthoProjInfo::GetRegularInstance().Right = (w * r);
+
 }

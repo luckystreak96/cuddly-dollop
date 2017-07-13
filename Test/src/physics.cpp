@@ -8,7 +8,7 @@ namespace Physics
 	//triangleNormal - the normal vector of collided surface
 	//first - did v1 collide with i2 or the other way around?
 	void FindClosestCollision(CollisionObject co1, CollisionObject co2, bool* collisionConfirmed,
-		double* percentMovement, Vector3f* triangleNormal, bool* first, Triangle* tri, Vector3f* traject, int* vertIndex, Vector3f* poc)
+		float* percentMovement, Vector3f* triangleNormal, bool* first, Triangle* tri, Vector3f* traject, int* vertIndex, Vector3f* poc)
 	{
 		static bool firstIteration = true;
 
@@ -21,7 +21,7 @@ namespace Physics
 				break;
 
 			Ray r = Ray();
-			r.P0 = v.vertex - co1.velocity * ElapsedTime::GetInstance().GetElapsedTime();
+			r.P0 = v.vertex - co1.velocity * (float)ElapsedTime::GetInstance().GetElapsedTime();
 			r.P1 = v.vertex;
 
 
@@ -88,7 +88,39 @@ namespace Physics
 	}
 
 	//Two cubic bounding boxes intersect?
-	bool Intersect(Array2d<float>& local, Array2d<float>& other)
+	bool Intersect3D(Array2d<float>& local, Array2d<float>& other)
+	{
+		//float x1 = local.Get(AABB::Left, 0);
+		//float x2 = other.Get(AABB::Left, 0);
+		//float x3 = local.Get(AABB::Right, 0);
+		//float x4 = other.Get(AABB::Right, 0);
+		//float y1 = local.Get(AABB::Up, 0);
+		//float y2 = other.Get(AABB::Up, 0);
+		//float y3 = local.Get(AABB::Down, 0);
+		//float y4 = other.Get(AABB::Down, 0);
+		float z1 = local.Get(AABB::Close, 0);
+		float z2 = other.Get(AABB::Close, 0);
+		float z3 = local.Get(AABB::Far, 0);
+		float z4 = other.Get(AABB::Far, 0);
+
+
+		//Left-Right
+		if (!(local.Get(AABB::Left, 0) <= other.Get(AABB::Right, 0) && local.Get(AABB::Right, 0) >= other.Get(AABB::Left, 0)))
+			return false;
+
+		//Up-Down
+		if (!(local.Get(AABB::Up, 0) >= other.Get(AABB::Down, 0) && local.Get(AABB::Down, 0) <= other.Get(AABB::Up, 0)))
+			return false;
+
+		//Close-Far
+		if (!(local.Get(AABB::Close, 0) <= other.Get(AABB::Far, 0) && local.Get(AABB::Far, 0) >= other.Get(AABB::Close, 0)))
+			return false;
+
+		return true;
+	}
+
+	//Two 2D square bounding boxes intersect?
+	bool Intersect2D(Array2d<float>& local, Array2d<float>& other)
 	{
 		//Left-Right
 		if (!(local.Get(AABB::Left, 0) < other.Get(AABB::Right, 0) && local.Get(AABB::Right, 0) > other.Get(AABB::Left, 0)))
@@ -96,10 +128,6 @@ namespace Physics
 
 		//Up-Down
 		if (!(local.Get(AABB::Up, 0) > other.Get(AABB::Down, 0) && local.Get(AABB::Down, 0) < other.Get(AABB::Up, 0)))
-			return false;
-
-		//Close-Far
-		if (!(local.Get(AABB::Close, 0) < other.Get(AABB::Far, 0) && local.Get(AABB::Far, 0) > other.Get(AABB::Close, 0)))
 			return false;
 
 		return true;

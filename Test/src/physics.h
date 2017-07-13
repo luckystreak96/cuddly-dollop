@@ -36,8 +36,9 @@ struct CollisionObject
 namespace Physics
 {
 	int intersect3D_RayTriangle(Ray R, Triangle T, Vector3f* I);
-	bool Intersect(Array2d<float>& local, Array2d<float>& other);
-	void FindClosestCollision(CollisionObject co1, CollisionObject co2, bool* collisionConfirmed, double* percentMovement, 
+	bool Intersect2D(Array2d<float>& local, Array2d<float>& other);
+	bool Intersect3D(Array2d<float>& local, Array2d<float>& other);
+	void FindClosestCollision(CollisionObject co1, CollisionObject co2, bool* collisionConfirmed, float* percentMovement, 
 		Vector3f* triangleNormal, bool* first, Triangle* tri, Vector3f* traject, int* vertIndex, Vector3f* poc);
 	bool RespectsNormal(Vector3f vel, Vector3f normal);
 }

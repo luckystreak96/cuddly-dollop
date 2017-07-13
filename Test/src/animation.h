@@ -3,17 +3,20 @@
 
 #include <vector>
 #include "vertex.h"
+#include <time.h>
 
 class Animation
 {
 public:
-	static void AnimationCounter(float et) { m_progress += et * 100; }
-	void SetTileModelTC(std::vector<Vertex>* verts);
+	Animation();
+	static void AnimationCounter(float et);
+	bool SetTileModelTC(std::vector<Vertex>* verts, bool forceUpdate = false);
 protected:
 	//ElapsedTime progress
 	static int m_progress;
 protected:
-	int m_delay = 10;
+	//Number of millis between frames
+	int m_delay = 160;
 	//Number of desired frames
 	int m_numFrames = 2;
 	//Whether the sprites go down or right
@@ -24,7 +27,7 @@ protected:
 	int m_sprite = 0;
 	//The total image size
 	int m_width = 2;
-	int m_height = 1;
+	int m_height = 4;
 };
 
 #endif

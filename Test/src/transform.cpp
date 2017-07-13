@@ -106,3 +106,37 @@ Camera& Transformation::GetCamera()
 {
 	return m_camera;
 }
+
+//Between 0 and 1
+void Transformation::SetFollowSpeed(float percentSpeed)
+{
+	m_followSpeed = percentSpeed;
+}
+
+//Target is the object that the camera should pan towards
+void Transformation::Follow(Vector3f target, Vector3f upperRightLimit)
+{
+	float distanceX = -target.x - m_translate.x;//find the distance between the 2, -target so that the movement of the world will be proper
+	float distanceY = -target.y - m_translate.y;
+	m_translate.x += distanceX / (40.0f * m_followSpeed);
+	m_translate.y += distanceY / (40.0f * m_followSpeed);
+
+	//Don't let the camera see black :)
+	if (m_translate.x - ORTHO_LEFT > 0)
+	{
+		m_translate.x = ORTHO_LEFT;
+	}
+	else if (abs(m_translate.x - ORTHO_RIGHT) > upperRightLimit.x)
+	{
+		m_translate.x = -(upperRightLimit.x - ORTHO_RIGHT);
+	}
+
+	if (m_translate.y - ORTHO_BOTTOM > 0)
+	{
+		m_translate.y = ORTHO_BOTTOM;
+	}
+	else if (abs(m_translate.y - ORTHO_TOP) > upperRightLimit.y)
+	{
+		m_translate.y = -(upperRightLimit.y - ORTHO_TOP);
+	}
+}

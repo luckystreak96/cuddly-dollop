@@ -22,7 +22,7 @@
     <ProjectGuid>{7D2A7D0E-30A6-47A7-9F2C-902D2F4406E8}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Test</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
     <ProjectName>Cuddly-dollop</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -164,13 +164,20 @@
     <ClInclude Include="src\array2d.h" />
     <ClInclude Include="src\array3d.h" />
     <ClInclude Include="src\basicEffect.h" />
+    <ClInclude Include="src\bloom.h" />
+    <ClInclude Include="src\bloomEffect.h" />
+    <ClInclude Include="src\blurEffect.h" />
+    <ClInclude Include="src\blur_framebuffer.h" />
     <ClInclude Include="src\callbacks.h" />
+    <ClInclude Include="src\combineEffect.h" />
     <ClInclude Include="src\define.h" />
+    <ClInclude Include="src\define_gl.h" />
     <ClInclude Include="src\directionalLightEffect.h" />
     <ClInclude Include="src\drawable.h" />
     <ClInclude Include="src\effect.h" />
     <ClInclude Include="src\elapsedTime.h" />
     <ClInclude Include="src\entity.h" />
+    <ClInclude Include="src\FBO.h" />
     <ClInclude Include="src\game.h" />
     <ClInclude Include="src\gameObjects.h" />
     <ClInclude Include="src\glutBackend.h" />
@@ -188,6 +195,8 @@
     <ClInclude Include="src\actor.h" />
     <ClInclude Include="src\pointLightEffect.h" />
     <ClInclude Include="src\pointLightShadowEffect.h" />
+    <ClInclude Include="src\postProcessingEffect.h" />
+    <ClInclude Include="src\post_processing_screen.h" />
     <ClInclude Include="src\resource_loader.h" />
     <ClInclude Include="src\resource_manager.h" />
     <ClInclude Include="src\resource_user.h" />
@@ -200,7 +209,9 @@
     <ClInclude Include="src\texture.h" />
     <ClInclude Include="src\textureatlas.h" />
     <ClInclude Include="src\tile.h" />
+    <ClInclude Include="src\trail.h" />
     <ClInclude Include="src\transform.h" />
+    <ClInclude Include="src\transparencyEffect.h" />
     <ClInclude Include="src\utils.h" />
     <ClInclude Include="src\vector3f.h" />
     <ClInclude Include="src\vertex.h" />
@@ -208,12 +219,18 @@
   <ItemGroup>
     <ClCompile Include="src\animation.cpp" />
     <ClCompile Include="src\basicEffect.cpp" />
+    <ClCompile Include="src\bloom.cpp" />
+    <ClCompile Include="src\bloomEffect.cpp" />
+    <ClCompile Include="src\blurEffect.cpp" />
+    <ClCompile Include="src\blur_framebuffer.cpp" />
+    <ClCompile Include="src\combineEffect.cpp" />
     <ClCompile Include="src\define.cpp" />
     <ClCompile Include="src\directionalLightEffect.cpp" />
     <ClCompile Include="src\drawable.cpp" />
     <ClCompile Include="src\effect.cpp" />
     <ClCompile Include="src\elapsedTime.cpp" />
     <ClCompile Include="src\entity.cpp" />
+    <ClCompile Include="src\FBO.cpp" />
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\glutBackend.cpp" />
     <ClCompile Include="src\input_manager.cpp" />
@@ -229,6 +246,8 @@
     <ClCompile Include="src\actor.cpp" />
     <ClCompile Include="src\pointLightEffect.cpp" />
     <ClCompile Include="src\pointLightShadowEffect.cpp" />
+    <ClCompile Include="src\postProcessingEffect.cpp" />
+    <ClCompile Include="src\post_processing_screen.cpp" />
     <ClCompile Include="src\resource_loader.cpp" />
     <ClCompile Include="src\resource_manager.cpp" />
     <ClCompile Include="src\scene_manager.cpp" />
@@ -238,7 +257,9 @@
     <ClCompile Include="src\texture.cpp" />
     <ClCompile Include="src\textureatlas.cpp" />
     <ClCompile Include="src\tile.cpp" />
+    <ClCompile Include="src\trail.cpp" />
     <ClCompile Include="src\transform.cpp" />
+    <ClCompile Include="src\transparencyEffect.cpp" />
     <ClCompile Include="src\utils.cpp" />
     <ClCompile Include="src\vector3f.cpp" />
     <ClCompile Include="src\vertex.cpp" />

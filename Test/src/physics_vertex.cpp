@@ -6,7 +6,7 @@ namespace Physics_Vertex {
 	{
 		bool collided = true;
 		bool collisionConfirmed = false;
-		double bestPercentMovement = 1;
+		float bestPercentMovement = 1;
 		Vector3f bestNormal;
 		Vector3f traject = Vector3f();
 		Vector3f poc = Vector3f();
@@ -31,7 +31,7 @@ namespace Physics_Vertex {
 						continue;
 
 					//Do they even intersect?
-					bool intersect = Physics::Intersect(list->at(i)->GetMoveBoundingBox(), list->at(j)->GetMoveBoundingBox());
+					bool intersect = Physics::Intersect3D(list->at(i)->GetMoveBoundingBox(), list->at(j)->GetMoveBoundingBox());
 					if (!intersect)
 						continue;
 
@@ -46,7 +46,7 @@ namespace Physics_Vertex {
 					if (co1.velocity == 0 && co2.velocity == 0)
 						continue;
 
-					double percentMovement = 1;
+					float percentMovement = 1;
 					Vector3f normal = Vector3f();
 					bool first = false;
 					collisionConfirmed = false;

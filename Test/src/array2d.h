@@ -73,6 +73,7 @@ void Array2d<T>::Set(int x, int y, T value)
 }
 
 template <class T>
+//The designated slot becomes the sum of the old value + the new value
 void Array2d<T>::Add(int x, int y, T value)
 {
 	//m_values[To2dIndex(x, y)] += value;

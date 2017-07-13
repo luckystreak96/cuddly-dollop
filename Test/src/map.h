@@ -21,7 +21,9 @@ class Map : public Drawable
         Map(const std::string& filePath);
 		void Draw();
 		void DrawShadowMap(Transformation& p);
-        void Update(double elapsedTime);
+        void Update();
+		void DesiredMove();
+		std::vector<Drawable*>* GetContainedObjects();
 		std::vector<Drawable*> Tiles();
 		unsigned int Size();
 		void SetupMesh();

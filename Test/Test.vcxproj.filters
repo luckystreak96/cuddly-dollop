@@ -70,6 +70,12 @@
     <Filter Include="Source Files\Engine\Backend">
       <UniqueIdentifier>{476d4fe4-fc95-4108-b816-dd89a5105218}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Engine\Graphics\PostProcessing">
+      <UniqueIdentifier>{1908b657-e3fa-4c0f-aafe-aaa764f8f643}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Graphics\PostProcessing">
+      <UniqueIdentifier>{29ede967-39e3-484d-a8a3-dd04eaeb458f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="TODO.txt" />
@@ -208,6 +214,39 @@
     <ClInclude Include="src\animation.h">
       <Filter>Header Files\Engine\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="src\blur_framebuffer.h">
+      <Filter>Header Files\Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\blurEffect.h">
+      <Filter>Header Files\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\FBO.h">
+      <Filter>Header Files\Engine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\define_gl.h">
+      <Filter>Header Files\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bloomEffect.h">
+      <Filter>Header Files\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\combineEffect.h">
+      <Filter>Header Files\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bloom.h">
+      <Filter>Header Files\Engine\Graphics\PostProcessing</Filter>
+    </ClInclude>
+    <ClInclude Include="src\post_processing_screen.h">
+      <Filter>Header Files\Drawables</Filter>
+    </ClInclude>
+    <ClInclude Include="src\trail.h">
+      <Filter>Header Files\Engine\Graphics\PostProcessing</Filter>
+    </ClInclude>
+    <ClInclude Include="src\transparencyEffect.h">
+      <Filter>Header Files\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\postProcessingEffect.h">
+      <Filter>Header Files\Effects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -317,6 +356,36 @@
     </ClCompile>
     <ClCompile Include="src\animation.cpp">
       <Filter>Source Files\Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\blur_framebuffer.cpp">
+      <Filter>Source Files\Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\blurEffect.cpp">
+      <Filter>Source Files\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\FBO.cpp">
+      <Filter>Source Files\Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\bloomEffect.cpp">
+      <Filter>Source Files\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\combineEffect.cpp">
+      <Filter>Source Files\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\post_processing_screen.cpp">
+      <Filter>Source Files\Drawables</Filter>
+    </ClCompile>
+    <ClCompile Include="src\bloom.cpp">
+      <Filter>Source Files\Engine\Graphics\PostProcessing</Filter>
+    </ClCompile>
+    <ClCompile Include="src\trail.cpp">
+      <Filter>Source Files\Engine\Graphics\PostProcessing</Filter>
+    </ClCompile>
+    <ClCompile Include="src\transparencyEffect.cpp">
+      <Filter>Source Files\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\postProcessingEffect.cpp">
+      <Filter>Source Files\Effects</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

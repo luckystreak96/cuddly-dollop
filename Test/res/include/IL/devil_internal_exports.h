@@ -18,6 +18,8 @@
 #ifdef DEBUG
 	#include <assert.h>
 #else
+	//if problems, remove the undef
+	#undef assert
 	#define assert(x)
 #endif
 

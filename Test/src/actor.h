@@ -5,8 +5,11 @@
 #include "drawable.h"
 #include "define.h"
 #include "animation.h"
+#include "blurEffect.h"
 #include <string>
 #include <gl/freeglut.h>
+
+enum Direction { dir_Up, dir_Right, dir_Down, dir_Left };
 
 class Actor : public Drawable, public Animation
 {
@@ -22,9 +25,11 @@ public:
 	void SetProperties();
 	Transformation GetMlMatrix();
 	void DrawShadowMap(Transformation & p);
+	Direction GetDirection() { return m_direction; }
 	inline float MoveSpeed() { return m_speed / 8.f; }
 	inline float SlowSpeed() { return m_speed / 16.f; }
 private:
+	Direction m_direction = dir_Down;
 	Vector3f m_playerSize;
 	float m_speed;
 	float m_RotationX = 0;

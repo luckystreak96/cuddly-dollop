@@ -16,15 +16,13 @@
 #include "input_manager.h"
 #include <gl/freeglut.h>
 #include "basicEffect.h"
+#include "bloomEffect.h"
+#include "combineEffect.h"
+#include "transparencyEffect.h"
 #include "animation.h"
-#include "define.h"
-
-struct CameraDirection
-{
-	GLenum CubemapFace;
-	Vector3f Target;
-	Vector3f Up;
-};
+#include "define_gl.h"
+#include "bloom.h"
+#include "trail.h"
 
 class SceneWorld : public Scene
 {
@@ -44,7 +42,6 @@ public:
 	void ManageInput();
 	
 public:
-	void ShadowMapPass();
 	void RenderPass();
 
 private:
@@ -54,11 +51,15 @@ private:
 	Map* m_map = NULL;
 	Transformation* m_World = NULL;
 	std::vector<Drawable*>* m_objList = NULL;
-	float m_shadowMapSize;
+	std::vector<Drawable*> m_clist;//collision list
 	bool m_pause;
 	bool m_resources_loaded;
 	bool m_acceptInput;
+	bool m_bloomEffect;
 	float m_camAngle = 0.0f;
+	int m_numFrames = 0;
+	Trail m_trail;
+	Bloom m_bloom;
 };
 
 #endif

@@ -111,6 +111,11 @@ bool Vector3f::operator!=(const Vector3f& r)
 	return !(this->x == r.x && this->y == r.y && this->z == r.z);
 }
 
+bool Vector3f::operator!=(const float& r)
+{
+	return !(this->x == r && this->y == r && this->z == r);
+}
+
 bool Vector3f::operator==(const int& i)
 {
 	return (x == i && y == i && z == i);
@@ -195,6 +200,13 @@ std::ostream& operator<<(std::ostream& output, const Vector3f& v)
 {
 	output << "(" << v.x << ", " << v.y << ", " << v.z << ")" << std::endl;
 	return output;
+}
+
+float Vector3f::Distance2D(Vector3f& other)
+{
+	float a = other.x - x;
+	float b = other.y - y;
+	return sqrtf(a*a + b*b);
 }
 
 Vector2f::Vector2f(float x, float y) : x(x), y(y) {}

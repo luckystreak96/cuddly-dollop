@@ -3,6 +3,8 @@
 Drawable::Drawable(Vector3f pos, std::string modelName, std::string texPath) : m_texture(texPath)
 {
 	m_pos = pos;
+	m_modelMat.SetTranslation(m_pos);
+
 	SetDefaults(modelName);
 }
 
@@ -11,12 +13,12 @@ void Drawable::Update()
 	if (m_modelName == "NONE")
 		return;
 
-	m_ground_check = false;//if a collision is about to be detected, its as if it was always on the ground
+	if (m_velocity != 0)
+	{
+		Drawable::Move();
+		m_modelMat.SetTranslation(m_pos);
+	}
 
-	Drawable::Move();
-	//m_rot.x += 0.002f;
-	m_modelMat.SetTranslation(m_pos);
-	//m_modelMat.SetRotation(m_rot);
 }
 
 bool Drawable::LoadExternalResources()
@@ -55,6 +57,16 @@ bool Drawable::LoadGLResources()
 	return true;
 }
 
+void Drawable::XCollide()
+{
+	m_velocity.x = 0;
+}
+
+void Drawable::YCollide()
+{
+	m_velocity.y = 0;
+}
+
 bool Drawable::UnloadGLResources()
 {
 	if (m_IBO != 0)
@@ -72,28 +84,30 @@ void Drawable::Draw()
 	if (!m_external_loaded || !m_GL_loaded || !mustDraw || m_modelName == "NONE")
 		return;
 
-	glEnableVertexAttribArray(0);
-	glEnableVertexAttribArray(1);
-	glEnableVertexAttribArray(2);
-	glEnableVertexAttribArray(3);
-	glEnableVertexAttribArray(4);
+	for (int i = 0; i < 6; i++)//0 to 5
+		glEnableVertexAttribArray(i);
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);//position
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);//vertex position
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*)(sizeof(float) * 3));//texcoords
 	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*)(sizeof(float) * 5));//normal
 	glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*)(sizeof(float) * 8));//specPow
 	glVertexAttribPointer(4, 1, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*)(sizeof(float) * 9));//specIntens
-	ResourceManager::GetInstance().GetTexture(m_texture)->Bind(GL_TEXTURE0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO);
 
-	glDrawElements(GL_TRIANGLES, m_indices.size() /** sizeof(GLuint)*/, GL_UNSIGNED_INT, 0);
+	ResourceManager::GetInstance().GetTexture(m_texture)->Bind(GL_TEXTURE0);
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_MBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(Vector3f) * m_models.size(), &m_models[0], GL_DYNAMIC_DRAW);
+	glVertexAttribPointer(5, 3, GL_FLOAT, GL_FALSE, sizeof(Vector3f), 0);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO);
+	glDrawElements(GL_TRIANGLES, (GLsizei)m_indices.size() /** sizeof(GLuint)*/, GL_UNSIGNED_INT, 0);
 
 	if (Globals::DEBUG_DRAW_NORMALS)
 	{
 		glBegin(GL_LINES);
 		glColor3f(1.0, 1.0, 1.0);
-		for(Vertex& v : m_vertices)
+		for (Vertex& v : m_vertices)
 		{
 			glVertex3f(v.vertex.x, v.vertex.y, v.vertex.z);
 			glVertex3f(v.vertex.x + v.normal.x, v.vertex.y + v.normal.y, v.vertex.z + v.normal.z);
@@ -101,11 +115,48 @@ void Drawable::Draw()
 		glEnd();
 	}
 
-	glDisableVertexAttribArray(4);
-	glDisableVertexAttribArray(3);
-	glDisableVertexAttribArray(2);
-	glDisableVertexAttribArray(1);
-	glDisableVertexAttribArray(0);
+	for (int i = 5; i >= 0; i--)//5 to 0
+		glEnableVertexAttribArray(i);
+}
+
+void Drawable::DrawNoTexture()
+{
+	if (!m_GL_loaded || !mustDraw || m_modelName == "NONE")
+		return;
+
+	for (int i = 0; i < 6; i++)//0 to 5
+		glEnableVertexAttribArray(i);
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);//vertex position
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*)(sizeof(float) * 3));//texcoords
+	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*)(sizeof(float) * 5));//normal
+	glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*)(sizeof(float) * 8));//specPow
+	glVertexAttribPointer(4, 1, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*)(sizeof(float) * 9));//specIntens
+
+	//ResourceManager::GetInstance().GetTexture(m_texture)->Bind(GL_TEXTURE0);
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_MBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(Vector3f) * m_models.size(), &m_models[0], GL_DYNAMIC_DRAW);
+	glVertexAttribPointer(5, 3, GL_FLOAT, GL_FALSE, sizeof(Vector3f), 0);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO);
+	glDrawElements(GL_TRIANGLES, (GLsizei)m_indices.size() /** sizeof(GLuint)*/, GL_UNSIGNED_INT, 0);
+
+	if (Globals::DEBUG_DRAW_NORMALS)
+	{
+		glBegin(GL_LINES);
+		glColor3f(1.0, 1.0, 1.0);
+		for (Vertex& v : m_vertices)
+		{
+			glVertex3f(v.vertex.x, v.vertex.y, v.vertex.z);
+			glVertex3f(v.vertex.x + v.normal.x, v.vertex.y + v.normal.y, v.vertex.z + v.normal.z);
+		}
+		glEnd();
+	}
+
+	for (int i = 5; i >= 0; i--)//5 to 0
+		glEnableVertexAttribArray(i);
 }
 
 void Drawable::SetBuffers()
@@ -114,18 +165,25 @@ void Drawable::SetBuffers()
 		glGenBuffers(1, &m_IBO);
 	if (m_VBO == 0)
 		glGenBuffers(1, &m_VBO);
+	if (m_MBO == 0)
+		glGenBuffers(1, &m_MBO);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO);//Give it a purpose
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_indices.size() * sizeof(GLuint), &m_indices[0], GL_STATIC_DRAW);
 
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);//Give it a purpose
+	glBufferData(GL_ARRAY_BUFFER, m_vertices.size() * sizeof(Vertex), &m_vertices[0], GL_STATIC_DRAW);
+}
 
+void Drawable::ResetVBO()
+{
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);//Give it a purpose
 	glBufferData(GL_ARRAY_BUFFER, m_vertices.size() * sizeof(Vertex), &m_vertices[0], GL_STATIC_DRAW);
 }
 
 void Drawable::Move()
 {
-	Vector3f distance = m_velocity * ElapsedTime::GetInstance().GetElapsedTime();
+	Vector3f distance = m_velocity * (float)ElapsedTime::GetInstance().GetElapsedTime();
 	RelativePosition(distance);
 }
 
@@ -148,14 +206,14 @@ void Drawable::SetDefaults(std::string name)
 	assert(verts.size() % 3 == 0);//full vertices only plz
 	//assert(tex.size() == (verts.size() % 3) * 2);//2 texcoords per vertex
 
-	int numVertex = verts.size() / 3;
+	int numVertex = (int)verts.size() / 3;
 
 	m_originalVertices = std::vector<Vertex>();
 
 	for (int x = 0; x < numVertex; x++)
 	{
 		m_originalVertices.push_back(
-			Vertex(Vector3f(verts[x * 3], verts[x * 3 + 1], verts[x * 3 + 2]), 
+			Vertex(Vector3f(verts[x * 3], verts[x * 3 + 1], verts[x * 3 + 2]),
 				Vector2f(x * 2 < tex.size() ? tex[x * 2] : 0, x * 2 + 1 < tex.size() ? tex[x * 2 + 1] : 0)));//TEXCOORD MOD HERE PLZ
 	}
 
@@ -167,7 +225,7 @@ void Drawable::SetDefaults(std::string name)
 
 		m_indices = std::vector<GLuint>();
 
-		for(auto i : indices)
+		for (auto i : indices)
 			m_indices.push_back(i);
 	}
 
@@ -184,9 +242,9 @@ void Drawable::SetTranslatedVertices()
 	m_translatedVertices = std::vector<Vertex>(m_vertices);
 	for (Vertex& v : m_translatedVertices)
 	{
-		v.vertex.x += m_pos.x + m_velocity.x * ElapsedTime::GetInstance().GetElapsedTime();
-		v.vertex.y += m_pos.y + m_velocity.y * ElapsedTime::GetInstance().GetElapsedTime();
-		v.vertex.z += m_pos.z + m_velocity.z * ElapsedTime::GetInstance().GetElapsedTime();
+		v.vertex.x += m_pos.x + m_velocity.x * (float)ElapsedTime::GetInstance().GetElapsedTime();
+		v.vertex.y += m_pos.y + m_velocity.y * (float)ElapsedTime::GetInstance().GetElapsedTime();
+		v.vertex.z += m_pos.z + m_velocity.z * (float)ElapsedTime::GetInstance().GetElapsedTime();
 	}
 }
 
@@ -215,11 +273,11 @@ void Drawable::CollisionMovement(Vector3f normal, float percent, bool secondColl
 
 	float projectedScalar = m_velocity.VectorProjection(normal);
 	Vector3f velChange = normal * -projectedScalar;
-	if(!secondCollision)
+	if (!secondCollision)
 	{
 		m_velocity += velChange;
 	}
-	else 
+	else
 	{
 		if (velChange.x != 0)
 			m_velocity.x = 0;
@@ -245,36 +303,46 @@ std::vector<Vertex> Drawable::GetTranslatedVertices()
 
 //Find the farthest edges from each other to make the biggest bounding
 //box using initial pos and pos + velocity
-void Drawable::SetMovementBB()
+//void Drawable::SetMovementBB()
+//{
+//	m_moveBoundingBox.Copy(m_boundingBox);
+//	m_moveBoundingBox.Add(AABB::Close, 0, m_velocity.z * (float)ElapsedTime::GetInstance().GetElapsedTime());
+//	m_moveBoundingBox.Add(AABB::Far, 0, m_velocity.z * (float)ElapsedTime::GetInstance().GetElapsedTime());
+//	m_moveBoundingBox.Add(AABB::Right, 0, m_velocity.x * (float)ElapsedTime::GetInstance().GetElapsedTime());
+//	m_moveBoundingBox.Add(AABB::Left, 0, m_velocity.x * (float)ElapsedTime::GetInstance().GetElapsedTime());
+//	m_moveBoundingBox.Add(AABB::Up, 0, m_velocity.y * (float)ElapsedTime::GetInstance().GetElapsedTime());
+//	m_moveBoundingBox.Add(AABB::Down, 0, m_velocity.y * (float)ElapsedTime::GetInstance().GetElapsedTime());
+//
+//	//Close Far
+//	if (abs(m_boundingBox.Get(AABB::Close, 0) - m_moveBoundingBox.Get(AABB::Far, 0)) >
+//		abs(m_boundingBox.Get(AABB::Far, 0) - m_moveBoundingBox.Get(AABB::Close, 0)))
+//		m_moveBoundingBox.Set(AABB::Close, 0, m_boundingBox.Get(AABB::Close, 0));
+//	else
+//		m_moveBoundingBox.Set(AABB::Far, 0, m_boundingBox.Get(AABB::Far, 0));
+//
+//	//Left Right
+//	if (abs(m_boundingBox.Get(AABB::Right, 0) - m_moveBoundingBox.Get(AABB::Left, 0)) >
+//		abs(m_boundingBox.Get(AABB::Left, 0) - m_moveBoundingBox.Get(AABB::Right, 0)))
+//		m_moveBoundingBox.Set(AABB::Right, 0, m_boundingBox.Get(AABB::Right, 0));
+//	else
+//		m_moveBoundingBox.Set(AABB::Left, 0, m_boundingBox.Get(AABB::Left, 0));
+//
+//	//Up Down
+//	if (abs(m_boundingBox.Get(AABB::Up, 0) - m_moveBoundingBox.Get(AABB::Down, 0)) >
+//		abs(m_boundingBox.Get(AABB::Down, 0) - m_moveBoundingBox.Get(AABB::Up, 0)))
+//		m_moveBoundingBox.Set(AABB::Up, 0, m_boundingBox.Get(AABB::Up, 0));
+//	else
+//		m_moveBoundingBox.Set(AABB::Down, 0, m_boundingBox.Get(AABB::Down, 0));
+//}
+
+//Create the destination BB for collision testing
+void Drawable::SetMovedBB()
 {
 	m_moveBoundingBox.Copy(m_boundingBox);
-	m_moveBoundingBox.Add(AABB::Close, 0, m_velocity.z * ElapsedTime::GetInstance().GetElapsedTime());
-	m_moveBoundingBox.Add(AABB::Far, 0, m_velocity.z * ElapsedTime::GetInstance().GetElapsedTime());
-	m_moveBoundingBox.Add(AABB::Right, 0, m_velocity.x * ElapsedTime::GetInstance().GetElapsedTime());
-	m_moveBoundingBox.Add(AABB::Left, 0, m_velocity.x * ElapsedTime::GetInstance().GetElapsedTime());
-	m_moveBoundingBox.Add(AABB::Up, 0, m_velocity.y * ElapsedTime::GetInstance().GetElapsedTime());
-	m_moveBoundingBox.Add(AABB::Down, 0, m_velocity.y * ElapsedTime::GetInstance().GetElapsedTime());
-
-	//Close Far
-	if (abs(m_boundingBox.Get(AABB::Close, 0) - m_moveBoundingBox.Get(AABB::Far, 0)) >
-		abs(m_boundingBox.Get(AABB::Far, 0) - m_moveBoundingBox.Get(AABB::Close, 0)))
-		m_moveBoundingBox.Set(AABB::Close, 0, m_boundingBox.Get(AABB::Close, 0));
-	else
-		m_moveBoundingBox.Set(AABB::Far, 0, m_boundingBox.Get(AABB::Far, 0));
-
-	//Left Right
-	if (abs(m_boundingBox.Get(AABB::Right, 0) - m_moveBoundingBox.Get(AABB::Left, 0)) >
-		abs(m_boundingBox.Get(AABB::Left, 0) - m_moveBoundingBox.Get(AABB::Right, 0)))
-		m_moveBoundingBox.Set(AABB::Right, 0, m_boundingBox.Get(AABB::Right, 0));
-	else
-		m_moveBoundingBox.Set(AABB::Left, 0, m_boundingBox.Get(AABB::Left, 0));
-
-	//Up Down
-	if (abs(m_boundingBox.Get(AABB::Up, 0) - m_moveBoundingBox.Get(AABB::Down, 0)) >
-		abs(m_boundingBox.Get(AABB::Down, 0) - m_moveBoundingBox.Get(AABB::Up, 0)))
-		m_moveBoundingBox.Set(AABB::Up, 0, m_boundingBox.Get(AABB::Up, 0));
-	else
-		m_moveBoundingBox.Set(AABB::Down, 0, m_boundingBox.Get(AABB::Down, 0));
+	m_moveBoundingBox.Add(AABB::Right, 0, m_velocity.x * (float)ElapsedTime::GetInstance().GetElapsedTime());
+	m_moveBoundingBox.Add(AABB::Left, 0, m_velocity.x * (float)ElapsedTime::GetInstance().GetElapsedTime());
+	m_moveBoundingBox.Add(AABB::Up, 0, m_velocity.y * (float)ElapsedTime::GetInstance().GetElapsedTime());
+	m_moveBoundingBox.Add(AABB::Down, 0, m_velocity.y * (float)ElapsedTime::GetInstance().GetElapsedTime());
 }
 
 
@@ -298,45 +366,99 @@ std::string Drawable::GetName()
 
 void Drawable::SetBoundingBox()
 {
-	m_boundingBox.Set(AABB::Right, 0, m_vertices[0].vertex.x);
-	m_boundingBox.Set(AABB::Left, 0, m_vertices[0].vertex.x);
-	m_boundingBox.Set(AABB::Up, 0, m_vertices[0].vertex.y);
-	m_boundingBox.Set(AABB::Down, 0, m_vertices[0].vertex.y);
-	m_boundingBox.Set(AABB::Close, 0, m_vertices[0].vertex.z);
-	m_boundingBox.Set(AABB::Far, 0, m_vertices[0].vertex.z);
 
-	for(auto v : m_vertices)
+	if (m_size != -1 && m_normalSize != -1)
 	{
-		//Right
-		if (v.vertex.x > m_boundingBox.Get(AABB::Right, 0))
-			m_boundingBox.Set(AABB::Right, 0, v.vertex.x);
-		//Left
-		else if (v.vertex.x < m_boundingBox.Get(AABB::Left, 0))
-			m_boundingBox.Set(AABB::Left, 0, v.vertex.x);
-		//Up
-		if (v.vertex.y > m_boundingBox.Get(AABB::Up, 0))
-			m_boundingBox.Set(AABB::Up, 0, v.vertex.y);
-		//Down
-		else if (v.vertex.y < m_boundingBox.Get(AABB::Down, 0))
-			m_boundingBox.Set(AABB::Down, 0, v.vertex.y);
-		//Away
-		if (v.vertex.z > m_boundingBox.Get(AABB::Far, 0))
-			m_boundingBox.Set(AABB::Far, 0, v.vertex.z);
-		//Close
-		else if (v.vertex.z < m_boundingBox.Get(AABB::Close, 0))
-			m_boundingBox.Set(AABB::Close, 0, v.vertex.z);
+		SetBoundingBoxSize(m_size, m_normalSize);
 	}
+	else
+	{
+		m_boundingBox.Set(AABB::Right, 0, m_vertices[0].vertex.x);
+		m_boundingBox.Set(AABB::Left, 0, m_vertices[0].vertex.x);
+		m_boundingBox.Set(AABB::Up, 0, m_vertices[0].vertex.y);
+		m_boundingBox.Set(AABB::Down, 0, m_vertices[0].vertex.y);
+		m_boundingBox.Set(AABB::Close, 0, m_vertices[0].vertex.z);
+		m_boundingBox.Set(AABB::Far, 0, m_vertices[0].vertex.z);
+
+		for (auto v : m_vertices)
+		{
+			//Right
+			if (v.vertex.x > m_boundingBox.Get(AABB::Right, 0))
+				m_boundingBox.Set(AABB::Right, 0, v.vertex.x);
+			//Left
+			else if (v.vertex.x < m_boundingBox.Get(AABB::Left, 0))
+				m_boundingBox.Set(AABB::Left, 0, v.vertex.x);
+			//Up
+			if (v.vertex.y > m_boundingBox.Get(AABB::Up, 0))
+				m_boundingBox.Set(AABB::Up, 0, v.vertex.y);
+			//Down
+			else if (v.vertex.y < m_boundingBox.Get(AABB::Down, 0))
+				m_boundingBox.Set(AABB::Down, 0, v.vertex.y);
+			//Away
+			if (v.vertex.z > m_boundingBox.Get(AABB::Far, 0))
+				m_boundingBox.Set(AABB::Far, 0, v.vertex.z);
+			//Close
+			else if (v.vertex.z < m_boundingBox.Get(AABB::Close, 0))
+				m_boundingBox.Set(AABB::Close, 0, v.vertex.z);
+		}
+		MoveBB(m_pos);
+	}
+}
+
+//Size = Desired size
+//numSquares = How big is the object in tiles (to determine how to centre the object)
+void Drawable::SetBoundingBoxSize(Vector3f size, Vector3f numSquares)
+{
+	//Side-Space, if you put 0, itll just stick it to the left/bottom/close(ground)
+	float sideX = numSquares.x > 0 ? (numSquares.x - size.x) / 2 : 0;
+	float sideY = numSquares.y > 0 ? (numSquares.y - size.y) / 2 : 0;
+	float sideZ = numSquares.z > 0 ? (numSquares.z - size.z) / 2 : 0;
+
+	if (size.x >= 0)
+	{
+		m_boundingBox.Set(AABB::Left, 0, m_vertices[0].vertex.x + sideX);
+		m_boundingBox.Set(AABB::Right, 0, size.x + sideX);
+	}
+	else
+	{
+		m_boundingBox.Set(AABB::Right, 0, m_vertices[0].vertex.x + sideX);
+		m_boundingBox.Set(AABB::Left, 0, size.x + sideX);
+	}
+
+	//The close z-value is the one closest to infinity, so its the bottom of the object
+	if (size.z >= 0)
+	{
+		m_boundingBox.Set(AABB::Close, 0, m_vertices[0].vertex.z + sideZ);
+		m_boundingBox.Set(AABB::Far, 0, size.z + sideZ);
+	}
+	else
+	{
+		m_boundingBox.Set(AABB::Far, 0, m_vertices[0].vertex.z + sideZ);
+		m_boundingBox.Set(AABB::Close, 0, size.z + sideZ);
+	}
+
+	if (size.y >= 0)
+	{
+		m_boundingBox.Set(AABB::Down, 0, m_vertices[0].vertex.y + sideY);
+		m_boundingBox.Set(AABB::Up, 0, size.y + sideY);
+	}
+	else
+	{
+		m_boundingBox.Set(AABB::Up, 0, m_vertices[0].vertex.y + sideY);
+		m_boundingBox.Set(AABB::Down, 0, size.y + sideY);
+	}
+
 	MoveBB(m_pos);
 }
 
 void Drawable::MoveBB(Vector3f distance)
 {
-	m_boundingBox.Set(AABB::Right, 0, m_boundingBox.Get(AABB::Right, 0) + distance.x);
-	m_boundingBox.Set(AABB::Left, 0, m_boundingBox.Get(AABB::Left, 0) + distance.x);
-	m_boundingBox.Set(AABB::Up, 0, m_boundingBox.Get(AABB::Up, 0) + distance.y);
-	m_boundingBox.Set(AABB::Down, 0, m_boundingBox.Get(AABB::Down, 0) + distance.y);
-	m_boundingBox.Set(AABB::Close, 0, m_boundingBox.Get(AABB::Close, 0) + distance.z);
-	m_boundingBox.Set(AABB::Far, 0, m_boundingBox.Get(AABB::Far, 0) + distance.z);
+	m_boundingBox.Add(AABB::Right, 0, distance.x);
+	m_boundingBox.Add(AABB::Left, 0, distance.x);
+	m_boundingBox.Add(AABB::Up, 0, distance.y);
+	m_boundingBox.Add(AABB::Down, 0, distance.y);
+	m_boundingBox.Add(AABB::Close, 0, distance.z);
+	m_boundingBox.Add(AABB::Far, 0, distance.z);
 }
 
 Array2d<float> Drawable::GetBoundingBox()
@@ -350,18 +472,18 @@ void Drawable::RelativePosition(Vector3f movementPos)
 	MoveBB(movementPos);
 }
 
-void Drawable::AbsolutePosition(Vector3f absolutePos)
+void Drawable::AbsolutePosition(Vector3f absolutePos, Vector3f useAxis)
 {
-	absolutePos.x = absolutePos.x == -1 ? m_pos.x : absolutePos.x;
-	absolutePos.y = absolutePos.y == -1 ? m_pos.y : absolutePos.y;
-	absolutePos.z = absolutePos.z == -1 ? m_pos.z : absolutePos.z;
+	absolutePos.x = useAxis.x == 0 ? m_pos.x : absolutePos.x;
+	absolutePos.y = useAxis.y == 0 ? m_pos.y : absolutePos.y;
+	absolutePos.z = useAxis.z == 0 ? m_pos.z : absolutePos.z;
 	m_pos = absolutePos;
 	SetBoundingBox();
 }
 
 void Drawable::SetSpecularStuff()
 {
-	for(Vertex& v : m_vertices)
+	for (Vertex& v : m_vertices)
 	{
 		v.SpecularPower = m_specularPower;
 		v.SpecularIntensity = m_specularIntensity;
@@ -389,7 +511,8 @@ int Drawable::GetHighestIndex()
 
 void Drawable::DesiredMove()
 {
-	SetMovementBB();
+	if (m_velocity != 0)
+		SetMovedBB();
 }
 
 std::string Drawable::GetTexture()

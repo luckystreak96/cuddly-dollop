@@ -14,6 +14,8 @@ class Mat4f
                 float a20, float a21, float a22, float a23,
                 float a30, float a31, float a32, float a33);
 
+		static Mat4f GetIdentity() { static Mat4f instance; return instance; };
+
         Mat4f operator*(const Mat4f &mat) const;
 		Vector3f Multiply(Vector3f &vec, float pretendVec4) const;
 
@@ -36,12 +38,12 @@ class Mat4f
         void Multiply(float (&first)[4][4], const float (&mat)[4][4]);
 
     public:
-        Camera camera;
+        //Camera camera;
         float m[4][4];
 
-        Vector3f m_scale;
-        Vector3f m_rotation;
-        Vector3f m_translation;
+        //Vector3f m_scale;
+        //Vector3f m_rotation;
+        //Vector3f m_translation;
 };
 
 #endif

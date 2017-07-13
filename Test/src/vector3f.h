@@ -18,6 +18,7 @@ public:
 	friend std::ostream& operator<<(std::ostream& output, const Vector3f& D);
 	bool operator==(const Vector3f& r);
 	bool operator!=(const Vector3f& r);
+	bool operator!=(const float & r);
 	bool operator==(const int& i);
 	bool operator<(const float& i);
 	bool operator>(const float& i);
@@ -33,6 +34,7 @@ public:
 	float Length();
 	float Dot(Vector3f v);
 	float VectorProjection(Vector3f normal);
+	float Distance2D(Vector3f& other);
 	float PercentDistance(Vector3f& other);
 
 	float x = 0.0;

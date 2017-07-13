@@ -1,7 +1,7 @@
 #include <iostream>
 #include "glutBackend.h"
 #include "game.h"
-#include "define.h"
+#include "define_gl.h"
 
 int main(int argc, char** argv)
 {

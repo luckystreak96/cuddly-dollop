@@ -8,12 +8,11 @@ SceneWorld::SceneWorld() : m_acceptInput(false)
 bool SceneWorld::Init()
 {
 	//Setup viewport to fit the window size
-	float ratio = WINDOW_WIDTH / WINDOW_HEIGHT;
-	glViewport(0, 0, WINDOW_WIDTH * ratio, WINDOW_HEIGHT * ratio);
+	glViewport(0, 0, (GLsizei)(glutGet(GLUT_WINDOW_WIDTH)), (GLsizei)(glutGet(GLUT_WINDOW_HEIGHT)));
 
-	m_shadowMapSize = glutGet(GLUT_WINDOW_WIDTH) > glutGet(GLUT_WINDOW_HEIGHT) ? glutGet(GLUT_WINDOW_WIDTH) : glutGet(GLUT_WINDOW_HEIGHT);
+	m_bloomEffect = false;
 
-	m_camera = new Camera(glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
+	m_camera = new Camera((float)glutGet(GLUT_WINDOW_WIDTH), (float)glutGet(GLUT_WINDOW_HEIGHT));
 	m_camera->Pos.z = -25;
 
 	m_World = new Transformation();
@@ -22,20 +21,50 @@ bool SceneWorld::Init()
 	//PointLightShadowEffect::GetInstance().SetColorTextureUnit(0);
 	//PointLightShadowEffect::GetInstance().SetShadowMapTextureUnit(1);
 
-	Model::GetInstance().init("res/models.data");
 
-
+	m_clist = std::vector<Drawable*>();
 	m_player = new Actor(Vector3f(0, 0, 4.0f), "TILE", "res/player.png");
 	m_map = new Map();
 
 	//Lists
 	m_objList = new std::vector<Drawable*>();
 	std::vector<ResourceUser*> temp = std::vector<ResourceUser*>();
+
+	Actor* test = new Actor(Vector3f(1, 1, 4.0f), "TILE", "res/player.png");
+	m_objList->push_back(test);
+	temp.push_back(test);
+
+	Actor* test2 = new Actor(Vector3f(10, 5, 4.0f), "TILE", "res/player.png");
+	m_objList->push_back(test2);
+	temp.push_back(test2);
+
+	Actor* test3 = new Actor(Vector3f(4, 12, 4.0f), "TILE", "res/player.png");
+	m_objList->push_back(test3);
+	temp.push_back(test3);
+
 	m_objList->push_back(m_player);
 	temp.push_back(m_player);
 	m_objList->push_back(m_map);
 	temp.push_back(m_map);
-		
+
+	//temp.push_back(new Actor(Vector3f(1, 1, 4.0f), "TILE", "res/player.png"));
+
+	//populate clist
+	for (auto x : *m_objList)
+	{
+		if (x->IsContainer() && x->GetContainedObjects() != NULL)
+		{
+			for (auto y : *x->GetContainedObjects())
+			{
+				m_clist.push_back(y);
+			}
+		}
+		else
+		{
+			m_clist.push_back(x);
+		}
+	}
+
 	ResourceManager::GetInstance().LoadAllExternalResources(&temp);
 	LoadAllResources();
 
@@ -77,17 +106,34 @@ void SceneWorld::ManageInput()
 	if (keyMap.count(std::pair<unsigned int, KeyStatus>('p', KeyPressed)))
 		m_pause = !m_pause;
 
-	//Manage MOVE and JUMP here
-	m_player->Move(
-		heldKeys->count(GLUT_KEY_UP + InputManager::SpecialKeyValue),
-		heldKeys->count(GLUT_KEY_DOWN + InputManager::SpecialKeyValue),
-		heldKeys->count(GLUT_KEY_LEFT + InputManager::SpecialKeyValue),
-		heldKeys->count(GLUT_KEY_RIGHT + InputManager::SpecialKeyValue));
+	if (keyMap.count(std::pair<unsigned int, KeyStatus>('o', KeyPressed)))
+		m_numFrames++;
 
-	if (keyMap.count(std::pair<unsigned int, KeyStatus>(' ', KeyPressed)))
+	//Manage MOVE and JUMP here
+	if (m_numFrames > 0 || !m_pause)
+		m_player->Move(
+			heldKeys->count(GLUT_KEY_UP + InputManager::SpecialKeyValue),
+			heldKeys->count(GLUT_KEY_DOWN + InputManager::SpecialKeyValue),
+			heldKeys->count(GLUT_KEY_LEFT + InputManager::SpecialKeyValue),
+			heldKeys->count(GLUT_KEY_RIGHT + InputManager::SpecialKeyValue));
+
+	if (keyMap.count(std::pair<unsigned int, KeyStatus>(' ', KeyStatus::KeyPressed)))
 		m_player->Jump(false);
 	else if (keyMap.count(std::pair<unsigned int, KeyStatus>(' ', Release)))
 		m_player->Jump(true);
+
+	if (keyMap.count(std::pair<unsigned int, KeyStatus>('b', KeyPressed)))
+		m_bloomEffect = !m_bloomEffect;
+
+	static float bloomint = 0.3f;
+	if (keyMap.count(std::pair<unsigned int, KeyStatus>('u', KeyPressed))) {
+		bloomint += 0.2f;
+		CombineEffect::GetInstance().SetIntensity(bloomint);
+	}
+	if (keyMap.count(std::pair<unsigned int, KeyStatus>('j', KeyPressed))) {
+		bloomint -= 0.2f;
+		CombineEffect::GetInstance().SetIntensity(bloomint);
+	}
 
 	if (heldKeys->count(GLUT_KEY_F5 + InputManager::SpecialKeyValue))
 		m_camAngle += 0.1f;
@@ -105,10 +151,23 @@ Scene* SceneWorld::Act()
 
 	ManageInput();
 
-	//RENDER SETUP
-	if (!m_pause)
+	//RENDER SETUP WITH FRAME BY FRAME
+	if (!m_pause || m_numFrames > 0)
+	{
+		//If we pause to slowly pass frames...
+		if (m_numFrames > 0)
+		{
+			m_numFrames--;
+			//...then set the elapsedtime to the desired amount (in fps)
+			ElapsedTime::GetInstance().SetBufferElapsedTime(60.f);
+		}
 		Update();
-	
+	}
+
+	//SIMPLE RENDER SETUP
+	//if (!m_pause)
+	//	Update();
+
 	//DRAW
 	Draw();
 
@@ -123,104 +182,91 @@ void SceneWorld::Draw()
 
 void SceneWorld::Update()
 {
-	Animation::AnimationCounter(ElapsedTime::GetInstance().GetElapsedTime());
+	Animation::AnimationCounter((float)ElapsedTime::GetInstance().GetElapsedTime());
 	//DesiredMove
-	for(auto it : *m_objList)
+	for (auto it : *m_objList)
 		it->DesiredMove();
 
 	//Collision
-	//Physics_2D::Collision(m_objList);
+	Physics_2D::Collision(&m_clist);
 
 	//Update
-	for(auto it : *m_objList)
+	for (auto it : *m_objList)
 		it->Update();
 
-	//std::cout << m_player->Position().x << ", " << m_player->Position().y << ", " << m_player->Position().z << std::endl;
+	std::cout << m_player->GetDirection() << std::endl;
+	//std::cout << m_player->Position().x << ", " << m_player->Position().y << ", " << m_player->Position().z << std::endl;// << ", " << m_clist.at(1)->GetMoveBoundingBox().Get(AABB::Down) << ", " << m_clist.at(1)->GetMoveBoundingBox().Get(AABB::Close) << std::endl;
 
-	m_camera->Update(m_player->Position());//this needs to change LOLOLOLOL
-}
-
-void SceneWorld::ShadowMapPass()
-{
-	static CameraDirection gCameraDirections[NUM_OF_LAYERS] =
-	{
-		{ GL_TEXTURE_CUBE_MAP_POSITIVE_X, Vector3f(1.0f, 0.0f, 0.0f),  Vector3f(0.0f, -1.0f, 0.0f) },
-		{ GL_TEXTURE_CUBE_MAP_NEGATIVE_X, Vector3f(-1.0f, 0.0f, 0.0f), Vector3f(0.0f, -1.0f, 0.0f) },
-		{ GL_TEXTURE_CUBE_MAP_POSITIVE_Y, Vector3f(0.0f, 1.0f, 0.0f),  Vector3f(0.0f, 0.0f, -1.0f) },
-		{ GL_TEXTURE_CUBE_MAP_NEGATIVE_Y, Vector3f(0.0f, -1.0f, 0.0f), Vector3f(0.0f, 0.0f, 1.0f) },
-		{ GL_TEXTURE_CUBE_MAP_POSITIVE_Z, Vector3f(0.0f, 0.0f, -1.0f),  Vector3f(0.0f, -1.0f, 0.0f) },
-		{ GL_TEXTURE_CUBE_MAP_NEGATIVE_Z, Vector3f(0.0f, 0.0f, 1.0f), Vector3f(0.0f, -1.0f, 0.0f) }
-	};
-
-	glViewport(0, 0, m_shadowMapSize, m_shadowMapSize);
-
-	glCullFace(GL_BACK);
-
-	ShadowMapEffect::GetInstance().Enable();
-
-	Transformation p = Transformation();
-	p.SetPersProjInfo(&PersProjInfo::GetShadowInstance());
-
-	//To be changed to fit lots o lights
-	Vector3f pos = PointLightShadowEffect::GetInstance().GetPointLightLocation(0);
-	ShadowMapEffect::GetInstance().SetLightWorldPos(pos);
-
-	glClearColor(FLT_MAX, FLT_MAX, FLT_MAX, FLT_MAX);
-
-	for (unsigned int i = 0; i < NUM_OF_LAYERS; i++) {
-		ShadowMapFBO::GetInstance().BindForWriting(gCameraDirections[i].CubemapFace);
-		glClear(GL_DEPTH_BUFFER_BIT | GL_COLOR_BUFFER_BIT);
-
-		p.SetCamera(gCameraDirections[i].Up, pos, gCameraDirections[i].Target);
-
-		for (auto it : *m_objList)
-			it->DrawShadowMap(p);
-	}
+	m_World->Follow(m_player->Position(), Vector3f(32, 18, 0));
+	//m_camera->Update(m_player->Position());//this needs to change LOLOLOLOL
 }
 
 void SceneWorld::RenderPass()
 {
-	//glCullFace(GL_FRONT);
-
-	//glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	//PointLightShadowEffect::GetInstance().Enable();
-	//ShadowMapFBO::GetInstance().BindForReading(SHADOW_TEXTURE_UNIT);
+	static bool drawinited = false;
+	if (!drawinited)
+	{
+		//m_camera->Up = Vector3f(0, 1, 0);
+		//m_World->SetCamera(*m_camera);
+		m_World->SetOrthoProj(&OrthoProjInfo::GetRegularInstance());
+		m_World->SetTranslation(OrthoProjInfo::GetRegularInstance().Left, OrthoProjInfo::GetRegularInstance().Bottom, 0);
+		//m_World->SetRotation(m_camAngle, 0.0f, 0.0f);
 
-	//glViewport(0, 0, glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
+		BasicEffect::GetInstance().Enable();
+		BasicEffect::GetInstance().SetWorldPosition(*m_World->GetWOTrans().m);
+		BlurEffect::GetInstance().Enable();
+		BlurEffect::GetInstance().SetWorldPosition(*m_World->GetWOTrans().m);
+		BloomEffect::GetInstance().Enable();
+		BloomEffect::GetInstance().SetWorldPosition(*m_World->GetWOTrans().m);
+		CombineEffect::GetInstance().Enable();
+		CombineEffect::GetInstance().SetWorldPosition(*m_World->GetWOTrans().m);
+		TransparencyEffect::GetInstance().Enable();
+		TransparencyEffect::GetInstance().SetWorldPosition(*m_World->GetWOTrans().m);
+		drawinited = true;
+	}
 
-	//m_camera->Target = Vector3f(0, 0, 1);
-	//m_camera->Up = Vector3f(0, 1, 0);
-	//m_World->SetCamera(*m_camera);
-	m_World->SetOrthoProj(&OrthoProjInfo::GetRegularInstance());
-	m_World->SetTranslation(OrthoProjInfo::GetRegularInstance().Left, OrthoProjInfo::GetRegularInstance().Bottom, 0);
-	//m_World->SetRotation(m_camAngle, 0.0f, 0.0f);
+	//m_World->SetTranslation(-m_player->Position().x, -m_player->Position().y, 0);
 
-	//PointLightShadowEffect::GetInstance().Move(&m_World->GetWorldTrans());
-	//PointLightShadowEffect::GetInstance().SetWorldPosition(*m_World->GetTrans().m);
-	//PointLightShadowEffect::GetInstance().SetEyeWorldPos(m_camera->Pos);
 	BasicEffect::GetInstance().Enable();
 	BasicEffect::GetInstance().SetWorldPosition(*m_World->GetWOTrans().m);
 
+	if (!m_bloomEffect)
+	{
+		for (auto it : *m_objList)
+			it->Draw();
+	}
+	else
+		//Draw blur
+	{
+		//m_trail.Begin();
+		m_bloom.Begin();
 
-	for (auto it : *m_objList)
-		it->Draw();
+		for (auto it : *m_objList)
+			it->Draw();
+
+		m_bloom.End();
+		//m_trail.End();
+	}
+
+
+
 
 	if (Globals::DEBUG_DRAW_TILE_OUTLINES)
 	{
 		glBegin(GL_LINES);
 		glColor3f(1.0, 0.0, 0.0);
-		for(int x = 1; x < 32; x++)
+		for (int x = 1; x < 32; x++)
 		{
-			glVertex3f(x, 0, -8);
-			glVertex3f(x, 18, -8);
+			glVertex3f((GLfloat)x, (GLfloat)0, (GLfloat)-8);
+			glVertex3f((GLfloat)x, (GLfloat)18, (GLfloat)-8);
 		}
 		for (int y = 1; y < 18; y++)
 		{
-			glVertex3f(0, y, -8);
-			glVertex3f(32, y, -8);
+			glVertex3f((GLfloat)0, (GLfloat)y, (GLfloat)-8);
+			glVertex3f((GLfloat)32, (GLfloat)y, (GLfloat)-8);
 		}
 		glEnd();
 	}

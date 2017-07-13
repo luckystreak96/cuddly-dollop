@@ -22,15 +22,17 @@ class Mesh
 public:
 	Mesh();
 	~Mesh();
-	void AddToMesh(std::vector<Vertex>& verts, std::vector<GLuint>& inds, int biggestIndex, Vector3f pos, std::string tex);
+	void AddToMesh(std::vector<Vertex>& verts, std::vector<GLuint>& inds, int biggestIndex, Vector3f pos, std::string tex, Transformation* t);
 	void Reset();
 	void Finalize(std::string name);
 	std::vector<Vertex> GetMeshVertices();
 	std::vector<GLuint> GetMeshIndices();
+	std::vector<Transformation*> GetMeshModels() { return m_models; };
 private:
 	GLuint m_IBO;
 	GLuint m_VBO;
 	std::vector<GLuint> m_indices;
+	std::vector<Transformation*> m_models;
 	int m_indexProgress;
 	TextureAtlas m_texAtlas;
 	Texture* m_texture;

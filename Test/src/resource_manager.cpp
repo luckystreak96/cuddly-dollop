@@ -36,7 +36,8 @@ void ResourceManager::AddTexture(std::string name, Texture tex)
 
 void ResourceManager::LoadGLTexture(std::string tex)
 {
-	m_textures.at(tex).LoadGL();
+	if (tex != "")
+		m_textures.at(tex).LoadGL();
 }
 
 void ResourceManager::UnloadAllResources()

@@ -92,8 +92,8 @@ bool Effect::Finalize()
 
 	Enable();
 
-	GLuint lol = GetUniformLocation("gColorMap");
-	GLuint lol2 = GetUniformLocation("gShadowMap");
+	GLuint lol = GetUniformLocation("gSampler");
+	GLuint lol2 = GetUniformLocation("gSampler2");
 	glUniform1i(lol, 0);
 	glUniform1i(lol2, 1);
 

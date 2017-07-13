@@ -211,26 +211,26 @@ void Mat4f::InitOrthoProj(OrthoProjInfo o)
 	//m[3][3] = 1;
 }
 
-void Mat4f::SetScale(Vector3f scale)
-{
-	m_scale.x = scale.x;
-	m_scale.y = scale.y;
-	m_scale.z = scale.z;
-}
-
-void Mat4f::SetRotation(Vector3f rotation)
-{
-	m_rotation.x = rotation.x;
-	m_rotation.y = rotation.y;
-	m_rotation.z = rotation.z;
-}
-
-void Mat4f::SetTranslation(Vector3f translation)
-{
-	m_translation.x = translation.x;
-	m_translation.y = translation.y;
-	m_translation.z = translation.z;
-}
+//void Mat4f::SetScale(Vector3f scale)
+//{
+//	m_scale.x = scale.x;
+//	m_scale.y = scale.y;
+//	m_scale.z = scale.z;
+//}
+//
+//void Mat4f::SetRotation(Vector3f rotation)
+//{
+//	m_rotation.x = rotation.x;
+//	m_rotation.y = rotation.y;
+//	m_rotation.z = rotation.z;
+//}
+//
+//void Mat4f::SetTranslation(Vector3f translation)
+//{
+//	m_translation.x = translation.x;
+//	m_translation.y = translation.y;
+//	m_translation.z = translation.z;
+//}
 
 void Mat4f::InitCameraTransform(Vector3f& Target, Vector3f& Up)
 {
