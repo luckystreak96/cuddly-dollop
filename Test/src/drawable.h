@@ -8,7 +8,7 @@
 #include "mathutils.h"
 #include "model.h"
 #include "math.h"
-#include "entity.h"
+#include "entity2.h"
 #include "array2d.h"
 #include "define.h"
 #include "basicEffect.h"
@@ -17,7 +17,7 @@
 #include "resource_manager.h"
 #include "blur_framebuffer.h"
 
-class Drawable : public Entity, public ResourceUser
+class Drawable : public Entity2, public ResourceUser
 {
 public:
 	Drawable(Vector3f pos = Vector3f(0, 0, 0), std::string modelName = "TILE", std::string texPath = std::string("res/test.png"));

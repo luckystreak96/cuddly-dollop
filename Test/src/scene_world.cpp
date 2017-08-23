@@ -7,6 +7,10 @@ SceneWorld::SceneWorld() : m_acceptInput(false)
 
 bool SceneWorld::Init()
 {
+	m_test2 = new Entity();
+	m_test = new GraphicsComponent();
+	m_test->Update();
+
 	//Setup viewport to fit the window size
 	glViewport(0, 0, (GLsizei)(glutGet(GLUT_WINDOW_WIDTH)), (GLsizei)(glutGet(GLUT_WINDOW_HEIGHT)));
 
@@ -47,6 +51,8 @@ bool SceneWorld::Init()
 	m_objList->push_back(m_map);
 	temp.push_back(m_map);
 
+	temp.push_back(m_test);
+
 	//temp.push_back(new Actor(Vector3f(1, 1, 4.0f), "TILE", "res/player.png"));
 
 	//populate clist
@@ -79,6 +85,8 @@ void SceneWorld::LoadAllResources()
 {
 	for (Drawable* x : *m_objList)
 		x->LoadGLResources();
+
+	m_test->LoadGLResources();
 
 	m_resources_loaded = true;
 }
@@ -194,6 +202,8 @@ void SceneWorld::Update()
 	for (auto it : *m_objList)
 		it->Update();
 
+	m_test2->Update();
+
 	std::cout << m_player->GetDirection() << std::endl;
 	//std::cout << m_player->Position().x << ", " << m_player->Position().y << ", " << m_player->Position().z << std::endl;// << ", " << m_clist.at(1)->GetMoveBoundingBox().Get(AABB::Down) << ", " << m_clist.at(1)->GetMoveBoundingBox().Get(AABB::Close) << std::endl;
 
@@ -237,6 +247,10 @@ void SceneWorld::RenderPass()
 	{
 		for (auto it : *m_objList)
 			it->Draw();
+
+		//m_test->Update();
+		//m_test->Draw();
+		m_test2->Draw();
 	}
 	else
 		//Draw blur

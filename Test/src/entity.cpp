@@ -1,40 +1,23 @@
 #include "entity.h"
 
-Vector3f Entity::Velocity()
+Entity::Entity()
 {
-	return m_velocity;
+	m_graphicsComponent = new GraphicsComponent();
+	components.push_back(m_graphicsComponent);
+	//components.push_back(m_physicsComponent);
+	//components.push_back(m_inputComponent);
 }
 
-Vector3f Entity::Position()
+void Entity::Update()
 {
-	return m_pos;
+	m_graphicsComponent->Update();
+	//m_physicsComponent->Update();
+	//m_inputComponent->Update();
 }
 
-void Entity::Move(float elapsedTime)
+void Entity::Draw()
 {
-	m_pos += m_velocity * elapsedTime;
-}
-
-Vector3f Entity::Emulate(float elapsedTime)
-{
-	return m_velocity * elapsedTime;
-}
-
-std::vector<Ent_Props>& Entity::GetProps()
-{
-	return m_props;
-}
-
-void Entity::AddProp(Ent_Props prop)
-{
-	m_props.push_back(prop);
-}
-
-bool Entity::ContainsProp(Ent_Props prop)
-{
-	for (std::vector<Ent_Props>::iterator it = m_props.begin(); it != m_props.end(); it++)
-		if (*it == prop)
-			return true;
-
-	return false;
+	BasicEffect::GetInstance().Enable();
+	BasicEffect::GetInstance().SetModelPosition(&m_graphicsComponent->GetModelMat()->GetWorldTrans().m[0][0]);
+	m_graphicsComponent->Draw();
 }

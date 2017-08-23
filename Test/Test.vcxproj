@@ -177,10 +177,14 @@
     <ClInclude Include="src\effect.h" />
     <ClInclude Include="src\elapsedTime.h" />
     <ClInclude Include="src\entity.h" />
+    <ClInclude Include="src\entity2.h" />
     <ClInclude Include="src\FBO.h" />
     <ClInclude Include="src\game.h" />
     <ClInclude Include="src\gameObjects.h" />
     <ClInclude Include="src\glutBackend.h" />
+    <ClInclude Include="src\graphicsComponent.h" />
+    <ClInclude Include="src\iComponent.h" />
+    <ClInclude Include="src\inputComponent.h" />
     <ClInclude Include="src\input_manager.h" />
     <ClInclude Include="src\key_status.h" />
     <ClInclude Include="src\map.h" />
@@ -190,9 +194,11 @@
     <ClInclude Include="src\mesh.h" />
     <ClInclude Include="src\model.h" />
     <ClInclude Include="src\physics.h" />
+    <ClInclude Include="src\physicsComponent.h" />
     <ClInclude Include="src\physics_2d.h" />
     <ClInclude Include="src\physics_vertex.h" />
     <ClInclude Include="src\actor.h" />
+    <ClInclude Include="src\playerGraphicsComponent.h" />
     <ClInclude Include="src\pointLightEffect.h" />
     <ClInclude Include="src\pointLightShadowEffect.h" />
     <ClInclude Include="src\postProcessingEffect.h" />
@@ -230,9 +236,11 @@
     <ClCompile Include="src\effect.cpp" />
     <ClCompile Include="src\elapsedTime.cpp" />
     <ClCompile Include="src\entity.cpp" />
+    <ClCompile Include="src\entity2.cpp" />
     <ClCompile Include="src\FBO.cpp" />
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\glutBackend.cpp" />
+    <ClCompile Include="src\graphicsComponent.cpp" />
     <ClCompile Include="src\input_manager.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\map.cpp" />
@@ -244,6 +252,7 @@
     <ClCompile Include="src\physics_2d.cpp" />
     <ClCompile Include="src\physics_vertex.cpp" />
     <ClCompile Include="src\actor.cpp" />
+    <ClCompile Include="src\playerGraphicsComponent.cpp" />
     <ClCompile Include="src\pointLightEffect.cpp" />
     <ClCompile Include="src\pointLightShadowEffect.cpp" />
     <ClCompile Include="src\postProcessingEffect.cpp" />

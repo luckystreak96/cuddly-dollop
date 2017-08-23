@@ -23,6 +23,8 @@
 #include "define_gl.h"
 #include "bloom.h"
 #include "trail.h"
+#include "graphicsComponent.h"
+#include "entity.h"
 
 class SceneWorld : public Scene
 {
@@ -46,6 +48,8 @@ public:
 
 private:
 	SceneWorld();
+	GraphicsComponent* m_test = NULL;
+	Entity* m_test2 = NULL;
 	Actor* m_player = NULL;
 	Camera* m_camera = NULL;
 	Map* m_map = NULL;

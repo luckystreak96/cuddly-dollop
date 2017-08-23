@@ -8,7 +8,7 @@
 #include "texture.h"
 #include "model.h"
 #include "math.h"
-#include "entity.h"
+#include "entity2.h"
 #include "array2d.h"
 #include "define.h"
 #include "drawable.h"

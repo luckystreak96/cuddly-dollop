@@ -76,6 +76,18 @@
     <Filter Include="Source Files\Engine\Graphics\PostProcessing">
       <UniqueIdentifier>{29ede967-39e3-484d-a8a3-dd04eaeb458f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Entity-Component">
+      <UniqueIdentifier>{62301216-b67c-4a8a-a05d-f2a922cf8b37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Entity-Component">
+      <UniqueIdentifier>{c32fb240-cab0-44ef-9c06-bfc1a49bed2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Entity-Component\Components">
+      <UniqueIdentifier>{b221ed85-ba3e-4271-8613-22f280c4e2ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Entity-Component\Components">
+      <UniqueIdentifier>{780dac1e-5760-4503-85bb-3d6e6a5be8f9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="TODO.txt" />
@@ -163,9 +175,6 @@
     <ClInclude Include="src\tile.h">
       <Filter>Header Files\Drawables</Filter>
     </ClInclude>
-    <ClInclude Include="src\entity.h">
-      <Filter>Header Files\Drawables</Filter>
-    </ClInclude>
     <ClInclude Include="src\define.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
@@ -247,6 +256,27 @@
     <ClInclude Include="src\postProcessingEffect.h">
       <Filter>Header Files\Effects</Filter>
     </ClInclude>
+    <ClInclude Include="src\entity2.h">
+      <Filter>Header Files\Drawables</Filter>
+    </ClInclude>
+    <ClInclude Include="src\entity.h">
+      <Filter>Header Files\Entity-Component</Filter>
+    </ClInclude>
+    <ClInclude Include="src\iComponent.h">
+      <Filter>Header Files\Entity-Component</Filter>
+    </ClInclude>
+    <ClInclude Include="src\playerGraphicsComponent.h">
+      <Filter>Header Files\Entity-Component\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphicsComponent.h">
+      <Filter>Header Files\Entity-Component</Filter>
+    </ClInclude>
+    <ClInclude Include="src\inputComponent.h">
+      <Filter>Header Files\Entity-Component</Filter>
+    </ClInclude>
+    <ClInclude Include="src\physicsComponent.h">
+      <Filter>Header Files\Entity-Component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -292,9 +322,6 @@
       <Filter>Source Files\Drawables</Filter>
     </ClCompile>
     <ClCompile Include="src\drawable.cpp">
-      <Filter>Source Files\Drawables</Filter>
-    </ClCompile>
-    <ClCompile Include="src\entity.cpp">
       <Filter>Source Files\Drawables</Filter>
     </ClCompile>
     <ClCompile Include="src\texture.cpp">
@@ -386,6 +413,18 @@
     </ClCompile>
     <ClCompile Include="src\postProcessingEffect.cpp">
       <Filter>Source Files\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entity2.cpp">
+      <Filter>Source Files\Drawables</Filter>
+    </ClCompile>
+    <ClCompile Include="src\entity.cpp">
+      <Filter>Source Files\Entity-Component</Filter>
+    </ClCompile>
+    <ClCompile Include="src\playerGraphicsComponent.cpp">
+      <Filter>Source Files\Entity-Component\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\graphicsComponent.cpp">
+      <Filter>Source Files\Entity-Component</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
