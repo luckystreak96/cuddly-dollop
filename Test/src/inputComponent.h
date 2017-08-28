@@ -8,7 +8,7 @@ class InputComponent : public IComponent
 public:
 	void ReceiveMessage(std::string message) {};
 
-	virtual void Update();
+	virtual void Update() {};
 };
 
 #endif

@@ -10,6 +10,21 @@ InputManager::~InputManager()
 	delete m_inputQueue;
 }
 
+void InputManager::SetupFrameKeys()
+{
+	std::list<std::pair<unsigned int, KeyStatus>>* keys = InputManager::GetInstance().GetKeys();
+	std::map<unsigned int, bool>* heldKeys = InputManager::GetInstance().GetHeldKeys();
+
+	keyMap = std::map<std::pair<unsigned int, KeyStatus>, bool>();
+	for (auto a : *keys)
+		keyMap.emplace(a, false);
+}
+
+bool InputManager::FrameKeyStatus(unsigned int key, KeyStatus status)
+{
+	return keyMap.count(std::pair<unsigned int, KeyStatus>(key, status));
+}
+
 std::list<std::pair<unsigned int, KeyStatus>>* InputManager::GetKeys()
 {
 	std::list<std::pair<unsigned int, KeyStatus>>* temp = m_inputQueue;
@@ -24,7 +39,7 @@ std::map<unsigned int, bool>* InputManager::GetHeldKeys()
 
 void InputManager::Input(unsigned int key, bool keydown)
 {
-	if (keydown) 
+	if (keydown)
 	{
 		if (m_inputHold->count(key) != 0)
 			m_inputQueue->push_back(std::pair<unsigned int, KeyStatus>(key, HoldDownPress));

@@ -17,9 +17,6 @@ GraphicsComponent::GraphicsComponent(std::string modelName, std::string texPath)
 
 void GraphicsComponent::Update()
 {
-	if (m_modelName == "NONE")
-		return;
-
 	//m_pos.x += 0.01f;
 	//m_pos.y += 0.01f;
 

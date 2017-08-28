@@ -40,6 +40,7 @@ public:
 	bool UnloadExternalResources();
 	bool LoadGLResources();
 	bool UnloadGLResources();
+	void SetPosition(Vector3f pos) { m_pos = pos; m_modelMat.SetTranslation(pos); };
 	//static inline bool SortFunc(GraphicsComponent* d, GraphicsComponent* d2) { return d->Position().z < d2->Position().z; }
 
 public:

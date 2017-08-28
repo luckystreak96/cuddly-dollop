@@ -4,14 +4,19 @@ Entity::Entity()
 {
 	m_graphicsComponent = new GraphicsComponent();
 	components.push_back(m_graphicsComponent);
-	//components.push_back(m_physicsComponent);
+
+	m_physicsComponent = new PhysicsComponent();
+	components.push_back(m_physicsComponent);
+
 	//components.push_back(m_inputComponent);
 }
 
 void Entity::Update()
 {
+	m_physicsComponent->Update();
+
+	m_graphicsComponent->SetPosition(m_physicsComponent->Position());
 	m_graphicsComponent->Update();
-	//m_physicsComponent->Update();
 	//m_inputComponent->Update();
 }
 

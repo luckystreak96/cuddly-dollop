@@ -277,6 +277,9 @@
     <ClInclude Include="src\physicsComponent.h">
       <Filter>Header Files\Entity-Component</Filter>
     </ClInclude>
+    <ClInclude Include="src\playerInputComponent.h">
+      <Filter>Header Files\Entity-Component\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -425,6 +428,12 @@
     </ClCompile>
     <ClCompile Include="src\graphicsComponent.cpp">
       <Filter>Source Files\Entity-Component</Filter>
+    </ClCompile>
+    <ClCompile Include="src\physicsComponent.cpp">
+      <Filter>Source Files\Entity-Component</Filter>
+    </ClCompile>
+    <ClCompile Include="src\playerInputComponent.cpp">
+      <Filter>Source Files\Entity-Component\Components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

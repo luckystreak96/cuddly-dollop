@@ -14,6 +14,9 @@ public:
 	Entity();
 	void Update();
 	void Draw();
+	PhysicsComponent* Physics() { return m_physicsComponent; }
+	GraphicsComponent* Graphics() { return m_graphicsComponent; }
+	InputComponent* Input() { return m_inputComponent; }
 	std::vector<IComponent*> components;
 private:
 	PhysicsComponent* m_physicsComponent;

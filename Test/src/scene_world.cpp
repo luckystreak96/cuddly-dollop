@@ -8,6 +8,17 @@ SceneWorld::SceneWorld() : m_acceptInput(false)
 bool SceneWorld::Init()
 {
 	m_test2 = new Entity();
+	m_test2->Physics()->SetPosition(Vector3f(0, 0, 1));
+	m_test2->Physics()->AbsolutePosition(Vector3f(0, 0, 1));
+	m_test3 = new Entity();
+	m_test3->Physics()->mustMove = false;
+	m_test3->Physics()->SetPosition(Vector3f(2.5f, 2, 1));
+	m_test3->Physics()->AbsolutePosition(Vector3f(2.5f, 2, 1));
+
+	m_celist = std::vector<Entity*>();
+	m_celist.push_back(m_test2);
+	m_celist.push_back(m_test3);
+
 	m_test = new GraphicsComponent();
 	m_test->Update();
 
@@ -195,16 +206,23 @@ void SceneWorld::Update()
 	for (auto it : *m_objList)
 		it->DesiredMove();
 
+	for (auto it : m_celist)
+		it->Physics()->DesiredMove();
+
 	//Collision
 	Physics_2D::Collision(&m_clist);
+	Physics_2D::Collision(&m_celist);
 
 	//Update
 	for (auto it : *m_objList)
 		it->Update();
 
-	m_test2->Update();
+	for (auto it : m_celist)
+		it->Update();
 
-	std::cout << m_player->GetDirection() << std::endl;
+	//m_test2->Update();
+
+	//std::cout << m_player->GetDirection() << std::endl;
 	//std::cout << m_player->Position().x << ", " << m_player->Position().y << ", " << m_player->Position().z << std::endl;// << ", " << m_clist.at(1)->GetMoveBoundingBox().Get(AABB::Down) << ", " << m_clist.at(1)->GetMoveBoundingBox().Get(AABB::Close) << std::endl;
 
 	m_World->Follow(m_player->Position(), Vector3f(32, 18, 0));
@@ -250,7 +268,9 @@ void SceneWorld::RenderPass()
 
 		//m_test->Update();
 		//m_test->Draw();
-		m_test2->Draw();
+		for (auto it : m_celist)
+			it->Draw();
+		//m_test2->Draw();
 	}
 	else
 		//Draw blur

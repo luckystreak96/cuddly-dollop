@@ -50,12 +50,14 @@ private:
 	SceneWorld();
 	GraphicsComponent* m_test = NULL;
 	Entity* m_test2 = NULL;
+	Entity* m_test3 = NULL;
 	Actor* m_player = NULL;
 	Camera* m_camera = NULL;
 	Map* m_map = NULL;
 	Transformation* m_World = NULL;
 	std::vector<Drawable*>* m_objList = NULL;
 	std::vector<Drawable*> m_clist;//collision list
+	std::vector<Entity*> m_celist;
 	bool m_pause;
 	bool m_resources_loaded;
 	bool m_acceptInput;
