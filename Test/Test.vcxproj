@@ -200,6 +200,7 @@
     <ClInclude Include="src\actor.h" />
     <ClInclude Include="src\playerGraphicsComponent.h" />
     <ClInclude Include="src\playerInputComponent.h" />
+    <ClInclude Include="src\playerPhysicsComponent.h" />
     <ClInclude Include="src\pointLightEffect.h" />
     <ClInclude Include="src\pointLightShadowEffect.h" />
     <ClInclude Include="src\postProcessingEffect.h" />
@@ -256,6 +257,7 @@
     <ClCompile Include="src\actor.cpp" />
     <ClCompile Include="src\playerGraphicsComponent.cpp" />
     <ClCompile Include="src\playerInputComponent.cpp" />
+    <ClCompile Include="src\playerPhysicsComponent.cpp" />
     <ClCompile Include="src\pointLightEffect.cpp" />
     <ClCompile Include="src\pointLightShadowEffect.cpp" />
     <ClCompile Include="src\postProcessingEffect.cpp" />

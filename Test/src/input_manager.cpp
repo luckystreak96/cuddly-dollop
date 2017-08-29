@@ -13,16 +13,19 @@ InputManager::~InputManager()
 void InputManager::SetupFrameKeys()
 {
 	std::list<std::pair<unsigned int, KeyStatus>>* keys = InputManager::GetInstance().GetKeys();
-	std::map<unsigned int, bool>* heldKeys = InputManager::GetInstance().GetHeldKeys();
 
-	keyMap = std::map<std::pair<unsigned int, KeyStatus>, bool>();
+	m_keyMap = std::map<std::pair<unsigned int, KeyStatus>, bool>();
 	for (auto a : *keys)
-		keyMap.emplace(a, false);
+		m_keyMap.emplace(a, false);
 }
 
 bool InputManager::FrameKeyStatus(unsigned int key, KeyStatus status)
 {
-	return keyMap.count(std::pair<unsigned int, KeyStatus>(key, status));
+	if (status == AnyPress)
+		return m_inputHold->count(key) || m_keyMap.count(std::pair<unsigned int, KeyStatus>(key, KeyPressed)) || m_keyMap.count(std::pair<unsigned int, KeyStatus>(key, HoldDownPress));
+	else if (status == AnyRelease)
+		return m_keyMap.count(std::pair<unsigned int, KeyStatus>(key, Release)) || m_keyMap.count(std::pair<unsigned int, KeyStatus>(key, ReleaseLong)) || m_keyMap.count(std::pair<unsigned int, KeyStatus>(key, ReleaseQuick));
+	return m_keyMap.count(std::pair<unsigned int, KeyStatus>(key, status));
 }
 
 std::list<std::pair<unsigned int, KeyStatus>>* InputManager::GetKeys()

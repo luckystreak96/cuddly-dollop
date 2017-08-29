@@ -280,6 +280,9 @@
     <ClInclude Include="src\playerInputComponent.h">
       <Filter>Header Files\Entity-Component\Components</Filter>
     </ClInclude>
+    <ClInclude Include="src\playerPhysicsComponent.h">
+      <Filter>Header Files\Entity-Component\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -433,6 +436,9 @@
       <Filter>Source Files\Entity-Component</Filter>
     </ClCompile>
     <ClCompile Include="src\playerInputComponent.cpp">
+      <Filter>Source Files\Entity-Component\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\playerPhysicsComponent.cpp">
       <Filter>Source Files\Entity-Component\Components</Filter>
     </ClCompile>
   </ItemGroup>

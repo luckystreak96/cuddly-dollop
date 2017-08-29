@@ -5,10 +5,11 @@ Entity::Entity()
 	m_graphicsComponent = new GraphicsComponent();
 	components.push_back(m_graphicsComponent);
 
-	m_physicsComponent = new PhysicsComponent();
+	m_physicsComponent = new PlayerPhysicsComponent();
 	components.push_back(m_physicsComponent);
 
-	//components.push_back(m_inputComponent);
+	m_inputComponent = new PlayerInputComponent(m_physicsComponent, m_graphicsComponent);
+	components.push_back(m_inputComponent);
 }
 
 void Entity::Update()
@@ -17,7 +18,7 @@ void Entity::Update()
 
 	m_graphicsComponent->SetPosition(m_physicsComponent->Position());
 	m_graphicsComponent->Update();
-	//m_inputComponent->Update();
+	m_inputComponent->Update();
 }
 
 void Entity::Draw()

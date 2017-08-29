@@ -78,10 +78,8 @@ void Actor::DesiredMove()
 void Actor::ApplyGravity()
 {
 	//Slow down a bit
-	m_velocity.x *= /*m_was_on_ground ? */0.6f/* : 0.95f*/;
-	m_velocity.y *= /*m_was_on_ground ?*/ 0.6f/* : 0.95f*/;
-	//You aren't a bird
-	//m_velocity.z += m_speed * 8.f * ElapsedTime::GetInstance().GetElapsedTime();
+	m_velocity.x *= 0.6f;
+	m_velocity.y *= 0.6f;
 
 	//Don't go too fast
 	//m_velocity.x = m_velocity.x > m_speed ? m_speed : m_velocity.x;
@@ -94,10 +92,6 @@ void Actor::ApplyGravity()
 	//Too slow = stop
 	m_velocity.x = abs(m_velocity.x) < 0.1f ? 0 : m_velocity.x;
 	m_velocity.y = abs(m_velocity.y) < 0.1f ? 0 : m_velocity.y;
-
-	//Dont leave the world >:P
-	//if (m_pos.z > 3.0f && m_velocity.z >= 0)
-	//	RelativePosition(Vector3f(0, 0, -10));
 
 	//Prepare the move
 	SetMovedBB();

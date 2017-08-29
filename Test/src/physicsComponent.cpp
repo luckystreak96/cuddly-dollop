@@ -3,6 +3,7 @@
 PhysicsComponent::PhysicsComponent(Vector3f pos, std::string modelName)
 {
 	m_pos = pos;
+	m_velocity = Vector3f();
 
 	SetDefaults(modelName);
 }
@@ -18,6 +19,28 @@ void PhysicsComponent::Update()
 		m_velocity.x = 1.0f;
 		m_velocity.y = 1.0f;
 	}
+}
+
+void PhysicsComponent::ApplyGravity()
+{
+	//Slow down a bit
+	m_velocity.x *= 0.6f;
+	m_velocity.y *= 0.6f;
+
+	//Don't go too fast
+	//m_velocity.x = m_velocity.x > m_speed ? m_speed : m_velocity.x;
+	//m_velocity.x = m_velocity.x < -m_speed ? -m_speed : m_velocity.x;
+	//m_velocity.y = m_velocity.y > m_speed ? m_speed : m_velocity.y;
+	//m_velocity.y = m_velocity.y < -m_speed ? -m_speed : m_velocity.y;
+	//m_velocity.z = m_velocity.z > m_speed * 2 ? m_speed * 2 : m_velocity.z;
+	//m_velocity.z = m_velocity.z < -m_speed * 2 ? -m_speed * 2 : m_velocity.z;
+
+	//Too slow = stop
+	m_velocity.x = abs(m_velocity.x) < 0.1f ? 0 : m_velocity.x;
+	m_velocity.y = abs(m_velocity.y) < 0.1f ? 0 : m_velocity.y;
+
+	//Prepare the move
+	SetMovedBB();
 }
 
 void PhysicsComponent::XCollide()
@@ -38,6 +61,8 @@ void PhysicsComponent::Move()
 
 void PhysicsComponent::ActionMove(bool up, bool down, bool left, bool right)
 {
+	//ApplyGravity();
+
 	float speed = 4.0f;
 	if (left)
 		m_velocity.x -= speed;
@@ -47,9 +72,6 @@ void PhysicsComponent::ActionMove(bool up, bool down, bool left, bool right)
 		m_velocity.y += speed;
 	if (down)
 		m_velocity.y -= speed;
-
-	//float hor = abs(m_velocity.x);
-	//float ver = abs(m_velocity.y);
 }
 
 void PhysicsComponent::SetDefaults(std::string name)

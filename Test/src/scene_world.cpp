@@ -112,55 +112,57 @@ void SceneWorld::UnloadAllResources()
 
 void SceneWorld::ManageInput()
 {
-	std::list<std::pair<unsigned int, KeyStatus>>* keys = InputManager::GetInstance().GetKeys();
-	std::map<unsigned int, bool>* heldKeys = InputManager::GetInstance().GetHeldKeys();
+	InputManager::GetInstance().SetupFrameKeys();
 
-	std::map<std::pair<unsigned int, KeyStatus>, bool> keyMap = std::map<std::pair<unsigned int, KeyStatus>, bool>();
-	for (auto a : *keys)
-		keyMap.emplace(a, false);
+	//std::list<std::pair<unsigned int, KeyStatus>>* keys = InputManager::GetInstance().GetKeys();
+	//std::map<unsigned int, bool>* heldKeys = InputManager::GetInstance().GetHeldKeys();
 
-	if (!m_acceptInput)
-		return;
+	//std::map<std::pair<unsigned int, KeyStatus>, bool> keyMap = std::map<std::pair<unsigned int, KeyStatus>, bool>();
+	//for (auto a : *keys)
+	//	keyMap.emplace(a, false);
 
-	if (keyMap.count(std::pair<unsigned int, KeyStatus>('p', KeyPressed)))
-		m_pause = !m_pause;
+	//if (!m_acceptInput)
+	//	return;
 
-	if (keyMap.count(std::pair<unsigned int, KeyStatus>('o', KeyPressed)))
-		m_numFrames++;
+	//if (keyMap.count(std::pair<unsigned int, KeyStatus>('p', KeyPressed)))
+	//	m_pause = !m_pause;
 
-	//Manage MOVE and JUMP here
-	if (m_numFrames > 0 || !m_pause)
-		m_player->Move(
-			heldKeys->count(GLUT_KEY_UP + InputManager::SpecialKeyValue),
-			heldKeys->count(GLUT_KEY_DOWN + InputManager::SpecialKeyValue),
-			heldKeys->count(GLUT_KEY_LEFT + InputManager::SpecialKeyValue),
-			heldKeys->count(GLUT_KEY_RIGHT + InputManager::SpecialKeyValue));
+	//if (keyMap.count(std::pair<unsigned int, KeyStatus>('o', KeyPressed)))
+	//	m_numFrames++;
 
-	if (keyMap.count(std::pair<unsigned int, KeyStatus>(' ', KeyStatus::KeyPressed)))
-		m_player->Jump(false);
-	else if (keyMap.count(std::pair<unsigned int, KeyStatus>(' ', Release)))
-		m_player->Jump(true);
+	////Manage MOVE and JUMP here
+	//if (m_numFrames > 0 || !m_pause)
+	//	m_player->Move(
+	//		heldKeys->count(GLUT_KEY_UP + InputManager::SpecialKeyValue),
+	//		heldKeys->count(GLUT_KEY_DOWN + InputManager::SpecialKeyValue),
+	//		heldKeys->count(GLUT_KEY_LEFT + InputManager::SpecialKeyValue),
+	//		heldKeys->count(GLUT_KEY_RIGHT + InputManager::SpecialKeyValue));
 
-	if (keyMap.count(std::pair<unsigned int, KeyStatus>('b', KeyPressed)))
-		m_bloomEffect = !m_bloomEffect;
+	//if (keyMap.count(std::pair<unsigned int, KeyStatus>(' ', KeyStatus::KeyPressed)))
+	//	m_player->Jump(false);
+	//else if (keyMap.count(std::pair<unsigned int, KeyStatus>(' ', Release)))
+	//	m_player->Jump(true);
 
-	static float bloomint = 0.3f;
-	if (keyMap.count(std::pair<unsigned int, KeyStatus>('u', KeyPressed))) {
-		bloomint += 0.2f;
-		CombineEffect::GetInstance().SetIntensity(bloomint);
-	}
-	if (keyMap.count(std::pair<unsigned int, KeyStatus>('j', KeyPressed))) {
-		bloomint -= 0.2f;
-		CombineEffect::GetInstance().SetIntensity(bloomint);
-	}
+	//if (keyMap.count(std::pair<unsigned int, KeyStatus>('b', KeyPressed)))
+	//	m_bloomEffect = !m_bloomEffect;
 
-	if (heldKeys->count(GLUT_KEY_F5 + InputManager::SpecialKeyValue))
-		m_camAngle += 0.1f;
-	else if (heldKeys->count(GLUT_KEY_F6 + InputManager::SpecialKeyValue))
-		m_camAngle -= 0.1f;
+	//static float bloomint = 0.3f;
+	//if (keyMap.count(std::pair<unsigned int, KeyStatus>('u', KeyPressed))) {
+	//	bloomint += 0.2f;
+	//	CombineEffect::GetInstance().SetIntensity(bloomint);
+	//}
+	//if (keyMap.count(std::pair<unsigned int, KeyStatus>('j', KeyPressed))) {
+	//	bloomint -= 0.2f;
+	//	CombineEffect::GetInstance().SetIntensity(bloomint);
+	//}
 
-	//Free memory here
-	delete keys;
+	//if (heldKeys->count(GLUT_KEY_F5 + InputManager::SpecialKeyValue))
+	//	m_camAngle += 0.1f;
+	//else if (heldKeys->count(GLUT_KEY_F6 + InputManager::SpecialKeyValue))
+	//	m_camAngle -= 0.1f;
+
+	////Free memory here
+	//delete keys;
 }
 
 Scene* SceneWorld::Act()

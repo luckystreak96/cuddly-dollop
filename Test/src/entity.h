@@ -5,8 +5,10 @@
 #include "define.h"
 #include "iComponent.h"
 #include "physicsComponent.h"
+#include "playerPhysicsComponent.h"
 #include "graphicsComponent.h"
 #include "inputComponent.h"
+#include "playerInputComponent.h"
 
 class Entity
 {

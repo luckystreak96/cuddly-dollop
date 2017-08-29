@@ -39,11 +39,12 @@ public:
 	Vector3f Position() { return m_pos; };
 	void SetPosition(Vector3f pos) { m_pos = pos; };
 	Vector3f Velocity() { return m_velocity; };
+	void ApplyGravity();
 	//static inline bool SortFunc(Drawable* d, Drawable* d2) { return d->Position().z < d2->Position().z; }
 
 	bool mustCollide = true;
 	bool mustMove = true;
-private:
+protected:
 	Vector3f m_pos;
 	Vector3f m_velocity;
 	std::vector<GLuint> m_indices;
