@@ -7,20 +7,7 @@ SceneWorld::SceneWorld() : m_acceptInput(false)
 
 bool SceneWorld::Init()
 {
-	m_test2 = new Entity();
-	m_test2->Physics()->SetPosition(Vector3f(0, 0, 1));
-	m_test2->Physics()->AbsolutePosition(Vector3f(0, 0, 1));
-	m_test3 = new Entity();
-	m_test3->Physics()->mustMove = false;
-	m_test3->Physics()->SetPosition(Vector3f(2.5f, 2, 1));
-	m_test3->Physics()->AbsolutePosition(Vector3f(2.5f, 2, 1));
 
-	m_celist = std::vector<Entity*>();
-	m_celist.push_back(m_test2);
-	m_celist.push_back(m_test3);
-
-	m_test = new GraphicsComponent();
-	m_test->Update();
 
 	//Setup viewport to fit the window size
 	glViewport(0, 0, (GLsizei)(glutGet(GLUT_WINDOW_WIDTH)), (GLsizei)(glutGet(GLUT_WINDOW_HEIGHT)));
@@ -39,7 +26,7 @@ bool SceneWorld::Init()
 
 	m_clist = std::vector<Drawable*>();
 	m_player = new Actor(Vector3f(0, 0, 4.0f), "TILE", "res/player.png");
-	m_map = new Map();
+	//m_map = new Map();
 
 	//Lists
 	m_objList = new std::vector<Drawable*>();
@@ -59,10 +46,8 @@ bool SceneWorld::Init()
 
 	m_objList->push_back(m_player);
 	temp.push_back(m_player);
-	m_objList->push_back(m_map);
-	temp.push_back(m_map);
-
-	temp.push_back(m_test);
+	//m_objList->push_back(m_map);
+	//temp.push_back(m_map);
 
 	//temp.push_back(new Actor(Vector3f(1, 1, 4.0f), "TILE", "res/player.png"));
 
@@ -88,6 +73,20 @@ bool SceneWorld::Init()
 	m_pause = false;
 	m_acceptInput = true;
 
+
+	m_mapHandler = new MapHandler();
+
+	m_test2 = new Entity(true);
+	m_test2->Physics()->SetPosition(Vector3f(0, 0, 4.5f));
+	m_test2->Physics()->AbsolutePosition(Vector3f(0, 0, 4.5f));
+	m_test3 = new Entity();
+	m_test3->Physics()->SetPosition(Vector3f(2.5f, 2, 4.5f));
+	m_test3->Physics()->AbsolutePosition(Vector3f(2.5f, 2, 4.5f));
+
+	m_celist = std::vector<Entity*>();
+	m_celist.push_back(m_test2);
+	m_celist.push_back(m_test3);
+
 	return true;
 }
 
@@ -97,7 +96,8 @@ void SceneWorld::LoadAllResources()
 	for (Drawable* x : *m_objList)
 		x->LoadGLResources();
 
-	m_test->LoadGLResources();
+	//m_test->LoadGLResources();
+	//m_mapHandler->Graphics()->LoadGLResources();
 
 	m_resources_loaded = true;
 }
@@ -205,29 +205,31 @@ void SceneWorld::Update()
 {
 	Animation::AnimationCounter((float)ElapsedTime::GetInstance().GetElapsedTime());
 	//DesiredMove
-	for (auto it : *m_objList)
-		it->DesiredMove();
+	//for (auto it : *m_objList)
+	//	it->DesiredMove();
 
 	for (auto it : m_celist)
 		it->Physics()->DesiredMove();
 
 	//Collision
-	Physics_2D::Collision(&m_clist);
-	Physics_2D::Collision(&m_celist);
+	//Physics_2D::Collision(&m_clist);
+	Physics_2D::Collision(&m_celist, m_mapHandler);
 
 	//Update
-	for (auto it : *m_objList)
-		it->Update();
+	//for (auto it : *m_objList)
+	//	it->Update();
 
 	for (auto it : m_celist)
 		it->Update();
 
+	m_mapHandler->Update();
+
 	//m_test2->Update();
 
 	//std::cout << m_player->GetDirection() << std::endl;
-	//std::cout << m_player->Position().x << ", " << m_player->Position().y << ", " << m_player->Position().z << std::endl;// << ", " << m_clist.at(1)->GetMoveBoundingBox().Get(AABB::Down) << ", " << m_clist.at(1)->GetMoveBoundingBox().Get(AABB::Close) << std::endl;
+	std::cout << /*m_player->Position().x << ", " << m_player->Position().y << ", " <<*/ m_test2->Physics()->Position().z << std::endl;// << ", " << m_clist.at(1)->GetMoveBoundingBox().Get(AABB::Down) << ", " << m_clist.at(1)->GetMoveBoundingBox().Get(AABB::Close) << std::endl;
 
-	m_World->Follow(m_player->Position(), Vector3f(32, 18, 0));
+	m_World->Follow(m_test2->Physics()->Position(), Vector3f(32, 18, 0));
 	//m_camera->Update(m_player->Position());//this needs to change LOLOLOLOL
 }
 
@@ -265,11 +267,14 @@ void SceneWorld::RenderPass()
 
 	if (!m_bloomEffect)
 	{
-		for (auto it : *m_objList)
-			it->Draw();
+		//for (auto it : *m_objList)
+		//	it->Draw();
 
 		//m_test->Update();
 		//m_test->Draw();
+
+		m_mapHandler->Draw();
+
 		for (auto it : m_celist)
 			it->Draw();
 		//m_test2->Draw();

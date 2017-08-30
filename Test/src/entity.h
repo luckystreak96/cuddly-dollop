@@ -13,7 +13,7 @@
 class Entity
 {
 public:
-	Entity();
+	Entity(bool playerInput = false);
 	void Update();
 	void Draw();
 	PhysicsComponent* Physics() { return m_physicsComponent; }

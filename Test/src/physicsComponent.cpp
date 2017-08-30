@@ -1,6 +1,6 @@
 #include "physicsComponent.h"
 
-PhysicsComponent::PhysicsComponent(Vector3f pos, std::string modelName)
+PhysicsComponent::PhysicsComponent(Vector3f pos, std::string modelName, Vector3f size, Vector3f numTiles) : m_size(size), m_BBcenter(numTiles)
 {
 	m_pos = pos;
 	m_velocity = Vector3f();
@@ -13,12 +13,7 @@ void PhysicsComponent::Update()
 	if (m_velocity != 0)
 		PhysicsComponent::Move();
 
-	//Remove me, I'm a test!!!
-	if (mustMove)
-	{
-		m_velocity.x = 1.0f;
-		m_velocity.y = 1.0f;
-	}
+	SetMovedBB();
 }
 
 void PhysicsComponent::ApplyGravity()
@@ -162,9 +157,9 @@ std::string PhysicsComponent::GetName()
 void PhysicsComponent::SetBoundingBox()
 {
 
-	if (m_size != -1 && m_normalSize != -1)
+	if (m_size != -1 && m_BBcenter != -1)
 	{
-		SetBoundingBoxSize(m_size, m_normalSize);
+		SetBoundingBoxSize(m_size, m_BBcenter);
 	}
 	else
 	{

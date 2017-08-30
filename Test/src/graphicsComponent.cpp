@@ -7,10 +7,29 @@ void GraphicsComponent::ReceiveMessage(std::string msg)
 
 GraphicsComponent::GraphicsComponent(std::string modelName, std::string texPath) : m_texture(texPath)
 {
-	m_pos = Vector3f(2.0f, 2.0f, 3.0f);
+	m_pos = Vector3f(2.0f, 2.0f, 5.0f);
 	m_modelMat.SetTranslation(m_pos);
 
 	SetDefaults(modelName);
+	LoadExternalResources();
+	LoadGLResources();
+}
+
+GraphicsComponent::GraphicsComponent(std::vector<Vertex> verts, std::vector<GLuint> inds, std::string texPath) : m_texture(texPath)
+{
+	m_pos = Vector3f(2.0f, 2.0f, 5.0f);
+	m_modelMat.SetTranslation(m_pos);
+
+	m_IBO = 0;
+	m_VBO = 0;
+
+	m_vertices = std::vector<Vertex>(verts);
+	m_indices = std::vector<GLuint>(inds);
+
+	MathUtils::CalcNormals(m_indices, m_vertices);
+
+	m_originalVertices = std::vector<Vertex>(m_vertices);
+
 	LoadExternalResources();
 	LoadGLResources();
 }
@@ -22,8 +41,8 @@ void GraphicsComponent::Update()
 
 	m_modelMat.SetTranslation(m_pos);
 
-	m_models = std::vector<Vector3f>();
-	m_models.insert(m_models.end(), 4, m_pos);
+	m_models = new std::vector<Vector3f>();
+	m_models->insert(m_models->end(), 4, m_pos);
 
 	//Might not be ideal to have this here
 	BasicEffect::GetInstance().Enable();
@@ -53,7 +72,7 @@ bool GraphicsComponent::UnloadExternalResources()
 
 bool GraphicsComponent::LoadGLResources()
 {
-	if (m_modelName == "NONE")
+	if (m_modelName == "NONE" && m_vertices.size() <= 0)
 	{
 		m_GL_loaded = false;
 		return false;
@@ -80,7 +99,7 @@ bool GraphicsComponent::UnloadGLResources()
 
 void GraphicsComponent::Draw()
 {
-	if (!m_external_loaded || !m_GL_loaded || !mustDraw || m_modelName == "NONE")
+	if (!m_external_loaded || !m_GL_loaded || !mustDraw || (m_modelName == "NONE" && m_vertices.size() <= 0))
 		return;
 
 	for (int i = 0; i < 6; i++)//0 to 5
@@ -96,7 +115,7 @@ void GraphicsComponent::Draw()
 	ResourceManager::GetInstance().GetTexture(m_texture)->Bind(GL_TEXTURE0);
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_MBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(Vector3f) * m_models.size(), &m_models[0], GL_DYNAMIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(Vector3f) * m_models->size(), &m_models->at(0), GL_DYNAMIC_DRAW);
 	glVertexAttribPointer(5, 3, GL_FLOAT, GL_FALSE, sizeof(Vector3f), 0);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO);
@@ -136,7 +155,7 @@ void GraphicsComponent::DrawNoTexture()
 																										//ResourceManager::GetInstance().GetTexture(m_texture)->Bind(GL_TEXTURE0);
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_MBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(Vector3f) * m_models.size(), &m_models[0], GL_DYNAMIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(Vector3f) * m_models->size(), m_models, GL_DYNAMIC_DRAW);
 	glVertexAttribPointer(5, 3, GL_FLOAT, GL_FALSE, sizeof(Vector3f), 0);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO);
@@ -210,7 +229,6 @@ void GraphicsComponent::SetDefaults(std::string name)
 				Vector2f(x * 2 < tex.size() ? tex[x * 2] : 0, x * 2 + 1 < tex.size() ? tex[x * 2 + 1] : 0)));
 	}
 
-	m_vertices = std::vector<Vertex>(m_originalVertices);
 
 	{
 		std::vector<GLuint> indices = Model::GetInstance().getIndices();
@@ -222,7 +240,8 @@ void GraphicsComponent::SetDefaults(std::string name)
 			m_indices.push_back(i);
 	}
 
-	MathUtils::CalcNormals(m_indices, m_vertices);
+	MathUtils::CalcNormals(m_indices, m_originalVertices);
+	m_vertices = std::vector<Vertex>(m_originalVertices);
 
 	//SetBoundingBox();
 }

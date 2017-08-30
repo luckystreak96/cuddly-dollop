@@ -4,7 +4,7 @@ Actor::Actor(Vector3f position, std::string modelName, std::string texPath) : Dr
 {
 	m_modelMat.SetScale(1, 1, 1);
 	m_size = Vector3f(0.9f, 0.4f, -0.45f);
-	m_normalSize = Vector3f(1, 0, 0);
+	m_normalSize = Vector3f(2, 0, 0);
 	SetBoundingBox();
 	SetProperties();
 }

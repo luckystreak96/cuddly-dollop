@@ -6,6 +6,7 @@
 class PlayerPhysicsComponent : public PhysicsComponent
 {
 public:
+	using PhysicsComponent::PhysicsComponent;
 	void Update();
 };
 

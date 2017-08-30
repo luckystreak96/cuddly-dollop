@@ -163,9 +163,6 @@
     <ClInclude Include="src\glutBackend.h">
       <Filter>Header Files\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="src\gameObjects.h">
-      <Filter>Header Files\Drawables</Filter>
-    </ClInclude>
     <ClInclude Include="src\drawable.h">
       <Filter>Header Files\Drawables</Filter>
     </ClInclude>
@@ -282,6 +279,12 @@
     </ClInclude>
     <ClInclude Include="src\playerPhysicsComponent.h">
       <Filter>Header Files\Entity-Component\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\map_tile.h">
+      <Filter>Header Files\Drawables</Filter>
+    </ClInclude>
+    <ClInclude Include="src\map_handler.h">
+      <Filter>Header Files\Drawables</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -440,6 +443,12 @@
     </ClCompile>
     <ClCompile Include="src\playerPhysicsComponent.cpp">
       <Filter>Source Files\Entity-Component\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\map_tile.cpp">
+      <Filter>Source Files\Drawables</Filter>
+    </ClCompile>
+    <ClCompile Include="src\map_handler.cpp">
+      <Filter>Source Files\Drawables</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

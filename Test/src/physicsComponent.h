@@ -12,7 +12,7 @@
 class PhysicsComponent : public IComponent
 {
 public:
-	PhysicsComponent(Vector3f pos = Vector3f(), std::string modelName = "TILE");
+	PhysicsComponent(Vector3f pos = Vector3f(), std::string modelName = "TILE", Vector3f size = Vector3f(), Vector3f numTilesSize = Vector3f(-1, -1, -1));
 	void ReceiveMessage(std::string message) {};
 	virtual void Update();
 	void SetDefaults(std::string name = "TILE");//cancer
@@ -43,7 +43,6 @@ public:
 	//static inline bool SortFunc(Drawable* d, Drawable* d2) { return d->Position().z < d2->Position().z; }
 
 	bool mustCollide = true;
-	bool mustMove = true;
 protected:
 	Vector3f m_pos;
 	Vector3f m_velocity;
@@ -53,7 +52,7 @@ protected:
 	std::vector<Vertex> m_originalVertices;
 	std::vector<Vector3f> m_models;
 	Vector3f m_size = Vector3f(-1, -1, -1);
-	Vector3f m_normalSize = Vector3f(-1, -1, -1);;
+	Vector3f m_BBcenter = Vector3f(-1, -1, -1);;
 	//Texture m_texture;
 	std::string m_texture;
 	std::string m_modelName = "NONE"; //cancer

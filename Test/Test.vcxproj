@@ -180,7 +180,6 @@
     <ClInclude Include="src\entity2.h" />
     <ClInclude Include="src\FBO.h" />
     <ClInclude Include="src\game.h" />
-    <ClInclude Include="src\gameObjects.h" />
     <ClInclude Include="src\glutBackend.h" />
     <ClInclude Include="src\graphicsComponent.h" />
     <ClInclude Include="src\iComponent.h" />
@@ -188,6 +187,8 @@
     <ClInclude Include="src\input_manager.h" />
     <ClInclude Include="src\key_status.h" />
     <ClInclude Include="src\map.h" />
+    <ClInclude Include="src\map_handler.h" />
+    <ClInclude Include="src\map_tile.h" />
     <ClInclude Include="src\mat4f.h" />
     <ClInclude Include="src\math.h" />
     <ClInclude Include="src\mathutils.h" />
@@ -246,6 +247,8 @@
     <ClCompile Include="src\input_manager.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\map.cpp" />
+    <ClCompile Include="src\map_handler.cpp" />
+    <ClCompile Include="src\map_tile.cpp" />
     <ClCompile Include="src\mat4f.cpp" />
     <ClCompile Include="src\mathutils.cpp" />
     <ClCompile Include="src\mesh.cpp" />

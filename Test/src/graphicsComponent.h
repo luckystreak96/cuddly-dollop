@@ -21,7 +21,8 @@ class GraphicsComponent : public IComponent, public ResourceUser
 public:
 	void ReceiveMessage(std::string msg);
 
-	GraphicsComponent(std::string modelName = "TILE", std::string texPath = std::string("res/test.png"));
+	GraphicsComponent(std::string modelName = "TILE", std::string texPath = std::string("res/mushroom.png"));
+	GraphicsComponent(std::vector<Vertex> verts, std::vector<GLuint> inds, std::string texPath = std::string("res/mushroom.png"));
 	void SetDefaults(std::string name = "TILE");
 	std::string GetName();
 	Transformation* GetModelMat() { return &m_modelMat; };
@@ -32,6 +33,7 @@ public:
 	std::vector<Vertex> GetTranslatedVertices();
 	std::vector<GLuint> GetIndices();
 	std::string GetTexture();
+	std::vector<Vector3f>* GetModels() { if (m_models == NULL) m_models = new std::vector<Vector3f>(); return m_models; }
 	int GetHighestIndex();
 	void SetBuffers();
 	void ResetVBO();
@@ -50,13 +52,13 @@ protected:
 	GLuint m_mlMatLoc;
 	GLuint m_IBO;
 	GLuint m_VBO;
-	GLuint m_MBO;
+	GLuint m_MBO = 0;
 	int m_MBO_instances = 1;
 	std::vector<GLuint> m_indices;
 	std::vector<Vertex> m_vertices;
 	std::vector<Vertex> m_translatedVertices;
 	std::vector<Vertex> m_originalVertices;
-	std::vector<Vector3f> m_models;
+	std::vector<Vector3f>* m_models = NULL;
 	Vector3f m_size = Vector3f(-1, -1, -1);
 	Vector3f m_normalSize = Vector3f(-1, -1, -1);
 	Vector3f m_pos = Vector3f();

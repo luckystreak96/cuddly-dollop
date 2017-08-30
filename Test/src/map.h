@@ -9,7 +9,8 @@
 #include "model.h"
 #include "array3d.h"
 #include "math.h"
-#include "gameObjects.h"
+#include "tile.h"
+#include "actor.h"
 #include "mesh.h"
 #include <vector>
 
