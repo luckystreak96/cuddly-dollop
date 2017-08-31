@@ -80,8 +80,8 @@ bool SceneWorld::Init()
 	m_test2->Physics()->SetPosition(Vector3f(0, 0, 4.5f));
 	m_test2->Physics()->AbsolutePosition(Vector3f(0, 0, 4.5f));
 	m_test3 = new Entity();
-	m_test3->Physics()->SetPosition(Vector3f(2.5f, 2, 4.5f));
-	m_test3->Physics()->AbsolutePosition(Vector3f(2.5f, 2, 4.5f));
+	m_test3->Physics()->SetPosition(Vector3f(2.f, 2.5f, 4.5f));
+	m_test3->Physics()->AbsolutePosition(Vector3f(2.5f, 2.5f, 4.5f));
 
 	m_celist = std::vector<Entity*>();
 	m_celist.push_back(m_test2);
