@@ -35,8 +35,8 @@ public:
 	void MoveBB(Vector3f distance);
 	void SetBoundingBox();
 	void Drawable::SetBoundingBoxSize(Vector3f size, Vector3f numSquare = Vector3f(1, 1, 1));
-	Array2d<float> GetBoundingBox();
-	Array2d<float> GetMoveBoundingBox();
+	std::array<float, 6> GetBoundingBox();
+	std::array<float, 6> GetMoveBoundingBox();
 	Vector3f BBSize();
 	void RelativePosition(Vector3f movementPos);
 	void AbsolutePosition(Vector3f absolutePos, Vector3f useAxis = Vector3f(1, 1, 1));
@@ -92,8 +92,8 @@ protected:
 	bool m_GL_loaded = false;
 	Transformation m_modelMat = Transformation();
 	Vector3f m_rot = Vector3f(0, 0, 0);
-	Array2d<float> m_boundingBox = Array2d<float>(6, 1);
-	Array2d<float> m_moveBoundingBox = Array2d<float>(6, 1);
+	std::array<float, 6> m_boundingBox = std::array<float, 6>();
+	std::array<float, 6> m_moveBoundingBox = std::array<float, 6>();
 };
 
 #endif

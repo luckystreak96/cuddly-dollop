@@ -3,9 +3,15 @@
 
 #include "iComponent.h"
 #include "graphicsComponent.h"
+#include "animation.h"
+#include <string>
 
-class PlayerGraphicsComponent : public GraphicsComponent
+class PlayerGraphicsComponent : public GraphicsComponent, public Animation
 {
+public:
+	PlayerGraphicsComponent(std::string tex = "res/player.png", std::string model = "TILE");
+	void Update();
+private:
 };
 
 #endif

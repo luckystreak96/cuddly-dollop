@@ -88,6 +88,9 @@
     <Filter Include="Source Files\Entity-Component\Components">
       <UniqueIdentifier>{780dac1e-5760-4503-85bb-3d6e6a5be8f9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Map">
+      <UniqueIdentifier>{a639ed71-6675-4a88-9951-8acbecd2271e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="TODO.txt" />
@@ -241,9 +244,6 @@
     <ClInclude Include="src\bloom.h">
       <Filter>Header Files\Engine\Graphics\PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="src\post_processing_screen.h">
-      <Filter>Header Files\Drawables</Filter>
-    </ClInclude>
     <ClInclude Include="src\trail.h">
       <Filter>Header Files\Engine\Graphics\PostProcessing</Filter>
     </ClInclude>
@@ -281,10 +281,13 @@
       <Filter>Header Files\Entity-Component\Components</Filter>
     </ClInclude>
     <ClInclude Include="src\map_tile.h">
-      <Filter>Header Files\Drawables</Filter>
+      <Filter>Header Files\Map</Filter>
     </ClInclude>
     <ClInclude Include="src\map_handler.h">
-      <Filter>Header Files\Drawables</Filter>
+      <Filter>Header Files\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="src\post_processing_screen.h">
+      <Filter>Header Files\Engine\Graphics\PostProcessing</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -346,9 +349,6 @@
       <Filter>Source Files\Engine\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="src\mat4f.cpp">
-      <Filter>Source Files\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="src\physics.cpp">
       <Filter>Source Files\Math</Filter>
     </ClCompile>
     <ClCompile Include="src\mathutils.cpp">
@@ -449,6 +449,9 @@
     </ClCompile>
     <ClCompile Include="src\map_handler.cpp">
       <Filter>Source Files\Drawables</Filter>
+    </ClCompile>
+    <ClCompile Include="src\physics.cpp">
+      <Filter>Source Files\Engine\Physics</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

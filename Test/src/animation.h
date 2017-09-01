@@ -5,12 +5,15 @@
 #include "vertex.h"
 #include <time.h>
 
+enum Direction { dir_Up, dir_Right, dir_Down, dir_Left };
+
 class Animation
 {
 public:
 	Animation();
 	static void AnimationCounter(float et);
 	bool SetTileModelTC(std::vector<Vertex>* verts, bool forceUpdate = false);
+	Direction GetDirection() { return m_direction; }
 protected:
 	//ElapsedTime progress
 	static int m_progress;
@@ -28,6 +31,7 @@ protected:
 	//The total image size
 	int m_width = 2;
 	int m_height = 4;
+	Direction m_direction = dir_Down;
 };
 
 #endif

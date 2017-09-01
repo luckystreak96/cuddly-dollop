@@ -40,6 +40,7 @@ public:
 	Scene* Act();
 	void Draw();
 	void Update();
+	void Interact();
 	void LoadAllResources();
 	void UnloadAllResources();
 	void ManageInput();
@@ -49,15 +50,12 @@ public:
 
 private:
 	SceneWorld();
-	Entity* m_test2 = NULL;
 	Entity* m_test3 = NULL;
-	Actor* m_player = NULL;
+	Entity* m_player = NULL;
 	Camera* m_camera = NULL;
 	//Map* m_map = NULL;
 	MapHandler* m_mapHandler = NULL;
 	Transformation* m_World = NULL;
-	std::vector<Drawable*>* m_objList = NULL;
-	std::vector<Drawable*> m_clist;//collision list
 	std::vector<Entity*> m_celist;
 	bool m_pause;
 	bool m_resources_loaded;

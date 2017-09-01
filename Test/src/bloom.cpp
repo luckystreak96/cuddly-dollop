@@ -3,7 +3,9 @@
 Bloom::Bloom() : m_width(1), m_height(1)
 {
 	CombineEffect::GetInstance().SetIntensity(0.9f);
-	pps.LoadGLResources();
+	pps.GetModelMat()->SetTranslation(0, 0, 0);
+	pps.Update();
+	//pps.LoadGLResources();
 }
 
 void Bloom::Begin()
@@ -20,8 +22,6 @@ void Bloom::Begin()
 	}
 
 	//Setup the tile to draw
-	pps.Update();
-	pps.GetModelMat()->SetTranslation(0, 0, 0);
 
 	//FBO
 	m_fbo.bindFrameBuffer();
@@ -46,7 +46,7 @@ void Bloom::End()
 
 	BloomEffect::GetInstance().Enable();
 	BloomEffect::GetInstance().SetModelPosition(&pps.GetModelMat()->GetWorldTrans().m[0][0]);
-	pps.DrawNoTexture();
+	pps.Draw(false);
 
 	m_bloom.unbindFrameBuffer();
 
@@ -63,7 +63,7 @@ void Bloom::End()
 	glBindTexture(GL_TEXTURE_2D, m_bloom.getColourTexture());
 	BlurEffect::GetInstance().Enable();
 	BlurEffect::GetInstance().SetModelPosition(&pps.GetModelMat()->GetWorldTrans().m[0][0]);
-	pps.DrawNoTexture();
+	pps.Draw(false);
 
 	m_gaussH.unbindFrameBuffer();
 
@@ -77,7 +77,7 @@ void Bloom::End()
 
 	glBindTexture(GL_TEXTURE_2D, m_gaussH.getColourTexture());
 	BlurEffect::GetInstance().SetHorizontalBlur(false);
-	pps.DrawNoTexture();
+	pps.Draw(false);
 
 	m_gaussV.unbindFrameBuffer();
 
@@ -91,7 +91,7 @@ void Bloom::End()
 
 	glBindTexture(GL_TEXTURE_2D, m_gaussV.getColourTexture());
 	BlurEffect::GetInstance().SetHorizontalBlur(true);
-	pps.DrawNoTexture();
+	pps.Draw(false);
 
 	m_gaussH.unbindFrameBuffer();
 
@@ -102,7 +102,7 @@ void Bloom::End()
 
 	glBindTexture(GL_TEXTURE_2D, m_gaussH.getColourTexture());
 	BlurEffect::GetInstance().SetHorizontalBlur(false);
-	pps.DrawNoTexture();
+	pps.Draw(false);
 
 	m_gaussV.unbindFrameBuffer();
 
@@ -118,7 +118,7 @@ void Bloom::End()
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, m_fbo.getColourTexture());
 
-	pps.DrawNoTexture();
+	pps.Draw(false);
 }
 
 void Bloom::ResetTextureSizes()

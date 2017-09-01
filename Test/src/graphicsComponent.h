@@ -21,13 +21,13 @@ class GraphicsComponent : public IComponent, public ResourceUser
 public:
 	void ReceiveMessage(std::string msg);
 
+	void Construct();
 	GraphicsComponent(std::string modelName = "TILE", std::string texPath = std::string("res/mushroom.png"));
 	GraphicsComponent(std::vector<Vertex> verts, std::vector<GLuint> inds, std::string texPath = std::string("res/mushroom.png"));
 	void SetDefaults(std::string name = "TILE");
 	std::string GetName();
 	Transformation* GetModelMat() { return &m_modelMat; };
-	void GraphicsComponent::DrawNoTexture();
-	virtual void Draw();
+	virtual void Draw(bool withTex = true);
 	virtual void Update();//Needs pos from physics component
 	std::vector<Vertex> GetVertices();
 	std::vector<Vertex> GetTranslatedVertices();
@@ -42,7 +42,7 @@ public:
 	bool UnloadExternalResources();
 	bool LoadGLResources();
 	bool UnloadGLResources();
-	void SetPosition(Vector3f pos) { m_pos = pos; m_modelMat.SetTranslation(pos); };
+	void SetPhysics(Vector3f pos, Vector3f vel) { m_pos = pos; m_vel = vel; m_modelMat.SetTranslation(pos); };
 	//static inline bool SortFunc(GraphicsComponent* d, GraphicsComponent* d2) { return d->Position().z < d2->Position().z; }
 
 public:
@@ -63,10 +63,11 @@ protected:
 	Vector3f m_normalSize = Vector3f(-1, -1, -1);
 	Vector3f m_pos = Vector3f();
 	std::string m_texture;
-	std::string m_modelName = "NONE"; //cancer
+	std::string m_modelName; //cancer
 	bool m_external_loaded = false;
 	bool m_GL_loaded = false;
 	Transformation m_modelMat = Transformation();
+	Vector3f m_vel = Vector3f();
 	Vector3f m_rot = Vector3f(0, 0, 0);
 };
 

@@ -8,6 +8,7 @@
 #include "array2d.h"
 #include "model.h"
 #include "elapsedTime.h"
+#include <array>
 
 class PhysicsComponent : public IComponent
 {
@@ -22,8 +23,8 @@ public:
 	void MoveBB(Vector3f distance);
 	void SetBoundingBox();
 	void SetBoundingBoxSize(Vector3f size, Vector3f numSquare = Vector3f(1, 1, 1));
-	Array2d<float> GetBoundingBox();
-	Array2d<float> GetMoveBoundingBox();
+	std::array<float, 6> GetBoundingBox();
+	std::array<float, 6> GetMoveBoundingBox();
 	Vector3f BBSize();
 	void RelativePosition(Vector3f movementPos);
 	void AbsolutePosition(Vector3f absolutePos, Vector3f useAxis = Vector3f(1, 1, 1));
@@ -37,6 +38,7 @@ public:
 	void SetMovedBB();
 	void SetTranslatedVertices();
 	Vector3f Position() { return m_pos; };
+	Vector3f GetCenter() { return m_pos + (m_size / 2); }
 	void SetPosition(Vector3f pos) { m_pos = pos; };
 	Vector3f Velocity() { return m_velocity; };
 	void ApplyGravity();
@@ -57,8 +59,10 @@ protected:
 	std::string m_texture;
 	std::string m_modelName = "NONE"; //cancer
 	Vector3f m_rot = Vector3f(0, 0, 0);
-	Array2d<float> m_boundingBox = Array2d<float>(6, 1);
-	Array2d<float> m_moveBoundingBox = Array2d<float>(6, 1);
+	std::array<float, 6> m_boundingBox = std::array<float, 6>();
+	std::array<float, 6> m_moveBoundingBox = std::array<float, 6>();
+	//Array2d<float> m_boundingBox = Array2d<float>(6, 1);
+	//Array2d<float> m_moveBoundingBox = Array2d<float>(6, 1);
 };
 
 #endif

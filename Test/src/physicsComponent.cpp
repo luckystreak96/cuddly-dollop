@@ -128,24 +128,24 @@ std::vector<Vertex> PhysicsComponent::GetTranslatedVertices()
 //Create the destination BB for collision testing
 void PhysicsComponent::SetMovedBB()
 {
-	m_moveBoundingBox.Copy(m_boundingBox);
-	m_moveBoundingBox.Add(AABB::Right, 0, m_velocity.x * (float)ElapsedTime::GetInstance().GetElapsedTime());
-	m_moveBoundingBox.Add(AABB::Left, 0, m_velocity.x * (float)ElapsedTime::GetInstance().GetElapsedTime());
-	m_moveBoundingBox.Add(AABB::Up, 0, m_velocity.y * (float)ElapsedTime::GetInstance().GetElapsedTime());
-	m_moveBoundingBox.Add(AABB::Down, 0, m_velocity.y * (float)ElapsedTime::GetInstance().GetElapsedTime());
+	m_moveBoundingBox = std::array<float, 6>(m_boundingBox);
+	m_moveBoundingBox[Right] += m_velocity.x * (float)ElapsedTime::GetInstance().GetElapsedTime();
+	m_moveBoundingBox[Left] += m_velocity.x * (float)ElapsedTime::GetInstance().GetElapsedTime();
+	m_moveBoundingBox[Up] += m_velocity.y * (float)ElapsedTime::GetInstance().GetElapsedTime();
+	m_moveBoundingBox[Down] += m_velocity.y * (float)ElapsedTime::GetInstance().GetElapsedTime();
 }
 
 
-Array2d<float> PhysicsComponent::GetMoveBoundingBox()
+std::array<float, 6> PhysicsComponent::GetMoveBoundingBox()
 {
 	return m_moveBoundingBox;
 }
 
 Vector3f PhysicsComponent::BBSize()
 {
-	float w = m_boundingBox.Get(Right, 0) - m_boundingBox.Get(Left, 0);
-	float h = m_boundingBox.Get(Up, 0) - m_boundingBox.Get(Down, 0);
-	float d = m_boundingBox.Get(Far, 0) - m_boundingBox.Get(Close, 0);
+	float w = m_boundingBox[Right] - m_boundingBox[Left];
+	float h = m_boundingBox[Up] - m_boundingBox[Down];
+	float d = m_boundingBox[Far] - m_boundingBox[Close];
 	return Vector3f(w, h, d);
 }
 
@@ -163,33 +163,33 @@ void PhysicsComponent::SetBoundingBox()
 	}
 	else
 	{
-		m_boundingBox.Set(AABB::Right, 0, m_vertices[0].vertex.x);
-		m_boundingBox.Set(AABB::Left, 0, m_vertices[0].vertex.x);
-		m_boundingBox.Set(AABB::Up, 0, m_vertices[0].vertex.y);
-		m_boundingBox.Set(AABB::Down, 0, m_vertices[0].vertex.y);
-		m_boundingBox.Set(AABB::Close, 0, m_vertices[0].vertex.z);
-		m_boundingBox.Set(AABB::Far, 0, m_vertices[0].vertex.z);
+		m_boundingBox[Right] = m_vertices[0].vertex.x;
+		m_boundingBox[Left] = m_vertices[0].vertex.x;
+		m_boundingBox[Up] = m_vertices[0].vertex.y;
+		m_boundingBox[Down] = m_vertices[0].vertex.y;
+		m_boundingBox[Close] = m_vertices[0].vertex.z;
+		m_boundingBox[Far] = m_vertices[0].vertex.z;
 
 		for (auto v : m_vertices)
 		{
 			//Right
-			if (v.vertex.x > m_boundingBox.Get(AABB::Right, 0))
-				m_boundingBox.Set(AABB::Right, 0, v.vertex.x);
+			if (v.vertex.x > m_boundingBox[Right])
+				m_boundingBox[Right] = v.vertex.x;
 			//Left
-			else if (v.vertex.x < m_boundingBox.Get(AABB::Left, 0))
-				m_boundingBox.Set(AABB::Left, 0, v.vertex.x);
+			else if (v.vertex.x < m_boundingBox[Left])
+				m_boundingBox[Left] = v.vertex.x;
 			//Up
-			if (v.vertex.y > m_boundingBox.Get(AABB::Up, 0))
-				m_boundingBox.Set(AABB::Up, 0, v.vertex.y);
+			if (v.vertex.y > m_boundingBox[Up])
+				m_boundingBox[Up] = v.vertex.y;
 			//Down
-			else if (v.vertex.y < m_boundingBox.Get(AABB::Down, 0))
-				m_boundingBox.Set(AABB::Down, 0, v.vertex.y);
+			else if (v.vertex.y < m_boundingBox[Down])
+				m_boundingBox[Down] = v.vertex.y;
 			//Away
-			if (v.vertex.z > m_boundingBox.Get(AABB::Far, 0))
-				m_boundingBox.Set(AABB::Far, 0, v.vertex.z);
+			if (v.vertex.z > m_boundingBox[Far])
+				m_boundingBox[Far] = v.vertex.z;
 			//Close
-			else if (v.vertex.z < m_boundingBox.Get(AABB::Close, 0))
-				m_boundingBox.Set(AABB::Close, 0, v.vertex.z);
+			else if (v.vertex.z < m_boundingBox[Close])
+				m_boundingBox[Close] = v.vertex.z;
 		}
 		MoveBB(m_pos);
 	}
@@ -206,36 +206,36 @@ void PhysicsComponent::SetBoundingBoxSize(Vector3f size, Vector3f numSquares)
 
 	if (size.x >= 0)
 	{
-		m_boundingBox.Set(AABB::Left, 0, m_vertices[0].vertex.x + sideX);
-		m_boundingBox.Set(AABB::Right, 0, size.x + sideX);
+		m_boundingBox[Left] = m_vertices[0].vertex.x + sideX;
+		m_boundingBox[Right] = size.x + sideX;
 	}
 	else
 	{
-		m_boundingBox.Set(AABB::Right, 0, m_vertices[0].vertex.x + sideX);
-		m_boundingBox.Set(AABB::Left, 0, size.x + sideX);
+		m_boundingBox[Right] = m_vertices[0].vertex.x + sideX;
+		m_boundingBox[Left] = size.x + sideX;
 	}
 
 	//The close z-value is the one closest to infinity, so its the bottom of the object
 	if (size.z >= 0)
 	{
-		m_boundingBox.Set(AABB::Close, 0, m_vertices[0].vertex.z + sideZ);
-		m_boundingBox.Set(AABB::Far, 0, size.z + sideZ);
+		m_boundingBox[Close] = m_vertices[0].vertex.z + sideZ;
+		m_boundingBox[Far] = size.z + sideZ;
 	}
 	else
 	{
-		m_boundingBox.Set(AABB::Far, 0, m_vertices[0].vertex.z + sideZ);
-		m_boundingBox.Set(AABB::Close, 0, size.z + sideZ);
+		m_boundingBox[Far] = m_vertices[0].vertex.z + sideZ;
+		m_boundingBox[Close] = size.z + sideZ;
 	}
 
 	if (size.y >= 0)
 	{
-		m_boundingBox.Set(AABB::Down, 0, m_vertices[0].vertex.y + sideY);
-		m_boundingBox.Set(AABB::Up, 0, size.y + sideY);
+		m_boundingBox[Down] = m_vertices[0].vertex.y + sideY;
+		m_boundingBox[Up] = size.y + sideY;
 	}
 	else
 	{
-		m_boundingBox.Set(AABB::Up, 0, m_vertices[0].vertex.y + sideY);
-		m_boundingBox.Set(AABB::Down, 0, size.y + sideY);
+		m_boundingBox[Up] = m_vertices[0].vertex.y + sideY;
+		m_boundingBox[Down] = size.y + sideY;
 	}
 
 	MoveBB(m_pos);
@@ -243,15 +243,15 @@ void PhysicsComponent::SetBoundingBoxSize(Vector3f size, Vector3f numSquares)
 
 void PhysicsComponent::MoveBB(Vector3f distance)
 {
-	m_boundingBox.Add(AABB::Right, 0, distance.x);
-	m_boundingBox.Add(AABB::Left, 0, distance.x);
-	m_boundingBox.Add(AABB::Up, 0, distance.y);
-	m_boundingBox.Add(AABB::Down, 0, distance.y);
-	m_boundingBox.Add(AABB::Close, 0, distance.z);
-	m_boundingBox.Add(AABB::Far, 0, distance.z);
+	m_boundingBox[Right] += distance.x;
+	m_boundingBox[Left] += distance.x;
+	m_boundingBox[Up] += distance.y;
+	m_boundingBox[Down] += distance.y;
+	m_boundingBox[Close] += distance.z;
+	m_boundingBox[Far] += distance.z;
 }
 
-Array2d<float> PhysicsComponent::GetBoundingBox()
+std::array<float, 6> PhysicsComponent::GetBoundingBox()
 {
 	return m_boundingBox;
 }

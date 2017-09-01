@@ -7,6 +7,7 @@
 #include <algorithm>
 #include "entity.h"
 #include "map_handler.h"
+#include <array>
 
 struct CollidedSurfaces
 {
@@ -33,7 +34,7 @@ namespace Physics_2D
 	std::vector<Drawable*> FindDupes(std::vector<Drawable*>* list, float targetHeight);
 	std::vector<Entity*> FindDupes(std::vector<Entity*>* list, float targetHeight);
 	std::vector<PhysicsComponent*> FindDupes(std::vector<PhysicsComponent*>* list, float targetHeight);
-	int TileTouchCount(Array2d<float> bb);
+	int TileTouchCount(std::array<float, 6> bb);
 	void FindMinMaxLegalZ(std::vector<Drawable*>* touching, float& min, float& max, float targetHeight);
 	void FindMinMaxLegalZ(std::vector<Entity*>* touching, float& min, float& max, float targetHeight);
 	void FindMinMaxLegalZ(std::vector<PhysicsComponent*>* touching, float& min, float& max, float targetHeight);

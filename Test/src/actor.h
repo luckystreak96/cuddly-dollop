@@ -9,8 +9,6 @@
 #include <string>
 #include <gl/freeglut.h>
 
-enum Direction { dir_Up, dir_Right, dir_Down, dir_Left };
-
 class Actor : public Drawable, public Animation
 {
 public:

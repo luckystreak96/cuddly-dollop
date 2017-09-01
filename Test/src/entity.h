@@ -9,6 +9,7 @@
 #include "graphicsComponent.h"
 #include "inputComponent.h"
 #include "playerInputComponent.h"
+#include "playerGraphicsComponent.h"
 
 class Entity
 {

@@ -117,14 +117,14 @@ namespace Physics_2D {
 			{
 				//X + Y movement is illegal
 				//If moving in only X or Y is legal and only the other illegal, just collide in that axis
-				Array2d<float> bbx = Array2d<float>(clist->at(i)->GetMoveBoundingBox());
-				bbx.Set(AABB::Down, 0, clist->at(i)->GetBoundingBox().Get(AABB::Down));
-				bbx.Set(AABB::Up, 0, clist->at(i)->GetBoundingBox().Get(AABB::Up));
+				std::array<float, 6> bbx = std::array<float, 6>(clist->at(i)->GetMoveBoundingBox());
+				bbx[Down] = clist->at(i)->GetBoundingBox()[Down];
+				bbx[Up] = clist->at(i)->GetBoundingBox()[Up];
 				int mustTouchX = TileTouchCount(bbx);
 
-				Array2d<float> bby = Array2d<float>(clist->at(i)->GetMoveBoundingBox());
-				bby.Set(AABB::Left, 0, clist->at(i)->GetBoundingBox().Get(AABB::Left));
-				bby.Set(AABB::Right, 0, clist->at(i)->GetBoundingBox().Get(AABB::Right));
+				std::array<float, 6> bby = std::array<float, 6>(clist->at(i)->GetMoveBoundingBox());
+				bby[Left] = clist->at(i)->GetBoundingBox()[Left];
+				bby[Right] = clist->at(i)->GetBoundingBox()[Right];
 				int mustTouchY = TileTouchCount(bby);
 
 				std::vector<Drawable*> touchX = std::vector<Drawable*>();
@@ -227,11 +227,11 @@ namespace Physics_2D {
 
 		//X-collision check
 		if (xdirection < 0 && //Going left...
-			a->GetBoundingBox().Get(AABB::Left) > b->GetBoundingBox().Get(AABB::Right))//...and A was to the right of B
-			x_perc = (abs(a->GetBoundingBox().Get(AABB::Left) - b->GetBoundingBox().Get(AABB::Right))) / (abs(xdirection));//(distance between 2) / (total length)
+			a->GetBoundingBox()[Left] > b->GetBoundingBox()[Right])//...and A was to the right of B
+			x_perc = (abs(a->GetBoundingBox()[Left] - b->GetBoundingBox()[Right])) / (abs(xdirection));//(distance between 2) / (total length)
 		else if (xdirection > 0 && //Going right...
-			a->GetBoundingBox().Get(AABB::Right) < b->GetBoundingBox().Get(AABB::Left))
-			x_perc = (abs(a->GetBoundingBox().Get(AABB::Right) - b->GetBoundingBox().Get(AABB::Left))) / (abs(xdirection));//(distance between 2) / (total length)
+			a->GetBoundingBox()[Right] < b->GetBoundingBox()[Left])
+			x_perc = (abs(a->GetBoundingBox()[Right] - b->GetBoundingBox()[Left])) / (abs(xdirection));//(distance between 2) / (total length)
 		else//was already in same X...
 			x_perc = 10;//...make it always lose condition
 
@@ -241,11 +241,11 @@ namespace Physics_2D {
 
 		//Y-collision check
 		if (ydirection < 0 && //Going down...
-			a->GetBoundingBox().Get(AABB::Down) > b->GetBoundingBox().Get(AABB::Up))//...and A was on top of B
-			y_perc = (abs(a->GetBoundingBox().Get(AABB::Down) - b->GetBoundingBox().Get(AABB::Up))) / (abs(ydirection));//(distance between 2) / (total length)
+			a->GetBoundingBox()[Down] > b->GetBoundingBox()[Up])//...and A was on top of B
+			y_perc = (abs(a->GetBoundingBox()[Down] - b->GetBoundingBox()[Up])) / (abs(ydirection));//(distance between 2) / (total length)
 		else if (ydirection > 0 && //Going up...
-			a->GetBoundingBox().Get(AABB::Up) < b->GetBoundingBox().Get(AABB::Down))//...and A under B
-			y_perc = (abs(a->GetBoundingBox().Get(AABB::Up) - b->GetBoundingBox().Get(AABB::Down))) / (abs(ydirection));//(distance between 2) / (total length)
+			a->GetBoundingBox()[Up] < b->GetBoundingBox()[Down])//...and A under B
+			y_perc = (abs(a->GetBoundingBox()[Up] - b->GetBoundingBox()[Down])) / (abs(ydirection));//(distance between 2) / (total length)
 		else//was already in same Y...
 			y_perc = 10;//...make it always lose condition
 
@@ -352,14 +352,14 @@ namespace Physics_2D {
 		return dupes;
 	}
 
-	int TileTouchCount(Array2d<float> bb)
+	int TileTouchCount(std::array<float, 6> bb)
 	{
-		if (bb.Count() != 6)
+		if (bb.size() != 6)
 			return -1;
 
 		//Get the borders and floor/ceil + area formula to know how many the bb is touching
-		return (ceil(bb.Get(AABB::Right)) - floor(bb.Get(AABB::Left))) *
-			(ceil(bb.Get(AABB::Up)) - floor(bb.Get(AABB::Down)));
+		return (ceil(bb[Right]) - floor(bb[Left])) *
+			(ceil(bb[Up]) - floor(bb[Down]));
 	}
 
 	//returns number of tiles that are legally touched
@@ -440,8 +440,8 @@ namespace Physics_2D {
 					continue;
 
 				//Are the objects inside each other right now? (nothing will go fast enough to skip this)
-				Array2d<float> lol1 = clist->at(i)->Physics()->GetMoveBoundingBox();
-				Array2d<float> lol2 = clist->at(j)->Physics()->GetMoveBoundingBox();
+				std::array<float, 6> lol1 = clist->at(i)->Physics()->GetMoveBoundingBox();
+				std::array<float, 6> lol2 = clist->at(j)->Physics()->GetMoveBoundingBox();
 				if (!Physics::Intersect3D(lol1, lol2))
 					//if (!Physics::Intersect3D(clist->at(i)->Physics()->GetMoveBoundingBox(), clist->at(j)->Physics()->GetMoveBoundingBox()))
 					continue;
@@ -519,14 +519,14 @@ namespace Physics_2D {
 			{
 				//X + Y movement is illegal
 				//If moving in only X or Y is legal and only the other illegal, just collide in that axis
-				Array2d<float> bbx = Array2d<float>(clist->at(i)->Physics()->GetMoveBoundingBox());
-				bbx.Set(AABB::Down, 0, clist->at(i)->Physics()->GetBoundingBox().Get(AABB::Down));
-				bbx.Set(AABB::Up, 0, clist->at(i)->Physics()->GetBoundingBox().Get(AABB::Up));
+				std::array<float, 6> bbx = std::array<float, 6>(clist->at(i)->Physics()->GetMoveBoundingBox());
+				bbx[Down] = clist->at(i)->Physics()->GetBoundingBox()[Down];
+				bbx[Up] = clist->at(i)->Physics()->GetBoundingBox()[Up];
 				int mustTouchX = TileTouchCount(bbx);
 
-				Array2d<float> bby = Array2d<float>(clist->at(i)->Physics()->GetMoveBoundingBox());
-				bby.Set(AABB::Left, 0, clist->at(i)->Physics()->GetBoundingBox().Get(AABB::Left));
-				bby.Set(AABB::Right, 0, clist->at(i)->Physics()->GetBoundingBox().Get(AABB::Right));
+				std::array<float, 6> bby = std::array<float, 6>(clist->at(i)->Physics()->GetMoveBoundingBox());
+				bby[Left] = clist->at(i)->Physics()->GetBoundingBox()[Left];
+				bby[Right] = clist->at(i)->Physics()->GetBoundingBox()[Right];
 				int mustTouchY = TileTouchCount(bby);
 
 				std::vector<Entity*> touchX = std::vector<Entity*>();
@@ -621,11 +621,11 @@ namespace Physics_2D {
 
 		//X-collision check
 		if (xdirection < 0 && //Going left...
-			a->Physics()->GetBoundingBox().Get(AABB::Left) > b->Physics()->GetBoundingBox().Get(AABB::Right))//...and A was to the right of B
-			x_perc = (abs(a->Physics()->GetBoundingBox().Get(AABB::Left) - b->Physics()->GetBoundingBox().Get(AABB::Right))) / (abs(xdirection));//(distance between 2) / (total length)
+			a->Physics()->GetBoundingBox()[Left] > b->Physics()->GetBoundingBox()[Right])//...and A was to the right of B
+			x_perc = (abs(a->Physics()->GetBoundingBox()[Left] - b->Physics()->GetBoundingBox()[Right])) / (abs(xdirection));//(distance between 2) / (total length)
 		else if (xdirection > 0 && //Going right...
-			a->Physics()->GetBoundingBox().Get(AABB::Right) < b->Physics()->GetBoundingBox().Get(AABB::Left))
-			x_perc = (abs(a->Physics()->GetBoundingBox().Get(AABB::Right) - b->Physics()->GetBoundingBox().Get(AABB::Left))) / (abs(xdirection));//(distance between 2) / (total length)
+			a->Physics()->GetBoundingBox()[Right] < b->Physics()->GetBoundingBox()[Left])
+			x_perc = (abs(a->Physics()->GetBoundingBox()[Right] - b->Physics()->GetBoundingBox()[Left])) / (abs(xdirection));//(distance between 2) / (total length)
 		else//was already in same X...
 			x_perc = 10;//...make it always lose condition
 
@@ -635,11 +635,11 @@ namespace Physics_2D {
 
 		//Y-collision check
 		if (ydirection < 0 && //Going down...
-			a->Physics()->GetBoundingBox().Get(AABB::Down) > b->Physics()->GetBoundingBox().Get(AABB::Up))//...and A was on top of B
-			y_perc = (abs(a->Physics()->GetBoundingBox().Get(AABB::Down) - b->Physics()->GetBoundingBox().Get(AABB::Up))) / (abs(ydirection));//(distance between 2) / (total length)
+			a->Physics()->GetBoundingBox()[Down] > b->Physics()->GetBoundingBox()[Up])//...and A was on top of B
+			y_perc = (abs(a->Physics()->GetBoundingBox()[Down] - b->Physics()->GetBoundingBox()[Up])) / (abs(ydirection));//(distance between 2) / (total length)
 		else if (ydirection > 0 && //Going up...
-			a->Physics()->GetBoundingBox().Get(AABB::Up) < b->Physics()->GetBoundingBox().Get(AABB::Down))//...and A under B
-			y_perc = (abs(a->Physics()->GetBoundingBox().Get(AABB::Up) - b->Physics()->GetBoundingBox().Get(AABB::Down))) / (abs(ydirection));//(distance between 2) / (total length)
+			a->Physics()->GetBoundingBox()[Up] < b->Physics()->GetBoundingBox()[Down])//...and A under B
+			y_perc = (abs(a->Physics()->GetBoundingBox()[Up] - b->Physics()->GetBoundingBox()[Down])) / (abs(ydirection));//(distance between 2) / (total length)
 		else//was already in same Y...
 			y_perc = 10;//...make it always lose condition
 
@@ -669,11 +669,11 @@ namespace Physics_2D {
 
 		//X-collision check
 		if (xdirection < 0 && //Going left...
-			a->GetBoundingBox().Get(AABB::Left) > b->GetBoundingBox().Get(AABB::Right))//...and A was to the right of B
-			x_perc = (abs(a->GetBoundingBox().Get(AABB::Left) - b->GetBoundingBox().Get(AABB::Right))) / (abs(xdirection));//(distance between 2) / (total length)
+			a->GetBoundingBox()[Left] > b->GetBoundingBox()[Right])//...and A was to the right of B
+			x_perc = (abs(a->GetBoundingBox()[Left] - b->GetBoundingBox()[Right])) / (abs(xdirection));//(distance between 2) / (total length)
 		else if (xdirection > 0 && //Going right...
-			a->GetBoundingBox().Get(AABB::Right) < b->GetBoundingBox().Get(AABB::Left))
-			x_perc = (abs(a->GetBoundingBox().Get(AABB::Right) - b->GetBoundingBox().Get(AABB::Left))) / (abs(xdirection));//(distance between 2) / (total length)
+			a->GetBoundingBox()[Right] < b->GetBoundingBox()[Left])
+			x_perc = (abs(a->GetBoundingBox()[Right] - b->GetBoundingBox()[Left])) / (abs(xdirection));//(distance between 2) / (total length)
 		else//was already in same X...
 			x_perc = 10;//...make it always lose condition
 
@@ -683,11 +683,11 @@ namespace Physics_2D {
 
 		//Y-collision check
 		if (ydirection < 0 && //Going down...
-			a->GetBoundingBox().Get(AABB::Down) > b->GetBoundingBox().Get(AABB::Up))//...and A was on top of B
-			y_perc = (abs(a->GetBoundingBox().Get(AABB::Down) - b->GetBoundingBox().Get(AABB::Up))) / (abs(ydirection));//(distance between 2) / (total length)
+			a->GetBoundingBox()[Down] > b->GetBoundingBox()[Up])//...and A was on top of B
+			y_perc = (abs(a->GetBoundingBox()[Down] - b->GetBoundingBox()[Up])) / (abs(ydirection));//(distance between 2) / (total length)
 		else if (ydirection > 0 && //Going up...
-			a->GetBoundingBox().Get(AABB::Up) < b->GetBoundingBox().Get(AABB::Down))//...and A under B
-			y_perc = (abs(a->GetBoundingBox().Get(AABB::Up) - b->GetBoundingBox().Get(AABB::Down))) / (abs(ydirection));//(distance between 2) / (total length)
+			a->GetBoundingBox()[Up] < b->GetBoundingBox()[Down])//...and A under B
+			y_perc = (abs(a->GetBoundingBox()[Up] - b->GetBoundingBox()[Down])) / (abs(ydirection));//(distance between 2) / (total length)
 		else//was already in same Y...
 			y_perc = 10;//...make it always lose condition
 
@@ -907,8 +907,8 @@ namespace Physics_2D {
 				//	continue;
 
 				//Are the objects inside each other right now? (nothing will go fast enough to skip this)
-				Array2d<float> lol1 = flist.at(i)->GetMoveBoundingBox();
-				Array2d<float> lol2 = flist.at(j)->GetMoveBoundingBox();
+				std::array<float, 6> lol1 = flist.at(i)->GetMoveBoundingBox();
+				std::array<float, 6> lol2 = flist.at(j)->GetMoveBoundingBox();
 				if (!Physics::Intersect3D(lol1, lol2))
 					//if (!Physics::Intersect3D(clist->at(i)->Physics()->GetMoveBoundingBox(), clist->at(j)->Physics()->GetMoveBoundingBox()))
 					continue;
@@ -986,14 +986,14 @@ namespace Physics_2D {
 			{
 				//X + Y movement is illegal
 				//If moving in only X or Y is legal and only the other illegal, just collide in that axis
-				Array2d<float> bbx = Array2d<float>(flist.at(i)->GetMoveBoundingBox());
-				bbx.Set(AABB::Down, 0, flist.at(i)->GetBoundingBox().Get(AABB::Down));
-				bbx.Set(AABB::Up, 0, flist.at(i)->GetBoundingBox().Get(AABB::Up));
+				std::array<float, 6> bbx = std::array<float, 6>(flist.at(i)->GetMoveBoundingBox());
+				bbx[Down] = flist.at(i)->GetBoundingBox()[Down];
+				bbx[Up] = flist.at(i)->GetBoundingBox()[Up];
 				int mustTouchX = TileTouchCount(bbx);
 
-				Array2d<float> bby = Array2d<float>(flist.at(i)->GetMoveBoundingBox());
-				bby.Set(AABB::Left, 0, flist.at(i)->GetBoundingBox().Get(AABB::Left));
-				bby.Set(AABB::Right, 0, flist.at(i)->GetBoundingBox().Get(AABB::Right));
+				std::array<float, 6> bby = std::array<float, 6>(flist.at(i)->GetMoveBoundingBox());
+				bby[Left] = flist.at(i)->GetBoundingBox()[Left];
+				bby[Right] = flist.at(i)->GetBoundingBox()[Right];
 				int mustTouchY = TileTouchCount(bby);
 
 				std::vector<PhysicsComponent*> touchX = std::vector<PhysicsComponent*>();

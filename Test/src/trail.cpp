@@ -58,7 +58,7 @@ void Trail::End()
 
 	TransparencyEffect::GetInstance().Enable();
 	TransparencyEffect::GetInstance().SetModelPosition(&pps.GetModelMat()->GetWorldTrans().m[0][0]);
-	pps.DrawNoTexture();
+	pps.Draw(false);
 
 	m_trans.unbindFrameBuffer();
 
@@ -75,7 +75,7 @@ void Trail::End()
 	glBindTexture(GL_TEXTURE_2D, m_trans.getColourTexture());
 	BlurEffect::GetInstance().Enable();
 	BlurEffect::GetInstance().SetModelPosition(&pps.GetModelMat()->GetWorldTrans().m[0][0]);
-	pps.DrawNoTexture();
+	pps.Draw(false);
 
 	m_gaussH.unbindFrameBuffer();
 
@@ -89,7 +89,7 @@ void Trail::End()
 
 	glBindTexture(GL_TEXTURE_2D, m_gaussH.getColourTexture());
 	BlurEffect::GetInstance().SetHorizontalBlur(false);
-	pps.DrawNoTexture();
+	pps.Draw(false);
 
 	m_gaussV.unbindFrameBuffer();
 
@@ -103,7 +103,7 @@ void Trail::End()
 
 	glBindTexture(GL_TEXTURE_2D, m_gaussV.getColourTexture());
 	BlurEffect::GetInstance().SetHorizontalBlur(true);
-	pps.DrawNoTexture();
+	pps.Draw(false);
 
 	m_gaussH.unbindFrameBuffer();
 
@@ -114,7 +114,7 @@ void Trail::End()
 
 	glBindTexture(GL_TEXTURE_2D, m_gaussH.getColourTexture());
 	BlurEffect::GetInstance().SetHorizontalBlur(false);
-	pps.DrawNoTexture();
+	pps.Draw(false);
 
 	m_gaussV.unbindFrameBuffer();
 
@@ -139,7 +139,7 @@ void Trail::End()
 
 	glBindTexture(GL_TEXTURE_2D, m_gaussV.getColourTexture());
 
-	pps.DrawNoTexture();
+	pps.Draw(false);
 
 	m_frames.at(m_frameCounter).unbindFrameBuffer();
 
@@ -159,7 +159,7 @@ void Trail::End()
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, m_fbo.getColourTexture());
 
-		pps.DrawNoTexture();
+		pps.Draw(false);
 	}
 	m_fbo.unbindFrameBuffer();
 
@@ -168,11 +168,11 @@ void Trail::End()
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, m_fbo.getColourTexture());
 
-	pps.DrawNoTexture();
+	pps.Draw(false);
 
 	BasicEffect::GetInstance().Enable();
 	glBindTexture(GL_TEXTURE_2D, m_fbo.getColourTexture());
-	pps.DrawNoTexture();
+	pps.Draw(false);
 
 
 	glActiveTexture(GL_TEXTURE1);
@@ -181,7 +181,7 @@ void Trail::End()
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, m_fbo.getColourTexture());
 
-	pps.DrawNoTexture();
+	pps.Draw(false);
 
 	glEnable(GL_DEPTH_TEST);
 }
