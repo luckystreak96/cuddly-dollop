@@ -28,8 +28,8 @@ bool SceneWorld::Init()
 	m_player->Physics()->SetPosition(Vector3f(0, 0, 4.0f));
 	m_player->Physics()->AbsolutePosition(Vector3f(0, 0, 4.0f));
 	m_test3 = new Entity();
-	m_test3->Physics()->SetPosition(Vector3f(7.f, 6.f, 3.0f));
-	m_test3->Physics()->AbsolutePosition(Vector3f(7.f, 6.f, 3.0f));
+	m_test3->Physics()->SetPosition(Vector3f(7.f, 6.5f, 3.0f));
+	m_test3->Physics()->AbsolutePosition(Vector3f(7.f, 6.5f, 3.0f));
 
 	m_celist = std::vector<Entity*>();
 	m_celist.push_back(m_player);
@@ -74,14 +74,6 @@ void SceneWorld::ManageInput()
 		bloomint -= 0.2f;
 		CombineEffect::GetInstance().SetIntensity(bloomint);
 	}
-
-	//if (heldKeys->count(GLUT_KEY_F5 + InputManager::SpecialKeyValue))
-	//	m_camAngle += 0.1f;
-	//else if (heldKeys->count(GLUT_KEY_F6 + InputManager::SpecialKeyValue))
-	//	m_camAngle -= 0.1f;
-
-	////Free memory here
-	//delete keys;
 }
 
 Scene* SceneWorld::Act()
@@ -120,7 +112,11 @@ void SceneWorld::Interact()
 		PlayerGraphicsComponent* pgc = static_cast<PlayerGraphicsComponent*>(m_player->Graphics());
 		Direction dir = pgc->GetDirection();
 
-		float distance = 0.5f;
+		float distance = 0.2f;
+		if (dir == dir_Left || dir == dir_Right)
+			distance += m_player->Physics()->GetSize().x / 2;
+		else if (dir == dir_Up || dir == dir_Down)
+			distance += m_player->Physics()->GetSize().y / 2;
 
 		dir == dir_Up ? pos.y += distance : pos.y = pos.y;
 		dir == dir_Down ? pos.y -= distance : pos.y = pos.y;
@@ -141,7 +137,7 @@ void SceneWorld::Interact()
 
 		if(inter != NULL)
 		{
-			inter->Input()->Interact();
+			m_player->Communicate(inter->Input()->Interact());
 		}
 	}
 }
@@ -224,8 +220,6 @@ void SceneWorld::RenderPass()
 		m_bloom.End();
 		//m_trail.End();
 	}
-
-
 
 
 	if (Globals::DEBUG_DRAW_TILE_OUTLINES)

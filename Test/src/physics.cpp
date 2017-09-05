@@ -136,6 +136,10 @@ namespace Physics
 	//A box and a dot intersect?
 	bool Intersect2D(std::array<float, 6>& bb, Vector3f point)
 	{
+		//Up-Down
+		if (!(abs(bb[Close] - point.z) <= 0.5f || abs(bb[Far] - point.z) <= 0.5f))
+			return false;
+
 		//Left-Right
 		if (!(bb[Left] < point.x && bb[Right] > point.x))
 			return false;

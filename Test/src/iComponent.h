@@ -2,16 +2,14 @@
 #define ICOMPONENT_H__
 
 #include <string>
+#include <vector>
 
 enum CMsg {Update};
 
 class IComponent
 {
-private:
-	const std::string MESSAGE_TOKEN = "#";
-
 public:
-	virtual void ReceiveMessage(std::string message) {};
+	virtual void ReceiveMessage(std::vector<std::string> message) {};
 
 };
 

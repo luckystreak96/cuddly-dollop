@@ -1,6 +1,6 @@
 #include "graphicsComponent.h"
 
-void GraphicsComponent::ReceiveMessage(std::string msg)
+void GraphicsComponent::ReceiveMessage(std::vector<std::string> msg)
 {
 
 }

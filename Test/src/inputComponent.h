@@ -7,10 +7,10 @@
 class InputComponent : public IComponent
 {
 public:
-	void ReceiveMessage(std::string message) {};
+	void ReceiveMessage(std::vector<std::string> message) {};
 
 	virtual void Update() {};
-	virtual void Interact() { static int counter = 0; std::cout << "Wow ur so cool! " << counter << std::endl; }
+	virtual std::vector<std::string> Interact() { return std::vector<std::string>() = {"TELEPORT", "6", "6", "4"}; }
 };
 
 #endif

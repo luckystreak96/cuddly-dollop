@@ -14,7 +14,7 @@ class PhysicsComponent : public IComponent
 {
 public:
 	PhysicsComponent(Vector3f pos = Vector3f(), std::string modelName = "TILE", Vector3f size = Vector3f(), Vector3f numTilesSize = Vector3f(-1, -1, -1));
-	void ReceiveMessage(std::string message) {};
+	void ReceiveMessage(std::vector<std::string> message);
 	virtual void Update();
 	void SetDefaults(std::string name = "TILE");//cancer
 	std::string GetName();
@@ -38,9 +38,10 @@ public:
 	void SetMovedBB();
 	void SetTranslatedVertices();
 	Vector3f Position() { return m_pos; };
-	Vector3f GetCenter() { return m_pos + (m_size / 2); }
+	Vector3f GetCenter() { return Vector3f(m_boundingBox[Left] + m_size.x / 2, m_boundingBox[Down] + m_size.y / 2, m_boundingBox[Far] + m_size.z / 2);/*return m_pos + (m_size / 2);*/ }
 	void SetPosition(Vector3f pos) { m_pos = pos; };
 	Vector3f Velocity() { return m_velocity; };
+	Vector3f GetSize() { return m_size; }
 	void ApplyGravity();
 	//static inline bool SortFunc(Drawable* d, Drawable* d2) { return d->Position().z < d2->Position().z; }
 

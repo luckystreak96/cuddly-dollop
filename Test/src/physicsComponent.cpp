@@ -1,5 +1,18 @@
 #include "physicsComponent.h"
 
+void PhysicsComponent::ReceiveMessage(std::vector<std::string> msg)
+{
+	if (msg.at(0) == "TELEPORT")
+	{
+		if (msg.size() >= 4)
+		{
+			AbsolutePosition(Vector3f(::atof(msg.at(1).c_str()), ::atof(msg.at(2).c_str()), 4), Vector3f(1, 1, 1));
+		}
+		else
+			AbsolutePosition(Vector3f(2, 2, 4), Vector3f(1, 1, 1));
+	}
+}
+
 PhysicsComponent::PhysicsComponent(Vector3f pos, std::string modelName, Vector3f size, Vector3f numTiles) : m_size(size), m_BBcenter(numTiles)
 {
 	m_pos = pos;

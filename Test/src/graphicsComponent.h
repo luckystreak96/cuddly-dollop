@@ -19,7 +19,7 @@
 class GraphicsComponent : public IComponent, public ResourceUser
 {
 public:
-	void ReceiveMessage(std::string msg);
+	void ReceiveMessage(std::vector<std::string> msg);
 
 	void Construct();
 	GraphicsComponent(std::string modelName = "TILE", std::string texPath = std::string("res/mushroom.png"));

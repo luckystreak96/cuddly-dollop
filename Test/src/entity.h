@@ -21,6 +21,7 @@ public:
 	GraphicsComponent* Graphics() { return m_graphicsComponent; }
 	InputComponent* Input() { return m_inputComponent; }
 	std::vector<IComponent*> components;
+	void Communicate(std::vector<std::string> msg);
 private:
 	PhysicsComponent* m_physicsComponent;
 	GraphicsComponent* m_graphicsComponent;

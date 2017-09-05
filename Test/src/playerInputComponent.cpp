@@ -6,6 +6,12 @@ PlayerInputComponent::PlayerInputComponent(PhysicsComponent* phys, GraphicsCompo
 	m_graph = graph;
 }
 
+//void PlayerInputComponent::Interact(Entity* interactor = NULL)
+//{
+//
+//}
+
+
 void PlayerInputComponent::Update()
 {
 	//std::list<std::pair<unsigned int, KeyStatus>>* keys = InputManager::GetInstance().GetKeys();

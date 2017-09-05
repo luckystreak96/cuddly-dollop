@@ -11,6 +11,7 @@ class PlayerInputComponent : public InputComponent
 public:
 	PlayerInputComponent(PhysicsComponent* phys, GraphicsComponent* graph);
 	void Update();
+	//void Interact(Entity* interactor = NULL);
 private:
 	PhysicsComponent* m_phys;
 	GraphicsComponent* m_graph;
