@@ -3,6 +3,7 @@
 SceneWorld::SceneWorld() : m_acceptInput(false)
 {
 	Init();
+	SoundManager::GetInstance();
 }
 
 bool SceneWorld::Init()

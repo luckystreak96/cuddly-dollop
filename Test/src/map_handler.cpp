@@ -56,7 +56,7 @@ void MapHandler::SetupMesh()
 
 	m_MBO_instances = m_tiles.size();
 
-	m_texture = "res/map01.png";
+	m_texture = "map01.png";
 	m_mesh.Finalize(m_texture);
 	m_graphics = new GraphicsComponent(m_mesh.GetMeshVertices(), m_mesh.GetMeshIndices(), m_texture);
 }

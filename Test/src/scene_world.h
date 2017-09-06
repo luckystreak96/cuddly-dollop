@@ -26,6 +26,7 @@
 #include "graphicsComponent.h"
 #include "entity.h"
 #include "map_handler.h"
+#include "soundManager.h"
 
 class SceneWorld : public Scene
 {

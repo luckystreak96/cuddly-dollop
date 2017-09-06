@@ -19,8 +19,7 @@ bool ResourceManager::LoadTexture(std::string tex)
 	}
 	mutex.unlock();
 
-	std::wstring ws(tex.begin(), tex.end());
-	const wchar_t* path = ws.c_str();
+	const char* path = tex.c_str();
 
 	mutex.lock();
 	m_textures.emplace(tex, Texture(GL_TEXTURE_2D, path));

@@ -1,14 +1,14 @@
 #include "texture.h"
 
-Texture::Texture(GLuint texID, GLenum target) : m_textureTarget(target), m_filename(L""), m_isValid(true), m_texId(texID), loaded(true)
+Texture::Texture(GLuint texID, GLenum target) : m_textureTarget(target), m_filename(""), m_isValid(true), m_texId(texID), loaded(true)
 {
 }
 
-Texture::Texture(GLenum TextureTarget, wchar_t* FileName) : m_textureTarget(TextureTarget), m_filename(FileName), m_isValid(false)
+Texture::Texture(GLenum TextureTarget, char* FileName) : m_textureTarget(TextureTarget), m_filename(FileName), m_isValid(false)
 {
 }
 
-Texture::Texture(GLenum TextureTarget, const wchar_t* FileName) : m_textureTarget(TextureTarget), m_filename(FileName), m_isValid(false)
+Texture::Texture(GLenum TextureTarget, const char* FileName) : m_textureTarget(TextureTarget), m_filename(FileName), m_isValid(false)
 {
 }
 
@@ -19,7 +19,8 @@ Texture::~Texture()
 
 bool Texture::LoadFromFile()
 {
-
+	if (m_filename != NULL && m_filename[0] == '\0')
+		return false;
 	// Initialize Devil only once:
 	static bool alreadyInitialized = false;
 	if (!alreadyInitialized)

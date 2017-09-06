@@ -15,8 +15,8 @@ class Texture
 {
 public:
 	Texture(GLuint texID, GLenum target = GL_TEXTURE_2D);
-   Texture(GLenum TextureTarget, wchar_t* FileName);
-   Texture(GLenum TextureTarget, const wchar_t* FileName);
+   Texture(GLenum TextureTarget, char* FileName);
+   Texture(GLenum TextureTarget, const char* FileName);
    ~Texture();
 
    bool LoadFromFile();
@@ -34,7 +34,7 @@ private:
 	bool m_isValid;
    GLenum m_textureTarget;
    GLuint m_textureId;
-   const wchar_t* m_filename;
+   const char* m_filename;
 };
 
 #endif

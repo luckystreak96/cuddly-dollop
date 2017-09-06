@@ -289,6 +289,12 @@
     <ClInclude Include="src\post_processing_screen.h">
       <Filter>Header Files\Engine\Graphics\PostProcessing</Filter>
     </ClInclude>
+    <ClInclude Include="src\soundManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Wave.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -452,6 +458,12 @@
     </ClCompile>
     <ClCompile Include="src\physics.cpp">
       <Filter>Source Files\Engine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\soundManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Wave.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -72,6 +72,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <IncludePath>C:\Users\yanik\Documents\cuddly-dollop\Test\res\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\yanik\Documents\cuddly-dollop\Test\res\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -94,10 +96,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>C:\Users\yanik\Documents\cuddly-dollop\Test\res\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>alut.lib;devil.lib;freeglut.lib;glew32.lib;ilu.lib;ilut.lib;openal32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -111,7 +115,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;glew32.lib;freeglut.lib;DevIL.lib;ILU.lib;ILUT.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;glew32.lib;freeglut.lib;DevIL.lib;ILU.lib;ILUT.lib;openal32.lib;alut.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -215,6 +219,7 @@
     <ClInclude Include="src\scene_world.h" />
     <ClInclude Include="src\shadowMapEffect.h" />
     <ClInclude Include="src\shadowMapFBO.h" />
+    <ClInclude Include="src\soundManager.h" />
     <ClInclude Include="src\texture.h" />
     <ClInclude Include="src\textureatlas.h" />
     <ClInclude Include="src\tile.h" />
@@ -224,6 +229,7 @@
     <ClInclude Include="src\utils.h" />
     <ClInclude Include="src\vector3f.h" />
     <ClInclude Include="src\vertex.h" />
+    <ClInclude Include="src\Wave.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\animation.cpp" />
@@ -271,6 +277,7 @@
     <ClCompile Include="src\scene_world.cpp" />
     <ClCompile Include="src\shadowMapEffect.cpp" />
     <ClCompile Include="src\shadowMapFBO.cpp" />
+    <ClCompile Include="src\soundManager.cpp" />
     <ClCompile Include="src\texture.cpp" />
     <ClCompile Include="src\textureatlas.cpp" />
     <ClCompile Include="src\tile.cpp" />
@@ -280,6 +287,7 @@
     <ClCompile Include="src\utils.cpp" />
     <ClCompile Include="src\vector3f.cpp" />
     <ClCompile Include="src\vertex.cpp" />
+    <ClCompile Include="src\Wave.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

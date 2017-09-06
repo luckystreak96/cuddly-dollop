@@ -64,9 +64,7 @@ bool TextureAtlas::Generate(int textureSize, bool mipmap, std::string filename)
             ilOriginFunc(IL_ORIGIN_LOWER_LEFT);
             ilEnable(IL_ORIGIN_SET);
 
-			std::wstring ws = std::wstring(it->first.begin(), it->first.end());
-
-			if (!ilLoadImage((const ILstring)ws.c_str()))
+			if (!ilLoadImage((const ILstring)it->first.c_str()))
 			{
 				std::cout << "Load Image failed." << std::endl;
                 return false;
@@ -114,8 +112,8 @@ bool TextureAtlas::Generate(int textureSize, bool mipmap, std::string filename)
     while(mipmapSize != 0)
     {
         ILuint atlasTex;
-        ilGenImages(1, &atlasTex);
-        ilBindImage(atlasTex);
+		ilGenImages(1, &atlasTex);
+		ilBindImage(atlasTex);
         ilTexImage(mipmapSize, mipmapSize, 1, 4, IL_RGBA, IL_UNSIGNED_BYTE, 0);
         ilClearColour(1, 0, 0, 1);
         ilClearImage();
@@ -124,11 +122,11 @@ bool TextureAtlas::Generate(int textureSize, bool mipmap, std::string filename)
         {
             ILuint tmpImg;
             ilGenImages(1, &tmpImg);
-            ilBindImage(tmpImg);
-            ilCopyImage(it->second.texId);
+			ilBindImage(tmpImg);
+			ilCopyImage(it->second.texId);
 
             iluImageParameter(ILU_FILTER, ILU_NEAREST);
-            //iluImageParameter(ILU_FILTER, ILU_BILINEAR);
+			//iluImageParameter(ILU_FILTER, ILU_BILINEAR);
             if(level != textureSize)
                 iluScale(level, level, 1);
 
@@ -140,12 +138,12 @@ bool TextureAtlas::Generate(int textureSize, bool mipmap, std::string filename)
             int x = imgIdx % m_nbTexturePerSide;
             int y = m_nbTexturePerSide - 1 - imgIdx / m_nbTexturePerSide;
             ilBindImage(atlasTex);
-            ilSetPixels(x * level, y * level, 0, level, level, 1, IL_RGBA, IL_UNSIGNED_BYTE, data);
-            //ilOverlayImage(tmpImg, x * level, y * level, 0);
+			ilSetPixels(x * level, y * level, 0, level, level, 1, IL_RGBA, IL_UNSIGNED_BYTE, data);
+			//ilOverlayImage(tmpImg, x * level, y * level, 0);
 
             delete [] data;
             ilDeleteImages(1, &tmpImg);
-        }
+		}
 
         // TODO
         //if(level == textureSize)
@@ -157,7 +155,7 @@ bool TextureAtlas::Generate(int textureSize, bool mipmap, std::string filename)
         //std::cout << oglLevel << ":" << level << ":" << mipmapSize << std::endl;
         glTexImage2D(GL_TEXTURE_2D, oglLevel++, GL_RGBA, ilGetInteger(IL_IMAGE_WIDTH), ilGetInteger(IL_IMAGE_HEIGHT), 0, GL_RGBA, GL_UNSIGNED_BYTE, ilGetData());
 
-        //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+		//glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
         //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
         //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
         //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, GL_CLAMP);
@@ -165,9 +163,9 @@ bool TextureAtlas::Generate(int textureSize, bool mipmap, std::string filename)
         //glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
         //CHECK_GL_ERROR();
 
-		std::wstring ws = std::wstring(filename.begin(), filename.end());
 		ilEnable(IL_FILE_OVERWRITE);
-		ilSaveImage(ws.c_str());
+		ilSaveImage((ILconst_string)filename.c_str());
+
 
         ilDeleteImages(1, &atlasTex);
 
