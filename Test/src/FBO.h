@@ -3,7 +3,7 @@
 
 #include <gl/glew.h>
 #include "define_gl.h"
-#include "drawable.h"
+//#include "drawable.h"
 
 class FBO
 {

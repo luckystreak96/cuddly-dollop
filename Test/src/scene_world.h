@@ -3,11 +3,8 @@
 
 #include <iostream>
 #include "scene.h"
-#include "actor.h"
 #include "shadowMapFBO.h"
 #include "transform.h"
-#include "drawable.h"
-#include "map.h"
 #include "array2d.h"
 #include "elapsedTime.h"
 #include "glutBackend.h"
@@ -45,6 +42,7 @@ public:
 	void LoadAllResources();
 	void UnloadAllResources();
 	void ManageInput();
+	void SetAudioPosition();
 	
 public:
 	void RenderPass();

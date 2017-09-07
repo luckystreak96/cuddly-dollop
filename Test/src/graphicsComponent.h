@@ -21,9 +21,10 @@ class GraphicsComponent : public IComponent, public ResourceUser
 public:
 	void ReceiveMessage(std::vector<std::string> msg);
 
-	void Construct();
 	GraphicsComponent(std::string modelName = "TILE", std::string texPath = std::string("res/mushroom.png"));
 	GraphicsComponent(std::vector<Vertex> verts, std::vector<GLuint> inds, std::string texPath = std::string("res/mushroom.png"));
+	~GraphicsComponent();
+	void Construct();
 	void SetDefaults(std::string name = "TILE");
 	std::string GetName();
 	Transformation* GetModelMat() { return &m_modelMat; };

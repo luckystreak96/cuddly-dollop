@@ -5,6 +5,11 @@ void GraphicsComponent::ReceiveMessage(std::vector<std::string> msg)
 
 }
 
+GraphicsComponent::~GraphicsComponent()
+{
+	delete m_models;
+}
+
 void GraphicsComponent::Construct()
 {
 	m_pos = Vector3f(2.0f, 2.0f, 5.0f);

@@ -10,6 +10,20 @@ Entity::Entity(bool playerInput)
 
 	m_inputComponent = playerInput ? new PlayerInputComponent(m_physicsComponent, m_graphicsComponent) : new InputComponent();
 	components.push_back(m_inputComponent);
+
+	if (!playerInput)
+	{
+		AudioComponent* audio = new AudioComponent();
+		components.push_back(audio);
+	}
+}
+
+Entity::~Entity()
+{
+	for (auto x : components)
+	{
+		delete x;
+	}
 }
 
 void Entity::Communicate(std::vector<std::string> msg)
@@ -22,6 +36,9 @@ void Entity::Communicate(std::vector<std::string> msg)
 void Entity::Update()
 {
 	m_physicsComponent->Update();
+	std::vector<std::string> vec = std::vector<std::string>() = { "SET_POSITION", std::to_string(m_physicsComponent->Position().x), std::to_string(m_physicsComponent->Position().y), std::to_string(m_physicsComponent->Position().z) };
+	for (auto x : components)
+		x->ReceiveMessage(vec);
 
 	m_inputComponent->Update();
 

@@ -160,6 +160,8 @@ void SceneWorld::Update()
 	m_mapHandler->Update();
 
 	Interact();
+	SetAudioPosition();
+	SoundManager::GetInstance().SetListenerOrientation(((PlayerGraphicsComponent*)m_player->Graphics())->GetDirection());
 
 	//std::cout << m_player->GetDirection() << std::endl;
 	//std::cout << /*m_player->Position().x << ", " << m_player->Position().y << ", " <<*/ m_player->Physics()->Position().z << std::endl;// << ", " << m_clist.at(1)->GetMoveBoundingBox().Get(AABB::Down) << ", " << m_clist.at(1)->GetMoveBoundingBox().Get(AABB::Close) << std::endl;
@@ -241,4 +243,12 @@ void SceneWorld::RenderPass()
 	}
 
 	GLUTBackendSwapBuffers();
+}
+
+void SceneWorld::SetAudioPosition()
+{
+	if(m_player != NULL)
+		SoundManager::GetInstance().SetListenerPosition(m_player->Physics()->Position(), m_player->Physics()->Velocity());
+	else
+		SoundManager::GetInstance().SetListenerPosition();
 }

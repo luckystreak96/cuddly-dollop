@@ -10,11 +10,13 @@
 #include "inputComponent.h"
 #include "playerInputComponent.h"
 #include "playerGraphicsComponent.h"
+#include "audioComponent.h"
 
 class Entity
 {
 public:
 	Entity(bool playerInput = false);
+	~Entity();
 	void Update();
 	void Draw();
 	PhysicsComponent* Physics() { return m_physicsComponent; }

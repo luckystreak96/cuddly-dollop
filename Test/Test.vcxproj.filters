@@ -19,9 +19,6 @@
     <Filter Include="Source Files\Effects">
       <UniqueIdentifier>{9e89a4a0-7996-4696-a607-d5d24aeec990}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Drawables">
-      <UniqueIdentifier>{8cb1a87e-48fe-484f-8d83-54f2e467b3bc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Math">
       <UniqueIdentifier>{43e90b94-32d4-4891-a091-141a54c3d3f6}</UniqueIdentifier>
     </Filter>
@@ -30,9 +27,6 @@
     </Filter>
     <Filter Include="Source Files\Utils">
       <UniqueIdentifier>{abcf02a9-4e62-464c-828f-f374eeb83a30}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Drawables">
-      <UniqueIdentifier>{fc22b48b-06d4-4f24-bc62-9bf985a26b47}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Math">
       <UniqueIdentifier>{cc0dbbb7-bf9d-4c76-90da-17192d5d4188}</UniqueIdentifier>
@@ -90,6 +84,21 @@
     </Filter>
     <Filter Include="Header Files\Map">
       <UniqueIdentifier>{a639ed71-6675-4a88-9951-8acbecd2271e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Graphics\Resource Management">
+      <UniqueIdentifier>{f2dbc4b2-d70a-4ab9-8375-a6cc542b106c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Map Management">
+      <UniqueIdentifier>{be215ced-f51b-4b0a-a2da-66e8ffc67210}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Audio">
+      <UniqueIdentifier>{7489d2ee-713f-453a-9512-265e06b6b725}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Audio">
+      <UniqueIdentifier>{da2aef37-ab37-4420-9ed0-7edcfdd47b6e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Graphics\Resource Management">
+      <UniqueIdentifier>{ffa976fd-c1f7-4254-9a7d-3e7293791e20}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -166,15 +175,6 @@
     <ClInclude Include="src\glutBackend.h">
       <Filter>Header Files\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="src\drawable.h">
-      <Filter>Header Files\Drawables</Filter>
-    </ClInclude>
-    <ClInclude Include="src\map.h">
-      <Filter>Header Files\Drawables</Filter>
-    </ClInclude>
-    <ClInclude Include="src\tile.h">
-      <Filter>Header Files\Drawables</Filter>
-    </ClInclude>
     <ClInclude Include="src\define.h">
       <Filter>Header Files\Utils</Filter>
     </ClInclude>
@@ -187,29 +187,14 @@
     <ClInclude Include="src\texture.h">
       <Filter>Header Files\Engine\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="src\physics_vertex.h">
-      <Filter>Header Files\Engine\Physics</Filter>
-    </ClInclude>
     <ClInclude Include="src\elapsedTime.h">
       <Filter>Header Files\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="src\resource_manager.h">
-      <Filter>Header Files\Engine\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\resource_user.h">
-      <Filter>Header Files\Engine\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\resource_loader.h">
-      <Filter>Header Files\Engine\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="src\textureatlas.h">
       <Filter>Header Files\Engine\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="src\input_manager.h">
       <Filter>Header Files\Engine\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="src\actor.h">
-      <Filter>Header Files\Drawables</Filter>
     </ClInclude>
     <ClInclude Include="src\key_status.h">
       <Filter>Header Files\Engine\Input</Filter>
@@ -223,14 +208,8 @@
     <ClInclude Include="src\animation.h">
       <Filter>Header Files\Engine\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="src\blur_framebuffer.h">
-      <Filter>Header Files\Engine\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="src\blurEffect.h">
       <Filter>Header Files\Effects</Filter>
-    </ClInclude>
-    <ClInclude Include="src\FBO.h">
-      <Filter>Header Files\Engine\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="src\define_gl.h">
       <Filter>Header Files\Utils</Filter>
@@ -252,9 +231,6 @@
     </ClInclude>
     <ClInclude Include="src\postProcessingEffect.h">
       <Filter>Header Files\Effects</Filter>
-    </ClInclude>
-    <ClInclude Include="src\entity2.h">
-      <Filter>Header Files\Drawables</Filter>
     </ClInclude>
     <ClInclude Include="src\entity.h">
       <Filter>Header Files\Entity-Component</Filter>
@@ -290,10 +266,25 @@
       <Filter>Header Files\Engine\Graphics\PostProcessing</Filter>
     </ClInclude>
     <ClInclude Include="src\soundManager.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Audio</Filter>
     </ClInclude>
-    <ClInclude Include="src\Wave.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\resource_manager.h">
+      <Filter>Header Files\Engine\Graphics\Resource Management</Filter>
+    </ClInclude>
+    <ClInclude Include="src\resource_loader.h">
+      <Filter>Header Files\Engine\Graphics\Resource Management</Filter>
+    </ClInclude>
+    <ClInclude Include="src\resource_user.h">
+      <Filter>Header Files\Engine\Graphics\Resource Management</Filter>
+    </ClInclude>
+    <ClInclude Include="src\FBO.h">
+      <Filter>Header Files\Engine\Graphics\PostProcessing</Filter>
+    </ClInclude>
+    <ClInclude Include="src\blur_framebuffer.h">
+      <Filter>Header Files\Engine\Graphics\PostProcessing</Filter>
+    </ClInclude>
+    <ClInclude Include="src\audioComponent.h">
+      <Filter>Header Files\Entity-Component\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -327,20 +318,11 @@
     <ClCompile Include="src\scene_world.cpp">
       <Filter>Source Files\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="src\tile.cpp">
-      <Filter>Source Files\Drawables</Filter>
-    </ClCompile>
     <ClCompile Include="src\vector3f.cpp">
       <Filter>Source Files\Math</Filter>
     </ClCompile>
     <ClCompile Include="src\utils.cpp">
       <Filter>Source Files\Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="src\map.cpp">
-      <Filter>Source Files\Drawables</Filter>
-    </ClCompile>
-    <ClCompile Include="src\drawable.cpp">
-      <Filter>Source Files\Drawables</Filter>
     </ClCompile>
     <ClCompile Include="src\texture.cpp">
       <Filter>Source Files\Engine\Graphics</Filter>
@@ -366,15 +348,6 @@
     <ClCompile Include="src\scene_manager.cpp">
       <Filter>Source Files\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="src\physics_vertex.cpp">
-      <Filter>Source Files\Engine\Physics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\resource_manager.cpp">
-      <Filter>Source Files\Engine\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\resource_loader.cpp">
-      <Filter>Source Files\Engine\Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="src\textureatlas.cpp">
       <Filter>Source Files\Engine\Graphics</Filter>
     </ClCompile>
@@ -390,32 +363,20 @@
     <ClCompile Include="src\transform.cpp">
       <Filter>Source Files\Engine\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="src\actor.cpp">
-      <Filter>Source Files\Drawables</Filter>
-    </ClCompile>
     <ClCompile Include="src\physics_2d.cpp">
       <Filter>Source Files\Engine\Physics</Filter>
     </ClCompile>
     <ClCompile Include="src\animation.cpp">
       <Filter>Source Files\Engine\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="src\blur_framebuffer.cpp">
-      <Filter>Source Files\Engine\Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="src\blurEffect.cpp">
       <Filter>Source Files\Effects</Filter>
-    </ClCompile>
-    <ClCompile Include="src\FBO.cpp">
-      <Filter>Source Files\Engine\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="src\bloomEffect.cpp">
       <Filter>Source Files\Effects</Filter>
     </ClCompile>
     <ClCompile Include="src\combineEffect.cpp">
       <Filter>Source Files\Effects</Filter>
-    </ClCompile>
-    <ClCompile Include="src\post_processing_screen.cpp">
-      <Filter>Source Files\Drawables</Filter>
     </ClCompile>
     <ClCompile Include="src\bloom.cpp">
       <Filter>Source Files\Engine\Graphics\PostProcessing</Filter>
@@ -428,9 +389,6 @@
     </ClCompile>
     <ClCompile Include="src\postProcessingEffect.cpp">
       <Filter>Source Files\Effects</Filter>
-    </ClCompile>
-    <ClCompile Include="src\entity2.cpp">
-      <Filter>Source Files\Drawables</Filter>
     </ClCompile>
     <ClCompile Include="src\entity.cpp">
       <Filter>Source Files\Entity-Component</Filter>
@@ -450,20 +408,35 @@
     <ClCompile Include="src\playerPhysicsComponent.cpp">
       <Filter>Source Files\Entity-Component\Components</Filter>
     </ClCompile>
-    <ClCompile Include="src\map_tile.cpp">
-      <Filter>Source Files\Drawables</Filter>
-    </ClCompile>
-    <ClCompile Include="src\map_handler.cpp">
-      <Filter>Source Files\Drawables</Filter>
-    </ClCompile>
     <ClCompile Include="src\physics.cpp">
       <Filter>Source Files\Engine\Physics</Filter>
     </ClCompile>
-    <ClCompile Include="src\soundManager.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\resource_manager.cpp">
+      <Filter>Source Files\Engine\Graphics\Resource Management</Filter>
     </ClCompile>
-    <ClCompile Include="src\Wave.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\resource_loader.cpp">
+      <Filter>Source Files\Engine\Graphics\Resource Management</Filter>
+    </ClCompile>
+    <ClCompile Include="src\blur_framebuffer.cpp">
+      <Filter>Source Files\Engine\Graphics\PostProcessing</Filter>
+    </ClCompile>
+    <ClCompile Include="src\FBO.cpp">
+      <Filter>Source Files\Engine\Graphics\PostProcessing</Filter>
+    </ClCompile>
+    <ClCompile Include="src\map_tile.cpp">
+      <Filter>Source Files\Map Management</Filter>
+    </ClCompile>
+    <ClCompile Include="src\map_handler.cpp">
+      <Filter>Source Files\Map Management</Filter>
+    </ClCompile>
+    <ClCompile Include="src\post_processing_screen.cpp">
+      <Filter>Source Files\Engine\Graphics\PostProcessing</Filter>
+    </ClCompile>
+    <ClCompile Include="src\soundManager.cpp">
+      <Filter>Source Files\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="src\audioComponent.cpp">
+      <Filter>Source Files\Entity-Component\Components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
