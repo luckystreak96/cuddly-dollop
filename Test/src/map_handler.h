@@ -24,6 +24,7 @@ public:
 	unsigned int Size();
 	void SetupMesh();
 	GraphicsComponent* Graphics() { return m_graphics; }
+	static inline bool TileSort(MapTile* i, MapTile* j) { return (i->Physics()->Position() < j->Physics()->Position()); }
 
 private:
 	std::vector<MapTile*> m_tiles = std::vector<MapTile*>();

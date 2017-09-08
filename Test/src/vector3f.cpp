@@ -106,6 +106,34 @@ bool Vector3f::operator==(const Vector3f& r)
 	return (this->x == r.x && this->y == r.y && this->z == r.z);
 }
 
+bool Vector3f::operator<(const Vector3f& r)
+{
+	if (x == r.x)
+	{
+		if (y == r.y)
+		{
+			if (z == r.z)
+			{
+
+			}
+			else
+			{
+				return z < r.z;
+			}
+		}
+		else
+		{
+			return y < r.y;
+		}
+	}
+	else
+	{
+		return x < r.x;
+	}
+
+	return false;
+}
+
 bool Vector3f::operator!=(const Vector3f& r)
 {
 	return !(this->x == r.x && this->y == r.y && this->z == r.z);

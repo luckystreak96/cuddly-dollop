@@ -35,6 +35,9 @@ MapHandler::MapHandler() : m_mesh(Mesh())
 			m_tiles.push_back(new MapTile(Vector3f((float)x, (float)y, 5.f), COMPOSITION, "res/grass_0" + std::to_string(num) + ".png"));
 		}
 
+	std::sort(m_tiles.begin(), m_tiles.end(), TileSort);
+	std::sort(m_tiles.begin(), m_tiles.end(), TileSort);
+
 	SetupMesh();
 	for (auto x : m_tiles)
 		x->Physics()->Update();
