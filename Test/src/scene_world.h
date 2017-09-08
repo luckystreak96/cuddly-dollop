@@ -24,6 +24,7 @@
 #include "entity.h"
 #include "map_handler.h"
 #include "soundManager.h"
+#include "heightFog.h"
 
 class SceneWorld : public Scene
 {
@@ -64,6 +65,7 @@ private:
 	int m_numFrames = 0;
 	Trail m_trail;
 	Bloom m_bloom;
+	HeightFog m_fog;
 };
 
 #endif

@@ -161,7 +161,7 @@ void SceneWorld::Update()
 
 	Interact();
 	SetAudioPosition();
-	SoundManager::GetInstance().SetListenerOrientation(((PlayerGraphicsComponent*)m_player->Graphics())->GetDirection());
+	//SoundManager::GetInstance().SetListenerOrientation(((PlayerGraphicsComponent*)m_player->Graphics())->GetDirection());
 
 	//std::cout << m_player->GetDirection() << std::endl;
 	//std::cout << /*m_player->Position().x << ", " << m_player->Position().y << ", " <<*/ m_player->Physics()->Position().z << std::endl;// << ", " << m_clist.at(1)->GetMoveBoundingBox().Get(AABB::Down) << ", " << m_clist.at(1)->GetMoveBoundingBox().Get(AABB::Close) << std::endl;
@@ -194,13 +194,16 @@ void SceneWorld::RenderPass()
 		CombineEffect::GetInstance().SetWorldPosition(*m_World->GetWOTrans().m);
 		TransparencyEffect::GetInstance().Enable();
 		TransparencyEffect::GetInstance().SetWorldPosition(*m_World->GetWOTrans().m);
+		HeightEffect::GetInstance().Enable();
+		HeightEffect::GetInstance().SetWorldPosition(*m_World->GetWOTrans().m);
+
 		drawinited = true;
 	}
 
 	//m_World->SetTranslation(-m_player->Position().x, -m_player->Position().y, 0);
 
-	BasicEffect::GetInstance().Enable();
-	BasicEffect::GetInstance().SetWorldPosition(*m_World->GetWOTrans().m);
+	//BasicEffect::GetInstance().Enable();
+	//Effect::SetWorldPosition(*m_World->GetWOTrans().m);
 
 	if (!m_bloomEffect)
 	{
@@ -213,7 +216,12 @@ void SceneWorld::RenderPass()
 		//Draw blur
 	{
 		//m_trail.Begin();
+		//m_fog.Begin();
 		m_bloom.Begin();
+
+		HeightEffect::GetInstance().Enable();
+		HeightEffect::GetInstance().SetPlayerPos(m_player->Physics()->Position());
+		Effect::SetWorldPosition(*m_World->GetWOTrans().m);
 
 		m_mapHandler->Draw();
 
@@ -221,6 +229,7 @@ void SceneWorld::RenderPass()
 			it->Draw();
 
 		m_bloom.End();
+		//m_fog.End(m_player->Physics()->Position());
 		//m_trail.End();
 	}
 

@@ -7,11 +7,18 @@ MapHandler::MapHandler() : m_mesh(Mesh())
 	m_tiles.push_back(new MapTile(Vector3f(10, 10, 4.5f), COMPOSITION, "res/pattern.png"));
 	m_tiles.push_back(new MapTile(Vector3f(2, 4, 4), COMPOSITION, "res/pattern.png"));
 	m_tiles.push_back(new MapTile(Vector3f(2, 3, 4.5f), COMPOSITION, "res/grass_01.png"));
-	m_tiles.push_back(new MapTile(Vector3f(3, 4, 3.5), COMPOSITION, "res/bridge.png"));
-	m_tiles.push_back(new MapTile(Vector3f(4, 4, 3.5), COMPOSITION, "res/bridge.png"));
-	m_tiles.push_back(new MapTile(Vector3f(5, 4, 3.5), COMPOSITION, "res/bridge.png"));
-	m_tiles.push_back(new MapTile(Vector3f(6, 4, 3.5), COMPOSITION, "res/bridge.png"));
+	m_tiles.push_back(new MapTile(Vector3f(3, 4, 3.5f), COMPOSITION, "res/bridge.png"));
+	m_tiles.push_back(new MapTile(Vector3f(4, 4, 3.5f), COMPOSITION, "res/bridge.png"));
+	m_tiles.push_back(new MapTile(Vector3f(5, 4, 3.5f), COMPOSITION, "res/bridge.png"));
+	m_tiles.push_back(new MapTile(Vector3f(6, 4, 3.5f), COMPOSITION, "res/bridge.png"));
 	m_tiles.push_back(new MapTile(Vector3f(7, 4, 4), COMPOSITION, "res/pattern.png"));
+	m_tiles.push_back(new MapTile(Vector3f(8, 4, 3.5f), COMPOSITION, "res/pattern.png"));
+	m_tiles.push_back(new MapTile(Vector3f(9, 4, 3.0f), COMPOSITION, "res/pattern.png"));
+	m_tiles.push_back(new MapTile(Vector3f(10, 4, 2.5f), COMPOSITION, "res/pattern.png"));
+	m_tiles.push_back(new MapTile(Vector3f(11, 4, 2.0f), COMPOSITION, "res/pattern.png"));
+	m_tiles.push_back(new MapTile(Vector3f(12, 4, 1.5f), COMPOSITION, "res/pattern.png"));
+	m_tiles.push_back(new MapTile(Vector3f(13, 4, 1.0f), COMPOSITION, "res/pattern.png"));
+	m_tiles.push_back(new MapTile(Vector3f(14, 4, 0.5f), COMPOSITION, "res/pattern.png"));
 	m_tiles.push_back(new MapTile(Vector3f(7, 5, 4), COMPOSITION, "res/pattern.png"));
 	m_tiles.push_back(new MapTile(Vector3f(7, 6, 4), COMPOSITION, "res/pattern.png"));
 	m_tiles.push_back(new MapTile(Vector3f(7, 3, 4.5f), COMPOSITION, "res/grass_01.png"));
@@ -104,8 +111,7 @@ void MapHandler::Draw()
 	//otherwise each individual object inside it has its own coords set in the vertices.
 	m_graphics->GetModelMat()->SetTranslation(Vector3f(0, 0, 0));
 
-	BasicEffect::GetInstance().Enable();
-	BasicEffect::GetInstance().SetModelPosition(&m_graphics->GetModelMat()->GetWorldTrans().m[0][0]);
+	Effect::SetModelPosition(&m_graphics->GetModelMat()->GetWorldTrans().m[0][0]);
 
 	m_graphics->Draw();
 }

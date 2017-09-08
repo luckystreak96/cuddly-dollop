@@ -48,7 +48,6 @@ void Entity::Update()
 
 void Entity::Draw()
 {
-	BasicEffect::GetInstance().Enable();
-	BasicEffect::GetInstance().SetModelPosition(&m_graphicsComponent->GetModelMat()->GetWorldTrans().m[0][0]);
+	Effect::SetModelPosition(&m_graphicsComponent->GetModelMat()->GetWorldTrans().m[0][0]);
 	m_graphicsComponent->Draw();
 }

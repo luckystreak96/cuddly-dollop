@@ -72,23 +72,23 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Users\yanik\Documents\cuddly-dollop\Test\res\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\yanik\Documents\cuddly-dollop\Test\res\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\yanik\Documents\cuddly-dollop\Test\res\include;C:\Files\Programming\cuddly-dollop\cuddly-dollop\Test\res\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\yanik\Documents\cuddly-dollop\Test\res\lib;C:\Files\Programming\cuddly-dollop\cuddly-dollop\Test\res\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Users\yanik\Documents\cuddly-dollop\Test\res\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\yanik\Documents\cuddly-dollop\Test\res\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\yanik\Documents\cuddly-dollop\Test\res\include;C:\Files\Programming\cuddly-dollop\cuddly-dollop\Test\res\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\yanik\Documents\cuddly-dollop\Test\res\lib;C:\Files\Programming\cuddly-dollop\cuddly-dollop\Test\res\include;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Users\yanik\Documents\cuddly-dollop\Test\res\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\yanik\Documents\cuddly-dollop\Test\res\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\yanik\Documents\cuddly-dollop\Test\res\include;C:\Files\Programming\cuddly-dollop\cuddly-dollop\Test\res\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\yanik\Documents\cuddly-dollop\Test\res\lib;C:\Files\Programming\cuddly-dollop\cuddly-dollop\Test\res\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Users\yanik\Documents\cuddly-dollop\Test\res\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\yanik\Documents\cuddly-dollop\Test\res\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\yanik\Documents\cuddly-dollop\Test\res\include;C:\Files\Programming\cuddly-dollop\cuddly-dollop\Test\res\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\yanik\Documents\cuddly-dollop\Test\res\lib;C:\Files\Programming\cuddly-dollop\cuddly-dollop\Test\res\include;$(LibraryPath)</LibraryPath>
     <TargetName>$(ProjectName)</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -188,6 +188,8 @@
     <ClInclude Include="src\game.h" />
     <ClInclude Include="src\glutBackend.h" />
     <ClInclude Include="src\graphicsComponent.h" />
+    <ClInclude Include="src\heightEffect.h" />
+    <ClInclude Include="src\heightFog.h" />
     <ClInclude Include="src\iComponent.h" />
     <ClInclude Include="src\inputComponent.h" />
     <ClInclude Include="src\input_manager.h" />
@@ -246,6 +248,8 @@
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\glutBackend.cpp" />
     <ClCompile Include="src\graphicsComponent.cpp" />
+    <ClCompile Include="src\heightEffect.cpp" />
+    <ClCompile Include="src\heightFog.cpp" />
     <ClCompile Include="src\input_manager.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\map_handler.cpp" />
@@ -279,6 +283,27 @@
     <ClCompile Include="src\utils.cpp" />
     <ClCompile Include="src\vector3f.cpp" />
     <ClCompile Include="src\vertex.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\ambientLight.fs" />
+    <None Include="shaders\bloom.fs" />
+    <None Include="shaders\blur.fs" />
+    <None Include="shaders\blur.vs" />
+    <None Include="shaders\combine.fs" />
+    <None Include="shaders\directionalLight.fs" />
+    <None Include="shaders\directionalLight.vs" />
+    <None Include="shaders\gaussian11.fs" />
+    <None Include="shaders\gaussian3.fs" />
+    <None Include="shaders\gaussian9.fs" />
+    <None Include="shaders\heightFog.fs" />
+    <None Include="shaders\heightFog.vs" />
+    <None Include="shaders\pointLight.fs" />
+    <None Include="shaders\pointLight.vs" />
+    <None Include="shaders\shader.fs" />
+    <None Include="shaders\shader.vs" />
+    <None Include="shaders\shadow_map.fs" />
+    <None Include="shaders\shadow_map.vs" />
+    <None Include="shaders\transparency.fs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

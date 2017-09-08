@@ -17,9 +17,9 @@ bool Game::init(float width, float height)
 	int hheight = glutGet(GLUT_WINDOW_HEIGHT);
 	int wwidth = glutGet(GLUT_WINDOW_WIDTH);
 
-	m_shadowMapSize = (float)(wwidth > hheight ? wwidth : hheight);
-	if (!ShadowMapFBO::GetInstance().Init((unsigned int)m_shadowMapSize, (unsigned int)m_shadowMapSize))
-		return false;
+	//m_shadowMapSize = (float)(wwidth > hheight ? wwidth : hheight);
+	//if (!ShadowMapFBO::GetInstance().Init((unsigned int)m_shadowMapSize, (unsigned int)m_shadowMapSize))
+	//	return false;
 
 	OrthoProjInfo::GetRegularInstance().Bottom = ORTHO_BOTTOM;//-(hheight / 64 / 2);// divide by 2 cuz yeah
 	OrthoProjInfo::GetRegularInstance().Top = ORTHO_TOP;//(hheight / 64 / 2);

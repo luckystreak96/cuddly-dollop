@@ -66,10 +66,12 @@ public:
 	~Effect();
 	virtual bool Init();//create shader program
 	void Enable();//enable shader -- glUseShaderProgram(m_shaderProgram);
+	static void SetModelPosition(float* mat);
+	static void SetWorldPosition(float* mat);
 protected:
 	bool AddShader(const char* shaderFileName, GLenum shaderType);//add a shader thru its contents
 	bool Finalize();//Link objects
-	GLuint GetUniformLocation(const GLchar* name);
+	static GLuint GetUniformLocation(const GLchar* name);
 private:
 	static GLuint m_currentShaderProgram;
 	GLuint m_shaderProg;

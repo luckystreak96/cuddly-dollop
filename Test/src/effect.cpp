@@ -26,6 +26,16 @@ bool Effect::Init()
 	return true;
 }
 
+void Effect::SetModelPosition(float* mat)
+{
+	glUniformMatrix4fv(GetUniformLocation("gModel"), 1, GL_TRUE, (const GLfloat*)mat);
+}
+
+void Effect::SetWorldPosition(float* mat)
+{
+	glUniformMatrix4fv(GetUniformLocation("gWorld"), 1, GL_TRUE, (const GLfloat*)mat);
+}
+
 void Effect::Enable()
 {
 	if (m_currentShaderProgram != m_shaderProg)
@@ -113,5 +123,5 @@ bool Effect::Finalize()
 
 GLuint Effect::GetUniformLocation(const GLchar* name)
 {
-	return glGetUniformLocation(m_shaderProg, name);
+	return glGetUniformLocation(m_currentShaderProgram, name);
 }

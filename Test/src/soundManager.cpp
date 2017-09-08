@@ -16,7 +16,7 @@ SoundManager::SoundManager()
 	//Setup listener
 	SetListenerPosition();
 	alListenerf(AL_GAIN, 0.9f);
-	ALfloat listenerOri[] = { 0.0f, 0.0f, 1.0f, 0.0f, -1.0f, 0.0f };
+	ALfloat listenerOri[] = { 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f };
 	alListenerfv(AL_ORIENTATION, listenerOri);
 
 

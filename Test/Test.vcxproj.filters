@@ -100,6 +100,9 @@
     <Filter Include="Header Files\Engine\Graphics\Resource Management">
       <UniqueIdentifier>{ffa976fd-c1f7-4254-9a7d-3e7293791e20}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{6e5001c4-1ab1-4428-be85-4ecc0d74202a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="TODO.txt" />
@@ -286,6 +289,12 @@
     <ClInclude Include="src\audioComponent.h">
       <Filter>Header Files\Entity-Component\Components</Filter>
     </ClInclude>
+    <ClInclude Include="src\heightFog.h">
+      <Filter>Header Files\Engine\Graphics\PostProcessing</Filter>
+    </ClInclude>
+    <ClInclude Include="src\heightEffect.h">
+      <Filter>Header Files\Effects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -387,9 +396,6 @@
     <ClCompile Include="src\transparencyEffect.cpp">
       <Filter>Source Files\Effects</Filter>
     </ClCompile>
-    <ClCompile Include="src\postProcessingEffect.cpp">
-      <Filter>Source Files\Effects</Filter>
-    </ClCompile>
     <ClCompile Include="src\entity.cpp">
       <Filter>Source Files\Entity-Component</Filter>
     </ClCompile>
@@ -438,5 +444,73 @@
     <ClCompile Include="src\audioComponent.cpp">
       <Filter>Source Files\Entity-Component\Components</Filter>
     </ClCompile>
+    <ClCompile Include="src\postProcessingEffect.cpp">
+      <Filter>Source Files\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\heightFog.cpp">
+      <Filter>Source Files\Engine\Graphics\PostProcessing</Filter>
+    </ClCompile>
+    <ClCompile Include="src\heightEffect.cpp">
+      <Filter>Source Files\Effects</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shaders\ambientLight.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\bloom.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\blur.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\blur.vs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\combine.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\directionalLight.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\directionalLight.vs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\gaussian3.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\gaussian9.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\gaussian11.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\heightFog.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\heightFog.vs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\pointLight.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\pointLight.vs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\shader.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\shader.vs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\shadow_map.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\shadow_map.vs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\transparency.fs">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>
