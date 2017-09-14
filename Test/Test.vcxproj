@@ -185,6 +185,7 @@
     <ClInclude Include="src\elapsedTime.h" />
     <ClInclude Include="src\entity.h" />
     <ClInclude Include="src\FBO.h" />
+    <ClInclude Include="src\font.h" />
     <ClInclude Include="src\game.h" />
     <ClInclude Include="src\glutBackend.h" />
     <ClInclude Include="src\graphicsComponent.h" />
@@ -245,6 +246,7 @@
     <ClCompile Include="src\elapsedTime.cpp" />
     <ClCompile Include="src\entity.cpp" />
     <ClCompile Include="src\FBO.cpp" />
+    <ClCompile Include="src\font.cpp" />
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\glutBackend.cpp" />
     <ClCompile Include="src\graphicsComponent.cpp" />

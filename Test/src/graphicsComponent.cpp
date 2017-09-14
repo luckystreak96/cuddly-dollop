@@ -214,28 +214,6 @@ void GraphicsComponent::SetDefaults(std::string name)
 	//SetBoundingBox();
 }
 
-void GraphicsComponent::SetTranslatedVertices(Vector3f pos, Vector3f vel)
-{
-	//Copy the current vertices
-	m_translatedVertices = std::vector<Vertex>(m_vertices);
-
-	//Calculate the second position
-	float x = pos.x + vel.x * (float)ElapsedTime::GetInstance().GetElapsedTime();
-	float y = pos.y + vel.y * (float)ElapsedTime::GetInstance().GetElapsedTime();
-	float z = pos.z + vel.z * (float)ElapsedTime::GetInstance().GetElapsedTime();
-
-	for (Vertex& v : m_translatedVertices)
-	{
-		v.vertex.x += x;
-		v.vertex.y += y;
-		v.vertex.z += z;
-	}
-}
-
-std::vector<Vertex> GraphicsComponent::GetTranslatedVertices()
-{
-	return m_translatedVertices;
-}
 
 std::string GraphicsComponent::GetName()
 {
