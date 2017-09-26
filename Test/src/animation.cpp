@@ -5,7 +5,9 @@ int Animation::m_progress = 0;
 Animation::Animation()
 {
 	srand(time(NULL));
-	m_delay = rand() % 20 + 160;
+	//m_delay = rand() % 20 + 160;
+	srand(clock());
+	m_delay = rand() % 140 + 260;
 }
 
 void Animation::AnimationCounter(float et)

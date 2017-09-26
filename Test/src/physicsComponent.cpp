@@ -71,7 +71,7 @@ void PhysicsComponent::ActionMove(bool up, bool down, bool left, bool right)
 {
 	//ApplyGravity();
 
-	float speed = 4.0f;
+	float speed = 2.0f;
 	if (left)
 		m_velocity.x -= speed;
 	if (right)

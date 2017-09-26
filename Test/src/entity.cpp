@@ -2,10 +2,10 @@
 
 Entity::Entity(bool playerInput)
 {
-	m_graphicsComponent = /*!playerInput ? new GraphicsComponent() :*/ new PlayerGraphicsComponent();
+	m_graphicsComponent = !playerInput ? new PlayerGraphicsComponent("res/ghost.png", "TILE") : new PlayerGraphicsComponent("res/ghost.png", "TILE");
 	components.push_back(m_graphicsComponent);
 
-	m_physicsComponent = new PlayerPhysicsComponent(Vector3f(), "TILE", Vector3f(0.9f, 0.4f, -0.45f), Vector3f(1, 0, 0));
+	m_physicsComponent = playerInput ? new PlayerPhysicsComponent(Vector3f(), "TILE", Vector3f(0.9f, 0.4f, -0.45f), Vector3f(1.0f, 0, 0)) : new PlayerPhysicsComponent(Vector3f(), "TILE", Vector3f(0.9f, 0.4f, -0.45f), Vector3f(1.0f, 0, 0));
 	components.push_back(m_physicsComponent);
 
 	m_inputComponent = playerInput ? new PlayerInputComponent(m_physicsComponent, m_graphicsComponent) : new InputComponent();
