@@ -4,7 +4,8 @@
 
 MapHandler::MapHandler() : m_mesh(Mesh())
 {
-	m_tiles.push_back(new MapTile(Vector3f(10, 10, 4.5f), COMPOSITION, "res/pattern.png"));
+	m_tiles.push_back(new MapTile(Vector3f(4, 3, 4.0f), COMPOSITION, "res/pimkin.png"));
+	m_tiles.push_back(new MapTile(Vector3f(5, 3, 4.0f), COMPOSITION, "res/pumpkin.png"));
 	m_tiles.push_back(new MapTile(Vector3f(2, 4, 4), COMPOSITION, "res/pattern.png"));
 	m_tiles.push_back(new MapTile(Vector3f(2, 3, 4.5f), COMPOSITION, "res/grass_01.png"));
 	m_tiles.push_back(new MapTile(Vector3f(3, 4, 3.5f), COMPOSITION, "res/bridge.png"));

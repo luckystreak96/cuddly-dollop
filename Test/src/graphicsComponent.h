@@ -31,14 +31,12 @@ public:
 	virtual void Draw(bool withTex = true);
 	virtual void Update();//Needs pos from physics component
 	std::vector<Vertex> GetVertices();
-	std::vector<Vertex> GetTranslatedVertices();
 	std::vector<GLuint> GetIndices();
 	std::string GetTexture();
 	std::vector<Vector3f>* GetModels() { if (m_models == NULL) m_models = new std::vector<Vector3f>(); return m_models; }
 	int GetHighestIndex();
 	void SetBuffers();
 	void ResetVBO();
-	void SetTranslatedVertices(Vector3f pos, Vector3f vel);
 	bool LoadExternalResources();
 	bool UnloadExternalResources();
 	bool LoadGLResources();
@@ -57,7 +55,6 @@ protected:
 	int m_MBO_instances = 1;
 	std::vector<GLuint> m_indices;
 	std::vector<Vertex> m_vertices;
-	std::vector<Vertex> m_translatedVertices;
 	std::vector<Vertex> m_originalVertices;
 	std::vector<Vector3f>* m_models = NULL;
 	Vector3f m_size = Vector3f(-1, -1, -1);
