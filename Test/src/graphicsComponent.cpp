@@ -7,12 +7,13 @@ void GraphicsComponent::ReceiveMessage(std::vector<std::string> msg)
 
 GraphicsComponent::~GraphicsComponent()
 {
+	UnloadGLResources();
 	delete m_models;
 }
 
 void GraphicsComponent::Construct()
 {
-	m_pos = Vector3f(2.0f, 2.0f, 5.0f);
+	m_pos = Vector3f(0.0f, 0.0f, 0.0f);
 	m_modelMat.SetTranslation(m_pos);
 
 	SetDefaults(m_modelName);
@@ -30,6 +31,7 @@ GraphicsComponent::GraphicsComponent(std::vector<Vertex>* verts, std::vector<GLu
 {
 	m_IBO = 0;
 	m_VBO = 0;
+	m_MBO = 0;
 
 	m_vertices = std::vector<Vertex>(*verts);
 	m_indices = std::vector<GLuint>(*inds);
@@ -98,6 +100,8 @@ bool GraphicsComponent::UnloadGLResources()
 		glDeleteBuffers(1, &m_IBO);
 	if (m_VBO != 0)
 		glDeleteBuffers(1, &m_VBO);
+	//if (m_MBO != 0)
+	//	glDeleteBuffers(1, &m_MBO);
 
 	m_GL_loaded = false;
 

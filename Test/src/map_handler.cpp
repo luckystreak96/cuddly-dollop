@@ -6,7 +6,7 @@ MapHandler::MapHandler() : m_mesh(Mesh())
 {
 	srand(clock());
 
-	//m_tiles.push_back(new MapTile(Vector3f(4, 3, 4.0f), COMPOSITION, "res/pimkin.png"));
+	m_tiles.push_back(new MapTile(Vector3f(4, 3, 4.0f), COMPOSITION, "res/pimkin.png"));
 	m_tiles.push_back(new MapTile(Vector3f(5, 3, 4.0f), COMPOSITION, "res/pumpkin.png"));
 	m_tiles.push_back(new MapTile(Vector3f(2, 4, 4), COMPOSITION, "res/platform.png"));
 	m_tiles.push_back(new MapTile(Vector3f(2, 3, 4.5f), COMPOSITION, "res/yellowGrass.png"));
@@ -36,7 +36,7 @@ MapHandler::MapHandler() : m_mesh(Mesh())
 			int num = rand() % 30 + 1;
 			num = num > 4 ? 1 : num;
 			//m_tiles.push_back(new MapTile(Vector3f((float)x, (float)y, 5.f), COMPOSITION, "res/grass_0" + std::to_string(num) + ".png"));
-			if(num == 4) m_tiles.push_back(new MapTile(Vector3f((float)x, (float)y, 4.f), COMPOSITION, "res/pumpkin.png"));
+			//if(num == 4) m_tiles.push_back(new MapTile(Vector3f((float)x, (float)y, 4.f), COMPOSITION, "res/pumpkin.png"));
 			m_tiles.push_back(new MapTile(Vector3f((float)x, (float)y, 5.f), COMPOSITION, "res/yellowGrass.png"));
 		}
 

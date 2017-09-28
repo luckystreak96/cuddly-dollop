@@ -130,7 +130,7 @@ void Bloom::End(bool dark)
 	{
 		BasicEffect::GetInstance().Enable();
 		BasicEffect::GetInstance().SetModelPosition(&pps.GetModelMat()->GetWorldTrans().m[0][0]);
-		glBindTexture(GL_TEXTURE_2D, m_bloom.getColourTexture());
+		glBindTexture(GL_TEXTURE_2D, m_gaussV.getColourTexture());
 	}
 
 	//Draw only base frame

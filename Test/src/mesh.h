@@ -19,9 +19,9 @@
 class Mesh
 {
 public:
-	Mesh();
+	Mesh(unsigned int atlasSize = 8);
 	~Mesh();
-	void AddToMesh(std::vector<Vertex>& verts, std::vector<GLuint>& inds, int biggestIndex, Vector3f pos, std::string tex, Transformation* t);
+	void AddToMesh(std::vector<Vertex>& verts, std::vector<GLuint>& inds, int biggestIndex, Vector3f pos, std::string tex, Transformation* t, int index = -1);
 	void Reset();
 	void Finalize(std::string name);
 	std::vector<Vertex>* GetMeshVertices();

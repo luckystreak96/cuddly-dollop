@@ -26,8 +26,8 @@ bool SceneWorld::Init()
 	m_mapHandler = new MapHandler();
 
 	m_player = new Entity(true);
-	m_player->Physics()->SetPosition(Vector3f(0, 0, 4.0f));
-	m_player->Physics()->AbsolutePosition(Vector3f(0, 0, 4.0f));
+	m_player->Physics()->SetPosition(Vector3f(0, 2, 4.0f));
+	m_player->Physics()->AbsolutePosition(Vector3f(0, 2, 4.0f));
 	m_test3 = new Entity();
 	m_test3->Physics()->SetPosition(Vector3f(7.f, 6.5f, 3.0f));
 	m_test3->Physics()->AbsolutePosition(Vector3f(7.f, 6.5f, 3.0f));
@@ -39,6 +39,9 @@ bool SceneWorld::Init()
 	m_celist.push_back(m_player);
 	m_celist.push_back(m_test3);
 	m_celist.push_back(m_test2);
+
+	m_font = new Font();
+	m_font->SetText("IT WORKS", Vector3f(0, 0, 0));
 
 	return true;
 }
@@ -173,6 +176,8 @@ void SceneWorld::Update()
 	m_World->Follow(m_player->Physics()->Position(), Vector3f(32, 18, 0));
 	//m_camera->Update(m_player->Position());//this needs to change LOLOLOLOL
 
+	m_font->SetText(std::string(std::to_string(ElapsedTime::GetInstance().GetFPS())), Vector3f(0, 0, 0));
+
 	Renderer::GetInstance().Empty();
 }
 
@@ -213,12 +218,11 @@ void SceneWorld::RenderPass()
 	//BasicEffect::GetInstance().Enable();
 	//Effect::SetWorldPosition(*m_World->GetWOTrans().m);
 
+	BasicEffect::GetInstance().Enable();
+	Effect::SetWorldPosition(*m_World->GetWOTrans().m);
+
 	if (!m_bloomEffect)
 	{
-		//BasicEffect::GetInstance().Enable();
-		BasicEffect::GetInstance().Enable();
-		Effect::SetWorldPosition(*m_World->GetWOTrans().m);
-
 		//m_mapHandler->Draw();
 		m_mapHandler->SetRender();
 
@@ -233,8 +237,8 @@ void SceneWorld::RenderPass()
 
 		//HeightEffect::GetInstance().Enable();
 		//HeightEffect::GetInstance().SetPlayerPos(m_player->Physics()->Position());
-		BasicEffect::GetInstance().Enable();
-		Effect::SetWorldPosition(*m_World->GetWOTrans().m);
+
+		m_font->Draw();
 
 		//m_mapHandler->Draw();
 		m_mapHandler->SetRender();
