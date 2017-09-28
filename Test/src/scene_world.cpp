@@ -31,10 +31,14 @@ bool SceneWorld::Init()
 	m_test3 = new Entity();
 	m_test3->Physics()->SetPosition(Vector3f(7.f, 6.5f, 3.0f));
 	m_test3->Physics()->AbsolutePosition(Vector3f(7.f, 6.5f, 3.0f));
+	m_test2 = new Entity();
+	m_test2->Physics()->SetPosition(Vector3f(4.f, 0.0f, 4.0f));
+	m_test2->Physics()->AbsolutePosition(Vector3f(4.f, 0.0f, 4.0f));
 
 	m_celist = std::vector<Entity*>();
 	m_celist.push_back(m_player);
 	m_celist.push_back(m_test3);
+	m_celist.push_back(m_test2);
 
 	return true;
 }
@@ -136,7 +140,7 @@ void SceneWorld::Interact()
 			}
 		}
 
-		if(inter != NULL)
+		if (inter != NULL)
 		{
 			m_player->Communicate(inter->Input()->Interact());
 		}
@@ -168,6 +172,8 @@ void SceneWorld::Update()
 
 	m_World->Follow(m_player->Physics()->Position(), Vector3f(32, 18, 0));
 	//m_camera->Update(m_player->Position());//this needs to change LOLOLOLOL
+
+	Renderer::GetInstance().Empty();
 }
 
 void SceneWorld::RenderPass()
@@ -190,6 +196,8 @@ void SceneWorld::RenderPass()
 		BlurEffect::GetInstance().SetWorldPosition(*m_World->GetWOTrans().m);
 		BloomEffect::GetInstance().Enable();
 		BloomEffect::GetInstance().SetWorldPosition(*m_World->GetWOTrans().m);
+		BloomEffect::GetInstance().Enable(BloomEffect::GetInstance().GetDark());
+		BloomEffect::GetInstance().SetWorldPosition(*m_World->GetWOTrans().m);
 		CombineEffect::GetInstance().Enable();
 		CombineEffect::GetInstance().SetWorldPosition(*m_World->GetWOTrans().m);
 		TransparencyEffect::GetInstance().Enable();
@@ -207,33 +215,40 @@ void SceneWorld::RenderPass()
 
 	if (!m_bloomEffect)
 	{
-		m_mapHandler->Draw();
-
-		for (auto it : m_celist)
-			it->Draw();
-	}
-	else
-		//Draw blur
-	{
-		//m_trail.Begin();
-		//m_fog.Begin();
-		m_bloom.Begin();
-
-		HeightEffect::GetInstance().Enable();
-		HeightEffect::GetInstance().SetPlayerPos(m_player->Physics()->Position());
+		//BasicEffect::GetInstance().Enable();
+		BasicEffect::GetInstance().Enable();
 		Effect::SetWorldPosition(*m_World->GetWOTrans().m);
 
-		m_mapHandler->Draw();
+		//m_mapHandler->Draw();
+		m_mapHandler->SetRender();
 
 		for (auto it : m_celist)
-			it->Draw();
+			//it->Draw();
+			it->SetRender();
+		Renderer::GetInstance().Draw();
+	}
+	else
+	{
+		m_bloom.Begin();
 
-		m_bloom.End();
-		//m_fog.End(m_player->Physics()->Position());
-		//m_trail.End();
+		//HeightEffect::GetInstance().Enable();
+		//HeightEffect::GetInstance().SetPlayerPos(m_player->Physics()->Position());
+		BasicEffect::GetInstance().Enable();
+		Effect::SetWorldPosition(*m_World->GetWOTrans().m);
+
+		//m_mapHandler->Draw();
+		m_mapHandler->SetRender();
+
+		for (auto it : m_celist)
+			it->SetRender();
+		//it->Draw();
+		Renderer::GetInstance().Draw();
+
+		bool darkBloom = true;
+		m_bloom.End(darkBloom);
 	}
 
-
+	//Debug tile outline drawing
 	if (Globals::DEBUG_DRAW_TILE_OUTLINES)
 	{
 		glBegin(GL_LINES);
@@ -256,7 +271,7 @@ void SceneWorld::RenderPass()
 
 void SceneWorld::SetAudioPosition()
 {
-	if(m_player != NULL)
+	if (m_player != NULL)
 		SoundManager::GetInstance().SetListenerPosition(m_player->Physics()->Position(), m_player->Physics()->Velocity());
 	else
 		SoundManager::GetInstance().SetListenerPosition();

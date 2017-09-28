@@ -5,18 +5,18 @@ Entity::Entity(bool playerInput)
 	m_graphicsComponent = !playerInput ? new PlayerGraphicsComponent("res/ghost.png", "TILE") : new PlayerGraphicsComponent("res/ghost.png", "TILE");
 	components.push_back(m_graphicsComponent);
 
-	m_physicsComponent = playerInput ? new PlayerPhysicsComponent(Vector3f(), "TILE", Vector3f(0.9f, 0.4f, -0.45f), Vector3f(1.0f, 0, 0)) : new PlayerPhysicsComponent(Vector3f(), "TILE", Vector3f(0.9f, 0.4f, -0.45f), Vector3f(1.0f, 0, 0));
+	//m_physicsComponent = playerInput ? new PlayerPhysicsComponent(Vector3f(), "TILE", Vector3f(0.9f, 0.4f, -0.45f), Vector3f(1.0f, 0, 0)) : new PlayerPhysicsComponent(Vector3f(), "TILE", Vector3f(0.9f, 0.4f, -0.45f), Vector3f(1.0f, 0, 0));
 	m_physicsComponent = new PlayerPhysicsComponent(Vector3f(), "TILE", Vector3f(0.8f, 0.4f, -0.45f), Vector3f(1, 0, 0));
 	components.push_back(m_physicsComponent);
 
 	m_inputComponent = playerInput ? new PlayerInputComponent(m_physicsComponent, m_graphicsComponent) : new InputComponent();
 	components.push_back(m_inputComponent);
 
-	if (!playerInput)
-	{
-		AudioComponent* audio = new AudioComponent();
-		components.push_back(audio);
-	}
+	//if (!playerInput)
+	//{
+	//	AudioComponent* audio = new AudioComponent();
+	//	components.push_back(audio);
+	//}
 }
 
 Entity::~Entity()
@@ -51,4 +51,9 @@ void Entity::Draw()
 {
 	Effect::SetModelPosition(&m_graphicsComponent->GetModelMat()->GetWorldTrans().m[0][0]);
 	m_graphicsComponent->Draw();
+}
+
+void Entity::SetRender()
+{
+	Renderer::GetInstance().Add(m_graphicsComponent);
 }

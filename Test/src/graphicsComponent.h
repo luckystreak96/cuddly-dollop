@@ -22,7 +22,7 @@ public:
 	void ReceiveMessage(std::vector<std::string> msg);
 
 	GraphicsComponent(std::string modelName = "TILE", std::string texPath = std::string("res/mushroom.png"));
-	GraphicsComponent(std::vector<Vertex> verts, std::vector<GLuint> inds, std::string texPath = std::string("res/mushroom.png"));
+	GraphicsComponent(std::vector<Vertex>* verts, std::vector<GLuint>* inds, std::string texPath = std::string("res/mushroom.png"));
 	~GraphicsComponent();
 	void Construct();
 	void SetDefaults(std::string name = "TILE");
@@ -34,6 +34,7 @@ public:
 	std::vector<GLuint> GetIndices();
 	std::string GetTexture();
 	std::vector<Vector3f>* GetModels() { if (m_models == NULL) m_models = new std::vector<Vector3f>(); return m_models; }
+	float GetZ() { return m_pos.z; }
 	int GetHighestIndex();
 	void SetBuffers();
 	void ResetVBO();

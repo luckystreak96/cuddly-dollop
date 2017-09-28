@@ -10,9 +10,9 @@ bool HeightEffect::Init()
 	const char* vs = "shaders/heightFog.vs";
 	const char* fs = "shaders/heightFog.fs";
 
-	AddShader(vs, GL_VERTEX_SHADER);
-	AddShader(fs, GL_FRAGMENT_SHADER);
-	bool isFinalized = Finalize();
+	AddShader(vs, GL_VERTEX_SHADER, m_shaderProg);
+	AddShader(fs, GL_FRAGMENT_SHADER, m_shaderProg);
+	bool isFinalized = Finalize(m_shaderProg);
 	assert(isFinalized == true);
 
 	return true;

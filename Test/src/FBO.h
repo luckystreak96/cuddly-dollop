@@ -15,6 +15,7 @@ public:
 private:
 	int m_width;
 	int m_height;
+	int m_depthBufferType;
 
 	GLuint frameBuffer;
 

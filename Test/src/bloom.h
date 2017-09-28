@@ -13,7 +13,7 @@ public:
 	Bloom();
 
 	void Begin();
-	void End();
+	void End(bool dark);
 	void ResetTextureSizes();
 
 private:

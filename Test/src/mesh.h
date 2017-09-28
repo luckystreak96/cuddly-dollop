@@ -1,6 +1,7 @@
 #ifndef MESH_H__
 #define MESH_H__
 
+#include <sys/stat.h>
 #include <iostream>
 #include <string>
 #include <math.h>
@@ -23,8 +24,8 @@ public:
 	void AddToMesh(std::vector<Vertex>& verts, std::vector<GLuint>& inds, int biggestIndex, Vector3f pos, std::string tex, Transformation* t);
 	void Reset();
 	void Finalize(std::string name);
-	std::vector<Vertex> GetMeshVertices();
-	std::vector<GLuint> GetMeshIndices();
+	std::vector<Vertex>* GetMeshVertices();
+	std::vector<GLuint>* GetMeshIndices();
 	std::vector<Transformation*> GetMeshModels() { return m_models; };
 private:
 	GLuint m_IBO;

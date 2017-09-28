@@ -11,9 +11,9 @@ bool BlurEffect::Init()
 	//const char* fs = "shaders/blur.fs";
 	const char* fs = "shaders/gaussian11.fs";
 
-	AddShader(vs, GL_VERTEX_SHADER);
-	AddShader(fs, GL_FRAGMENT_SHADER);
-	bool isFinalized = Finalize();
+	AddShader(vs, GL_VERTEX_SHADER, m_shaderProg);
+	AddShader(fs, GL_FRAGMENT_SHADER, m_shaderProg);
+	bool isFinalized = Finalize(m_shaderProg);
 	assert(isFinalized == true);
 
 	return true;

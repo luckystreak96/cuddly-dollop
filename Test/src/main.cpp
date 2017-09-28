@@ -5,7 +5,7 @@
 
 int main(int argc, char** argv)
 {
-    GLUTBackendInit(argc, argv, true, false);
+    GLUTBackendInit(argc, argv, false, false);
 
     if(!GLUTBackendCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, IS_FULLSCREEN, "Game Title Here"))
     {

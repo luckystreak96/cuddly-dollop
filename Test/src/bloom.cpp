@@ -26,11 +26,11 @@ void Bloom::Begin()
 	//FBO
 	m_fbo.bindFrameBuffer();
 
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void Bloom::End()
+void Bloom::End(bool dark)
 {
 	m_fbo.unbindFrameBuffer();
 
@@ -44,7 +44,9 @@ void Bloom::End()
 
 	glBindTexture(GL_TEXTURE_2D, m_fbo.getColourTexture());
 
-	BloomEffect::GetInstance().Enable();
+	GLuint program = dark ? BloomEffect::GetInstance().GetDark() : BloomEffect::GetInstance().GetNormal();
+	//program = BloomEffect::GetInstance().GetNormal();
+	BloomEffect::GetInstance().Enable(program);
 	BloomEffect::GetInstance().SetModelPosition(&pps.GetModelMat()->GetWorldTrans().m[0][0]);
 	pps.Draw(false);
 
@@ -109,14 +111,29 @@ void Bloom::End()
 	pps.GetModelMat()->SetScale(Vector3f(1.0f, 1.0f, 1));
 
 	//END SECOND GAUSSIAN BLUR
-	
-	//Combine blur with actual frame
-	CombineEffect::GetInstance().Enable();
-	CombineEffect::GetInstance().SetModelPosition(&pps.GetModelMat()->GetWorldTrans().m[0][0]);
-	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, m_gaussV.getColourTexture());
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, m_fbo.getColourTexture());
+
+	bool test = false;
+
+	if (!test)
+	{
+		//Combine blur with actual frame
+		CombineEffect::GetInstance().Enable();
+		CombineEffect::GetInstance().SetModelPosition(&pps.GetModelMat()->GetWorldTrans().m[0][0]);
+		float intensity = dark ? 0.9f : 0.9f;
+		CombineEffect::GetInstance().SetIntensity(intensity);
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_2D, m_gaussV.getColourTexture());
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, m_fbo.getColourTexture());
+	}
+	else
+	{
+		BasicEffect::GetInstance().Enable();
+		BasicEffect::GetInstance().SetModelPosition(&pps.GetModelMat()->GetWorldTrans().m[0][0]);
+		glBindTexture(GL_TEXTURE_2D, m_bloom.getColourTexture());
+	}
+
+	//Draw only base frame
 
 	pps.Draw(false);
 }
@@ -124,7 +141,7 @@ void Bloom::End()
 void Bloom::ResetTextureSizes()
 {
 	m_fbo.resetTextures(m_width, m_height);
-	m_gaussH.resetTextures(m_width / m_divisor, m_height / m_divisor);
-	m_gaussV.resetTextures(m_width / m_divisor, m_height / m_divisor);
+	m_gaussH.resetTextures(m_width / (int)m_divisor, m_height / (int)m_divisor);
+	m_gaussV.resetTextures(m_width / (int)m_divisor, m_height / (int)m_divisor);
 	m_bloom.resetTextures(m_width, m_height);
 }

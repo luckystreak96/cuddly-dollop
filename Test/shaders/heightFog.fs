@@ -26,7 +26,7 @@ void main()
    color = mix(color * 1/*(1 - (abs(0.05 * pow((player.z - position.z), 2)) + (abs(0.001 * pow(((player.x - position.x) + (player.y - position.y)), 2)))))*/, //use this for spotlight effect
       mix(vec4(0.5, 0.5, 0.5, 1.0), color, 1.0 + 0.1 * (player.z - position.z)), 0.5);
 
-   color.a = 1.0;
+   //color.a += 0.1;
 
 	FragColor = color;
 }

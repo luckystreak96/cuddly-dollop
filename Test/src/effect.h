@@ -64,17 +64,17 @@ class Effect
 public:
 	Effect();
 	~Effect();
-	virtual bool Init();//create shader program
-	void Enable();//enable shader -- glUseShaderProgram(m_shaderProgram);
+	virtual bool Init(GLuint& program);//create shader program
+	void Enable(GLuint program = 0);//enable shader -- glUseShaderProgram(m_shaderProgram);
 	static void SetModelPosition(float* mat);
 	static void SetWorldPosition(float* mat);
 protected:
-	bool AddShader(const char* shaderFileName, GLenum shaderType);//add a shader thru its contents
-	bool Finalize();//Link objects
+	bool AddShader(const char* shaderFileName, GLenum shaderType, GLuint& program);//add a shader thru its contents
+	bool Finalize(GLuint& program);//Link objects
 	static GLuint GetUniformLocation(const GLchar* name);
-private:
-	static GLuint m_currentShaderProgram;
 	GLuint m_shaderProg;
+	static GLuint m_currentShaderProgram;
+private:
 	typedef std::list<GLuint> ShaderObjList;
 	ShaderObjList m_shaderObjList;
 };

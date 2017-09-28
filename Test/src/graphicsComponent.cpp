@@ -26,15 +26,15 @@ GraphicsComponent::GraphicsComponent(std::string modelName, std::string texPath)
 	Construct();
 }
 
-GraphicsComponent::GraphicsComponent(std::vector<Vertex> verts, std::vector<GLuint> inds, std::string texPath) : m_texture(texPath), m_modelName("NONE")
+GraphicsComponent::GraphicsComponent(std::vector<Vertex>* verts, std::vector<GLuint>* inds, std::string texPath) : m_texture(texPath), m_modelName("NONE")
 {
 	m_IBO = 0;
 	m_VBO = 0;
 
-	m_vertices = std::vector<Vertex>(verts);
-	m_indices = std::vector<GLuint>(inds);
+	m_vertices = std::vector<Vertex>(*verts);
+	m_indices = std::vector<GLuint>(*inds);
 
-	MathUtils::CalcNormals(m_indices, m_vertices);
+	//MathUtils::CalcNormals(m_indices, m_vertices);
 
 	m_originalVertices = std::vector<Vertex>(m_vertices);
 
@@ -52,8 +52,8 @@ void GraphicsComponent::Update()
 	m_models->insert(m_models->end(), 4, m_pos);
 
 	//Might not be ideal to have this here
-	BasicEffect::GetInstance().Enable();
-	BasicEffect::GetInstance().SetModelPosition(&m_modelMat.GetWorldTrans().m[0][0]);
+	//BasicEffect::GetInstance().Enable();
+	Effect::SetModelPosition(&m_modelMat.GetWorldTrans().m[0][0]);
 }
 
 bool GraphicsComponent::LoadExternalResources()
@@ -106,6 +106,8 @@ bool GraphicsComponent::UnloadGLResources()
 
 void GraphicsComponent::Draw(bool withTex)
 {
+	Effect::SetModelPosition(&GetModelMat()->GetWorldTrans().m[0][0]);
+
 	if (!m_external_loaded || !m_GL_loaded || !mustDraw || (m_modelName == "NONE" && m_vertices.size() <= 0))
 		return;
 

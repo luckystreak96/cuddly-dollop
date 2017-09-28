@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include <time.h>
 #include "texture.h"
 #include "model.h"
 #include "array3d.h"
@@ -11,6 +12,7 @@
 #include "map_tile.h"
 #include "graphicsComponent.h"
 #include <vector>
+#include "renderer.h"
 
 class MapHandler
 {
@@ -18,6 +20,7 @@ public:
 	MapHandler();
 	~MapHandler();
 	MapHandler(const std::string& filePath);
+	void SetRender();
 	void Draw();
 	void Update();
 	std::vector<MapTile*>* Tiles();

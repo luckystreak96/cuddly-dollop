@@ -121,19 +121,7 @@
     <ClInclude Include="src\scene_world.h">
       <Filter>Header Files\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="src\pointLightShadowEffect.h">
-      <Filter>Header Files\Effects</Filter>
-    </ClInclude>
-    <ClInclude Include="src\pointLightEffect.h">
-      <Filter>Header Files\Effects</Filter>
-    </ClInclude>
-    <ClInclude Include="src\shadowMapEffect.h">
-      <Filter>Header Files\Effects</Filter>
-    </ClInclude>
     <ClInclude Include="src\effect.h">
-      <Filter>Header Files\Effects</Filter>
-    </ClInclude>
-    <ClInclude Include="src\directionalLightEffect.h">
       <Filter>Header Files\Effects</Filter>
     </ClInclude>
     <ClInclude Include="src\basicEffect.h">
@@ -298,6 +286,9 @@
     <ClInclude Include="src\font.h">
       <Filter>Header Files\Engine\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="src\renderer.h">
+      <Filter>Header Files\Engine\Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -306,22 +297,10 @@
     <ClCompile Include="src\game.cpp">
       <Filter>Source Files\Engine</Filter>
     </ClCompile>
-    <ClCompile Include="src\directionalLightEffect.cpp">
-      <Filter>Source Files\Effects</Filter>
-    </ClCompile>
     <ClCompile Include="src\basicEffect.cpp">
       <Filter>Source Files\Effects</Filter>
     </ClCompile>
     <ClCompile Include="src\effect.cpp">
-      <Filter>Source Files\Effects</Filter>
-    </ClCompile>
-    <ClCompile Include="src\pointLightEffect.cpp">
-      <Filter>Source Files\Effects</Filter>
-    </ClCompile>
-    <ClCompile Include="src\pointLightShadowEffect.cpp">
-      <Filter>Source Files\Effects</Filter>
-    </ClCompile>
-    <ClCompile Include="src\shadowMapEffect.cpp">
       <Filter>Source Files\Effects</Filter>
     </ClCompile>
     <ClCompile Include="src\define.cpp">
@@ -459,6 +438,9 @@
     <ClCompile Include="src\font.cpp">
       <Filter>Source Files\Engine\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="src\renderer.cpp">
+      <Filter>Source Files\Engine\Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\ambientLight.fs">
@@ -516,6 +498,9 @@
       <Filter>Shaders</Filter>
     </None>
     <None Include="shaders\transparency.fs">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\bloomDark.fs">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>

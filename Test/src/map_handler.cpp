@@ -4,25 +4,27 @@
 
 MapHandler::MapHandler() : m_mesh(Mesh())
 {
-	m_tiles.push_back(new MapTile(Vector3f(4, 3, 4.0f), COMPOSITION, "res/pimkin.png"));
+	srand(clock());
+
+	//m_tiles.push_back(new MapTile(Vector3f(4, 3, 4.0f), COMPOSITION, "res/pimkin.png"));
 	m_tiles.push_back(new MapTile(Vector3f(5, 3, 4.0f), COMPOSITION, "res/pumpkin.png"));
-	m_tiles.push_back(new MapTile(Vector3f(2, 4, 4), COMPOSITION, "res/pattern.png"));
-	m_tiles.push_back(new MapTile(Vector3f(2, 3, 4.5f), COMPOSITION, "res/grass_01.png"));
+	m_tiles.push_back(new MapTile(Vector3f(2, 4, 4), COMPOSITION, "res/platform.png"));
+	m_tiles.push_back(new MapTile(Vector3f(2, 3, 4.5f), COMPOSITION, "res/yellowGrass.png"));
 	m_tiles.push_back(new MapTile(Vector3f(3, 4, 3.5f), COMPOSITION, "res/bridge.png"));
-	m_tiles.push_back(new MapTile(Vector3f(4, 4, 3.5f), COMPOSITION, "res/bridge.png"));
-	m_tiles.push_back(new MapTile(Vector3f(5, 4, 3.5f), COMPOSITION, "res/bridge.png"));
+	m_tiles.push_back(new MapTile(Vector3f(4, 4, 3.0f), COMPOSITION, "res/bridge.png"));
+	m_tiles.push_back(new MapTile(Vector3f(5, 4, 3.0f), COMPOSITION, "res/bridge.png"));
 	m_tiles.push_back(new MapTile(Vector3f(6, 4, 3.5f), COMPOSITION, "res/bridge.png"));
-	m_tiles.push_back(new MapTile(Vector3f(7, 4, 4), COMPOSITION, "res/pattern.png"));
-	m_tiles.push_back(new MapTile(Vector3f(8, 4, 3.5f), COMPOSITION, "res/pattern.png"));
-	m_tiles.push_back(new MapTile(Vector3f(9, 4, 3.0f), COMPOSITION, "res/pattern.png"));
-	m_tiles.push_back(new MapTile(Vector3f(10, 4, 2.5f), COMPOSITION, "res/pattern.png"));
-	m_tiles.push_back(new MapTile(Vector3f(11, 4, 2.0f), COMPOSITION, "res/pattern.png"));
-	m_tiles.push_back(new MapTile(Vector3f(12, 4, 1.5f), COMPOSITION, "res/pattern.png"));
-	m_tiles.push_back(new MapTile(Vector3f(13, 4, 1.0f), COMPOSITION, "res/pattern.png"));
-	m_tiles.push_back(new MapTile(Vector3f(14, 4, 0.5f), COMPOSITION, "res/pattern.png"));
-	m_tiles.push_back(new MapTile(Vector3f(7, 5, 4), COMPOSITION, "res/pattern.png"));
-	m_tiles.push_back(new MapTile(Vector3f(7, 6, 4), COMPOSITION, "res/pattern.png"));
-	m_tiles.push_back(new MapTile(Vector3f(7, 3, 4.5f), COMPOSITION, "res/grass_01.png"));
+	m_tiles.push_back(new MapTile(Vector3f(7, 4, 4), COMPOSITION, "res/platform.png"));
+	m_tiles.push_back(new MapTile(Vector3f(8, 4, 3.5f), COMPOSITION, "res/platform.png"));
+	m_tiles.push_back(new MapTile(Vector3f(9, 4, 3.0f), COMPOSITION, "res/platform.png"));
+	m_tiles.push_back(new MapTile(Vector3f(10, 4, 2.5f), COMPOSITION, "res/platform.png"));
+	m_tiles.push_back(new MapTile(Vector3f(11, 4, 2.0f), COMPOSITION, "res/platform.png"));
+	m_tiles.push_back(new MapTile(Vector3f(12, 4, 1.5f), COMPOSITION, "res/platform.png"));
+	m_tiles.push_back(new MapTile(Vector3f(13, 4, 1.0f), COMPOSITION, "res/platform.png"));
+	m_tiles.push_back(new MapTile(Vector3f(14, 4, 0.5f), COMPOSITION, "res/platform.png"));
+	m_tiles.push_back(new MapTile(Vector3f(7, 5, 4), COMPOSITION, "res/platform.png"));
+	m_tiles.push_back(new MapTile(Vector3f(7, 6, 4), COMPOSITION, "res/platform.png"));
+	m_tiles.push_back(new MapTile(Vector3f(7, 3, 4.5f), COMPOSITION, "res/yellowGrass.png"));
 
 	//m_tiles.push_back(new Tile(Vector3f(2, 4, 4), COMPOSITION, "res/pattern.png", Vector3f(1.f, 0.5f, 1.f), Vector3f(1.f, 0.f, 1.f)));
 
@@ -31,9 +33,11 @@ MapHandler::MapHandler() : m_mesh(Mesh())
 		for (int y = 0; y < 18; y++)
 		{
 			//m_tiles.push_back(new Tile(Vector3f(x, y, 5), COMPOSITION, "res/sand.png"));
-			int num = rand() % 20 + 1;
+			int num = rand() % 30 + 1;
 			num = num > 4 ? 1 : num;
-			m_tiles.push_back(new MapTile(Vector3f((float)x, (float)y, 5.f), COMPOSITION, "res/grass_0" + std::to_string(num) + ".png"));
+			//m_tiles.push_back(new MapTile(Vector3f((float)x, (float)y, 5.f), COMPOSITION, "res/grass_0" + std::to_string(num) + ".png"));
+			if(num == 4) m_tiles.push_back(new MapTile(Vector3f((float)x, (float)y, 4.f), COMPOSITION, "res/pumpkin.png"));
+			m_tiles.push_back(new MapTile(Vector3f((float)x, (float)y, 5.f), COMPOSITION, "res/yellowGrass.png"));
 		}
 
 	std::sort(m_tiles.begin(), m_tiles.end(), TileSort);
@@ -67,7 +71,7 @@ void MapHandler::SetupMesh()
 
 	m_MBO_instances = m_tiles.size();
 
-	m_texture = "map01.png";
+	m_texture = "res/map01.png";
 	m_mesh.Finalize(m_texture);
 	m_graphics = new GraphicsComponent(m_mesh.GetMeshVertices(), m_mesh.GetMeshIndices(), m_texture);
 }
@@ -91,11 +95,12 @@ void MapHandler::Update()
 
 		for (auto x : m_tiles)
 		{
-			m_graphics->GetModels()->insert(m_graphics->GetModels()->end(), 4, x->Physics()->Position());
+			Vector3f pos = x->Physics()->Position();
+			m_graphics->GetModels()->insert(m_graphics->GetModels()->end(), 4, pos);
 		}
 	}
 
-	m_graphics->Update();
+	//m_graphics->Update();
 
 	//if (m_models.size() == 0)
 	//{
@@ -108,14 +113,18 @@ void MapHandler::Update()
 	//}
 }
 
+void MapHandler::SetRender()
+{
+	m_graphics->GetModelMat()->SetTranslation(Vector3f(0, 0, 0));
+	Renderer::GetInstance().Add(m_graphics);
+}
+
 void MapHandler::Draw()
 {
 	//Set to 0 so the mesh doesnt move all the objects as well.
 	//This should only be modified if the whole mesh is moving, 
 	//otherwise each individual object inside it has its own coords set in the vertices.
 	m_graphics->GetModelMat()->SetTranslation(Vector3f(0, 0, 0));
-
-	Effect::SetModelPosition(&m_graphics->GetModelMat()->GetWorldTrans().m[0][0]);
 
 	m_graphics->Draw();
 }

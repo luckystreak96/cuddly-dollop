@@ -3,6 +3,7 @@
 FBO::FBO(int width, int height, int depthBufferType) {
 	m_width = width;
 	m_height = height;
+	m_depthBufferType = depthBufferType;
 	initialiseFrameBuffer(depthBufferType);
 	GLenum status;
 
@@ -43,6 +44,8 @@ void FBO::cleanUp() {
 */
 void FBO::bindFrameBuffer() {
 	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, frameBuffer);
+	//glEnable(GL_BLEND);
+	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	//glDrawBuffer(GL_COLOR_ATTACHMENT0);
 	//glBindTexture(GL_TEXTURE_2D, colourTexture);
 	//float w = glutGet(GLUT_WINDOW_WIDTH);
@@ -117,6 +120,9 @@ void FBO::createFrameBuffer() {
 	glGenFramebuffers(1, &frameBuffer);
 	glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
 	glDrawBuffer(GL_COLOR_ATTACHMENT0);
+	//glDisable(GL_DEPTH_TEST);
+	//glEnable(GL_BLEND);
+	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 /**
@@ -126,7 +132,7 @@ void FBO::createFrameBuffer() {
 void FBO::createTextureAttachment() {
 	glGenTextures(1, &colourTexture);
 	glBindTexture(GL_TEXTURE_2D, colourTexture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, m_width, m_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_width, m_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -142,7 +148,7 @@ void FBO::createTextureAttachment() {
 void FBO::createDepthTextureAttachment() {
 	glGenTextures(1, &depthTexture);
 	glBindTexture(GL_TEXTURE_2D, depthTexture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32, m_width, m_height, 0, GL_DEPTH_COMPONENT,
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, m_width, m_height, 0, GL_DEPTH_COMPONENT,
 		GL_FLOAT, nullptr);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -160,7 +166,7 @@ void FBO::createDepthBufferAttachment() {
 	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthBuffer);
 }
 
-void FBO::resetTextures(int width, int height) 
+void FBO::resetTextures(int width, int height)
 {
 	m_width = width;
 	m_height = height;
@@ -168,7 +174,6 @@ void FBO::resetTextures(int width, int height)
 	glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
 
 	glDeleteTextures(1, &colourTexture);
-	glDeleteTextures(1, &depthTexture);
 	glDeleteRenderbuffers(1, &depthBuffer);
 
 	glGenTextures(1, &colourTexture);
@@ -180,13 +185,18 @@ void FBO::resetTextures(int width, int height)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, colourTexture, 0);
 
-	glGenTextures(1, &depthTexture);
-	glBindTexture(GL_TEXTURE_2D, depthTexture);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32, m_width, m_height, 0, GL_DEPTH_COMPONENT,
-		GL_FLOAT, nullptr);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthTexture, 0);
+	if (m_depthBufferType == FBO::DEPTH_TEXTURE)
+	{
+		glDeleteTextures(1, &depthTexture);
+
+		glGenTextures(1, &depthTexture);
+		glBindTexture(GL_TEXTURE_2D, depthTexture);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32, m_width, m_height, 0, GL_DEPTH_COMPONENT,
+			GL_FLOAT, nullptr);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthTexture, 0);
+	}
 
 	glGenRenderbuffers(1, &depthBuffer);
 	glBindRenderbuffer(GL_RENDERBUFFER, depthBuffer);

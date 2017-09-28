@@ -31,7 +31,7 @@ void Mesh::AddToMesh(std::vector<Vertex>& verts, std::vector<GLuint>& inds, int 
 		m_textures.emplace(tex, m_texAtlas.AddTexture(tex));
 	}
 
-	for(auto v : verts)
+	for (auto v : verts)
 	{
 		Vertex temp = Vertex(v);
 		temp.vertex += pos;
@@ -39,7 +39,7 @@ void Mesh::AddToMesh(std::vector<Vertex>& verts, std::vector<GLuint>& inds, int 
 		m_vertexList.push_back(temp);
 	}
 
-	for(auto i : inds)
+	for (auto i : inds)
 		m_indices.push_back(i + m_indexProgress);
 
 	m_models.push_back(t);
@@ -49,16 +49,22 @@ void Mesh::AddToMesh(std::vector<Vertex>& verts, std::vector<GLuint>& inds, int 
 
 void Mesh::Finalize(std::string name)
 {
-	m_texAtlas.Generate(1024, false, name);
+	//Make sure texture doesnt exist so it doesnt always lag on startup
+	struct stat buffer;
+	bool textureExists = (stat(name.c_str(), &buffer) == 0);
+
+	if (!textureExists)
+		m_texAtlas.Generate(1024, false, name);
+
 	ResourceManager::GetInstance().LoadTexture(name);
 }
 
-std::vector<Vertex> Mesh::GetMeshVertices()
+std::vector<Vertex>* Mesh::GetMeshVertices()
 {
-	return m_vertexList;
+	return &m_vertexList;
 }
 
-std::vector<GLuint> Mesh::GetMeshIndices()
+std::vector<GLuint>* Mesh::GetMeshIndices()
 {
-	return m_indices;
+	return &m_indices;
 }

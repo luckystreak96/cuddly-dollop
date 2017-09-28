@@ -4,7 +4,7 @@ GLuint Effect::m_currentShaderProgram = 0;
 
 Effect::Effect()
 {
-	Init();
+	Init(m_shaderProg);
 }
 
 Effect::~Effect()
@@ -12,10 +12,10 @@ Effect::~Effect()
 	glDeleteProgram(m_shaderProg);
 }
 
-bool Effect::Init()
+bool Effect::Init(GLuint& program)
 {
-	m_shaderProg = glCreateProgram();
-	if (m_shaderProg == 0)
+	program = glCreateProgram();
+	if (program == 0)
 	{
 		std::cout << "Error creating shader program" << std::endl;
 		system("PAUSE");
@@ -36,15 +36,19 @@ void Effect::SetWorldPosition(float* mat)
 	glUniformMatrix4fv(GetUniformLocation("gWorld"), 1, GL_TRUE, (const GLfloat*)mat);
 }
 
-void Effect::Enable()
+void Effect::Enable(GLuint program)
 {
-	if (m_currentShaderProgram != m_shaderProg)
-		glUseProgram(m_shaderProg);
+	//Default value
+	if (program == 0)
+		program = m_shaderProg;
 
-	m_currentShaderProgram = m_shaderProg;
+	if (m_currentShaderProgram != program)
+		glUseProgram(program);
+
+	m_currentShaderProgram = program;
 }
 
-bool Effect::AddShader(const char* shaderFileName, GLenum shaderType)
+bool Effect::AddShader(const char* shaderFileName, GLenum shaderType, GLuint& program)
 {
 	std::string shaderString;
 	shaderString = Utils::ReadFile(shaderFileName);
@@ -82,41 +86,43 @@ bool Effect::AddShader(const char* shaderFileName, GLenum shaderType)
 	m_shaderObjList.push_back(ShaderObj);
 
 	//Attach it to the program so we can link it
-	glAttachShader(m_shaderProg, ShaderObj);
+	glAttachShader(program, ShaderObj);
 
 	return true;
 }
 
-bool Effect::Finalize()
+bool Effect::Finalize(GLuint& program)
 {
 	GLint Success = 0;
 	GLchar ErrorLog[1024] = { 0 };
 
-	glLinkProgram(m_shaderProg);
-	glGetProgramiv(m_shaderProg, GL_LINK_STATUS, &Success);
+	glLinkProgram(program);
+	glGetProgramiv(program, GL_LINK_STATUS, &Success);
 	if (Success == 0) {
-		glGetProgramInfoLog(m_shaderProg, sizeof(ErrorLog), NULL, ErrorLog);
+		glGetProgramInfoLog(program, sizeof(ErrorLog), NULL, ErrorLog);
 		std::cout << "Error linking shader program: " << ErrorLog << std::endl;
 		return false;
 	}
 
-	Enable();
+	Enable(program);
 
 	GLuint lol = GetUniformLocation("gSampler");
 	GLuint lol2 = GetUniformLocation("gSampler2");
 	glUniform1i(lol, 0);
 	glUniform1i(lol2, 1);
 
-	glValidateProgram(m_shaderProg);
-	glGetProgramiv(m_shaderProg, GL_VALIDATE_STATUS, &Success);
+	glValidateProgram(program);
+	glGetProgramiv(program, GL_VALIDATE_STATUS, &Success);
 	if (!Success) {
-		glGetProgramInfoLog(m_shaderProg, sizeof(ErrorLog), NULL, ErrorLog);
+		glGetProgramInfoLog(program, sizeof(ErrorLog), NULL, ErrorLog);
 		std::cout << "Invalid shader program: " << ErrorLog << std::endl;
 		return false;
 	}
 
 	for (std::list<GLuint>::iterator it = m_shaderObjList.begin(); it != m_shaderObjList.end(); it++)
 		glDeleteShader(*it);
+
+	m_shaderObjList.clear();
 
 	return true;
 }

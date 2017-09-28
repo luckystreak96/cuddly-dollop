@@ -181,7 +181,6 @@
     <ClInclude Include="src\combineEffect.h" />
     <ClInclude Include="src\define.h" />
     <ClInclude Include="src\define_gl.h" />
-    <ClInclude Include="src\directionalLightEffect.h" />
     <ClInclude Include="src\effect.h" />
     <ClInclude Include="src\elapsedTime.h" />
     <ClInclude Include="src\entity.h" />
@@ -209,10 +208,9 @@
     <ClInclude Include="src\playerGraphicsComponent.h" />
     <ClInclude Include="src\playerInputComponent.h" />
     <ClInclude Include="src\playerPhysicsComponent.h" />
-    <ClInclude Include="src\pointLightEffect.h" />
-    <ClInclude Include="src\pointLightShadowEffect.h" />
     <ClInclude Include="src\postProcessingEffect.h" />
     <ClInclude Include="src\post_processing_screen.h" />
+    <ClInclude Include="src\renderer.h" />
     <ClInclude Include="src\resource_loader.h" />
     <ClInclude Include="src\resource_manager.h" />
     <ClInclude Include="src\resource_user.h" />
@@ -220,7 +218,6 @@
     <ClInclude Include="src\scenes.h" />
     <ClInclude Include="src\scene_manager.h" />
     <ClInclude Include="src\scene_world.h" />
-    <ClInclude Include="src\shadowMapEffect.h" />
     <ClInclude Include="src\shadowMapFBO.h" />
     <ClInclude Include="src\soundManager.h" />
     <ClInclude Include="src\texture.h" />
@@ -242,7 +239,6 @@
     <ClCompile Include="src\blur_framebuffer.cpp" />
     <ClCompile Include="src\combineEffect.cpp" />
     <ClCompile Include="src\define.cpp" />
-    <ClCompile Include="src\directionalLightEffect.cpp" />
     <ClCompile Include="src\effect.cpp" />
     <ClCompile Include="src\elapsedTime.cpp" />
     <ClCompile Include="src\entity.cpp" />
@@ -267,15 +263,13 @@
     <ClCompile Include="src\playerGraphicsComponent.cpp" />
     <ClCompile Include="src\playerInputComponent.cpp" />
     <ClCompile Include="src\playerPhysicsComponent.cpp" />
-    <ClCompile Include="src\pointLightEffect.cpp" />
-    <ClCompile Include="src\pointLightShadowEffect.cpp" />
     <ClCompile Include="src\postProcessingEffect.cpp" />
     <ClCompile Include="src\post_processing_screen.cpp" />
+    <ClCompile Include="src\renderer.cpp" />
     <ClCompile Include="src\resource_loader.cpp" />
     <ClCompile Include="src\resource_manager.cpp" />
     <ClCompile Include="src\scene_manager.cpp" />
     <ClCompile Include="src\scene_world.cpp" />
-    <ClCompile Include="src\shadowMapEffect.cpp" />
     <ClCompile Include="src\shadowMapFBO.cpp" />
     <ClCompile Include="src\soundManager.cpp" />
     <ClCompile Include="src\texture.cpp" />
@@ -290,6 +284,7 @@
   <ItemGroup>
     <None Include="shaders\ambientLight.fs" />
     <None Include="shaders\bloom.fs" />
+    <None Include="shaders\bloomDark.fs" />
     <None Include="shaders\blur.fs" />
     <None Include="shaders\blur.vs" />
     <None Include="shaders\combine.fs" />

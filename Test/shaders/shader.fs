@@ -10,7 +10,7 @@ void main()
 {
 	//gl_FragCoord.z += gl_FragCoord.y * 0.000001;
 	vec4 color = texture2D(gSampler, TexCoord0.st);
-	if(color.a < 0.2)
+	if(color.a < 0.1)
 		discard;
 
 	//color.x += 0.05 * gl_FragCoord.z;

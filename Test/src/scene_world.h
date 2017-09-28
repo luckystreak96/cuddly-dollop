@@ -25,6 +25,7 @@
 #include "map_handler.h"
 #include "soundManager.h"
 #include "heightFog.h"
+#include "renderer.h"
 
 class SceneWorld : public Scene
 {
@@ -50,6 +51,7 @@ public:
 
 private:
 	SceneWorld();
+	Entity* m_test2 = NULL;
 	Entity* m_test3 = NULL;
 	Entity* m_player = NULL;
 	Camera* m_camera = NULL;
