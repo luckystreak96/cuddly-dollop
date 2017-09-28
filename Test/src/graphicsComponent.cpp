@@ -13,7 +13,8 @@ GraphicsComponent::~GraphicsComponent()
 
 void GraphicsComponent::Construct()
 {
-	m_pos = Vector3f(0.0f, 0.0f, 0.0f);
+	//When this z is small - transparency fucks up????
+	m_pos = Vector3f(0.0f, 0.0f, 10.0f);
 	m_modelMat.SetTranslation(m_pos);
 
 	SetDefaults(m_modelName);
@@ -55,7 +56,7 @@ void GraphicsComponent::Update()
 
 	//Might not be ideal to have this here
 	//BasicEffect::GetInstance().Enable();
-	Effect::SetModelPosition(&m_modelMat.GetWorldTrans().m[0][0]);
+	//Effect::SetModelPosition(&m_modelMat.GetWorldTrans().m[0][0]);
 }
 
 bool GraphicsComponent::LoadExternalResources()
@@ -100,8 +101,8 @@ bool GraphicsComponent::UnloadGLResources()
 		glDeleteBuffers(1, &m_IBO);
 	if (m_VBO != 0)
 		glDeleteBuffers(1, &m_VBO);
-	//if (m_MBO != 0)
-	//	glDeleteBuffers(1, &m_MBO);
+	if (m_MBO != 0)
+		glDeleteBuffers(1, &m_MBO);
 
 	m_GL_loaded = false;
 
@@ -110,7 +111,7 @@ bool GraphicsComponent::UnloadGLResources()
 
 void GraphicsComponent::Draw(bool withTex)
 {
-	Effect::SetModelPosition(&GetModelMat()->GetWorldTrans().m[0][0]);
+	Effect::SetModelPosition(&m_modelMat.GetWorldTrans().m[0][0]);
 
 	if (!m_external_loaded || !m_GL_loaded || !mustDraw || (m_modelName == "NONE" && m_vertices.size() <= 0))
 		return;

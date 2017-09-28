@@ -250,6 +250,7 @@ void SceneWorld::RenderPass()
 
 		bool darkBloom = true;
 		m_bloom.End(darkBloom);
+
 	}
 
 	//Debug tile outline drawing

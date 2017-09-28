@@ -12,5 +12,5 @@ void main()
 	vec4 color = texture2D(gSampler, TexCoord0.st);
 	vec4 highlightColor = texture2D(gSampler2, TexCoord0.st);
 
-	FragColor = color + vec4(vec3(highlightColor) * gIntensity, highlightColor.a);
+	FragColor = color + highlightColor * gIntensity;
 }
