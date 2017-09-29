@@ -186,6 +186,7 @@
     <ClInclude Include="src\entity.h" />
     <ClInclude Include="src\FBO.h" />
     <ClInclude Include="src\font.h" />
+    <ClInclude Include="src\fontGraphicsComponent.h" />
     <ClInclude Include="src\game.h" />
     <ClInclude Include="src\glutBackend.h" />
     <ClInclude Include="src\graphicsComponent.h" />

@@ -24,8 +24,10 @@ class Transformation
 		void SetFollowSpeed(float percentSpeed);
 		void Follow(Vector3f target, Vector3f upperRightLimit);
 
-        Mat4f GetWorldTrans();
+		Mat4f GetWorldTrans();
+		Mat4f GetWorldTransNoTranslate();
 		Mat4f GetWOTrans();
+		Mat4f GetWOTransNoTranslate();
         Mat4f GetWPTrans();
         Mat4f GetTrans();
 		Camera& GetCamera();

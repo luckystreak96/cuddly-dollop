@@ -7,6 +7,7 @@
 #include "graphicsComponent.h"
 #include "mesh.h"
 #include "physicsComponent.h"
+#include "renderer.h"
 
 class Font
 {
@@ -18,7 +19,7 @@ public:
 	void SetText(std::string text, Vector3f location = Vector3f(0, 0, 0), bool centered = false);
 	void ChangeLetter(unsigned int index, char newChar);
 	void Draw();
-	float* WorldPos() { return &trans.GetWorldTrans().m[0][0]; };
+	void SetRender() { Renderer::GetInstance().Add(m_graphics); }
 
 private:
 	void CreateHash();

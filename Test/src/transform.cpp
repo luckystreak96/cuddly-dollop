@@ -16,9 +16,30 @@ Mat4f Transformation::GetWorldTrans()
     return m_WTrans;
 }
 
+Mat4f Transformation::GetWorldTransNoTranslate()
+{
+	Mat4f scale, translate, rotate;
+
+	scale.InitScaleMat(m_scale);
+	translate.InitTranslateMat(Vector3f());
+	rotate.InitRotateMat(m_rotate);
+	m_WTrans = translate * rotate * scale;
+
+	return m_WTrans;
+}
+
 Mat4f Transformation::GetWOTrans()
 {
 	m_WTrans = GetWorldTrans();
+	m_Proj.InitOrthoProj(*m_orthoProj);
+	m_WPTrans = m_Proj * m_WTrans;
+
+	return m_WPTrans;
+}
+
+Mat4f Transformation::GetWOTransNoTranslate()
+{
+	m_WTrans = GetWorldTransNoTranslate();
 	m_Proj.InitOrthoProj(*m_orthoProj);
 	m_WPTrans = m_Proj * m_WTrans;
 

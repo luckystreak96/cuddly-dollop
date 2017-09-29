@@ -289,6 +289,9 @@
     <ClInclude Include="src\renderer.h">
       <Filter>Header Files\Engine\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="src\fontGraphicsComponent.h">
+      <Filter>Header Files\Entity-Component\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">

@@ -228,6 +228,7 @@ void SceneWorld::RenderPass()
 	if (!m_bloomEffect)
 	{
 		//m_mapHandler->Draw();
+		m_font->Draw();
 		m_mapHandler->SetRender();
 
 		for (auto it : m_celist)
@@ -241,12 +242,7 @@ void SceneWorld::RenderPass()
 
 		//HeightEffect::GetInstance().Enable();
 		//HeightEffect::GetInstance().SetPlayerPos(m_player->Physics()->Position());
-		Vector3f pos = m_World->GetTranslation();
-		m_World->SetTranslation(OrthoProjInfo::GetRegularInstance().Left, OrthoProjInfo::GetRegularInstance().Bottom, 0);
-		Effect::SetWorldPosition(*m_World->GetWOTrans().m);
-		m_font->Draw();
-		m_World->SetTranslation(pos.x, pos.y, pos.z);
-		Effect::SetWorldPosition(*m_World->GetWOTrans().m);
+		m_font->SetRender();
 
 		//m_mapHandler->Draw();
 		m_mapHandler->SetRender();
