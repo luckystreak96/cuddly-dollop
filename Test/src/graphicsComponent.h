@@ -30,7 +30,7 @@ public:
 	Transformation* GetModelMat() { return &m_modelMat; };
 	virtual void Draw(bool withTex = true);
 	virtual void Update();//Needs pos from physics component
-	std::vector<Vertex> GetVertices();
+	std::vector<Vertex>* GetVertices();
 	std::vector<GLuint> GetIndices();
 	std::string GetTexture();
 	std::vector<Vector3f>* GetModels() { if (m_models == NULL) m_models = new std::vector<Vector3f>(); return m_models; }

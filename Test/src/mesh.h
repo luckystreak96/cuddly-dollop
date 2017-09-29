@@ -27,6 +27,7 @@ public:
 	std::vector<Vertex>* GetMeshVertices();
 	std::vector<GLuint>* GetMeshIndices();
 	std::vector<Transformation*> GetMeshModels() { return m_models; };
+	TextureAtlas* GetAtlas() { return &m_texAtlas; }
 private:
 	GLuint m_IBO;
 	GLuint m_VBO;

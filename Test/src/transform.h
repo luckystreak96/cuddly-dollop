@@ -29,6 +29,7 @@ class Transformation
         Mat4f GetWPTrans();
         Mat4f GetTrans();
 		Camera& GetCamera();
+		Vector3f GetTranslation() { return m_translate; };
 
     private:
 		float m_followSpeed = 1;

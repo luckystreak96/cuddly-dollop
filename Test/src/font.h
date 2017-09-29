@@ -16,7 +16,9 @@ public:
 
 public:
 	void SetText(std::string text, Vector3f location = Vector3f(0, 0, 0), bool centered = false);
+	void ChangeLetter(unsigned int index, char newChar);
 	void Draw();
+	float* WorldPos() { return &trans.GetWorldTrans().m[0][0]; };
 
 private:
 	void CreateHash();
@@ -37,6 +39,7 @@ private:
 	unsigned int m_lettersPerColumn = 16;
 
 	PhysicsComponent m_phys;
+	Transformation trans;
 
 	Vector3f m_position = Vector3f();
 	Vector3f m_basePosition = Vector3f();

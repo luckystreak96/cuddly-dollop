@@ -21,10 +21,10 @@ void PlayerInputComponent::Update()
 	//for (auto a : *keys)
 	//	keyMap.emplace(a, false);
 
-	bool up = InputManager::GetInstance().FrameKeyStatus(GLUT_KEY_UP + InputManager::SpecialKeyValue);
-	bool down = InputManager::GetInstance().FrameKeyStatus(GLUT_KEY_DOWN + InputManager::SpecialKeyValue);
-	bool left = InputManager::GetInstance().FrameKeyStatus(GLUT_KEY_LEFT + InputManager::SpecialKeyValue);
-	bool right = InputManager::GetInstance().FrameKeyStatus(GLUT_KEY_RIGHT + InputManager::SpecialKeyValue);
+	bool up = InputManager::GetInstance().FrameKeyStatus(GLUT_KEY_UP + InputManager::SpecialKeyValue) || InputManager::GetInstance().FrameKeyStatus('w');
+	bool down = InputManager::GetInstance().FrameKeyStatus(GLUT_KEY_DOWN + InputManager::SpecialKeyValue) || InputManager::GetInstance().FrameKeyStatus('s');
+	bool left = InputManager::GetInstance().FrameKeyStatus(GLUT_KEY_LEFT + InputManager::SpecialKeyValue) || InputManager::GetInstance().FrameKeyStatus('a');
+	bool right = InputManager::GetInstance().FrameKeyStatus(GLUT_KEY_RIGHT + InputManager::SpecialKeyValue) || InputManager::GetInstance().FrameKeyStatus('d');
 
 	m_phys->ActionMove(up, down, left, right);
 	//if(InputManager::GetInstance().FrameKeyStatus(GLUT_KEY_UP + InputManager::SpecialKeyValue, ))

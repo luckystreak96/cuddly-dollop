@@ -17,6 +17,32 @@ Font::~Font()
 	delete m_graphics;
 }
 
+void Font::ChangeLetter(unsigned int index, char newChar)
+{
+	//The verts per letter are by groups of 4
+	index *= 4;
+
+	//The texture coords (they need the default values to register properly in the texAtlas func)
+	std::vector<Vector2f> vecs = {
+	Vector2f(0, 0),
+	Vector2f(1, 0),
+	Vector2f(0, 1),
+	Vector2f(1, 1)
+	};
+
+	for (int i = 0; i < 4; i++)
+	{
+		//Let the texture atlas figure out what the tex coords should be
+		m_mesh.GetAtlas()->TextureIndexToCoord(CharToCode(newChar), vecs.at(i).x, vecs.at(i).y);
+		//Update them in the vertices for the mesh and graphics (cuz y not)
+		m_mesh.GetMeshVertices()->at(index + i).tex = vecs.at(i);
+		m_graphics->GetVertices()->at(index + i).tex = vecs.at(i);
+	}
+	//Make sure the component updates its stuff
+	m_graphics->ResetVBO();
+}
+
+
 void Font::SetupMesh()
 {
 	m_mesh.Reset();
@@ -111,7 +137,7 @@ setString(text, x, y, false);
 //}
 
 //Returns the index of the letter
-unsigned int Font::CharToCode(char c) 
+unsigned int Font::CharToCode(char c)
 {
 	return m_letters.at(c/* - 32*/);
 }

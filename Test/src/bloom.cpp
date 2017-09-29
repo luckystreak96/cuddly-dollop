@@ -119,7 +119,7 @@ void Bloom::End(bool dark)
 		//Combine blur with actual frame
 		CombineEffect::GetInstance().Enable();
 		CombineEffect::GetInstance().SetModelPosition(&pps.GetModelMat()->GetWorldTrans().m[0][0]);
-		float intensity = dark ? 0.9f : 0.9f;
+		float intensity = dark ? 0.7f : 0.9f;
 		CombineEffect::GetInstance().SetIntensity(intensity);
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, m_gaussV.getColourTexture());

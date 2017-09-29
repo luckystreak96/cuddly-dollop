@@ -227,9 +227,9 @@ std::string GraphicsComponent::GetName()
 	return m_modelName;
 }
 
-std::vector<Vertex> GraphicsComponent::GetVertices()
+std::vector<Vertex>* GraphicsComponent::GetVertices()
 {
-	return m_vertices;
+	return &m_vertices;
 }
 
 std::vector<GLuint> GraphicsComponent::GetIndices()

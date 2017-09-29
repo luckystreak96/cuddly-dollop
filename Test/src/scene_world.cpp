@@ -176,7 +176,11 @@ void SceneWorld::Update()
 	m_World->Follow(m_player->Physics()->Position(), Vector3f(32, 18, 0));
 	//m_camera->Update(m_player->Position());//this needs to change LOLOLOLOL
 
-	m_font->SetText(std::string(std::to_string(ElapsedTime::GetInstance().GetFPS())), Vector3f(0, 0, 0));
+	//m_font->SetText(std::string(std::to_string(ElapsedTime::GetInstance().GetFPS())), Vector3f(0, 0, 0));
+	srand(clock());
+	int ha = rand();
+	m_font->ChangeLetter(0, ha % 4 == 1 ? '_' : 'I');
+	//m_font->ChangeLetter(0, ha % 30 == 1 ? 'O' : 'I');
 
 	Renderer::GetInstance().Empty();
 }
@@ -237,8 +241,12 @@ void SceneWorld::RenderPass()
 
 		//HeightEffect::GetInstance().Enable();
 		//HeightEffect::GetInstance().SetPlayerPos(m_player->Physics()->Position());
-
+		Vector3f pos = m_World->GetTranslation();
+		m_World->SetTranslation(OrthoProjInfo::GetRegularInstance().Left, OrthoProjInfo::GetRegularInstance().Bottom, 0);
+		Effect::SetWorldPosition(*m_World->GetWOTrans().m);
 		m_font->Draw();
+		m_World->SetTranslation(pos.x, pos.y, pos.z);
+		Effect::SetWorldPosition(*m_World->GetWOTrans().m);
 
 		//m_mapHandler->Draw();
 		m_mapHandler->SetRender();
