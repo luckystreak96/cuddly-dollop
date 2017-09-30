@@ -27,6 +27,7 @@
 #include "heightFog.h"
 #include "renderer.h"
 #include "font.h"
+#include "fontManager.h"
 
 class SceneWorld : public Scene
 {
@@ -67,6 +68,8 @@ private:
 	bool m_bloomEffect;
 	float m_camAngle = 0.0f;
 	int m_numFrames = 0;
+	unsigned int m_fontTitle;
+	unsigned int m_fontFPS;
 	Trail m_trail;
 	Bloom m_bloom;
 	HeightFog m_fog;

@@ -40,8 +40,10 @@ bool SceneWorld::Init()
 	m_celist.push_back(m_test3);
 	m_celist.push_back(m_test2);
 
-	m_font = new Font();
-	m_font->SetText("IT WORKS", Vector3f(0, 0, 0));
+	m_fontTitle = FontManager::GetInstance().AddFont();
+	m_fontFPS = FontManager::GetInstance().AddFont(true, true);
+	FontManager::GetInstance().SetScale(m_fontFPS, Vector3f(0.5, 0.5, 1));
+	FontManager::GetInstance().SetText(m_fontTitle, "IT WORKS!");
 
 	return true;
 }
@@ -176,13 +178,17 @@ void SceneWorld::Update()
 	m_World->Follow(m_player->Physics()->Position(), Vector3f(32, 18, 0));
 	//m_camera->Update(m_player->Position());//this needs to change LOLOLOLOL
 
-	//m_font->SetText(std::string(std::to_string(ElapsedTime::GetInstance().GetFPS())), Vector3f(0, 0, 0));
+	//Display FPS
+	FontManager::GetInstance().SetText(m_fontFPS, std::to_string(ElapsedTime::GetInstance().GetFPS()), Vector3f(0, 15.5f, 0));
+	//FontManager::GetInstance().GetFont(m_fontFPS)->GetGraphics()->SetScale(Vector3f(0.5, 0.5, 1));
+
 	srand(clock());
 	int ha = rand();
-	m_font->ChangeLetter(0, ha % 4 == 1 ? '_' : 'I');
+	FontManager::GetInstance().GetFont(m_fontTitle)->ChangeLetter(0, ha % 4 == 1 ? '_' : 'I');
 	//m_font->ChangeLetter(0, ha % 30 == 1 ? 'O' : 'I');
 
 	Renderer::GetInstance().Empty();
+	FontManager::GetInstance().Update(ElapsedTime::GetInstance().GetElapsedTime());
 }
 
 void SceneWorld::RenderPass()
@@ -228,7 +234,7 @@ void SceneWorld::RenderPass()
 	if (!m_bloomEffect)
 	{
 		//m_mapHandler->Draw();
-		m_font->Draw();
+		//m_font->Draw();
 		m_mapHandler->SetRender();
 
 		for (auto it : m_celist)
@@ -242,7 +248,7 @@ void SceneWorld::RenderPass()
 
 		//HeightEffect::GetInstance().Enable();
 		//HeightEffect::GetInstance().SetPlayerPos(m_player->Physics()->Position());
-		m_font->SetRender();
+		//m_font->SetRender();
 
 		//m_mapHandler->Draw();
 		m_mapHandler->SetRender();
@@ -250,6 +256,8 @@ void SceneWorld::RenderPass()
 		for (auto it : m_celist)
 			it->SetRender();
 		//it->Draw();
+		FontManager::GetInstance().SetRender();
+
 		Renderer::GetInstance().Draw();
 
 		bool darkBloom = true;

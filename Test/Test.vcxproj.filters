@@ -292,6 +292,9 @@
     <ClInclude Include="src\fontGraphicsComponent.h">
       <Filter>Header Files\Entity-Component\Components</Filter>
     </ClInclude>
+    <ClInclude Include="src\fontManager.h">
+      <Filter>Header Files\Engine\Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -443,6 +446,12 @@
     </ClCompile>
     <ClCompile Include="src\renderer.cpp">
       <Filter>Source Files\Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\fontManager.cpp">
+      <Filter>Source Files\Engine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\fontGraphicsComponent.cpp">
+      <Filter>Source Files\Entity-Component\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

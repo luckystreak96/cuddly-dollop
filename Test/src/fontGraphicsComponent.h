@@ -6,14 +6,15 @@
 class FontGraphicsComponent : public GraphicsComponent 
 {
 public:
-	void Draw(bool withTex = true) {
-		m_trans.SetOrthoProj(&OrthoProjInfo::GetRegularInstance());
-		m_trans.SetTranslation(OrthoProjInfo::GetRegularInstance().Left, OrthoProjInfo::GetRegularInstance().Bottom, 0);
-		Effect::SetWorldPosition(&m_trans.GetWOTransNoTranslate().m[0][0]);
-		GraphicsComponent::Draw(withTex);
-	}
+	FontGraphicsComponent() : GraphicsComponent() {}
+	FontGraphicsComponent(std::vector<Vertex>* verts, std::vector<GLuint>* inds, std::string texPath = std::string("res/mushroom.png"));
+	void Draw(bool withTex = true);
+	void SetStatic(bool sTatic);
+	void SetScale(Vector3f scale);
+
 private:
-	static Transformation m_trans;
+	bool m_static = false;
+	static Transformation m_staticityTrans;
 };
 
 #endif // !FONT_GRAPHICS_COMPONENT

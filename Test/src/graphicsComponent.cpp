@@ -11,6 +11,24 @@ GraphicsComponent::~GraphicsComponent()
 	delete m_models;
 }
 
+void GraphicsComponent::FullReset(std::vector<Vertex>* verts, std::vector<GLuint>* inds)
+{
+	UnloadGLResources();
+
+	m_IBO = 0;
+	m_VBO = 0;
+	m_MBO = 0;
+
+	m_vertices = std::vector<Vertex>(*verts);
+	m_indices = std::vector<GLuint>(*inds);
+
+	//MathUtils::CalcNormals(m_indices, m_vertices);
+
+	m_originalVertices = std::vector<Vertex>(m_vertices);
+
+	Construct();
+}
+
 void GraphicsComponent::Construct()
 {
 	//When this z is small - transparency fucks up????
@@ -25,6 +43,9 @@ void GraphicsComponent::Construct()
 
 GraphicsComponent::GraphicsComponent(std::string modelName, std::string texPath) : m_texture(texPath), m_modelName(modelName)
 {
+	m_IBO = 0;
+	m_VBO = 0;
+	m_MBO = 0;
 	Construct();
 }
 

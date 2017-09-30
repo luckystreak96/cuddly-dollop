@@ -1,5 +1,6 @@
 #include "elapsedTime.h"
 
+//Return elapsed time in seconds
 void ElapsedTime::CalculateElapsedTime()
 {
 	static int prev_time = 0;

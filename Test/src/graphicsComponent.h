@@ -24,6 +24,7 @@ public:
 	GraphicsComponent(std::string modelName = "TILE", std::string texPath = std::string("res/mushroom.png"));
 	GraphicsComponent(std::vector<Vertex>* verts, std::vector<GLuint>* inds, std::string texPath = std::string("res/mushroom.png"));
 	~GraphicsComponent();
+	void FullReset(std::vector<Vertex>* verts, std::vector<GLuint>* inds);
 	void Construct();
 	void SetDefaults(std::string name = "TILE");
 	std::string GetName();
@@ -35,6 +36,7 @@ public:
 	std::string GetTexture();
 	std::vector<Vector3f>* GetModels() { if (m_models == NULL) m_models = new std::vector<Vector3f>(); return m_models; }
 	float GetZ() { return m_pos.z; }
+	GLuint GetMVBO() { return m_VBO; }
 	int GetHighestIndex();
 	void SetBuffers();
 	void ResetVBO();

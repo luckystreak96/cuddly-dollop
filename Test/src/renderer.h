@@ -14,8 +14,8 @@ public:
 		static Renderer instance;
 		return instance;
 	}
-	void Add(GraphicsComponent* c) { m_toDraw.push_back(c); }
-	void Empty() { m_toDraw.empty(); }
+	void Add(GraphicsComponent* c);
+	void Empty();
 	void Draw();
 private:
 	Renderer();

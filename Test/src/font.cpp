@@ -1,6 +1,7 @@
 #include "font.h"
 
-Font::Font(std::string path) : m_texture(path), m_mesh(Mesh(256)), m_phys(PhysicsComponent(Vector3f(), "TEXT"))
+Font::Font(bool sTatic, bool temporary, std::string path) : m_texture(path), m_mesh(Mesh(256)), m_phys(PhysicsComponent(Vector3f(), "TEXT")),
+m_elapsedTime(-1), m_textSpeed(0.3), m_static(sTatic), m_temporary(temporary), m_lifetime(5.0)
 {
 	int bitmapWidth = 16;
 	m_width = 0.5f;
@@ -10,11 +11,27 @@ Font::Font(std::string path) : m_texture(path), m_mesh(Mesh(256)), m_phys(Physic
 
 	CreateHash();
 	ResourceManager::GetInstance().LoadTexture(path);
+
+	SetText(" ");
 }
 
 Font::~Font()
 {
 	delete m_graphics;
+}
+
+void Font::Update(double elapsedTime)
+{
+	m_elapsedTime += elapsedTime;
+
+	for (unsigned int i = 0; i < m_message.size(); i++)
+	{
+		if (m_message.at(i) != m_messageProgress.at(i) && m_elapsedTime > m_textSpeed * i)
+		{
+			m_messageProgress.at(i) = m_message.at(i);
+			ChangeLetter(i, m_message.at(i));
+		}
+	}
 }
 
 void Font::ChangeLetter(unsigned int index, char newChar)
@@ -49,7 +66,8 @@ void Font::SetupMesh()
 
 	for (int i = 0; i < m_message.size(); i++)
 	{
-		char c = m_message.at(i);
+		char c = m_messageProgress.at(i);
+		//char c = m_message.at(i);
 		unsigned int index = CharToCode(c);
 		Transformation trans = Transformation();
 		//trans.SetScale(Vector3f(m_width, m_height, 1.0f));
@@ -61,17 +79,18 @@ void Font::SetupMesh()
 		m_mesh.AddToMesh(m_phys.GetVertices(), m_phys.GetIndices(), m_phys.GetHighestIndex(), pos, m_texture, &trans, index);
 	}
 
-	delete m_graphics;
-	m_graphics = new GraphicsComponent(m_mesh.GetMeshVertices(), m_mesh.GetMeshIndices(), m_texture);
+	//delete m_graphics;
+	if (m_graphics == NULL)
+		m_graphics = new FontGraphicsComponent(m_mesh.GetMeshVertices(), m_mesh.GetMeshIndices(), m_texture);
+	m_graphics->FullReset(m_mesh.GetMeshVertices(), m_mesh.GetMeshIndices());
 	m_graphics->SetPhysics(m_phys.Position(), Vector3f());
+	m_graphics->SetStatic(m_static);
 
-	if (m_graphics->GetModels()->size() == 0)
+	m_graphics->GetModels()->clear();
+	for (auto x : m_message)
 	{
-		for (auto x : m_message)
-		{
-			Vector3f pos = Vector3f();
-			m_graphics->GetModels()->insert(m_graphics->GetModels()->end(), 4, pos);
-		}
+		Vector3f pos = Vector3f();
+		m_graphics->GetModels()->insert(m_graphics->GetModels()->end(), 4, pos);
 	}
 }
 
@@ -91,6 +110,10 @@ void Font::CreateHash() {
 void Font::SetText(std::string text, Vector3f location, bool centered)
 {
 	m_message = text;
+	m_totalTime = text.size() * m_textSpeed;
+	m_messageProgress = "";
+	for (auto x : m_message)
+		m_messageProgress += ' ';
 
 	m_basePosition.x = location.x;
 	m_basePosition.y = location.y;
@@ -110,4 +133,10 @@ void Font::Draw()
 unsigned int Font::CharToCode(char c)
 {
 	return m_letters.at(c/* - 32*/);
+}
+
+void Font::SetRender()
+{
+	if (m_graphics != NULL)
+		Renderer::GetInstance().Add(m_graphics);
 }
