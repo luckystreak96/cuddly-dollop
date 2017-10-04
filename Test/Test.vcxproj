@@ -186,7 +186,7 @@
     <ClInclude Include="src\effect.h" />
     <ClInclude Include="src\elapsedTime.h" />
     <ClInclude Include="src\entity.h" />
-    <ClInclude Include="src\eventManager.h" />
+    <ClInclude Include="src\eventQueue.h" />
     <ClInclude Include="src\FBO.h" />
     <ClInclude Include="src\font.h" />
     <ClInclude Include="src\fontGraphicsComponent.h" />
@@ -250,7 +250,7 @@
     <ClCompile Include="src\effect.cpp" />
     <ClCompile Include="src\elapsedTime.cpp" />
     <ClCompile Include="src\entity.cpp" />
-    <ClCompile Include="src\eventManager.cpp" />
+    <ClCompile Include="src\eventQueue.cpp" />
     <ClCompile Include="src\FBO.cpp" />
     <ClCompile Include="src\font.cpp" />
     <ClCompile Include="src\fontGraphicsComponent.cpp" />
@@ -261,6 +261,7 @@
     <ClCompile Include="src\heightEffect.cpp" />
     <ClCompile Include="src\heightFog.cpp" />
     <ClCompile Include="src\iComponent.cpp" />
+    <ClCompile Include="src\iEvent.cpp" />
     <ClCompile Include="src\inputComponent.cpp" />
     <ClCompile Include="src\input_manager.cpp" />
     <ClCompile Include="src\main.cpp" />

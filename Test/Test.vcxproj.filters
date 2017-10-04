@@ -307,10 +307,10 @@
     <ClInclude Include="src\dialogueGraph.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\eventManager.h">
+    <ClInclude Include="src\iEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\iEvent.h">
+    <ClInclude Include="src\eventQueue.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -483,7 +483,10 @@
     <ClCompile Include="src\dialogueGraph.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\eventManager.cpp">
+    <ClCompile Include="src\eventQueue.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\iEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
