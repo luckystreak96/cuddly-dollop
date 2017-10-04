@@ -46,6 +46,24 @@ MapHandler::MapHandler() : m_mesh(Mesh())
 	SetupMesh();
 	for (auto x : m_tiles)
 		x->Physics()->Update();
+
+	int x = 0;
+	int y = 0;
+	int z = 0;
+	for (auto t : m_tiles)
+	{
+		int tx = t->GetTransformation()->GetTranslation().x;
+		if (tx > x)
+			x = tx;
+		int ty = t->GetTransformation()->GetTranslation().y;
+		if (ty > y)
+			y = ty;
+		int tz = t->GetTransformation()->GetTranslation().z;
+		if (tz > z)
+			z = tz;
+	}
+
+	m_mapSize = Vector3f(x, y, z);
 }
 
 MapHandler::~MapHandler()
@@ -137,4 +155,9 @@ std::vector<MapTile*>* MapHandler::Tiles()
 unsigned int MapHandler::Size()
 {
 	return (unsigned int)m_tiles.size();
+}
+
+Vector3f MapHandler::GetMapSize()
+{
+	return m_mapSize;
 }

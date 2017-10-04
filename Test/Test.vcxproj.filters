@@ -103,6 +103,12 @@
     <Filter Include="Shaders">
       <UniqueIdentifier>{6e5001c4-1ab1-4428-be85-4ecc0d74202a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Engine\Graphics\Fonts">
+      <UniqueIdentifier>{67e39002-ce46-476d-b158-6f040eb6c0c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Graphics\Fonts">
+      <UniqueIdentifier>{3cc710e6-9bb5-4e79-bb63-cf4e3262103d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="TODO.txt" />
@@ -283,17 +289,29 @@
     <ClInclude Include="src\heightEffect.h">
       <Filter>Header Files\Effects</Filter>
     </ClInclude>
-    <ClInclude Include="src\font.h">
-      <Filter>Header Files\Engine\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="src\renderer.h">
       <Filter>Header Files\Engine\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="src\fontGraphicsComponent.h">
       <Filter>Header Files\Entity-Component\Components</Filter>
     </ClInclude>
+    <ClInclude Include="src\font.h">
+      <Filter>Header Files\Engine\Graphics\Fonts</Filter>
+    </ClInclude>
     <ClInclude Include="src\fontManager.h">
-      <Filter>Header Files\Engine\Graphics</Filter>
+      <Filter>Header Files\Engine\Graphics\Fonts</Filter>
+    </ClInclude>
+    <ClInclude Include="src\dialogueBox.h">
+      <Filter>Header Files\Engine\Graphics\Fonts</Filter>
+    </ClInclude>
+    <ClInclude Include="src\dialogueGraph.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\eventManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\iEvent.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -441,17 +459,32 @@
     <ClCompile Include="src\heightEffect.cpp">
       <Filter>Source Files\Effects</Filter>
     </ClCompile>
-    <ClCompile Include="src\font.cpp">
-      <Filter>Source Files\Engine\Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="src\renderer.cpp">
-      <Filter>Source Files\Engine\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\fontManager.cpp">
       <Filter>Source Files\Engine\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="src\fontGraphicsComponent.cpp">
       <Filter>Source Files\Entity-Component\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\inputComponent.cpp">
+      <Filter>Source Files\Entity-Component</Filter>
+    </ClCompile>
+    <ClCompile Include="src\iComponent.cpp">
+      <Filter>Source Files\Entity-Component</Filter>
+    </ClCompile>
+    <ClCompile Include="src\font.cpp">
+      <Filter>Source Files\Engine\Graphics\Fonts</Filter>
+    </ClCompile>
+    <ClCompile Include="src\fontManager.cpp">
+      <Filter>Source Files\Engine\Graphics\Fonts</Filter>
+    </ClCompile>
+    <ClCompile Include="src\dialogueBox.cpp">
+      <Filter>Source Files\Engine\Graphics\Fonts</Filter>
+    </ClCompile>
+    <ClCompile Include="src\dialogueGraph.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\eventManager.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

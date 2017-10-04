@@ -1,5 +1,6 @@
 #include "effect.h"
 
+float* Effect::m_prevWorld = NULL;
 GLuint Effect::m_currentShaderProgram = 0;
 
 Effect::Effect()
@@ -34,6 +35,7 @@ void Effect::SetModelPosition(float* mat)
 void Effect::SetWorldPosition(float* mat)
 {
 	glUniformMatrix4fv(GetUniformLocation("gWorld"), 1, GL_TRUE, (const GLfloat*)mat);
+	m_prevWorld = mat;
 }
 
 void Effect::Enable(GLuint program)
@@ -130,4 +132,9 @@ bool Effect::Finalize(GLuint& program)
 GLuint Effect::GetUniformLocation(const GLchar* name)
 {
 	return glGetUniformLocation(m_currentShaderProgram, name);
+}
+
+float* Effect::GetPrevWorldPos()
+{
+	return m_prevWorld;
 }

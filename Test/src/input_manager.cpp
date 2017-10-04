@@ -1,6 +1,6 @@
 #include "input_manager.h"
 
-InputManager::InputManager() : m_inputHold(std::map<unsigned int, bool>()), m_inputQueue(std::list<std::pair<unsigned int, KeyStatus>>())
+InputManager::InputManager() : m_inputHold(std::map<unsigned int, bool>()), m_inputQueue(std::list<std::pair<unsigned int, KeyStatus>>()), m_lockLevel(0)
 {
 }
 
@@ -17,8 +17,12 @@ void InputManager::SetupFrameKeys()
 		m_keyMap.emplace(a, false);
 }
 
-bool InputManager::FrameKeyStatus(unsigned int key, KeyStatus status)
+bool InputManager::FrameKeyStatus(unsigned int key, KeyStatus status, unsigned int accessLevel)
 {
+	//The key is never considered pressed to a method that doesnt currently have access
+	if (accessLevel < m_lockLevel)
+		return false;
+
 	if (status == AnyPress)
 		return m_inputHold.count(key) || m_keyMap.count(std::pair<unsigned int, KeyStatus>(key, KeyPressed)) || m_keyMap.count(std::pair<unsigned int, KeyStatus>(key, HoldDownPress));
 	else if (status == AnyRelease)
@@ -74,4 +78,9 @@ int InputManager::FindKey(std::list<std::pair<unsigned int, KeyStatus>>* list, u
 	}
 
 	return -1;
+}
+
+void InputManager::SetLockLevel(unsigned int level)
+{
+	m_lockLevel = level;
 }

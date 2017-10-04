@@ -29,20 +29,18 @@ bool SceneWorld::Init()
 	m_player->Physics()->SetPosition(Vector3f(0, 2, 4.0f));
 	m_player->Physics()->AbsolutePosition(Vector3f(0, 2, 4.0f));
 	m_test3 = new Entity();
-	m_test3->Physics()->SetPosition(Vector3f(7.f, 6.5f, 3.0f));
 	m_test3->Physics()->AbsolutePosition(Vector3f(7.f, 6.5f, 3.0f));
 	m_test2 = new Entity();
-	m_test2->Physics()->SetPosition(Vector3f(4.f, 0.0f, 4.0f));
-	m_test2->Physics()->AbsolutePosition(Vector3f(4.f, 0.0f, 4.0f));
+	m_test2->Physics()->AbsolutePosition(Vector3f(14.f, 9.0f, 4.0f));
 
 	m_celist = std::vector<Entity*>();
 	m_celist.push_back(m_player);
 	m_celist.push_back(m_test3);
 	m_celist.push_back(m_test2);
 
-	m_fontTitle = FontManager::GetInstance().AddFont();
-	m_fontFPS = FontManager::GetInstance().AddFont(true, true);
-	FontManager::GetInstance().SetScale(m_fontFPS, Vector3f(0.5, 0.5, 1));
+	//m_fontTitle = FontManager::GetInstance().AddFont();
+	m_fontFPS = FontManager::GetInstance().AddFont(true);
+	FontManager::GetInstance().SetScale(m_fontFPS, 0.5f, 0.5f);
 	FontManager::GetInstance().SetText(m_fontTitle, "IT WORKS!");
 
 	return true;
@@ -117,7 +115,7 @@ void SceneWorld::Draw()
 
 void SceneWorld::Interact()
 {
-	if (InputManager::GetInstance().FrameKeyStatus(' ')) {
+	if (InputManager::GetInstance().FrameKeyStatus(' ', KeyStatus::KeyPressed)) {
 		Vector3f pos = m_player->Physics()->GetCenter();
 		PlayerGraphicsComponent* pgc = static_cast<PlayerGraphicsComponent*>(m_player->Graphics());
 		Direction dir = pgc->GetDirection();
@@ -175,7 +173,7 @@ void SceneWorld::Update()
 	//std::cout << m_player->GetDirection() << std::endl;
 	//std::cout << /*m_player->Position().x << ", " << m_player->Position().y << ", " <<*/ m_player->Physics()->Position().z << std::endl;// << ", " << m_clist.at(1)->GetMoveBoundingBox().Get(AABB::Down) << ", " << m_clist.at(1)->GetMoveBoundingBox().Get(AABB::Close) << std::endl;
 
-	m_World->Follow(m_player->Physics()->Position(), Vector3f(32, 18, 0));
+	m_World->Follow(m_player->Physics()->Position(), m_mapHandler->GetMapSize()/*Vector3f(32, 18, 0)*/);
 	//m_camera->Update(m_player->Position());//this needs to change LOLOLOLOL
 
 	//Display FPS
@@ -183,9 +181,7 @@ void SceneWorld::Update()
 	//FontManager::GetInstance().GetFont(m_fontFPS)->GetGraphics()->SetScale(Vector3f(0.5, 0.5, 1));
 
 	srand(clock());
-	int ha = rand();
-	FontManager::GetInstance().GetFont(m_fontTitle)->ChangeLetter(0, ha % 4 == 1 ? '_' : 'I');
-	//m_font->ChangeLetter(0, ha % 30 == 1 ? 'O' : 'I');
+	FontManager::GetInstance().ChangeLetter(m_fontTitle, 0, rand() % 4 == 1 ? '_' : 'I');
 
 	Renderer::GetInstance().Empty();
 	FontManager::GetInstance().Update(ElapsedTime::GetInstance().GetElapsedTime());
@@ -193,17 +189,15 @@ void SceneWorld::Update()
 
 void SceneWorld::RenderPass()
 {
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	static bool drawinited = false;
 	if (!drawinited)
 	{
-		//m_camera->Up = Vector3f(0, 1, 0);
-		//m_World->SetCamera(*m_camera);
 		m_World->SetOrthoProj(&OrthoProjInfo::GetRegularInstance());
 		m_World->SetTranslation(OrthoProjInfo::GetRegularInstance().Left, OrthoProjInfo::GetRegularInstance().Bottom, 0);
-		//m_World->SetRotation(m_camAngle, 0.0f, 0.0f);
+		//m_World->SetRotation(0.0f, 0.0f, 0.1f);
 
 		BasicEffect::GetInstance().Enable();
 		BasicEffect::GetInstance().SetWorldPosition(*m_World->GetWOTrans().m);
@@ -223,22 +217,14 @@ void SceneWorld::RenderPass()
 		drawinited = true;
 	}
 
-	//m_World->SetTranslation(-m_player->Position().x, -m_player->Position().y, 0);
-
-	//BasicEffect::GetInstance().Enable();
-	//Effect::SetWorldPosition(*m_World->GetWOTrans().m);
-
 	BasicEffect::GetInstance().Enable();
 	Effect::SetWorldPosition(*m_World->GetWOTrans().m);
 
 	if (!m_bloomEffect)
 	{
-		//m_mapHandler->Draw();
-		//m_font->Draw();
 		m_mapHandler->SetRender();
 
 		for (auto it : m_celist)
-			//it->Draw();
 			it->SetRender();
 		Renderer::GetInstance().Draw();
 	}
@@ -246,16 +232,11 @@ void SceneWorld::RenderPass()
 	{
 		m_bloom.Begin();
 
-		//HeightEffect::GetInstance().Enable();
-		//HeightEffect::GetInstance().SetPlayerPos(m_player->Physics()->Position());
-		//m_font->SetRender();
-
-		//m_mapHandler->Draw();
 		m_mapHandler->SetRender();
 
 		for (auto it : m_celist)
 			it->SetRender();
-		//it->Draw();
+
 		FontManager::GetInstance().SetRender();
 
 		Renderer::GetInstance().Draw();

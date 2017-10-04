@@ -66,7 +66,6 @@ private:
 	bool m_resources_loaded;
 	bool m_acceptInput;
 	bool m_bloomEffect;
-	float m_camAngle = 0.0f;
 	int m_numFrames = 0;
 	unsigned int m_fontTitle;
 	unsigned int m_fontFPS;

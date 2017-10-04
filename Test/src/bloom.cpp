@@ -26,7 +26,7 @@ void Bloom::Begin()
 	//FBO
 	m_fbo.bindFrameBuffer();
 
-	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
@@ -39,7 +39,8 @@ void Bloom::End(bool dark)
 	//BEGIN BLOOM STAGE
 
 	m_bloom.bindFrameBuffer();
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glBindTexture(GL_TEXTURE_2D, m_fbo.getColourTexture());
@@ -59,7 +60,8 @@ void Bloom::End(bool dark)
 	pps.GetModelMat()->SetScale(Vector3f(1.0f / m_divisor, 1.0f / m_divisor, 1));
 
 	m_gaussH.bindFrameBuffer();
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glBindTexture(GL_TEXTURE_2D, m_bloom.getColourTexture());
@@ -74,7 +76,8 @@ void Bloom::End(bool dark)
 	//BEGIN GAUSSIAN VERTICAL BLUR
 
 	m_gaussV.bindFrameBuffer();
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glBindTexture(GL_TEXTURE_2D, m_gaussH.getColourTexture());

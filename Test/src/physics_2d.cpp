@@ -54,8 +54,8 @@ namespace Physics_2D {
 			return -1;
 
 		//Get the borders and floor/ceil + area formula to know how many the bb is touching
-		return (ceil(bb[Right]) - floor(bb[Left])) *
-			(ceil(bb[Up]) - floor(bb[Down]));
+		return (int)(ceil(bb[Right]) - floor(bb[Left])) *
+			(int)(ceil(bb[Up]) - floor(bb[Down]));
 	}
 
 	//"Collisions" happens in 1 of 2 cases:
@@ -80,14 +80,14 @@ namespace Physics_2D {
 		//			b: Which is the highest legal tile (some could be very high) - move object there
 
 		//Iterate through all objects
-		for (int i = 0; i < clist->size(); i++) {
+		for (unsigned int i = 0; i < clist->size(); i++) {
 
 			//Possible optimization by skipping all non-moving
 			if (clist->at(i)->Physics()->Velocity() == 0)
 				continue;
 
 			//Compare against the rest
-			for (int j = 0; j < clist->size(); j++)
+			for (unsigned int j = 0; j < clist->size(); j++)
 			{
 				if (i == j)//dont collide with yourself
 					continue;
@@ -115,7 +115,7 @@ namespace Physics_2D {
 		//			b: Which is the highest legal tile (some could be very high) - move object there
 
 		//Iterate through all objects
-		for (int i = 0; i < clist->size(); i++) {
+		for (unsigned int i = 0; i < clist->size(); i++) {
 
 			//Possible optimization by skipping all non-moving
 			if (clist->at(i)->Physics()->Velocity() == 0)
@@ -127,7 +127,7 @@ namespace Physics_2D {
 			int mustTouch = TileTouchCount(clist->at(i)->Physics()->GetMoveBoundingBox());
 
 			//Create list of touching
-			for (int j = 0; j < clist->size(); j++)
+			for (unsigned int j = 0; j < clist->size(); j++)
 			{
 				if (i == j)//dont check against yourself
 					continue;
@@ -524,10 +524,10 @@ namespace Physics_2D {
 	{
 		std::vector<PhysicsComponent*> flist = std::vector<PhysicsComponent*>();
 
-		for (int i = 0; i < clist->size(); i++)
+		for (unsigned int i = 0; i < clist->size(); i++)
 			flist.push_back(clist->at(i)->Physics());
 		
-		for (int i = 0; i < mh->Tiles()->size(); i++)
+		for (unsigned int i = 0; i < mh->Tiles()->size(); i++)
 			flist.push_back(mh->Tiles()->at(i)->Physics());
 			
 
@@ -547,14 +547,14 @@ namespace Physics_2D {
 		//			b: Which is the highest legal tile (some could be very high) - move object there
 
 		//Iterate through all objects
-		for (int i = 0; i < flist.size(); i++) {
+		for (unsigned int i = 0; i < flist.size(); i++) {
 
 			//Possible optimization by skipping all non-moving
 			if (flist.at(i)->Velocity() == 0)
 				continue;
 
 			//Compare against the rest
-			for (int j = 0; j < flist.size(); j++)
+			for (unsigned int j = 0; j < flist.size(); j++)
 			{
 				if (i == j)//dont collide with yourself
 					continue;
@@ -582,7 +582,7 @@ namespace Physics_2D {
 		//			b: Which is the highest legal tile (some could be very high) - move object there
 
 		//Iterate through all objects
-		for (int i = 0; i < flist.size(); i++) {
+		for (unsigned int i = 0; i < flist.size(); i++) {
 
 			//Possible optimization by skipping all non-moving
 			if (flist.at(i)->Velocity() == 0)
@@ -594,7 +594,7 @@ namespace Physics_2D {
 			int mustTouch = TileTouchCount(flist.at(i)->GetMoveBoundingBox());
 
 			//Create list of touching
-			for (int j = 0; j < flist.size(); j++)
+			for (unsigned int j = 0; j < flist.size(); j++)
 			{
 				if (i == j)//dont check against yourself
 					continue;

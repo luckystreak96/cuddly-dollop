@@ -1,11 +1,11 @@
 #include "font.h"
 
-Font::Font(bool sTatic, bool temporary, std::string path) : m_texture(path), m_mesh(Mesh(256)), m_phys(PhysicsComponent(Vector3f(), "TEXT")),
-m_elapsedTime(-1), m_textSpeed(0.3), m_static(sTatic), m_temporary(temporary), m_lifetime(5.0)
+Font::Font(bool sTatic, bool temporary, std::string path) : m_texture(path), m_phys(PhysicsComponent(Vector3f(), "TEXT")),
+m_elapsedTime(0), m_textSpeed(0.3), m_static(sTatic), m_temporary(temporary), m_lifetime(5.0), LetterSpacing(0.6f), MaxTime(30000),
+m_lettersPerRow(16), m_lettersPerColumn(16), m_xScale(1.0f)
 {
+	m_mesh = Mesh(m_lettersPerRow * m_lettersPerColumn);
 	int bitmapWidth = 16;
-	m_width = 0.5f;
-	m_height = 0.5f;
 
 	m_phys.Update();
 
@@ -20,9 +20,15 @@ Font::~Font()
 	delete m_graphics;
 }
 
+bool Font::IsDead()
+{
+	return m_temporary && m_elapsedTime > m_lifetime;
+}
+
 void Font::Update(double elapsedTime)
 {
-	m_elapsedTime += elapsedTime;
+	if (m_elapsedTime < MaxTime)
+		m_elapsedTime += elapsedTime;
 
 	for (unsigned int i = 0; i < m_message.size(); i++)
 	{
@@ -33,6 +39,12 @@ void Font::Update(double elapsedTime)
 		}
 	}
 }
+
+bool Font::TextDisplayDone()
+{
+	return m_elapsedTime > m_textSpeed * m_message.size();
+}
+
 
 void Font::ChangeLetter(unsigned int index, char newChar)
 {
@@ -64,7 +76,7 @@ void Font::SetupMesh()
 {
 	m_mesh.Reset();
 
-	for (int i = 0; i < m_message.size(); i++)
+	for (unsigned int i = 0; i < m_message.size(); i++)
 	{
 		char c = m_messageProgress.at(i);
 		//char c = m_message.at(i);
@@ -75,7 +87,7 @@ void Font::SetupMesh()
 
 		//Change position, and then change texture coords
 		Vector3f pos = Vector3f();
-		pos.x += m_basePosition.x + i;
+		pos.x += i * LetterSpacing;
 		m_mesh.AddToMesh(m_phys.GetVertices(), m_phys.GetIndices(), m_phys.GetHighestIndex(), pos, m_texture, &trans, index);
 	}
 
@@ -103,7 +115,7 @@ void Font::CreateHash() {
 		"_`abcdefghijklmn"
 		"opqrstuvwxyz{|}~";
 
-	for (int i = 0; i < charList.length(); i++)
+	for (unsigned int i = 0; i < charList.length(); i++)
 		m_letters.emplace(charList.at(i), i);
 }
 
@@ -111,11 +123,18 @@ void Font::SetText(std::string text, Vector3f location, bool centered)
 {
 	m_message = text;
 	m_totalTime = text.size() * m_textSpeed;
+	m_lifetime = 2 + text.size() * 0.1;
 	m_messageProgress = "";
 	for (auto x : m_message)
 		m_messageProgress += ' ';
 
-	m_basePosition.x = location.x;
+	float value = 0;
+	if (centered)
+		value = (((float)m_message.size() / 2.0f) * LetterSpacing * m_xScale);
+
+	location.x -= value;
+
+	m_basePosition.x = location.x/* - value*/;
 	m_basePosition.y = location.y;
 
 	m_phys.SetPosition(location);
@@ -126,6 +145,11 @@ void Font::SetText(std::string text, Vector3f location, bool centered)
 void Font::Draw()
 {
 	m_graphics->Draw();
+}
+
+void Font::SetTextSpeed(double speed)
+{
+	m_textSpeed = speed;
 }
 
 
@@ -139,4 +163,12 @@ void Font::SetRender()
 {
 	if (m_graphics != NULL)
 		Renderer::GetInstance().Add(m_graphics);
+}
+
+void Font::SetScale(float xScale, float yScale)
+{
+	if (m_graphics != NULL)
+		m_graphics->SetScale(Vector3f(xScale, yScale, 1));
+
+	m_xScale = xScale;
 }

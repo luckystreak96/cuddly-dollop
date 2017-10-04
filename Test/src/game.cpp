@@ -62,31 +62,7 @@ void Game::renderSceneCB()
 }
 
 void Game::specialKeyboardCB(int key, int x, int y)
-{	
-	switch (key)
-	{
-	case GLUT_KEY_F1:
-		Globals::DEBUG_DRAW_NORMALS = !Globals::DEBUG_DRAW_NORMALS;
-		break;
-	case GLUT_KEY_F2:
-		Globals::DEBUG_DRAW_TILE_OUTLINES = !Globals::DEBUG_DRAW_TILE_OUTLINES;
-		break;
-	case GLUT_KEY_F11:
-		if (m_isFullscreen)
-		{
-			glutReshapeWindow(WINDOW_WIDTH, WINDOW_HEIGHT);
-			glutPositionWindow(0, 0);
-			m_isFullscreen = false;
-		}
-		else
-		{
-			glutFullScreen();
-			m_isFullscreen = true;
-		}
-	default:
-		break;
-	}
-
+{
 	InputManager::GetInstance().SpecialInput(key, true);
 }
 
@@ -141,23 +117,40 @@ void Game::keyboardUpCB(unsigned char key, int x, int y)
 void Game::specialKeyboardUpCB(int key, int x, int y)
 {
 	InputManager::GetInstance().SpecialInput(key, false);
+	switch (key)
+	{
+	case GLUT_KEY_F3://ESC
+		InputManager::GetInstance().SetLockLevel(0);
+		break;
+	case GLUT_KEY_F1:
+		Globals::DEBUG_DRAW_NORMALS = !Globals::DEBUG_DRAW_NORMALS;
+		break;
+	case GLUT_KEY_F2:
+		Globals::DEBUG_DRAW_TILE_OUTLINES = !Globals::DEBUG_DRAW_TILE_OUTLINES;
+		break;
+	case GLUT_KEY_F11:
+		if (m_isFullscreen)
+		{
+			glutReshapeWindow(WINDOW_WIDTH, WINDOW_HEIGHT);
+			glutPositionWindow(0, 0);
+			m_isFullscreen = false;
+		}
+		else
+		{
+			glutFullScreen();
+			m_isFullscreen = true;
+		}
+	case GLUT_KEY_F10:
+		glutReshapeWindow(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
+		glutPositionWindow(0, 0);
+		m_isFullscreen = false;
+	default:
+		break;
+	}
 }
 
 void Game::windowResizeCB(int w, int h)
 {
-	//float w = (float)glutGet(GLUT_WINDOW_WIDTH);
-	//float h = (float)glutGet(GLUT_WINDOW_HEIGHT);
-	//float r = (float)w / (float)h;
-		//Prevents stretching
-	//glViewport(0, 0, WINDOW_WIDTH * ratio, WINDOW_HEIGHT * ratio);
-
 	//Stretches to fit window size
 	glViewport(0, 0, (GLsizei)w, (GLsizei)h);
-	//glViewport(0, 0, (GLsizei)(WINDOW_WIDTH * RATIO), (GLsizei)(WINDOW_HEIGHT * RATIO));
-
-	//OrthoProjInfo::GetRegularInstance().Bottom = -(h);
-	//OrthoProjInfo::GetRegularInstance().Top = (h);
-	//OrthoProjInfo::GetRegularInstance().Left = -(w * r);
-	//OrthoProjInfo::GetRegularInstance().Right = (w * r);
-
 }

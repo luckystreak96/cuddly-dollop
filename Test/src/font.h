@@ -17,30 +17,31 @@ public:
 	~Font();
 
 public:
-	void SetText(std::string text, Vector3f location = Vector3f(0, 0, 0), bool centered = false);
+	virtual void SetText(std::string text, Vector3f location = Vector3f(0, 0, 0), bool centered = false);
 	void ChangeLetter(unsigned int index, char newChar);
-	void Draw();
-	void Update(double elapsedTime);
-	void SetRender();
+	virtual void Draw();
+	virtual void Update(double elapsedTime);
+	virtual void SetRender();
+	void SetTextSpeed(double speed);
 	FontGraphicsComponent* GetGraphics() { return m_graphics; }
-	bool IsDead() { return m_temporary && m_elapsedTime > m_lifetime; }
+	bool IsDead();
+	void SetScale(float xScale, float yScale);
+	bool TextDisplayDone();
 
-private:
+protected:
 	void CreateHash();
 	void SetupMesh();
 	unsigned int CharToCode(char c);
 
-private:
-	const double MaxTime = 30000;
+protected:
+	const double MaxTime;
+	const float LetterSpacing;
 	double m_elapsedTime;
 	double m_textSpeed;
 	double m_lifetime;
 	double m_totalTime;
 
-	float m_width = 0.5f;
-	float m_height = 0.5f;
-	float m_baseX = 0;
-	float m_baseY = 0;
+	float m_xScale;
 
 	bool m_static;
 	bool m_temporary;
@@ -49,14 +50,13 @@ private:
 	std::map<char, unsigned int> m_letters;
 	Mesh m_mesh;
 	//std::vector<Vertex> m_verts;
-	unsigned int m_lettersPerRow = 16;
-	unsigned int m_lettersPerColumn = 16;
+	const unsigned int m_lettersPerRow;
+	const unsigned int m_lettersPerColumn;
 
 	PhysicsComponent m_phys;
 	Transformation trans;
 
-	Vector3f m_position = Vector3f();
-	Vector3f m_basePosition = Vector3f();
+	Vector3f m_basePosition;
 	std::string m_texture;
 	std::string m_message;
 	std::string m_messageProgress;

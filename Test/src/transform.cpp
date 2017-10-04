@@ -139,25 +139,26 @@ void Transformation::Follow(Vector3f target, Vector3f upperRightLimit)
 {
 	float distanceX = -target.x - m_translate.x;//find the distance between the 2, -target so that the movement of the world will be proper
 	float distanceY = -target.y - m_translate.y;
+
+	// Sets how much the camera will move in this frame
 	m_translate.x += distanceX / (40.0f * m_followSpeed);
 	m_translate.y += distanceY / (40.0f * m_followSpeed);
 
-	//Don't let the camera see black :)
-	if (m_translate.x - ORTHO_LEFT > 0)
-	{
+	// If the pan would bring you left further than the left limit OR the map is too small to fit the screen width,
+	//  just pan at the left limit
+	if (m_translate.x - ORTHO_LEFT > 0 || upperRightLimit.x < ORTHO_RIGHT * 2)
 		m_translate.x = ORTHO_LEFT;
-	}
+	// If the map is big enough for the screen to pan it right and you would normally pass the limits,
+	//  set the pan to the exact right limit
 	else if (abs(m_translate.x - ORTHO_RIGHT) > upperRightLimit.x)
-	{
 		m_translate.x = -(upperRightLimit.x - ORTHO_RIGHT);
-	}
 
-	if (m_translate.y - ORTHO_BOTTOM > 0)
-	{
+	// If the pan would bring you down further than the bottom OR the map isnt high enough to fill the screen,
+	//  just stay at the bottom
+	if (m_translate.y - ORTHO_BOTTOM > 0 || upperRightLimit.y < ORTHO_TOP * 2)
 		m_translate.y = ORTHO_BOTTOM;
-	}
+	// If the map is big enough for the screen to pan it upwards and you would normally pass the limits,
+	//  set the pan to the exact top
 	else if (abs(m_translate.y - ORTHO_TOP) > upperRightLimit.y)
-	{
 		m_translate.y = -(upperRightLimit.y - ORTHO_TOP);
-	}
 }

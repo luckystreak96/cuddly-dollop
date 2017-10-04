@@ -7,6 +7,7 @@ class FontGraphicsComponent : public GraphicsComponent
 {
 public:
 	FontGraphicsComponent() : GraphicsComponent() {}
+	FontGraphicsComponent(std::string model = "DIALOGUE_BOX", std::string path = "res/dialogue.png");
 	FontGraphicsComponent(std::vector<Vertex>* verts, std::vector<GLuint>* inds, std::string texPath = std::string("res/mushroom.png"));
 	void Draw(bool withTex = true);
 	void SetStatic(bool sTatic);

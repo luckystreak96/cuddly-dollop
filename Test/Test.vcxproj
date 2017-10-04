@@ -181,9 +181,12 @@
     <ClInclude Include="src\combineEffect.h" />
     <ClInclude Include="src\define.h" />
     <ClInclude Include="src\define_gl.h" />
+    <ClInclude Include="src\dialogueBox.h" />
+    <ClInclude Include="src\dialogueGraph.h" />
     <ClInclude Include="src\effect.h" />
     <ClInclude Include="src\elapsedTime.h" />
     <ClInclude Include="src\entity.h" />
+    <ClInclude Include="src\eventManager.h" />
     <ClInclude Include="src\FBO.h" />
     <ClInclude Include="src\font.h" />
     <ClInclude Include="src\fontGraphicsComponent.h" />
@@ -194,6 +197,7 @@
     <ClInclude Include="src\heightEffect.h" />
     <ClInclude Include="src\heightFog.h" />
     <ClInclude Include="src\iComponent.h" />
+    <ClInclude Include="src\iEvent.h" />
     <ClInclude Include="src\inputComponent.h" />
     <ClInclude Include="src\input_manager.h" />
     <ClInclude Include="src\key_status.h" />
@@ -241,9 +245,12 @@
     <ClCompile Include="src\blur_framebuffer.cpp" />
     <ClCompile Include="src\combineEffect.cpp" />
     <ClCompile Include="src\define.cpp" />
+    <ClCompile Include="src\dialogueBox.cpp" />
+    <ClCompile Include="src\dialogueGraph.cpp" />
     <ClCompile Include="src\effect.cpp" />
     <ClCompile Include="src\elapsedTime.cpp" />
     <ClCompile Include="src\entity.cpp" />
+    <ClCompile Include="src\eventManager.cpp" />
     <ClCompile Include="src\FBO.cpp" />
     <ClCompile Include="src\font.cpp" />
     <ClCompile Include="src\fontGraphicsComponent.cpp" />
@@ -253,6 +260,8 @@
     <ClCompile Include="src\graphicsComponent.cpp" />
     <ClCompile Include="src\heightEffect.cpp" />
     <ClCompile Include="src\heightFog.cpp" />
+    <ClCompile Include="src\iComponent.cpp" />
+    <ClCompile Include="src\inputComponent.cpp" />
     <ClCompile Include="src\input_manager.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\map_handler.cpp" />

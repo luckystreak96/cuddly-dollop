@@ -27,6 +27,9 @@ public:
 	unsigned int Size();
 	void SetupMesh();
 	GraphicsComponent* Graphics() { return m_graphics; }
+
+	// Returns the farthest reaches of the map in  x, y and z
+	Vector3f GetMapSize();
 	static inline bool TileSort(MapTile* i, MapTile* j) { return (i->Physics()->Position() < j->Physics()->Position()); }
 
 private:
@@ -35,6 +38,8 @@ private:
 	GraphicsComponent* m_graphics = NULL;
 	int m_MBO_instances;
 	std::string m_texture;
+	// The width height and depth of the map in tiles
+	Vector3f m_mapSize;
 };
 
 #endif

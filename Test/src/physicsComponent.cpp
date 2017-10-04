@@ -2,6 +2,8 @@
 
 void PhysicsComponent::ReceiveMessage(std::vector<std::string> msg)
 {
+	if (msg.size() == 0)
+		return;
 	if (msg.at(0) == "TELEPORT")
 	{
 		if (msg.size() >= 4)

@@ -68,12 +68,14 @@ public:
 	void Enable(GLuint program = 0);//enable shader -- glUseShaderProgram(m_shaderProgram);
 	static void SetModelPosition(float* mat);
 	static void SetWorldPosition(float* mat);
+	static float* GetPrevWorldPos();
 protected:
 	bool AddShader(const char* shaderFileName, GLenum shaderType, GLuint& program);//add a shader thru its contents
 	bool Finalize(GLuint& program);//Link objects
 	static GLuint GetUniformLocation(const GLchar* name);
 	GLuint m_shaderProg;
 	static GLuint m_currentShaderProgram;
+	static float* m_prevWorld;
 private:
 	typedef std::list<GLuint> ShaderObjList;
 	ShaderObjList m_shaderObjList;
