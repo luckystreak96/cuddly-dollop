@@ -9,6 +9,8 @@ DialogueBox::DialogueBox() : m_box(NULL), Font()
 
 	m_phys.SetPosition(Vector3f());
 	m_static = true;
+	m_lockLevel = 1;
+	m_mode = BLOCKING;
 	InputManager::GetInstance().SetLockLevel(1);
 }
 
@@ -18,9 +20,31 @@ void DialogueBox::Draw()
 	m_graphics->Draw();
 }
 
-void DialogueBox::SetText(std::string text, Vector3f location, bool centered)
+void DialogueBox::SetText(std::string text)
 {
 	Font::SetText(text, Vector3f(0.5f, 4.0f, 0.0f), false);
+}
+
+bool DialogueBox::UpdateEvent(double elapsedTime)
+{
+	// Don't update it if its completed
+	if (m_completed)
+		return true;
+
+	// Update the font
+	Font::Update(elapsedTime);
+
+	// When you press space, set up the textbox to be destroyed
+	if (TextDisplayDone() && InputManager::GetInstance().FrameKeyStatus(' ', KeyStatus::KeyPressed, 1))
+	{
+		m_completed = true;
+		return true;
+	}
+
+	SetRender();
+
+	// The dialogue is not done
+	return false;
 }
 
 void DialogueBox::Update(double elapsedTime)

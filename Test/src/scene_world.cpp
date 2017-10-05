@@ -152,7 +152,10 @@ void SceneWorld::Interact()
 
 void SceneWorld::Update()
 {
+	// Needs to be called here so the EventQueues can set render
+	Renderer::GetInstance().Empty();
 	Animation::AnimationCounter((float)ElapsedTime::GetInstance().GetElapsedTime());
+	Interact();
 
 	for (auto it : m_celist)
 		it->Physics()->DesiredMove();
@@ -166,7 +169,6 @@ void SceneWorld::Update()
 
 	m_mapHandler->Update();
 
-	Interact();
 	SetAudioPosition();
 	//SoundManager::GetInstance().SetListenerOrientation(((PlayerGraphicsComponent*)m_player->Graphics())->GetDirection());
 
@@ -182,8 +184,6 @@ void SceneWorld::Update()
 
 	srand(clock());
 	FontManager::GetInstance().ChangeLetter(m_fontTitle, 0, rand() % 4 == 1 ? '_' : 'I');
-
-	Renderer::GetInstance().Empty();
 	FontManager::GetInstance().Update(ElapsedTime::GetInstance().GetElapsedTime());
 }
 

@@ -2,6 +2,7 @@
 #define EVENT_QUEUE_H__
 
 #include <deque>
+#include <algorithm>
 #include "iEvent.h"
 #include "input_manager.h"
 
@@ -14,7 +15,8 @@ public:
 	bool Complete();
 protected:
 	void Erase(unsigned int index);
-	void UnlockInput();
+	void UpdateLockLevel();
+	void AddToLockVector(IEvent* ev);
 protected:
 	std::deque<IEvent*> m_queue;
 	static std::vector<IEvent*> m_locks;

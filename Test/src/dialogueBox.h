@@ -3,15 +3,17 @@
 
 #include "font.h"
 #include "input_manager.h"
+#include "iEvent.h"
 
-class DialogueBox : public Font
+class DialogueBox : public Font, public IEvent
 {
 public:
 	DialogueBox();
 	void Update(double elapsedTime);
+	bool UpdateEvent(double elapsedTime);
 	void Draw();
 	void SetRender();
-	void SetText(std::string text, Vector3f location = Vector3f(0, 0, 0), bool centered = false);
+	void SetText(std::string text);
 
 private:
 	FontGraphicsComponent* m_box;

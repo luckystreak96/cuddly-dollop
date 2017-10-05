@@ -1,11 +1,8 @@
 #include "iEvent.h"
 
-//bool IEvent::IsDone()
-//{
-//	return m_completed;
-//}
+IEvent::IEvent() : m_lockLevel(0), m_mode(ASYNC), m_completed(false) {}
 
-IEvent::IEvent() : m_lockLevel(0), m_mode(ASYNC) {}
+//IEvent::~IEvent() {}
 
 unsigned int IEvent::GetLockLevel()
 {
@@ -14,7 +11,7 @@ unsigned int IEvent::GetLockLevel()
 
 bool IEvent::UpdateEvent(double elapsedTime)
 {
-	return false;
+	return m_completed;
 }
 
 EventExecutionMode IEvent::GetExecutionMode()
