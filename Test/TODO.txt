@@ -1,0 +1,3 @@
+Press Space to skip
+Hold to speed up
+Load entities correctly immediately

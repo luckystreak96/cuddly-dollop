@@ -164,10 +164,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <Text Include="Optimization.txt" />
-    <Text Include="TODO.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="src\animation.h" />
     <ClInclude Include="src\array2d.h" />
     <ClInclude Include="src\array3d.h" />
@@ -316,6 +312,9 @@
     <None Include="shaders\shadow_map.fs" />
     <None Include="shaders\shadow_map.vs" />
     <None Include="shaders\transparency.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="TODO.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

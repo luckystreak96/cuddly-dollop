@@ -20,7 +20,7 @@ std::vector<std::string> InputComponent::Interact()
 
 	DialogueBox* db2 = new DialogueBox();
 	db2->SetScale(0.5f, 0.5f);
-	db2->SetTextSpeed(0.02f);
+	db2->SetTextSpeed(0.2f);
 	db2->SetText("I'm talking to you right now!");
 
 	m_eventQueue.PushBack(db);

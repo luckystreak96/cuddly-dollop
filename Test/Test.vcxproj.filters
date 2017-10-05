@@ -111,10 +111,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="TODO.txt" />
-    <Text Include="Optimization.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="src\scenes.h">
       <Filter>Header Files\Scenes</Filter>
     </ClInclude>
@@ -551,5 +547,8 @@
     <None Include="shaders\bloomDark.fs">
       <Filter>Shaders</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="TODO.txt" />
   </ItemGroup>
 </Project>
