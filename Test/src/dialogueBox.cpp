@@ -22,7 +22,7 @@ void DialogueBox::Draw()
 
 void DialogueBox::SetText(std::string text)
 {
-	Font::SetText(text, Vector3f(0.5f, 4.0f, 0.0f), false);
+	Font::SetText(text, Vector3f(0.5f, 4.0f, 0.0f), false, m_maxWidth);
 }
 
 bool DialogueBox::UpdateEvent(double elapsedTime)
@@ -39,6 +39,14 @@ bool DialogueBox::UpdateEvent(double elapsedTime)
 	{
 		m_completed = true;
 		return true;
+	}
+	else if (InputManager::GetInstance().FrameKeyStatus(' ', KeyStatus::AnyPress, 1))
+	{
+ 		m_textSpeed = 3;
+	}
+	else
+	{
+		m_textSpeed = 1;
 	}
 
 	SetRender();
@@ -66,4 +74,12 @@ void DialogueBox::SetRender()
 		Renderer::GetInstance().Add(m_box);
 	if (m_graphics != NULL)
 		Renderer::GetInstance().Add(m_graphics);
+}
+
+void DialogueBox::SetScale(float xScale, float yScale)
+{
+	Font::SetScale(xScale, yScale);
+
+	m_maxWidth = 29.0f/* / xScale*/;
+	m_maxHeight = 4.0f/* / yScale*/;
 }

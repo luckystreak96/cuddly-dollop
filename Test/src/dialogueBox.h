@@ -14,9 +14,12 @@ public:
 	void Draw();
 	void SetRender();
 	void SetText(std::string text);
+	void SetScale(float xScale, float yScale);
 
 private:
 	FontGraphicsComponent* m_box;
+	float m_maxWidth;
+	float m_maxHeight;
 };
 
 #endif // !DIALOGUE_BOX_H__

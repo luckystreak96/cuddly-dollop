@@ -1,10 +1,12 @@
 #include "playerGraphicsComponent.h"
 
-PlayerGraphicsComponent::PlayerGraphicsComponent(std::string tex, std::string model)
+PlayerGraphicsComponent::PlayerGraphicsComponent(std::string tex, std::string model) : m_firstLoad(true)
 {
 	m_modelName = model;
 	m_texture = tex;
 	Construct();
+	Update();
+	m_firstLoad = false;
 }
 
 void PlayerGraphicsComponent::Update()
@@ -35,7 +37,7 @@ void PlayerGraphicsComponent::Update()
 	//Change the sprite depending on direction
 	m_animation = m_direction;
 
-	if (SetTileModelTC(&m_vertices, dir != m_direction))
+	if (SetTileModelTC(&m_vertices, dir != m_direction || m_firstLoad))
 		ResetVBO();
 
 	GraphicsComponent::Update();

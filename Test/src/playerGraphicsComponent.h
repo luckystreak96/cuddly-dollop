@@ -12,6 +12,7 @@ public:
 	PlayerGraphicsComponent(std::string tex = "res/player.png", std::string model = "TILE");
 	void Update();
 private:
+	bool m_firstLoad;
 };
 
 #endif

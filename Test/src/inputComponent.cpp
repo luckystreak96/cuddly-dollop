@@ -16,12 +16,12 @@ std::vector<std::string> InputComponent::Interact()
 	DialogueBox* db = new DialogueBox();
 	db->SetScale(0.5f, 0.5f);
 	db->SetTextSpeed(0.03f);
-	db->SetText("Hello!");
+	db->SetText("Hello! \nHaha!\nCoolCats.\n");
 
 	DialogueBox* db2 = new DialogueBox();
-	db2->SetScale(0.5f, 0.5f);
+	db2->SetScale(0.7f, 0.7f);
 	db2->SetTextSpeed(0.2f);
-	db2->SetText("I'm talking to you right now!");
+	db2->SetText("I'm talking to you right now! Isn't this great? We should hang out sometime! Have a blast! You'll see! It'll be so great, we'll eat everyone's apples and they'll all be so mad! Haha! Apples really are great! Andyways dude, I gotta go. My wife is waiting for me. You have a nice day and take care of yourself, okay!?");
 
 	m_eventQueue.PushBack(db);
 	m_eventQueue.PushBack(db2);

@@ -2,7 +2,12 @@
 #define FONT_H__
 
 #include "vector3f.h"
+#include <string>
+#include <sstream>
+#include <vector>
+#include <iterator>
 #include <map>
+#include <math.h>
 #include "resource_manager.h"
 #include "graphicsComponent.h"
 #include "mesh.h"
@@ -17,7 +22,7 @@ public:
 	~Font();
 
 public:
-	virtual void SetText(std::string text, Vector3f location = Vector3f(0, 0, 0), bool centered = false);
+	virtual void SetText(std::string text, Vector3f location = Vector3f(0, 0, 0), bool centered = false, float xBoundry = -1);
 	void ChangeLetter(unsigned int index, char newChar);
 	virtual void Draw();
 	virtual void Update(double elapsedTime);
@@ -25,16 +30,18 @@ public:
 	void SetTextSpeed(double speed);
 	FontGraphicsComponent* GetGraphics() { return m_graphics; }
 	bool IsDead();
-	void SetScale(float xScale, float yScale);
+	virtual void SetScale(float xScale, float yScale);
 	bool TextDisplayDone();
 
 protected:
+	void AddWordToMesh(std::string word, float x, float y);
 	void CreateHash();
-	void SetupMesh();
+	void SetupMesh(float xBoundry = -1, float yBoundry = -1);
 	unsigned int CharToCode(char c);
 
 protected:
 	const double MaxTime;
+	const double m_timePerLetter;
 	const float LetterSpacing;
 	double m_elapsedTime;
 	double m_textSpeed;
@@ -42,6 +49,7 @@ protected:
 	double m_totalTime;
 
 	float m_xScale;
+	float m_yScale;
 
 	bool m_static;
 	bool m_temporary;

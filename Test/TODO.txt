@@ -1,3 +1,2 @@
-Press Space to skip
-Hold to speed up
-Load entities correctly immediately
+Clean up the messy font code
+Set up the dialogue graphs
