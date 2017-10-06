@@ -21,7 +21,7 @@ std::vector<std::string> InputComponent::Interact()
 	DialogueBox* db2 = new DialogueBox();
 	db2->SetScale(0.7f, 0.7f);
 	db2->SetTextSpeed(0.2f);
-	db2->SetText("I'm talking to you right now! Isn't this great? We should hang out sometime! Have a blast! You'll see! It'll be so great, we'll eat everyone's apples and they'll all be so mad! Haha! Apples really are great! Andyways dude, I gotta go. My wife is waiting for me. You have a nice day and take care of yourself, okay!?");
+	db2->SetText("I'm talking to you right now! Isn't this great? We should hang out sometime! Have a blast! You'll see! It'll be so great, we'll eat everyone's apples and they'll all be so mad! Haha! Apples really are great! Anyways dude, I gotta go. My wife is waiting for me. You have a nice day and take care of yourself, okay!?");
 
 	m_eventQueue.PushBack(db);
 	m_eventQueue.PushBack(db2);

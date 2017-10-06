@@ -42,7 +42,7 @@ bool DialogueBox::UpdateEvent(double elapsedTime)
 	}
 	else if (InputManager::GetInstance().FrameKeyStatus(' ', KeyStatus::AnyPress, 1))
 	{
- 		m_textSpeed = 3;
+ 		m_textSpeed = 7;
 	}
 	else
 	{
