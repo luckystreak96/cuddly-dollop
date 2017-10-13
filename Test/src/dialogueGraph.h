@@ -5,15 +5,23 @@
 #include <vector>
 #include <map>
 #include "iEvent.h"
+#include "eventQueue.h"
+#include "eventMove.h"
 
 enum DialogueType { Simple, Choice, End };
 enum InputType { IT_Action, IT_Up, IT_Down };
+
+struct DialogueResponse
+{
+	bool NotDone;
+	EventQueue Queue;
+};
 
 struct DialogueChoice
 {
 	std::string Text;
 	int NextTextId;
-	IEvent* Event;
+	EventQueue Queue;
 };
 
 struct Dialogue
@@ -31,7 +39,7 @@ public:
 	DialogueGraph();
 	DialogueGraph(std::map<int, Dialogue> ds);
 	std::string GetCurrentText();
-	bool SendInput(InputType it);
+	DialogueResponse SendInput(InputType it);
 	bool ChoiceAvailable();
 	int SelectedChoice();
 	std::vector<std::string> GetChoices();

@@ -1,3 +1,4 @@
-Entity walking and talking at the same time
-Entity collision when 2 bitches are moving at the same time is fucked
+Entity walking and talking at the same time - set talking bool
+data.json add args that the events can read - including other events for the dialogue stuff
 Entity Factory
+Optimize collisions lol

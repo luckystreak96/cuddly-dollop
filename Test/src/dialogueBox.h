@@ -5,6 +5,7 @@
 #include "input_manager.h"
 #include "iEvent.h"
 #include "dialogueGraph.h"
+#include "eventQueue.h"
 
 class DialogueBox : public Font, public IEvent
 {
@@ -12,7 +13,7 @@ public:
 	DialogueBox(DialogueGraph* dg = NULL);
 	~DialogueBox();
 	void Update(double elapsedTime);
-	bool UpdateEvent(double elapsedTime, std::map<unsigned int, Entity*>* ents);
+	EventUpdateResponse UpdateEvent(double elapsedTime, std::map<unsigned int, Entity*>* ents);
 	void Draw();
 	void SetRender();
 	void SetText(std::string text);

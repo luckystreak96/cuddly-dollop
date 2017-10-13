@@ -8,7 +8,6 @@
 #include "input_manager.h"
 #include "entity.h"
 #include "eventQueue.h"
-#include "eventFactory.h"
 
 class EventManager
 {

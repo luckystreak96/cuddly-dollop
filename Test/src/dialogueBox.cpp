@@ -57,11 +57,15 @@ void DialogueBox::SetText(std::string text)
 	}
 }
 
-bool DialogueBox::UpdateEvent(double elapsedTime, std::map<unsigned int, Entity*>* ents)
+EventUpdateResponse DialogueBox::UpdateEvent(double elapsedTime, std::map<unsigned int, Entity*>* ents)
 {
+	EventUpdateResponse eur = EventUpdateResponse();
+	eur.IsDone = true;
+	eur.Queue = EventQueue();
+
 	// Don't update it if its completed
 	if (m_completed)
-		return true;
+		return eur;
 
 	// Update the font
 	Font::Update(elapsedTime);
@@ -88,14 +92,23 @@ bool DialogueBox::UpdateEvent(double elapsedTime, std::map<unsigned int, Entity*
 		if (InputManager::GetInstance().FrameKeyStatus(' ', KeyStatus::KeyPressed, 1))
 		{
 			// SendInput returns false if its done
-			if (m_dialogueGraph == NULL || !m_dialogueGraph->SendInput(IT_Action))
+			if (m_dialogueGraph == NULL)
 			{
 				m_completed = true;
-				return true;
+				return eur;
+			}
+
+			DialogueResponse dr = m_dialogueGraph->SendInput(IT_Action);
+			eur.Queue = dr.Queue;
+
+			if (dr.NotDone)
+			{
+				SetText(m_dialogueGraph->GetCurrentText());
 			}
 			else
 			{
-				SetText(m_dialogueGraph->GetCurrentText());
+				m_completed = true;
+				return eur;
 			}
 		}
 		else if (m_dialogueGraph != NULL && m_dialogueGraph->ChoiceAvailable() && InputManager::GetInstance().FrameKeyStatus(GLUT_KEY_DOWN + InputManager::SpecialKeyValue, KeyStatus::KeyPressed, 1))
@@ -119,7 +132,8 @@ bool DialogueBox::UpdateEvent(double elapsedTime, std::map<unsigned int, Entity*
 	SetRender();
 
 	// The dialogue is not done
-	return false;
+	eur.IsDone = false;
+	return eur;
 }
 
 void DialogueBox::Update(double elapsedTime)

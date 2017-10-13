@@ -2,8 +2,15 @@
 #define IEVENT_H__
 
 #include <map>
+#include "eventQueue.h"
 
 class Entity;
+
+struct EventUpdateResponse
+{
+	bool IsDone;
+	EventQueue Queue;
+};
 
 enum EventExecutionMode
 {
@@ -17,7 +24,7 @@ public:
 	virtual ~IEvent() = default;
 
 	// Returns true if the event is done updating
-	virtual bool UpdateEvent(double elapsedTime, std::map<unsigned int, Entity*>* ents);
+	virtual EventUpdateResponse UpdateEvent(double elapsedTime, std::map<unsigned int, Entity*>* ents);
 	virtual void ResetEvent();
 	unsigned int GetLockLevel();
 	EventExecutionMode GetExecutionMode();

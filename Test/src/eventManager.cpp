@@ -33,8 +33,12 @@ void EventManager::Update(double elapsedTime)
 			EventExecutionMode eem = q.Get(i)->GetExecutionMode();
 
 			// Is the event done?
-			if (q.Get(i)->UpdateEvent(elapsedTime, m_entities) == false)
+			EventUpdateResponse eur = q.Get(i)->UpdateEvent(elapsedTime, m_entities);
+			if (!eur.IsDone)
 				allDone = false;
+
+			if (eur.Queue.Count() > 0)
+				PushBack(eur.Queue);
 
 			// Loop breaks to handle stuff
 			if (eem == EventExecutionMode::BLOCKING)
@@ -54,7 +58,17 @@ void EventManager::Update(double elapsedTime)
 			// If repeat is on, send it to the back of the queue
 			if (q.IsRepeating())
 			{
-				q.SendToBack();
+				for (int i = 0; i < q.Count(); i++)
+				{
+					if (q.Get(0)->GetExecutionMode() == BLOCKING)
+					{
+						q.Get(0)->ResetEvent();
+						q.SendToBack();
+						break;
+					}
+					q.Get(0)->ResetEvent();
+					q.SendToBack();
+				}
 			}
 			else
 			{
@@ -90,6 +104,8 @@ void EventManager::Erase(unsigned int index, unsigned int queueIndex)
 
 	if (!q.Count())
 		m_queues.erase(m_queues.begin() + queueIndex);
+
+	delete ev;
 
 	UpdateLockLevel();
 }

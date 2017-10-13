@@ -39,7 +39,7 @@ IEvent* EventQueue::Get(unsigned int index)
 
 void EventQueue::Remove(unsigned int index)
 {
-	delete m_queue.at(index);
+	//delete m_queue.at(index);
 	m_queue.erase(m_queue.begin() + index);
 }
 
@@ -52,15 +52,9 @@ bool EventQueue::IsRepeating()
 void EventQueue::SendToBack()
 {
 	// Make sure that you dont go on forever lol
-	for (int i = 0; i < Count(); i++)
-	{
-		IEvent* x = m_queue.front();
-		m_queue.pop_front();
-		x->ResetEvent();
-		m_queue.push_back(x);
-		if (x->GetExecutionMode() == EventExecutionMode::BLOCKING)
-			break;
-	}
+	IEvent* x = m_queue.front();
+	m_queue.pop_front();
+	m_queue.push_back(x);
 }
 
 void EventQueue::SetRepeating(bool rep)

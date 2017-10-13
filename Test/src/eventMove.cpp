@@ -7,8 +7,11 @@ EventMove::EventMove(unsigned int entity_id, float distance, unsigned int direct
 	m_mode = EventExecutionMode::ASYNC;
 }
 
-bool EventMove::UpdateEvent(double elapsedTime, std::map<unsigned int, Entity*>* ents)
+EventUpdateResponse EventMove::UpdateEvent(double elapsedTime, std::map<unsigned int, Entity*>* ents)
 {
+	EventUpdateResponse eur = EventUpdateResponse();
+	eur.IsDone = true;
+
 	// If pos hasnt been set yet
 	if (m_firstSetup)
 	{
@@ -22,11 +25,11 @@ bool EventMove::UpdateEvent(double elapsedTime, std::map<unsigned int, Entity*>*
 	{
 		ents->at(m_target)->Physics()->AbsolutePosition(m_startPos + ((m_direction == 2 || m_direction == 3) ? -m_distance : m_distance), Vector3f(m_moveAxis == 0 ? 1 : 0, m_moveAxis == 1 ? 1 : 0, m_moveAxis == 2 ? 1 : 0));
 		ents->at(m_target)->Physics()->RemoveVelocity();
-		return true;
+		return eur;
 	}
 
-	// Set a distance?
-	return false;
+	eur.IsDone = false;
+	return eur;
 }
 
 void EventMove::ResetEvent()

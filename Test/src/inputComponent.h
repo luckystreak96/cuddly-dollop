@@ -3,12 +3,8 @@
 
 #include "iComponent.h"
 #include <iostream>
-#include "fontManager.h"
 #include "input_manager.h"
-//#include "eventQueue.h"
 #include "elapsedTime.h"
-//#include "eventFactory.h"
-//#include "jsonHandler.h"
 
 class InputComponent : public IComponent
 {

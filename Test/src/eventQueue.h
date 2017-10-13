@@ -2,8 +2,10 @@
 #define EVENT_QUEUE_H__
 
 #include <deque>
-#include "iEvent.h"
+//#include "iEvent.h"
 #include "jsonHandler.h"
+
+class IEvent;
 
 class EventQueue
 {

@@ -3,11 +3,15 @@
 DialogueGraph::DialogueGraph()
 {
 	m_dialogues = std::map<int, Dialogue>();
-	DialogueChoice dc1 = { "Know anything cool?", 1, NULL };
-	DialogueChoice dc2 = { "I gotta go.", -1, NULL };
+	DialogueChoice dc1 = { "Know anything cool?", 1, EventQueue() };
+	EventQueue ev = EventQueue();
+	ev.PushBack(new EventMove(2, 3.0f, 2));
+	DialogueChoice dc2 = { "Can you walk down please?", 1, ev };
+	DialogueChoice dc3 = { "I gotta go.", -1, EventQueue() };
 	std::vector<DialogueChoice> vdc = std::vector<DialogueChoice>();
 	vdc.push_back(dc1);
 	vdc.push_back(dc2);
+	vdc.push_back(dc3);
 	Dialogue d0 = { 0, 1, "Hey man, what's up?", Choice, vdc };
 	Dialogue d1 = { 1, 0, "Did you know that nurses and doctors wear white to make it easier to spot any bleeding? Pretty cool, huh?", Simple, std::vector<DialogueChoice>() };
 	m_dialogues.emplace(d0.Id, d0);
@@ -34,9 +38,13 @@ std::string DialogueGraph::GetCurrentText()
 }
 
 // Returns false if the dialogue is done
-bool DialogueGraph::SendInput(InputType it)
+DialogueResponse DialogueGraph::SendInput(InputType it)
 {
 	Dialogue& d = m_dialogues.at(m_currentDialogue);
+
+	DialogueResponse result = DialogueResponse();
+	m_selectedChoice != -1 ? result.Queue = d.Choices.at(m_selectedChoice).Queue : EventQueue();
+	result.NotDone = false;
 
 	unsigned int length = d.Choices.size();
 
@@ -44,13 +52,15 @@ bool DialogueGraph::SendInput(InputType it)
 	{
 		// The dialogue is over
 		if (d.Type == End || d.NextTextId == -1)
-			return false;
+			return result;
 
 		if (d.Choices.size() > 0)
 		{
-			// TODO: handle choices
+			// If theres no future text, end the conversation
 			if (d.Choices.at(m_selectedChoice).NextTextId == -1)
-				return false;
+				return result;
+
+			// Set the next dialogue
 			SetNextDialogue(d.Choices.at(m_selectedChoice).NextTextId);
 		}
 		else if (d.Type == Simple)
@@ -69,7 +79,8 @@ bool DialogueGraph::SendInput(InputType it)
 			m_selectedChoice++;
 	}
 
-	return true;
+	result.NotDone = true;
+	return result;
 }
 
 void DialogueGraph::SetNextDialogue(int id)
