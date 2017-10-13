@@ -50,6 +50,8 @@ protected:
 
 	float m_xScale;
 	float m_yScale;
+	float m_x;
+	float m_y;
 
 	bool m_static;
 	bool m_temporary;

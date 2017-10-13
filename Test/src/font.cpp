@@ -100,73 +100,91 @@ void Font::SetupMesh(float xBndry, float yBndry)
 	// Split the text into words for op word wrap
 	std::vector<std::string> temp = split(m_message, ' ');
 	std::vector<std::string> words = std::vector<std::string>();//split(m_message, ' ');
-	//std::vector<std::string> words = std::vector<std::string>();
+
+	// Iterate through the words
 	for (auto x : temp)
 	{
+		// If there's any \n's in the text
 		if (x.find('\n') != std::string::npos)
 		{
 			// Number of backslash ens
 			int numBSN = std::count(x.begin(), x.end(), '\n');
+
+			// Little hack to find out how many \n's and where they go
 			auto s = split(x, '\n');
 			for (auto b : s)
 			{
+				// An empty string indicates \n at the start of the word
 				if (b == "")
 					b = "\n";
 
+				// Add the word itself
 				words.push_back(b);
 
+				// If the string isn't \n, then it had a \n at the end, so add it here
 				if (b != "\n")
 					words.push_back("\n");
 			}
+
+			// If the \n count was larger than the
 			if (numBSN >= s.size())
 				words.push_back("\n");
 		}
 		else
 		{
+			// No \n in the word, so just add the word
 			words.push_back(x);
 		}
 	}
 
 	// Letter position
-	float x = 0;
-	float y = 0;
+	m_x = 0;
+	m_y = 0;
 
 	unsigned int progress = 0;
+	// This string is message but without \n's in it because
+	//  for display purposes, the \n is fucking with the letter count
 	std::string newmessage = "";
+
 	// Look at a word
 	for (auto w : words)
 	{
+		// If the word is a \n, just start a new line
 		if (w == "\n")
 		{
-			y -= 1;
-			x = 0;
+			m_y -= 1;
+			m_x = 0;
 		}
 		// Is the word too big to fit in the first place?
 		else if (w.size() * LetterSpacing > xBndry)
 		{
 			// TODO: Letter me wrap plz
-			AddWordToMesh(w + " ", x, y);
+			AddWordToMesh(w + " ", m_x, m_y);
 			newmessage += w + " ";
 		}
-		else if (w.size() * LetterSpacing * m_xScale + x > xBndry / m_xScale)
+		else if (w.size() * LetterSpacing * m_xScale + m_x > xBndry / m_xScale)
 		{
 			// Increment y and start on new line
-			y -= 1;
-			x = 0;
+			m_y -= 1;
+			m_x = 0;
 
-			AddWordToMesh(w + " ", x, y);
+			AddWordToMesh(w + " ", m_x, m_y);
 			newmessage += w + " ";
-			x += (w.size() + 1) * LetterSpacing * m_xScale;
+			m_x += (w.size() + 1) * LetterSpacing * m_xScale;
 		}
 		else
 		{
-			AddWordToMesh(w + " ", x, y);
+			AddWordToMesh(w + " ", m_x, m_y);
 			newmessage += w + " ";
-			x += (w.size() + 1) * LetterSpacing * m_xScale;
+			m_x += (w.size() + 1) * LetterSpacing * m_xScale;
 		}
 	}
 
+
+	// Set message to the non-\n version
 	m_message = newmessage;
+
+	// Reset messageprogress so we dont have \n's
 	m_messageProgress = "";
 	for (auto x : m_message)
 		m_messageProgress += ' ';
@@ -221,6 +239,7 @@ void Font::CreateHash() {
 
 void Font::SetText(std::string text, Vector3f location, bool centered, float xBoundry)
 {
+	m_elapsedTime = 0;
 	m_message = text;
 	m_totalTime = text.size() * m_timePerLetter;
 	m_lifetime = 2 + text.size() * 0.1;

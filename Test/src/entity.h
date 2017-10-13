@@ -16,17 +16,19 @@
 class Entity
 {
 public:
-	Entity(bool playerInput = false);
+	Entity(unsigned int id, bool playerInput = false);
 	~Entity();
 	void SetRender();
 	void Update();
 	void Draw();
+	unsigned int GetID();
 	PhysicsComponent* Physics() { return m_physicsComponent; }
 	GraphicsComponent* Graphics() { return m_graphicsComponent; }
 	InputComponent* Input() { return m_inputComponent; }
 	std::vector<IComponent*> components;
 	void Communicate(std::vector<std::string> msg);
 private:
+	unsigned int m_id;
 	PhysicsComponent* m_physicsComponent;
 	GraphicsComponent* m_graphicsComponent;
 	InputComponent* m_inputComponent;

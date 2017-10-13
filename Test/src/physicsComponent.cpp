@@ -312,3 +312,8 @@ void PhysicsComponent::DesiredMove()
 	if (m_velocity != 0)
 		SetMovedBB();
 }
+
+void PhysicsComponent::RemoveVelocity()
+{
+	m_velocity = Vector3f();
+}

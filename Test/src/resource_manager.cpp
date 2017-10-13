@@ -24,8 +24,12 @@ bool ResourceManager::LoadTexture(std::string tex)
 	mutex.lock();
 	m_textures.emplace(tex, Texture(GL_TEXTURE_2D, path));
 	mutex.unlock();
-	return m_textures.at(tex).LoadFromFile();
-
+	if (m_textures.at(tex).LoadFromFile())
+	{
+		m_textures.at(tex).LoadGL();
+		return true;
+	}
+	return false;
 }
 
 void ResourceManager::AddTexture(std::string name, Texture tex)

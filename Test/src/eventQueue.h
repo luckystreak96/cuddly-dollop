@@ -2,25 +2,27 @@
 #define EVENT_QUEUE_H__
 
 #include <deque>
-#include <algorithm>
 #include "iEvent.h"
-#include "input_manager.h"
+#include "jsonHandler.h"
 
 class EventQueue
 {
 public:
 	EventQueue();
+	~EventQueue();
 	void PushBack(IEvent* ev);
-	void Update(double elapsedTime);
-	bool Complete();
-protected:
-	void Erase(unsigned int index);
-	void UpdateLockLevel();
-	void AddToLockVector(IEvent* ev);
-protected:
+	unsigned int GetID();
+	unsigned int Count();
+	IEvent* Get(unsigned int index);
+	void Remove(unsigned int index);
+	bool IsRepeating();
+	void SendToBack();
+	void SetRepeating(bool rep);
+private:
+	unsigned int m_id;
+	bool m_repeat;
 	std::deque<IEvent*> m_queue;
-	static std::vector<IEvent*> m_locks;
 };
 
-#endif // !DIALOGUE_GRAPH_H__
+#endif // !EVENT_LOOP_H__
 

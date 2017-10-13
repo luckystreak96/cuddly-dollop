@@ -271,3 +271,9 @@ std::string GraphicsComponent::GetTexture()
 {
 	return m_texture;
 }
+
+void GraphicsComponent::SetTexture(std::string newTex)
+{
+	m_texture = newTex;
+	LoadExternalResources();
+}

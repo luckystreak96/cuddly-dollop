@@ -42,6 +42,7 @@ public:
 	void SetPosition(Vector3f pos) { m_pos = pos; };
 	Vector3f Velocity() { return m_velocity; };
 	Vector3f GetSize() { return m_size; }
+	void RemoveVelocity();
 	void ApplyGravity();
 	//static inline bool SortFunc(Drawable* d, Drawable* d2) { return d->Position().z < d2->Position().z; }
 

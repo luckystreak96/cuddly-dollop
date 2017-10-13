@@ -28,6 +28,9 @@
 #include "renderer.h"
 #include "font.h"
 #include "fontManager.h"
+#include "eventManager.h"
+#include "jsonHandler.h"
+#include "eventFactory.h"
 
 class SceneWorld : public Scene
 {
@@ -43,6 +46,7 @@ public:
 	void Draw();
 	void Update();
 	void Interact();
+	void TriggerEvents(unsigned int entity_id);
 	void LoadAllResources();
 	void UnloadAllResources();
 	void ManageInput();
@@ -58,10 +62,12 @@ private:
 	Entity* m_player = NULL;
 	Font* m_font = NULL;
 	Camera* m_camera = NULL;
+	EventManager m_eventManager;
 	//Map* m_map = NULL;
 	MapHandler* m_mapHandler = NULL;
 	Transformation* m_World = NULL;
-	std::vector<Entity*> m_celist;
+	//std::vector<Entity*> m_celist;
+	std::map<unsigned int, Entity*> m_celist;
 	bool m_pause;
 	bool m_resources_loaded;
 	bool m_acceptInput;
@@ -72,6 +78,7 @@ private:
 	Trail m_trail;
 	Bloom m_bloom;
 	HeightFog m_fog;
+	const std::string DATA_FILE = "res/data/data.json";
 };
 
 #endif

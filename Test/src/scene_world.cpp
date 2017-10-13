@@ -25,18 +25,21 @@ bool SceneWorld::Init()
 
 	m_mapHandler = new MapHandler();
 
-	m_player = new Entity(true);
+	m_player = new Entity(1, true);
 	m_player->Physics()->SetPosition(Vector3f(0, 2, 4.0f));
 	m_player->Physics()->AbsolutePosition(Vector3f(0, 2, 4.0f));
-	m_test3 = new Entity();
+	m_test3 = new Entity(2);
 	m_test3->Physics()->AbsolutePosition(Vector3f(7.f, 6.5f, 3.0f));
-	m_test2 = new Entity();
+	m_test2 = new Entity(3);
 	m_test2->Physics()->AbsolutePosition(Vector3f(14.f, 9.0f, 4.0f));
 
-	m_celist = std::vector<Entity*>();
-	m_celist.push_back(m_player);
-	m_celist.push_back(m_test3);
-	m_celist.push_back(m_test2);
+	m_celist = std::map<unsigned int, Entity*>();
+	m_eventManager.SetEntitiesMap(&m_celist);
+	m_celist.emplace(m_player->GetID(), m_player);
+	m_celist.emplace(m_test2->GetID(), m_test2);
+	m_celist.emplace(m_test3->GetID(), m_test3);
+	//m_celist.push_back(m_test3);
+	//m_celist.push_back(m_test2);
 
 	//m_fontTitle = FontManager::GetInstance().AddFont();
 	m_fontFPS = FontManager::GetInstance().AddFont(true);
@@ -134,20 +137,27 @@ void SceneWorld::Interact()
 		Entity* inter = NULL;
 		for (auto x : m_celist)
 		{
-			if (Physics::Intersect2D(x->Physics()->GetBoundingBox(), pos))
+			if (Physics::Intersect2D(x.second->Physics()->GetBoundingBox(), pos))
 			{
-				if (x == m_player)
+				if (x.second == m_player)
 					break;
-				inter = x;
+				inter = x.second;
 				break;
 			}
 		}
 
 		if (inter != NULL)
 		{
-			m_player->Communicate(inter->Input()->Interact());
+			//m_player->Communicate(inter->Input()->Interact(&m_eventQueue, inter->GetID()));
+			TriggerEvents(inter->GetID());
 		}
 	}
+}
+
+void SceneWorld::TriggerEvents(unsigned int entity_id)
+{
+	for (auto x : EventFactory::LoadEvent(entity_id))
+		m_eventManager.PushBack(x);
 }
 
 void SceneWorld::Update()
@@ -156,16 +166,17 @@ void SceneWorld::Update()
 	Renderer::GetInstance().Empty();
 	Animation::AnimationCounter((float)ElapsedTime::GetInstance().GetElapsedTime());
 	Interact();
+	m_eventManager.Update(ElapsedTime::GetInstance().GetElapsedTime());
 
 	for (auto it : m_celist)
-		it->Physics()->DesiredMove();
+		it.second->Physics()->DesiredMove();
 
 	//Collision
 	Physics_2D::Collision(&m_celist, m_mapHandler);
 
 	//Update
 	for (auto it : m_celist)
-		it->Update();
+		it.second->Update();
 
 	m_mapHandler->Update();
 
@@ -225,7 +236,7 @@ void SceneWorld::RenderPass()
 		m_mapHandler->SetRender();
 
 		for (auto it : m_celist)
-			it->SetRender();
+			it.second->SetRender();
 		Renderer::GetInstance().Draw();
 	}
 	else
@@ -235,7 +246,7 @@ void SceneWorld::RenderPass()
 		m_mapHandler->SetRender();
 
 		for (auto it : m_celist)
-			it->SetRender();
+			it.second->SetRender();
 
 		FontManager::GetInstance().SetRender();
 

@@ -9,7 +9,7 @@ unsigned int IEvent::GetLockLevel()
 	return m_lockLevel;
 }
 
-bool IEvent::UpdateEvent(double elapsedTime)
+bool IEvent::UpdateEvent(double elapsedTime, std::map<unsigned int, Entity*>* ents)
 {
 	return m_completed;
 }
@@ -17,4 +17,14 @@ bool IEvent::UpdateEvent(double elapsedTime)
 EventExecutionMode IEvent::GetExecutionMode()
 {
 	return m_mode;
+}
+
+void IEvent::SetExecutionMode(EventExecutionMode eem)
+{
+	m_mode = eem;
+}
+
+void IEvent::ResetEvent()
+{
+	m_completed = false;
 }

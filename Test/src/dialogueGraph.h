@@ -3,20 +3,23 @@
 
 #include <string>
 #include <vector>
+#include <map>
 #include "iEvent.h"
 
-enum DialogueType { Simple, Choice };
+enum DialogueType { Simple, Choice, End };
+enum InputType { IT_Action, IT_Up, IT_Down };
 
 struct DialogueChoice
 {
 	std::string Text;
-	unsigned int NextTextId;
+	int NextTextId;
 	IEvent* Event;
 };
 
 struct Dialogue
 {
-	unsigned int TextId;
+	int Id;
+	int NextTextId;
 	std::string Text;
 	DialogueType Type;
 	std::vector<DialogueChoice> Choices;
@@ -25,11 +28,19 @@ struct Dialogue
 class DialogueGraph
 {
 public:
-	DialogueGraph(std::vector<Dialogue> ds);
-	bool GetCurrentDialogue();
+	DialogueGraph();
+	DialogueGraph(std::map<int, Dialogue> ds);
+	std::string GetCurrentText();
+	bool SendInput(InputType it);
+	bool ChoiceAvailable();
+	int SelectedChoice();
+	std::vector<std::string> GetChoices();
 private:
-	std::vector<Dialogue> m_dialogues;
-	unsigned int m_currentDialogue;
+	void SetNextDialogue(int id);
+private:
+	int m_selectedChoice;
+	std::map<int, Dialogue> m_dialogues;
+	int m_currentDialogue;
 };
 
 #endif // !DIALOGUE_GRAPH_H__

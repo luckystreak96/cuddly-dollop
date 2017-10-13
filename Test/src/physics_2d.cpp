@@ -520,12 +520,14 @@ namespace Physics_2D {
 	//1 - The object is going somewhere that lacks any valid blocks (ex: walking off a cliff -- the other blocks are too far)
 	//2 - The object bumps into something within his z-range (if the z is 4, then any object within the range [4,5[ )
 	//		For objects greater than 1 higher, the object goes under it.
-	void Collision(std::vector<Entity*>* clist, MapHandler* mh)
+	void Collision(std::map<unsigned int, Entity*>* clist, MapHandler* mh)
 	{
 		std::vector<PhysicsComponent*> flist = std::vector<PhysicsComponent*>();
 
-		for (unsigned int i = 0; i < clist->size(); i++)
-			flist.push_back(clist->at(i)->Physics());
+		for (auto x : *clist)
+			flist.push_back(x.second->Physics());
+		//for (unsigned int i = 0; i < clist->size(); i++)
+		//	flist.push_back(clist->at(i)->Physics());
 		
 		for (unsigned int i = 0; i < mh->Tiles()->size(); i++)
 			flist.push_back(mh->Tiles()->at(i)->Physics());

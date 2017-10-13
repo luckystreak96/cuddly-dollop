@@ -34,6 +34,7 @@ public:
 	std::vector<Vertex>* GetVertices();
 	std::vector<GLuint> GetIndices();
 	std::string GetTexture();
+	void SetTexture(std::string newTex);
 	std::vector<Vector3f>* GetModels() { if (m_models == NULL) m_models = new std::vector<Vector3f>(); return m_models; }
 	float GetZ() { return m_pos.z; }
 	GLuint GetMVBO() { return m_VBO; }

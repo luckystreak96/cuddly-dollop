@@ -1,6 +1,6 @@
 #include "entity.h"
 
-Entity::Entity(bool playerInput)
+Entity::Entity(unsigned int id, bool playerInput) : m_id(id)
 {
 	m_graphicsComponent = !playerInput ? new PlayerGraphicsComponent("res/ghost.png", "TILE") : new PlayerGraphicsComponent("res/ghost.png", "TILE");
 	components.push_back(m_graphicsComponent);
@@ -57,3 +57,9 @@ void Entity::SetRender()
 {
 	Renderer::GetInstance().Add(m_graphicsComponent);
 }
+
+unsigned int Entity::GetID()
+{
+	return m_id;
+}
+

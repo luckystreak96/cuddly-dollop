@@ -1,0 +1,35 @@
+{
+    "entities": [
+        {
+            "id": 2,
+            "queues": [
+                {
+                    "flag": 1,
+                    "events": [
+                        {
+                            "type": "dialogue"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "queues": [
+                {
+                    "repeating": true,
+                    "events": [
+                        {
+                            "type": "move_down",
+                            "execution_type": "blocking"
+                        },
+                        {
+                            "type": "move_up",
+                            "execution_type": "blocking"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -1,42 +1,47 @@
 #include "inputComponent.h"
 
-InputComponent::InputComponent() : m_pos(Vector3f()), m_eventQueue(EventQueue())
+InputComponent::InputComponent() : m_pos(Vector3f())/*, m_eventQueue(EventQueue())*/
 {
 
 }
 
 void InputComponent::Update()
 {
-	m_eventQueue.Update(ElapsedTime::GetInstance().GetElapsedTime());
+	//m_eventQueue.Update(ElapsedTime::GetInstance().GetElapsedTime());
 }
 
 
-std::vector<std::string> InputComponent::Interact()
-{
-	DialogueBox* db = new DialogueBox();
-	db->SetScale(0.5f, 0.5f);
-	db->SetTextSpeed(0.03f);
-	db->SetText("Hello! \nHaha!\nCoolCats.\n");
-
-	DialogueBox* db2 = new DialogueBox();
-	db2->SetScale(0.7f, 0.7f);
-	db2->SetTextSpeed(0.2f);
-	db2->SetText("I'm talking to you right now! Isn't this great? We should hang out sometime! Have a blast! You'll see! It'll be so great, we'll eat everyone's apples and they'll all be so mad! Haha! Apples really are great! Anyways dude, I gotta go. My wife is waiting for me. You have a nice day and take care of yourself, okay!?");
-
-	m_eventQueue.PushBack(db);
-	m_eventQueue.PushBack(db2);
-
-	//unsigned int font = FontManager::GetInstance().AddDialogueBox();
-	//Vector3f pos = m_pos;
-	//pos.y += 1.0f;
-	//pos.z = 0;
-	//pos.x += 0.5f;
-	//FontManager::GetInstance().SetScale(font, 0.5f, 0.5f);
-	//FontManager::GetInstance().SetTextSpeed(font, 0.03f);
-	//FontManager::GetInstance().SetText(font, "Hello!", pos, true);
-
-	return std::vector<std::string>()/* = { "TELEPORT", "6", "6", "4" }*/; 
-}
+//std::vector<std::string> InputComponent::Interact(EventQueue* eq, unsigned int parent_id)
+//{
+//	// Load the file (could be made to load only once at the start?)
+//	rapidjson::Document doc = JsonHandler::LoadJsonFromFile(DATA_FILE);
+//
+//	// If the json file has entities and the entities is an array
+//	if (doc.HasMember("entities") && doc["entities"].IsArray())
+//	{
+//		// Shortcut notation
+//		const auto& arr = doc["entities"].GetArray();
+//
+//		// Go through the entities
+//		for (unsigned int i = 0; i < arr.Size(); i++)
+//		{
+//			// If the entity is you...
+//			if (arr[i]["id"] == parent_id)
+//			{
+//				// Add your events to the event queue
+//				const auto& evts = arr[i]["events"].GetArray();
+//				for (auto& x : evts)
+//				{
+//					// Find a way to add args to the event
+//					IEvent* ev = EventFactory::BuildEvent((EventTypes)EventFactory::TypeDict.at(x["type"].GetString()), std::vector<std::string>());
+//					eq->PushBack(ev);
+//				}
+//			}
+//		}
+//	}
+//
+//	return std::vector<std::string>()/* = { "TELEPORT", "6", "6", "4" }*/;
+//}
 
 void InputComponent::ReceiveMessage(std::vector<std::string> msg)
 {

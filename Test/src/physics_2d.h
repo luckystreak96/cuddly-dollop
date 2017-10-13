@@ -29,7 +29,7 @@ namespace Physics_2D
 {
 	//void Collision(std::vector<Drawable*>* list);
 	void Collision(std::vector<Entity*>* list);
-	void Collision(std::vector<Entity*>* list, MapHandler* mh);
+	void Collision(std::map<unsigned int, Entity*>* list, MapHandler* mh);
 	bool IsLegalHeight(float tilez, float otherz);
 	//std::vector<Drawable*> FindDupes(std::vector<Drawable*>* list, float targetHeight);
 	std::vector<Entity*> FindDupes(std::vector<Entity*>* list, float targetHeight);
