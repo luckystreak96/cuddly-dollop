@@ -15,7 +15,7 @@ void PhysicsComponent::ReceiveMessage(std::vector<std::string> msg)
 	}
 }
 
-PhysicsComponent::PhysicsComponent(Vector3f pos, std::string modelName, Vector3f size, Vector3f numTiles) : m_size(size), m_BBcenter(numTiles)
+PhysicsComponent::PhysicsComponent(Vector3f pos, std::string modelName, Vector3f size, Vector3f numTiles) : m_size(size), m_BBcenter(numTiles), m_conversationLock(false)
 {
 	m_pos = pos;
 	m_velocity = Vector3f();
@@ -71,6 +71,8 @@ void PhysicsComponent::Move()
 
 void PhysicsComponent::ActionMove(bool up, bool down, bool left, bool right)
 {
+	if (m_conversationLock)
+		return;
 	//ApplyGravity();
 
 	float speed = 2.0f;
@@ -317,3 +319,10 @@ void PhysicsComponent::RemoveVelocity()
 {
 	m_velocity = Vector3f();
 }
+
+void PhysicsComponent::SetConversationLock(bool locked)
+{
+	m_conversationLock = locked;
+	RemoveVelocity();
+}
+

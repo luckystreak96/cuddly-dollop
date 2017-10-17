@@ -86,7 +86,18 @@ void EventManager::Update(double elapsedTime)
 
 void EventManager::PushBack(EventQueue ev)
 {
-	m_queues.push_back(ev);
+	bool found = false;
+
+	for(auto x : m_queues)
+		if (ev.GetID() != -1 && x.GetID() == ev.GetID())
+		{
+			found = true;
+			for (int i = 0; i < ev.Count(); i++)
+				delete ev.Get(i);
+		}
+
+	if(!found || ev.GetID() == -1)
+		m_queues.push_back(ev);
 }
 
 void EventManager::Erase(unsigned int index, unsigned int queueIndex)

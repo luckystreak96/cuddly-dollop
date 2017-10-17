@@ -1,4 +1,3 @@
-Entity walking and talking at the same time - set talking bool
-data.json add args that the events can read - including other events for the dialogue stuff
+test eventQueue-ception
 Entity Factory
 Optimize collisions lol

@@ -84,7 +84,7 @@ void MapHandler::SetupMesh()
 	for (auto t : m_tiles)
 	{
 		MapTile* temp = t;
-		m_mesh.AddToMesh(temp->Physics()->GetVertices(), temp->Physics()->GetIndices(), temp->Physics()->GetHighestIndex(), temp->Physics()->Position(), temp->GetTexture(), temp->GetTransformation());
+		m_mesh.AddToMesh(temp->Physics()->GetVertices(), temp->Physics()->GetIndices(), temp->Physics()->GetHighestIndex(), temp->Physics()->Position(), temp->GetTexture()/*, temp->GetTransformation()*/);
 	}
 
 	m_MBO_instances = m_tiles.size();

@@ -4,9 +4,6 @@ Mesh::Mesh(unsigned int atlasSize) : m_texAtlas(TextureAtlas(atlasSize))
 {
 	m_IBO = 0;
 	m_VBO = 0;
-	m_indices = std::vector<GLuint>();
-	m_vertexList = std::vector<Vertex>();
-	m_models = std::vector<Transformation*>();
 	m_indexProgress = 0;
 	m_texture = NULL;
 	m_progess = 0;
@@ -14,6 +11,8 @@ Mesh::Mesh(unsigned int atlasSize) : m_texAtlas(TextureAtlas(atlasSize))
 
 Mesh::~Mesh()
 {
+	if (m_texture)
+		delete m_texture;
 }
 
 void Mesh::Reset()
@@ -25,7 +24,7 @@ void Mesh::Reset()
 	m_textures.clear();
 }
 
-void Mesh::AddToMesh(std::vector<Vertex>& verts, std::vector<GLuint>& inds, int biggestIndex, Vector3f pos, std::string tex, Transformation* t, int index)
+void Mesh::AddToMesh(std::vector<Vertex>& verts, std::vector<GLuint>& inds, int biggestIndex, Vector3f pos, std::string tex, /*Transformation t,*/ int index)
 {
 	if (m_textures.emplace(tex, 0).second) {
 		m_textures.erase(tex);
@@ -47,7 +46,7 @@ void Mesh::AddToMesh(std::vector<Vertex>& verts, std::vector<GLuint>& inds, int 
 	for (auto i : inds)
 		m_indices.push_back(i + m_indexProgress);
 
-	m_models.push_back(t);
+	//m_models.push_back(t);
 
 	m_indexProgress += biggestIndex + 1;
 }

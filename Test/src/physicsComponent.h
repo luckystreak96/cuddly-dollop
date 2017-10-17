@@ -44,6 +44,7 @@ public:
 	Vector3f GetSize() { return m_size; }
 	void RemoveVelocity();
 	void ApplyGravity();
+	void SetConversationLock(bool locked);
 	//static inline bool SortFunc(Drawable* d, Drawable* d2) { return d->Position().z < d2->Position().z; }
 
 	bool mustCollide = true;
@@ -56,7 +57,8 @@ protected:
 	std::vector<Vertex> m_originalVertices;
 	std::vector<Vector3f> m_models;
 	Vector3f m_size = Vector3f(-1, -1, -1);
-	Vector3f m_BBcenter = Vector3f(-1, -1, -1);;
+	Vector3f m_BBcenter = Vector3f(-1, -1, -1);
+	bool m_conversationLock;
 	//Texture m_texture;
 	std::string m_texture;
 	std::string m_modelName = "NONE"; //cancer

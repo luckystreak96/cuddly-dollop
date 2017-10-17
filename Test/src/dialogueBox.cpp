@@ -1,8 +1,9 @@
 #include "dialogueBox.h"
 
-DialogueBox::DialogueBox(DialogueGraph* dg) : m_box(NULL), Font()
+DialogueBox::DialogueBox(unsigned int entity_id, DialogueGraph* dg) : m_box(NULL), Font()
 {
 	m_dialogueGraph = dg;
+	m_target = entity_id;
 
 	m_box = new FontGraphicsComponent("DIALOGUE_BOX", "res/dialogue.png");
 	m_box->SetPhysics(Vector3f(0, 0, 0.5f), Vector3f(0, 0, 0));
@@ -66,13 +67,16 @@ EventUpdateResponse DialogueBox::UpdateEvent(double elapsedTime, std::map<unsign
 	// Don't update it if its completed
 	if (m_completed)
 		return eur;
+	else
+		if (m_target <= ents->size())
+			ents->at(m_target)->Physics()->SetConversationLock(true);
 
 	// Update the font
 	Font::Update(elapsedTime);
 
 	for (int i = 0; i < m_choices.size(); i++)
 	{
-		if(m_dialogueGraph->SelectedChoice() == i)
+		if (m_dialogueGraph->SelectedChoice() == i)
 			m_choices.at(i)->GetGraphics()->SetTexture("res/fonts/selected.png");
 		else
 			m_choices.at(i)->GetGraphics()->SetTexture("res/fonts/basic.png");
@@ -95,6 +99,8 @@ EventUpdateResponse DialogueBox::UpdateEvent(double elapsedTime, std::map<unsign
 			if (m_dialogueGraph == NULL)
 			{
 				m_completed = true;
+				if (m_target <= ents->size())
+					ents->at(m_target)->Physics()->SetConversationLock(false);
 				return eur;
 			}
 
@@ -108,6 +114,8 @@ EventUpdateResponse DialogueBox::UpdateEvent(double elapsedTime, std::map<unsign
 			else
 			{
 				m_completed = true;
+				if (m_target <= ents->size())
+					ents->at(m_target)->Physics()->SetConversationLock(false);
 				return eur;
 			}
 		}

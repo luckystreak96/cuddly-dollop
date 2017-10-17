@@ -35,9 +35,9 @@ void PlayerGraphicsComponent::Update()
 	m_vertices = std::vector<Vertex>(m_originalVertices);
 
 	//Change the sprite depending on direction
-	m_animation = m_direction;
+	//m_animation = m_direction;
 
-	if (SetTileModelTC(&m_vertices, dir != m_direction || m_firstLoad))
+	if (SetTileModelTC(&m_vertices, m_direction, dir != m_direction || m_direction != m_lastInteraction || m_firstLoad))
 		ResetVBO();
 
 	GraphicsComponent::Update();

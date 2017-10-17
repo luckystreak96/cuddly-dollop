@@ -18,7 +18,7 @@
 class Font
 {
 public:
-	Font(bool sTatic = false, bool temporary = false, std::string path = "res/fonts/basic.png");
+	Font(bool sTatic = false, bool temporary = false, bool lightSpeed = false, std::string path = "res/fonts/basic.png");
 	~Font();
 
 public:
@@ -55,6 +55,7 @@ protected:
 
 	bool m_static;
 	bool m_temporary;
+	bool m_lightSpeed;
 
 	FontGraphicsComponent* m_graphics = NULL;
 	std::map<char, unsigned int> m_letters;

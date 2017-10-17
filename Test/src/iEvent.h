@@ -3,6 +3,7 @@
 
 #include <map>
 #include "eventQueue.h"
+#include <rapidjson\document.h>
 
 class Entity;
 
@@ -31,9 +32,11 @@ public:
 	void SetExecutionMode(EventExecutionMode eem);
 protected:
 	// Stops from updating if its done but not destroyed
+	//std::map<std::string, rapidjson::Value> m_args;
 	bool m_completed;
 	EventExecutionMode m_mode;
 	unsigned int m_lockLevel;
+	unsigned int m_target;
 };
 
 #endif // !DIALOGUE_GRAPH_H__

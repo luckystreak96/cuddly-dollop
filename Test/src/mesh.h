@@ -21,18 +21,18 @@ class Mesh
 public:
 	Mesh(unsigned int atlasSize = 8);
 	~Mesh();
-	void AddToMesh(std::vector<Vertex>& verts, std::vector<GLuint>& inds, int biggestIndex, Vector3f pos, std::string tex, Transformation* t, int index = -1);
+	void AddToMesh(std::vector<Vertex>& verts, std::vector<GLuint>& inds, int biggestIndex, Vector3f pos, std::string tex, /*Transformation t,*/ int index = -1);
 	void Reset();
 	void Finalize(std::string name);
 	std::vector<Vertex>* GetMeshVertices();
 	std::vector<GLuint>* GetMeshIndices();
-	std::vector<Transformation*> GetMeshModels() { return m_models; };
+	//std::vector<Transformation> GetMeshModels() { return m_models; };
 	TextureAtlas* GetAtlas() { return &m_texAtlas; }
 private:
 	GLuint m_IBO;
 	GLuint m_VBO;
 	std::vector<GLuint> m_indices;
-	std::vector<Transformation*> m_models;
+	//std::vector<Transformation> m_models;
 	int m_indexProgress;
 	TextureAtlas m_texAtlas;
 	Texture* m_texture;

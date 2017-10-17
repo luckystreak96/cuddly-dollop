@@ -4,6 +4,7 @@
             "id": 2,
             "queues": [
                 {
+                    "id": 0,
                     "flag": 1,
                     "events": [
                         {
@@ -17,11 +18,16 @@
             "id": 3,
             "queues": [
                 {
+                    "id": 1,
                     "repeating": true,
                     "events": [
                         {
                             "type": "move_down",
-                            "execution_type": "blocking"
+                            "execution_type": "blocking",
+                            "args":
+                            {
+                                "distance": 2.0
+                            }
                         },
                         {
                             "type": "move_up",

@@ -1,8 +1,8 @@
 #include "font.h"
 
-Font::Font(bool sTatic, bool temporary, std::string path) : m_texture(path), m_phys(PhysicsComponent(Vector3f(), "TEXT")),
+Font::Font(bool sTatic, bool temporary, bool lightSpeed, std::string path) : m_texture(path), m_phys(PhysicsComponent(Vector3f(), "TEXT")),
 m_elapsedTime(0), m_textSpeed(1.0), m_timePerLetter(0.03), m_static(sTatic), m_temporary(temporary), m_lifetime(5.0), LetterSpacing(1.0f), MaxTime(30000),
-m_lettersPerRow(16), m_lettersPerColumn(16), m_xScale(1.0f)
+m_lettersPerRow(16), m_lettersPerColumn(16), m_xScale(1.0f), m_lightSpeed(lightSpeed)
 {
 	m_mesh = Mesh(m_lettersPerRow * m_lettersPerColumn);
 	int bitmapWidth = 16;
@@ -27,6 +27,10 @@ bool Font::IsDead()
 
 void Font::Update(double elapsedTime)
 {
+	//For those who hate to wait for the text to draw
+	if (m_lightSpeed)
+		elapsedTime = MaxTime;
+
 	if (m_elapsedTime < MaxTime)
 		m_elapsedTime += elapsedTime * m_textSpeed;
 
@@ -161,6 +165,7 @@ void Font::SetupMesh(float xBndry, float yBndry)
 			// TODO: Letter me wrap plz
 			AddWordToMesh(w + " ", m_x, m_y);
 			newmessage += w + " ";
+			m_x += (w.size() + 1) * LetterSpacing * m_xScale;
 		}
 		else if (w.size() * LetterSpacing * m_xScale + m_x > xBndry / m_xScale)
 		{
@@ -219,7 +224,7 @@ void Font::AddWordToMesh(std::string word, float x, float y)
 		pos.x = i * LetterSpacing * m_xScale + x;
 		pos.y = y;
 
-		m_mesh.AddToMesh(m_phys.GetVertices(), m_phys.GetIndices(), m_phys.GetHighestIndex(), pos, m_texture, &trans, index);
+		m_mesh.AddToMesh(m_phys.GetVertices(), m_phys.GetIndices(), m_phys.GetHighestIndex(), pos, m_texture,/* &trans,*/ index);
 	}
 }
 

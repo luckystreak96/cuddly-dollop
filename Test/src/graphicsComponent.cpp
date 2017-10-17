@@ -31,6 +31,8 @@ void GraphicsComponent::FullReset(std::vector<Vertex>* verts, std::vector<GLuint
 
 void GraphicsComponent::Construct()
 {
+	m_direction = dir_Down;
+
 	//When this z is small - transparency fucks up????
 	m_pos = Vector3f(0.0f, 0.0f, 10.0f);
 	m_modelMat.SetTranslation(m_pos);
@@ -276,4 +278,40 @@ void GraphicsComponent::SetTexture(std::string newTex)
 {
 	m_texture = newTex;
 	LoadExternalResources();
+}
+
+Vector3f GraphicsComponent::GetPosition() { return m_pos; }
+
+Direction GraphicsComponent::GetDirection() { return m_direction; }
+void GraphicsComponent::SetDirection(Direction dir) { m_direction = dir; }
+
+void GraphicsComponent::SetDirection(GraphicsComponent* graph)
+{
+	float x = m_pos.x;
+	float y = m_pos.y;
+	float ox = graph->GetPosition().x;
+	float oy = graph->GetPosition().y;
+
+	if (abs(x - ox) > abs(y - oy))
+	{
+		//x is closer
+
+		if (x - ox < 0)
+			m_direction = dir_Right;
+		else
+			m_direction = dir_Left;
+
+	}
+	else 
+	{
+		//y is closer
+
+		//your under the other guy, turn up
+		if (y - oy < 0)
+			m_direction = dir_Up;
+		else
+			m_direction = dir_Down;
+	}
+
+	m_lastInteraction = m_direction;
 }

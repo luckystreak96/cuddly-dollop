@@ -72,7 +72,7 @@ void FontManager::Update(double elapsedTime)
 	}
 }
 
-unsigned int FontManager::AddFont(bool sTatic, bool temporary, std::string texPath)
+unsigned int FontManager::AddFont(bool sTatic, bool temporary, bool lightspeed, std::string texPath)
 {
 	unsigned int key;
 	while (true)
@@ -82,7 +82,7 @@ unsigned int FontManager::AddFont(bool sTatic, bool temporary, std::string texPa
 		if (m_fonts.count(key) == 0)
 			break;
 	}
-	m_fonts.emplace(key, new Font(sTatic, temporary, texPath));
+	m_fonts.emplace(key, new Font(sTatic, temporary, lightspeed, texPath));
 	return key;
 }
 
@@ -90,7 +90,7 @@ unsigned int FontManager::AddFont(bool sTatic, bool temporary, std::string texPa
 unsigned int FontManager::AddDialogueBox(std::string texPath)
 {
 	unsigned int key = GenerateKey();
-	m_fonts.emplace(key, new DialogueBox());
+	m_fonts.emplace(key, new DialogueBox(0));
 	return key;
 }
 

@@ -1,7 +1,7 @@
 #include "eventQueue.h"
 
 
-EventQueue::EventQueue() : m_repeat(false), m_id(0)
+EventQueue::EventQueue(int id) : m_repeat(false), m_id(id)
 {
 
 }
@@ -19,7 +19,7 @@ void EventQueue::PushBack(IEvent* ev)
 }
 
 
-unsigned int EventQueue::GetID()
+int EventQueue::GetID()
 {
 	return m_id;
 }

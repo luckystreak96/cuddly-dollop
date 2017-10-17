@@ -8,6 +8,8 @@ SceneWorld::SceneWorld() : m_acceptInput(false)
 
 bool SceneWorld::Init()
 {
+	JsonHandler::LoadJsonFromFile(DATA_FILE);
+
 	//Setup viewport to fit the window size
 	glViewport(0, 0, (GLsizei)(glutGet(GLUT_WINDOW_WIDTH)), (GLsizei)(glutGet(GLUT_WINDOW_HEIGHT)));
 
@@ -41,8 +43,8 @@ bool SceneWorld::Init()
 	//m_celist.push_back(m_test3);
 	//m_celist.push_back(m_test2);
 
-	//m_fontTitle = FontManager::GetInstance().AddFont();
-	m_fontFPS = FontManager::GetInstance().AddFont(true);
+	m_fontTitle = FontManager::GetInstance().AddFont(false, false);
+	m_fontFPS = FontManager::GetInstance().AddFont(true, false, true);
 	FontManager::GetInstance().SetScale(m_fontFPS, 0.5f, 0.5f);
 	FontManager::GetInstance().SetText(m_fontTitle, "IT WORKS!");
 
@@ -120,8 +122,7 @@ void SceneWorld::Interact()
 {
 	if (InputManager::GetInstance().FrameKeyStatus(' ', KeyStatus::KeyPressed)) {
 		Vector3f pos = m_player->Physics()->GetCenter();
-		PlayerGraphicsComponent* pgc = static_cast<PlayerGraphicsComponent*>(m_player->Graphics());
-		Direction dir = pgc->GetDirection();
+		Direction dir = m_player->Graphics()->GetDirection();
 
 		float distance = 0.2f;
 		if (dir == dir_Left || dir == dir_Right)
@@ -149,6 +150,7 @@ void SceneWorld::Interact()
 		if (inter != NULL)
 		{
 			//m_player->Communicate(inter->Input()->Interact(&m_eventQueue, inter->GetID()));
+			inter->Graphics()->SetDirection(m_player->Graphics());
 			TriggerEvents(inter->GetID());
 		}
 	}

@@ -16,6 +16,8 @@
 #include "resource_user.h"
 #include "resource_manager.h"
 
+enum Direction { dir_Up, dir_Right, dir_Down, dir_Left };
+
 class GraphicsComponent : public IComponent, public ResourceUser
 {
 public:
@@ -38,6 +40,10 @@ public:
 	std::vector<Vector3f>* GetModels() { if (m_models == NULL) m_models = new std::vector<Vector3f>(); return m_models; }
 	float GetZ() { return m_pos.z; }
 	GLuint GetMVBO() { return m_VBO; }
+	Vector3f GetPosition();
+	Direction GetDirection();
+	void SetDirection(Direction dir);
+	void SetDirection(GraphicsComponent* graph);
 	int GetHighestIndex();
 	void SetBuffers();
 	void ResetVBO();
@@ -56,6 +62,8 @@ protected:
 	GLuint m_IBO;
 	GLuint m_VBO;
 	GLuint m_MBO = 0;
+	Direction m_direction;
+	Direction m_lastInteraction;
 	int m_MBO_instances = 1;
 	std::vector<GLuint> m_indices;
 	std::vector<Vertex> m_vertices;
@@ -63,12 +71,12 @@ protected:
 	std::vector<Vector3f>* m_models = NULL;
 	Vector3f m_size = Vector3f(-1, -1, -1);
 	Vector3f m_normalSize = Vector3f(-1, -1, -1);
-	Vector3f m_pos = Vector3f();
+	Vector3f m_pos;
 	std::string m_texture;
-	std::string m_modelName; //cancer
+	std::string m_modelName;
 	bool m_external_loaded = false;
 	bool m_GL_loaded = false;
-	Transformation m_modelMat = Transformation();
+	Transformation m_modelMat;
 	Vector3f m_vel = Vector3f();
 	Vector3f m_rot = Vector3f(0, 0, 0);
 };

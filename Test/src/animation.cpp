@@ -16,8 +16,11 @@ void Animation::AnimationCounter(float et)
 }
 
 
-bool Animation::SetTileModelTC(std::vector<Vertex>* verts, bool forceUpdate)
+bool Animation::SetTileModelTC(std::vector<Vertex>* verts, int direction, bool forceUpdate)
 {
+	if (direction != -1)
+		m_animation = direction;
+
 	int next = (m_progress % (m_delay * m_numFrames)) / m_delay;
 	if (m_sprite == next && !forceUpdate)
 		return false;

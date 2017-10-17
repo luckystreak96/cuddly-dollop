@@ -10,7 +10,7 @@
 class DialogueBox : public Font, public IEvent
 {
 public:
-	DialogueBox(DialogueGraph* dg = NULL);
+	DialogueBox(unsigned int entity_id, DialogueGraph* dg = NULL);
 	~DialogueBox();
 	void Update(double elapsedTime);
 	EventUpdateResponse UpdateEvent(double elapsedTime, std::map<unsigned int, Entity*>* ents);

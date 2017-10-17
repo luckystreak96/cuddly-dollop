@@ -6,7 +6,8 @@ std::map<std::string, unsigned int> EventFactory::TypeDict =
 	{ "dialogue", ET_DialogueBox },
 	{ "move_right", ET_MoveRight },
 	{ "move_down", ET_MoveDown },
-	{ "move_up", ET_MoveUp}
+	{ "move_up", ET_MoveUp },
+	{ "move_left", ET_MoveLeft}
 };
 
 std::map<std::string, unsigned int> EventFactory::EEMDict =
@@ -15,7 +16,7 @@ std::map<std::string, unsigned int> EventFactory::EEMDict =
 	{ "async", ASYNC }
 };
 
-IEvent* EventFactory::BuildEvent(EventTypes et, std::vector<std::string> s)
+IEvent* EventFactory::BuildEvent(EventTypes et, std::map<std::string, EventArgType> args)
 {
 	//if (s.size() <= 0)
 	//	return NULL;
@@ -27,21 +28,24 @@ IEvent* EventFactory::BuildEvent(EventTypes et, std::vector<std::string> s)
 	case EventTypes::ET_Teleport:
 		break;
 	case EventTypes::ET_MoveRight:
-		result = new EventMove(2, 3.0f, 1);
+		result = new EventMove(3, 3.0f, 1);
 		break;
 	case EventTypes::ET_MoveUp:
-		result = new EventMove(2, 3.0f, 0);
+		result = new EventMove(
+			3, 
+			args.count("distance") ? std::get<float>(args.at("distance")) : 3.0f,
+			0);
 		break;
 	case EventTypes::ET_MoveDown:
-		result = new EventMove(2, 3.0f, 2);
+		result = new EventMove(3,
+			args.count("distance") ? std::get<float>(args.at("distance")) : 3.0f,
+			2);
+		break;
+	case EventTypes::ET_MoveLeft:
+		result = new EventMove(3, 3.0f, 3);
 		break;
 	case EventTypes::ET_DialogueBox:
-		//No args = default text
-		if (s.size() <= 0)
-		{
-			result = new DialogueBox(new DialogueGraph());
-			break;
-		}
+		result = new DialogueBox(2, new DialogueGraph());
 		break;
 	default:
 		break;
@@ -50,98 +54,176 @@ IEvent* EventFactory::BuildEvent(EventTypes et, std::vector<std::string> s)
 	return result;
 }
 
-std::vector<EventQueue> EventFactory::LoadEvent(unsigned int entity_id, std::string DATA_FILE)
+std::vector<EventQueue> EventFactory::LoadEvent(unsigned int entity_id)
 {
 	std::vector<EventQueue> result = std::vector<EventQueue>();
 
-	// Load the file (could be made to load only once at the start?)
-	rapidjson::Document doc = JsonHandler::LoadJsonFromFile(DATA_FILE);
-
-	// If the json file has entities and the entities is an array
-	if (doc.HasMember("entities") && doc["entities"].IsArray())
+	auto ques = JsonHandler::LoadQueues(entity_id);
+	for (auto& x : ques.GetArray())
 	{
-		// Shortcut notation
-		const auto& arr = doc["entities"].GetArray();
-
-		// Go through the entities
-		for (unsigned int i = 0; i < arr.Size(); i++)
+		//Make sure that the event is flagged as valid
+		if (!x.HasMember("flag") || x["flag"].GetInt() == 1)
 		{
-			// If the entity is you...
-			if (arr[i]["id"] == entity_id)
+			int id = -1;
+			if (x.HasMember("id"))
+				id = x["id"].GetInt();
+			EventQueue queue = EventQueue(id);
+
+			// Set repeating if necessary
+			if (x.HasMember("repeating") && x["repeating"].GetBool() == true)
+				queue.SetRepeating(true);
+
+			// Add your events to the event queue
+			const auto& evts = x["events"].GetArray();
+			for (auto& e : evts)
 			{
-				// Check out all the queues
-				const auto& ques = arr[i]["queues"].GetArray();
-				for (auto& x : ques)
+				// Make sure the event exists
+				if (TypeDict.find(e["type"].GetString()) != TypeDict.end())
 				{
-					//Make sure that the event is flagged as valid
-					if (!x.HasMember("flag") || x["flag"].GetInt() == 1)
-					{
-						EventQueue queue = EventQueue();
+					std::map<std::string, EventArgType> args = std::map<std::string, EventArgType>();
 
-						// Set repeating if necessary
-						if (x.HasMember("repeating") && x["repeating"].GetBool() == true)
-							queue.SetRepeating(true);
-
-						// Add your events to the event queue
-						const auto& evts = x["events"].GetArray();
-						for (auto& e : evts)
+					// If there are args
+					if (e.HasMember("args"))
+						for (rapidjson::Value::ConstMemberIterator iter = e["args"].MemberBegin(); iter != e["args"].MemberEnd(); ++iter)
 						{
-							// Make sure the event exists
-							if (TypeDict.find(e["type"].GetString()) != TypeDict.end())
+							EventArgType eat;
+							rapidjson::Type t;
+							t = iter->value.GetType();
+							switch (t)
 							{
-								// Find a way to add args to the event
-								IEvent* ev = EventFactory::BuildEvent((EventTypes)TypeDict.at(e["type"].GetString()), std::vector<std::string>());
-
-								// Set execution mode if necessary
-								if (e.HasMember("execution_type") && EEMDict.find(e["execution_type"].GetString()) != EEMDict.end())
-									ev->SetExecutionMode((EventExecutionMode)EEMDict.at(e["execution_type"].GetString()));
-
-								queue.PushBack(ev);
+							case rapidjson::Type::kNumberType:
+								if (iter->value.IsFloat())
+									eat = iter->value.GetFloat();
+								if (iter->value.IsInt())
+									eat = iter->value.GetInt();
+								break;
+							case rapidjson::Type::kStringType:
+								eat = iter->value.GetString();
+								break;
+							case rapidjson::Type::kTrueType:
+								eat = iter->value.GetBool();
+								break;
+							case rapidjson::Type::kFalseType:
+								eat = iter->value.GetBool();
+								break;
 							}
+
+							args.emplace(std::string(iter->name.GetString()), eat);
 						}
-						if (queue.Count() > 0)
-							result.push_back(queue);
+
+					// If the event has a queue in it
+					if (e.HasMember("queues"))
+					{
+						EventArgType eat;
+						rapidjson::Value val = e["queues"].GetArray();
+						args.emplace("queue", LoadEvent(val));
 					}
+
+					IEvent* ev = EventFactory::BuildEvent((EventTypes)TypeDict.at(e["type"].GetString()), args);
+
+					// Set execution mode if necessary
+					if (e.HasMember("execution_type") && EEMDict.find(e["execution_type"].GetString()) != EEMDict.end())
+						ev->SetExecutionMode((EventExecutionMode)EEMDict.at(e["execution_type"].GetString()));
+
+
+					queue.PushBack(ev);
 				}
 			}
+			if (queue.Count() > 0)
+				result.push_back(queue);
 		}
 	}
+	return result;
+}
 
+// Recursive AS FUCK
+std::vector<EventQueue> EventFactory::LoadEvent(rapidjson::Value& v)
+{
+	std::vector<EventQueue> result = std::vector<EventQueue>();
+
+	for (auto& p : v.GetArray())
+	{
+		EventQueue queue = EventQueue();
+		// Set repeating if necessary
+		if (p.HasMember("repeating") && p["repeating"].GetBool() == true)
+			queue.SetRepeating(true);
+
+		// Add your events to the event queue
+		const auto& evts = p["events"].GetArray();
+		for (auto& e : evts)
+		{
+			// Make sure the event exists
+			if (TypeDict.find(e["type"].GetString()) != TypeDict.end())
+			{
+				std::map<std::string, EventArgType> args = std::map<std::string, EventArgType>();
+
+				// If there are args
+				if (e.HasMember("args"))
+					for (rapidjson::Value::ConstMemberIterator iter = e["args"].MemberBegin(); iter != e["args"].MemberEnd(); ++iter)
+					{
+						EventArgType eat;
+						rapidjson::Type t;
+						t = iter->value.GetType();
+						switch (t)
+						{
+						case rapidjson::Type::kNumberType:
+							if (iter->value.IsFloat())
+								eat = iter->value.GetFloat();
+							if (iter->value.IsInt())
+								eat = iter->value.GetInt();
+							break;
+						case rapidjson::Type::kStringType:
+							eat = iter->value.GetString();
+							break;
+						case rapidjson::Type::kTrueType:
+							eat = iter->value.GetBool();
+							break;
+						case rapidjson::Type::kFalseType:
+							eat = iter->value.GetBool();
+							break;
+						}
+
+						args.emplace(std::string(iter->name.GetString()), eat);
+					}
+
+
+				// If the event has a queue in it
+				if (e.HasMember("queues"))
+				{
+					EventArgType eat;
+					rapidjson::Value val = e["queues"].GetArray();
+					args.emplace("queue", LoadEvent(val));
+				}
+
+				IEvent* ev = EventFactory::BuildEvent((EventTypes)TypeDict.at(e["type"].GetString()), args);
+
+				// Set execution mode if necessary
+				if (e.HasMember("execution_type") && EEMDict.find(e["execution_type"].GetString()) != EEMDict.end())
+					ev->SetExecutionMode((EventExecutionMode)EEMDict.at(e["execution_type"].GetString()));
+
+				queue.PushBack(ev);
+			}
+		}
+		if (queue.Count() > 0)
+			result.push_back(queue);
+	}
 	return result;
 }
 
 
+
 void EventFactory::FlagEvent(unsigned int entity_id, unsigned int queue_id, int flag, std::string DATA_FILE)
 {
-
-	// Load the file (could be made to load only once at the start?)
-	rapidjson::Document doc = JsonHandler::LoadJsonFromFile(DATA_FILE);
-
-	// If the json file has entities and the entities is an array
-	if (doc.HasMember("entities") && doc["entities"].IsArray())
+	// Check out all the queues
+	const auto& ques = JsonHandler::LoadQueues(entity_id).GetArray();
+	for (auto& x : ques)
 	{
-		// Shortcut notation
-		const auto& arr = doc["entities"].GetArray();
-
-		// Go through the entities
-		for (unsigned int i = 0; i < arr.Size(); i++)
+		if (x.HasMember("id") && x["id"].GetInt() == queue_id)
 		{
-			// If the entity is you...
-			if (arr[i]["id"] == entity_id)
+			//Make sure that the event has a flag property
+			if (x.HasMember("flag"))
 			{
-				// Check out all the queues
-				const auto& ques = arr[i]["queues"].GetArray();
-				for (auto& x : ques)
-				{
-					if (x.HasMember("id") && x["id"].GetInt() == queue_id)
-					{
-						//Make sure that the event has a flag property
-						if (x.HasMember("flag"))
-						{
-							x["flag"].SetInt(flag);
-						}
-					}
-				}
+				x["flag"].SetInt(flag);
 			}
 		}
 	}

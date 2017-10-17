@@ -13,7 +13,7 @@ public:
 	void ResetEvent();
 
 private:
-	unsigned int m_target;
+	//unsigned int m_target;
 	bool m_firstSetup;
 	int m_moveAxis;
 	float m_distance;

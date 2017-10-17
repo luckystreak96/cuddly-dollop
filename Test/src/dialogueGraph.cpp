@@ -4,9 +4,15 @@ DialogueGraph::DialogueGraph()
 {
 	m_dialogues = std::map<int, Dialogue>();
 	DialogueChoice dc1 = { "Know anything cool?", 1, EventQueue() };
-	EventQueue ev = EventQueue();
-	ev.PushBack(new EventMove(2, 3.0f, 2));
-	DialogueChoice dc2 = { "Can you walk down please?", 1, ev };
+	EventQueue ev = EventQueue(2);
+	EventMove* down = new EventMove(2, 3.0, 2);
+	EventMove* up = new EventMove(2, 3.0, 0);
+	down->SetExecutionMode(EventExecutionMode::BLOCKING);
+	up->SetExecutionMode(EventExecutionMode::BLOCKING);
+	ev.SetRepeating(true);
+	ev.PushBack(down);
+	ev.PushBack(up);
+	DialogueChoice dc2 = { "Can you walk down please?", 2, ev };
 	DialogueChoice dc3 = { "I gotta go.", -1, EventQueue() };
 	std::vector<DialogueChoice> vdc = std::vector<DialogueChoice>();
 	vdc.push_back(dc1);
@@ -14,8 +20,10 @@ DialogueGraph::DialogueGraph()
 	vdc.push_back(dc3);
 	Dialogue d0 = { 0, 1, "Hey man, what's up?", Choice, vdc };
 	Dialogue d1 = { 1, 0, "Did you know that nurses and doctors wear white to make it easier to spot any bleeding? Pretty cool, huh?", Simple, std::vector<DialogueChoice>() };
+	Dialogue d2 = { 2, 0, "Sure man, just move away after we're done talking!", Simple, std::vector<DialogueChoice>() };
 	m_dialogues.emplace(d0.Id, d0);
 	m_dialogues.emplace(d1.Id, d1);
+	m_dialogues.emplace(d2.Id, d2);
 
 	m_currentDialogue = m_dialogues.at(0).Id;
 	m_selectedChoice = m_dialogues.at(m_currentDialogue).Choices.size() > 0 ? 0 : -1;
