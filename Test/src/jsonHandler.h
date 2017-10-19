@@ -11,10 +11,14 @@ class JsonHandler
 {
 public:
 	static rapidjson::Document& LoadJsonFromFile(std::string filename);
-	static rapidjson::Value LoadEntities();
-	static rapidjson::Value LoadQueues(int entity_id);
+	static rapidjson::Value LoadEntities(int map_id);
+	static rapidjson::Value LoadQueues(int map_id, int entity_id);
+	static rapidjson::Value LoadMap(int map_id);
+	static rapidjson::Value LoadMaps();
 public:
 	static rapidjson::Document DataDocument;
+private:
+	static std::string File;
 };
 
 #endif // !JSON_HANDLER_H__

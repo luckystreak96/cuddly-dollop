@@ -1,41 +1,64 @@
 {
-    "entities": [
+    "maps": [
+
         {
-            "id": 2,
-            "queues": [
-                {
-                    "id": 0,
-                    "flag": 1,
-                    "events": [
-                        {
-                            "type": "dialogue"
-                        }
-                    ]
-                }
-            ]
-        },
-        {
-            "id": 3,
-            "queues": [
+            "id": 0,
+            "entities": [
                 {
                     "id": 1,
-                    "repeating": true,
-                    "events": [
+                    "player": true,
+                    "position.x": 0.0,
+                    "position.y": 1.0,
+                    "position.z": 4.0
+
+                },
+
+                {
+                    "id": 2,
+                    "position.x": 7.0,
+                    "position.y": 6.5,
+                    "position.z": 3.0,
+                    "queues": [
                         {
-                            "type": "move_down",
-                            "execution_type": "blocking",
-                            "args":
-                            {
-                                "distance": 2.0
-                            }
-                        },
+                            "id": 0,
+                            "flag": 1,
+                            "events": [
+                                {
+                                    "type": "dialogue"
+                                }
+                            ]
+                        }
+                    ]
+                },
+
+                {
+                    "id": 3,
+                    "position.x": 14.0,
+                    "position.y": 9.0,
+                    "position.z": 4.0,
+                    "queues": [
                         {
-                            "type": "move_up",
-                            "execution_type": "blocking"
+                            "id": 1,
+                            "repeating": true,
+                            "events": [
+                                {
+                                    "type": "move_down",
+                                    "execution_type": "blocking",
+                                    "args": {
+                                        "distance": 3.0
+                                    }
+                                },
+                                {
+                                    "type": "move_up",
+                                    "execution_type": "blocking"
+                                }
+                            ]
                         }
                     ]
                 }
+
             ]
         }
+
     ]
 }

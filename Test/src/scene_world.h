@@ -31,6 +31,7 @@
 #include "eventManager.h"
 #include "jsonHandler.h"
 #include "eventFactory.h"
+#include "entityFactory.h"
 
 class SceneWorld : public Scene
 {
@@ -73,6 +74,7 @@ private:
 	bool m_acceptInput;
 	bool m_bloomEffect;
 	int m_numFrames = 0;
+	int m_currentMap;
 	unsigned int m_fontTitle;
 	unsigned int m_fontFPS;
 	Trail m_trail;

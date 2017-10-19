@@ -10,17 +10,6 @@
 #include "eventMove.h"
 #include "eventQueue.h"
 
-//union EventArgType
-//{
-//	EventArgType() {};
-//	int i;
-//	float f;
-//	bool b;
-//	std::string s;
-//	std::vector<EventQueue> eqv;
-//	~EventArgType() {};
-//};
-
 typedef std::variant<bool, float, int, std::string, std::vector<EventQueue>> EventArgType;
 
 enum EventTypes { ET_Teleport, ET_DialogueBox, ET_MoveRight, ET_MoveUp, ET_MoveDown, ET_MoveLeft };
@@ -31,9 +20,9 @@ public:
 	static IEvent* BuildEvent(EventTypes et, std::map<std::string, EventArgType> args);
 	static std::map<std::string, unsigned int> TypeDict;
 	static std::map<std::string, unsigned int> EEMDict;
-	static std::vector<EventQueue> LoadEvent(unsigned int entity_id);
+	static std::vector<EventQueue> LoadEvent(int map_id, unsigned int entity_id);
 	static std::vector<EventQueue> LoadEvent(rapidjson::Value& v);
-	static void FlagEvent(unsigned int entity_id, unsigned int queue_id, int flag, std::string DATA_FILE = "res/data/data.json");
+	static void FlagEvent(int map_id, unsigned int entity_id, unsigned int queue_id, int flag, std::string DATA_FILE = "res/data/data.json");
 };
 
 #endif // !DIALOGUE_GRAPH_H__

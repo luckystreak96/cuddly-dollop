@@ -54,12 +54,12 @@ IEvent* EventFactory::BuildEvent(EventTypes et, std::map<std::string, EventArgTy
 	return result;
 }
 
-std::vector<EventQueue> EventFactory::LoadEvent(unsigned int entity_id)
+std::vector<EventQueue> EventFactory::LoadEvent(int map_id, unsigned int entity_id)
 {
 	std::vector<EventQueue> result = std::vector<EventQueue>();
 
-	auto ques = JsonHandler::LoadQueues(entity_id);
-	for (auto& x : ques.GetArray())
+	auto& ques = JsonHandler::LoadQueues(map_id, entity_id).GetArray();
+	for (auto& x : ques)
 	{
 		//Make sure that the event is flagged as valid
 		if (!x.HasMember("flag") || x["flag"].GetInt() == 1)
@@ -212,10 +212,10 @@ std::vector<EventQueue> EventFactory::LoadEvent(rapidjson::Value& v)
 
 
 
-void EventFactory::FlagEvent(unsigned int entity_id, unsigned int queue_id, int flag, std::string DATA_FILE)
+void EventFactory::FlagEvent(int map_id, unsigned int entity_id, unsigned int queue_id, int flag, std::string DATA_FILE)
 {
 	// Check out all the queues
-	const auto& ques = JsonHandler::LoadQueues(entity_id).GetArray();
+	const auto& ques = JsonHandler::LoadQueues(map_id, entity_id).GetArray();
 	for (auto& x : ques)
 	{
 		if (x.HasMember("id") && x["id"].GetInt() == queue_id)

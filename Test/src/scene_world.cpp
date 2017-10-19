@@ -25,23 +25,14 @@ bool SceneWorld::Init()
 	m_pause = false;
 	m_acceptInput = true;
 
+	m_currentMap = 0;
 	m_mapHandler = new MapHandler();
 
-	m_player = new Entity(1, true);
-	m_player->Physics()->SetPosition(Vector3f(0, 2, 4.0f));
-	m_player->Physics()->AbsolutePosition(Vector3f(0, 2, 4.0f));
-	m_test3 = new Entity(2);
-	m_test3->Physics()->AbsolutePosition(Vector3f(7.f, 6.5f, 3.0f));
-	m_test2 = new Entity(3);
-	m_test2->Physics()->AbsolutePosition(Vector3f(14.f, 9.0f, 4.0f));
-
-	m_celist = std::map<unsigned int, Entity*>();
+	m_celist = EntityFactory::GetEntities(m_currentMap);
 	m_eventManager.SetEntitiesMap(&m_celist);
-	m_celist.emplace(m_player->GetID(), m_player);
-	m_celist.emplace(m_test2->GetID(), m_test2);
-	m_celist.emplace(m_test3->GetID(), m_test3);
-	//m_celist.push_back(m_test3);
-	//m_celist.push_back(m_test2);
+
+	// THIS IS NOT GOOD - THE PLAYER NEEDS TO BE FOUND, NOT JUST BE ID 1
+	m_player = m_celist.at(1);
 
 	m_fontTitle = FontManager::GetInstance().AddFont(false, false);
 	m_fontFPS = FontManager::GetInstance().AddFont(true, false, true);
@@ -158,7 +149,7 @@ void SceneWorld::Interact()
 
 void SceneWorld::TriggerEvents(unsigned int entity_id)
 {
-	for (auto x : EventFactory::LoadEvent(entity_id))
+	for (auto x : EventFactory::LoadEvent(m_currentMap, entity_id))
 		m_eventManager.PushBack(x);
 }
 
