@@ -2,31 +2,51 @@
 
 DialogueGraph::DialogueGraph()
 {
-	m_dialogues = std::map<int, Dialogue>();
-	DialogueChoice dc1 = { "Know anything cool?", 1, EventQueue() };
 	EventQueue ev = EventQueue(2);
+
+	DialogueChoice dc1 = { 0, "Know anything cool?", 1, EventQueue() };
+
+	m_choices.push_back(DialogueChoice{ 0, "Know anything cool?", 1, EventQueue() });
+
 	EventMove* down = new EventMove(2, 3.0, 2);
 	EventMove* up = new EventMove(2, 3.0, 0);
 	down->SetExecutionMode(EventExecutionMode::BLOCKING);
 	up->SetExecutionMode(EventExecutionMode::BLOCKING);
+
 	ev.SetRepeating(true);
 	ev.PushBack(down);
 	ev.PushBack(up);
-	DialogueChoice dc2 = { "Can you walk down please?", 2, ev };
-	DialogueChoice dc3 = { "I gotta go.", -1, EventQueue() };
+
+	DialogueChoice dc2 = { 0, "Can you walk down please?", 2, ev };
+	DialogueChoice dc3 = { 0, "I gotta go.", -1, EventQueue() };
+
+	m_choices.push_back(DialogueChoice{ 0, "Can you walk down please?", 2, ev });
+	m_choices.push_back(DialogueChoice{ 0, "I gotta go.", -1, EventQueue() });
+
 	std::vector<DialogueChoice> vdc = std::vector<DialogueChoice>();
 	vdc.push_back(dc1);
 	vdc.push_back(dc2);
 	vdc.push_back(dc3);
-	Dialogue d0 = { 0, 1, "Hey man, what's up?", Choice, vdc };
-	Dialogue d1 = { 1, 0, "Did you know that nurses and doctors wear white to make it easier to spot any bleeding? Pretty cool, huh?", Simple, std::vector<DialogueChoice>() };
-	Dialogue d2 = { 2, 0, "Sure man, just move away after we're done talking!", Simple, std::vector<DialogueChoice>() };
+
+	Dialogue d0 = { 0, 1, "Hey man, what's up?", Choice };
+	Dialogue d1 = { 1, 0, "Nope! Sorry!", Simple };
+	Dialogue d2 = { 2, 0, "Sure man, just move away after we're done talking!", Simple };
 	m_dialogues.emplace(d0.Id, d0);
 	m_dialogues.emplace(d1.Id, d1);
 	m_dialogues.emplace(d2.Id, d2);
 
 	m_currentDialogue = m_dialogues.at(0).Id;
-	m_selectedChoice = m_dialogues.at(m_currentDialogue).Choices.size() > 0 ? 0 : -1;
+	m_selectedChoice = m_dialogues.at(m_currentDialogue).Type == Choice ? 0 : -1;
+}
+
+DialogueGraph::DialogueGraph(std::vector<Dialogue> d, std::vector<DialogueChoice> dc)
+{
+	m_choices = dc;
+	for (auto x : d)
+		m_dialogues.emplace(x.Id, x);
+
+	m_currentDialogue = m_dialogues.at(0).Id;
+	m_selectedChoice = m_dialogues.at(m_currentDialogue).Type == Choice ? 0 : -1;
 }
 
 DialogueGraph::DialogueGraph(std::map<int, Dialogue> ds)
@@ -34,9 +54,26 @@ DialogueGraph::DialogueGraph(std::map<int, Dialogue> ds)
 	m_dialogues = ds;
 }
 
+DialogueGraph::~DialogueGraph()
+{
+
+}
+
+
+std::vector<std::string> DialogueGraph::GetChoices()
+{
+	std::vector<std::string> result = std::vector<std::string>();
+	for (auto x : m_choices)
+	{
+		if (x.DialogueId == m_currentDialogue)
+			result.push_back(x.Text);
+	}
+	return result;
+}
+
 bool DialogueGraph::ChoiceAvailable()
 {
-	return m_dialogues.at(m_currentDialogue).Choices.size() > 0;
+	return m_dialogues.at(m_currentDialogue).Type == Choice;
 }
 
 
@@ -105,12 +142,12 @@ int DialogueGraph::SelectedChoice()
 	return m_selectedChoice;
 }
 
-std::vector<std::string> DialogueGraph::GetChoices()
-{
-	std::vector<std::string> result = std::vector<std::string>();
-	for (auto x : m_dialogues.at(m_currentDialogue).Choices)
-	{
-		result.push_back(x.Text);
-	}
-	return result;
-}
+//std::vector<std::string> DialogueGraph::GetChoices()
+//{
+//	std::vector<std::string> result = std::vector<std::string>();
+//	for (auto x : m_dialogues.at(m_currentDialogue).Choices)
+//	{
+//		result.push_back(x.Text);
+//	}
+//	return result;
+//}

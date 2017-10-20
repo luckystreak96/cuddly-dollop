@@ -5,12 +5,14 @@
 #include <iostream>
 #include <fstream>
 #include <cstdlib>
+#include <vector>
 
 class Utils
 {
     public:
         static std::string ReadFile(std::string filename, bool includeNewLine = true);
 		static std::string RemoveWhiteSpace(std::string& str);
+		static std::vector<std::string> Split(const std::string &s, char delim);
         static void Pause();
 };
 

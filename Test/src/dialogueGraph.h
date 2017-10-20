@@ -19,6 +19,7 @@ struct DialogueResponse
 
 struct DialogueChoice
 {
+	int DialogueId;
 	std::string Text;
 	int NextTextId;
 	EventQueue Queue;
@@ -30,24 +31,28 @@ struct Dialogue
 	int NextTextId;
 	std::string Text;
 	DialogueType Type;
-	std::vector<DialogueChoice> Choices;
+	EventQueue Queue;
 };
 
 class DialogueGraph
 {
 public:
 	DialogueGraph();
+	DialogueGraph(std::vector<Dialogue> d, std::vector<DialogueChoice> dc);
 	DialogueGraph(std::map<int, Dialogue> ds);
+	~DialogueGraph();
 	std::string GetCurrentText();
 	DialogueResponse SendInput(InputType it);
 	bool ChoiceAvailable();
 	int SelectedChoice();
 	std::vector<std::string> GetChoices();
+	//std::vector<std::string> GetChoices(int dialogueId);
 private:
 	void SetNextDialogue(int id);
 private:
 	int m_selectedChoice;
 	std::map<int, Dialogue> m_dialogues;
+	std::vector<DialogueChoice> m_choices;
 	int m_currentDialogue;
 };
 

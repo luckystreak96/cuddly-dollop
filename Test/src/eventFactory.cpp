@@ -16,7 +16,7 @@ std::map<std::string, unsigned int> EventFactory::EEMDict =
 	{ "async", ASYNC }
 };
 
-IEvent* EventFactory::BuildEvent(EventTypes et, std::map<std::string, EventArgType> args)
+IEvent* EventFactory::BuildEvent(EventTypes et, std::map<std::string, EventArgType> args, unsigned int entity_id)
 {
 	//if (s.size() <= 0)
 	//	return NULL;
@@ -32,7 +32,7 @@ IEvent* EventFactory::BuildEvent(EventTypes et, std::map<std::string, EventArgTy
 		break;
 	case EventTypes::ET_MoveUp:
 		result = new EventMove(
-			3, 
+			3,
 			args.count("distance") ? std::get<float>(args.at("distance")) : 3.0f,
 			0);
 		break;
@@ -45,8 +45,62 @@ IEvent* EventFactory::BuildEvent(EventTypes et, std::map<std::string, EventArgTy
 		result = new EventMove(3, 3.0f, 3);
 		break;
 	case EventTypes::ET_DialogueBox:
-		result = new DialogueBox(2, new DialogueGraph());
+	{
+		std::vector<DialogueChoice> choices;
+		std::vector<Dialogue> dialogues;
+
+		// Add the choices and dialogues to the vectors
+		for (auto x : args)
+		{
+			std::vector<std::string> vs = Utils::Split(x.first, ' ');
+			for (auto s : vs)
+			{
+				if (s == "choice")
+				{
+					DialogueChoice dc;
+
+					// For each param in the choice
+					for (auto t : std::get<std::map<std::string, std::variant<bool, float, int, std::string, std::vector<EventQueue>>>>(x.second))
+					{
+						// Dialogue id
+						if (t.first == "d")
+							dc.DialogueId = std::get<int>(t.second);
+						else if (t.first == "text")
+							dc.Text = std::get<std::string>(t.second);
+						else if (t.first == "next")
+							dc.NextTextId = std::get<int>(t.second);
+						else if (t.first == "queues")
+							dc.Queue = std::get<EventQueue>(t.second);
+					}
+					
+					choices.push_back(dc);
+				}
+				else if (s == "dialogue")
+				{
+					Dialogue d;
+
+					// For each param in the choice
+					for (auto t : std::get<std::map<std::string, std::variant<bool, float, int, std::string, std::vector<EventQueue>>>>(x.second))
+					{
+						// Dialogue id
+						if (t.first == "d")
+							d.Id = std::get<int>(t.second);
+						else if (t.first == "text")
+							d.Text = std::get<std::string>(t.second);
+						else if (t.first == "next")
+							d.NextTextId = std::get<int>(t.second);
+						else if (t.first == "queues")
+							d.Queue = std::get<EventQueue>(t.second);
+					}
+
+					dialogues.push_back(d);
+				}
+			}
+		}
+
+		result = new DialogueBox(entity_id, new DialogueGraph());
 		break;
+	}
 	default:
 		break;
 	}
@@ -84,30 +138,9 @@ std::vector<EventQueue> EventFactory::LoadEvent(int map_id, unsigned int entity_
 
 					// If there are args
 					if (e.HasMember("args"))
-						for (rapidjson::Value::ConstMemberIterator iter = e["args"].MemberBegin(); iter != e["args"].MemberEnd(); ++iter)
+						for (rapidjson::Value::MemberIterator iter = e["args"].MemberBegin(); iter != e["args"].MemberEnd(); ++iter)
 						{
-							EventArgType eat;
-							rapidjson::Type t;
-							t = iter->value.GetType();
-							switch (t)
-							{
-							case rapidjson::Type::kNumberType:
-								if (iter->value.IsFloat())
-									eat = iter->value.GetFloat();
-								if (iter->value.IsInt())
-									eat = iter->value.GetInt();
-								break;
-							case rapidjson::Type::kStringType:
-								eat = iter->value.GetString();
-								break;
-							case rapidjson::Type::kTrueType:
-								eat = iter->value.GetBool();
-								break;
-							case rapidjson::Type::kFalseType:
-								eat = iter->value.GetBool();
-								break;
-							}
-
+							EventArgType eat = AddArg(iter);
 							args.emplace(std::string(iter->name.GetString()), eat);
 						}
 
@@ -119,7 +152,7 @@ std::vector<EventQueue> EventFactory::LoadEvent(int map_id, unsigned int entity_
 						args.emplace("queue", LoadEvent(val));
 					}
 
-					IEvent* ev = EventFactory::BuildEvent((EventTypes)TypeDict.at(e["type"].GetString()), args);
+					IEvent* ev = EventFactory::BuildEvent((EventTypes)TypeDict.at(e["type"].GetString()), args, entity_id);
 
 					// Set execution mode if necessary
 					if (e.HasMember("execution_type") && EEMDict.find(e["execution_type"].GetString()) != EEMDict.end())
@@ -134,6 +167,45 @@ std::vector<EventQueue> EventFactory::LoadEvent(int map_id, unsigned int entity_
 		}
 	}
 	return result;
+}
+
+EventArgType EventFactory::AddArg(rapidjson::Value::MemberIterator iter, bool secondIteration)
+{
+	std::map<std::string, std::variant<bool, float, int, std::string, std::vector<EventQueue>>> map = std::map<std::string, std::variant<bool, float, int, std::string, std::vector<EventQueue>>>();
+	EventArgType eat = false;
+	rapidjson::Type t;
+	t = iter->value.GetType();
+	switch (t)
+	{
+	case rapidjson::Type::kNumberType:
+		if (iter->value.IsFloat())
+			eat = iter->value.GetFloat();
+		if (iter->value.IsInt())
+			eat = iter->value.GetInt();
+		break;
+	case rapidjson::Type::kStringType:
+		eat = iter->value.GetString();
+		break;
+	case rapidjson::Type::kTrueType:
+		eat = iter->value.GetBool();
+		break;
+	case rapidjson::Type::kFalseType:
+		eat = iter->value.GetBool();
+		break;
+	case rapidjson::Type::kObjectType:
+		if (secondIteration)
+			break;
+		for (rapidjson::Value::MemberIterator it = iter->value.MemberBegin(); it != iter->value.MemberEnd(); ++it)
+			map.emplace(std::string(it->name.GetString()), AddArg(it, true));
+		eat = map;
+		break;
+	case rapidjson::Type::kArrayType:
+		rapidjson::Value val = iter->value.GetArray();
+		eat = LoadEvent(val);
+		break;
+	}
+
+	return eat;
 }
 
 // Recursive AS FUCK

@@ -37,7 +37,7 @@ bool SceneWorld::Init()
 	m_fontTitle = FontManager::GetInstance().AddFont(false, false);
 	m_fontFPS = FontManager::GetInstance().AddFont(true, false, true);
 	FontManager::GetInstance().SetScale(m_fontFPS, 0.5f, 0.5f);
-	FontManager::GetInstance().SetText(m_fontTitle, "IT WORKS!");
+	//FontManager::GetInstance().SetText(m_fontTitle, "IT WORKS!");
 
 	return true;
 }
@@ -187,7 +187,7 @@ void SceneWorld::Update()
 	//FontManager::GetInstance().GetFont(m_fontFPS)->GetGraphics()->SetScale(Vector3f(0.5, 0.5, 1));
 
 	srand(clock());
-	FontManager::GetInstance().ChangeLetter(m_fontTitle, 0, rand() % 4 == 1 ? '_' : 'I');
+	//FontManager::GetInstance().ChangeLetter(m_fontTitle, 0, rand() % 4 == 1 ? '_' : 'I');
 	FontManager::GetInstance().Update(ElapsedTime::GetInstance().GetElapsedTime());
 }
 
