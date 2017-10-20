@@ -71,6 +71,17 @@ std::vector<std::string> DialogueGraph::GetChoices()
 	return result;
 }
 
+std::vector<DialogueChoice> DialogueGraph::GetDialogueChoices(int current_dialogue_id)
+{
+	std::vector<DialogueChoice> result = std::vector<DialogueChoice>();
+	for (auto x : m_choices)
+	{
+		if (x.DialogueId == current_dialogue_id)
+			result.push_back(x);
+	}
+	return result;
+}
+
 bool DialogueGraph::ChoiceAvailable()
 {
 	return m_dialogues.at(m_currentDialogue).Type == Choice;
@@ -87,11 +98,19 @@ DialogueResponse DialogueGraph::SendInput(InputType it)
 {
 	Dialogue& d = m_dialogues.at(m_currentDialogue);
 
+	std::vector<DialogueChoice> choices = GetDialogueChoices(m_currentDialogue);
+
 	DialogueResponse result = DialogueResponse();
-	m_selectedChoice != -1 ? result.Queue = d.Choices.at(m_selectedChoice).Queue : EventQueue();
+
+	// Set result queue
+	if (m_selectedChoice == -1)
+		result.Queue = EventQueue();
+	else
+		result.Queue = choices.at(m_selectedChoice).Queue;
+
 	result.NotDone = false;
 
-	unsigned int length = d.Choices.size();
+	unsigned int length = choices.size();
 
 	if (it == IT_Action)
 	{
@@ -99,14 +118,14 @@ DialogueResponse DialogueGraph::SendInput(InputType it)
 		if (d.Type == End || d.NextTextId == -1)
 			return result;
 
-		if (d.Choices.size() > 0)
+		if (choices.size() > 0)
 		{
 			// If theres no future text, end the conversation
-			if (d.Choices.at(m_selectedChoice).NextTextId == -1)
+			if (choices.at(m_selectedChoice).NextTextId == -1)
 				return result;
 
 			// Set the next dialogue
-			SetNextDialogue(d.Choices.at(m_selectedChoice).NextTextId);
+			SetNextDialogue(choices.at(m_selectedChoice).NextTextId);
 		}
 		else if (d.Type == Simple)
 		{
@@ -120,7 +139,7 @@ DialogueResponse DialogueGraph::SendInput(InputType it)
 	}
 	else if (it == IT_Down)
 	{
-		if (m_selectedChoice != -1 && m_selectedChoice + 1 < d.Choices.size())
+		if (m_selectedChoice != -1 && m_selectedChoice + 1 < choices.size())
 			m_selectedChoice++;
 	}
 
@@ -141,6 +160,23 @@ int DialogueGraph::SelectedChoice()
 {
 	return m_selectedChoice;
 }
+
+DialogueType DialogueGraph::StringToDialogueType(std::string s)
+{
+	switch (s[0])
+	{
+	case 's':
+		return Simple;
+		break;
+	case 'e':
+		return End;
+		break;
+	case 'c':
+		return Choice;
+		break;
+	}
+}
+
 
 //std::vector<std::string> DialogueGraph::GetChoices()
 //{

@@ -46,6 +46,8 @@ public:
 	bool ChoiceAvailable();
 	int SelectedChoice();
 	std::vector<std::string> GetChoices();
+	std::vector<DialogueChoice> GetDialogueChoices(int current_dialogue_id);
+	static DialogueType StringToDialogueType(std::string s);
 	//std::vector<std::string> GetChoices(int dialogueId);
 private:
 	void SetNextDialogue(int id);

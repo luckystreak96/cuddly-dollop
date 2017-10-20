@@ -6,6 +6,7 @@
 #include <fstream>
 #include <cstdlib>
 #include <vector>
+#include <sstream>
 
 class Utils
 {

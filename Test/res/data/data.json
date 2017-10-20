@@ -41,15 +41,20 @@
                           "repeating": true,
                           "events": [
                             {
-                              "type": "move_down",
-                              "execution_type": "blocking",
-                              "args": {
-                                "distance": 3.0
-                              }
+                                "type": "move_down",
+                                "execution_type": "blocking",
+                                "args": {
+                                    "id": 2,
+                                    "distance": 3.0
+                                }
                             },
                             {
-                              "type": "move_up",
-                              "execution_type": "blocking"
+                                "type": "move_up",
+                                "execution_type": "blocking",
+                                "args": {
+                                    "id": 2,
+                                    "distance": 3.0
+                                }
                             }
                           ]
                         }
@@ -68,7 +73,7 @@
                     },
                     "dialogue 1": {
                       "id": 1,
-                      "text": "Roses are red,\nViolets are blue,\nThis poem is amazing,\nUnlike you!",
+                      "text": "Roses are red,\n Violets are blue,\n This poem is amazing,\n Unlike you!",
                       "next": 0,
                       "type": "simple"
                     },

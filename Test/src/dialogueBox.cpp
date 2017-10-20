@@ -18,6 +18,25 @@ DialogueBox::DialogueBox(unsigned int entity_id, DialogueGraph* dg) : m_box(NULL
 	SetScale(0.5f, 0.5f);
 }
 
+DialogueBox::DialogueBox(unsigned int entity_id, std::vector<Dialogue> d, std::vector<DialogueChoice> dc)
+{
+	m_dialogueGraph = new DialogueGraph(d, dc);
+	m_target = entity_id;
+
+	m_box = new FontGraphicsComponent("DIALOGUE_BOX", "res/dialogue.png");
+	m_box->SetPhysics(Vector3f(0, 0, 0.5f), Vector3f(0, 0, 0));
+	m_box->Update();
+	m_box->SetStatic(true);
+
+	m_phys.SetPosition(Vector3f());
+	m_static = true;
+	m_lockLevel = 1;
+	m_mode = BLOCKING;
+
+	SetScale(0.5f, 0.5f);
+}
+
+
 DialogueBox::~DialogueBox()
 {
 	if (m_dialogueGraph)

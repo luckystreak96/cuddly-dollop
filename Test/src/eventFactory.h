@@ -24,7 +24,8 @@ public:
 	static std::vector<EventQueue> LoadEvent(int map_id, unsigned int entity_id);
 	static std::vector<EventQueue> LoadEvent(rapidjson::Value& v);
 	static void FlagEvent(int map_id, unsigned int entity_id, unsigned int queue_id, int flag, std::string DATA_FILE = "res/data/data.json");
-	static EventArgType AddArg(rapidjson::Value::MemberIterator iter, bool secondIteration = false);
+	static EventArgType AddArg(rapidjson::Value::MemberIterator iter, bool secondIteration);
+	static std::variant<bool, float, int, std::string, std::vector<EventQueue>> AddArg(rapidjson::Value::MemberIterator iter);
 };
 
 #endif // !DIALOGUE_GRAPH_H__
