@@ -131,7 +131,7 @@ void Font::SetupMesh(float xBndry, float yBndry)
 			}
 
 			// If the \n count was larger than the
-			if (numBSN >= s.size())
+			if (numBSN > s.size())
 				words.push_back("\n");
 		}
 		else

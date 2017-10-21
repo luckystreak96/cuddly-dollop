@@ -34,6 +34,9 @@ std::map<unsigned int, Entity*> EntityFactory::GetEntities(unsigned int map_id)
 {
 	std::map<unsigned int, Entity*> result = std::map<unsigned int, Entity*>();
 
+	if (!JsonHandler::DocumentNotNull())
+		return result;
+
 	auto& ents = JsonHandler::LoadEntities(map_id).GetArray();
 
 

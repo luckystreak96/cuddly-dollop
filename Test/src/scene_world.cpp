@@ -32,7 +32,8 @@ bool SceneWorld::Init()
 	m_eventManager.SetEntitiesMap(&m_celist);
 
 	// THIS IS NOT GOOD - THE PLAYER NEEDS TO BE FOUND, NOT JUST BE ID 1
-	m_player = m_celist.at(1);
+	if (m_celist.count(1))
+		m_player = m_celist.at(1);
 
 	m_fontTitle = FontManager::GetInstance().AddFont(false, false);
 	m_fontFPS = FontManager::GetInstance().AddFont(true, false, true);
@@ -111,7 +112,7 @@ void SceneWorld::Draw()
 
 void SceneWorld::Interact()
 {
-	if (InputManager::GetInstance().FrameKeyStatus(' ', KeyStatus::KeyPressed)) {
+	if (InputManager::GetInstance().FrameKeyStatus(' ', KeyStatus::KeyPressed) && m_player) {
 		Vector3f pos = m_player->Physics()->GetCenter();
 		Direction dir = m_player->Graphics()->GetDirection();
 
@@ -179,7 +180,8 @@ void SceneWorld::Update()
 	//std::cout << m_player->GetDirection() << std::endl;
 	//std::cout << /*m_player->Position().x << ", " << m_player->Position().y << ", " <<*/ m_player->Physics()->Position().z << std::endl;// << ", " << m_clist.at(1)->GetMoveBoundingBox().Get(AABB::Down) << ", " << m_clist.at(1)->GetMoveBoundingBox().Get(AABB::Close) << std::endl;
 
-	m_World->Follow(m_player->Physics()->Position(), m_mapHandler->GetMapSize()/*Vector3f(32, 18, 0)*/);
+	if (m_player)
+		m_World->Follow(m_player->Physics()->Position(), m_mapHandler->GetMapSize()/*Vector3f(32, 18, 0)*/);
 	//m_camera->Update(m_player->Position());//this needs to change LOLOLOLOL
 
 	//Display FPS

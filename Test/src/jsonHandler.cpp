@@ -3,6 +3,11 @@
 rapidjson::Document JsonHandler::DataDocument = rapidjson::Document();
 std::string JsonHandler::File = "";
 
+bool JsonHandler::DocumentNotNull()
+{
+	return DataDocument.IsObject();
+}
+
 rapidjson::Document& JsonHandler::LoadJsonFromFile(std::string filename)
 {
 	File = Utils::ReadFile(filename);
@@ -68,6 +73,9 @@ rapidjson::Value JsonHandler::LoadMaps()
 
 rapidjson::Value JsonHandler::LoadMap(int map_id)
 {
+	//auto& temp = LoadMaps();
+	//if (temp.IsNull())
+	//	return;
 	auto& ms = LoadMaps().GetArray();
 	// Go through the entities
 	for (unsigned int i = 0; i < ms.Size(); i++)
