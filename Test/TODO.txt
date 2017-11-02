@@ -1,2 +1,5 @@
-Entities added on editor
+Editor:
+	Entity sprites
+	Load entities
+	Entity EventQueues
 Optimize collisions lol

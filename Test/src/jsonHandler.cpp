@@ -31,8 +31,8 @@ rapidjson::Document& JsonHandler::LoadJsonFromFile(std::string filename)
 rapidjson::Value JsonHandler::LoadEntities(int map_id)
 {
 	auto& m = LoadMap(map_id);
-		if (m.HasMember("entities") && m["entities"].IsArray())
-			return m["entities"].GetArray();
+	if (m.HasMember("entities") && m["entities"].IsArray())
+		return m["entities"].GetArray();
 
 	std::cout << "Entities doesn't exist in the map" << std::endl;
 
@@ -61,10 +61,15 @@ rapidjson::Value JsonHandler::LoadMaps()
 {
 	DataDocument.Parse(File.c_str());
 
+	auto x = DataDocument.GetType();
+
 	if (DataDocument.IsObject())
 		// If the json file has entities and the entities is an array
 		if (DataDocument.HasMember("maps") && DataDocument["maps"].IsArray())
 			return DataDocument["maps"].GetArray();
+		else if (DataDocument.HasMember("tiles"))
+			if (DataDocument["tiles"].IsArray())
+				return DataDocument.GetObject();
 
 	std::cout << "Maps don't exist in the file" << std::endl;
 
@@ -76,20 +81,28 @@ rapidjson::Value JsonHandler::LoadMap(int map_id)
 	//auto& temp = LoadMaps();
 	//if (temp.IsNull())
 	//	return;
-	auto& ms = LoadMaps().GetArray();
-	// Go through the entities
-	for (unsigned int i = 0; i < ms.Size(); i++)
-	{
-		// If the entity is you...
-		if (ms[i]["id"] == map_id)
-		{
-			return ms[i].GetObject();
-		}
-	}
+	auto& ms = LoadMaps();
 
-	return rapidjson::Value();
+	if (ms.IsArray())
+		// Go through the entities
+		for (unsigned int i = 0; i < ms.Size(); i++)
+		{
+			// If the entity is you...
+			if (ms[i]["id"] == map_id)
+			{
+				return ms[i].GetObject();
+			}
+		}
+	else
+		return ms.GetObject();
 
 	std::cout << "Map doesn't exist in the file" << std::endl;
 
 	return rapidjson::Value();
+}
+
+
+void JsonHandler::SetFile(std::string filename)
+{
+	LoadJsonFromFile(filename);
 }

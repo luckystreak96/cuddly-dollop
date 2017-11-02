@@ -19,6 +19,7 @@ namespace dollop_editor
     {
         public Dictionary<string, ImageBrush> Brushes { get; }
         public Dictionary<Point3D, Rectangle> Tiles { get; set; }
+        public Dictionary<Point3D, Tuple<Entity, Rectangle>> Entities { get; set; }
         public List<Dictionary<Point3D, Rectangle>> TileHistory { get; set; }
         public int HistoryProgress { get; set; }
         public int Width { get; set; }
@@ -30,6 +31,7 @@ namespace dollop_editor
             Brushes = new Dictionary<string, ImageBrush>();
             Tiles = new Dictionary<Point3D, Rectangle>();
             TileHistory = new List<Dictionary<Point3D, Rectangle>>();
+            Entities = new Dictionary<Point3D, Tuple<Entity, Rectangle>>();
             HistoryProgress = -1;
             Width = 0;
             Height = 0;
@@ -37,7 +39,6 @@ namespace dollop_editor
             PopulateBrushes();
             ResetTiles();
         }
-
         public void Setup(int width, int height)
         {
             Width = width;
@@ -115,49 +116,88 @@ namespace dollop_editor
             return new Tuple<Rectangle, Rectangle>(rectangle, r);
         }
 
-        public void Serialize()
+        public void Serialize(string filename)
         {
-            Tiles tiles = new Tiles();
-
-            foreach (var x in Tiles)
+            try
             {
-                Tile tile = new Tile
+
+                List<Tile> tiles = new List<Tile>();
+
+                foreach (var x in Tiles)
                 {
-                    x = (float)x.Key.X,
-                    // -1 because height - y on its own makes an off by 1 error
-                    y = Height - (float)x.Key.Y - 1,
-                    z = (float)x.Key.Z,
-                    sprite = ((BitmapImage)(x.Value.Fill.GetValue(ImageBrush.ImageSourceProperty))).UriSource.ToString().Split('\\').Last()
-                };
+                    Tile tile = new Tile
+                    {
+                        x = (float)x.Key.X,
+                        // -1 because height - y on its own makes an off by 1 error
+                        y = Height - (float)x.Key.Y - 1,
+                        z = (float)x.Key.Z,
+                        sprite = ((BitmapImage)(x.Value.Fill.GetValue(ImageBrush.ImageSourceProperty))).UriSource.ToString().Split('\\').Last()
+                    };
 
-                tiles.tiles.Add(tile);
+                    tiles.Add(tile);
+                }
+
+                List<Entity> ents = new List<Entity>();
+                foreach (var x in Entities)
+                    ents.Add(x.Value.Item1);
+
+                string data = "";
+                if (File.Exists(filename))
+                {
+                    // The tiles data
+                    string json = JsonConvert.SerializeObject(new Tiles() { tiles = tiles });
+                    string entityjson = JsonConvert.SerializeObject(new Entities() { entities = ents });
+
+                    // The existing data file
+                    data = File.ReadAllText(filename);
+                    JObject o = JObject.Parse(data);
+
+                    JObject map;
+                    if (o["maps"] != null)
+                        map = o["maps"][0] as JObject;
+                    else
+                        map = o;
+
+                    if (map["tiles"] == null)
+                        map.Property("id").AddAfterSelf(new JProperty("tiles", JObject.Parse(json)["tiles"]));
+                    else
+                        map["tiles"].Replace(JToken.Parse(json)["tiles"]);
+
+                    if (map["entities"] == null)
+                        map.Property("id").AddAfterSelf(new JProperty("entities", JObject.Parse(entityjson)["entities"]));
+                    else
+                        map["entities"].Replace(JToken.Parse(entityjson)["entities"]);
+
+                    string result = JsonConvert.SerializeObject(o);
+                    File.WriteAllText(filename, result);
+                }
+                else
+                {
+                    Map newMap = new Map() { id = int.Parse(filename.Split('\\').Last().Split('.').First()), entities = ents , tiles = tiles };
+                    string result = JsonConvert.SerializeObject(newMap);
+                    File.WriteAllText(filename, result);
+                }
             }
-
-
-            string json = JsonConvert.SerializeObject(tiles);
-
-            string data = File.ReadAllText("../../../Test/res/data/data.json");
-            JObject o = JObject.Parse(data);
-            var map = o["maps"][0] as JObject;
-            //if(!map["tiles"].)
-            if (map["tiles"] == null)
-                map.Property("id").AddAfterSelf(new JProperty("tiles", JObject.Parse(json)["tiles"]));
-            else
-                map["tiles"].Replace(JToken.Parse(json)["tiles"]);
-
-            string result = JsonConvert.SerializeObject(o);
-            File.WriteAllText("../../../Test/res/data/data.json", result);
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
         }
 
-        internal bool Load()
+        internal bool Load(string filename)
         {
             try
             {
                 Dictionary<Point3D, Rectangle> dictionary = new Dictionary<Point3D, Rectangle>();
-                string data = File.ReadAllText("../../../Test/res/data/data.json");
+                string data = File.ReadAllText(filename);
 
                 JObject o = JObject.Parse(data);
-                var map = o["maps"][0] as JObject;
+
+                JObject map;
+                if (o["maps"] != null)
+                    map = o["maps"][0] as JObject;
+                else
+                    map = o;
 
                 // If the tiles dont exist, dont try to load them
                 if (map["tiles"] == null)

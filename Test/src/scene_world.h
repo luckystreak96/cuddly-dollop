@@ -80,7 +80,7 @@ private:
 	Trail m_trail;
 	Bloom m_bloom;
 	HeightFog m_fog;
-	const std::string DATA_FILE = "res/data/data.json";
+	const std::string DATA_FILE = "res/data/001.json";
 };
 
 #endif

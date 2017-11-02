@@ -17,11 +17,11 @@ Entity* EntityFactory::BuildEntity(std::map<std::string, EntityArgType> args)
 		result = new Entity((unsigned int)rand() + (unsigned int)(MAXINT / 2));
 
 	// Position
-	if (args.count("position.x"))
+	if (args.count("x"))
 	{
-		float x = std::get<float>(args.at("position.x"));
-		float y = std::get<float>(args.at("position.y"));
-		float z = std::get<float>(args.at("position.z"));
+		float x = std::get<float>(args.at("x"));
+		float y = std::get<float>(args.at("y"));
+		float z = std::get<float>(args.at("z"));
 		result->Physics()->AbsolutePosition(Vector3f(x, y, z));
 	}
 	else
@@ -37,8 +37,11 @@ std::map<unsigned int, Entity*> EntityFactory::GetEntities(unsigned int map_id)
 	if (!JsonHandler::DocumentNotNull())
 		return result;
 
-	auto& ents = JsonHandler::LoadEntities(map_id).GetArray();
+	auto& entities = JsonHandler::LoadEntities(map_id);
+	if (entities.IsNull())
+		return result;
 
+	auto& ents = entities.GetArray();
 
 	for (auto& x : ents)
 	{

@@ -15,6 +15,7 @@ public:
 	static rapidjson::Value LoadQueues(int map_id, int entity_id);
 	static rapidjson::Value LoadMap(int map_id);
 	static rapidjson::Value LoadMaps();
+	static void SetFile(std::string filename);
 	static bool JsonHandler::DocumentNotNull();
 public:
 	static rapidjson::Document DataDocument;

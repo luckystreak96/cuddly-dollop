@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,6 +27,7 @@ namespace dollop_editor
         private int prevx = -1;
         private int prevy = -1;
         private bool opaqueView = false;
+        private bool entityMode = false;
 
         public MainWindow()
         {
@@ -103,6 +105,14 @@ namespace dollop_editor
         {
             x /= 32;
             y /= 32;
+
+            if (entityMode)
+            {
+                EntitySelected(x, y, slrDepth.Value);
+                return;
+            }
+
+            // Dont want to spam add a tile on the same spot
             if (x == prevx && y == prevy)
                 return;
             prevx = x;
@@ -114,12 +124,43 @@ namespace dollop_editor
                 cnvMap.Children.Add(t.Item1);
         }
 
+        private void EntitySelected(int x, int y, double z)
+        {
+            Point3D point = new Point3D(x, y, z);
+            if (editor.Entities.ContainsKey(point))
+            {
+                // Load up that entity into the new window
+            }
+            else
+            {
+                // Open entity window
+                EntityWindow window = new EntityWindow(new Point3D(x, editor.Height - 1 - y, z), editor.Entities);
+                window.ShowDialog();
+
+                if (window.Entity.id == -1)
+                    return;
+
+                Rectangle rectangle = new Rectangle()
+                {
+                    Width = editor.TileSize,
+                    Height = editor.TileSize,
+                    Stroke = Brushes.White
+                };
+                rectangle.SetCurrentValue(Canvas.ZIndexProperty, (int)(20 - z * 2));
+                rectangle.RenderTransform = new TranslateTransform(x * 32, y * 32);
+
+                editor.Entities.Add(point, new Tuple<Entity, Rectangle>(window.Entity, rectangle));
+                cnvMap.Children.Add(rectangle);
+            }
+        }
+
         private void CnvMap_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 int x = (int)e.GetPosition(cnvMap).X;
                 int y = (int)e.GetPosition(cnvMap).Y;
+
 
                 if (x > 0 && x < cnvMap.Width && y > 0 && y < cnvMap.Height)
                     SetMapTile(x, y, selTile);
@@ -129,13 +170,15 @@ namespace dollop_editor
         private void ReSyncOnEditor()
         {
             cnvMap.Children.Clear();
+
+            // Draw the tiles
             foreach (var x in editor.Tiles)
                 cnvMap.Children.Add(x.Value);
-        }
 
-        private void CnvMap_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            //AddCurrentMapToHistory();
+            // Draw the entities
+            if (entityMode)
+                foreach (var x in editor.Entities)
+                    cnvMap.Children.Add(x.Value.Item2);
         }
 
         private void AddCurrentMapToHistory()
@@ -202,7 +245,8 @@ namespace dollop_editor
                 int zind = (int)x.GetValue(Canvas.ZIndexProperty);
                 if (!opaqueView && zind != (int)((10 - slrDepth.Value) * 2))
                 {
-                    double opacity =  1 - Math.Abs((20 - slrDepth.Value * 2) - zind) / 5;
+                    double opacity = 1 - Math.Abs((20 - slrDepth.Value * 2) - zind) / 10;
+                    opacity -= 0.5;
                     x.Fill.Opacity = opacity;
                 }
                 else
@@ -226,12 +270,47 @@ namespace dollop_editor
 
         private void MenuSave_Click(object sender, RoutedEventArgs e)
         {
-            editor.Serialize();
+            FileDialog fileDialog = new SaveFileDialog();
+            fileDialog.FileName = "001";
+            fileDialog.DefaultExt = ".json";
+            fileDialog.Filter = "JSON files (.json)|*.json";
+
+            bool? result;
+            while ((result = fileDialog.ShowDialog()) == true)
+            {
+                // Open document 
+                string filename = fileDialog.FileName;
+                if (int.TryParse(filename.Split('\\').Last().Split('.').First(), out int temp) != true)
+                {
+                    MessageBox.Show("Name must be a number (ex: 001.json)");
+                    continue;
+                }
+                editor.Serialize(filename);
+                break;
+            }
         }
 
         private void MenuOpen_Click(object sender, RoutedEventArgs e)
         {
-            editor.Load();
+            FileDialog fileDialog = new OpenFileDialog();
+            fileDialog.DefaultExt = ".json";
+            fileDialog.Filter = "JSON files (.json)|*.json";
+
+            bool? result = fileDialog.ShowDialog();
+
+            if (result == true)
+            {
+                // Open document 
+                string filename = fileDialog.FileName;
+
+                editor.Load(filename);
+                ReSyncOnEditor();
+            }
+        }
+
+        private void chkEntityMode_Click(object sender, RoutedEventArgs e)
+        {
+            entityMode = chkEntityMode.IsChecked ?? false;
             ReSyncOnEditor();
         }
     }

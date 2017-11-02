@@ -57,11 +57,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Entities.cs" />
+    <Compile Include="Entity.cs" />
+    <Compile Include="EntityWindow.xaml.cs">
+      <DependentUpon>EntityWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Map.cs" />
     <Compile Include="NewMap.xaml.cs">
       <DependentUpon>NewMap.xaml</DependentUpon>
     </Compile>
     <Compile Include="Tile.cs" />
     <Compile Include="Tiles.cs" />
+    <Page Include="EntityWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
