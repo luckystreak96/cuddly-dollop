@@ -26,7 +26,7 @@ bool SceneWorld::Init()
 	m_acceptInput = true;
 
 	m_currentMap = 0;
-	m_mapHandler = new MapHandler();
+	m_mapHandler = new MapHandler(0);
 
 	m_celist = EntityFactory::GetEntities(m_currentMap);
 	m_eventManager.SetEntitiesMap(&m_celist);

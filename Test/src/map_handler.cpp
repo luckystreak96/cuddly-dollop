@@ -40,6 +40,30 @@ MapHandler::MapHandler() : m_mesh(Mesh())
 			m_tiles.push_back(new MapTile(Vector3f((float)x, (float)y, 5.f), COMPOSITION, "res/yellowGrass.png"));
 		}
 
+	FinalizeSetup();
+}
+
+MapHandler::MapHandler(int id) : m_mesh(Mesh())
+{
+	auto& map = JsonHandler::LoadMap(id);
+	if (!map.HasMember("tiles"))
+		return;
+	for (auto& x : map["tiles"].GetArray())
+	{
+		Vector3f pos;
+		std::string sprite;
+		pos.x = x["x"].GetFloat();
+		pos.y = x["y"].GetFloat();
+		pos.z = x["z"].GetFloat();
+		sprite = std::string("res/sprites/") + std::string(x["sprite"].GetString());
+		m_tiles.push_back(new MapTile(pos, COMPOSITION, sprite));
+	}
+
+	FinalizeSetup();
+}
+
+void MapHandler::FinalizeSetup()
+{
 	std::sort(m_tiles.begin(), m_tiles.end(), TileSort);
 	std::sort(m_tiles.begin(), m_tiles.end(), TileSort);
 

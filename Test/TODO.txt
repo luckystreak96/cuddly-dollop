@@ -1,3 +1,2 @@
-eventfactory DialogueGraphs
-test eventQueue-ception
+Entities added on editor
 Optimize collisions lol

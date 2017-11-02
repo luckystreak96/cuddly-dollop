@@ -13,13 +13,16 @@
 #include "graphicsComponent.h"
 #include <vector>
 #include "renderer.h"
+#include "jsonHandler.h"
 
 class MapHandler
 {
 public:
 	MapHandler();
+	MapHandler(int id);
 	~MapHandler();
 	MapHandler(const std::string& filePath);
+	void FinalizeSetup();
 	void SetRender();
 	void Draw();
 	void Update();
