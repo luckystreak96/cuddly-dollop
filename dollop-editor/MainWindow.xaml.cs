@@ -144,8 +144,10 @@ namespace dollop_editor
                 {
                     Width = editor.TileSize,
                     Height = editor.TileSize,
-                    Stroke = Brushes.White
+                    Stroke = new SolidColorBrush() { Color = Colors.White, Opacity = 1.0 }
                 };
+                if (editor.Brushes.ContainsKey(window.Entity.sprite))
+                    rectangle.Fill = editor.Brushes[window.Entity.sprite];
                 rectangle.SetCurrentValue(Canvas.ZIndexProperty, (int)(20 - z * 2));
                 rectangle.RenderTransform = new TranslateTransform(x * 32, y * 32);
 
@@ -247,10 +249,18 @@ namespace dollop_editor
                 {
                     double opacity = 1 - Math.Abs((20 - slrDepth.Value * 2) - zind) / 10;
                     opacity -= 0.5;
-                    x.Fill.Opacity = opacity;
+                    if (x.Fill != null)
+                        x.Fill.Opacity = opacity;
+                    if (x.Stroke != null)
+                        x.Stroke.Opacity = opacity + 0.1;
                 }
                 else
-                    x.Fill.Opacity = 1.0;
+                {
+                    if (x.Fill != null)
+                        x.Fill.Opacity = 1.0;
+                    if (x.Stroke != null)
+                        x.Stroke.Opacity = 1.0;
+                }
             }
         }
 

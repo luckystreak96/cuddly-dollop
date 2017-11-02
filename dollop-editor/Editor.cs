@@ -72,7 +72,14 @@ namespace dollop_editor
             {
                 ImageBrush brush = new ImageBrush();
                 string source = @"..\..\..\Test\res\" + x;
-                brush.ImageSource = new BitmapImage(new Uri(x, UriKind.Relative));
+                BitmapImage bmi = new BitmapImage(new Uri(x, UriKind.Relative));
+                if (bmi.PixelWidth > 32 || bmi.PixelHeight > 32)
+                {
+                    BitmapSource bms = new CroppedBitmap(bmi, new Int32Rect(0, 32, 32, 32));
+                    brush.ImageSource = bms;
+                }
+                else
+                    brush.ImageSource = bmi;
                 Brushes.Add(x.Split('\\').Last(), brush);
             }
         }
@@ -173,7 +180,7 @@ namespace dollop_editor
                 }
                 else
                 {
-                    Map newMap = new Map() { id = int.Parse(filename.Split('\\').Last().Split('.').First()), entities = ents , tiles = tiles };
+                    Map newMap = new Map() { id = int.Parse(filename.Split('\\').Last().Split('.').First()), entities = ents, tiles = tiles };
                     string result = JsonConvert.SerializeObject(newMap);
                     File.WriteAllText(filename, result);
                 }
@@ -200,63 +207,103 @@ namespace dollop_editor
                     map = o;
 
                 // If the tiles dont exist, dont try to load them
-                if (map["tiles"] == null)
-                    return false;
-
-                // Load the tiles
-                string text = map["tiles"].ToString();
-                JsonTextReader reader = new JsonTextReader(new StringReader(text));
-
-                Tile tile = new Tile();
-                int counter = 0;
-                // Read all the tiles
-                while (reader.Read())
+                if (!(map["tiles"] == null))
                 {
-                    // every 4 properties, add to list and reset counter
-                    if (counter >= 4)
+                    // Load the tiles
+                    string text = map["tiles"].ToString();
+                    JsonTextReader reader = new JsonTextReader(new StringReader(text));
+
+                    Tile tile = new Tile();
+                    // Read all the tiles
+                    while (reader.Read())
                     {
-                        counter = 0;
-                        Rectangle rectangle = new Rectangle
+                        if (reader.TokenType == JsonToken.EndObject)
                         {
-                            Fill = Brushes[tile.sprite].Clone(),
-                            Width = TileSize,
-                            Height = TileSize
-                        };
-                        rectangle.SetCurrentValue(Canvas.ZIndexProperty, (int)(20 - tile.z * 2));
-                        rectangle.RenderTransform = new TranslateTransform((tile.x) * 32, (Height - 1 - tile.y) * 32);
-                        if (!(tile.x >= Width || Height - 1 - tile.y >= Height))
-                            dictionary.Add(new Point3D(tile.x, (Height - 1 - tile.y), tile.z), rectangle);
-                    }
+                            Rectangle rectangle = new Rectangle
+                            {
+                                Fill = Brushes[tile.sprite].Clone(),
+                                Width = TileSize,
+                                Height = TileSize
+                            };
+                            rectangle.SetCurrentValue(Canvas.ZIndexProperty, (int)(20 - tile.z * 2));
+                            rectangle.RenderTransform = new TranslateTransform((tile.x) * 32, (Height - 1 - tile.y) * 32);
+                            if (!(tile.x >= Width || Height - 1 - tile.y >= Height))
+                                dictionary.Add(new Point3D(tile.x, (Height - 1 - tile.y), tile.z), rectangle);
+                        }
 
-                    if (reader.TokenType == JsonToken.PropertyName && reader.Value.ToString() == "x")
-                    {
-                        reader.Read();
-                        tile.x = (float)(double)reader.Value;
-                        counter++;
+                        if (reader.TokenType == JsonToken.PropertyName)
+                        {
+                            if (reader.Value.ToString() == "x" && reader.Read())
+                                tile.x = (float)(double)reader.Value;
+                            if (reader.Value.ToString() == "y" && reader.Read())
+                                tile.y = (float)(double)reader.Value;
+                            if (reader.Value.ToString() == "z" && reader.Read())
+                                tile.z = (float)(double)reader.Value;
+                            if (reader.Value.ToString() == "sprite" && reader.Read())
+                                tile.sprite = (string)reader.Value;
+                        }
                     }
-
-                    if (reader.TokenType == JsonToken.PropertyName && reader.Value.ToString() == "y")
-                    {
-                        reader.Read();
-                        tile.y = (float)(double)reader.Value;
-                        counter++;
-                    }
-
-                    if (reader.TokenType == JsonToken.PropertyName && reader.Value.ToString() == "z")
-                    {
-                        reader.Read();
-                        tile.z = (float)(double)reader.Value;
-                        counter++;
-                    }
-
-                    if (reader.TokenType == JsonToken.PropertyName && reader.Value.ToString() == "sprite")
-                    {
-                        reader.Read();
-                        tile.sprite = (string)reader.Value;
-                        counter++;
-                    }
+                    Tiles = dictionary;
                 }
-                Tiles = dictionary;
+
+
+                // If the entities dont exist, dont try to load them
+                if (!(map["entities"] == null))
+                {
+                    // Entity dictionary
+                    Dictionary<Point3D, Tuple<Entity, Rectangle>> entities = new Dictionary<Point3D, Tuple<Entity, Rectangle>>();
+
+                    // Load the tiles
+                    string text = map["entities"].ToString();
+                    JsonTextReader reader = new JsonTextReader(new StringReader(text));
+
+                    Entity entity = new Entity();
+                    entity.sprite = "";
+
+                    // Read all the tiles
+                    bool hasBegun = false;
+                    while (reader.Read())
+                    {
+                        if (reader.TokenType == JsonToken.EndObject && hasBegun)
+                        {
+                            hasBegun = false;
+                            Rectangle rectangle = new Rectangle()
+                            {
+                                Width = TileSize,
+                                Height = TileSize,
+                                Stroke = new SolidColorBrush() { Color = Colors.White, Opacity = 1.0 },
+                            };
+                            if (Brushes.ContainsKey(entity.sprite))
+                                rectangle.Fill = Brushes[entity.sprite];
+                            int z = (int)(20 - Math.Floor(entity.z) * 2);
+                            rectangle.SetCurrentValue(Canvas.ZIndexProperty, z);
+                            rectangle.RenderTransform = new TranslateTransform(entity.x * 32, (Height - 1 - entity.y) * 32);
+                            if (!(entity.x >= Width || Height - 1 - entity.y >= Height))
+                                entities.Add(new Point3D(entity.x, Height - 1 - entity.y, entity.z), new Tuple<Entity, Rectangle>(entity, rectangle));
+                        }
+
+                        if (reader.TokenType == JsonToken.PropertyName)
+                        {
+                            hasBegun = true;
+                            if (reader.Value.ToString() == "x" && reader.Read())
+                                entity.x = (float)(double)reader.Value;
+                            else if (reader.Value.ToString() == "y" && reader.Read())
+                                entity.y = (float)(double)reader.Value;
+                            else if (reader.Value.ToString() == "z" && reader.Read())
+                                entity.z = (float)(double)reader.Value;
+                            else if (reader.Value.ToString() == "id" && reader.Read())
+                            {
+                                var x = reader.ValueType;
+                                entity.id = int.Parse(reader.Value.ToString());
+                            }
+                            else if (reader.Value.ToString() == "player" && reader.Read())
+                                entity.player = (bool)reader.Value;
+                            else if (reader.Value.ToString() == "sprite" && reader.Read())
+                                entity.sprite = reader.Value.ToString();
+                        }
+                    }
+                    Entities = entities;
+                }
             }
             catch (Exception e)
             {

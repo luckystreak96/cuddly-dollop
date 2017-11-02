@@ -10,6 +10,7 @@ namespace dollop_editor
     {
         public int id { get; set; }
         public bool player { get; set; }
+        public string sprite { get; set; }
         public float x { get; set; }
         public float y { get; set; }
         public float z { get; set; }
