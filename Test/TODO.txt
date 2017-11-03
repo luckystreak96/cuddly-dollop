@@ -1,5 +1,3 @@
 Editor:
-	Entity sprites
-	Load entities
 	Entity EventQueues
 Optimize collisions lol

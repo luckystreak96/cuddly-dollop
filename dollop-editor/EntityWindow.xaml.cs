@@ -21,9 +21,19 @@ namespace dollop_editor
     public partial class EntityWindow : Window
     {
         public Entity Entity { get; set; }
+        private Dictionary<Point3D, Tuple<Entity, Rectangle>> dictionary;
+        private Point3D location;
+        private MainWindow mainWindow;
+        private Editor Editor;
+        private int mapHeight;
 
-        public EntityWindow(Point3D pos, Dictionary<Point3D, Tuple<Entity, Rectangle>> dict)
+        public EntityWindow(Point3D pos, Dictionary<Point3D, Tuple<Entity, Rectangle>> dict, int height, MainWindow window, Editor editor)
         {
+            Editor = editor;
+            mapHeight = height;
+            mainWindow = window;
+            dictionary = dict;
+            location = pos;
             Entity = new Entity();
             Entity.id = -1;
 
@@ -32,17 +42,37 @@ namespace dollop_editor
 
             for (int i = 1; i < 999999; i++)
             {
+                bool exists = false;
                 foreach (var x in dict)
                     if (x.Value.Item1.id == i)
-                        continue;
+                    {
+                        exists = true;
+                        break;
+                    }
 
-                txtID.Text = i.ToString();
-                break;
+                if (!exists)
+                {
+                    txtID.Text = i.ToString();
+                    break;
+                }
             }
 
-            txtX.Text = pos.X.ToString();
-            txtY.Text = pos.Y.ToString();
-            txtZ.Text = pos.Z.ToString();
+            Point3D p = new Point3D(pos.X, mapHeight - 1 - pos.Y, pos.Z);
+            if (dictionary.ContainsKey(p))
+            {
+                txtX.Text = dictionary[p].Item1.x.ToString();
+                txtY.Text = dictionary[p].Item1.y.ToString();
+                txtZ.Text = dictionary[p].Item1.z.ToString();
+                txtID.Text = dictionary[p].Item1.id.ToString();
+                txtSprite.Text = dictionary[p].Item1.sprite.ToString();
+                chkPlayer.IsChecked = dictionary[p].Item1.player;
+            }
+            else
+            {
+                txtX.Text = pos.X.ToString();
+                txtY.Text = pos.Y.ToString();
+                txtZ.Text = pos.Z.ToString();
+            }
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
@@ -74,8 +104,24 @@ namespace dollop_editor
                 x = x,
                 y = y,
                 z = z,
-                player = player
+                player = player,
+                sprite = txtSprite.Text
             };
+
+            Point3D p = new Point3D(location.X, mapHeight - 1 - location.Y, location.Z);
+            if (dictionary.ContainsKey(p))
+            {
+                Point3D current = new Point3D(Math.Floor(Entity.x), mapHeight - 1 - Math.Floor(Entity.y), Entity.z);
+                Tuple<Entity, Rectangle> tu = new Tuple<Entity, Rectangle>(Entity, Editor.EntityRectangle(Entity));
+                if (current != p)
+                {
+                    dictionary.Remove(p);
+                    dictionary.Add(current, tu);
+                }
+                else
+                    dictionary[p] = tu;
+
+            }
 
             Close();
         }

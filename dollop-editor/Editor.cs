@@ -258,7 +258,6 @@ namespace dollop_editor
                     JsonTextReader reader = new JsonTextReader(new StringReader(text));
 
                     Entity entity = new Entity();
-                    entity.sprite = "";
 
                     // Read all the tiles
                     bool hasBegun = false;
@@ -267,19 +266,11 @@ namespace dollop_editor
                         if (reader.TokenType == JsonToken.EndObject && hasBegun)
                         {
                             hasBegun = false;
-                            Rectangle rectangle = new Rectangle()
-                            {
-                                Width = TileSize,
-                                Height = TileSize,
-                                Stroke = new SolidColorBrush() { Color = Colors.White, Opacity = 1.0 },
-                            };
-                            if (Brushes.ContainsKey(entity.sprite))
-                                rectangle.Fill = Brushes[entity.sprite];
+                            Rectangle rectangle = EntityRectangle(entity);
                             int z = (int)(20 - Math.Floor(entity.z) * 2);
-                            rectangle.SetCurrentValue(Canvas.ZIndexProperty, z);
-                            rectangle.RenderTransform = new TranslateTransform(entity.x * 32, (Height - 1 - entity.y) * 32);
                             if (!(entity.x >= Width || Height - 1 - entity.y >= Height))
-                                entities.Add(new Point3D(entity.x, Height - 1 - entity.y, entity.z), new Tuple<Entity, Rectangle>(entity, rectangle));
+                                entities.Add(new Point3D(Math.Floor(entity.x), Height - 1 - (Math.Floor(entity.y)), entity.z), new Tuple<Entity, Rectangle>(entity, rectangle));
+                            entity = new Entity();
                         }
 
                         if (reader.TokenType == JsonToken.PropertyName)
@@ -292,10 +283,7 @@ namespace dollop_editor
                             else if (reader.Value.ToString() == "z" && reader.Read())
                                 entity.z = (float)(double)reader.Value;
                             else if (reader.Value.ToString() == "id" && reader.Read())
-                            {
-                                var x = reader.ValueType;
                                 entity.id = int.Parse(reader.Value.ToString());
-                            }
                             else if (reader.Value.ToString() == "player" && reader.Read())
                                 entity.player = (bool)reader.Value;
                             else if (reader.Value.ToString() == "sprite" && reader.Read())
@@ -311,6 +299,22 @@ namespace dollop_editor
             }
 
             return true;
+        }
+
+        public Rectangle EntityRectangle(Entity entity)
+        {
+            Rectangle rectangle = new Rectangle()
+            {
+                Width = TileSize,
+                Height = TileSize,
+                Stroke = new SolidColorBrush() { Color = Colors.White, Opacity = 1.0 }
+            };
+            rectangle.SetCurrentValue(Canvas.ZIndexProperty, (int)(20 - entity.z * 2));
+            rectangle.RenderTransform = new TranslateTransform(entity.x * 32, (Height - 1 - entity.y) * 32);
+            if (Brushes.ContainsKey(entity.sprite))
+                rectangle.Fill = Brushes[entity.sprite].Clone();
+
+            return rectangle;
         }
     }
 }

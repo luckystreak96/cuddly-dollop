@@ -28,6 +28,8 @@ namespace dollop_editor
         private int prevy = -1;
         private bool opaqueView = false;
         private bool entityMode = false;
+        private int contextMenuX = 0;
+        private int contextMenuY = 0;
 
         public MainWindow()
         {
@@ -56,8 +58,33 @@ namespace dollop_editor
             int x = (int)e.GetPosition(cnvMap).X;
             int y = (int)e.GetPosition(cnvMap).Y;
 
-            if (x > 0 && x < cnvMap.Width && y > 0 && y < cnvMap.Height)
-                SetMapTile(x, y, selTile);
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                if (x > 0 && x < cnvMap.Width && y > 0 && y < cnvMap.Height)
+                    SetMapTile(x, y, selTile);
+            }
+            else if (e.RightButton == MouseButtonState.Pressed)
+            {
+                contextMenuX = x / 32;
+                contextMenuY = y / 32;
+                FrameworkElement fe = e.Source as FrameworkElement;
+                if (entityMode)
+                {
+                    ContextMenu theMenu = new ContextMenu();
+                    MenuItem modify = new MenuItem();
+                    modify.Header = "Modify";
+                    modify.Click += Modify_Click;
+                    MenuItem delete = new MenuItem();
+                    delete.Header = "Delete";
+                    delete.Click += Delete_Click;
+                    theMenu.Items.Add(modify);
+                    theMenu.Items.Add(delete);
+
+                    fe.ContextMenu = theMenu;
+                }
+                else
+                    fe.ContextMenu.Items.Clear();
+            }
         }
 
         private void CnvTilePicker_MouseDown(object sender, MouseButtonEventArgs e)
@@ -130,26 +157,20 @@ namespace dollop_editor
             if (editor.Entities.ContainsKey(point))
             {
                 // Load up that entity into the new window
+                EntityWindow window = new EntityWindow(new Point3D(x, editor.Height - 1 - y, z), editor.Entities, editor.Height, this, editor);
+                window.ShowDialog();
+                ReSyncOnEditor();
             }
             else
             {
                 // Open entity window
-                EntityWindow window = new EntityWindow(new Point3D(x, editor.Height - 1 - y, z), editor.Entities);
+                EntityWindow window = new EntityWindow(new Point3D(x, editor.Height - 1 - y, z), editor.Entities, editor.Height, this, editor);
                 window.ShowDialog();
 
                 if (window.Entity.id == -1)
                     return;
 
-                Rectangle rectangle = new Rectangle()
-                {
-                    Width = editor.TileSize,
-                    Height = editor.TileSize,
-                    Stroke = new SolidColorBrush() { Color = Colors.White, Opacity = 1.0 }
-                };
-                if (editor.Brushes.ContainsKey(window.Entity.sprite))
-                    rectangle.Fill = editor.Brushes[window.Entity.sprite];
-                rectangle.SetCurrentValue(Canvas.ZIndexProperty, (int)(20 - z * 2));
-                rectangle.RenderTransform = new TranslateTransform(x * 32, y * 32);
+                Rectangle rectangle = editor.EntityRectangle(window.Entity);
 
                 editor.Entities.Add(point, new Tuple<Entity, Rectangle>(window.Entity, rectangle));
                 cnvMap.Children.Add(rectangle);
@@ -259,7 +280,12 @@ namespace dollop_editor
                     if (x.Fill != null)
                         x.Fill.Opacity = 1.0;
                     if (x.Stroke != null)
-                        x.Stroke.Opacity = 1.0;
+                        if (opaqueView)
+                            x.Stroke.Opacity = 0;
+                        else
+                            x.Stroke.Opacity = 1.0;
+
+
                 }
             }
         }
@@ -322,6 +348,21 @@ namespace dollop_editor
         {
             entityMode = chkEntityMode.IsChecked ?? false;
             ReSyncOnEditor();
+        }
+
+        private void Delete_Click(object sender, RoutedEventArgs e)
+        {
+            Point3D p = new Point3D(contextMenuX, contextMenuY, slrDepth.Value);
+            if (editor.Entities.ContainsKey(p))
+            {
+                editor.Entities.Remove(p);
+                ReSyncOnEditor();
+            }
+        }
+
+        private void Modify_Click(object sender, RoutedEventArgs e)
+        {
+            EntitySelected(contextMenuX, contextMenuY, slrDepth.Value);
         }
     }
 }

@@ -8,6 +8,11 @@ namespace dollop_editor
 {
     public class Entity
     {
+        public Entity()
+        {
+            sprite = "";
+
+        }
         public int id { get; set; }
         public bool player { get; set; }
         public string sprite { get; set; }
