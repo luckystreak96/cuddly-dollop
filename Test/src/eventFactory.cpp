@@ -23,6 +23,10 @@ IEvent* EventFactory::BuildEvent(EventTypes et, std::map<std::string, EventArgTy
 
 	IEvent* result = NULL;
 
+	// Target id setup
+	unsigned int id = args.count("id") ? std::get<int>(args.at("id")) : 0;
+	if (id == 0) id = entity_id;
+
 	switch (et)
 	{
 	case EventTypes::ET_Teleport:
@@ -31,14 +35,12 @@ IEvent* EventFactory::BuildEvent(EventTypes et, std::map<std::string, EventArgTy
 		result = new EventMove(3, 3.0f, 1);
 		break;
 	case EventTypes::ET_MoveUp:
-		result = new EventMove(
-			args.count("id") ? std::get<int>(args.at("id")) : 3,
+		result = new EventMove(id,
 			args.count("distance") ? std::get<float>(args.at("distance")) : 3.0f,
 			0);
 		break;
 	case EventTypes::ET_MoveDown:
-		result = new EventMove(
-			args.count("id") ? std::get<int>(args.at("id")) : 3,
+		result = new EventMove(id,
 			args.count("distance") ? std::get<float>(args.at("distance")) : 3.0f,
 			2);
 		break;
@@ -73,7 +75,7 @@ IEvent* EventFactory::BuildEvent(EventTypes et, std::map<std::string, EventArgTy
 						else if (t.first == "queues")
 							dc.Queue = (std::get<std::vector<EventQueue>>(t.second)).at(0);
 					}
-					
+
 					choices.push_back(dc);
 				}
 				else if (s == "dialogue")

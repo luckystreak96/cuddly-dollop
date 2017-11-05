@@ -4,7 +4,7 @@ Entity* EntityFactory::BuildEntity(std::map<std::string, EntityArgType> args)
 {
 	Entity* result = NULL;
 
-	bool isPlayer = args.count("player");
+	bool isPlayer = args.count("player") ? std::get<bool>(args.at("player")) : false;
 
 	// ID
 	if (args.count("id"))
@@ -43,11 +43,9 @@ std::map<unsigned int, Entity*> EntityFactory::GetEntities(unsigned int map_id)
 
 	auto& ents = entities.GetArray();
 
+	// Get the args for each entity
 	for (auto& x : ents)
 	{
-		//unsigned int id = x["id"].GetUint();
-
-		//Entity* temp = new Entity(id, isPlayer);
 		std::map<std::string, EntityArgType> args = std::map<std::string, EntityArgType>();
 
 		for (rapidjson::Value::ConstMemberIterator iter = x.MemberBegin(); iter != x.MemberEnd(); ++iter)
@@ -79,6 +77,7 @@ std::map<unsigned int, Entity*> EntityFactory::GetEntities(unsigned int map_id)
 			args.emplace(std::string(iter->name.GetString()), eat);
 		}
 
+		//Build the entity
 		Entity* temp = BuildEntity(args);
 		result.emplace(temp->GetID(), temp);
 	}

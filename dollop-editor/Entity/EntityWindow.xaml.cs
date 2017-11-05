@@ -39,7 +39,6 @@ namespace dollop_editor
 
             InitializeComponent();
 
-
             for (int i = 1; i < 999999; i++)
             {
                 bool exists = false;
@@ -60,6 +59,7 @@ namespace dollop_editor
             Point3D p = new Point3D(pos.X, mapHeight - 1 - pos.Y, pos.Z);
             if (dictionary.ContainsKey(p))
             {
+                Entity = dictionary[p].Item1;
                 txtX.Text = dictionary[p].Item1.x.ToString();
                 txtY.Text = dictionary[p].Item1.y.ToString();
                 txtZ.Text = dictionary[p].Item1.z.ToString();
@@ -73,6 +73,11 @@ namespace dollop_editor
                 txtY.Text = pos.Y.ToString();
                 txtZ.Text = pos.Z.ToString();
             }
+
+            // At the end because otherwise it follows the queues of an empty entity if it existed (see line 62)
+            lstQueue.ItemsSource = Entity.queues;
+                if (Entity.queues.Count > 0)
+                    lstQueue.SelectedIndex = 0;
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
@@ -111,7 +116,7 @@ namespace dollop_editor
             Point3D p = new Point3D(location.X, mapHeight - 1 - location.Y, location.Z);
             if (dictionary.ContainsKey(p))
             {
-                Point3D current = new Point3D(Math.Floor(Entity.x), mapHeight - 1 - Math.Floor(Entity.y), Entity.z);
+                Point3D current = new Point3D(Math.Floor(Entity.x), Editor.InvertHeight((float)Math.Floor(Entity.y)), Entity.z);
                 Tuple<Entity, Rectangle> tu = new Tuple<Entity, Rectangle>(Entity, Editor.EntityRectangle(Entity));
                 if (current != p)
                 {
@@ -129,6 +134,11 @@ namespace dollop_editor
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        private void lstQueue_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            lstEvent.ItemsSource = Entity.queues[lstQueue.SelectedIndex].events;
         }
     }
 }

@@ -5,23 +5,25 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:dollop_editor"
         mc:Ignorable="d"
-        Title="Dollop-Editor" Height="981.117" Width="1443.715" WindowState="Maximized" KeyDown="Window_KeyDown">
+        Title="Dollop-Editor" Height="981.117" Width="1443.715" WindowState="Maximized" KeyDown="Window_KeyDown" MinWidth="1140" MinHeight="800">
 
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <!--<<< Will resize taking all remaining space -->
         </Grid.RowDefinitions>
-        <ScrollViewer Margin="334,59,288,84" PanningMode="Both" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-            <Canvas x:Name="cnvMap" HorizontalAlignment="Left" Height="806" VerticalAlignment="Top" Width="814" Background="Black" IsManipulationEnabled="True" PreviewMouseUp="CnvMap_PreviewMouseUp" PreviewMouseDown="CnvMap_MouseDown" PreviewMouseMove="CnvMap_MouseMove" Margin="0,0,-649,-508"/>
+        <ScrollViewer Margin="288,59,334,84" PanningMode="Both" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <DockPanel LastChildFill="True" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <Canvas x:Name="cnvMap" Background="Black" IsManipulationEnabled="True" PreviewMouseUp="CnvMap_PreviewMouseUp" PreviewMouseDown="CnvMap_MouseDown" PreviewMouseMove="CnvMap_MouseMove" RenderTransformOrigin="0.5,0.5" Width="762" HorizontalAlignment="Left" VerticalAlignment="Top" Height="508"/>
+            </DockPanel>
         </ScrollViewer>
         <ScrollViewer HorizontalAlignment="Left" Margin="10,32,0,84" Width="273" VerticalScrollBarVisibility="Auto">
-            <Canvas x:Name="cnvTilePicker" HorizontalAlignment="Left" Width="256" Background="#FFDADADA" MouseDown="CnvTilePicker_MouseDown" Height="834" VerticalAlignment="Top"/>
+            <Canvas x:Name="cnvTilePicker" Width="256" Background="#FFDADADA" MouseDown="CnvTilePicker_MouseDown" Height="834" VerticalAlignment="Top"/>
         </ScrollViewer>
-        <Slider x:Name="slrDepth" Margin="367,30,0,0" VerticalAlignment="Top" Minimum="0.5" SmallChange="0.5" Value="5" TickPlacement="TopLeft" TickFrequency="0.5" IsSnapToTickEnabled="True" ValueChanged="SlrDepth_ValueChanged" HorizontalAlignment="Left" Width="433"/>
-        <TextBox x:Name="txtDepth" HorizontalAlignment="Left" Height="24" Margin="334,30,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="28" Text="{Binding ElementName=slrDepth,Path=Value}"/>
-        <CheckBox x:Name="chkOpaqueView" Content="Opaque View" Margin="1038,32,0,0" VerticalAlignment="Top" FontWeight="Bold" Click="ChkOpaqueView_Checked" HorizontalAlignment="Left" Width="110"/>
-        <DockPanel Margin="0,0,0,925">
+        <Slider x:Name="slrDepth" Margin="321,33,0,0" VerticalAlignment="Top" Minimum="0.5" SmallChange="0.5" Value="5" TickPlacement="TopLeft" TickFrequency="0.5" IsSnapToTickEnabled="True" ValueChanged="SlrDepth_ValueChanged" HorizontalAlignment="Left" Width="433"/>
+        <TextBox x:Name="txtDepth" HorizontalAlignment="Left" Height="24" Margin="288,33,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="28" Text="{Binding ElementName=slrDepth,Path=Value}"/>
+        <CheckBox x:Name="chkOpaqueView" Content="Opaque View" Margin="992,39,0,0" VerticalAlignment="Top" FontWeight="Bold" Click="ChkOpaqueView_Checked" HorizontalAlignment="Left" Width="110"/>
+        <DockPanel VerticalAlignment="Top">
             <Menu DockPanel.Dock="Top" Height="20" VerticalAlignment="Top">
                 <MenuItem Header="_File">
                     <MenuItem x:Name="menuNew" Header="_New" Click="MenuNew_Click" />
@@ -32,7 +34,7 @@
                 </MenuItem>
             </Menu>
         </DockPanel>
-        <CheckBox Name="chkEntityMode" Content="Entity Mode" FontWeight="Bold" HorizontalAlignment="Left" Margin="922,32,0,0" VerticalAlignment="Top" Click="chkEntityMode_Click"/>
+        <CheckBox Name="chkEntityMode" Content="Entity Mode" FontWeight="Bold" HorizontalAlignment="Left" Margin="876,39,0,0" VerticalAlignment="Top" Click="chkEntityMode_Click"/>
 
 
     </Grid>

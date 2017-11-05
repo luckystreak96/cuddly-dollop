@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:dollop_editor"
         mc:Ignorable="d"
-        Title="Entity" Height="300" Width="271.398">
+        Title="Entity" Height="504" Width="711.398">
     <Grid>
         <TextBox Name="txtID" HorizontalAlignment="Left" Height="23" Margin="87,14,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="120"/>
         <Label Content="ID" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
@@ -19,8 +19,16 @@
         <CheckBox Name="chkPlayer" Content="CheckBox" HorizontalAlignment="Left" Margin="87,47,0,0" VerticalAlignment="Top"/>
         <Label Content="Sprite" HorizontalAlignment="Left" Margin="10,165,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="txtSprite" HorizontalAlignment="Left" Height="23" Margin="87,169,0,0" TextWrapping="Wrap" Text="ghost.png" VerticalAlignment="Top" Width="120"/>
-        <Button Name="btnSave" Content="Save" HorizontalAlignment="Left" Margin="27,227,0,0" VerticalAlignment="Top" Width="75" Click="btnSave_Click"/>
-        <Button Name="btnCancel" Content="Cancel" HorizontalAlignment="Left" Margin="132,227,0,0" VerticalAlignment="Top" Width="75" Click="btnCancel_Click"/>
+        <Button Name="btnSave" Content="Save" HorizontalAlignment="Left" Margin="10,438,0,0" VerticalAlignment="Top" Width="75" Click="btnSave_Click"/>
+        <Button Name="btnCancel" Content="Cancel" HorizontalAlignment="Left" Margin="317,438,0,0" VerticalAlignment="Top" Width="75" Click="btnCancel_Click"/>
+        <ListBox Name="lstQueue" HorizontalAlignment="Left" Height="151" Margin="212,41,0,0" VerticalAlignment="Top" Width="180" Background="#FFC2E6FF" SelectionChanged="lstQueue_SelectionChanged"/>
+        <ListBox Name="lstEvent" HorizontalAlignment="Left" Height="206" Margin="10,227,0,0" VerticalAlignment="Top" Width="382" Background="#FFC2E6FF"/>
+        <Label Content="Queues:" HorizontalAlignment="Left" Margin="212,10,0,0" VerticalAlignment="Top"/>
+        <Label Content="Events:" HorizontalAlignment="Left" Margin="10,196,0,0" VerticalAlignment="Top"/>
+        <Button Name="btnAddQueue" Content="+" HorizontalAlignment="Left" Margin="347,16,0,0" VerticalAlignment="Top" Width="20" RenderTransformOrigin="-0.095,0.55" FontWeight="Bold"/>
+        <Button Name="btnRemoveQueue" Content="-" HorizontalAlignment="Left" Margin="372,16,0,0" VerticalAlignment="Top" Width="20" FontWeight="Bold"/>
+        <Button Name="btnAddEvent" Content="+" HorizontalAlignment="Left" Margin="347,202,0,0" VerticalAlignment="Top" Width="20" RenderTransformOrigin="-0.095,0.55" FontWeight="Bold"/>
+        <Button Name="btnRemoveEvent" Content="-" HorizontalAlignment="Left" Margin="372,202,0,0" VerticalAlignment="Top" Width="20" FontWeight="Bold"/>
 
     </Grid>
 </Window>

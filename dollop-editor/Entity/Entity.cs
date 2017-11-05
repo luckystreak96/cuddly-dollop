@@ -11,7 +11,12 @@ namespace dollop_editor
         public Entity()
         {
             sprite = "";
-
+            id = 1;
+            player = true;
+            x = 0;
+            y = 0;
+            z = 0;
+            queues = new List<EventQueue>();// { new EventQueue() };
         }
         public int id { get; set; }
         public bool player { get; set; }
@@ -19,5 +24,6 @@ namespace dollop_editor
         public float x { get; set; }
         public float y { get; set; }
         public float z { get; set; }
+        public List<EventQueue> queues { get; set; }
     }
 }

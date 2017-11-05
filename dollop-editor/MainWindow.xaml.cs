@@ -30,15 +30,26 @@ namespace dollop_editor
         private bool entityMode = false;
         private int contextMenuX = 0;
         private int contextMenuY = 0;
+        private Rectangle selectedTile;
 
         public MainWindow()
         {
             InitializeComponent();
+
             editor = new Editor();
             Setup(32, 18);
 
             SetupTileSelecter();
             ReleaseMouse();
+
+            selectedTile = new Rectangle()
+            {
+                Width = editor.TileSize,
+                Height = editor.TileSize,
+                Stroke = new SolidColorBrush() { Color = Colors.White, Opacity = 1.0 }
+            };
+            selectedTile.SetCurrentValue(Canvas.ZIndexProperty, 100);
+            selectedTile.RenderTransform = new TranslateTransform(0, 0);
         }
 
         private void Setup(int x, int y)
@@ -60,8 +71,16 @@ namespace dollop_editor
 
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                if (x > 0 && x < cnvMap.Width && y > 0 && y < cnvMap.Height)
+                if(entityMode && e.ClickCount == 2 ||
+                    !entityMode && x > 0 && x < cnvMap.Width && y > 0 && y < cnvMap.Height)
                     SetMapTile(x, y, selTile);
+                else // Entitymode && clickcount == 1
+                {
+                    if(entityMode)
+                    {
+
+                    }
+                }
             }
             else if (e.RightButton == MouseButtonState.Pressed)
             {
@@ -126,6 +145,8 @@ namespace dollop_editor
                     offy += 32;
                 }
             }
+
+            cnvTilePicker.Height = offy + 32;
         }
 
         private void SetMapTile(int x, int y, string brush)
@@ -258,42 +279,14 @@ namespace dollop_editor
 
         private void SlrDepth_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            ChangeOpacity();
+            Editor.ChangeOpacity(cnvMap.Children, slrDepth.Value, opaqueView);
         }
 
-        private void ChangeOpacity()
-        {
-            foreach (Rectangle x in cnvMap.Children)
-            {
-                int zind = (int)x.GetValue(Canvas.ZIndexProperty);
-                if (!opaqueView && zind != (int)((10 - slrDepth.Value) * 2))
-                {
-                    double opacity = 1 - Math.Abs((20 - slrDepth.Value * 2) - zind) / 10;
-                    opacity -= 0.5;
-                    if (x.Fill != null)
-                        x.Fill.Opacity = opacity;
-                    if (x.Stroke != null)
-                        x.Stroke.Opacity = opacity + 0.1;
-                }
-                else
-                {
-                    if (x.Fill != null)
-                        x.Fill.Opacity = 1.0;
-                    if (x.Stroke != null)
-                        if (opaqueView)
-                            x.Stroke.Opacity = 0;
-                        else
-                            x.Stroke.Opacity = 1.0;
-
-
-                }
-            }
-        }
 
         private void ChkOpaqueView_Checked(object sender, RoutedEventArgs e)
         {
             opaqueView = chkOpaqueView.IsChecked ?? false;
-            ChangeOpacity();
+            Editor.ChangeOpacity(cnvMap.Children, slrDepth.Value, opaqueView);
         }
 
         private void MenuNew_Click(object sender, RoutedEventArgs e)
