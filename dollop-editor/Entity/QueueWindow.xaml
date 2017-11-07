@@ -1,0 +1,22 @@
+﻿<Window x:Class="dollop_editor.QueueWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:dollop_editor"
+        mc:Ignorable="d"
+        Title="Queue" Height="246.5" Width="267.585" WindowStartupLocation="CenterScreen" PreviewKeyDown="Window_PreviewKeyDown">
+    <Grid>
+        <TextBox Name="txtID" HorizontalAlignment="Left" Height="23" Margin="130,13,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <Label Content="ID" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <TextBox Name="txtName" HorizontalAlignment="Left" Height="23" Margin="130,45,0,0" TextWrapping="Wrap" Text="queue" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Name" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top"/>
+        <TextBox Name="txtFlag" HorizontalAlignment="Left" Height="23" Margin="130,75,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Flag" HorizontalAlignment="Left" Margin="10,72,0,0" VerticalAlignment="Top"/>
+        <Label Content="Repeating" HorizontalAlignment="Left" Margin="10,103,0,0" VerticalAlignment="Top"/>
+        <CheckBox Name="chkRepeat" Content="" HorizontalAlignment="Left" Margin="130,109,0,0" VerticalAlignment="Top"/>
+        <Button Name="btnSave" Content="Save" HorizontalAlignment="Left" Margin="10,186,0,0" VerticalAlignment="Top" Width="75" Click="btnSave_Click" />
+        <Button Name="btnCancel" Content="Cancel" HorizontalAlignment="Left" Margin="176,186,0,0" VerticalAlignment="Top" Width="74" Click="btnCancel_Click"/>
+
+    </Grid>
+</Window>

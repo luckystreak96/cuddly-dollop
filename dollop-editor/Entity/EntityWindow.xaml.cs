@@ -76,8 +76,8 @@ namespace dollop_editor
 
             // At the end because otherwise it follows the queues of an empty entity if it existed (see line 62)
             lstQueue.ItemsSource = Entity.queues;
-                if (Entity.queues.Count > 0)
-                    lstQueue.SelectedIndex = 0;
+            if (Entity.queues.Count > 0)
+                lstQueue.SelectedIndex = 0;
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
@@ -103,15 +103,12 @@ namespace dollop_editor
                 return;
             }
 
-            Entity = new Entity()
-            {
-                id = id,
-                x = x,
-                y = y,
-                z = z,
-                player = player,
-                sprite = txtSprite.Text
-            };
+            Entity.id = id;
+            Entity.x = x;
+            Entity.y = y;
+            Entity.z = z;
+            Entity.player = player;
+            Entity.sprite = txtSprite.Text;
 
             Point3D p = new Point3D(location.X, mapHeight - 1 - location.Y, location.Z);
             if (dictionary.ContainsKey(p))
@@ -139,6 +136,45 @@ namespace dollop_editor
         private void lstQueue_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             lstEvent.ItemsSource = Entity.queues[lstQueue.SelectedIndex].events;
+        }
+
+        private void btnAddQueue_Click(object sender, RoutedEventArgs e)
+        {
+            QueueWindow queueWindow = new QueueWindow();
+            if (queueWindow.ShowDialog() == true)
+                Entity.queues.Add(queueWindow.Queue);
+
+            lstQueue.Items.Refresh();
+        }
+
+        private void lstQueue_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ClickCount == 2 && lstQueue.SelectedIndex > 0 && lstQueue.SelectedIndex < lstQueue.Items.Count)
+            {
+                QueueWindow queueWindow = new QueueWindow(lstQueue.SelectedItem as EventQueue);
+                queueWindow.ShowDialog();
+                lstQueue.Items.Refresh();
+            }
+        }
+
+        private void lstEvent_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ClickCount == 2 && lstEvent.SelectedIndex > 0 && lstEvent.SelectedIndex < lstEvent.Items.Count)
+            {
+                EventWindow eventWindow = new EventWindow(lstEvent.SelectedItem as Event);
+                eventWindow.ShowDialog();
+                lstEvent.Items.Refresh();
+            }
+        }
+
+        private void btnAddEvent_Click(object sender, RoutedEventArgs e)
+        {
+            EventWindow eventWindow = new EventWindow();
+            if (eventWindow.ShowDialog() == true)
+            {
+                // Add the event or whatever
+                lstEvent.Items.Refresh();
+            }
         }
     }
 }

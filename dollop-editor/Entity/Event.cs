@@ -6,8 +6,15 @@ using System.Threading.Tasks;
 
 namespace dollop_editor
 {
+    public enum EventType { move_down, move_up, move_left, move_right }
+    public enum EventExecution { blocking, async }
+
     public class Event
     {
+        public string type { get; set; }
+        public string execution_type { get; set; }
+        public Dictionary<string, object> args { get; set; }
+
         public Event(int value)
         {
             if (value == 1)
@@ -23,9 +30,6 @@ namespace dollop_editor
                 args = new Dictionary<string, object>() { { "id", 0 }, { "distance", 3.0 } };
             }
         }
-        public string type { get; set; }
-        public string execution_type { get; set; }
-        public Dictionary<string, object> args { get; set; }
 
         public override string ToString()
         {

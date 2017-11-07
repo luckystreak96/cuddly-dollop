@@ -57,6 +57,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Entity\QueueWindow.xaml.cs">
+      <DependentUpon>QueueWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Entity\DialogueArgs.cs" />
     <Compile Include="Entity\Entities.cs" />
     <Compile Include="Entity\Entity.cs" />
@@ -65,13 +68,24 @@
     </Compile>
     <Compile Include="Entity\Event.cs" />
     <Compile Include="Entity\EventQueue.cs" />
+    <Compile Include="Entity\EventWindow.xaml.cs">
+      <DependentUpon>EventWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Map.cs" />
     <Compile Include="NewMap.xaml.cs">
       <DependentUpon>NewMap.xaml</DependentUpon>
     </Compile>
     <Compile Include="Tile.cs" />
     <Compile Include="Tiles.cs" />
+    <Page Include="Entity\QueueWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Entity\EntityWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Entity\EventWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

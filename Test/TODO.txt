@@ -1,6 +1,5 @@
 Editor:
 	Entity EventQueues:
-		Make a user-friendly interface to creating the events
-			Find an ez way to create new Queues and Events (maybe a new window is best for this)
+		Make a textbox that reads the json and turns it into objects huehue????
 
 Optimize collisions lol
