@@ -180,43 +180,6 @@ namespace dollop_editor
                 map.tiles = tiles;
                 map.entities = ents;
                 File.WriteAllText(filename, JsonConvert.SerializeObject(map));
-
-                //string data = "";
-                //if (File.Exists(filename))
-                //{
-                //    // The tiles data
-                //    string json = JsonConvert.SerializeObject(new Tiles() { tiles = tiles });
-                //    string entityjson = JsonConvert.SerializeObject(new Entities() { entities = ents });
-
-                //    // The existing data file
-                //    data = File.ReadAllText(filename);
-                //    JObject o = JObject.Parse(data);
-
-                //    JObject map;
-                //    if (o["maps"] != null)
-                //        map = o["maps"][0] as JObject;
-                //    else
-                //        map = o;
-
-                //    if (map["tiles"] == null)
-                //        map.Property("id").AddAfterSelf(new JProperty("tiles", JObject.Parse(json)["tiles"]));
-                //    else
-                //        map["tiles"].Replace(JToken.Parse(json)["tiles"]);
-
-                //    if (map["entities"] == null)
-                //        map.Property("id").AddAfterSelf(new JProperty("entities", JObject.Parse(entityjson)["entities"]));
-                //    else
-                //        map["entities"].Replace(JToken.Parse(entityjson)["entities"]);
-
-                //    string result = JsonConvert.SerializeObject(o);
-                //    File.WriteAllText(filename, result);
-                //}
-                //else
-                //{
-                //    Map newMap = new Map() { id = int.Parse(filename.Split('\\').Last().Split('.').First()), entities = ents, tiles = tiles };
-                //    string result = JsonConvert.SerializeObject(newMap);
-                //    File.WriteAllText(filename, result);
-                //}
             }
             catch (Exception e)
             {
@@ -235,7 +198,7 @@ namespace dollop_editor
                 Map loadedMap = JsonConvert.DeserializeObject<Map>(data);
 
                 // Setup the tiles in the dictionary
-                foreach(Tile tile in loadedMap.tiles)
+                foreach (Tile tile in loadedMap.tiles)
                 {
                     Rectangle rectangle = new Rectangle
                     {
