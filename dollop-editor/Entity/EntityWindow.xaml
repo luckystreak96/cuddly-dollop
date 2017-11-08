@@ -28,7 +28,7 @@
         <Button Name="btnAddQueue" Content="+" HorizontalAlignment="Left" Margin="347,16,0,0" VerticalAlignment="Top" Width="20" RenderTransformOrigin="-0.095,0.55" FontWeight="Bold" Click="btnAddQueue_Click"/>
         <Button Name="btnRemoveQueue" Content="-" HorizontalAlignment="Left" Margin="372,16,0,0" VerticalAlignment="Top" Width="20" FontWeight="Bold"/>
         <Button Name="btnAddEvent" Content="+" HorizontalAlignment="Left" Margin="347,202,0,0" VerticalAlignment="Top" Width="20" RenderTransformOrigin="-0.095,0.55" FontWeight="Bold" Click="btnAddEvent_Click"/>
-        <Button Name="btnRemoveEvent" Content="-" HorizontalAlignment="Left" Margin="372,202,0,0" VerticalAlignment="Top" Width="20" FontWeight="Bold"/>
+        <Button Name="btnRemoveEvent" Content="-" HorizontalAlignment="Left" Margin="372,202,0,0" VerticalAlignment="Top" Width="20" FontWeight="Bold" Click="btnRemoveEvent_Click"/>
 
     </Grid>
 </Window>

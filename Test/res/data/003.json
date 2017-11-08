@@ -1,0 +1,68 @@
+{
+    "id": 3,
+    "tiles": [
+        {
+            "x": 2.0,
+            "y": 15.0,
+            "z": 5.0,
+            "sprite": "pumpkin.png"
+        }
+    ],
+    "entities": [
+        {
+            "id": 1,
+            "player": false,
+            "sprite": "ghost.png",
+            "x": 12.0,
+            "y": 16.0,
+            "z": 5.0,
+            "queues": [
+                {
+                    "name": "queue",
+                    "id": 1,
+                    "flag": 1,
+                    "repeating": false,
+                    "events": [
+                        {
+                            "type": "move_down",
+                            "execution_type": "blocking",
+                            "args": {
+                                "id": 0,
+                                "distance": 3.0,
+                                "choice 1": {
+                                    "d": 0,
+                                    "text": "Can you walk down for me?",
+                                    "next": 2,
+                                    "queues": [
+                                        {
+                                            "id": 2,
+                                            "repeating": true,
+                                            "events": [
+                                                {
+                                                    "type": "move_down",
+                                                    "execution_type": "blocking",
+                                                    "args": {
+                                                        "id": 2,
+                                                        "distance": 3.0
+                                                    }
+                                                },
+                                                {
+                                                    "type": "move_up",
+                                                    "execution_type": "blocking",
+                                                    "args": {
+                                                        "id": 2,
+                                                        "distance": 3.0
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -78,6 +78,8 @@ namespace dollop_editor
             lstQueue.ItemsSource = Entity.queues;
             if (Entity.queues.Count > 0)
                 lstQueue.SelectedIndex = 0;
+
+            btnAddEvent.IsEnabled = false;
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
@@ -136,6 +138,7 @@ namespace dollop_editor
         private void lstQueue_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             lstEvent.ItemsSource = Entity.queues[lstQueue.SelectedIndex].events;
+            btnAddEvent.IsEnabled = true;
         }
 
         private void btnAddQueue_Click(object sender, RoutedEventArgs e)
@@ -149,11 +152,15 @@ namespace dollop_editor
 
         private void lstQueue_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ClickCount == 2 && lstQueue.SelectedIndex > 0 && lstQueue.SelectedIndex < lstQueue.Items.Count)
+            if (lstQueue.SelectedIndex >= 0 && lstQueue.SelectedIndex < lstQueue.Items.Count)
             {
-                QueueWindow queueWindow = new QueueWindow(lstQueue.SelectedItem as EventQueue);
-                queueWindow.ShowDialog();
-                lstQueue.Items.Refresh();
+                if (e.ClickCount == 2)
+                {
+                    QueueWindow queueWindow = new QueueWindow(lstQueue.SelectedItem as EventQueue);
+                    queueWindow.ShowDialog();
+                    lstQueue.Items.Refresh();
+                }
+                btnAddEvent.IsEnabled = true;
             }
         }
 
@@ -169,10 +176,22 @@ namespace dollop_editor
 
         private void btnAddEvent_Click(object sender, RoutedEventArgs e)
         {
-            EventWindow eventWindow = new EventWindow();
-            if (eventWindow.ShowDialog() == true)
+            if (lstQueue.SelectedIndex >= 0 && lstQueue.SelectedIndex < lstQueue.Items.Count)
             {
-                // Add the event or whatever
+                EventWindow eventWindow = new EventWindow();
+                if (eventWindow.ShowDialog() == true)
+                {
+                    Entity.queues[lstQueue.SelectedIndex].events.Add(eventWindow.Event);
+                    lstEvent.Items.Refresh();
+                }
+            }
+        }
+
+        private void btnRemoveEvent_Click(object sender, RoutedEventArgs e)
+        {
+            if (lstEvent.SelectedIndex >= 0 && lstEvent.SelectedIndex < lstEvent.Items.Count)
+            {
+                Entity.queues[lstEvent.SelectedIndex].events.RemoveAt(lstEvent.SelectedIndex);
                 lstEvent.Items.Refresh();
             }
         }

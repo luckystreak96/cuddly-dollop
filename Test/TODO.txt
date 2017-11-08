@@ -1,5 +1,6 @@
 Editor:
 	Entity EventQueues:
-		Make a textbox that reads the json and turns it into objects huehue????
+		Make more events in gui
+		Make the weird events fill the textbox with a generic formula for it
 
 Optimize collisions lol
