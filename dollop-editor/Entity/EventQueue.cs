@@ -24,7 +24,7 @@ namespace dollop_editor
 
         public override string ToString()
         {
-            return this.name + ": ID " + this.id;
+            return this.name + ": ID " + this.id + (repeating ? " - REPEATING" : "");
         }
     }
 }

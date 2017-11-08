@@ -137,8 +137,11 @@ namespace dollop_editor
 
         private void lstQueue_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            lstEvent.ItemsSource = Entity.queues[lstQueue.SelectedIndex].events;
-            btnAddEvent.IsEnabled = true;
+            if (lstQueue.SelectedIndex >= 0 && Entity.queues.Count > lstQueue.SelectedIndex)
+            {
+                lstEvent.ItemsSource = Entity.queues[lstQueue.SelectedIndex].events;
+                btnAddEvent.IsEnabled = true;
+            }
         }
 
         private void btnAddQueue_Click(object sender, RoutedEventArgs e)
@@ -166,10 +169,15 @@ namespace dollop_editor
 
         private void lstEvent_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ClickCount == 2 && lstEvent.SelectedIndex > 0 && lstEvent.SelectedIndex < lstEvent.Items.Count)
+            if (e.ClickCount == 2 && lstEvent.SelectedIndex >= 0 && lstEvent.SelectedIndex < lstEvent.Items.Count && lstQueue.SelectedIndex >= 0 && lstQueue.SelectedIndex < lstQueue.Items.Count)
             {
-                EventWindow eventWindow = new EventWindow(lstEvent.SelectedItem as Event);
-                eventWindow.ShowDialog();
+                Event ev = lstEvent.SelectedItem as Event;
+                EventWindow eventWindow = new EventWindow(ev);
+
+                if (eventWindow.ShowDialog() == true)
+                {
+                    Entity.queues[lstQueue.SelectedIndex].events[lstEvent.SelectedIndex] = eventWindow.Event;
+                }
                 lstEvent.Items.Refresh();
             }
         }
@@ -193,6 +201,15 @@ namespace dollop_editor
             {
                 Entity.queues[lstEvent.SelectedIndex].events.RemoveAt(lstEvent.SelectedIndex);
                 lstEvent.Items.Refresh();
+            }
+        }
+
+        private void btnRemoveQueue_Click(object sender, RoutedEventArgs e)
+        {
+            if (lstQueue.SelectedIndex >= 0 && lstQueue.SelectedIndex < lstQueue.Items.Count)
+            {
+                Entity.queues.RemoveAt(lstQueue.SelectedIndex);
+                lstQueue.Items.Refresh();
             }
         }
     }

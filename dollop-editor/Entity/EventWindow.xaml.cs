@@ -52,7 +52,7 @@ namespace dollop_editor
                 cmbType.Items.Add(val.ToString());
                 if (Event != null && Event.type == val.ToString())
                     cmbType.SelectedItem = val.ToString();
-                else
+                else if(cmbType.SelectedIndex == -1)
                     cmbType.SelectedIndex = 0;
             }
 
@@ -61,7 +61,7 @@ namespace dollop_editor
                 cmbExecution.Items.Add(val.ToString());
                 if (Event != null && Event.execution_type == val.ToString())
                     cmbExecution.SelectedItem = val.ToString();
-                else
+                else if (cmbExecution.SelectedIndex == -1)
                     cmbExecution.SelectedIndex = 0;
             }
 
@@ -87,11 +87,6 @@ namespace dollop_editor
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            if (Event.args.ContainsKey(txtKey.Text))
-            {
-                MessageBox.Show("Key already exists");
-                return;
-            }
             if (_modifyMode)
             {
                 Event.args.Remove(_currentSelectionKey);
@@ -103,6 +98,11 @@ namespace dollop_editor
             }
             else
             {
+                if (Event.args.ContainsKey(txtKey.Text))
+                {
+                    MessageBox.Show("Key already exists");
+                    return;
+                }
                 AddArg();
             }
             lstArgs.Items.Refresh();
@@ -183,6 +183,13 @@ namespace dollop_editor
             {
                 _currentSelectionKey = ((KeyValuePair<string, object>)lstArgs.SelectedItem).Key;
                 txtKey.Text = _currentSelectionKey;
+
+                foreach(var x in cmbArgKey.Items)
+                {
+                    if (x.ToString() == _currentSelectionKey)
+                        cmbArgKey.SelectedItem = x;
+                }
+
                 txtArg.Text = ((KeyValuePair<string, object>)lstArgs.SelectedItem).Value.ToString();
                 _modifyMode = true;
                 SetSaveButtonText();
@@ -207,6 +214,8 @@ namespace dollop_editor
 
         private void btnSaveEvent_Click(object sender, RoutedEventArgs e)
         {
+            Event.type = cmbType.SelectedItem.ToString();
+            Event.execution_type = cmbExecution.SelectedItem.ToString();
             DialogResult = true;
             Close();
         }
