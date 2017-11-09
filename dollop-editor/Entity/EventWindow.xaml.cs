@@ -52,7 +52,7 @@ namespace dollop_editor
                 cmbType.Items.Add(val.ToString());
                 if (Event != null && Event.type == val.ToString())
                     cmbType.SelectedItem = val.ToString();
-                else if(cmbType.SelectedIndex == -1)
+                else if (cmbType.SelectedIndex == -1)
                     cmbType.SelectedIndex = 0;
             }
 
@@ -135,13 +135,42 @@ namespace dollop_editor
             if (cmbArgKey.SelectedItem == null)
                 return;
             txtKey.Text = cmbArgKey.SelectedItem.ToString();
-            if (EventCompletionHelper.eventArgComplexExamples.ContainsKey(cmbType.SelectedItem.ToString()))
+            if (cmbType.SelectedItem.ToString() == "dialogue")
             {
-                string trimmedByLine = string.Join(
-                             "\n",
-                             EventCompletionHelper.eventArgComplexExamples[cmbType.SelectedItem.ToString()].Split('\n').Select(s => s.Trim()));
-                txtArg.Text = trimmedByLine;
+                if (cmbArgKey.SelectedItem.ToString() == "dialogue")
+                {
+                    string text = string.Join("\n", @"{
+                                    ""id"": 0,
+                                    ""text"": ""Hey man, what's up? I wrote a poem today."",
+                                    ""next"": 1,
+                                    ""type"": ""simple choice end""
+                                }".Split('\n').Select(s => s.Trim()));
+                    txtArg.Text = text;
+                }
+                else if (cmbArgKey.SelectedItem.ToString() == "choice")
+                {
+                    string text = string.Join("\n", @"{
+                                            ""d"": 0,
+                                            ""text"": ""Can you walk down for me?"",
+                                            ""next"": 2
+
+                                            ,""queues"": [{
+                                                    ""id"": 2,
+                                                    ""repeating"": false,
+                                                    ""events"": [{
+                                                            ""type"": ""move_down"",
+                                                            ""execution_type"": ""blocking"",
+                                                            ""args"": {
+                                                                ""id"": 2,
+                                                                ""distance"": 3.0
+                                                        }}]}]
+
+                                        }".Split('\n').Select(s => s.Trim()));
+                    txtArg.Text = text;
+                }
+                chkJsonObject.IsChecked = true;
             }
+
         }
 
         private void cmbType_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -184,7 +213,7 @@ namespace dollop_editor
                 _currentSelectionKey = ((KeyValuePair<string, object>)lstArgs.SelectedItem).Key;
                 txtKey.Text = _currentSelectionKey;
 
-                foreach(var x in cmbArgKey.Items)
+                foreach (var x in cmbArgKey.Items)
                 {
                     if (x.ToString() == _currentSelectionKey)
                         cmbArgKey.SelectedItem = x;
@@ -193,6 +222,8 @@ namespace dollop_editor
                 txtArg.Text = ((KeyValuePair<string, object>)lstArgs.SelectedItem).Value.ToString();
                 _modifyMode = true;
                 SetSaveButtonText();
+
+                chkJsonObject.IsChecked = cmbType.SelectedItem.ToString() == "dialogue";
             }
         }
 

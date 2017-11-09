@@ -46,10 +46,12 @@ namespace dollop_editor
             {
                 Width = editor.TileSize,
                 Height = editor.TileSize,
-                Stroke = new SolidColorBrush() { Color = Colors.White, Opacity = 1.0 }
+                Stroke = new SolidColorBrush() { Color = Colors.Black, Opacity = 1.0 },
+                StrokeThickness = 3.0
             };
-            selectedTile.SetCurrentValue(Canvas.ZIndexProperty, 100);
+            selectedTile.SetCurrentValue(Canvas.ZIndexProperty, 20);
             selectedTile.RenderTransform = new TranslateTransform(0, 0);
+            cnvTilePicker.Children.Add(selectedTile);
         }
 
         private void Setup(int x, int y)
@@ -120,6 +122,8 @@ namespace dollop_editor
                 return;
 
             selTile = editor.Brushes.ElementAt(index).Key;
+
+            selectedTile.RenderTransform = new TranslateTransform((x / 32) * 32, (y / 32) * 32);
         }
 
         // Sets up the images for the sprite selecter
@@ -335,6 +339,8 @@ namespace dollop_editor
                 editor.Load(filename);
                 ReSyncOnEditor();
             }
+
+            Editor.ChangeOpacity(cnvMap.Children, slrDepth.Value, opaqueView);
         }
 
         private void chkEntityMode_Click(object sender, RoutedEventArgs e)

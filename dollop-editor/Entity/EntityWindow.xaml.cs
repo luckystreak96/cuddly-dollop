@@ -212,5 +212,29 @@ namespace dollop_editor
                 lstQueue.Items.Refresh();
             }
         }
+
+        private void btnMoveUp_Click(object sender, RoutedEventArgs e)
+        {
+            if (lstEvent.SelectedIndex > 0)
+            {
+                int index = lstEvent.SelectedIndex;
+                Entity.queues[lstQueue.SelectedIndex].events.Swap(index, index - 1);
+                lstEvent.Items.Refresh();
+                lstEvent.SelectedIndex = index - 1;
+            }
+        }
+
+        private void btnMoveDown_Click(object sender, RoutedEventArgs e)
+        {
+            if (lstEvent.SelectedIndex < lstEvent.Items.Count - 1)
+            {
+                int index = lstEvent.SelectedIndex;
+                Entity.queues[lstQueue.SelectedIndex].events.Swap(index, index + 1);
+                lstEvent.Items.Refresh();
+                lstEvent.SelectedIndex = index + 1;
+            }
+        }
+
+
     }
 }

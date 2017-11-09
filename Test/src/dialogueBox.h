@@ -14,6 +14,7 @@ public:
 	DialogueBox(unsigned int entity_id, std::vector<Dialogue> d, std::vector<DialogueChoice> dc);
 	~DialogueBox();
 	void Update(double elapsedTime);
+	void ResetEvent();
 	EventUpdateResponse UpdateEvent(double elapsedTime, std::map<unsigned int, Entity*>* ents);
 	void Draw();
 	void SetRender();

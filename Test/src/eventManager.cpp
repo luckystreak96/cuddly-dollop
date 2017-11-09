@@ -14,7 +14,10 @@ void EventManager::Update(double elapsedTime)
 		EventQueue& q = m_queues.at(k);
 		// If the queue is empty, dont bother
 		if (!q.Count())
-			return;
+		{
+			Erase(0, k);
+			continue;
+		}
 
 		// By default, it assumes every event is done
 		// This variable is set to false if one of the events on the way to and/or the blocking one is NOT done
@@ -88,7 +91,7 @@ void EventManager::PushBack(EventQueue ev)
 {
 	bool found = false;
 
-	for(auto x : m_queues)
+	for (auto x : m_queues)
 		if (ev.GetID() != -1 && x.GetID() == ev.GetID())
 		{
 			found = true;
@@ -96,7 +99,7 @@ void EventManager::PushBack(EventQueue ev)
 				delete ev.Get(i);
 		}
 
-	if(!found || ev.GetID() == -1)
+	if (!found || ev.GetID() == -1)
 		m_queues.push_back(ev);
 }
 
@@ -104,6 +107,13 @@ void EventManager::Erase(unsigned int index, unsigned int queueIndex)
 {
 	// Roundabout way of destroying the event in the lock vector and the queue
 	EventQueue& q = m_queues.at(queueIndex);
+	// If the specified q is empty, just destroy it and dont ask any questions
+	if (!q.Count())
+	{
+		m_queues.erase(m_queues.begin() + queueIndex);
+		return;
+	}
+
 	IEvent* ev = q.Get(index);
 
 	int i = 0;

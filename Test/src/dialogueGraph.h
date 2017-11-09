@@ -41,6 +41,7 @@ public:
 	DialogueGraph(std::vector<Dialogue> d, std::vector<DialogueChoice> dc);
 	DialogueGraph(std::map<int, Dialogue> ds);
 	~DialogueGraph();
+	void SetToStart();
 	std::string GetCurrentText();
 	DialogueResponse SendInput(InputType it);
 	bool ChoiceAvailable();

@@ -177,6 +177,14 @@ DialogueType DialogueGraph::StringToDialogueType(std::string s)
 	}
 }
 
+void DialogueGraph::SetToStart()
+{
+	for (auto x : m_dialogues)
+		if (x.first == 0)
+			SetNextDialogue(0);
+}
+
+
 
 //std::vector<std::string> DialogueGraph::GetChoices()
 //{

@@ -5,16 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:dollop_editor"
         mc:Ignorable="d"
-        Title="Event" Height="439.061" Width="651.746">
+        Title="Event" Height="577.663" Width="651.746">
     <Grid>
         <Label Content="Event" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
         <Label Content="Execution" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top"/>
         <ComboBox Name="cmbType" HorizontalAlignment="Left" Margin="126,14,0,0" VerticalAlignment="Top" Width="182" SelectionChanged="cmbType_SelectionChanged"/>
         <ComboBox x:Name="cmbExecution" HorizontalAlignment="Left" Margin="126,45,0,0" VerticalAlignment="Top" Width="182"/>
-        <ListBox Name="lstArgs" HorizontalAlignment="Left" Height="266" Margin="10,103,0,0" VerticalAlignment="Top" Width="298" PreviewMouseDown="lstArgs_PreviewMouseDown" SelectionChanged="lstArgs_SelectionChanged"/>
+        <ListBox Name="lstArgs" HorizontalAlignment="Left" Height="409" Margin="10,103,0,0" VerticalAlignment="Top" Width="298" PreviewMouseDown="lstArgs_PreviewMouseDown" SelectionChanged="lstArgs_SelectionChanged"/>
         <Label Content="Args" HorizontalAlignment="Left" Margin="10,72,0,0" VerticalAlignment="Top"/>
-        <TextBox Name="txtArg" AcceptsReturn="True" AcceptsTab="True" HorizontalAlignment="Left" Height="281" Margin="313,63,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="321"/>
-        <Button Name="btnSave" Content="Save Args" HorizontalAlignment="Left" Margin="313,349,0,0" VerticalAlignment="Top" Width="321" Click="btnSave_Click"/>
+        <TextBox Name="txtArg" AcceptsReturn="True" AcceptsTab="True" HorizontalAlignment="Left" Height="449" Margin="313,63,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="321"/>
+        <Button Name="btnSave" Content="Save Args" HorizontalAlignment="Left" Margin="313,517,0,0" VerticalAlignment="Top" Width="321" Click="btnSave_Click"/>
         <Button Name="btnAddArg" Content="+" HorizontalAlignment="Left" Margin="263,78,0,0" VerticalAlignment="Top" Width="20" Click="btnAddArg_Click"/>
         <TextBox Name="txtKey" HorizontalAlignment="Left" Height="23" Margin="509,14,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="125"/>
         <Label Content="Key" HorizontalAlignment="Left" Margin="313,10,0,0" VerticalAlignment="Top"/>
@@ -22,8 +22,8 @@
         <Button x:Name="btnRemoveArg" Content="-" HorizontalAlignment="Left" Margin="288,78,0,0" VerticalAlignment="Top" Width="20" Click="btnRemoveArg_Click" />
         <ComboBox Name="cmbArgKey" HorizontalAlignment="Left" Margin="357,15,0,0" VerticalAlignment="Top" Width="147" SelectionChanged="cmbArgKey_SelectionChanged"/>
         <CheckBox Name="chkJsonObject" Content="JsonObject" HorizontalAlignment="Left" Margin="357,41,0,0" VerticalAlignment="Top" Width="101"/>
-        <Button Name="btnSaveEvent" Content="Save" HorizontalAlignment="Left" Margin="10,378,0,0" VerticalAlignment="Top" Width="75" Click="btnSaveEvent_Click"/>
-        <Button Name="btnCancelEvent" Content="Cancel" HorizontalAlignment="Left" Margin="90,378,0,0" VerticalAlignment="Top" Width="75" Click="btnCancelEvent_Click"/>
+        <Button Name="btnSaveEvent" Content="Save" HorizontalAlignment="Left" Margin="10,517,0,0" VerticalAlignment="Top" Width="75" Click="btnSaveEvent_Click"/>
+        <Button Name="btnCancelEvent" Content="Cancel" HorizontalAlignment="Left" Margin="90,517,0,0" VerticalAlignment="Top" Width="75" Click="btnCancelEvent_Click"/>
 
 
     </Grid>

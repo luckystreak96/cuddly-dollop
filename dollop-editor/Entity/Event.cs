@@ -9,7 +9,7 @@ namespace dollop_editor
     public enum EventType { move_down, move_up, move_left, move_right, dialogue }
     public enum EventExecution { blocking, async }
     public enum EventArgMove { id, distance }
-    public enum EventArgDialogue { choice_x, dialogue_x }
+    public enum EventArgDialogue { choice, dialogue }
 
     public class Event
     {

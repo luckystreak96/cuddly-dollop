@@ -196,3 +196,10 @@ void DialogueBox::SetScale(float xScale, float yScale)
 	if (m_dialogueGraph != NULL)
 		SetText(m_dialogueGraph->GetCurrentText());
 }
+
+void DialogueBox::ResetEvent()
+{
+	m_completed = false;
+	m_dialogueGraph->SetToStart();
+	SetText(m_dialogueGraph->GetCurrentText());
+}
