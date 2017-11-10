@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace dollop_editor
 {
-    public enum EventType { move_down, move_up, move_left, move_right, dialogue }
+    public enum EventType { move_down, move_up, move_left, move_right, dialogue, call_queue }
     public enum EventExecution { blocking, async }
+    public enum EventArgEventCall { id, queue_id }
     public enum EventArgMove { id, distance }
     public enum EventArgDialogue { choice, dialogue }
 

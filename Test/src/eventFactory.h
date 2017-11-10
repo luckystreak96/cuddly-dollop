@@ -10,10 +10,11 @@
 #include "eventMove.h"
 #include "eventQueue.h"
 #include "utils.h"
+#include "eventCaller.h"
 
 typedef std::variant<bool, float, int, std::string, std::vector<EventQueue>, std::map<std::string, std::variant<bool, float, int, std::string, std::vector<EventQueue>>>> EventArgType;
 
-enum EventTypes { ET_Teleport, ET_DialogueBox, ET_MoveRight, ET_MoveUp, ET_MoveDown, ET_MoveLeft };
+enum EventTypes { ET_Teleport, ET_DialogueBox, ET_MoveRight, ET_MoveUp, ET_MoveDown, ET_MoveLeft, ET_CallQueue };
 
 class EventFactory
 {
@@ -22,6 +23,7 @@ public:
 	static std::map<std::string, unsigned int> TypeDict;
 	static std::map<std::string, unsigned int> EEMDict;
 	static std::vector<EventQueue> LoadEvent(int map_id, unsigned int entity_id);
+	static EventQueue LoadEvent(int map_id, unsigned int entity_id, unsigned int queue_id);
 	static std::vector<EventQueue> LoadEvent(rapidjson::Value& v);
 	static void FlagEvent(int map_id, unsigned int entity_id, unsigned int queue_id, int flag, std::string DATA_FILE = "res/data/data.json");
 	static EventArgType AddArg(rapidjson::Value::MemberIterator iter, bool secondIteration);

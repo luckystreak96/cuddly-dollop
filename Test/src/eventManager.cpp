@@ -11,6 +11,7 @@ void EventManager::Update(double elapsedTime)
 {
 	for (int k = 0; k < m_queues.size(); k++)
 	{
+		EventQueue temp = EventQueue(-69);
 		EventQueue& q = m_queues.at(k);
 		// If the queue is empty, dont bother
 		if (!q.Count())
@@ -41,7 +42,9 @@ void EventManager::Update(double elapsedTime)
 				allDone = false;
 
 			if (eur.Queue.Count() > 0)
-				PushBack(eur.Queue);
+			{
+				temp = eur.Queue;
+			}
 
 			// Loop breaks to handle stuff
 			if (eem == EventExecutionMode::BLOCKING)
@@ -49,6 +52,7 @@ void EventManager::Update(double elapsedTime)
 				// Update is done
 				break;
 			}
+			int lol = 69;
 		}
 		// The order is i++, then check the condition, so it needs to be decremented
 		if (i >= q.Count())
@@ -83,6 +87,11 @@ void EventManager::Update(double elapsedTime)
 			// If the queue is not done, continue updates
 			if (q.Count())
 				Update(elapsedTime);
+		}
+		if (temp.GetID() != -69)
+		{
+			PushBack(temp);
+			Update(elapsedTime);
 		}
 	}
 }

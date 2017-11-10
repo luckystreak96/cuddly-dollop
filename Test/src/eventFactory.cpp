@@ -7,7 +7,8 @@ std::map<std::string, unsigned int> EventFactory::TypeDict =
 	{ "move_right", ET_MoveRight },
 	{ "move_down", ET_MoveDown },
 	{ "move_up", ET_MoveUp },
-	{ "move_left", ET_MoveLeft}
+	{ "move_left", ET_MoveLeft },
+	{ "call_queue", ET_CallQueue }
 };
 
 std::map<std::string, unsigned int> EventFactory::EEMDict =
@@ -46,6 +47,9 @@ IEvent* EventFactory::BuildEvent(EventTypes et, std::map<std::string, EventArgTy
 		break;
 	case EventTypes::ET_MoveLeft:
 		result = new EventMove(3, 3.0f, 3);
+		break;
+	case EventTypes::ET_CallQueue:
+		result = new EventCaller(id, args.count("queue_id") ? std::get<int>(args.at("queue_id")) : 0);
 		break;
 	case EventTypes::ET_DialogueBox:
 	{
@@ -169,6 +173,72 @@ std::vector<EventQueue> EventFactory::LoadEvent(int map_id, unsigned int entity_
 			}
 			if (queue.Count() > 0)
 				result.push_back(queue);
+		}
+	}
+	return result;
+}
+
+EventQueue EventFactory::LoadEvent(int map_id, unsigned int entity_id, unsigned int queue_id)
+{
+	EventQueue result = EventQueue(-1);
+
+	auto& ques = JsonHandler::LoadQueues(map_id, entity_id).GetArray();
+	for (auto& x : ques)
+	{
+		//Make sure that the event is flagged as valid
+		if (!x.HasMember("flag") || x["flag"].GetInt() == 1)
+		{
+			int id = -1;
+			if (x.HasMember("id"))
+				id = x["id"].GetInt();
+
+			if (id != queue_id)
+				continue;
+
+			result = EventQueue(id);
+
+			// Set repeating if necessary
+			if (x.HasMember("repeating") && x["repeating"].GetBool() == true)
+				result.SetRepeating(true);
+
+			// Add your events to the event queue
+			const auto& evts = x["events"].GetArray();
+			for (auto& e : evts)
+			{
+				// Make sure the event exists
+				if (TypeDict.find(e["type"].GetString()) != TypeDict.end())
+				{
+					std::map<std::string, EventArgType> args = std::map<std::string, EventArgType>();
+
+					// If there are args
+					if (e.HasMember("args"))
+						for (rapidjson::Value::MemberIterator iter = e["args"].MemberBegin(); iter != e["args"].MemberEnd(); ++iter)
+						{
+							EventArgType eat = AddArg(iter, false);
+							args.emplace(std::string(iter->name.GetString()), eat);
+						}
+
+					// If the event has a queue in it
+					if (e.HasMember("queues"))
+					{
+						EventArgType eat;
+						rapidjson::Value val = e["queues"].GetArray();
+						args.emplace("queue", LoadEvent(val));
+					}
+
+					IEvent* ev = EventFactory::BuildEvent((EventTypes)TypeDict.at(e["type"].GetString()), args, entity_id);
+
+					// Set execution mode if necessary
+					if (e.HasMember("execution_type") && EEMDict.find(e["execution_type"].GetString()) != EEMDict.end())
+						ev->SetExecutionMode((EventExecutionMode)EEMDict.at(e["execution_type"].GetString()));
+
+
+					result.PushBack(ev);
+				}
+			}
+			if (!result.Count())
+				result = EventQueue(-1);
+			return result;
 		}
 	}
 	return result;
@@ -337,4 +407,22 @@ void EventFactory::FlagEvent(int map_id, unsigned int entity_id, unsigned int qu
 			}
 		}
 	}
+}
+
+// Defined here to avoid circular dependancies
+EventUpdateResponse EventCaller::UpdateEvent(double elapsedTime, std::map<unsigned int, Entity*>* ents)
+{
+	EventUpdateResponse eur = EventUpdateResponse();
+	eur.IsDone = true;
+
+	EventQueue queue = EventFactory::LoadEvent(-1, m_target, m_targetQueue);
+	if (queue.GetID() == -1)
+	{
+		m_completed = true;
+		return eur;
+	}
+
+	eur.Queue = queue;
+
+	return eur;
 }

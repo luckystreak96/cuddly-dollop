@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace dollop_editor
 {
+    public enum EventActivation { interact, touch, autorun}
+
     public class EventQueue
     {
         private static int eyedee = 0;
@@ -19,6 +21,7 @@ namespace dollop_editor
         public string name { get; set; }
         public int id { get; set; }
         public int flag { get; set; }
+        public string activation { get; set; }
         public bool repeating { get; set; }
         public List<Event> events { get; set; }
 

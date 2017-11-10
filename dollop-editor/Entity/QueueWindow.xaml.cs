@@ -26,15 +26,30 @@ namespace dollop_editor
             InitializeComponent();
             Queue = new EventQueue();
 
+            FillComboBox();
+
             txtID.Text = Queue.id.ToString();
             txtFlag.Text = 1.ToString();
             txtName.Text = "queue";
+        }
+
+        private void FillComboBox()
+        {
+            foreach (var val in Enum.GetValues(typeof(EventActivation)))
+                cmbActivation.Items.Add(val.ToString());
+
+            cmbActivation.Items.Refresh();
         }
 
         public QueueWindow(EventQueue eventQueue)
         {
             InitializeComponent();
             Queue = eventQueue;
+
+            FillComboBox();
+            foreach (var x in cmbActivation.Items)
+                if (Queue.activation == x.ToString())
+                    cmbActivation.SelectedItem = x;
 
             txtID.Text = Queue.id.ToString();
             txtFlag.Text = Queue.flag.ToString();
@@ -62,6 +77,7 @@ namespace dollop_editor
                 Queue.flag = int.Parse(txtFlag.Text);
                 Queue.name = txtName.Text;
                 Queue.repeating = (bool)chkRepeat.IsChecked;
+                Queue.activation = cmbActivation.SelectedItem.ToString();
             }
             catch (Exception ex)
             {

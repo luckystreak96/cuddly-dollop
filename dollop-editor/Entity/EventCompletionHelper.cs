@@ -14,6 +14,7 @@ namespace dollop_editor
             { (int)EventType.move_right, typeof(EventArgMove) },
             { (int)EventType.move_up, typeof(EventArgMove) },
             { (int)EventType.dialogue, typeof(EventArgDialogue) },
+            { (int)EventType.call_queue, typeof(EventArgEventCall) },
         };
         public static Dictionary<string, string> eventArgComplexExamples = new Dictionary<string, string>() {
             { EventType.dialogue.ToString(), @"--choice 1--{
