@@ -199,7 +199,7 @@ void TextureAtlas::TextureIndexToCoord(TextureIndex idx, float& x, float& y) con
     float u = (float)((unsigned int)idx % m_nbTexturePerSide) * w;
     float v = (float)(m_nbTexturePerSide - 1 - (unsigned int)idx / m_nbTexturePerSide) * h;
 
-	float halfPixel = 0.5f / (32.0f * m_nbTexturePerSide);//prevent texture bleeding, 32 is hardcoded cuz struggle is real
+	float halfPixel = 0.125f / (32.0f * m_nbTexturePerSide);//prevent texture bleeding, 32 is hardcoded cuz struggle is real
 
 	x = (u + w * x) + (x == 0 ? halfPixel : -halfPixel);
 	y = (v + h * y) + (y == 0 ? halfPixel : -halfPixel);
