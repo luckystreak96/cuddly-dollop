@@ -4,13 +4,14 @@
 #include <map>
 #include "eventQueue.h"
 #include <rapidjson\document.h>
+#include <memory>
 
 class Entity;
 
 struct EventUpdateResponse
 {
 	bool IsDone;
-	EventQueue Queue;
+	std::shared_ptr<EventQueue> Queue;
 };
 
 enum EventExecutionMode

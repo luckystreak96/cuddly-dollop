@@ -13,7 +13,7 @@ class EventManager
 {
 public:
 	EventManager();
-	void PushBack(EventQueue ev);
+	void PushBack(std::shared_ptr<EventQueue> ev);
 	void Update(double elapsedTime);
 	void SetEntitiesMap(std::map<unsigned int, Entity*>* ents);
 	void SetFlag(unsigned int eventID);
@@ -22,7 +22,7 @@ protected:
 	void UpdateLockLevel();
 	void AddToLockVector(IEvent* ev);
 protected:
-	std::vector<EventQueue> m_queues;
+	std::vector<std::shared_ptr<EventQueue>> m_queues;
 	static std::vector<IEvent*> m_locks;
 	std::map<unsigned int, Entity*>* m_entities;
 };

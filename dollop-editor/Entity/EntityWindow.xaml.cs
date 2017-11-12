@@ -221,6 +221,7 @@ namespace dollop_editor
                 Entity.queues[lstQueue.SelectedIndex].events.Swap(index, index - 1);
                 lstEvent.Items.Refresh();
                 lstEvent.SelectedIndex = index - 1;
+                lstEvent.Focus();
             }
         }
 
@@ -232,6 +233,7 @@ namespace dollop_editor
                 Entity.queues[lstQueue.SelectedIndex].events.Swap(index, index + 1);
                 lstEvent.Items.Refresh();
                 lstEvent.SelectedIndex = index + 1;
+                lstEvent.Focus();
             }
         }
 

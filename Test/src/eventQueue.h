@@ -7,6 +7,8 @@
 
 class IEvent;
 
+enum ActivationType { AT_Autorun, AT_Interact, AT_Touch };
+
 class EventQueue
 {
 public:
@@ -20,9 +22,13 @@ public:
 	bool IsRepeating();
 	void SendToBack();
 	void SetRepeating(bool rep);
+	ActivationType GetActivationType();
+	void SetActivationType(ActivationType at);
 private:
 	int m_id;
+	ActivationType m_activation;
 	bool m_repeat;
+
 	std::deque<IEvent*> m_queue;
 };
 

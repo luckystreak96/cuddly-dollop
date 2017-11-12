@@ -2,7 +2,7 @@
 
 std::vector<IEvent*> EventManager::m_locks = std::vector<IEvent*>();
 
-EventManager::EventManager() : m_queues(std::vector<EventQueue>())
+EventManager::EventManager() : m_queues(std::vector<std::shared_ptr<EventQueue>>())
 {
 
 }
@@ -11,10 +11,10 @@ void EventManager::Update(double elapsedTime)
 {
 	for (int k = 0; k < m_queues.size(); k++)
 	{
-		EventQueue temp = EventQueue(-69);
-		EventQueue& q = m_queues.at(k);
+		std::shared_ptr<EventQueue> temp = std::shared_ptr<EventQueue>(new EventQueue(-69));
+		std::shared_ptr<EventQueue>& q = m_queues.at(k);
 		// If the queue is empty, dont bother
-		if (!q.Count())
+		if (!q->Count())
 		{
 			Erase(0, k);
 			continue;
@@ -28,20 +28,20 @@ void EventManager::Update(double elapsedTime)
 		int i = 0;
 
 		// Iterate through the queue until a blocking event is hit
-		for (i; i < q.Count(); i++)
+		for (i; i < q->Count(); i++)
 		{
 			// Add to lock vector if the level is > 0
-			AddToLockVector(q.Get(i));
+			AddToLockVector(q->Get(i));
 
 			// The eventexecutionmode determines the end of the loop -> when its blocking
-			EventExecutionMode eem = q.Get(i)->GetExecutionMode();
+			EventExecutionMode eem = q->Get(i)->GetExecutionMode();
 
 			// Is the event done?
-			EventUpdateResponse eur = q.Get(i)->UpdateEvent(elapsedTime, m_entities);
+			EventUpdateResponse eur = q->Get(i)->UpdateEvent(elapsedTime, m_entities);
 			if (!eur.IsDone)
 				allDone = false;
 
-			if (eur.Queue.Count() > 0)
+			if (eur.Queue && eur.Queue->Count() > 0)
 			{
 				temp = eur.Queue;
 			}
@@ -52,10 +52,9 @@ void EventManager::Update(double elapsedTime)
 				// Update is done
 				break;
 			}
-			int lol = 69;
 		}
 		// The order is i++, then check the condition, so it needs to be decremented
-		if (i >= q.Count())
+		if (i >= q->Count())
 			i--;
 
 		// If they are all done, remove the specific events
@@ -63,18 +62,18 @@ void EventManager::Update(double elapsedTime)
 		if (allDone)
 		{
 			// If repeat is on, send it to the back of the queue
-			if (q.IsRepeating())
+			if (q->IsRepeating())
 			{
-				for (int i = 0; i < q.Count(); i++)
+				for (int i = 0; i < q->Count(); i++)
 				{
-					if (q.Get(0)->GetExecutionMode() == BLOCKING)
+					if (q->Get(0)->GetExecutionMode() == BLOCKING)
 					{
-						q.Get(0)->ResetEvent();
-						q.SendToBack();
+						q->Get(0)->ResetEvent();
+						q->SendToBack();
 						break;
 					}
-					q.Get(0)->ResetEvent();
-					q.SendToBack();
+					q->Get(0)->ResetEvent();
+					q->SendToBack();
 				}
 			}
 			else
@@ -85,10 +84,13 @@ void EventManager::Update(double elapsedTime)
 			}
 
 			// If the queue is not done, continue updates
-			if (q.Count())
+			// COMMENTING THIS NEXT LINE MAY CAUSE PROBLEMS XDXDXDXDXDXDXDDXDXDXDXDXDXD
+			// LIKE AN EVENT RUNNING 2 FRAMES WHEN IT SHOULDNT???
+			// IF LOTS OF FRAMES ARE RUNNING PARRALLEL (PLZ NO FCK ME)
+			//if (q->Count())
 				Update(elapsedTime);
 		}
-		if (temp.GetID() != -69)
+		if (temp->GetID() != -69)
 		{
 			PushBack(temp);
 			Update(elapsedTime);
@@ -96,43 +98,43 @@ void EventManager::Update(double elapsedTime)
 	}
 }
 
-void EventManager::PushBack(EventQueue ev)
+void EventManager::PushBack(std::shared_ptr<EventQueue> ev)
 {
 	bool found = false;
 
 	for (auto x : m_queues)
-		if (ev.GetID() != -1 && x.GetID() == ev.GetID())
+		if (ev->GetID() != -1 && x->GetID() == ev->GetID())
 		{
 			found = true;
-			for (int i = 0; i < ev.Count(); i++)
-				delete ev.Get(i);
+			for (int i = 0; i < ev->Count(); i++)
+				delete ev->Get(i);
 		}
 
-	if (!found || ev.GetID() == -1)
+	if (!found || ev->GetID() == -1)
 		m_queues.push_back(ev);
 }
 
 void EventManager::Erase(unsigned int index, unsigned int queueIndex)
 {
 	// Roundabout way of destroying the event in the lock vector and the queue
-	EventQueue& q = m_queues.at(queueIndex);
+	std::shared_ptr<EventQueue>& q = m_queues.at(queueIndex);
 	// If the specified q is empty, just destroy it and dont ask any questions
-	if (!q.Count())
+	if (!q->Count())
 	{
 		m_queues.erase(m_queues.begin() + queueIndex);
 		return;
 	}
 
-	IEvent* ev = q.Get(index);
+	IEvent* ev = q->Get(index);
 
 	int i = 0;
 	for (i; i < m_locks.size(); i++)
-		if (m_locks.at(i) == q.Get(index))
+		if (m_locks.at(i) == q->Get(index))
 			break;
 	m_locks.erase(m_locks.begin() + i);
-	q.Remove(index);
+	q->Remove(index);
 
-	if (!q.Count())
+	if (!q->Count())
 		m_queues.erase(m_queues.begin() + queueIndex);
 
 	delete ev;

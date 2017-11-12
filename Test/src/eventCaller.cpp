@@ -7,6 +7,8 @@ EventCaller::EventCaller(unsigned int entity_id, unsigned int queue_id) : m_targ
 	m_mode = EventExecutionMode::BLOCKING;
 }
 
+// Update method is in EventFactory
+
 void EventCaller::ResetEvent()
 {
 	IEvent::ResetEvent();

@@ -81,7 +81,7 @@ EventUpdateResponse DialogueBox::UpdateEvent(double elapsedTime, std::map<unsign
 {
 	EventUpdateResponse eur = EventUpdateResponse();
 	eur.IsDone = true;
-	eur.Queue = EventQueue();
+	eur.Queue = std::shared_ptr<EventQueue>(new EventQueue());
 
 	// Don't update it if its completed
 	if (m_completed)
@@ -124,7 +124,7 @@ EventUpdateResponse DialogueBox::UpdateEvent(double elapsedTime, std::map<unsign
 			}
 
 			DialogueResponse dr = m_dialogueGraph->SendInput(IT_Action);
-			eur.Queue = dr.Queue;
+			*eur.Queue = dr.Queue;
 
 			if (dr.NotDone)
 			{

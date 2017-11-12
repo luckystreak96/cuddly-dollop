@@ -188,13 +188,13 @@ namespace dollop_editor
             object result;
             try
             {
-                result = float.Parse(text);
+                result = int.Parse(text);
                 return result;
             }
             catch { }
             try
             {
-                result = int.Parse(text);
+                result = float.Parse(text);
                 return result;
             }
             catch { }

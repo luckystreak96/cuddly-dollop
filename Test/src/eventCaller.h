@@ -14,6 +14,8 @@ public:
 
 private:
 	unsigned int m_targetQueue;
+	std::shared_ptr<EventQueue> m_queue;
+	bool m_firstTime;
 };
 
 #endif // !DIALOGUE_BOX_H__

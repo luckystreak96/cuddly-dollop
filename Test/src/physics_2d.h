@@ -28,7 +28,7 @@ enum Axis { X, Y, Z };
 namespace Physics_2D
 {
 	//void Collision(std::vector<Drawable*>* list);
-	void Collision(std::map<unsigned int, Entity*>* list, MapHandler* mh);
+	std::vector<Entity*> Collision(std::map<unsigned int, Entity*>* list, MapHandler* mh);
 	bool IsLegalHeight(float tilez, float otherz);
 	std::vector<PhysicsComponent*> FindDupes(std::vector<PhysicsComponent*>* list, float targetHeight);
 	int TileTouchCount(std::array<float, 6> bb);

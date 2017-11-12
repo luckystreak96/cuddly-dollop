@@ -33,7 +33,9 @@ IEvent* EventFactory::BuildEvent(EventTypes et, std::map<std::string, EventArgTy
 	case EventTypes::ET_Teleport:
 		break;
 	case EventTypes::ET_MoveRight:
-		result = new EventMove(3, 3.0f, 1);
+		result = new EventMove(id,
+			args.count("distance") ? std::get<float>(args.at("distance")) : 3.0f,
+			1);
 		break;
 	case EventTypes::ET_MoveUp:
 		result = new EventMove(id,
@@ -46,7 +48,9 @@ IEvent* EventFactory::BuildEvent(EventTypes et, std::map<std::string, EventArgTy
 			2);
 		break;
 	case EventTypes::ET_MoveLeft:
-		result = new EventMove(3, 3.0f, 3);
+		result = new EventMove(id,
+			args.count("distance") ? std::get<float>(args.at("distance")) : 3.0f,
+			3);
 		break;
 	case EventTypes::ET_CallQueue:
 		result = new EventCaller(id, args.count("queue_id") ? std::get<int>(args.at("queue_id")) : 0);
@@ -117,9 +121,25 @@ IEvent* EventFactory::BuildEvent(EventTypes et, std::map<std::string, EventArgTy
 	return result;
 }
 
-std::vector<EventQueue> EventFactory::LoadEvent(int map_id, unsigned int entity_id)
+void EventFactory::SetActivationType(EventQueue* eq, std::string s)
 {
-	std::vector<EventQueue> result = std::vector<EventQueue>();
+	switch (tolower(s[0]))
+	{
+	case 'a':
+		eq->SetActivationType(AT_Autorun);
+		break;
+	case 't':
+		eq->SetActivationType(AT_Touch);
+		break;
+	case 'i':
+		eq->SetActivationType(AT_Interact);
+		break;
+	}
+}
+
+std::vector<std::shared_ptr<EventQueue>> EventFactory::LoadEvent(int map_id, unsigned int entity_id)
+{
+	std::vector<std::shared_ptr<EventQueue>> result = std::vector<std::shared_ptr<EventQueue>>();
 
 	auto& ques = JsonHandler::LoadQueues(map_id, entity_id).GetArray();
 	for (auto& x : ques)
@@ -130,11 +150,15 @@ std::vector<EventQueue> EventFactory::LoadEvent(int map_id, unsigned int entity_
 			int id = -1;
 			if (x.HasMember("id"))
 				id = x["id"].GetInt();
-			EventQueue queue = EventQueue(id);
+			std::shared_ptr<EventQueue> queue = std::shared_ptr<EventQueue>(new EventQueue(id));
 
 			// Set repeating if necessary
 			if (x.HasMember("repeating") && x["repeating"].GetBool() == true)
-				queue.SetRepeating(true);
+				queue->SetRepeating(true);
+
+			// Find activation type
+			if (x.HasMember("activation") && x["activation"].GetType() == rapidjson::Type::kStringType)
+				SetActivationType(queue.get(), std::string(x["activation"].GetString()));
 
 			// Add your events to the event queue
 			const auto& evts = x["events"].GetArray();
@@ -168,19 +192,19 @@ std::vector<EventQueue> EventFactory::LoadEvent(int map_id, unsigned int entity_
 						ev->SetExecutionMode((EventExecutionMode)EEMDict.at(e["execution_type"].GetString()));
 
 
-					queue.PushBack(ev);
+					queue->PushBack(ev);
 				}
 			}
-			if (queue.Count() > 0)
+			if (queue->Count() > 0)
 				result.push_back(queue);
 		}
 	}
 	return result;
 }
 
-EventQueue EventFactory::LoadEvent(int map_id, unsigned int entity_id, unsigned int queue_id)
+std::shared_ptr<EventQueue> EventFactory::LoadEvent(int map_id, unsigned int entity_id, unsigned int queue_id)
 {
-	EventQueue result = EventQueue(-1);
+	std::shared_ptr<EventQueue> result = std::shared_ptr<EventQueue>(new EventQueue(-1));
 
 	auto& ques = JsonHandler::LoadQueues(map_id, entity_id).GetArray();
 	for (auto& x : ques)
@@ -195,11 +219,15 @@ EventQueue EventFactory::LoadEvent(int map_id, unsigned int entity_id, unsigned 
 			if (id != queue_id)
 				continue;
 
-			result = EventQueue(id);
+			result = std::shared_ptr<EventQueue>(new EventQueue(id));
 
 			// Set repeating if necessary
 			if (x.HasMember("repeating") && x["repeating"].GetBool() == true)
-				result.SetRepeating(true);
+				result->SetRepeating(true);
+
+			// Find activation type
+			if (x.HasMember("activation") && x["activation"].GetType() == rapidjson::Type::kStringType)
+				SetActivationType(result.get(), std::string(x["activation"].GetString()));
 
 			// Add your events to the event queue
 			const auto& evts = x["events"].GetArray();
@@ -233,11 +261,11 @@ EventQueue EventFactory::LoadEvent(int map_id, unsigned int entity_id, unsigned 
 						ev->SetExecutionMode((EventExecutionMode)EEMDict.at(e["execution_type"].GetString()));
 
 
-					result.PushBack(ev);
+					result->PushBack(ev);
 				}
 			}
-			if (!result.Count())
-				result = EventQueue(-1);
+			if (!result->Count())
+				result = std::shared_ptr<EventQueue>(new EventQueue(-1));
 			return result;
 		}
 	}
@@ -328,6 +356,10 @@ std::vector<EventQueue> EventFactory::LoadEvent(rapidjson::Value& v)
 		if (p.HasMember("repeating") && p["repeating"].GetBool() == true)
 			queue.SetRepeating(true);
 
+		// Find activation type
+		if (p.HasMember("activation"))
+			SetActivationType(&queue, p.GetString());
+
 		// Add your events to the event queue
 		const auto& evts = p["events"].GetArray();
 		for (auto& e : evts)
@@ -413,16 +445,28 @@ void EventFactory::FlagEvent(int map_id, unsigned int entity_id, unsigned int qu
 EventUpdateResponse EventCaller::UpdateEvent(double elapsedTime, std::map<unsigned int, Entity*>* ents)
 {
 	EventUpdateResponse eur = EventUpdateResponse();
-	eur.IsDone = true;
+	eur.IsDone = false;
 
-	EventQueue queue = EventFactory::LoadEvent(-1, m_target, m_targetQueue);
-	if (queue.GetID() == -1)
+	if (m_firstTime)
 	{
-		m_completed = true;
-		return eur;
-	}
+		m_queue = EventFactory::LoadEvent(-1, m_target, m_targetQueue);
+		if (m_queue->GetID() == -1)
+		{
+			m_completed = true;
+			return eur;
+		}
 
-	eur.Queue = queue;
+		eur.Queue = m_queue;
+		m_firstTime = false;
+	}
+	else
+	{
+		if (m_queue->Count() == 0)
+		{
+			m_completed = true;
+			eur.IsDone = true;
+		}
+	}
 
 	return eur;
 }

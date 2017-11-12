@@ -39,6 +39,12 @@ bool SceneWorld::Init()
 	m_fontFPS = FontManager::GetInstance().AddFont(true, false, true);
 	FontManager::GetInstance().SetScale(m_fontFPS, 0.5f, 0.5f);
 	//FontManager::GetInstance().SetText(m_fontTitle, "IT WORKS!");
+	for (auto e : m_celist)
+	{
+		for (auto x : EventFactory::LoadEvent(m_currentMap, e.first))
+			if (x->GetActivationType() == AT_Autorun)
+				m_eventManager.PushBack(x);
+	}
 
 	return true;
 }
@@ -151,7 +157,8 @@ void SceneWorld::Interact()
 void SceneWorld::TriggerEvents(unsigned int entity_id)
 {
 	for (auto x : EventFactory::LoadEvent(m_currentMap, entity_id))
-		m_eventManager.PushBack(x);
+		if (x->GetActivationType() == AT_Interact)
+			m_eventManager.PushBack(x);
 }
 
 void SceneWorld::Update()
@@ -166,7 +173,13 @@ void SceneWorld::Update()
 		it.second->Physics()->DesiredMove();
 
 	//Collision
-	Physics_2D::Collision(&m_celist, m_mapHandler);
+	std::vector<Entity*> collided = Physics_2D::Collision(&m_celist, m_mapHandler);
+	for (auto x : collided)
+	{
+		for (auto x : EventFactory::LoadEvent(m_currentMap, x->GetID()))
+			if (x->GetActivationType() == AT_Touch)
+				m_eventManager.PushBack(x);
+	}
 
 	//Update
 	for (auto it : m_celist)

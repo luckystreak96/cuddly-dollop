@@ -3630,10 +3630,10 @@
             "z": 3.0,
             "queues": [
                 {
-                    "name": "",
+                    "name": "run_around",
                     "id": 5,
                     "flag": 1,
-                    "activation": null,
+                    "activation": "autorun",
                     "repeating": true,
                     "events": [
                         {
@@ -3729,6 +3729,14 @@
                     "repeating": false,
                     "events": [
                         {
+                            "type": "call_queue",
+                            "execution_type": "blocking",
+                            "args": {
+                                "id": 2,
+                                "queue_id": 3
+                            }
+                        },
+                        {
                             "type": "dialogue",
                             "execution_type": "blocking",
                             "args": {
@@ -3745,13 +3753,22 @@
                                     "type": "end"
                                 }
                             }
-                        },
+                        }
+                    ]
+                },
+                {
+                    "name": "donttouch",
+                    "id": 4,
+                    "flag": 1,
+                    "activation": "touch",
+                    "repeating": false,
+                    "events": [
                         {
-                            "type": "call_queue",
+                            "type": "move_right",
                             "execution_type": "blocking",
                             "args": {
-                                "id": 2,
-                                "queue_id": 3
+                                "id": 0,
+                                "distance": 1.0
                             }
                         }
                     ]

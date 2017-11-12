@@ -1,7 +1,7 @@
 #include "eventQueue.h"
 
 
-EventQueue::EventQueue(int id) : m_repeat(false), m_id(id)
+EventQueue::EventQueue(int id) : m_repeat(false), m_id(id), m_activation(AT_Interact)
 {
 
 }
@@ -61,3 +61,14 @@ void EventQueue::SetRepeating(bool rep)
 {
 	m_repeat = rep;
 }
+
+ActivationType EventQueue::GetActivationType()
+{
+	return m_activation;
+}
+
+void EventQueue::SetActivationType(ActivationType at)
+{
+	m_activation = at;
+}
+

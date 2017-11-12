@@ -191,14 +191,20 @@ namespace Physics_2D {
 	// 1 - The object is going somewhere that lacks any valid blocks (ex: walking off a cliff -- the other blocks are too far)
 	// 2 - The object bumps into something within his z-range (if the z is 4, then any object within the range [4,5[ )
 	//		For objects greater than 1 higher, the object goes under it.
-	void Collision(std::map<unsigned int, Entity*>* clist, MapHandler* mh)
+	std::vector<Entity*> Collision(std::map<unsigned int, Entity*>* clist, MapHandler* mh)
 	{
+		std::vector<Entity*> result = std::vector<Entity*>();
 		// What if a dude NOT falling off a cliff causes a direct collision?
 		// No way to know right now unless we redo the whole thing twice
 		std::vector<PhysicsComponent*> flist = std::vector<PhysicsComponent*>();
 
+		int playerPos = 0;
 		for (auto x : *clist)
+		{
+			if (x.second->GetID() == 1)
+				playerPos = flist.size();
 			flist.push_back(x.second->Physics());
+		}
 		//for (unsigned int i = 0; i < clist->size(); i++)
 		//	flist.push_back(clist->at(i)->Physics());
 
@@ -248,6 +254,19 @@ namespace Physics_2D {
 						continue;
 
 					ApplyCollision(flist.at(i), flist.at(j));
+					int c = 0;
+					if (i < clist->size() && j < clist->size())
+					{
+						for (auto x : *clist)
+						{
+							if (c == i && j == playerPos || i == playerPos && c == j)
+							{
+								if (x.second->GetID() != 1)
+									result.push_back(x.second);
+							}
+							c++;
+						}
+					}
 				}
 			}
 
@@ -403,6 +422,7 @@ namespace Physics_2D {
 					flist.at(i)->AbsolutePosition(Vector3f(-1, -1, min - STAND_HEIGHT), Vector3f(0, 0, 1));
 			}
 		}
+		return result;
 	}
 }
 
