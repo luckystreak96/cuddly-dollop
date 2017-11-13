@@ -9,7 +9,7 @@ unsigned int IEvent::GetLockLevel()
 	return m_lockLevel;
 }
 
-EventUpdateResponse IEvent::UpdateEvent(double elapsedTime, std::map<unsigned int, Entity*>* ents)
+EventUpdateResponse IEvent::UpdateEvent(double elapsedTime, std::map<unsigned int, std::shared_ptr<Entity>>* ents)
 {
 	EventUpdateResponse eur = EventUpdateResponse();
 	eur.IsDone = m_completed;

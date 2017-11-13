@@ -12,7 +12,8 @@ bool Game::init(float width, float height)
 {
 	Model::GetInstance().init("res/models.data");
 
-	SceneManager::GetInstance().SetScene(&SceneWorld::GetInstance());
+	std::shared_ptr<SceneWorld> world = std::shared_ptr<SceneWorld>(new SceneWorld(1));
+	SceneManager::GetInstance().SetScene(world);
 
 	int hheight = glutGet(GLUT_WINDOW_HEIGHT);
 	int wwidth = glutGet(GLUT_WINDOW_WIDTH);

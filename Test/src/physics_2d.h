@@ -28,14 +28,14 @@ enum Axis { X, Y, Z };
 namespace Physics_2D
 {
 	//void Collision(std::vector<Drawable*>* list);
-	std::vector<Entity*> Collision(std::map<unsigned int, Entity*>* list, MapHandler* mh);
+	std::vector<std::shared_ptr<Entity>> Collision(std::map<unsigned int, std::shared_ptr<Entity>>* list, std::shared_ptr<MapHandler> mh);
 	bool IsLegalHeight(float tilez, float otherz);
-	std::vector<PhysicsComponent*> FindDupes(std::vector<PhysicsComponent*>* list, float targetHeight);
+	std::vector<std::shared_ptr<PhysicsComponent>> FindDupes(std::vector<std::shared_ptr<PhysicsComponent>>* list, float targetHeight);
 	int TileTouchCount(std::array<float, 6> bb);
-	void FindMinMaxLegalZ(std::vector<PhysicsComponent*>* touching, float& min, float& max, float targetHeight);
-	int TouchCount(std::vector<PhysicsComponent*>* touching, float targetHeight);
-	void ApplyCollision(PhysicsComponent* a, PhysicsComponent* b);
-	void ApplyCollision(PhysicsComponent* a, PhysicsComponent* b, Axis precalculatedAxis);
+	void FindMinMaxLegalZ(std::vector<std::shared_ptr<PhysicsComponent>>* touching, float& min, float& max, float targetHeight);
+	int TouchCount(std::vector<std::shared_ptr<PhysicsComponent>>* touching, float targetHeight);
+	void ApplyCollision(std::shared_ptr<PhysicsComponent> a, std::shared_ptr<PhysicsComponent> b);
+	void ApplyCollision(std::shared_ptr<PhysicsComponent> a, std::shared_ptr<PhysicsComponent> b, Axis precalculatedAxis);
 }
 
 #endif

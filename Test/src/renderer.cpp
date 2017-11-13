@@ -3,16 +3,13 @@
 Renderer::Renderer() : m_toDraw(std::vector<GraphicsComponent*>())
 {}
 
-void Renderer::Add(GraphicsComponent* c) 
+void Renderer::Add(std::shared_ptr<GraphicsComponent> c)
 { 
-	m_toDraw.push_back(c);
-	if (m_toDraw.size() > 6)
-		int lol = 5;
+	m_toDraw.push_back(c.get());
 }
 
-void Renderer::Empty() 
+void Renderer::Clear() 
 {
-	//m_toDraw.empty();
 	m_toDraw.clear();
 }
 
@@ -28,9 +25,6 @@ void Renderer::Sort()
 
 	//Sort the components
 	std::sort(m_toDraw.begin(), m_toDraw.end(), ComponentSort);
-
-	if (m_toDraw.size() > 6)
-		int lol = 5;
 }
 
 void Renderer::Draw()
@@ -40,9 +34,5 @@ void Renderer::Draw()
 
 	//Draw everything
 	for (auto x : m_toDraw)
-	{
-		if (x->GetMVBO() > 300)
-			int lol = 5;
 		x->Draw();
-	}
 }

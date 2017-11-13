@@ -8,7 +8,7 @@ EventMove::EventMove(unsigned int entity_id, float distance, unsigned int direct
 	m_mode = EventExecutionMode::ASYNC;
 }
 
-EventUpdateResponse EventMove::UpdateEvent(double elapsedTime, std::map<unsigned int, Entity*>* ents)
+EventUpdateResponse EventMove::UpdateEvent(double elapsedTime, std::map<unsigned int, std::shared_ptr<Entity>>* ents)
 {
 	EventUpdateResponse eur = EventUpdateResponse();
 	eur.IsDone = true;

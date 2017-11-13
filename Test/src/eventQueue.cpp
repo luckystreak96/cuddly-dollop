@@ -8,12 +8,14 @@ EventQueue::EventQueue(int id) : m_repeat(false), m_id(id), m_activation(AT_Inte
 
 EventQueue::~EventQueue()
 {
-	//for (auto x : m_queue)
-	//	if (x)
-	//		delete x;
 }
 
-void EventQueue::PushBack(IEvent* ev)
+void EventQueue::ClearEvents()
+{
+	m_queue.clear();
+}
+
+void EventQueue::PushBack(std::shared_ptr<IEvent> ev)
 {
 	m_queue.push_back(ev);
 }
@@ -29,7 +31,7 @@ unsigned int EventQueue::Count()
 	return m_queue.size();
 }
 
-IEvent* EventQueue::Get(unsigned int index)
+std::shared_ptr<IEvent> EventQueue::Get(unsigned int index)
 {
 	if (Count() > index)
 		return m_queue.at(index);
@@ -39,7 +41,6 @@ IEvent* EventQueue::Get(unsigned int index)
 
 void EventQueue::Remove(unsigned int index)
 {
-	//delete m_queue.at(index);
 	m_queue.erase(m_queue.begin() + index);
 }
 
@@ -52,7 +53,7 @@ bool EventQueue::IsRepeating()
 void EventQueue::SendToBack()
 {
 	// Make sure that you dont go on forever lol
-	IEvent* x = m_queue.front();
+	std::shared_ptr<IEvent> x = m_queue.front();
 	m_queue.pop_front();
 	m_queue.push_back(x);
 }

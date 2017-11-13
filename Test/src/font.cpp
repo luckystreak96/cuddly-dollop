@@ -17,7 +17,6 @@ m_lettersPerRow(16), m_lettersPerColumn(16), m_xScale(1.0f), m_lightSpeed(lightS
 
 Font::~Font()
 {
-	delete m_graphics;
 }
 
 bool Font::IsDead()
@@ -196,7 +195,7 @@ void Font::SetupMesh(float xBndry, float yBndry)
 
 	//delete m_graphics;
 	if (m_graphics == NULL)
-		m_graphics = new FontGraphicsComponent(m_mesh.GetMeshVertices(), m_mesh.GetMeshIndices(), m_texture);
+		m_graphics = std::shared_ptr<FontGraphicsComponent>(new FontGraphicsComponent(m_mesh.GetMeshVertices(), m_mesh.GetMeshIndices(), m_texture));
 	m_graphics->FullReset(m_mesh.GetMeshVertices(), m_mesh.GetMeshIndices());
 	m_graphics->SetPhysics(m_phys.Position(), Vector3f());
 	m_graphics->SetStatic(m_static);

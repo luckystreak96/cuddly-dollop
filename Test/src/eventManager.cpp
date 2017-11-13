@@ -1,6 +1,6 @@
 #include "eventManager.h"
 
-std::vector<IEvent*> EventManager::m_locks = std::vector<IEvent*>();
+std::vector<std::shared_ptr<IEvent>> EventManager::m_locks = std::vector<std::shared_ptr<IEvent>>();
 
 EventManager::EventManager() : m_queues(std::vector<std::shared_ptr<EventQueue>>())
 {
@@ -104,11 +104,7 @@ void EventManager::PushBack(std::shared_ptr<EventQueue> ev)
 
 	for (auto x : m_queues)
 		if (ev->GetID() != -1 && x->GetID() == ev->GetID())
-		{
 			found = true;
-			for (int i = 0; i < ev->Count(); i++)
-				delete ev->Get(i);
-		}
 
 	if (!found || ev->GetID() == -1)
 		m_queues.push_back(ev);
@@ -117,7 +113,7 @@ void EventManager::PushBack(std::shared_ptr<EventQueue> ev)
 void EventManager::Erase(unsigned int index, unsigned int queueIndex)
 {
 	// Roundabout way of destroying the event in the lock vector and the queue
-	std::shared_ptr<EventQueue>& q = m_queues.at(queueIndex);
+	std::shared_ptr<EventQueue> q = m_queues.at(queueIndex);
 	// If the specified q is empty, just destroy it and dont ask any questions
 	if (!q->Count())
 	{
@@ -125,19 +121,17 @@ void EventManager::Erase(unsigned int index, unsigned int queueIndex)
 		return;
 	}
 
-	IEvent* ev = q->Get(index);
+	std::shared_ptr<IEvent> ev = q->Get(index);
 
 	int i = 0;
 	for (i; i < m_locks.size(); i++)
-		if (m_locks.at(i) == q->Get(index))
+		if (m_locks.at(i).get() == ev.get())
 			break;
 	m_locks.erase(m_locks.begin() + i);
 	q->Remove(index);
 
 	if (!q->Count())
 		m_queues.erase(m_queues.begin() + queueIndex);
-
-	delete ev;
 
 	UpdateLockLevel();
 }
@@ -152,7 +146,7 @@ void EventManager::UpdateLockLevel()
 	InputManager::GetInstance().SetLockLevel(i);
 }
 
-void EventManager::AddToLockVector(IEvent* ev)
+void EventManager::AddToLockVector(std::shared_ptr<IEvent> ev)
 {
 	// The event needs to have a lock level greater than 0
 	if (ev->GetLockLevel() < 0)
@@ -167,7 +161,7 @@ void EventManager::AddToLockVector(IEvent* ev)
 	UpdateLockLevel();
 }
 
-void EventManager::SetEntitiesMap(std::map<unsigned int, Entity*>* ents)
+void EventManager::SetEntitiesMap(std::map<unsigned int, std::shared_ptr<Entity>>* ents)
 {
 	m_entities = ents;
 }

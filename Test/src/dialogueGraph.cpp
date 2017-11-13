@@ -2,26 +2,26 @@
 
 DialogueGraph::DialogueGraph()
 {
-	EventQueue ev = EventQueue(2);
+	std::shared_ptr<EventQueue> ev = std::shared_ptr<EventQueue>(new EventQueue(2));
 
-	DialogueChoice dc1 = { 0, "Know anything cool?", 1, EventQueue() };
+	DialogueChoice dc1 = { 0, "Know anything cool?", 1, std::shared_ptr<EventQueue>(new EventQueue()) };
 
-	m_choices.push_back(DialogueChoice{ 0, "Know anything cool?", 1, EventQueue() });
+	m_choices.push_back(DialogueChoice{ 0, "Know anything cool?", 1, std::shared_ptr<EventQueue>(new EventQueue()) });
 
-	EventMove* down = new EventMove(2, 3.0, 2);
-	EventMove* up = new EventMove(2, 3.0, 0);
+	std::shared_ptr<IEvent> down = std::shared_ptr<IEvent>(new EventMove(2, 3.0, 2));
+	std::shared_ptr<IEvent> up = std::shared_ptr<IEvent>(new EventMove(2, 3.0, 0));
 	down->SetExecutionMode(EventExecutionMode::BLOCKING);
 	up->SetExecutionMode(EventExecutionMode::BLOCKING);
 
-	ev.SetRepeating(true);
-	ev.PushBack(down);
-	ev.PushBack(up);
+	ev->SetRepeating(true);
+	ev->PushBack(down);
+	ev->PushBack(up);
 
 	DialogueChoice dc2 = { 0, "Can you walk down please?", 2, ev };
-	DialogueChoice dc3 = { 0, "I gotta go.", -1, EventQueue() };
+	DialogueChoice dc3 = { 0, "I gotta go.", -1, std::shared_ptr<EventQueue>(new EventQueue()) };
 
 	m_choices.push_back(DialogueChoice{ 0, "Can you walk down please?", 2, ev });
-	m_choices.push_back(DialogueChoice{ 0, "I gotta go.", -1, EventQueue() });
+	m_choices.push_back(DialogueChoice{ 0, "I gotta go.", -1, std::shared_ptr<EventQueue>(new EventQueue()) });
 
 	std::vector<DialogueChoice> vdc = std::vector<DialogueChoice>();
 	vdc.push_back(dc1);
@@ -104,7 +104,7 @@ DialogueResponse DialogueGraph::SendInput(InputType it)
 
 	// Set result queue
 	if (m_selectedChoice == -1)
-		result.Queue = EventQueue();
+		result.Queue = std::shared_ptr<EventQueue>(new EventQueue());
 	else
 		result.Queue = choices.at(m_selectedChoice).Queue;
 

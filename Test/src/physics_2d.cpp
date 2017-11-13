@@ -10,9 +10,9 @@ namespace Physics_2D {
 		return true;
 	}
 
-	std::vector<PhysicsComponent*> FindDupes(std::vector<PhysicsComponent*>* list, float targetHeight)
+	std::vector<std::shared_ptr<PhysicsComponent>> FindDupes(std::vector<std::shared_ptr<PhysicsComponent>>* list, float targetHeight)
 	{
-		std::vector<PhysicsComponent*> dupes = std::vector<PhysicsComponent*>();
+		std::vector<std::shared_ptr<PhysicsComponent>> dupes = std::vector<std::shared_ptr<PhysicsComponent>>();
 
 		for (auto x : *list)
 		{
@@ -36,7 +36,7 @@ namespace Physics_2D {
 
 				//remove lowest
 
-				PhysicsComponent* to_remove = x->Position().z > y->Position().z ? x : y;
+				std::shared_ptr<PhysicsComponent> to_remove = x->Position().z > y->Position().z ? x : y;
 
 				if (!(std::find(dupes.begin(), dupes.end(), to_remove) != dupes.end())) {
 					/* dupes does not contain to_remove */
@@ -62,7 +62,7 @@ namespace Physics_2D {
 
 	//MAKE SURE YOU KNOW THE 2 OBJECTS ARE ON THE RIGHT Z BEFORE CALLING THIS FUUNCTION
 	//Do these 2 objects collide, and if they do change the colliding velocity axis to 0 and set the move BB
-	void ApplyCollision(PhysicsComponent* a, PhysicsComponent* b)
+	void ApplyCollision(std::shared_ptr<PhysicsComponent> a, std::shared_ptr<PhysicsComponent> b)
 	{
 		//Ensure that they actually collide -- 2D-intersect to allow "collision" with bottom of cliffs and pits
 		if (!Physics::Intersect2D(a->GetMoveBoundingBox(), b->GetMoveBoundingBox()))
@@ -110,7 +110,7 @@ namespace Physics_2D {
 
 	//MAKE SURE YOU KNOW THE 2 OBJECTS ARE ON THE RIGHT Z BEFORE CALLING THIS FUUNCTION
 	//change the colliding velocity axis to 0 and set the move BB
-	void ApplyCollision(PhysicsComponent* a, PhysicsComponent* b, Axis precalculatedAxis)
+	void ApplyCollision(std::shared_ptr<PhysicsComponent> a, std::shared_ptr<PhysicsComponent> b, Axis precalculatedAxis)
 	{
 		if (precalculatedAxis == Axis::X)
 		{
@@ -129,12 +129,12 @@ namespace Physics_2D {
 
 
 	//returns number of tiles that are legally touched
-	int TouchCount(std::vector<Entity*>* touching, float targetHeight)
+	int TouchCount(std::vector<std::shared_ptr<Entity>>* touching, float targetHeight)
 	{
 		int touchCounter = 0;
 		for (auto ents : *touching)
 		{
-			PhysicsComponent* x = ents->Physics();
+			std::shared_ptr<PhysicsComponent> x = ents->Physics();
 
 			float z = x->Position().z;
 
@@ -149,7 +149,7 @@ namespace Physics_2D {
 	}
 
 	//returns number of tiles that are legally touched
-	int TouchCount(std::vector<PhysicsComponent*>* touching, float targetHeight)
+	int TouchCount(std::vector<std::shared_ptr<PhysicsComponent>>* touching, float targetHeight)
 	{
 		int touchCounter = 0;
 		for (auto ents : *touching)
@@ -167,7 +167,7 @@ namespace Physics_2D {
 	}
 
 	//Finds the min and max legal z for a list of tiles
-	void FindMinMaxLegalZ(std::vector<PhysicsComponent*>* touching, float& min, float& max, float targetHeight)
+	void FindMinMaxLegalZ(std::vector<std::shared_ptr<PhysicsComponent>>* touching, float& min, float& max, float targetHeight)
 	{
 		for (auto ents : *touching)
 		{
@@ -191,12 +191,12 @@ namespace Physics_2D {
 	// 1 - The object is going somewhere that lacks any valid blocks (ex: walking off a cliff -- the other blocks are too far)
 	// 2 - The object bumps into something within his z-range (if the z is 4, then any object within the range [4,5[ )
 	//		For objects greater than 1 higher, the object goes under it.
-	std::vector<Entity*> Collision(std::map<unsigned int, Entity*>* clist, MapHandler* mh)
+	std::vector<std::shared_ptr<Entity>> Collision(std::map<unsigned int, std::shared_ptr<Entity>>* clist, std::shared_ptr<MapHandler> mh)
 	{
-		std::vector<Entity*> result = std::vector<Entity*>();
+		std::vector<std::shared_ptr<Entity>> result = std::vector<std::shared_ptr<Entity>>();
 		// What if a dude NOT falling off a cliff causes a direct collision?
 		// No way to know right now unless we redo the whole thing twice
-		std::vector<PhysicsComponent*> flist = std::vector<PhysicsComponent*>();
+		std::vector<std::shared_ptr<PhysicsComponent>> flist = std::vector<std::shared_ptr<PhysicsComponent>>();
 
 		int playerPos = 0;
 		for (auto x : *clist)
@@ -285,7 +285,7 @@ namespace Physics_2D {
 					continue;
 
 				//What is this object touching
-				std::vector<PhysicsComponent*> touching = std::vector<PhysicsComponent*>();
+				std::vector<std::shared_ptr<PhysicsComponent>> touching = std::vector<std::shared_ptr<PhysicsComponent>>();
 
 				int mustTouch = TileTouchCount(flist.at(i)->GetMoveBoundingBox());
 
@@ -305,7 +305,7 @@ namespace Physics_2D {
 				float oz = flist.at(i)->Position().z;
 
 				//Remove Dupes (Blocks that are at the same height but one is irrelevant)
-				std::vector<PhysicsComponent*> dupes = FindDupes(&touching, oz);
+				std::vector<std::shared_ptr<PhysicsComponent>> dupes = FindDupes(&touching, oz);
 
 				for (auto x : dupes)
 					touching.erase(std::remove(touching.begin(), touching.end(), x));
@@ -349,8 +349,8 @@ namespace Physics_2D {
 					bby[Right] = flist.at(i)->GetBoundingBox()[Right];
 					int mustTouchY = TileTouchCount(bby);
 
-					std::vector<PhysicsComponent*> touchX = std::vector<PhysicsComponent*>();
-					std::vector<PhysicsComponent*> touchY = std::vector<PhysicsComponent*>();
+					std::vector<std::shared_ptr<PhysicsComponent>> touchX = std::vector<std::shared_ptr<PhysicsComponent>>();
+					std::vector<std::shared_ptr<PhysicsComponent>> touchY = std::vector<std::shared_ptr<PhysicsComponent>>();
 
 					//Which in touching is the obj touching
 					for (auto x : touching)

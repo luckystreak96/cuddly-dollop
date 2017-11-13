@@ -1,6 +1,8 @@
 #include "scene_world.h"
 
-SceneWorld::SceneWorld() : m_acceptInput(false)
+std::shared_ptr<Scene> SceneWorld::NextScene = std::shared_ptr<Scene>(NULL);
+
+SceneWorld::SceneWorld(unsigned int map_id) : m_acceptInput(false), m_currentMap(map_id), m_drawinited(false)
 {
 	Init();
 	SoundManager::GetInstance();
@@ -8,25 +10,25 @@ SceneWorld::SceneWorld() : m_acceptInput(false)
 
 bool SceneWorld::Init()
 {
-	JsonHandler::LoadJsonFromFile(DATA_FILE);
+	NextScene = std::shared_ptr<Scene>(NULL);
+	JsonHandler::LoadJsonFromFile("res/data/" + std::to_string(m_currentMap) + ".json");
 
 	//Setup viewport to fit the window size
 	glViewport(0, 0, (GLsizei)(glutGet(GLUT_WINDOW_WIDTH)), (GLsizei)(glutGet(GLUT_WINDOW_HEIGHT)));
 
 	m_bloomEffect = true;
 
-	m_camera = new Camera((float)glutGet(GLUT_WINDOW_WIDTH), (float)glutGet(GLUT_WINDOW_HEIGHT));
+	m_camera = std::shared_ptr<Camera>(new Camera((float)glutGet(GLUT_WINDOW_WIDTH), (float)glutGet(GLUT_WINDOW_HEIGHT)));
 	m_camera->Pos.z = -25;
 
-	m_World = new Transformation();
+	m_World = std::shared_ptr<Transformation>(new Transformation());
 
 	BasicEffect::GetInstance();
 
 	m_pause = false;
 	m_acceptInput = true;
 
-	m_currentMap = 0;
-	m_mapHandler = new MapHandler(0);
+	m_mapHandler = std::shared_ptr<MapHandler>(new MapHandler(m_currentMap));
 
 	m_celist = EntityFactory::GetEntities(m_currentMap);
 	m_eventManager.SetEntitiesMap(&m_celist);
@@ -35,19 +37,30 @@ bool SceneWorld::Init()
 	if (m_celist.count(1))
 		m_player = m_celist.at(1);
 
+	if (!FontManager::GetInstance().IsEmpty())
+		FontManager::GetInstance().ClearFonts();
+
 	m_fontTitle = FontManager::GetInstance().AddFont(false, false);
 	m_fontFPS = FontManager::GetInstance().AddFont(true, false, true);
 	FontManager::GetInstance().SetScale(m_fontFPS, 0.5f, 0.5f);
-	//FontManager::GetInstance().SetText(m_fontTitle, "IT WORKS!");
+
+	// Autorun events
 	for (auto e : m_celist)
 	{
 		for (auto x : EventFactory::LoadEvent(m_currentMap, e.first))
 			if (x->GetActivationType() == AT_Autorun)
 				m_eventManager.PushBack(x);
+			else
+				x->ClearEvents();
 	}
 
 	return true;
 }
+
+SceneWorld::~SceneWorld()
+{
+}
+
 
 //Loads GL resources
 void SceneWorld::LoadAllResources()
@@ -87,8 +100,9 @@ void SceneWorld::ManageInput()
 	}
 }
 
-Scene* SceneWorld::Act()
+std::shared_ptr<Scene> SceneWorld::Act()
 {
+	std::shared_ptr<Scene> result = std::shared_ptr<Scene>(NULL);
 	ManageInput();
 
 	//RENDER SETUP WITH FRAME BY FRAME
@@ -101,13 +115,13 @@ Scene* SceneWorld::Act()
 			//...then set the elapsedtime to the desired amount (in fps)
 			ElapsedTime::GetInstance().SetBufferElapsedTime(60.f);
 		}
-		Update();
+		result = Update();
 	}
 
 	//DRAW
 	Draw();
 
-	return &SceneWorld::GetInstance();
+	return result;
 }
 
 void SceneWorld::Draw()
@@ -133,7 +147,7 @@ void SceneWorld::Interact()
 		dir == dir_Right ? pos.x += distance : pos.x = pos.x;
 		dir == dir_Left ? pos.x -= distance : pos.x = pos.x;
 
-		Entity* inter = NULL;
+		std::shared_ptr<Entity> inter = NULL;
 		for (auto x : m_celist)
 		{
 			if (Physics::Intersect2D(x.second->Physics()->GetBoundingBox(), pos))
@@ -158,13 +172,15 @@ void SceneWorld::TriggerEvents(unsigned int entity_id)
 {
 	for (auto x : EventFactory::LoadEvent(m_currentMap, entity_id))
 		if (x->GetActivationType() == AT_Interact)
-			m_eventManager.PushBack(x);
+			m_eventManager.PushBack(x);			
+		else
+			x->ClearEvents();
 }
 
-void SceneWorld::Update()
+std::shared_ptr<Scene> SceneWorld::Update()
 {
 	// Needs to be called here so the EventQueues can set render
-	Renderer::GetInstance().Empty();
+	Renderer::GetInstance().Clear();
 	Animation::AnimationCounter((float)ElapsedTime::GetInstance().GetElapsedTime());
 	Interact();
 	m_eventManager.Update(ElapsedTime::GetInstance().GetElapsedTime());
@@ -173,12 +189,14 @@ void SceneWorld::Update()
 		it.second->Physics()->DesiredMove();
 
 	//Collision
-	std::vector<Entity*> collided = Physics_2D::Collision(&m_celist, m_mapHandler);
+	std::vector<std::shared_ptr<Entity>> collided = Physics_2D::Collision(&m_celist, m_mapHandler);
 	for (auto x : collided)
 	{
-		for (auto x : EventFactory::LoadEvent(m_currentMap, x->GetID()))
-			if (x->GetActivationType() == AT_Touch)
-				m_eventManager.PushBack(x);
+		for (auto q : EventFactory::LoadEvent(m_currentMap, x->GetID()))
+			if (q->GetActivationType() == AT_Touch)
+				m_eventManager.PushBack(q);
+			else
+				q->ClearEvents();
 	}
 
 	//Update
@@ -204,6 +222,8 @@ void SceneWorld::Update()
 	srand(clock());
 	//FontManager::GetInstance().ChangeLetter(m_fontTitle, 0, rand() % 4 == 1 ? '_' : 'I');
 	FontManager::GetInstance().Update(ElapsedTime::GetInstance().GetElapsedTime());
+
+	return NextScene;
 }
 
 void SceneWorld::RenderPass()
@@ -211,8 +231,7 @@ void SceneWorld::RenderPass()
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	static bool drawinited = false;
-	if (!drawinited)
+	if (!m_drawinited)
 	{
 		m_World->SetOrthoProj(&OrthoProjInfo::GetRegularInstance());
 		m_World->SetTranslation(OrthoProjInfo::GetRegularInstance().Left, OrthoProjInfo::GetRegularInstance().Bottom, 0);
@@ -233,7 +252,7 @@ void SceneWorld::RenderPass()
 		HeightEffect::GetInstance().Enable();
 		HeightEffect::GetInstance().SetWorldPosition(*m_World->GetWOTrans().m);
 
-		drawinited = true;
+		m_drawinited = true;
 	}
 
 	BasicEffect::GetInstance().Enable();
@@ -292,4 +311,9 @@ void SceneWorld::SetAudioPosition()
 		SoundManager::GetInstance().SetListenerPosition(m_player->Physics()->Position(), m_player->Physics()->Velocity());
 	else
 		SoundManager::GetInstance().SetListenerPosition();
+}
+
+void SceneWorld::SetNextScene(std::shared_ptr<Scene> s)
+{
+	NextScene = s;
 }

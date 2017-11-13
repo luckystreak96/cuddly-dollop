@@ -2,7 +2,7 @@
 
 #define COMPOSITION "TILE"
 
-MapHandler::MapHandler() : m_mesh(Mesh())
+MapHandler::MapHandler() : m_mesh(Mesh()), m_id(1)
 {
 	srand(clock());
 
@@ -43,7 +43,7 @@ MapHandler::MapHandler() : m_mesh(Mesh())
 	FinalizeSetup();
 }
 
-MapHandler::MapHandler(int id) : m_mesh(Mesh())
+MapHandler::MapHandler(unsigned int id) : m_mesh(Mesh()), m_id(id)
 {
 	auto& map = JsonHandler::LoadMap(id);
 	if (!map.HasMember("tiles"))
@@ -87,7 +87,8 @@ void MapHandler::FinalizeSetup()
 			z = tz;
 	}
 
-	m_mapSize = Vector3f(x, y, z);
+	// +1 to add the size of the tile as well
+	m_mapSize = Vector3f(x + 1, y + 1, z);
 }
 
 MapHandler::~MapHandler()
@@ -113,9 +114,9 @@ void MapHandler::SetupMesh()
 
 	m_MBO_instances = m_tiles.size();
 
-	m_texture = "res/map01.png";
+	m_texture = "res/map" + std::to_string(m_id) + ".png";
 	m_mesh.Finalize(m_texture);
-	m_graphics = new GraphicsComponent(m_mesh.GetMeshVertices(), m_mesh.GetMeshIndices(), m_texture);
+	m_graphics = std::shared_ptr<GraphicsComponent>(new GraphicsComponent(m_mesh.GetMeshVertices(), m_mesh.GetMeshIndices(), m_texture));
 }
 
 void MapHandler::Update()

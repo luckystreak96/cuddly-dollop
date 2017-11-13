@@ -8,7 +8,8 @@ std::map<std::string, unsigned int> EventFactory::TypeDict =
 	{ "move_down", ET_MoveDown },
 	{ "move_up", ET_MoveUp },
 	{ "move_left", ET_MoveLeft },
-	{ "call_queue", ET_CallQueue }
+	{ "call_queue", ET_CallQueue },
+	{ "map_change", ET_MapChange }
 };
 
 std::map<std::string, unsigned int> EventFactory::EEMDict =
@@ -17,12 +18,12 @@ std::map<std::string, unsigned int> EventFactory::EEMDict =
 	{ "async", ASYNC }
 };
 
-IEvent* EventFactory::BuildEvent(EventTypes et, std::map<std::string, EventArgType> args, unsigned int entity_id)
+std::shared_ptr<IEvent> EventFactory::BuildEvent(EventTypes et, std::map<std::string, EventArgType> args, unsigned int entity_id)
 {
 	//if (s.size() <= 0)
 	//	return NULL;
 
-	IEvent* result = NULL;
+	std::shared_ptr<IEvent> result = NULL;
 
 	// Target id setup
 	unsigned int id = args.count("id") ? std::get<int>(args.at("id")) : 0;
@@ -30,30 +31,33 @@ IEvent* EventFactory::BuildEvent(EventTypes et, std::map<std::string, EventArgTy
 
 	switch (et)
 	{
+	case EventTypes::ET_MapChange:
+		result = std::shared_ptr<IEvent>(new EventMapChange(id));
+		break;
 	case EventTypes::ET_Teleport:
 		break;
 	case EventTypes::ET_MoveRight:
-		result = new EventMove(id,
+		result = std::shared_ptr<IEvent>(new EventMove(id,
 			args.count("distance") ? std::get<float>(args.at("distance")) : 3.0f,
-			1);
+			1));
 		break;
 	case EventTypes::ET_MoveUp:
-		result = new EventMove(id,
+		result = std::shared_ptr<IEvent>(new EventMove(id,
 			args.count("distance") ? std::get<float>(args.at("distance")) : 3.0f,
-			0);
+			0));
 		break;
 	case EventTypes::ET_MoveDown:
-		result = new EventMove(id,
+		result = std::shared_ptr<IEvent>(new EventMove(id,
 			args.count("distance") ? std::get<float>(args.at("distance")) : 3.0f,
-			2);
+			2));
 		break;
 	case EventTypes::ET_MoveLeft:
-		result = new EventMove(id,
+		result = std::shared_ptr<IEvent>(new EventMove(id,
 			args.count("distance") ? std::get<float>(args.at("distance")) : 3.0f,
-			3);
+			3));
 		break;
 	case EventTypes::ET_CallQueue:
-		result = new EventCaller(id, args.count("queue_id") ? std::get<int>(args.at("queue_id")) : 0);
+		result = std::shared_ptr<IEvent>(new EventCaller(id, args.count("queue_id") ? std::get<int>(args.at("queue_id")) : 0));
 		break;
 	case EventTypes::ET_DialogueBox:
 	{
@@ -71,7 +75,7 @@ IEvent* EventFactory::BuildEvent(EventTypes et, std::map<std::string, EventArgTy
 					DialogueChoice dc;
 
 					// For each param in the choice
-					for (auto t : std::get<std::map<std::string, std::variant<bool, float, int, std::string, std::vector<EventQueue>>>>(x.second))
+					for (auto t : std::get<std::map<std::string, std::variant<bool, float, int, std::string, std::vector<std::shared_ptr<EventQueue>>>>>(x.second))
 					{
 						// Dialogue id
 						if (t.first == "d")
@@ -81,7 +85,7 @@ IEvent* EventFactory::BuildEvent(EventTypes et, std::map<std::string, EventArgTy
 						else if (t.first == "next")
 							dc.NextTextId = std::get<int>(t.second);
 						else if (t.first == "queues")
-							dc.Queue = (std::get<std::vector<EventQueue>>(t.second)).at(0);
+							dc.Queue = (std::get<std::vector<std::shared_ptr<EventQueue>>>(t.second)).at(0);
 					}
 
 					choices.push_back(dc);
@@ -91,7 +95,7 @@ IEvent* EventFactory::BuildEvent(EventTypes et, std::map<std::string, EventArgTy
 					Dialogue d;
 
 					// For each param in the dialogue
-					for (auto t : (std::get<std::map<std::string, std::variant<bool, float, int, std::string, std::vector<EventQueue>>>>(x.second)))
+					for (auto t : (std::get<std::map<std::string, std::variant<bool, float, int, std::string, std::vector<std::shared_ptr<EventQueue>>>>>(x.second)))
 					{
 						// Dialogue id
 						if (t.first == "id")
@@ -101,7 +105,7 @@ IEvent* EventFactory::BuildEvent(EventTypes et, std::map<std::string, EventArgTy
 						else if (t.first == "next")
 							d.NextTextId = std::get<int>(t.second);
 						else if (t.first == "queues")
-							d.Queue = (std::get<std::vector<EventQueue>>(t.second)).at(0);
+							d.Queue = (std::get<std::vector<std::shared_ptr<EventQueue>>>(t.second)).at(0);
 						else if (t.first == "type")
 							d.Type = DialogueGraph::StringToDialogueType(std::get<std::string>(t.second));
 					}
@@ -111,7 +115,7 @@ IEvent* EventFactory::BuildEvent(EventTypes et, std::map<std::string, EventArgTy
 			}
 		}
 
-		result = new DialogueBox(entity_id, dialogues, choices);
+		result = std::shared_ptr<IEvent>(new DialogueBox(entity_id, dialogues, choices));
 		break;
 	}
 	default:
@@ -121,7 +125,7 @@ IEvent* EventFactory::BuildEvent(EventTypes et, std::map<std::string, EventArgTy
 	return result;
 }
 
-void EventFactory::SetActivationType(EventQueue* eq, std::string s)
+void EventFactory::SetActivationType(std::shared_ptr<EventQueue> eq, std::string s)
 {
 	switch (tolower(s[0]))
 	{
@@ -158,7 +162,7 @@ std::vector<std::shared_ptr<EventQueue>> EventFactory::LoadEvent(int map_id, uns
 
 			// Find activation type
 			if (x.HasMember("activation") && x["activation"].GetType() == rapidjson::Type::kStringType)
-				SetActivationType(queue.get(), std::string(x["activation"].GetString()));
+				SetActivationType(queue, std::string(x["activation"].GetString()));
 
 			// Add your events to the event queue
 			const auto& evts = x["events"].GetArray();
@@ -185,7 +189,7 @@ std::vector<std::shared_ptr<EventQueue>> EventFactory::LoadEvent(int map_id, uns
 						args.emplace("queue", LoadEvent(val));
 					}
 
-					IEvent* ev = EventFactory::BuildEvent((EventTypes)TypeDict.at(e["type"].GetString()), args, entity_id);
+					std::shared_ptr<IEvent> ev = EventFactory::BuildEvent((EventTypes)TypeDict.at(e["type"].GetString()), args, entity_id);
 
 					// Set execution mode if necessary
 					if (e.HasMember("execution_type") && EEMDict.find(e["execution_type"].GetString()) != EEMDict.end())
@@ -227,7 +231,7 @@ std::shared_ptr<EventQueue> EventFactory::LoadEvent(int map_id, unsigned int ent
 
 			// Find activation type
 			if (x.HasMember("activation") && x["activation"].GetType() == rapidjson::Type::kStringType)
-				SetActivationType(result.get(), std::string(x["activation"].GetString()));
+				SetActivationType(result, std::string(x["activation"].GetString()));
 
 			// Add your events to the event queue
 			const auto& evts = x["events"].GetArray();
@@ -254,7 +258,7 @@ std::shared_ptr<EventQueue> EventFactory::LoadEvent(int map_id, unsigned int ent
 						args.emplace("queue", LoadEvent(val));
 					}
 
-					IEvent* ev = EventFactory::BuildEvent((EventTypes)TypeDict.at(e["type"].GetString()), args, entity_id);
+					std::shared_ptr<IEvent> ev = EventFactory::BuildEvent((EventTypes)TypeDict.at(e["type"].GetString()), args, entity_id);
 
 					// Set execution mode if necessary
 					if (e.HasMember("execution_type") && EEMDict.find(e["execution_type"].GetString()) != EEMDict.end())
@@ -274,7 +278,7 @@ std::shared_ptr<EventQueue> EventFactory::LoadEvent(int map_id, unsigned int ent
 
 EventArgType EventFactory::AddArg(rapidjson::Value::MemberIterator iter, bool secondIteration)
 {
-	std::map<std::string, std::variant<bool, float, int, std::string, std::vector<EventQueue>>> map = std::map<std::string, std::variant<bool, float, int, std::string, std::vector<EventQueue>>>();
+	std::map<std::string, std::variant<bool, float, int, std::string, std::vector<std::shared_ptr<EventQueue>>>> map = std::map<std::string, std::variant<bool, float, int, std::string, std::vector<std::shared_ptr<EventQueue>>>>();
 	EventArgType eat = false;
 	rapidjson::Type t;
 	t = iter->value.GetType();
@@ -311,10 +315,10 @@ EventArgType EventFactory::AddArg(rapidjson::Value::MemberIterator iter, bool se
 	return eat;
 }
 
-std::variant<bool, float, int, std::string, std::vector<EventQueue>> EventFactory::AddArg(rapidjson::Value::MemberIterator iter)
+std::variant<bool, float, int, std::string, std::vector<std::shared_ptr<EventQueue>>> EventFactory::AddArg(rapidjson::Value::MemberIterator iter)
 {
-	std::map<std::string, std::variant<bool, float, int, std::string, std::vector<EventQueue>>> map = std::map<std::string, std::variant<bool, float, int, std::string, std::vector<EventQueue>>>();
-	std::variant<bool, float, int, std::string, std::vector<EventQueue>> eat = false;
+	std::map<std::string, std::variant<bool, float, int, std::string, std::vector<std::shared_ptr<EventQueue>>>> map = std::map<std::string, std::variant<bool, float, int, std::string, std::vector<std::shared_ptr<EventQueue>>>>();
+	std::variant<bool, float, int, std::string, std::vector<std::shared_ptr<EventQueue>>> eat = false;
 	rapidjson::Type t;
 	t = iter->value.GetType();
 	switch (t)
@@ -345,20 +349,20 @@ std::variant<bool, float, int, std::string, std::vector<EventQueue>> EventFactor
 
 
 // Recursive AS FUCK
-std::vector<EventQueue> EventFactory::LoadEvent(rapidjson::Value& v)
+std::vector<std::shared_ptr<EventQueue>> EventFactory::LoadEvent(rapidjson::Value& v)
 {
-	std::vector<EventQueue> result = std::vector<EventQueue>();
+	std::vector<std::shared_ptr<EventQueue>> result = std::vector<std::shared_ptr<EventQueue>>();
 
 	for (auto& p : v.GetArray())
 	{
-		EventQueue queue = EventQueue();
+		std::shared_ptr<EventQueue> queue = std::shared_ptr<EventQueue>(new EventQueue());
 		// Set repeating if necessary
 		if (p.HasMember("repeating") && p["repeating"].GetBool() == true)
-			queue.SetRepeating(true);
+			queue->SetRepeating(true);
 
 		// Find activation type
 		if (p.HasMember("activation"))
-			SetActivationType(&queue, p.GetString());
+			SetActivationType(queue, p.GetString());
 
 		// Add your events to the event queue
 		const auto& evts = p["events"].GetArray();
@@ -407,16 +411,16 @@ std::vector<EventQueue> EventFactory::LoadEvent(rapidjson::Value& v)
 					args.emplace("queue", LoadEvent(val));
 				}
 
-				IEvent* ev = EventFactory::BuildEvent((EventTypes)TypeDict.at(e["type"].GetString()), args);
+				std::shared_ptr<IEvent> ev = EventFactory::BuildEvent((EventTypes)TypeDict.at(e["type"].GetString()), args);
 
 				// Set execution mode if necessary
 				if (e.HasMember("execution_type") && EEMDict.find(e["execution_type"].GetString()) != EEMDict.end())
 					ev->SetExecutionMode((EventExecutionMode)EEMDict.at(e["execution_type"].GetString()));
 
-				queue.PushBack(ev);
+				queue->PushBack(ev);
 			}
 		}
-		if (queue.Count() > 0)
+		if (queue->Count() > 0)
 			result.push_back(queue);
 	}
 	return result;
@@ -442,7 +446,7 @@ void EventFactory::FlagEvent(int map_id, unsigned int entity_id, unsigned int qu
 }
 
 // Defined here to avoid circular dependancies
-EventUpdateResponse EventCaller::UpdateEvent(double elapsedTime, std::map<unsigned int, Entity*>* ents)
+EventUpdateResponse EventCaller::UpdateEvent(double elapsedTime, std::map<unsigned int, std::shared_ptr<Entity>>* ents)
 {
 	EventUpdateResponse eur = EventUpdateResponse();
 	eur.IsDone = false;

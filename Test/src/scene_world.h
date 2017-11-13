@@ -36,45 +36,39 @@
 class SceneWorld : public Scene
 {
 public:
-	static SceneWorld& GetInstance()
-	{
-		static SceneWorld instance;
-		return instance;
-	}
-
+	SceneWorld(unsigned int map_id);
+	~SceneWorld();
 	bool Init();
-	Scene* Act();
+	std::shared_ptr<Scene> Act();
 	void Draw();
-	void Update();
+	std::shared_ptr<Scene> Update();
 	void Interact();
 	void TriggerEvents(unsigned int entity_id);
 	void LoadAllResources();
 	void UnloadAllResources();
 	void ManageInput();
 	void SetAudioPosition();
+	static void SetNextScene(std::shared_ptr<Scene> s);
 	
 public:
 	void RenderPass();
 
 private:
-	SceneWorld();
-	Entity* m_test2 = NULL;
-	Entity* m_test3 = NULL;
-	Entity* m_player = NULL;
-	Font* m_font = NULL;
-	Camera* m_camera = NULL;
+	std::shared_ptr<Entity> m_player = NULL;
+	std::shared_ptr<Camera> m_camera;
+	static std::shared_ptr<Scene> NextScene;
 	EventManager m_eventManager;
 	//Map* m_map = NULL;
-	MapHandler* m_mapHandler = NULL;
-	Transformation* m_World = NULL;
-	//std::vector<Entity*> m_celist;
-	std::map<unsigned int, Entity*> m_celist;
+	std::shared_ptr<MapHandler> m_mapHandler;
+	std::shared_ptr<Transformation> m_World;
+	std::map<unsigned int, std::shared_ptr<Entity>> m_celist;
 	bool m_pause;
 	bool m_resources_loaded;
 	bool m_acceptInput;
 	bool m_bloomEffect;
+	bool m_drawinited;
 	int m_numFrames = 0;
-	int m_currentMap;
+	unsigned int m_currentMap;
 	unsigned int m_fontTitle;
 	unsigned int m_fontFPS;
 	Trail m_trail;

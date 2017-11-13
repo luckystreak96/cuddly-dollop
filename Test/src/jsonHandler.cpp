@@ -43,14 +43,15 @@ rapidjson::Value JsonHandler::LoadQueues(int map_id, int entity_id)
 {
 	auto& a = LoadEntities(map_id).GetArray();
 	// Go through the entities
-	for (unsigned int i = 0; i < a.Size(); i++)
+	for (auto& ent : a)
 	{
 		// If the entity is you...
-		if (a[i]["id"] == entity_id)
+		if (ent["id"].GetInt() == entity_id)
 		{
 			// Check out all the queues
-			//const auto& ques = arr[i]["queues"].GetArray();
-			return a[i]["queues"].GetArray();
+			if (ent.HasMember("queues"))
+				if (ent["queues"].IsArray())
+					return ent["queues"].GetArray();
 		}
 	}
 
@@ -59,9 +60,8 @@ rapidjson::Value JsonHandler::LoadQueues(int map_id, int entity_id)
 
 rapidjson::Value JsonHandler::LoadMaps()
 {
+	DataDocument = rapidjson::Document();
 	DataDocument.Parse(File.c_str());
-
-	auto x = DataDocument.GetType();
 
 	if (DataDocument.IsObject())
 		// If the json file has entities and the entities is an array

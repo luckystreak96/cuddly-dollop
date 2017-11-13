@@ -5,7 +5,7 @@ DialogueBox::DialogueBox(unsigned int entity_id, DialogueGraph* dg) : m_box(NULL
 	m_dialogueGraph = dg;
 	m_target = entity_id;
 
-	m_box = new FontGraphicsComponent("DIALOGUE_BOX", "res/dialogue.png");
+	m_box = std::shared_ptr<FontGraphicsComponent>(new FontGraphicsComponent("DIALOGUE_BOX", "res/dialogue.png"));
 	m_box->SetPhysics(Vector3f(0, 0, 0.5f), Vector3f(0, 0, 0));
 	m_box->Update();
 	m_box->SetStatic(true);
@@ -23,7 +23,7 @@ DialogueBox::DialogueBox(unsigned int entity_id, std::vector<Dialogue> d, std::v
 	m_dialogueGraph = new DialogueGraph(d, dc);
 	m_target = entity_id;
 
-	m_box = new FontGraphicsComponent("DIALOGUE_BOX", "res/dialogue.png");
+	m_box = std::shared_ptr<FontGraphicsComponent>(new FontGraphicsComponent("DIALOGUE_BOX", "res/dialogue.png"));
 	m_box->SetPhysics(Vector3f(0, 0, 0.5f), Vector3f(0, 0, 0));
 	m_box->Update();
 	m_box->SetStatic(true);
@@ -41,10 +41,6 @@ DialogueBox::~DialogueBox()
 {
 	if (m_dialogueGraph)
 		delete m_dialogueGraph;
-	for (auto c : m_choices)
-		delete c;
-	if (m_box)
-		delete m_box;
 }
 
 
@@ -59,8 +55,6 @@ void DialogueBox::Draw()
 void DialogueBox::SetText(std::string text)
 {
 	Font::SetText(text, Vector3f(0.5f, 4.0f, 0.0f), false, m_maxWidth);
-	for (auto c : m_choices)
-		delete c;
 	m_choices.clear();
 	if (m_dialogueGraph && m_dialogueGraph->ChoiceAvailable())
 	{
@@ -68,7 +62,7 @@ void DialogueBox::SetText(std::string text)
 		for (auto x : m_dialogueGraph->GetChoices())
 		{
 			m_y -= m_yScale * 1.25f;
-			Font* temp = new Font(true);
+			std::shared_ptr<Font> temp = std::shared_ptr<Font>(new Font(true));
 			temp->SetScale(m_xScale, m_yScale);
 			temp->SetTextSpeed(1);
 			temp->SetText(x, Vector3f(0.75f, 4.0f + m_y, 0), false, m_maxWidth);
@@ -77,7 +71,7 @@ void DialogueBox::SetText(std::string text)
 	}
 }
 
-EventUpdateResponse DialogueBox::UpdateEvent(double elapsedTime, std::map<unsigned int, Entity*>* ents)
+EventUpdateResponse DialogueBox::UpdateEvent(double elapsedTime, std::map<unsigned int, std::shared_ptr<Entity>>* ents)
 {
 	EventUpdateResponse eur = EventUpdateResponse();
 	eur.IsDone = true;
@@ -124,7 +118,7 @@ EventUpdateResponse DialogueBox::UpdateEvent(double elapsedTime, std::map<unsign
 			}
 
 			DialogueResponse dr = m_dialogueGraph->SendInput(IT_Action);
-			*eur.Queue = dr.Queue;
+			eur.Queue = dr.Queue;
 
 			if (dr.NotDone)
 			{

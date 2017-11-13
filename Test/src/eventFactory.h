@@ -11,24 +11,25 @@
 #include "eventQueue.h"
 #include "utils.h"
 #include "eventCaller.h"
+#include "eventMapChange.h"
 
-typedef std::variant<bool, float, int, std::string, std::vector<EventQueue>, std::map<std::string, std::variant<bool, float, int, std::string, std::vector<EventQueue>>>> EventArgType;
+typedef std::variant<bool, float, int, std::string, std::vector<std::shared_ptr<EventQueue>>, std::map<std::string, std::variant<bool, float, int, std::string, std::vector<std::shared_ptr<EventQueue>>>>> EventArgType;
 
-enum EventTypes { ET_Teleport, ET_DialogueBox, ET_MoveRight, ET_MoveUp, ET_MoveDown, ET_MoveLeft, ET_CallQueue };
+enum EventTypes { ET_Teleport, ET_DialogueBox, ET_MoveRight, ET_MoveUp, ET_MoveDown, ET_MoveLeft, ET_CallQueue, ET_MapChange};
 
 class EventFactory
 {
 public:
-	static IEvent* BuildEvent(EventTypes et, std::map<std::string, EventArgType> args, unsigned int entity_id = 0);
+	static std::shared_ptr<IEvent> BuildEvent(EventTypes et, std::map<std::string, EventArgType> args, unsigned int entity_id = 0);
 	static std::map<std::string, unsigned int> TypeDict;
 	static std::map<std::string, unsigned int> EEMDict;
 	static std::vector<std::shared_ptr<EventQueue>> LoadEvent(int map_id, unsigned int entity_id);
 	static std::shared_ptr<EventQueue> LoadEvent(int map_id, unsigned int entity_id, unsigned int queue_id);
-	static std::vector<EventQueue> LoadEvent(rapidjson::Value& v);
+	static std::vector<std::shared_ptr<EventQueue>> LoadEvent(rapidjson::Value& v);
 	static void FlagEvent(int map_id, unsigned int entity_id, unsigned int queue_id, int flag, std::string DATA_FILE = "res/data/data.json");
 	static EventArgType AddArg(rapidjson::Value::MemberIterator iter, bool secondIteration);
-	static std::variant<bool, float, int, std::string, std::vector<EventQueue>> AddArg(rapidjson::Value::MemberIterator iter);
-	static void SetActivationType(EventQueue* eq, std::string s);
+	static std::variant<bool, float, int, std::string, std::vector<std::shared_ptr<EventQueue>>> AddArg(rapidjson::Value::MemberIterator iter);
+	static void SetActivationType(std::shared_ptr<EventQueue> eq, std::string s);
 };
 
 #endif // !DIALOGUE_GRAPH_H__

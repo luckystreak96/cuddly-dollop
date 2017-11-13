@@ -9,12 +9,12 @@
 class PlayerInputComponent : public InputComponent
 {
 public:
-	PlayerInputComponent(PhysicsComponent* phys, GraphicsComponent* graph);
+	PlayerInputComponent(std::shared_ptr<PhysicsComponent> phys, std::shared_ptr<GraphicsComponent> graph);
 	void Update();
-	//void Interact(Entity* interactor = NULL);
+	//void Interact(std::shared_ptr<Entity> interactor = NULL);
 private:
-	PhysicsComponent* m_phys;
-	GraphicsComponent* m_graph;
+	std::shared_ptr<PhysicsComponent> m_phys;
+	std::shared_ptr<GraphicsComponent> m_graph;
 };
 
 #endif // !PLAYER_INPUT_COMPONENT

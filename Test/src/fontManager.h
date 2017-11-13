@@ -23,6 +23,8 @@ public:
 	unsigned int AddDialogueBox(std::string texPath = "res/fonts/basic.png");
 	void RemoveFont(unsigned int font) { m_fonts.erase(font); }
 	Font* GetFont(unsigned int key);
+	void ClearFonts();
+	bool IsEmpty();
 
 	// Generates a random key for the map
 	unsigned int GenerateKey();

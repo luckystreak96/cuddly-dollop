@@ -15,16 +15,16 @@ public:
 	EventManager();
 	void PushBack(std::shared_ptr<EventQueue> ev);
 	void Update(double elapsedTime);
-	void SetEntitiesMap(std::map<unsigned int, Entity*>* ents);
+	void SetEntitiesMap(std::map<unsigned int, std::shared_ptr<Entity>>* ents);
 	void SetFlag(unsigned int eventID);
 protected:
 	void Erase(unsigned int index, unsigned int queueIndex);
 	void UpdateLockLevel();
-	void AddToLockVector(IEvent* ev);
+	void AddToLockVector(std::shared_ptr<IEvent> ev);
 protected:
 	std::vector<std::shared_ptr<EventQueue>> m_queues;
-	static std::vector<IEvent*> m_locks;
-	std::map<unsigned int, Entity*>* m_entities;
+	static std::vector<std::shared_ptr<IEvent>> m_locks;
+	std::map<unsigned int, std::shared_ptr<Entity>>* m_entities;
 };
 
 #endif // !DIALOGUE_GRAPH_H__

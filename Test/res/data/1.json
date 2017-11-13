@@ -1,5 +1,5 @@
 {
-    "id": 2,
+    "id": 1,
     "tiles": [
         {
             "x": -1.0,
@@ -3630,9 +3630,10 @@
             "z": 3.0,
             "queues": [
                 {
-                    "name": null,
+                    "name": "run_around",
                     "id": 5,
                     "flag": 1,
+                    "activation": "autorun",
                     "repeating": true,
                     "events": [
                         {
@@ -3640,7 +3641,7 @@
                             "execution_type": "blocking",
                             "args": {
                                 "id": 0,
-                                "distance": 3.0
+                                "distance": 4.0
                             }
                         },
                         {
@@ -3648,7 +3649,55 @@
                             "execution_type": "blocking",
                             "args": {
                                 "id": 0,
-                                "distance": 3.0
+                                "distance": 4.0
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "queue",
+                    "id": 3,
+                    "flag": 1,
+                    "activation": "interact",
+                    "repeating": false,
+                    "events": [
+                        {
+                            "type": "dialogue",
+                            "execution_type": "blocking",
+                            "args": {
+                                "dialogue 0": {
+                                    "id": 0,
+                                    "text": "Wut chu want?",
+                                    "next": 1,
+                                    "type": "choice"
+                                },
+                                "choice 0": {
+                                    "d": 0,
+                                    "text": "I dunno.",
+                                    "next": 1
+                                },
+                                "dialogue 1": {
+                                    "id": 1,
+                                    "text": "Oh. Uhhh... ok I guess?",
+                                    "next": -1,
+                                    "type": "end"
+                                },
+                                "dialogue 2": {
+                                    "id": 2,
+                                    "text": "Cya!",
+                                    "next": -1,
+                                    "type": "end"
+                                },
+                                "choice 1": {
+                                    "d": 0,
+                                    "text": "I was just leaving.",
+                                    "next": 2
+                                },
+                                "choice 2": {
+                                    "d": 0,
+                                    "text": "Ur a fag.",
+                                    "next": -1
+                                }
                             }
                         }
                     ]
@@ -3662,32 +3711,7 @@
             "x": 2.0,
             "y": 5.0,
             "z": 3.0,
-            "queues": [
-                {
-                    "name": null,
-                    "id": 1,
-                    "flag": 1,
-                    "repeating": true,
-                    "events": [
-                        {
-                            "type": "move_down",
-                            "execution_type": "blocking",
-                            "args": {
-                                "id": 0,
-                                "distance": 3.0
-                            }
-                        },
-                        {
-                            "type": "move_up",
-                            "execution_type": "blocking",
-                            "args": {
-                                "id": 0,
-                                "distance": 3.0
-                            }
-                        }
-                    ]
-                }
-            ]
+            "queues": []
         },
         {
             "id": 3,
@@ -3698,26 +3722,78 @@
             "z": 4.0,
             "queues": [
                 {
-                    "name": null,
+                    "name": "talking",
                     "id": 2,
                     "flag": 1,
-                    "repeating": true,
+                    "activation": null,
+                    "repeating": false,
                     "events": [
                         {
-                            "type": "move_down",
+                            "type": "call_queue",
                             "execution_type": "blocking",
                             "args": {
-                                "id": 0,
-                                "distance": 3.0
+                                "id": 2,
+                                "queue_id": 3
                             }
                         },
                         {
-                            "type": "move_up",
+                            "type": "dialogue",
+                            "execution_type": "blocking",
+                            "args": {
+                                "dialogue 0": {
+                                    "id": 0,
+                                    "text": "Hey man, what's up? I wrote a poem today.",
+                                    "next": 1,
+                                    "type": "simple"
+                                },
+                                "dialogue 1": {
+                                    "id": 1,
+                                    "text": "Roses are red,\n Violets are blue,\n\n This poem is amazing,\n Unlike you!",
+                                    "next": -1,
+                                    "type": "end"
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "donttouch",
+                    "id": 4,
+                    "flag": 1,
+                    "activation": "touch",
+                    "repeating": false,
+                    "events": [
+                        {
+                            "type": "move_right",
                             "execution_type": "blocking",
                             "args": {
                                 "id": 0,
-                                "distance": 3.0
+                                "distance": 1.0
                             }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "player": false,
+            "sprite": "ghost.png",
+            "x": 17.0,
+            "y": 1.0,
+            "z": 4.0,
+            "queues": [
+                {
+                    "name": "queue",
+                    "id": 6,
+                    "flag": 1,
+                    "activation": "interact",
+                    "repeating": false,
+                    "events": [
+                        {
+                            "type": "map_change",
+                            "execution_type": "blocking",
+                            "args": { "id": 2 }
                         }
                     ]
                 }

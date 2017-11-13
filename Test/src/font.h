@@ -28,7 +28,7 @@ public:
 	virtual void Update(double elapsedTime);
 	virtual void SetRender();
 	void SetTextSpeed(double speed);
-	FontGraphicsComponent* GetGraphics() { return m_graphics; }
+	std::shared_ptr<FontGraphicsComponent> GetGraphics() { return m_graphics; }
 	bool IsDead();
 	virtual void SetScale(float xScale, float yScale);
 	bool TextDisplayDone();
@@ -57,7 +57,7 @@ protected:
 	bool m_temporary;
 	bool m_lightSpeed;
 
-	FontGraphicsComponent* m_graphics = NULL;
+	std::shared_ptr<FontGraphicsComponent> m_graphics = NULL;
 	std::map<char, unsigned int> m_letters;
 	Mesh m_mesh;
 	//std::vector<Vertex> m_verts;

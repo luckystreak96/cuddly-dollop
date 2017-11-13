@@ -26,7 +26,7 @@ public:
 	virtual ~IEvent() = default;
 
 	// Returns true if the event is done updating
-	virtual EventUpdateResponse UpdateEvent(double elapsedTime, std::map<unsigned int, Entity*>* ents);
+	virtual EventUpdateResponse UpdateEvent(double elapsedTime, std::map<unsigned int, std::shared_ptr<Entity>>* ents);
 	virtual void ResetEvent();
 	unsigned int GetLockLevel();
 	EventExecutionMode GetExecutionMode();

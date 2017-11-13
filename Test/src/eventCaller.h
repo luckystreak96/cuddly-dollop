@@ -9,7 +9,7 @@ class EventCaller : public IEvent
 public:
 	EventCaller(unsigned int entity_id, unsigned int queue_id);
 	~EventCaller() {}
-	EventUpdateResponse UpdateEvent(double elapsedTime, std::map<unsigned int, Entity*>* ents);
+	EventUpdateResponse UpdateEvent(double elapsedTime, std::map<unsigned int, std::shared_ptr<Entity>>* ents);
 	void ResetEvent();
 
 private:

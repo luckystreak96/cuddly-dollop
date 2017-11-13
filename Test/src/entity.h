@@ -22,16 +22,16 @@ public:
 	void Update();
 	void Draw();
 	unsigned int GetID();
-	PhysicsComponent* Physics() { return m_physicsComponent; }
-	GraphicsComponent* Graphics() { return m_graphicsComponent; }
-	InputComponent* Input() { return m_inputComponent; }
-	std::vector<IComponent*> components;
+	std::shared_ptr<PhysicsComponent> Physics() { return m_physicsComponent; }
+	std::shared_ptr<GraphicsComponent> Graphics() { return m_graphicsComponent; }
+	std::shared_ptr<InputComponent> Input() { return m_inputComponent; }
+	std::vector<std::shared_ptr<IComponent>> components;
 	void Communicate(std::vector<std::string> msg);
 private:
 	unsigned int m_id;
-	PhysicsComponent* m_physicsComponent;
-	GraphicsComponent* m_graphicsComponent;
-	InputComponent* m_inputComponent;
+	std::shared_ptr<PhysicsComponent> m_physicsComponent;
+	std::shared_ptr<GraphicsComponent> m_graphicsComponent;
+	std::shared_ptr<InputComponent> m_inputComponent;
 };
 
 #endif

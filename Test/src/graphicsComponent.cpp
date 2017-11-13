@@ -285,7 +285,7 @@ Vector3f GraphicsComponent::GetPosition() { return m_pos; }
 Direction GraphicsComponent::GetDirection() { return m_direction; }
 void GraphicsComponent::SetDirection(Direction dir) { m_direction = dir; }
 
-void GraphicsComponent::SetDirection(GraphicsComponent* graph)
+void GraphicsComponent::SetDirection(std::shared_ptr<GraphicsComponent> graph)
 {
 	float x = m_pos.x;
 	float y = m_pos.y;

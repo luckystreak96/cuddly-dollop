@@ -19,7 +19,7 @@ class MapHandler
 {
 public:
 	MapHandler();
-	MapHandler(int id);
+	MapHandler(unsigned int id);
 	~MapHandler();
 	MapHandler(const std::string& filePath);
 	void FinalizeSetup();
@@ -29,7 +29,7 @@ public:
 	std::vector<MapTile*>* Tiles();
 	unsigned int Size();
 	void SetupMesh();
-	GraphicsComponent* Graphics() { return m_graphics; }
+	std::shared_ptr<GraphicsComponent> Graphics() { return m_graphics; }
 
 	// Returns the farthest reaches of the map in  x, y and z
 	Vector3f GetMapSize();
@@ -38,8 +38,9 @@ public:
 private:
 	std::vector<MapTile*> m_tiles = std::vector<MapTile*>();
 	Mesh m_mesh;
-	GraphicsComponent* m_graphics = NULL;
+	std::shared_ptr<GraphicsComponent> m_graphics = NULL;
 	int m_MBO_instances;
+	unsigned int m_id;
 	std::string m_texture;
 	// The width height and depth of the map in tiles
 	Vector3f m_mapSize;

@@ -1,12 +1,12 @@
 #include "playerInputComponent.h"
 
-PlayerInputComponent::PlayerInputComponent(PhysicsComponent* phys, GraphicsComponent* graph)
+PlayerInputComponent::PlayerInputComponent(std::shared_ptr<PhysicsComponent> phys, std::shared_ptr<GraphicsComponent> graph)
 {
 	m_phys = phys;
 	m_graph = graph;
 }
 
-//void PlayerInputComponent::Interact(Entity* interactor = NULL)
+//void PlayerInputComponent::Interact(std::shared_ptr<Entity> interactor = NULL)
 //{
 //
 //}

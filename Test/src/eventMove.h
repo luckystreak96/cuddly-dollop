@@ -9,7 +9,7 @@ class EventMove : public IEvent
 public:
 	EventMove(unsigned int entity_id, float distance = 3.0f, unsigned int direction = 2);
 	~EventMove() {}
-	EventUpdateResponse UpdateEvent(double elapsedTime, std::map<unsigned int, Entity*>* ents);
+	EventUpdateResponse UpdateEvent(double elapsedTime, std::map<unsigned int, std::shared_ptr<Entity>>* ents);
 	void ResetEvent();
 
 private:

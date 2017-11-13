@@ -14,12 +14,12 @@ public:
 		return instance;
 	}
 
-	void SetScene(Scene* s);
+	void SetScene(std::shared_ptr<Scene> s);
 	void Act();
 
 private:
 	SceneManager() {}
-	Scene* m_currentScene;
+	std::shared_ptr<Scene> m_currentScene;
 };
 
 #endif // !SCENE_MANAGER_H__

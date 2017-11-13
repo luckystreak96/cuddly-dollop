@@ -43,7 +43,7 @@ public:
 	Vector3f GetPosition();
 	Direction GetDirection();
 	void SetDirection(Direction dir);
-	void SetDirection(GraphicsComponent* graph);
+	void SetDirection(std::shared_ptr<GraphicsComponent> graph);
 	int GetHighestIndex();
 	void SetBuffers();
 	void ResetVBO();

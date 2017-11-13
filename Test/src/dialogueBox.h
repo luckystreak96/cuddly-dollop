@@ -15,15 +15,15 @@ public:
 	~DialogueBox();
 	void Update(double elapsedTime);
 	void ResetEvent();
-	EventUpdateResponse UpdateEvent(double elapsedTime, std::map<unsigned int, Entity*>* ents);
+	EventUpdateResponse UpdateEvent(double elapsedTime, std::map<unsigned int, std::shared_ptr<Entity>>* ents);
 	void Draw();
 	void SetRender();
 	void SetText(std::string text);
 	void SetScale(float xScale, float yScale);
 
 private:
-	FontGraphicsComponent* m_box;
-	std::vector<Font*> m_choices;
+	std::shared_ptr<FontGraphicsComponent> m_box;
+	std::vector<std::shared_ptr<Font>> m_choices;
 	float m_maxWidth;
 	float m_maxHeight;
 	DialogueGraph* m_dialogueGraph;

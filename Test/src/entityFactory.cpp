@@ -1,8 +1,8 @@
 #include "entityFactory.h"
 
-Entity* EntityFactory::BuildEntity(std::map<std::string, EntityArgType> args)
+std::shared_ptr<Entity> EntityFactory::BuildEntity(std::map<std::string, EntityArgType> args)
 {
-	Entity* result = NULL;
+	std::shared_ptr<Entity> result = NULL;
 
 	bool isPlayer = args.count("player") ? std::get<bool>(args.at("player")) : false;
 
@@ -10,11 +10,11 @@ Entity* EntityFactory::BuildEntity(std::map<std::string, EntityArgType> args)
 	if (args.count("id"))
 	{
 		unsigned int id = std::get<unsigned int>(args.at("id"));
-		result = new Entity(id, isPlayer);
+		result = std::shared_ptr<Entity>(new Entity(id, isPlayer));
 	}
 	else
 		// Sketchy af
-		result = new Entity((unsigned int)rand() + (unsigned int)(MAXINT / 2));
+		result = std::shared_ptr<Entity>(new Entity((unsigned int)rand() + (unsigned int)(MAXINT / 2)));
 
 	// Position
 	if (args.count("x"))
@@ -30,9 +30,9 @@ Entity* EntityFactory::BuildEntity(std::map<std::string, EntityArgType> args)
 	return result;
 }
 
-std::map<unsigned int, Entity*> EntityFactory::GetEntities(unsigned int map_id)
+std::map<unsigned int, std::shared_ptr<Entity>> EntityFactory::GetEntities(unsigned int map_id)
 {
-	std::map<unsigned int, Entity*> result = std::map<unsigned int, Entity*>();
+	std::map<unsigned int, std::shared_ptr<Entity>> result = std::map<unsigned int, std::shared_ptr<Entity>>();
 
 	if (!JsonHandler::DocumentNotNull())
 		return result;
@@ -78,7 +78,7 @@ std::map<unsigned int, Entity*> EntityFactory::GetEntities(unsigned int map_id)
 		}
 
 		//Build the entity
-		Entity* temp = BuildEntity(args);
+		std::shared_ptr<Entity> temp = BuildEntity(args);
 		result.emplace(temp->GetID(), temp);
 	}
 

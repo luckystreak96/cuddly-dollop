@@ -6,10 +6,21 @@ FontManager::FontManager() : m_fonts(std::map<unsigned int, Font*>())
 
 FontManager::~FontManager()
 {
+	ClearFonts();
+}
+
+bool FontManager::IsEmpty()
+{
+	return m_fonts.empty();
+}
+
+void FontManager::ClearFonts()
+{
 	for (auto x : m_fonts)
 	{
 		delete x.second;
 	}
+	m_fonts.clear();
 }
 
 void FontManager::SetScale(unsigned int font, float xScale, float yScale)

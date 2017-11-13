@@ -189,6 +189,7 @@
     <ClInclude Include="src\entityFactory.h" />
     <ClInclude Include="src\eventCaller.h" />
     <ClInclude Include="src\eventFactory.h" />
+    <ClInclude Include="src\eventMapChange.h" />
     <ClInclude Include="src\eventQueue.h" />
     <ClInclude Include="src\eventMove.h" />
     <ClInclude Include="src\eventManager.h" />
@@ -259,6 +260,7 @@
     <ClCompile Include="src\entityFactory.cpp" />
     <ClCompile Include="src\eventCaller.cpp" />
     <ClCompile Include="src\eventFactory.cpp" />
+    <ClCompile Include="src\eventMapChange.cpp" />
     <ClCompile Include="src\eventQueue.cpp" />
     <ClCompile Include="src\eventMove.cpp" />
     <ClCompile Include="src\eventManager.cpp" />

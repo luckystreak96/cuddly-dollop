@@ -14,7 +14,7 @@ enum InputType { IT_Action, IT_Up, IT_Down };
 struct DialogueResponse
 {
 	bool NotDone;
-	EventQueue Queue;
+	std::shared_ptr<EventQueue> Queue;
 };
 
 struct DialogueChoice
@@ -22,7 +22,7 @@ struct DialogueChoice
 	int DialogueId;
 	std::string Text;
 	int NextTextId;
-	EventQueue Queue;
+	std::shared_ptr<EventQueue> Queue;
 };
 
 struct Dialogue
@@ -31,7 +31,7 @@ struct Dialogue
 	int NextTextId;
 	std::string Text;
 	DialogueType Type;
-	EventQueue Queue;
+	std::shared_ptr<EventQueue> Queue;
 };
 
 class DialogueGraph

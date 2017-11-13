@@ -3,6 +3,7 @@
 
 #include <iostream>//duh
 #include <cassert>//Asserts
+#include <memory>
 
 #include <GL/glew.h>//duh
 #include <GL/freeglut.h>//duh
