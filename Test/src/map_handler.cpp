@@ -114,8 +114,8 @@ void MapHandler::SetupMesh()
 
 	m_MBO_instances = m_tiles.size();
 
-	m_texture = "res/map" + std::to_string(m_id) + ".png";
-	m_mesh.Finalize(m_texture);
+	m_texture = "res/tiles.png";
+	//m_mesh.Finalize(m_texture);
 	m_graphics = std::shared_ptr<GraphicsComponent>(new GraphicsComponent(m_mesh.GetMeshVertices(), m_mesh.GetMeshIndices(), m_texture));
 }
 

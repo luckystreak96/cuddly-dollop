@@ -241,7 +241,7 @@ namespace dollop_editor
             {
                 Width = TileSize,
                 Height = TileSize,
-                Stroke = new SolidColorBrush() { Color = Colors.White, Opacity = 1.0 }
+                Stroke = new SolidColorBrush() { Color = entity.player ? Colors.Orange : Colors.White, Opacity = 1.0 }
             };
             rectangle.SetCurrentValue(Canvas.ZIndexProperty, GameToCanvasZ(entity.z));
             rectangle.RenderTransform = new TranslateTransform(entity.x * 32, InvertHeight(entity.y) * 32);

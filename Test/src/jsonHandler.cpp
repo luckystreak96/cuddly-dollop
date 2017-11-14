@@ -1,11 +1,12 @@
 #include "jsonHandler.h"
 
 rapidjson::Document JsonHandler::DataDocument = rapidjson::Document();
+rapidjson::Document JsonHandler::ReferenceDocument = rapidjson::Document();
 std::string JsonHandler::File = "";
 
 bool JsonHandler::DocumentNotNull()
 {
-	return DataDocument.IsObject();
+	return ReferenceDocument.IsObject();
 }
 
 rapidjson::Document& JsonHandler::LoadJsonFromFile(std::string filename)
@@ -13,18 +14,18 @@ rapidjson::Document& JsonHandler::LoadJsonFromFile(std::string filename)
 	File = Utils::ReadFile(filename);
 	//rapidjson::Document doc;
 
-	DataDocument.Parse(File.c_str());
+	ReferenceDocument.Parse(File.c_str());
 
-	if (DataDocument.IsObject())
+	if (ReferenceDocument.IsObject())
 	{
-		return DataDocument;
+		return ReferenceDocument;
 		//if (doc.HasMember("hello"))
 		//	std::cout << doc["hello"].GetString() << std::endl;
 	}
 	else
 	{
 		std::cout << "The following JSON document is invalid: " << filename << std::endl;
-		return DataDocument;
+		return ReferenceDocument;
 	}
 }
 
@@ -36,7 +37,7 @@ rapidjson::Value JsonHandler::LoadEntities(int map_id)
 
 	std::cout << "Entities doesn't exist in the map" << std::endl;
 
-	return rapidjson::Value();
+	return rapidjson::Value(rapidjson::Type::kArrayType);
 }
 
 rapidjson::Value JsonHandler::LoadQueues(int map_id, int entity_id)
@@ -55,13 +56,13 @@ rapidjson::Value JsonHandler::LoadQueues(int map_id, int entity_id)
 		}
 	}
 
-	return rapidjson::Value();
+	return rapidjson::Value(rapidjson::Type::kArrayType);
 }
 
 rapidjson::Value JsonHandler::LoadMaps()
 {
-	DataDocument = rapidjson::Document();
-	DataDocument.Parse(File.c_str());
+	rapidjson::Document::AllocatorType& a = ReferenceDocument.GetAllocator();
+	DataDocument.CopyFrom(ReferenceDocument, a);
 
 	if (DataDocument.IsObject())
 		// If the json file has entities and the entities is an array

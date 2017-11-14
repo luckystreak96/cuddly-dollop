@@ -10,6 +10,24 @@ Game::~Game()
 
 bool Game::init(float width, float height)
 {
+	std::vector<std::string> vs;
+	HANDLE hFind;
+	WIN32_FIND_DATA FindFileData;
+	hFind = FindFirstFile(L"res/sprites/*.png", &FindFileData);
+	if (hFind != INVALID_HANDLE_VALUE)
+	{
+		do {
+			std::wstring w = FindFileData.cFileName;
+			vs.push_back(std::string(w.begin(), w.end()));
+		} while (FindNextFile(hFind, &FindFileData));
+		FindClose(hFind);
+	}
+
+	for (std::string s : vs)
+		TextureAtlas::m_textureAtlas.AddTexture("res/sprites/" + s);
+	TextureAtlas::m_textureAtlas.Generate(32, false, "res/tiles.png");
+
+
 	Model::GetInstance().init("res/models.data");
 
 	std::shared_ptr<SceneWorld> world = std::shared_ptr<SceneWorld>(new SceneWorld(1));

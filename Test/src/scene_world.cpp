@@ -190,9 +190,9 @@ std::shared_ptr<Scene> SceneWorld::Update()
 
 	//Collision
 	std::vector<std::shared_ptr<Entity>> collided = Physics_2D::Collision(&m_celist, m_mapHandler);
-	for (auto x : collided)
+	for (auto entity : collided)
 	{
-		for (auto q : EventFactory::LoadEvent(m_currentMap, x->GetID()))
+		for (auto q : EventFactory::LoadEvent(m_currentMap, entity->GetID()))
 			if (q->GetActivationType() == AT_Touch)
 				m_eventManager.PushBack(q);
 			else

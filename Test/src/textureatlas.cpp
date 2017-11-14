@@ -1,5 +1,7 @@
 #include "textureatlas.h"
 
+TextureAtlas TextureAtlas::m_textureAtlas = TextureAtlas(64);
+
 TextureAtlas::TextureAtlas(unsigned int nbTexture) : m_isValid(false), m_currentTextureIndex(0)
 {
     if(nbTexture < 4)

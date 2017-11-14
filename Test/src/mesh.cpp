@@ -26,17 +26,24 @@ void Mesh::Reset()
 
 void Mesh::AddToMesh(std::vector<Vertex>& verts, std::vector<GLuint>& inds, int biggestIndex, Vector3f pos, std::string tex, /*Transformation t,*/ int index)
 {
-	if (m_textures.emplace(tex, 0).second) {
-		m_textures.erase(tex);
+	if (!m_textures.count(tex)) {
+		//m_textures.erase(tex);
+		if(index == -1)
+			m_textures.emplace(tex, TextureAtlas::m_textureAtlas.AddTexture(tex));
+		else
 		m_textures.emplace(tex, m_texAtlas.AddTexture(tex));
 	}
+	//if (m_textures.emplace(tex, 0).second) {
+	//	m_textures.erase(tex);
+	//	m_textures.emplace(tex, TextureAtlas::m_textureAtlas.AddTexture(tex));
+	//}
 
 	for (auto v : verts)
 	{
 		Vertex temp = Vertex(v);
 		temp.vertex += pos;
 		if (index == -1)
-			m_texAtlas.TextureIndexToCoord(m_textures.at(tex), temp.tex.x, temp.tex.y);
+			TextureAtlas::m_textureAtlas.TextureIndexToCoord(m_textures.at(tex), temp.tex.x, temp.tex.y);
 		else
 			m_texAtlas.TextureIndexToCoord(index, temp.tex.x, temp.tex.y);
 
@@ -59,7 +66,7 @@ void Mesh::Finalize(std::string name)
 	bool textureExists = (stat(name.c_str(), &buffer) == 0);
 
 	if (!textureExists)
-		m_texAtlas.Generate(1024, false, name);
+		TextureAtlas::m_textureAtlas.Generate(32, false, name);
 
 	ResourceManager::GetInstance().LoadTexture(name);
 }

@@ -27,6 +27,7 @@ public:
 
     void TextureIndexToCoord(TextureIndex idx, float& u, float& v) const;
 
+	static TextureAtlas m_textureAtlas;
 private:
     bool IsPowerOfTwo(unsigned int x)
     {
@@ -49,7 +50,6 @@ private:
     GLuint  m_textureId;
     bool    m_isValid;
     unsigned int m_nbTexturePerSide;
-
 };
 
 #endif // TEXTUREATLAS_H__

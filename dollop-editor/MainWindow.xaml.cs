@@ -30,7 +30,8 @@ namespace dollop_editor
         private bool entityMode = false;
         private int contextMenuX = 0;
         private int contextMenuY = 0;
-        private Rectangle selectedTile;
+        private Rectangle selectedPickerTile;
+        private Rectangle selectedMapTile;
 
         public MainWindow()
         {
@@ -42,16 +43,25 @@ namespace dollop_editor
             SetupTileSelecter();
             ReleaseMouse();
 
-            selectedTile = new Rectangle()
+            selectedPickerTile = new Rectangle()
             {
                 Width = editor.TileSize,
                 Height = editor.TileSize,
                 Stroke = new SolidColorBrush() { Color = Colors.Black, Opacity = 1.0 },
                 StrokeThickness = 3.0
             };
-            selectedTile.SetCurrentValue(Canvas.ZIndexProperty, 20);
-            selectedTile.RenderTransform = new TranslateTransform(0, 0);
-            cnvTilePicker.Children.Add(selectedTile);
+            selectedPickerTile.SetCurrentValue(Canvas.ZIndexProperty, 20);
+            selectedPickerTile.RenderTransform = new TranslateTransform(0, 0);
+            selectedMapTile = new Rectangle()
+            {
+                Width = editor.TileSize,
+                Height = editor.TileSize,
+                Stroke = new SolidColorBrush() { Color = Colors.LawnGreen, Opacity = 1.0 },
+                StrokeThickness = 3.0
+            };
+            selectedMapTile.SetCurrentValue(Canvas.ZIndexProperty, 20);
+            selectedMapTile.RenderTransform = new TranslateTransform(0, 0);
+            cnvTilePicker.Children.Add(selectedPickerTile);
         }
 
         private void Setup(int x, int y)
@@ -73,14 +83,16 @@ namespace dollop_editor
 
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                if(entityMode && e.ClickCount == 2 ||
+                if (entityMode && e.ClickCount == 2 ||
                     !entityMode && x > 0 && x < cnvMap.Width && y > 0 && y < cnvMap.Height)
                     SetMapTile(x, y, selTile);
                 else // Entitymode && clickcount == 1
                 {
-                    if(entityMode)
+                    if (entityMode)
                     {
-
+                        selectedMapTile.RenderTransform = new TranslateTransform((x / 32) * 32, (y / 32) * 32);
+                        if (!cnvMap.Children.Contains(selectedMapTile))
+                            cnvMap.Children.Add(selectedMapTile);
                     }
                 }
             }
@@ -114,6 +126,7 @@ namespace dollop_editor
             int y = (int)e.GetPosition(cnvTilePicker).Y;
 
             selTile = "";
+            selectedPickerTile.RenderTransform = new TranslateTransform((x / 32) * 32, (y / 32) * 32);
             // -1 at the end because of the empty tile at the beginning for erasing
             int index = (x / 32) + ((y / 32) * ((int)cnvTilePicker.Width / 32)) - 1;
 
@@ -122,8 +135,6 @@ namespace dollop_editor
                 return;
 
             selTile = editor.Brushes.ElementAt(index).Key;
-
-            selectedTile.RenderTransform = new TranslateTransform((x / 32) * 32, (y / 32) * 32);
         }
 
         // Sets up the images for the sprite selecter

@@ -4,10 +4,13 @@
 #include <iostream>//duh
 #include <cassert>//Asserts
 #include <memory>
+#include <string>
+#include <vector>
 
 #include <GL/glew.h>//duh
 #include <GL/freeglut.h>//duh
 
+#include "textureatlas.h"
 #include "callbacks.h"
 #include "glutBackend.h"
 #include "array2d.h"

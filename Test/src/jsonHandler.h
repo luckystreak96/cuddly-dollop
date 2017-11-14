@@ -18,6 +18,7 @@ public:
 	static void SetFile(std::string filename);
 	static bool JsonHandler::DocumentNotNull();
 public:
+	static rapidjson::Document ReferenceDocument;
 	static rapidjson::Document DataDocument;
 private:
 	static std::string File;
