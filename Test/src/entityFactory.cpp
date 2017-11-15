@@ -1,27 +1,41 @@
 #include "entityFactory.h"
 
+float EntityFactory::GetFloat(EntityArgType eat)
+{
+	if (std::holds_alternative<float>(eat))
+		return std::get<float>(eat);
+	if (std::holds_alternative<int>(eat))
+		return (float)std::get<int>(eat);
+
+	// If we get here then its not even an int so wtf -_-
+	return std::get<float>(eat);
+}
+
 std::shared_ptr<Entity> EntityFactory::BuildEntity(std::map<std::string, EntityArgType> args)
 {
 	std::shared_ptr<Entity> result = NULL;
 
 	bool isPlayer = args.count("player") ? std::get<bool>(args.at("player")) : false;
 
+	 std::string sprite = "res/sprites/";
+	 sprite += args.count("sprite") ? std::get<std::string>(args.at("sprite")) : "default.png";
+
 	// ID
 	if (args.count("id"))
 	{
 		unsigned int id = std::get<unsigned int>(args.at("id"));
-		result = std::shared_ptr<Entity>(new Entity(id, isPlayer));
+		result = std::shared_ptr<Entity>(new Entity(id, sprite, isPlayer));
 	}
 	else
 		// Sketchy af
-		result = std::shared_ptr<Entity>(new Entity((unsigned int)rand() + (unsigned int)(MAXINT / 2)));
+		result = std::shared_ptr<Entity>(new Entity((unsigned int)rand() + (unsigned int)(MAXINT / 2), sprite));
 
 	// Position
 	if (args.count("x"))
 	{
-		float x = std::get<float>(args.at("x"));
-		float y = std::get<float>(args.at("y"));
-		float z = std::get<float>(args.at("z"));
+		float x = GetFloat(args.at("x"));
+		float y = GetFloat(args.at("y"));
+		float z = GetFloat(args.at("z"));
 		result->Physics()->AbsolutePosition(Vector3f(x, y, z));
 	}
 	else
@@ -64,7 +78,7 @@ std::map<unsigned int, std::shared_ptr<Entity>> EntityFactory::GetEntities(unsig
 					eat = iter->value.GetUint();
 				break;
 			case rapidjson::Type::kStringType:
-				eat = iter->value.GetString();
+				eat = std::string(iter->value.GetString());
 				break;
 			case rapidjson::Type::kTrueType:
 				eat = iter->value.GetBool();

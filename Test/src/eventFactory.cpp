@@ -18,6 +18,17 @@ std::map<std::string, unsigned int> EventFactory::EEMDict =
 	{ "async", ASYNC }
 };
 
+float EventFactory::GetFloat(EventArgType eat)
+{
+	if (std::holds_alternative<float>(eat))
+		return std::get<float>(eat);
+	if (std::holds_alternative<int>(eat))
+		return (float)std::get<int>(eat);
+	
+	// If we get here then its not even an int so wtf -_-
+	return std::get<float>(eat);
+}
+
 std::shared_ptr<IEvent> EventFactory::BuildEvent(EventTypes et, std::map<std::string, EventArgType> args, unsigned int entity_id)
 {
 	//if (s.size() <= 0)
@@ -36,28 +47,28 @@ std::shared_ptr<IEvent> EventFactory::BuildEvent(EventTypes et, std::map<std::st
 		break;
 	case EventTypes::ET_Teleport:
 		result = std::shared_ptr<IEvent>(new EventTeleport(id,
-			args.count("x") ? std::get<float>(args.at("x")) : 0.0f,
-			args.count("y") ? std::get<float>(args.at("y")) : 0.0f,
-			args.count("z") ? std::get<float>(args.at("z")) : 0.0f));
+			args.count("x") ? GetFloat(args.at("x")) : 0.0f,
+			args.count("y") ? GetFloat(args.at("y")) : 0.0f,
+			args.count("z") ? GetFloat(args.at("z")) : 0.0f));
 		break;
 	case EventTypes::ET_MoveRight:
 		result = std::shared_ptr<IEvent>(new EventMove(id,
-			args.count("distance") ? std::get<float>(args.at("distance")) : 3.0f,
+			args.count("distance") ? GetFloat(args.at("distance")) : 3.0f,
 			1));
 		break;
 	case EventTypes::ET_MoveUp:
 		result = std::shared_ptr<IEvent>(new EventMove(id,
-			args.count("distance") ? std::get<float>(args.at("distance")) : 3.0f,
+			args.count("distance") ? GetFloat(args.at("distance")) : 3.0f,
 			0));
 		break;
 	case EventTypes::ET_MoveDown:
 		result = std::shared_ptr<IEvent>(new EventMove(id,
-			args.count("distance") ? std::get<float>(args.at("distance")) : 3.0f,
+			args.count("distance") ? GetFloat(args.at("distance")) : 3.0f,
 			2));
 		break;
 	case EventTypes::ET_MoveLeft:
 		result = std::shared_ptr<IEvent>(new EventMove(id,
-			args.count("distance") ? std::get<float>(args.at("distance")) : 3.0f,
+			args.count("distance") ? GetFloat(args.at("distance")) : 3.0f,
 			3));
 		break;
 	case EventTypes::ET_CallQueue:

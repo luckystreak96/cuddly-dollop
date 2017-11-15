@@ -17,7 +17,7 @@
 class Entity
 {
 public:
-	Entity(unsigned int id, bool playerInput = false);
+	Entity(unsigned int id, std::string spritesheet, bool playerInput = false);
 	~Entity();
 	void SetRender();
 	void Update();

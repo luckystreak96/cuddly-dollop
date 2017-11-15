@@ -20,6 +20,7 @@ EventUpdateResponse EventMapChange::UpdateEvent(double elapsedTime, std::map<uns
 	else if(1/*fadeout is done*/)
 	{
 		SceneWorld::SetNextScene(std::shared_ptr<Scene>(new SceneWorld(m_map)));
+		m_completed = true;
 		return eur;
 	}
 

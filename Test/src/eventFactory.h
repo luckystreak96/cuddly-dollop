@@ -31,6 +31,7 @@ public:
 	static EventArgType AddArg(rapidjson::Value::MemberIterator iter, bool secondIteration);
 	static std::variant<bool, float, int, std::string, std::vector<std::shared_ptr<EventQueue>>> AddArg(rapidjson::Value::MemberIterator iter);
 	static void SetActivationType(std::shared_ptr<EventQueue> eq, std::string s);
+	static float GetFloat(EventArgType eat);
 };
 
 #endif // !DIALOGUE_GRAPH_H__
