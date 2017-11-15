@@ -12,11 +12,11 @@ void EventManager::Update(double elapsedTime)
 	for (int k = 0; k < m_queues.size(); k++)
 	{
 		std::shared_ptr<EventQueue> temp = std::shared_ptr<EventQueue>(new EventQueue(-69));
-		std::shared_ptr<EventQueue>& q = m_queues.at(k);
+		std::shared_ptr<EventQueue> q = m_queues.at(k);
 		// If the queue is empty, dont bother
 		if (!q->Count())
 		{
-			Erase(0, k);
+			Erase(k);
 			continue;
 		}
 
@@ -30,27 +30,33 @@ void EventManager::Update(double elapsedTime)
 		// Iterate through the queue until a blocking event is hit
 		for (i; i < q->Count(); i++)
 		{
-			// Add to lock vector if the level is > 0
-			AddToLockVector(q->Get(i));
-
-			// The eventexecutionmode determines the end of the loop -> when its blocking
-			EventExecutionMode eem = q->Get(i)->GetExecutionMode();
-
-			// Is the event done?
-			EventUpdateResponse eur = q->Get(i)->UpdateEvent(elapsedTime, m_entities);
-			if (!eur.IsDone)
-				allDone = false;
-
-			if (eur.Queue && eur.Queue->Count() > 0)
+			// If the event is completed, dont bother looking at it
+			if (!q->Get(i)->IsCompleted())
 			{
-				temp = eur.Queue;
-			}
+				// Add to lock vector if the level is > 0
+				AddToLockVector(q->Get(i));
 
-			// Loop breaks to handle stuff
-			if (eem == EventExecutionMode::BLOCKING)
-			{
-				// Update is done
-				break;
+				// The eventexecutionmode determines the end of the loop -> when its blocking
+				EventExecutionMode eem = q->Get(i)->GetExecutionMode();
+
+				// Is the event done?
+				EventUpdateResponse eur = q->Get(i)->UpdateEvent(elapsedTime, m_entities);
+				if (!eur.IsDone)
+					allDone = false;
+				else
+					RemoveLock(q->Get(i));
+
+				if (eur.Queue && eur.Queue->Count() > 0)
+				{
+					temp = eur.Queue;
+				}
+
+				// Loop breaks to handle stuff
+				if (eem == EventExecutionMode::BLOCKING && allDone == false)
+				{
+					// Update is done
+					break;
+				}
 			}
 		}
 		// The order is i++, then check the condition, so it needs to be decremented
@@ -79,15 +85,11 @@ void EventManager::Update(double elapsedTime)
 			else
 			{
 				// Remove the events from the queue
-				for (int j = i; j >= 0; j--)
-					Erase(j, k);
+				Erase(k);
 			}
 
 			// If the queue is not done, continue updates
-			// COMMENTING THIS NEXT LINE MAY CAUSE PROBLEMS XDXDXDXDXDXDXDDXDXDXDXDXDXD
-			// LIKE AN EVENT RUNNING 2 FRAMES WHEN IT SHOULDNT???
-			// IF LOTS OF FRAMES ARE RUNNING PARRALLEL (PLZ NO FCK ME)
-			//if (q->Count())
+			if (q && !q->IsRepeating() && q->IsDone())
 				Update(elapsedTime);
 		}
 		if (temp->GetID() != -69)
@@ -107,10 +109,24 @@ void EventManager::PushBack(std::shared_ptr<EventQueue> ev)
 			found = true;
 
 	if (!found || ev->GetID() == -1)
+	{
+		for (int i = 0; i < ev->Count(); i++)
+			ev->Get(i)->ResetEvent();
 		m_queues.push_back(ev);
+	}
 }
 
-void EventManager::Erase(unsigned int index, unsigned int queueIndex)
+void EventManager::RemoveLock(std::shared_ptr<IEvent> ev)
+{
+	int i = 0;
+	for (i; i < m_locks.size(); i++)
+		if (m_locks.at(i).get() == ev.get())
+			break;
+	if (i < m_locks.size())
+		m_locks.erase(m_locks.begin() + i);
+}
+
+void EventManager::Erase(unsigned int queueIndex)
 {
 	// Roundabout way of destroying the event in the lock vector and the queue
 	std::shared_ptr<EventQueue> q = m_queues.at(queueIndex);
@@ -121,20 +137,34 @@ void EventManager::Erase(unsigned int index, unsigned int queueIndex)
 		return;
 	}
 
-	std::shared_ptr<IEvent> ev = q->Get(index);
+	//Remove all events from the lock
+	for (int e = 0; e < q->Count(); e++)
+	{
+		std::shared_ptr<IEvent> ev = q->Get(e);
+		RemoveLock(ev);
+	}
+	//q->Remove(index);
 
-	int i = 0;
-	for (i; i < m_locks.size(); i++)
-		if (m_locks.at(i).get() == ev.get())
-			break;
-	m_locks.erase(m_locks.begin() + i);
-	q->Remove(index);
-
-	if (!q->Count())
+	if (IsAllDone(queueIndex))
+	{
 		m_queues.erase(m_queues.begin() + queueIndex);
+	}
 
 	UpdateLockLevel();
 }
+
+bool EventManager::IsAllDone(unsigned int index)
+{
+	bool allDone = true;
+	if (index >= m_queues.size())
+		return true;
+	std::shared_ptr<EventQueue> q = m_queues.at(index);
+	return q->IsDone();
+
+
+	return allDone;
+}
+
 
 // Lock the input to the highest event
 void EventManager::UpdateLockLevel()

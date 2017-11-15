@@ -1,4 +1,5 @@
 #include "eventQueue.h"
+#include "iEvent.h"
 
 
 EventQueue::EventQueue(int id) : m_repeat(false), m_id(id), m_activation(AT_Interact)
@@ -9,6 +10,15 @@ EventQueue::EventQueue(int id) : m_repeat(false), m_id(id), m_activation(AT_Inte
 EventQueue::~EventQueue()
 {
 }
+
+bool EventQueue::IsDone()
+{
+	for (auto x : m_queue)
+		if (!x->IsCompleted())
+			return false;
+	return true;
+}
+
 
 void EventQueue::ClearEvents()
 {

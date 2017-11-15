@@ -193,6 +193,7 @@
     <ClInclude Include="src\eventQueue.h" />
     <ClInclude Include="src\eventMove.h" />
     <ClInclude Include="src\eventManager.h" />
+    <ClInclude Include="src\eventTeleport.h" />
     <ClInclude Include="src\FBO.h" />
     <ClInclude Include="src\font.h" />
     <ClInclude Include="src\fontGraphicsComponent.h" />
@@ -264,6 +265,7 @@
     <ClCompile Include="src\eventQueue.cpp" />
     <ClCompile Include="src\eventMove.cpp" />
     <ClCompile Include="src\eventManager.cpp" />
+    <ClCompile Include="src\eventTeleport.cpp" />
     <ClCompile Include="src\FBO.cpp" />
     <ClCompile Include="src\font.cpp" />
     <ClCompile Include="src\fontGraphicsComponent.cpp" />

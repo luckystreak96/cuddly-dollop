@@ -3,7 +3,6 @@
 
 #include <deque>
 #include <memory>
-//#include "iEvent.h"
 #include "jsonHandler.h"
 
 class IEvent;
@@ -17,6 +16,7 @@ public:
 	~EventQueue();
 	void PushBack(std::shared_ptr<IEvent> ev);
 	int GetID();
+	bool IsDone();
 	unsigned int Count();
 	std::shared_ptr<IEvent> Get(unsigned int index);
 	void Remove(unsigned int index);

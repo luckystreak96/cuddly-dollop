@@ -1,6 +1,6 @@
 #include "entity.h"
 
-Entity::Entity(unsigned int id, bool playerInput) : m_id(id)
+Entity::Entity(unsigned int id, bool playerInput) : m_id(id), m_hasEvents(false)
 {
 	m_graphicsComponent = !playerInput ? std::shared_ptr<GraphicsComponent>(new PlayerGraphicsComponent("res/ghost.png", "TILE")) : std::shared_ptr<GraphicsComponent>(new PlayerGraphicsComponent("res/ghost.png", "TILE"));
 	components.push_back(m_graphicsComponent);
@@ -21,6 +21,17 @@ Entity::Entity(unsigned int id, bool playerInput) : m_id(id)
 
 Entity::~Entity()
 {
+}
+
+void Entity::AddEventQueue(std::shared_ptr<EventQueue> eq)
+{
+	m_events.push_back(eq);
+	m_hasEvents = true;
+}
+
+std::vector<std::shared_ptr<EventQueue>>* Entity::GetQueues()
+{
+	return &m_events;
 }
 
 void Entity::Communicate(std::vector<std::string> msg)

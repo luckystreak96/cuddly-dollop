@@ -68,6 +68,7 @@ private:
 	bool m_bloomEffect;
 	bool m_drawinited;
 	int m_numFrames = 0;
+	std::shared_ptr<JsonHandler> m_jsonHandler;
 	unsigned int m_currentMap;
 	unsigned int m_fontTitle;
 	unsigned int m_fontFPS;

@@ -30,14 +30,14 @@ std::shared_ptr<Entity> EntityFactory::BuildEntity(std::map<std::string, EntityA
 	return result;
 }
 
-std::map<unsigned int, std::shared_ptr<Entity>> EntityFactory::GetEntities(unsigned int map_id)
+std::map<unsigned int, std::shared_ptr<Entity>> EntityFactory::GetEntities(unsigned int map_id, std::shared_ptr<JsonHandler> jh)
 {
 	std::map<unsigned int, std::shared_ptr<Entity>> result = std::map<unsigned int, std::shared_ptr<Entity>>();
 
-	if (!JsonHandler::DocumentNotNull())
+	if (!jh->DocumentNotNull())
 		return result;
 
-	auto& entities = JsonHandler::LoadEntities(map_id);
+	auto& entities = jh->LoadEntities(map_id);
 	if (entities.IsNull())
 		return result;
 

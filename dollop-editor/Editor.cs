@@ -223,6 +223,7 @@ namespace dollop_editor
                         entities.Add(new Point3D(Math.Floor(e.x), InvertHeight((float)Math.Floor(e.y)), e.z), new Tuple<Entity, Rectangle>(e, rectangle));
                 }
 
+                Entities.Clear();
                 Entities = entities;
 
                 return true;

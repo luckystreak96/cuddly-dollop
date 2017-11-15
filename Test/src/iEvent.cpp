@@ -31,3 +31,8 @@ void IEvent::ResetEvent()
 {
 	m_completed = false;
 }
+
+bool IEvent::IsCompleted()
+{
+	return m_completed;
+}

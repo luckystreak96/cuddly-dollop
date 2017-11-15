@@ -43,9 +43,9 @@ MapHandler::MapHandler() : m_mesh(Mesh()), m_id(1)
 	FinalizeSetup();
 }
 
-MapHandler::MapHandler(unsigned int id) : m_mesh(Mesh()), m_id(id)
+MapHandler::MapHandler(unsigned int id, std::shared_ptr<JsonHandler> jh) : m_mesh(Mesh()), m_id(id), m_jsonHandler(jh)
 {
-	auto& map = JsonHandler::LoadMap(id);
+	auto& map = m_jsonHandler->LoadMap(id);
 	if (!map.HasMember("tiles"))
 		return;
 	for (auto& x : map["tiles"].GetArray())

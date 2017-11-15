@@ -97,6 +97,18 @@ unsigned int FontManager::AddFont(bool sTatic, bool temporary, bool lightspeed, 
 	return key;
 }
 
+void FontManager::RemoveFont(unsigned int font)
+{
+	if (m_fonts.size() == 0)
+		return;
+	if (m_fonts.count(font))
+	{
+		if (m_fonts.at(font))
+			delete m_fonts.at(font);
+		m_fonts.erase(font);
+	}
+}
+
 
 unsigned int FontManager::AddDialogueBox(std::string texPath)
 {

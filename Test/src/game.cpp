@@ -30,6 +30,9 @@ bool Game::init(float width, float height)
 
 	Model::GetInstance().init("res/models.data");
 
+	//Setup viewport to fit the window size
+	glViewport(0, 0, (GLsizei)(glutGet(GLUT_WINDOW_WIDTH)), (GLsizei)(glutGet(GLUT_WINDOW_HEIGHT)));
+
 	std::shared_ptr<SceneWorld> world = std::shared_ptr<SceneWorld>(new SceneWorld(1));
 	SceneManager::GetInstance().SetScene(world);
 

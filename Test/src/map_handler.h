@@ -19,7 +19,7 @@ class MapHandler
 {
 public:
 	MapHandler();
-	MapHandler(unsigned int id);
+	MapHandler(unsigned int id, std::shared_ptr<JsonHandler> jh);
 	~MapHandler();
 	MapHandler(const std::string& filePath);
 	void FinalizeSetup();
@@ -39,6 +39,7 @@ private:
 	std::vector<MapTile*> m_tiles = std::vector<MapTile*>();
 	Mesh m_mesh;
 	std::shared_ptr<GraphicsComponent> m_graphics = NULL;
+	std::shared_ptr<JsonHandler> m_jsonHandler;
 	int m_MBO_instances;
 	unsigned int m_id;
 	std::string m_texture;

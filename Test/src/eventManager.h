@@ -18,7 +18,9 @@ public:
 	void SetEntitiesMap(std::map<unsigned int, std::shared_ptr<Entity>>* ents);
 	void SetFlag(unsigned int eventID);
 protected:
-	void Erase(unsigned int index, unsigned int queueIndex);
+	bool IsAllDone(unsigned int index);
+	void Erase(unsigned int queueIndex);
+	void RemoveLock(std::shared_ptr<IEvent> ev);
 	void UpdateLockLevel();
 	void AddToLockVector(std::shared_ptr<IEvent> ev);
 protected:

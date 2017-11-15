@@ -1,9 +1,9 @@
 #include "eventMapChange.h"
 #include "scene_world.h"
 
-EventMapChange::EventMapChange(unsigned int map) : m_map(map)
+EventMapChange::EventMapChange(unsigned int map) : m_map(map), m_firstSetup(true)
 {
-	m_lockLevel = 0;
+	m_lockLevel = 5;
 	m_mode = EventExecutionMode::BLOCKING;
 }
 
@@ -11,10 +11,22 @@ EventUpdateResponse EventMapChange::UpdateEvent(double elapsedTime, std::map<uns
 {
 	EventUpdateResponse eur = EventUpdateResponse();
 	eur.IsDone = true;
-	std::shared_ptr<Scene> s = std::shared_ptr<Scene>(new SceneWorld(m_map));
-	SceneWorld::SetNextScene(s);
+
+	if (m_firstSetup)
+	{
+		// Start a fadeout?
+		m_firstSetup = false;
+	}
+	else if(1/*fadeout is done*/)
+	{
+		SceneWorld::SetNextScene(std::shared_ptr<Scene>(new SceneWorld(m_map)));
+		return eur;
+	}
+
+	eur.IsDone = false;
 	return eur;
 }
+
 
 void EventMapChange::ResetEvent()
 {

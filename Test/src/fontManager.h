@@ -21,7 +21,7 @@ public:
 	void SetText(unsigned int font, std::string text = " ", Vector3f location = Vector3f(), bool centered = false);
 	unsigned int AddFont(bool sTatic = false, bool temporary = false, bool lightspeed = false, std::string texPath = "res/fonts/basic.png");
 	unsigned int AddDialogueBox(std::string texPath = "res/fonts/basic.png");
-	void RemoveFont(unsigned int font) { m_fonts.erase(font); }
+	void RemoveFont(unsigned int font);
 	Font* GetFont(unsigned int key);
 	void ClearFonts();
 	bool IsEmpty();

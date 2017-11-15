@@ -11,5 +11,6 @@ EventCaller::EventCaller(unsigned int entity_id, unsigned int queue_id) : m_targ
 
 void EventCaller::ResetEvent()
 {
+	m_firstTime = true;
 	IEvent::ResetEvent();
 }

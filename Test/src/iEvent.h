@@ -29,6 +29,7 @@ public:
 	virtual EventUpdateResponse UpdateEvent(double elapsedTime, std::map<unsigned int, std::shared_ptr<Entity>>* ents);
 	virtual void ResetEvent();
 	unsigned int GetLockLevel();
+	bool IsCompleted();
 	EventExecutionMode GetExecutionMode();
 	void SetExecutionMode(EventExecutionMode eem);
 protected:

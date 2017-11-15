@@ -11,10 +11,8 @@ SceneWorld::SceneWorld(unsigned int map_id) : m_acceptInput(false), m_currentMap
 bool SceneWorld::Init()
 {
 	NextScene = std::shared_ptr<Scene>(NULL);
-	JsonHandler::LoadJsonFromFile("res/data/" + std::to_string(m_currentMap) + ".json");
-
-	//Setup viewport to fit the window size
-	glViewport(0, 0, (GLsizei)(glutGet(GLUT_WINDOW_WIDTH)), (GLsizei)(glutGet(GLUT_WINDOW_HEIGHT)));
+	m_jsonHandler = std::shared_ptr<JsonHandler>(new JsonHandler());
+	m_jsonHandler->LoadJsonFromFile("res/data/" + std::to_string(m_currentMap) + ".json");
 
 	m_bloomEffect = true;
 
@@ -28,17 +26,14 @@ bool SceneWorld::Init()
 	m_pause = false;
 	m_acceptInput = true;
 
-	m_mapHandler = std::shared_ptr<MapHandler>(new MapHandler(m_currentMap));
+	m_mapHandler = std::shared_ptr<MapHandler>(new MapHandler(m_currentMap, m_jsonHandler));
 
-	m_celist = EntityFactory::GetEntities(m_currentMap);
+	m_celist = EntityFactory::GetEntities(m_currentMap, m_jsonHandler);
 	m_eventManager.SetEntitiesMap(&m_celist);
 
 	// THIS IS NOT GOOD - THE PLAYER NEEDS TO BE FOUND, NOT JUST BE ID 1
 	if (m_celist.count(1))
 		m_player = m_celist.at(1);
-
-	if (!FontManager::GetInstance().IsEmpty())
-		FontManager::GetInstance().ClearFonts();
 
 	m_fontTitle = FontManager::GetInstance().AddFont(false, false);
 	m_fontFPS = FontManager::GetInstance().AddFont(true, false, true);
@@ -47,11 +42,12 @@ bool SceneWorld::Init()
 	// Autorun events
 	for (auto e : m_celist)
 	{
-		for (auto x : EventFactory::LoadEvent(m_currentMap, e.first))
+		for (auto x : EventFactory::LoadEvent(m_currentMap, e.first, m_jsonHandler))
+		{
+			e.second->AddEventQueue(x);
 			if (x->GetActivationType() == AT_Autorun)
 				m_eventManager.PushBack(x);
-			else
-				x->ClearEvents();
+		}
 	}
 
 	return true;
@@ -59,6 +55,8 @@ bool SceneWorld::Init()
 
 SceneWorld::~SceneWorld()
 {
+	FontManager::GetInstance().RemoveFont(m_fontFPS);
+	FontManager::GetInstance().RemoveFont(m_fontTitle);
 }
 
 
@@ -88,6 +86,9 @@ void SceneWorld::ManageInput()
 
 	if (InputManager::GetInstance().FrameKeyStatus('b', AnyRelease))
 		m_bloomEffect = !m_bloomEffect;
+
+	if (InputManager::GetInstance().FrameKeyStatus('p', AnyRelease))
+		m_pause = !m_pause;
 
 	static float bloomint = 0.3f;
 	if (InputManager::GetInstance().FrameKeyStatus('u')) {
@@ -170,11 +171,10 @@ void SceneWorld::Interact()
 
 void SceneWorld::TriggerEvents(unsigned int entity_id)
 {
-	for (auto x : EventFactory::LoadEvent(m_currentMap, entity_id))
-		if (x->GetActivationType() == AT_Interact)
-			m_eventManager.PushBack(x);			
-		else
-			x->ClearEvents();
+	if (m_celist.count(entity_id))
+		for (auto x : *m_celist.at(entity_id)->GetQueues())
+			if (x->GetActivationType() == AT_Interact)
+				m_eventManager.PushBack(x);
 }
 
 std::shared_ptr<Scene> SceneWorld::Update()
@@ -192,11 +192,9 @@ std::shared_ptr<Scene> SceneWorld::Update()
 	std::vector<std::shared_ptr<Entity>> collided = Physics_2D::Collision(&m_celist, m_mapHandler);
 	for (auto entity : collided)
 	{
-		for (auto q : EventFactory::LoadEvent(m_currentMap, entity->GetID()))
-			if (q->GetActivationType() == AT_Touch)
-				m_eventManager.PushBack(q);
-			else
-				q->ClearEvents();
+		for (auto x : *entity->GetQueues())
+			if (x->GetActivationType() == AT_Touch)
+				m_eventManager.PushBack(x);
 	}
 
 	//Update
@@ -279,7 +277,7 @@ void SceneWorld::RenderPass()
 
 		Renderer::GetInstance().Draw();
 
-		bool darkBloom = true;
+		bool darkBloom = false;
 		m_bloom.End(darkBloom);
 
 	}

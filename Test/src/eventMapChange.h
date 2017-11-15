@@ -3,6 +3,9 @@
 
 #include "iEvent.h"
 #include "entity.h"
+#include <thread>
+#include <mutex>
+#include "scene.h"
 
 class EventMapChange : public IEvent
 {
@@ -14,6 +17,7 @@ public:
 
 private:
 	unsigned int m_map;
+	bool m_firstSetup;
 };
 
 #endif // !DIALOGUE_BOX_H__

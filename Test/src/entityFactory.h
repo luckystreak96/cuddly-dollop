@@ -14,7 +14,7 @@ class EntityFactory
 {
 public:
 	static std::shared_ptr<Entity> BuildEntity(std::map<std::string, EntityArgType> args);
-	static std::map<unsigned int, std::shared_ptr<Entity>> GetEntities(unsigned int map_id);
+	static std::map<unsigned int, std::shared_ptr<Entity>> GetEntities(unsigned int map_id, std::shared_ptr<JsonHandler> jh);
 };
 
 #endif // !DIALOGUE_GRAPH_H__

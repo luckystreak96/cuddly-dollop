@@ -35,6 +35,10 @@ std::shared_ptr<IEvent> EventFactory::BuildEvent(EventTypes et, std::map<std::st
 		result = std::shared_ptr<IEvent>(new EventMapChange(id));
 		break;
 	case EventTypes::ET_Teleport:
+		result = std::shared_ptr<IEvent>(new EventTeleport(id,
+			args.count("x") ? std::get<float>(args.at("x")) : 0.0f,
+			args.count("y") ? std::get<float>(args.at("y")) : 0.0f,
+			args.count("z") ? std::get<float>(args.at("z")) : 0.0f));
 		break;
 	case EventTypes::ET_MoveRight:
 		result = std::shared_ptr<IEvent>(new EventMove(id,
@@ -141,11 +145,11 @@ void EventFactory::SetActivationType(std::shared_ptr<EventQueue> eq, std::string
 	}
 }
 
-std::vector<std::shared_ptr<EventQueue>> EventFactory::LoadEvent(int map_id, unsigned int entity_id)
+std::vector<std::shared_ptr<EventQueue>> EventFactory::LoadEvent(int map_id, unsigned int entity_id, std::shared_ptr<JsonHandler> jh)
 {
 	std::vector<std::shared_ptr<EventQueue>> result = std::vector<std::shared_ptr<EventQueue>>();
 
-	auto& ques = JsonHandler::LoadQueues(map_id, entity_id).GetArray();
+	auto& ques = jh->LoadQueues(map_id, entity_id).GetArray();
 	for (auto& x : ques)
 	{
 		//Make sure that the event is flagged as valid
@@ -206,11 +210,11 @@ std::vector<std::shared_ptr<EventQueue>> EventFactory::LoadEvent(int map_id, uns
 	return result;
 }
 
-std::shared_ptr<EventQueue> EventFactory::LoadEvent(int map_id, unsigned int entity_id, unsigned int queue_id)
+std::shared_ptr<EventQueue> EventFactory::LoadEvent(int map_id, unsigned int entity_id, unsigned int queue_id, std::shared_ptr<JsonHandler> jh)
 {
 	std::shared_ptr<EventQueue> result = std::shared_ptr<EventQueue>(new EventQueue(-1));
 
-	auto& ques = JsonHandler::LoadQueues(map_id, entity_id).GetArray();
+	auto& ques = jh->LoadQueues(map_id, entity_id).GetArray();
 	for (auto& x : ques)
 	{
 		//Make sure that the event is flagged as valid
@@ -431,18 +435,18 @@ std::vector<std::shared_ptr<EventQueue>> EventFactory::LoadEvent(rapidjson::Valu
 void EventFactory::FlagEvent(int map_id, unsigned int entity_id, unsigned int queue_id, int flag, std::string DATA_FILE)
 {
 	// Check out all the queues
-	const auto& ques = JsonHandler::LoadQueues(map_id, entity_id).GetArray();
-	for (auto& x : ques)
-	{
-		if (x.HasMember("id") && x["id"].GetInt() == queue_id)
-		{
-			//Make sure that the event has a flag property
-			if (x.HasMember("flag"))
-			{
-				x["flag"].SetInt(flag);
-			}
-		}
-	}
+	//const auto& ques = JsonHandler::LoadQueues(map_id, entity_id).GetArray();
+	//for (auto& x : ques)
+	//{
+	//	if (x.HasMember("id") && x["id"].GetInt() == queue_id)
+	//	{
+	//		//Make sure that the event has a flag property
+	//		if (x.HasMember("flag"))
+	//		{
+	//			x["flag"].SetInt(flag);
+	//		}
+	//	}
+	//}
 }
 
 // Defined here to avoid circular dependancies
@@ -453,7 +457,11 @@ EventUpdateResponse EventCaller::UpdateEvent(double elapsedTime, std::map<unsign
 
 	if (m_firstTime)
 	{
-		m_queue = EventFactory::LoadEvent(-1, m_target, m_targetQueue);
+		// Possible that this steals the instance of and reks other events - be wary
+		for (auto x : *ents->at(m_target)->GetQueues())
+			if (x->GetID() == m_targetQueue)
+				m_queue = x;
+		/* EventFactory::LoadEvent(-1, m_target, m_targetQueue);*/
 		if (m_queue->GetID() == -1)
 		{
 			m_completed = true;
@@ -465,7 +473,7 @@ EventUpdateResponse EventCaller::UpdateEvent(double elapsedTime, std::map<unsign
 	}
 	else
 	{
-		if (m_queue->Count() == 0)
+		if (m_queue->IsDone())
 		{
 			m_completed = true;
 			eur.IsDone = true;

@@ -1,8 +1,11 @@
 #include "jsonHandler.h"
 
-rapidjson::Document JsonHandler::DataDocument = rapidjson::Document();
-rapidjson::Document JsonHandler::ReferenceDocument = rapidjson::Document();
-std::string JsonHandler::File = "";
+JsonHandler::JsonHandler()
+{
+	JsonHandler::DataDocument = rapidjson::Document();
+	JsonHandler::ReferenceDocument = rapidjson::Document();
+	JsonHandler::File = "";
+}
 
 bool JsonHandler::DocumentNotNull()
 {
