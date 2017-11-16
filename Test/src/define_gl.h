@@ -20,8 +20,8 @@
 #define ORTHO_TOP 8
 #define ORTHO_LEFT -15
 #define ORTHO_RIGHT 15
-#define ORTHO_NEAR 10
-#define ORTHO_FAR -10
+#define ORTHO_NEAR 100
+#define ORTHO_FAR -100
 
 //#define RATIO (WINDOW_WIDTH / WINDOW_HEIGHT)
 #define RATIO (32/16)
