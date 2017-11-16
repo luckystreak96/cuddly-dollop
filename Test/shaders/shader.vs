@@ -13,13 +13,13 @@ uniform mat4 gModel = mat4(1.0);
 
 void main()
 {
-	if(Position.x == 0 && Position.y == 0 && Position.z == 0)
+	if(gModel[3][0] == 0 && gModel[3][1] == 0 && gModel[3][2] == 0)
 	{
 		gl_Position = gWorld * gModel * vec4(Position.x, Position.y, Position.z, 1.0);
 	}
 	else
 	{
-		gl_Position = gWorld * gModel * vec4(Position.x, Position.y, Position.z - Position.y * 0.2, 1.0);
+		gl_Position = gWorld * gModel * vec4(Position.x, Position.y, ((-0.5 + Position.y) * -2.0), 1.0);
 	}
     TexCoord0 = TexCoord;
 }
