@@ -2,9 +2,9 @@
 
 namespace Physics_2D {
 
-	bool IsLegalHeight(float tilez, float otherz)
+	bool IsLegalHeight(float tilez, float entityz)
 	{
-		if (tilez < otherz + STAND_HEIGHT - STEP_HEIGHT || tilez > otherz + STAND_HEIGHT + STEP_HEIGHT)
+		if (tilez < entityz + STAND_HEIGHT - STEP_HEIGHT || tilez > entityz + STAND_HEIGHT + STEP_HEIGHT)
 			return false;
 
 		return true;
@@ -50,8 +50,9 @@ namespace Physics_2D {
 
 	int TileTouchCount(std::array<float, 6> bb)
 	{
+		assert(bb.size() == 6);
 		if (bb.size() != 6)
-			return -1;
+			return 0;
 
 		//Get the borders and floor/ceil + area formula to know how many the bb is touching
 		return (int)(ceil(bb[Right]) - floor(bb[Left])) *
@@ -148,7 +149,7 @@ namespace Physics_2D {
 		return touchCounter;
 	}
 
-	//returns number of tiles that are legally touched
+	//returns number of tiles that are legally touching
 	int TouchCount(std::vector<std::shared_ptr<PhysicsComponent>>* touching, float targetHeight)
 	{
 		int touchCounter = 0;
@@ -158,7 +159,20 @@ namespace Physics_2D {
 
 			//Disregard illegal blocks
 			if (!IsLegalHeight(z, targetHeight))
+			{
+				//if (IsTileCollideHeight(targetHeight, z))
+				//{
+				//	for (auto s : *touching)
+				//	{
+				//		if (s->Position().x == ents->Position().x && s->Position().y == ents->Position().y)
+				//		{
+				//			touchCounter--;
+				//			break;
+				//		}
+				//	}
+				//}
 				continue;
+			}
 
 			touchCounter++;
 		}
@@ -424,5 +438,262 @@ namespace Physics_2D {
 		}
 		return result;
 	}
-}
 
+
+	// "Collisions" happens in 1 of 2 cases:
+	// 1 - The object is going somewhere that lacks any valid blocks (ex: walking off a cliff -- the other blocks are too far)
+	// 2 - The object bumps into something within his z-range (if the z is 4, then any object within the range [4,5[ )
+	//		For objects greater than 1.5 higher, the object goes under it.
+	std::vector<std::shared_ptr<Entity>> CollisionRemastered(std::map<unsigned int, std::shared_ptr<Entity>>* clist, std::vector<std::shared_ptr<MapTile>>* mt)
+	{
+		std::vector<std::shared_ptr<Entity>> result = std::vector<std::shared_ptr<Entity>>();
+
+		int playerId = -1;
+
+		// Set player
+		if (clist->count(1))
+			playerId = 1;
+
+		// What if a dude NOT falling off a cliff causes a direct collision?
+		// No way to know right now unless we redo the whole thing twice
+		//for (int redo = 0; redo < 1; redo++)
+		//{
+
+			//How to deal with a collision
+			//	1: Use velocity/elapsed time to know what collided first (x or y)
+			//	2: Change the velocity of that direction to 0
+
+			//	2: Ensure that the dude isnt falling off a cliff
+			//			a: Check what cooordinates the player is touching
+			//			b: Make sure all those tiles are under him (z to z - 0.5, OR z to z + 0.5, he cant go up and down a cliff at the same time -- act as collision)
+			//	3: Set the object to the right height
+			//			a: What tiles/coordinates is the object touching
+			//			b: Which is the highest legal tile (some could be very high) - move object there
+
+			// Touching is used throughout the whole method
+		std::map<unsigned int, std::vector<std::shared_ptr<PhysicsComponent>>> touching;
+		for (auto xs : *clist)
+		{
+			std::shared_ptr<Entity> x = xs.second;
+			int id = x->GetID();
+			touching.emplace(id, std::vector<std::shared_ptr<PhysicsComponent>>());
+
+
+			//Create list of touching
+			for (auto ts : *mt)
+			{
+				auto bb1 = x->Physics()->GetMoveBoundingBox();
+				auto bb2 = ts->Physics()->GetMoveBoundingBox();
+				float bb2c = bb2.at(AABB::Close);
+				float bb1c = bb1.at(AABB::Close);
+				float bb2l = bb2.at(AABB::Left);
+				float bb1r = bb1.at(AABB::Right);
+
+				if (bb2.at(AABB::Close) == 5.0f)
+					if (bb2l > bb1r)
+						break;
+				if (Physics::Intersect2D(bb1, bb2))
+					touching.at(id).push_back(ts->Physics());
+			}
+
+
+
+			float oz = x->Physics()->Position().z;
+
+			//Remove Dupes (Blocks that are at the same height but one is irrelevant)
+			std::vector<std::shared_ptr<PhysicsComponent>> dupes = FindDupes(&touching.at(id), oz);
+
+			for (auto x : dupes)
+				touching.at(id).erase(std::remove(touching.at(id).begin(), touching.at(id).end(), x));
+
+			//What is this object touching
+
+			int mustTouch = TileTouchCount(x->Physics()->GetMoveBoundingBox());
+			//Z-values
+			float max = -10000;
+			float min = 10000;
+
+			if (id == 1)
+				int lol = 69;
+			int touchCounter = TouchCount(&touching.at(id), oz);
+
+			FindMinMaxLegalZ(&touching.at(id), min, max, oz);
+
+			dupes.clear();
+
+			if (touchCounter < mustTouch)
+			{
+				// X + Y movement is illegal
+				// If moving in only X or Y is legal and only the other illegal, just collide in that axis
+
+				// Here we make bounding boxes that test for one direction at a time
+				std::array<float, 6> bbx = std::array<float, 6>(x->Physics()->GetMoveBoundingBox());
+				bbx[Down] = x->Physics()->GetBoundingBox()[Down];// Gets the up down from the pre-move bb
+				bbx[Up] = x->Physics()->GetBoundingBox()[Up];
+				int mustTouchX = TileTouchCount(bbx);
+
+				std::array<float, 6> bby = std::array<float, 6>(x->Physics()->GetMoveBoundingBox());
+				bby[Left] = x->Physics()->GetBoundingBox()[Left];// Gets the left right from the pre-move bb
+				bby[Right] = x->Physics()->GetBoundingBox()[Right];
+				int mustTouchY = TileTouchCount(bby);
+
+				std::vector<std::shared_ptr<PhysicsComponent>> touchX = std::vector<std::shared_ptr<PhysicsComponent>>();
+				std::vector<std::shared_ptr<PhysicsComponent>> touchY = std::vector<std::shared_ptr<PhysicsComponent>>();
+
+				//Which in touching is the obj touching
+				for (auto x : touching.at(id))
+				{
+					if (Physics::Intersect2D(bbx, x->GetMoveBoundingBox()))
+						touchX.push_back(x);
+					if (Physics::Intersect2D(bby, x->GetMoveBoundingBox()))
+						touchY.push_back(x);
+				}
+
+				int touchingX = TouchCount(&touchX, oz);
+				int touchingY = TouchCount(&touchY, oz);
+
+				//Only 1 of them is true
+				if ((touchingX == mustTouchX) != (touchingY == mustTouchY))
+				{
+					if (touchingX == mustTouchX)
+					{
+						for (auto tx : touchX)
+							if (!IsLegalHeight(tx->Position().z, oz))
+								ApplyCollision(x->Physics(), tx, Axis::Y);
+						touching.at(id) = touchX;
+					}
+					else if (touchingY == mustTouchY)
+					{
+						for (auto tx : touchY)
+							if (!IsLegalHeight(tx->Position().z, oz))
+								ApplyCollision(x->Physics(), tx, Axis::X);
+						touching.at(id) = touchY;
+					}
+				}
+				else
+
+					//...collide with everything not at a legal height
+					for (auto tx : touching.at(id))
+					{
+						float z = tx->Position().z;
+
+						//collide with illegal blocks
+						if (!IsLegalHeight(z, oz))
+						{
+							ApplyCollision(x->Physics(), tx);
+							dupes.push_back(tx);
+						}
+					}
+			}
+			//If youre trying to touch 2 different heights at once or you arent touching enough blocks...
+			else if (abs(min - max) > STEP_HEIGHT)
+			{
+				if (x->GetID() == 1)
+					int lol = 69;
+				//...collide with everything not at your exact height
+				for (auto t : touching.at(id))
+				{
+					float z = t->Position().z;
+
+					if (z != oz + STAND_HEIGHT)
+					{
+						ApplyCollision(x->Physics(), t);
+						dupes.push_back(t);
+					}
+				}
+			}
+
+			// Remove the invalid blocks we arent colliding with anymore to set the height
+			for (auto x : dupes)
+				touching.at(id).erase(std::remove(touching.at(id).begin(), touching.at(id).end(), x));
+
+			// Collide with tiles
+			TileCollision(x, touching.at(id));
+
+			//Set height to highest
+			min = 1000;
+
+			for (auto tx : touching.at(id))
+			{
+				float z = tx->Position().z;
+
+				//Disregard illegal blocks
+				if (!IsLegalHeight(z, oz))
+					continue;
+
+				//If its the highest, set max to it
+				if (z < min)
+					min = z;
+			}
+
+			if (min != 1000)
+				x->Physics()->AbsolutePosition(Vector3f(-1, -1, min - STAND_HEIGHT), Vector3f(0, 0, 1));
+		}
+
+
+		for (auto xs : *clist) {
+			auto x = xs.second;
+
+			// Only the entities will be colliding
+				// Don't collide against other entities
+			for (auto xs2 : *clist)
+			{
+				auto x2 = xs2.second;
+				// We dont want to re-pass the same collision checks
+				if (x2 == x)
+					continue;
+
+				//Are the objects inside each other right now? (nothing will go fast enough to skip this)
+				std::array<float, 6> lol1 = x->Physics()->GetMoveBoundingBox();
+				std::array<float, 6> lol2 = x2->Physics()->GetMoveBoundingBox();
+
+				// This is all assuming that the models are 2d, lets make sure that they are
+				assert(lol1.at(AABB::Close) == lol1.at(AABB::Far));
+				assert(lol2.at(AABB::Close) == lol2.at(AABB::Far));
+				if (!(abs(lol1.at(AABB::Close) - lol2.at(AABB::Close)) < STAND_HEIGHT && Physics::Intersect2D(lol1, lol2)))
+					continue;
+
+				ApplyCollision(x->Physics(), x2->Physics());
+
+				// Shoot out the event cause its touching the player
+				if (playerId != -1)
+					if (x->GetID() == playerId || x2->GetID() == playerId)
+						result.push_back(x->GetID() == playerId ? x2 : x);
+			}
+
+		}
+
+		//}
+		return result;
+	}
+
+	// Returns whether a tileheight would collide with the entityheight
+	bool IsTileCollideHeight(float entityHeight, float colliderHeight)
+	{
+		float dif = entityHeight + STAND_HEIGHT - colliderHeight;
+		return dif > STEP_HEIGHT && dif <= STAND_HEIGHT;
+	}
+
+	void TileCollision(std::shared_ptr<Entity> x, std::vector<std::shared_ptr<PhysicsComponent>> p)
+	{
+		//	1: Check if there's any collisions
+		//			a: Compare BB to see if instersection
+		//			b: Deal with it
+		for (auto tou : p)
+		{
+			//Are the objects inside each other right now? (nothing will go fast enough to skip this)
+			std::array<float, 6> lol1 = x->Physics()->GetMoveBoundingBox();
+			std::array<float, 6> lol2 = tou->GetMoveBoundingBox();
+
+			// This is all assuming that the models are 2d, lets make sure that they are
+			assert(lol1.at(AABB::Close) == lol1.at(AABB::Far));
+			assert(lol2.at(AABB::Close) == lol2.at(AABB::Far));
+			float dif = lol1.at(AABB::Close) - lol2.at(AABB::Close);
+			if (!(dif <= STEP_HEIGHT && dif >= 0.0f && Physics::Intersect2D(lol1, lol2)))
+				continue;
+
+			ApplyCollision(x->Physics(), tou);
+		}
+	}
+
+}

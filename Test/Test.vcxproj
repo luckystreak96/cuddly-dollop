@@ -178,6 +178,7 @@
     <ClInclude Include="src\blurEffect.h" />
     <ClInclude Include="src\blur_framebuffer.h" />
     <ClInclude Include="src\callbacks.h" />
+    <ClInclude Include="src\collisionManager.h" />
     <ClInclude Include="src\combineEffect.h" />
     <ClInclude Include="src\define.h" />
     <ClInclude Include="src\define_gl.h" />
@@ -251,6 +252,7 @@
     <ClCompile Include="src\bloomEffect.cpp" />
     <ClCompile Include="src\blurEffect.cpp" />
     <ClCompile Include="src\blur_framebuffer.cpp" />
+    <ClCompile Include="src\collisionManager.cpp" />
     <ClCompile Include="src\combineEffect.cpp" />
     <ClCompile Include="src\define.cpp" />
     <ClCompile Include="src\dialogueBox.cpp" />

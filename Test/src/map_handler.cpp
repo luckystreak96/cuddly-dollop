@@ -6,25 +6,25 @@ MapHandler::MapHandler() : m_mesh(Mesh()), m_id(1)
 {
 	srand(clock());
 
-	m_tiles.push_back(new MapTile(Vector3f(4, 3, 4.0f), COMPOSITION, "res/pimkin.png"));
-	m_tiles.push_back(new MapTile(Vector3f(5, 3, 4.0f), COMPOSITION, "res/pumpkin.png"));
-	m_tiles.push_back(new MapTile(Vector3f(2, 4, 4), COMPOSITION, "res/platform.png"));
-	m_tiles.push_back(new MapTile(Vector3f(2, 3, 4.5f), COMPOSITION, "res/yellowGrass.png"));
-	m_tiles.push_back(new MapTile(Vector3f(3, 4, 3.5f), COMPOSITION, "res/bridge.png"));
-	m_tiles.push_back(new MapTile(Vector3f(4, 4, 3.0f), COMPOSITION, "res/bridge.png"));
-	m_tiles.push_back(new MapTile(Vector3f(5, 4, 3.0f), COMPOSITION, "res/bridge.png"));
-	m_tiles.push_back(new MapTile(Vector3f(6, 4, 3.5f), COMPOSITION, "res/bridge.png"));
-	m_tiles.push_back(new MapTile(Vector3f(7, 4, 4), COMPOSITION, "res/platform.png"));
-	m_tiles.push_back(new MapTile(Vector3f(8, 4, 3.5f), COMPOSITION, "res/platform.png"));
-	m_tiles.push_back(new MapTile(Vector3f(9, 4, 3.0f), COMPOSITION, "res/platform.png"));
-	m_tiles.push_back(new MapTile(Vector3f(10, 4, 2.5f), COMPOSITION, "res/platform.png"));
-	m_tiles.push_back(new MapTile(Vector3f(11, 4, 2.0f), COMPOSITION, "res/platform.png"));
-	m_tiles.push_back(new MapTile(Vector3f(12, 4, 1.5f), COMPOSITION, "res/platform.png"));
-	m_tiles.push_back(new MapTile(Vector3f(13, 4, 1.0f), COMPOSITION, "res/platform.png"));
-	m_tiles.push_back(new MapTile(Vector3f(14, 4, 0.5f), COMPOSITION, "res/platform.png"));
-	m_tiles.push_back(new MapTile(Vector3f(7, 5, 4), COMPOSITION, "res/platform.png"));
-	m_tiles.push_back(new MapTile(Vector3f(7, 6, 4), COMPOSITION, "res/platform.png"));
-	m_tiles.push_back(new MapTile(Vector3f(7, 3, 4.5f), COMPOSITION, "res/yellowGrass.png"));
+	m_tiles.push_back(std::shared_ptr<MapTile>(new MapTile(Vector3f(4, 3, 4.0f), COMPOSITION, "res/pimkin.png")));
+	m_tiles.push_back(std::shared_ptr<MapTile>(new MapTile(Vector3f(5, 3, 4.0f), COMPOSITION, "res/pumpkin.png")));
+	m_tiles.push_back(std::shared_ptr<MapTile>(new MapTile(Vector3f(2, 4, 4), COMPOSITION, "res/platform.png")));
+	m_tiles.push_back(std::shared_ptr<MapTile>(new MapTile(Vector3f(2, 3, 4.5f), COMPOSITION, "res/yellowGrass.png")));
+	m_tiles.push_back(std::shared_ptr<MapTile>(new MapTile(Vector3f(3, 4, 3.5f), COMPOSITION, "res/bridge.png")));
+	m_tiles.push_back(std::shared_ptr<MapTile>(new MapTile(Vector3f(4, 4, 3.0f), COMPOSITION, "res/bridge.png")));
+	m_tiles.push_back(std::shared_ptr<MapTile>(new MapTile(Vector3f(5, 4, 3.0f), COMPOSITION, "res/bridge.png")));
+	m_tiles.push_back(std::shared_ptr<MapTile>(new MapTile(Vector3f(6, 4, 3.5f), COMPOSITION, "res/bridge.png")));
+	m_tiles.push_back(std::shared_ptr<MapTile>(new MapTile(Vector3f(7, 4, 4), COMPOSITION, "res/platform.png")));
+	m_tiles.push_back(std::shared_ptr<MapTile>(new MapTile(Vector3f(8, 4, 3.5f), COMPOSITION, "res/platform.png")));
+	m_tiles.push_back(std::shared_ptr<MapTile>(new MapTile(Vector3f(9, 4, 3.0f), COMPOSITION, "res/platform.png")));
+	m_tiles.push_back(std::shared_ptr<MapTile>(new MapTile(Vector3f(10, 4, 2.5f), COMPOSITION, "res/platform.png")));
+	m_tiles.push_back(std::shared_ptr<MapTile>(new MapTile(Vector3f(11, 4, 2.0f), COMPOSITION, "res/platform.png")));
+	m_tiles.push_back(std::shared_ptr<MapTile>(new MapTile(Vector3f(12, 4, 1.5f), COMPOSITION, "res/platform.png")));
+	m_tiles.push_back(std::shared_ptr<MapTile>(new MapTile(Vector3f(13, 4, 1.0f), COMPOSITION, "res/platform.png")));
+	m_tiles.push_back(std::shared_ptr<MapTile>(new MapTile(Vector3f(14, 4, 0.5f), COMPOSITION, "res/platform.png")));
+	m_tiles.push_back(std::shared_ptr<MapTile>(new MapTile(Vector3f(7, 5, 4), COMPOSITION, "res/platform.png")));
+	m_tiles.push_back(std::shared_ptr<MapTile>(new MapTile(Vector3f(7, 6, 4), COMPOSITION, "res/platform.png")));
+	m_tiles.push_back(std::shared_ptr<MapTile>(new MapTile(Vector3f(7, 3, 4.5f), COMPOSITION, "res/yellowGrass.png")));
 
 	//m_tiles.push_back(new Tile(Vector3f(2, 4, 4), COMPOSITION, "res/pattern.png", Vector3f(1.f, 0.5f, 1.f), Vector3f(1.f, 0.f, 1.f)));
 
@@ -37,7 +37,7 @@ MapHandler::MapHandler() : m_mesh(Mesh()), m_id(1)
 			num = num > 4 ? 1 : num;
 			//m_tiles.push_back(new MapTile(Vector3f((float)x, (float)y, 5.f), COMPOSITION, "res/grass_0" + std::to_string(num) + ".png"));
 			//if(num == 4) m_tiles.push_back(new MapTile(Vector3f((float)x, (float)y, 4.f), COMPOSITION, "res/pumpkin.png"));
-			m_tiles.push_back(new MapTile(Vector3f((float)x, (float)y, 5.f), COMPOSITION, "res/yellowGrass.png"));
+			m_tiles.push_back(std::shared_ptr<MapTile>(new MapTile(Vector3f((float)x, (float)y, 5.f), COMPOSITION, "res/yellowGrass.png")));
 		}
 
 	FinalizeSetup();
@@ -56,7 +56,7 @@ MapHandler::MapHandler(unsigned int id, std::shared_ptr<JsonHandler> jh) : m_mes
 		pos.y = x["y"].GetFloat();
 		pos.z = x["z"].GetFloat();
 		sprite = std::string("res/sprites/") + std::string(x["sprite"].GetString());
-		m_tiles.push_back(new MapTile(pos, COMPOSITION, sprite));
+		m_tiles.push_back(std::shared_ptr<MapTile>(new MapTile(pos, COMPOSITION, sprite)));
 	}
 
 	FinalizeSetup();
@@ -93,8 +93,6 @@ void MapHandler::FinalizeSetup()
 
 MapHandler::~MapHandler()
 {
-	for (auto x : m_tiles)
-		delete x;
 }
 
 MapHandler::MapHandler(const std::string& filePath)
@@ -108,7 +106,7 @@ void MapHandler::SetupMesh()
 	std::sort(m_tiles.begin(), m_tiles.end(), MapTile::SortFunc);
 	for (auto t : m_tiles)
 	{
-		MapTile* temp = t;
+		std::shared_ptr<MapTile> temp = t;
 		m_mesh.AddToMesh(temp->Physics()->GetVertices(), temp->Physics()->GetIndices(), temp->Physics()->GetHighestIndex(), temp->Physics()->Position(), temp->GetTexture()/*, temp->GetTransformation()*/);
 	}
 
@@ -172,7 +170,7 @@ void MapHandler::Draw()
 	m_graphics->Draw();
 }
 
-std::vector<MapTile*>* MapHandler::Tiles()
+std::vector<std::shared_ptr<MapTile>>* MapHandler::Tiles()
 {
 	return &m_tiles;
 }

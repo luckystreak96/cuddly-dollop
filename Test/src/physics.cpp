@@ -90,20 +90,6 @@ namespace Physics
 	//Two cubic bounding boxes intersect?
 	bool Intersect3D(std::array<float, 6>& local, std::array<float, 6>& other)
 	{
-		//float x1 = local.Get(AABB::Left, 0);
-		//float x2 = other.Get(AABB::Left, 0);
-		//float x3 = local.Get(AABB::Right, 0);
-		//float x4 = other.Get(AABB::Right, 0);
-		//float y1 = local.Get(AABB::Up, 0);
-		//float y2 = other.Get(AABB::Up, 0);
-		//float y3 = local.Get(AABB::Down, 0);
-		//float y4 = other.Get(AABB::Down, 0);
-		float z1 = local[Close];
-		float z2 = other[Close];
-		float z3 = local[Far];
-		float z4 = other[Far];
-
-
 		//Left-Right
 		if (!(local[Left] <= other[Right] && local[Right] >= other[Left]))
 			return false;

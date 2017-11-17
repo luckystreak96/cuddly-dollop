@@ -6,7 +6,7 @@ Entity::Entity(unsigned int id, std::string spritesheet, bool playerInput) : m_i
 	components.push_back(m_graphicsComponent);
 
 	//m_physicsComponent = playerInput ? new PlayerPhysicsComponent(Vector3f(), "TILE", Vector3f(0.9f, 0.4f, -0.45f), Vector3f(1.0f, 0, 0)) : new PlayerPhysicsComponent(Vector3f(), "TILE", Vector3f(0.9f, 0.4f, -0.45f), Vector3f(1.0f, 0, 0));
-	m_physicsComponent = std::shared_ptr<PhysicsComponent>(new PlayerPhysicsComponent(Vector3f(), "TILE", Vector3f(0.8f, 0.4f, -0.45f), Vector3f(1, 0, 0)));
+	m_physicsComponent = std::shared_ptr<PhysicsComponent>(new PlayerPhysicsComponent(Vector3f(), "TILE", Vector3f(0.8f, 0.4f, 0), Vector3f(1, 0, 0)));
 	components.push_back(m_physicsComponent);
 
 	m_inputComponent = playerInput ? std::shared_ptr<InputComponent>(new PlayerInputComponent(m_physicsComponent, m_graphicsComponent)) : std::shared_ptr<InputComponent>(new InputComponent());

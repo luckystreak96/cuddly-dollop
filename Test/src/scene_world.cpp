@@ -27,9 +27,11 @@ bool SceneWorld::Init()
 	m_acceptInput = true;
 
 	m_mapHandler = std::shared_ptr<MapHandler>(new MapHandler(m_currentMap, m_jsonHandler));
+	m_collisionManager.SetMapTiles(m_mapHandler->Tiles());
 
 	m_celist = EntityFactory::GetEntities(m_currentMap, m_jsonHandler);
 	m_eventManager.SetEntitiesMap(&m_celist);
+	m_collisionManager.SetEntities(&m_celist);
 
 	// THIS IS NOT GOOD - THE PLAYER NEEDS TO BE FOUND, NOT JUST BE ID 1
 	if (m_celist.count(1))
@@ -189,7 +191,7 @@ std::shared_ptr<Scene> SceneWorld::Update()
 		it.second->Physics()->DesiredMove();
 
 	//Collision
-	std::vector<std::shared_ptr<Entity>> collided = Physics_2D::Collision(&m_celist, m_mapHandler);
+	std::vector<std::shared_ptr<Entity>> collided = m_collisionManager.CalculateCollision();//Physics_2D::Collision(&m_celist, m_mapHandler);
 	for (auto entity : collided)
 	{
 		for (auto x : *entity->GetQueues())

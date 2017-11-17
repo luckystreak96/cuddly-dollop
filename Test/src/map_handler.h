@@ -26,17 +26,17 @@ public:
 	void SetRender();
 	void Draw();
 	void Update();
-	std::vector<MapTile*>* Tiles();
+	std::vector<std::shared_ptr<MapTile>>* Tiles();
 	unsigned int Size();
 	void SetupMesh();
 	std::shared_ptr<GraphicsComponent> Graphics() { return m_graphics; }
 
 	// Returns the farthest reaches of the map in  x, y and z
 	Vector3f GetMapSize();
-	static inline bool TileSort(MapTile* i, MapTile* j) { return (i->Physics()->Position() < j->Physics()->Position()); }
+	static inline bool TileSort(std::shared_ptr<MapTile> i, std::shared_ptr<MapTile> j) { return (i->Physics()->Position() < j->Physics()->Position()); }
 
 private:
-	std::vector<MapTile*> m_tiles = std::vector<MapTile*>();
+	std::vector<std::shared_ptr<MapTile>> m_tiles;
 	Mesh m_mesh;
 	std::shared_ptr<GraphicsComponent> m_graphics = NULL;
 	std::shared_ptr<JsonHandler> m_jsonHandler;

@@ -8,7 +8,6 @@
 #include "array2d.h"
 #include "elapsedTime.h"
 #include "glutBackend.h"
-#include "physics_2d.h"
 #include "resource_manager.h"
 #include "input_manager.h"
 #include <gl/freeglut.h>
@@ -32,6 +31,7 @@
 #include "jsonHandler.h"
 #include "eventFactory.h"
 #include "entityFactory.h"
+#include "collisionManager.h"
 
 class SceneWorld : public Scene
 {
@@ -62,6 +62,7 @@ private:
 	std::shared_ptr<MapHandler> m_mapHandler;
 	std::shared_ptr<Transformation> m_World;
 	std::map<unsigned int, std::shared_ptr<Entity>> m_celist;
+	CollisionManager m_collisionManager;
 	bool m_pause;
 	bool m_resources_loaded;
 	bool m_acceptInput;
