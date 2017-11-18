@@ -32,6 +32,7 @@
 #include "eventFactory.h"
 #include "entityFactory.h"
 #include "collisionManager.h"
+#include "fade.h"
 
 class SceneWorld : public Scene
 {
@@ -57,6 +58,7 @@ private:
 	std::shared_ptr<Entity> m_player = NULL;
 	std::shared_ptr<Camera> m_camera;
 	static std::shared_ptr<Scene> NextScene;
+	std::shared_ptr<Scene> m_nextScene;
 	EventManager m_eventManager;
 	//Map* m_map = NULL;
 	std::shared_ptr<MapHandler> m_mapHandler;
@@ -75,6 +77,7 @@ private:
 	unsigned int m_fontFPS;
 	Trail m_trail;
 	Bloom m_bloom;
+	Fade m_fade;
 	HeightFog m_fog;
 	const std::string DATA_FILE = "res/data/001.json";
 };

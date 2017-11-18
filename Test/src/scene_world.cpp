@@ -6,6 +6,7 @@ SceneWorld::SceneWorld(unsigned int map_id) : m_acceptInput(false), m_currentMap
 {
 	Init();
 	SoundManager::GetInstance();
+	m_fade.SetFade(true);
 }
 
 bool SceneWorld::Init()
@@ -51,6 +52,7 @@ bool SceneWorld::Init()
 				m_eventManager.PushBack(x);
 		}
 	}
+
 
 	return true;
 }
@@ -130,6 +132,8 @@ std::shared_ptr<Scene> SceneWorld::Act()
 	//DRAW
 	Draw();
 
+	if (!m_fade.IsDone())
+		return std::shared_ptr<Scene>(NULL);
 	return result;
 }
 
@@ -187,11 +191,16 @@ void SceneWorld::TriggerEvents(unsigned int entity_id)
 
 std::shared_ptr<Scene> SceneWorld::Update()
 {
+	std::shared_ptr<Scene> next = NextScene;
+
 	// Needs to be called here so the EventQueues can set render
 	Renderer::GetInstance().Clear();
 	Animation::AnimationCounter((float)ElapsedTime::GetInstance().GetElapsedTime());
 	Interact();
 	m_eventManager.Update(ElapsedTime::GetInstance().GetElapsedTime());
+
+	if (next != NextScene)
+		m_fade.SetFade(false);
 
 	for (auto it : m_celist)
 		it.second->Physics()->DesiredMove();
@@ -218,7 +227,7 @@ std::shared_ptr<Scene> SceneWorld::Update()
 	//std::cout << /*m_player->Position().x << ", " << m_player->Position().y << ", " <<*/ m_player->Physics()->Position().z << std::endl;// << ", " << m_clist.at(1)->GetMoveBoundingBox().Get(AABB::Down) << ", " << m_clist.at(1)->GetMoveBoundingBox().Get(AABB::Close) << std::endl;
 
 	if (m_player)
-		m_World->Follow(m_player->Physics()->Position(), m_mapHandler->GetMapSize()/*Vector3f(32, 18, 0)*/);
+		m_World->Follow(m_player->Physics()->Position(), m_mapHandler->GetMapSize());
 	//m_camera->Update(m_player->Position());//this needs to change LOLOLOLOL
 
 	//Display FPS
@@ -251,6 +260,8 @@ void SceneWorld::RenderPass()
 		BloomEffect::GetInstance().SetWorldPosition(*m_World->GetWOTrans().m);
 		BloomEffect::GetInstance().Enable(BloomEffect::GetInstance().GetDark());
 		BloomEffect::GetInstance().SetWorldPosition(*m_World->GetWOTrans().m);
+		FadeEffect::GetInstance().Enable();
+		FadeEffect::GetInstance().SetWorldPosition(*m_World->GetWOTrans().m);
 		CombineEffect::GetInstance().Enable();
 		CombineEffect::GetInstance().SetWorldPosition(*m_World->GetWOTrans().m);
 		TransparencyEffect::GetInstance().Enable();
@@ -258,37 +269,35 @@ void SceneWorld::RenderPass()
 		HeightEffect::GetInstance().Enable();
 		HeightEffect::GetInstance().SetWorldPosition(*m_World->GetWOTrans().m);
 
+		for (int i = 0; i < 30; i++)
+			m_World->Follow(m_player->Physics()->Position(), m_mapHandler->GetMapSize());
+
 		m_drawinited = true;
 	}
 
 	BasicEffect::GetInstance().Enable();
 	Effect::SetWorldPosition(*m_World->GetWOTrans().m);
 
-	if (!m_bloomEffect)
-	{
-		m_mapHandler->SetRender();
+	// Set the renders
+	m_mapHandler->SetRender();
 
-		for (auto it : m_celist)
-			it.second->SetRender();
-		Renderer::GetInstance().Draw();
-	}
-	else
-	{
+	for (auto it : m_celist)
+		it.second->SetRender();
+	FontManager::GetInstance().SetRender();
+
+	if (!m_fade.IsDone())
+		m_fade.Begin();
+
+	// BLOOM
+	if (m_bloomEffect)
 		m_bloom.Begin();
 
-		m_mapHandler->SetRender();
+	// DRAW
+	Renderer::GetInstance().Draw();
 
-		for (auto it : m_celist)
-			it.second->SetRender();
-
-		FontManager::GetInstance().SetRender();
-
-		Renderer::GetInstance().Draw();
-
-		bool darkBloom = false;
-		m_bloom.End(darkBloom);
-
-	}
+	// BLOOM END
+	if (m_bloomEffect)
+		m_bloom.End(false);
 
 	//Debug tile outline drawing
 	if (Globals::DEBUG_DRAW_TILE_OUTLINES)

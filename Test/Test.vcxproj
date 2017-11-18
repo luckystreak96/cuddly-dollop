@@ -195,6 +195,8 @@
     <ClInclude Include="src\eventMove.h" />
     <ClInclude Include="src\eventManager.h" />
     <ClInclude Include="src\eventTeleport.h" />
+    <ClInclude Include="src\fade.h" />
+    <ClInclude Include="src\fadeEffect.h" />
     <ClInclude Include="src\FBO.h" />
     <ClInclude Include="src\font.h" />
     <ClInclude Include="src\fontGraphicsComponent.h" />
@@ -268,6 +270,8 @@
     <ClCompile Include="src\eventMove.cpp" />
     <ClCompile Include="src\eventManager.cpp" />
     <ClCompile Include="src\eventTeleport.cpp" />
+    <ClCompile Include="src\fade.cpp" />
+    <ClCompile Include="src\fadeEffect.cpp" />
     <ClCompile Include="src\FBO.cpp" />
     <ClCompile Include="src\font.cpp" />
     <ClCompile Include="src\fontGraphicsComponent.cpp" />
@@ -314,6 +318,7 @@
     <ClCompile Include="src\vertex.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="res\data\3.json" />
     <None Include="res\data\data.json" />
     <None Include="shaders\ambientLight.fs" />
     <None Include="shaders\bloom.fs" />
@@ -323,6 +328,7 @@
     <None Include="shaders\combine.fs" />
     <None Include="shaders\directionalLight.fs" />
     <None Include="shaders\directionalLight.vs" />
+    <None Include="shaders\fade.fs" />
     <None Include="shaders\gaussian11.fs" />
     <None Include="shaders\gaussian3.fs" />
     <None Include="shaders\gaussian9.fs" />

@@ -147,9 +147,11 @@ void Transformation::Follow(Vector3f target, Vector3f upperRightLimit)
 	float distanceX = -target.x - m_translate.x;//find the distance between the 2, -target so that the movement of the world will be proper
 	float distanceY = -target.y - m_translate.y;
 
+	float percentage = abs(distanceX) > 15.f || abs(distanceY) > 8.f ? 8.0f : 40.0f;
+
 	// Sets how much the camera will move in this frame
-	m_translate.x += distanceX / (40.0f * m_followSpeed);
-	m_translate.y += distanceY / (40.0f * m_followSpeed);
+	m_translate.x += distanceX / (percentage * m_followSpeed);
+	m_translate.y += distanceY / (percentage * m_followSpeed);
 
 	// If the pan would bring you left further than the left limit OR the map is too small to fit the screen width,
 	//  just pan at the left limit

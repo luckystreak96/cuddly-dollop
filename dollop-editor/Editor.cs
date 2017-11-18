@@ -191,6 +191,8 @@ namespace dollop_editor
         {
             try
             {
+                Width = 0;
+                Height = 0;
                 Dictionary<Point3D, Rectangle> dictionary = new Dictionary<Point3D, Rectangle>();
                 Dictionary<Point3D, Tuple<Entity, Rectangle>> entities = new Dictionary<Point3D, Tuple<Entity, Rectangle>>();
 
@@ -200,6 +202,10 @@ namespace dollop_editor
                 // Setup the tiles in the dictionary
                 foreach (Tile tile in loadedMap.tiles)
                 {
+                    if (tile.x > Width)
+                        Width = (int)Math.Ceiling(tile.x);
+                    if (tile.y > Height)
+                        Height = (int)Math.Ceiling(tile.x);
                     Rectangle rectangle = new Rectangle
                     {
                         Fill = Brushes[tile.sprite].Clone(),
