@@ -89,6 +89,12 @@ void SceneWorld::ManageInput()
 	if (InputManager::GetInstance().FrameKeyStatus('b', AnyRelease))
 		m_bloomEffect = !m_bloomEffect;
 
+	if (InputManager::GetInstance().FrameKeyStatus('t', AnyRelease))
+		m_World->AddTranslation(0, 0, 1);
+
+	if (InputManager::GetInstance().FrameKeyStatus('y', AnyRelease))
+		m_World->AddTranslation(0, 0, -1);
+
 	if (InputManager::GetInstance().FrameKeyStatus('p', AnyRelease))
 		m_pause = !m_pause;
 

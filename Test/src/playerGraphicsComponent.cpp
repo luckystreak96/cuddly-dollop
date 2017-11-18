@@ -9,6 +9,14 @@ PlayerGraphicsComponent::PlayerGraphicsComponent(std::string tex, std::string mo
 	m_firstLoad = false;
 }
 
+void PlayerGraphicsComponent::Draw(bool withTex)
+{
+	Effect::SetDrawType(DrawType::DT_ENTITY);
+	GraphicsComponent::Draw(withTex);
+	Effect::SetDrawType(DrawType::DT_FLAT);
+}
+
+
 void PlayerGraphicsComponent::Update()
 {
 	int dir = m_direction;

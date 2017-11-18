@@ -24,9 +24,9 @@ EventUpdateResponse EventMove::UpdateEvent(double elapsedTime, std::map<unsigned
 
 	ents->at(m_target)->Physics()->ActionMove(m_direction == 0, m_direction == 2, m_direction == 3, m_direction == 1);
 
-	if (abs(ents->at(m_target)->Physics()->Position()[m_moveAxis] - m_startPos[m_moveAxis]) >= m_distance)
+	if (abs(ents->at(m_target)->Physics()->Position()[m_moveAxis] - m_startPos[m_moveAxis]) >= m_distance * 0.99f)
 	{
-		ents->at(m_target)->Physics()->AbsolutePosition(m_startPos + ((m_direction == 2 || m_direction == 3) ? -m_distance : m_distance), Vector3f(m_moveAxis == 0 ? 1 : 0, m_moveAxis == 1 ? 1 : 0, m_moveAxis == 2 ? 1 : 0));
+		//ents->at(m_target)->Physics()->AbsolutePosition(m_startPos + ((m_direction == 2 || m_direction == 3) ? -m_distance : m_distance), Vector3f(m_moveAxis == 0 ? 1 : 0, m_moveAxis == 1 ? 1 : 0, m_moveAxis == 2 ? 1 : 0));
 		ents->at(m_target)->Physics()->RemoveVelocity();
 		ents->at(m_target)->Physics()->SetConversationLock(false);
 		m_completed = true;

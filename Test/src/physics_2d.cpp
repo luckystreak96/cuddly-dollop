@@ -610,6 +610,17 @@ namespace Physics_2D {
 			// Collide with tiles
 			TileCollision(x, touching.at(id));
 
+			auto temp = std::vector<std::shared_ptr<PhysicsComponent>>(touching.at(id));
+			touching.at(id).clear();
+			//Create list of touching
+			for (auto ts : temp)
+			{
+				auto bb1 = x->Physics()->GetMoveBoundingBox();
+				auto bb2 = ts->GetMoveBoundingBox();
+				if (Physics::Intersect2D(bb1, bb2))
+					touching.at(id).push_back(ts);
+			}
+
 			//Set height to highest
 			min = 1000;
 
@@ -631,36 +642,43 @@ namespace Physics_2D {
 		}
 
 
-		for (auto xs : *clist) {
-			auto x = xs.second;
+		bool redo = false;
+		for (int i = 0; i < 2; i++)
+		{
+			for (auto xs : *clist) {
+				auto x = xs.second;
 
-			// Only the entities will be colliding
-				// Don't collide against other entities
-			for (auto xs2 : *clist)
-			{
-				auto x2 = xs2.second;
-				// We dont want to re-pass the same collision checks
-				if (x2 == x)
-					continue;
+				// Only the entities will be colliding
+					// Don't collide against other entities
+				for (auto xs2 : *clist)
+				{
+					auto x2 = xs2.second;
+					// We dont want to re-pass the same collision checks
+					if (x2 == x)
+						continue;
 
-				//Are the objects inside each other right now? (nothing will go fast enough to skip this)
-				std::array<float, 6> lol1 = x->Physics()->GetMoveBoundingBox();
-				std::array<float, 6> lol2 = x2->Physics()->GetMoveBoundingBox();
+					//Are the objects inside each other right now? (nothing will go fast enough to skip this)
+					std::array<float, 6> lol1 = x->Physics()->GetMoveBoundingBox();
+					std::array<float, 6> lol2 = x2->Physics()->GetMoveBoundingBox();
 
-				// This is all assuming that the models are 2d, lets make sure that they are
-				assert(lol1.at(AABB::Close) == lol1.at(AABB::Far));
-				assert(lol2.at(AABB::Close) == lol2.at(AABB::Far));
-				if (!(abs(lol1.at(AABB::Close) - lol2.at(AABB::Close)) < STAND_HEIGHT && Physics::Intersect2D(lol1, lol2)))
-					continue;
+					// This is all assuming that the models are 2d, lets make sure that they are
+					assert(lol1.at(AABB::Close) == lol1.at(AABB::Far));
+					assert(lol2.at(AABB::Close) == lol2.at(AABB::Far));
+					if (!(abs(lol1.at(AABB::Close) - lol2.at(AABB::Close)) < STAND_HEIGHT && Physics::Intersect2D(lol1, lol2)))
+						continue;
 
-				ApplyCollision(x->Physics(), x2->Physics());
+					ApplyCollision(x->Physics(), x2->Physics());
+					redo = true;
 
-				// Shoot out the event cause its touching the player
-				if (playerId != -1)
-					if (x->GetID() == playerId || x2->GetID() == playerId)
-						result.push_back(x->GetID() == playerId ? x2 : x);
+					// Shoot out the event cause its touching the player
+					if (playerId != -1)
+						if (x->GetID() == playerId || x2->GetID() == playerId)
+							result.push_back(x->GetID() == playerId ? x2 : x);
+				}
+
 			}
-
+			if (!redo)
+				break;
 		}
 
 		//}

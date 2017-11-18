@@ -118,6 +118,13 @@ void Transformation::SetTranslation(Vector3f& vec)
     SetTranslation(vec.x, vec.y, vec.z);
 }
 
+void Transformation::AddTranslation(float x, float y, float z)
+{
+	m_translate.x += x;
+	m_translate.y += y;
+	m_translate.z += z;
+}
+
 void Transformation::SetRotation(Vector3f& vec)
 {
     SetRotation(vec.x, vec.y, vec.z);

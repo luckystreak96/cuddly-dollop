@@ -1,6 +1,6 @@
 #include "fontManager.h"
 
-FontManager::FontManager() : m_fonts(std::map<unsigned int, Font*>())
+FontManager::FontManager() : m_fonts(std::map<unsigned int, std::shared_ptr<Font>>())
 {
 }
 
@@ -16,16 +16,12 @@ bool FontManager::IsEmpty()
 
 void FontManager::ClearFonts()
 {
-	for (auto x : m_fonts)
-	{
-		delete x.second;
-	}
 	m_fonts.clear();
 }
 
 void FontManager::SetScale(unsigned int font, float xScale, float yScale)
 {
-	Font* temp = GetFont(font);
+	std::shared_ptr<Font> temp = GetFont(font);
 	if (temp == NULL)
 		return;
 
@@ -34,7 +30,7 @@ void FontManager::SetScale(unsigned int font, float xScale, float yScale)
 
 void FontManager::SetText(unsigned int font, std::string text, Vector3f location, bool centered)
 {
-	Font* temp = GetFont(font);
+	std::shared_ptr<Font> temp = GetFont(font);
 	if (temp == NULL)
 		return;
 
@@ -43,7 +39,7 @@ void FontManager::SetText(unsigned int font, std::string text, Vector3f location
 
 void FontManager::SetTextSpeed(unsigned int font, double speed)
 {
-	Font* temp = GetFont(font);
+	std::shared_ptr<Font> temp = GetFont(font);
 	if (temp == NULL)
 		return;
 
@@ -53,7 +49,7 @@ void FontManager::SetTextSpeed(unsigned int font, double speed)
 
 void FontManager::ChangeLetter(unsigned int font, unsigned int index, char newChar)
 {
-	Font* temp = GetFont(font);
+	std::shared_ptr<Font> temp = GetFont(font);
 	if (temp == NULL)
 		return;
 
@@ -78,7 +74,6 @@ void FontManager::Update(double elapsedTime)
 	}
 	for (auto x : to_remove)
 	{
-		delete m_fonts.at(x);
 		m_fonts.erase(x);
 	}
 }
@@ -103,8 +98,6 @@ void FontManager::RemoveFont(unsigned int font)
 		return;
 	if (m_fonts.count(font))
 	{
-		if (m_fonts.at(font))
-			delete m_fonts.at(font);
 		m_fonts.erase(font);
 	}
 }
@@ -130,7 +123,7 @@ unsigned int FontManager::GenerateKey()
 }
 
 
-Font* FontManager::GetFont(unsigned int key)
+std::shared_ptr<Font> FontManager::GetFont(unsigned int key)
 {
 	if (m_fonts.count(key) > 0) 
 		return m_fonts.at(key);

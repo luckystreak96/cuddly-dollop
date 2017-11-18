@@ -22,7 +22,7 @@ public:
 	unsigned int AddFont(bool sTatic = false, bool temporary = false, bool lightspeed = false, std::string texPath = "res/fonts/basic.png");
 	unsigned int AddDialogueBox(std::string texPath = "res/fonts/basic.png");
 	void RemoveFont(unsigned int font);
-	Font* GetFont(unsigned int key);
+	std::shared_ptr<Font> GetFont(unsigned int key);
 	void ClearFonts();
 	bool IsEmpty();
 
@@ -31,7 +31,7 @@ public:
 private:
 	FontManager();
 	~FontManager();
-	std::map<unsigned int, Font*> m_fonts;
+	std::map<unsigned int, std::shared_ptr<Font>> m_fonts;
 };
 
 #endif // !FONT_MANAGER_H__

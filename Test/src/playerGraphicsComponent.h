@@ -11,6 +11,7 @@ class PlayerGraphicsComponent : public GraphicsComponent, public Animation
 public:
 	PlayerGraphicsComponent(std::string tex = "res/player.png", std::string model = "TILE");
 	void Update();
+	void Draw(bool withTex = true);
 private:
 	bool m_firstLoad;
 };

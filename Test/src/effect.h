@@ -15,6 +15,8 @@
 
 #define SHADOW_TEXTURE_UNIT GL_TEXTURE1
 
+enum DrawType { DT_FLAT, DT_ENTITY };
+
 struct BaseLight
 {
 	Vector3f Color;
@@ -68,6 +70,7 @@ public:
 	void Enable(GLuint program = 0);//enable shader -- glUseShaderProgram(m_shaderProgram);
 	static void SetModelPosition(float* mat);
 	static void SetWorldPosition(float* mat);
+	static void SetDrawType(DrawType dt);
 	static float* GetPrevWorldPos();
 protected:
 	bool AddShader(const char* shaderFileName, GLenum shaderType, GLuint& program);//add a shader thru its contents
