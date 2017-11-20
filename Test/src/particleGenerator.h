@@ -10,29 +10,41 @@
 #include "renderer.h"
 #include <time.h>
 
+enum ParticleType { PT_Snow, PT_Rain };
+
 struct Particle
 {
-	Particle(Vector3f mapSize);
+	Particle();
 
 	std::string texture;
 	PhysicsComponent physics;
 	Vector3f position;
 	Vector3f velocity;
 	float counter;
-	virtual void Update(Vector3f mapSize);
-	virtual void ResetLocation(Vector3f mapSize);
+	virtual void Update(Vector3f mapSize) {};
+	virtual void ResetLocation(Vector3f mapSize) {};
 };
 
 struct Snow : public Particle
 {
+	Snow(Vector3f zoneSize);
+	void Update(Vector3f mapSize);
+	void ResetLocation(Vector3f mapSize);
+};
 
+struct Rain : public Particle
+{
+	Rain(Vector3f zoneSize);
+	void Update(Vector3f mapSize);
+	void ResetLocation(Vector3f mapSize);
 };
 
 class ParticleGenerator
 {
 public:
-	ParticleGenerator(unsigned int num_particles = 1, Vector3f mapSize = Vector3f(32, 16, 0));
+	ParticleGenerator();
 	~ParticleGenerator();
+	void Init(ParticleType c, unsigned int num_particles = 1, Vector3f zoneSize = Vector3f(32, 16, 0));
 	void FinalizeSetup();
 	void SetRender();
 	void Draw();
@@ -54,7 +66,7 @@ private:
 	unsigned int m_id;
 	std::string m_texture;
 	// The width height and depth of the map in tiles
-	Vector3f m_mapSize;
+	Vector3f m_zoneSize;
 };
 
 #endif

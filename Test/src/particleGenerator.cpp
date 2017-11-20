@@ -1,39 +1,85 @@
 #include "particleGenerator.h"
 
-ParticleGenerator::ParticleGenerator(unsigned int numParticles, Vector3f mapSize) : m_mesh(Mesh()), m_mapSize(mapSize)
+ParticleGenerator::ParticleGenerator() : m_mesh(Mesh())
 {
-	// Create all particles
-	for (unsigned int i = 0; i < numParticles; i++)
-	{
-		m_particles.push_back(std::shared_ptr<Particle>(new Particle(mapSize)));
-	}
 
-	FinalizeSetup();
 }
 
-void Particle::Update(Vector3f mapSize)
+Particle::Particle() : physics(PhysicsComponent(Vector3f(), "CENTERED_TILE")), texture("res/sprites/default.png")
+{
+}
+
+void Snow::Update(Vector3f zoneSize)
 {
 	velocity.x = sin(counter * 3.0f) / 20.0f;
 	position += velocity;
-	if (position.y < -1 || position.x < -1 || position.x > mapSize.x + 1)
-		ResetLocation(mapSize);
+	if (position.y < -1 || position.x < -1 || position.x > zoneSize.x + 1)
+		ResetLocation(zoneSize);
 	counter += 0.01f;
 };
 
-Particle::Particle(Vector3f mapSize) : physics(PhysicsComponent(Vector3f(), "CENTERED_TILE")), texture("res/sprites/snowflake2.png")
+Snow::Snow(Vector3f zoneSize)
 {
-	ResetLocation(mapSize);
+	texture = "res/sprites/snowflake2.png";
+	ResetLocation(zoneSize);
 }
 
-void Particle::ResetLocation(Vector3f mapSize)
+
+void Snow::ResetLocation(Vector3f zoneSize)
 {
 	counter = fmod(((float)rand() / 100.0f), 1.0f);
-	position.x = fmod(((float)rand() / 10.0f), mapSize.x);
-	position.y = rand() % 5 + mapSize.y;
+	position.x = fmod(((float)rand() / 10.0f), zoneSize.x);
+	position.y = rand() % 5 + zoneSize.y;
 	velocity.y = -fmod(((float)rand() / 1000.0f), 0.05f);
 	velocity.y -= 0.05f;
 	float value = fmod(((float)rand() / 1000.0f), 0.1f);
 	velocity.x = (rand() % 2) == 0 ? value : -value;
+}
+
+void Rain::Update(Vector3f zoneSize)
+{
+	velocity.x = 0.04f;
+	position += velocity;
+	if (position.y < -5 || position.x < -1 || position.x > zoneSize.x)
+		ResetLocation(zoneSize);
+	//counter += 0.01f;
+};
+
+Rain::Rain(Vector3f zoneSize)
+{
+	texture = "res/sprites/mushroom.png";
+	ResetLocation(zoneSize);
+}
+
+
+void Rain::ResetLocation(Vector3f zoneSize)
+{
+	counter = fmod(((float)rand() / 100.0f), 1.0f);
+	position.x = fmod(((float)rand() / 10.0f), zoneSize.x);
+	position.y = rand() % 5 + zoneSize.y;
+	velocity.y = -fmod(((float)rand() / 1000.0f), 0.1f);
+	velocity.y -= 0.4f;
+	float value = fmod(((float)rand() / 1000.0f), 0.1f);
+}
+
+void ParticleGenerator::Init(ParticleType c, unsigned int num_particles, Vector3f zoneSize)
+{
+	m_zoneSize = zoneSize;
+
+	// Create all particles
+	switch (c)
+	{
+	case PT_Snow:
+		for (unsigned int i = 0; i < num_particles; i++)
+			m_particles.push_back(std::shared_ptr<Particle>(new Snow(zoneSize)));
+		break;
+	case PT_Rain:
+		for (unsigned int i = 0; i < num_particles; i++)
+			m_particles.push_back(std::shared_ptr<Particle>(new Rain(zoneSize)));
+		break;
+	}
+
+	FinalizeSetup();
 }
 
 void ParticleGenerator::FinalizeSetup()
@@ -43,7 +89,7 @@ void ParticleGenerator::FinalizeSetup()
 
 	SetupMesh();
 	for (auto x : m_particles)
-		x->Update(m_mapSize);
+		x->Update(m_zoneSize);
 
 	Update();
 }
@@ -71,7 +117,7 @@ void ParticleGenerator::SetupMesh()
 void ParticleGenerator::Update()
 {
 	for (auto d : m_particles)
-		d->Update(m_mapSize);
+		d->Update(m_zoneSize);
 
 	//SetupMesh();
 
@@ -95,18 +141,18 @@ void ParticleGenerator::Update()
 
 	//if (m_graphics->GetMModels()->size() == 0)
 	//{
-		m_graphics->GetMModels()->clear();
+	m_graphics->GetMModels()->clear();
 
-		for (auto x : m_particles)
-		{
-			Vector3f pos = x->position;
-			pos.z = 0.6f;
-			Transformation t;
-			t.SetTranslation(pos);
-			t.SetRotation(0, 0, x->counter);
-			t.SetScale(Vector3f(0.3f, 0.3f, 0.3f));
-			m_graphics->GetMModels()->insert(m_graphics->GetMModels()->end(), 4, t.GetWorldTrans());
-		}
+	for (auto x : m_particles)
+	{
+		Vector3f pos = x->position;
+		pos.z = 0.6f;
+		Transformation t;
+		t.SetTranslation(pos);
+		t.SetRotation(0, 0, x->counter * 10);
+		t.SetScale(Vector3f(0.3f, 0.3f, 0.3f));
+		m_graphics->GetMModels()->insert(m_graphics->GetMModels()->end(), 4, t.GetWorldTrans());
+	}
 	//}
 
 	//m_graphics->Update();
@@ -124,7 +170,7 @@ void ParticleGenerator::Update()
 
 void ParticleGenerator::SetRender()
 {
-	m_graphics->GetModelMat()->SetTranslation(Vector3f(10, 10, 0));
+	//m_graphics->GetModelMat()->SetTranslation(Vector3f(10, 10, 0));
 	Renderer::GetInstance().Add(m_graphics);
 }
 
@@ -149,5 +195,5 @@ unsigned int ParticleGenerator::Size()
 
 Vector3f ParticleGenerator::GetRange()
 {
-	return m_mapSize;
+	return m_zoneSize;
 }
