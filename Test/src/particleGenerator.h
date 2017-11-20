@@ -22,21 +22,24 @@ struct Particle
 	Vector3f velocity;
 	float counter;
 	virtual void Update(Vector3f mapSize) {};
-	virtual void ResetLocation(Vector3f mapSize) {};
+	virtual void ResetLocation(Vector3f mapSize, bool firstSpawn = false) {};
+	virtual void SetTrans(Transformation& trans) {};
 };
 
 struct Snow : public Particle
 {
 	Snow(Vector3f zoneSize);
 	void Update(Vector3f mapSize);
-	void ResetLocation(Vector3f mapSize);
+	void ResetLocation(Vector3f mapSize, bool firstSpawn = false);
+	void SetTrans(Transformation& trans);
 };
 
 struct Rain : public Particle
 {
 	Rain(Vector3f zoneSize);
 	void Update(Vector3f mapSize);
-	void ResetLocation(Vector3f mapSize);
+	void ResetLocation(Vector3f mapSize, bool firstSpawn = false);
+	void SetTrans(Transformation& trans);
 };
 
 class ParticleGenerator

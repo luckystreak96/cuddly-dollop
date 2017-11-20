@@ -11,7 +11,7 @@ Particle::Particle() : physics(PhysicsComponent(Vector3f(), "CENTERED_TILE")), t
 
 void Snow::Update(Vector3f zoneSize)
 {
-	velocity.x = sin(counter * 3.0f) / 20.0f;
+	velocity.x =  sin(counter * 3.0f) / 20.0f;
 	position += velocity;
 	if (position.y < -1 || position.x < -1 || position.x > zoneSize.x + 1)
 		ResetLocation(zoneSize);
@@ -21,44 +21,56 @@ void Snow::Update(Vector3f zoneSize)
 Snow::Snow(Vector3f zoneSize)
 {
 	texture = "res/sprites/snowflake2.png";
-	ResetLocation(zoneSize);
+	ResetLocation(zoneSize, true);
 }
 
 
-void Snow::ResetLocation(Vector3f zoneSize)
+void Snow::ResetLocation(Vector3f zoneSize, bool firstSpawn)
 {
 	counter = fmod(((float)rand() / 100.0f), 1.0f);
 	position.x = fmod(((float)rand() / 10.0f), zoneSize.x);
-	position.y = rand() % 5 + zoneSize.y;
+	position.y = rand() % ((firstSpawn ? (int)zoneSize.y : 5)) + (firstSpawn ? 0 : zoneSize.y);
 	velocity.y = -fmod(((float)rand() / 1000.0f), 0.05f);
 	velocity.y -= 0.05f;
 	float value = fmod(((float)rand() / 1000.0f), 0.1f);
 	velocity.x = (rand() % 2) == 0 ? value : -value;
 }
 
+void Snow::SetTrans(Transformation& trans)
+{
+	trans.SetRotation(0, 0, counter * 10);
+	trans.SetScale(Vector3f(0.3f, 0.3f, 0.3f));
+}
+
 void Rain::Update(Vector3f zoneSize)
 {
 	velocity.x = 0.04f;
 	position += velocity;
-	if (position.y < -5 || position.x < -1 || position.x > zoneSize.x)
+	if (position.y < -1.0f || position.x < -4.0f || position.x > zoneSize.x + 1)
 		ResetLocation(zoneSize);
-	//counter += 0.01f;
+	counter -= 0.01f;
 };
 
 Rain::Rain(Vector3f zoneSize)
 {
-	texture = "res/sprites/mushroom.png";
-	ResetLocation(zoneSize);
+	texture = "res/sprites/rain.png";
+	ResetLocation(zoneSize, true);
+}
+
+void Rain::SetTrans(Transformation& trans)
+{
+	trans.SetRotation(0, 0, velocity.x);
+	trans.SetScale(Vector3f(0.05f, 0.6f, 0.2f));
 }
 
 
-void Rain::ResetLocation(Vector3f zoneSize)
+void Rain::ResetLocation(Vector3f zoneSize, bool firstSpawn)
 {
 	counter = fmod(((float)rand() / 100.0f), 1.0f);
-	position.x = fmod(((float)rand() / 10.0f), zoneSize.x);
-	position.y = rand() % 5 + zoneSize.y;
+	position.x = fmod(((float)rand() / 10.0f), zoneSize.x + 4.0f) - 4.0f;
+	position.y = rand() % ((firstSpawn ? (int)zoneSize.y : 5)) + (firstSpawn ? 0 : zoneSize.y);
 	velocity.y = -fmod(((float)rand() / 1000.0f), 0.1f);
-	velocity.y -= 0.4f;
+	velocity.y -= 0.6f;
 	float value = fmod(((float)rand() / 1000.0f), 0.1f);
 }
 
@@ -77,6 +89,9 @@ void ParticleGenerator::Init(ParticleType c, unsigned int num_particles, Vector3
 		for (unsigned int i = 0; i < num_particles; i++)
 			m_particles.push_back(std::shared_ptr<Particle>(new Rain(zoneSize)));
 		break;
+	default:
+		for (unsigned int i = 0; i < num_particles; i++)
+			m_particles.push_back(std::shared_ptr<Particle>(new Rain(zoneSize)));
 	}
 
 	FinalizeSetup();
@@ -149,8 +164,7 @@ void ParticleGenerator::Update()
 		pos.z = 0.6f;
 		Transformation t;
 		t.SetTranslation(pos);
-		t.SetRotation(0, 0, x->counter * 10);
-		t.SetScale(Vector3f(0.3f, 0.3f, 0.3f));
+		x->SetTrans(t);
 		m_graphics->GetMModels()->insert(m_graphics->GetMModels()->end(), 4, t.GetWorldTrans());
 	}
 	//}
