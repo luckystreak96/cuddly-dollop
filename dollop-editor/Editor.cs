@@ -191,21 +191,24 @@ namespace dollop_editor
         {
             try
             {
-                Width = 0;
-                Height = 0;
+                Entities.Clear();
+                Tiles.Clear();
+                TileHistory.Clear();
+
                 Dictionary<Point3D, Rectangle> dictionary = new Dictionary<Point3D, Rectangle>();
                 Dictionary<Point3D, Tuple<Entity, Rectangle>> entities = new Dictionary<Point3D, Tuple<Entity, Rectangle>>();
 
                 string data = File.ReadAllText(filename);
                 Map loadedMap = JsonConvert.DeserializeObject<Map>(data);
 
+                Width = (int)loadedMap.tiles.Max(x => x.x);
+                Height = (int)loadedMap.tiles.Max(x => x.y);
+
                 // Setup the tiles in the dictionary
                 foreach (Tile tile in loadedMap.tiles)
                 {
-                    if (tile.x > Width)
-                        Width = (int)Math.Ceiling(tile.x);
-                    if (tile.y > Height)
-                        Height = (int)Math.Ceiling(tile.x);
+                    if (tile.x < 0 || tile.y < 0 || tile.z < 0 || InvertHeight(tile.y) < 0)
+                        continue;
                     Rectangle rectangle = new Rectangle
                     {
                         Fill = Brushes[tile.sprite].Clone(),
@@ -215,7 +218,12 @@ namespace dollop_editor
                     rectangle.SetCurrentValue(Canvas.ZIndexProperty, GameToCanvasZ(tile.z));
                     rectangle.RenderTransform = new TranslateTransform((tile.x) * 32, InvertHeight(tile.y) * 32);
                     if (!(tile.x >= Width || InvertHeight(tile.y) >= Height))
-                        dictionary.Add(new Point3D(tile.x, InvertHeight(tile.y), tile.z), rectangle);
+                    {
+                        Point3D point3D = new Point3D(tile.x, InvertHeight(tile.y), tile.z);
+                        if (dictionary.ContainsKey(point3D))
+                            dictionary.Remove(point3D);
+                        dictionary.Add(point3D, rectangle);
+                    }
                 }
 
                 Tiles = dictionary;

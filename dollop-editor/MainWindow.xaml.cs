@@ -71,9 +71,9 @@ namespace dollop_editor
             cnvMap.Children.Clear();
             cnvMap.Width = editor.Width * editor.TileSize;
             cnvMap.Height = editor.Height * editor.TileSize;
-            editor.AddTile(2, 2, slrDepth.Value, "pumpkin.png");
-            foreach (var t in editor.Tiles)
-                cnvMap.Children.Add(t.Value);
+            //editor.AddTile(2, 2, slrDepth.Value, "pumpkin.png");
+            //foreach (var t in editor.Tiles)
+            //    cnvMap.Children.Add(t.Value);
         }
 
         private void CnvMap_MouseDown(object sender, MouseButtonEventArgs e)
@@ -346,8 +346,9 @@ namespace dollop_editor
             {
                 // Open document 
                 string filename = fileDialog.FileName;
-
                 editor.Load(filename);
+                cnvMap.Height = editor.Height * editor.TileSize;
+                cnvMap.Width = editor.Width * editor.TileSize;
                 ReSyncOnEditor();
             }
 

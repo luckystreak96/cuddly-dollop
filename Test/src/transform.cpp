@@ -171,3 +171,13 @@ void Transformation::Follow(Vector3f target, Vector3f upperRightLimit)
 	else if (abs(m_translate.y - ORTHO_TOP) > upperRightLimit.y)
 		m_translate.y = -(upperRightLimit.y - ORTHO_TOP);
 }
+
+bool Transformation::operator!=(const Transformation& t)
+{
+	if (this->m_translate == t.m_translate)
+		if (this->m_rotate == t.m_rotate)
+			if (this->m_scale == t.m_scale)
+				return false;
+
+	return true;
+}

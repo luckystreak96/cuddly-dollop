@@ -25,6 +25,8 @@ class Transformation
 		void SetFollowSpeed(float percentSpeed);
 		void Follow(Vector3f target, Vector3f upperRightLimit);
 
+		bool operator!=(const Transformation& t);
+
 		Mat4f GetWorldTrans();
 		Mat4f GetWorldTransNoTranslate();
 		Mat4f GetWOTrans();

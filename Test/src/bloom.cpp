@@ -58,6 +58,7 @@ void Bloom::End(bool dark)
 	//BEGIN GAUSSIAN HORIZONTAL BLUR
 
 	pps.GetModelMat()->SetScale(Vector3f(1.0f / m_divisor, 1.0f / m_divisor, 1));
+	pps.Update();
 
 	m_gaussH.bindFrameBuffer();
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -112,6 +113,7 @@ void Bloom::End(bool dark)
 	m_gaussV.unbindFrameBuffer();
 
 	pps.GetModelMat()->SetScale(Vector3f(1.0f, 1.0f, 1));
+	pps.Update();
 
 	//END SECOND GAUSSIAN BLUR
 

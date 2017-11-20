@@ -58,6 +58,7 @@ protected:
 	bool m_lightSpeed;
 
 	std::shared_ptr<FontGraphicsComponent> m_graphics = NULL;
+	std::vector<Vector3f> m_letterPositions;
 	std::map<char, unsigned int> m_letters;
 	Mesh m_mesh;
 	//std::vector<Vertex> m_verts;

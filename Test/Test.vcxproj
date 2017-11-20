@@ -219,6 +219,7 @@
     <ClInclude Include="src\mathutils.h" />
     <ClInclude Include="src\mesh.h" />
     <ClInclude Include="src\model.h" />
+    <ClInclude Include="src\particleGenerator.h" />
     <ClInclude Include="src\physics.h" />
     <ClInclude Include="src\physicsComponent.h" />
     <ClInclude Include="src\physics_2d.h" />
@@ -293,6 +294,7 @@
     <ClCompile Include="src\mathutils.cpp" />
     <ClCompile Include="src\mesh.cpp" />
     <ClCompile Include="src\model.cpp" />
+    <ClCompile Include="src\particleGenerator.cpp" />
     <ClCompile Include="src\physics.cpp" />
     <ClCompile Include="src\physicsComponent.cpp" />
     <ClCompile Include="src\physics_2d.cpp" />

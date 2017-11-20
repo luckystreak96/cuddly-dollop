@@ -1,7 +1,7 @@
 #include "font.h"
 
 Font::Font(bool sTatic, bool temporary, bool lightSpeed, std::string path) : m_texture(path), m_phys(PhysicsComponent(Vector3f(), "TEXT")),
-m_elapsedTime(0), m_textSpeed(1.0), m_timePerLetter(0.03), m_static(sTatic), m_temporary(temporary), m_lifetime(5.0), LetterSpacing(1.0f), MaxTime(30000),
+m_elapsedTime(0), m_textSpeed(1.0), m_timePerLetter(0.03), m_static(sTatic), m_temporary(temporary), m_lifetime(5.0), LetterSpacing(0.5f), MaxTime(30000),
 m_lettersPerRow(16), m_lettersPerColumn(16), m_xScale(1.0f), m_lightSpeed(lightSpeed)
 {
 	m_mesh = Mesh(m_lettersPerRow * m_lettersPerColumn);
@@ -149,13 +149,15 @@ void Font::SetupMesh(float xBndry, float yBndry)
 	//  for display purposes, the \n is fucking with the letter count
 	std::string newmessage = "";
 
+	m_letterPositions.clear();
+
 	// Look at a word
 	for (auto w : words)
 	{
 		// If the word is a \n, just start a new line
 		if (w == "\n")
 		{
-			m_y -= 1;
+			m_y -= 0.5f;
 			m_x = 0;
 		}
 		// Is the word too big to fit in the first place?
@@ -169,7 +171,7 @@ void Font::SetupMesh(float xBndry, float yBndry)
 		else if (w.size() * LetterSpacing * m_xScale + m_x > xBndry / m_xScale)
 		{
 			// Increment y and start on new line
-			m_y -= 1;
+			m_y -= 0.5f;
 			m_x = 0;
 
 			AddWordToMesh(w + " ", m_x, m_y);
@@ -206,6 +208,15 @@ void Font::SetupMesh(float xBndry, float yBndry)
 		Vector3f pos = Vector3f();
 		m_graphics->GetModels()->insert(m_graphics->GetModels()->end(), 4, pos);
 	}
+
+	m_graphics->GetMModels()->clear();
+	for (auto x : m_letterPositions)
+	{
+		Transformation t;
+		t.SetTranslation(x);
+		t.SetScale(Vector3f(m_xScale, m_yScale, 1));
+		m_graphics->GetMModels()->insert(m_graphics->GetMModels()->end(), 4, t.GetWorldTrans());
+	}
 }
 
 void Font::AddWordToMesh(std::string word, float x, float y)
@@ -222,6 +233,8 @@ void Font::AddWordToMesh(std::string word, float x, float y)
 
 		pos.x = i * LetterSpacing * m_xScale + x;
 		pos.y = y;
+
+		m_letterPositions.push_back(pos + m_phys.Position());
 
 		m_mesh.AddToMesh(m_phys.GetVertices(), m_phys.GetIndices(), m_phys.GetHighestIndex(), pos, m_texture,/* &trans,*/ index);
 	}
@@ -290,8 +303,14 @@ void Font::SetRender()
 
 void Font::SetScale(float xScale, float yScale)
 {
-	if (m_graphics != NULL)
-		m_graphics->SetScale(Vector3f(xScale, yScale, 1));
+	m_graphics->GetMModels()->clear();
+	for (auto x : m_letterPositions)
+	{
+		Transformation t;
+		t.SetTranslation(x);
+		t.SetScale(Vector3f(xScale, yScale, 1));
+		m_graphics->GetMModels()->insert(m_graphics->GetMModels()->end(), 4, t.GetWorldTrans());
+	}
 
 	m_xScale = xScale;
 	m_yScale = yScale;

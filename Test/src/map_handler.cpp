@@ -76,13 +76,13 @@ void MapHandler::FinalizeSetup()
 	int z = 0;
 	for (auto t : m_tiles)
 	{
-		int tx = t->GetTransformation()->GetTranslation().x;
+		int tx = t->Physics()->Position().x;
 		if (tx > x)
 			x = tx;
-		int ty = t->GetTransformation()->GetTranslation().y;
+		int ty = t->Physics()->Position().y;
 		if (ty > y)
 			y = ty;
-		int tz = t->GetTransformation()->GetTranslation().z;
+		int tz = t->Physics()->Position().z;
 		if (tz > z)
 			z = tz;
 	}
@@ -138,6 +138,20 @@ void MapHandler::Update()
 		{
 			Vector3f pos = x->Physics()->Position();
 			m_graphics->GetModels()->insert(m_graphics->GetModels()->end(), 4, pos);
+		}
+	}
+
+	if (m_graphics->GetMModels()->size() == 0)
+	{
+		//m_graphics->GetModels() = new std::vector<Vector3f>();
+
+		for (auto x : m_tiles)
+		{
+			Vector3f pos = x->Physics()->Position();
+			Transformation t;
+			t.SetTranslation(pos);
+			auto temp = t.GetWorldTrans();
+			m_graphics->GetMModels()->insert(m_graphics->GetMModels()->end(), 4, temp);
 		}
 	}
 

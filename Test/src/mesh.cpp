@@ -24,14 +24,14 @@ void Mesh::Reset()
 	m_textures.clear();
 }
 
-void Mesh::AddToMesh(std::vector<Vertex>& verts, std::vector<GLuint>& inds, int biggestIndex, Vector3f pos, std::string tex, /*Transformation t,*/ int index)
+void Mesh::AddToMesh(std::vector<Vertex>& verts, std::vector<GLuint>& inds, int biggestIndex, Vector3f pos, std::string tex, int index)
 {
 	if (!m_textures.count(tex)) {
 		//m_textures.erase(tex);
-		if(index == -1)
+		if (index == -1)
 			m_textures.emplace(tex, TextureAtlas::m_textureAtlas.AddTexture(tex));
 		else
-		m_textures.emplace(tex, m_texAtlas.AddTexture(tex));
+			m_textures.emplace(tex, m_texAtlas.AddTexture(tex));
 	}
 	//if (m_textures.emplace(tex, 0).second) {
 	//	m_textures.erase(tex);
@@ -41,7 +41,15 @@ void Mesh::AddToMesh(std::vector<Vertex>& verts, std::vector<GLuint>& inds, int 
 	for (auto v : verts)
 	{
 		Vertex temp = Vertex(v);
-		temp.vertex += pos;
+		//temp.vertex += pos;
+		//if (t != Transformation())
+		//{
+		//	t.SetTranslation(temp.vertex.x, temp.vertex.y, temp.vertex.z);
+		//	Mat4f mat = t.GetWorldTrans();
+		//	temp.vertex.x = mat.m[0][3];
+		//	temp.vertex.y = mat.m[1][3];
+		//	temp.vertex.z = mat.m[2][3];
+		//}
 		if (index == -1)
 			TextureAtlas::m_textureAtlas.TextureIndexToCoord(m_textures.at(tex), temp.tex.x, temp.tex.y);
 		else

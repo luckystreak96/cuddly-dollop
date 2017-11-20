@@ -33,6 +33,7 @@
 #include "entityFactory.h"
 #include "collisionManager.h"
 #include "fade.h"
+#include "particleGenerator.h"
 
 class SceneWorld : public Scene
 {
@@ -78,6 +79,7 @@ private:
 	Trail m_trail;
 	Bloom m_bloom;
 	Fade m_fade;
+	ParticleGenerator m_particles;
 	HeightFog m_fog;
 	const std::string DATA_FILE = "res/data/001.json";
 };

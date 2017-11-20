@@ -29,6 +29,7 @@ bool SceneWorld::Init()
 
 	m_mapHandler = std::shared_ptr<MapHandler>(new MapHandler(m_currentMap, m_jsonHandler));
 	m_collisionManager.SetMapTiles(m_mapHandler->Tiles());
+	m_particles = ParticleGenerator(100, m_mapHandler->GetMapSize());
 
 	m_celist = EntityFactory::GetEntities(m_currentMap, m_jsonHandler);
 	m_eventManager.SetEntitiesMap(&m_celist);
@@ -220,6 +221,8 @@ std::shared_ptr<Scene> SceneWorld::Update()
 
 	m_mapHandler->Update();
 
+	m_particles.Update();
+
 	SetAudioPosition();
 	//SoundManager::GetInstance().SetListenerOrientation(((PlayerGraphicsComponent*)m_player->Graphics())->GetDirection());
 
@@ -280,6 +283,7 @@ void SceneWorld::RenderPass()
 
 	// Set the renders
 	m_mapHandler->SetRender();
+	m_particles.SetRender();
 
 	for (auto it : m_celist)
 		it.second->SetRender();
