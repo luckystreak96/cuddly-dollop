@@ -19,8 +19,10 @@ namespace dollop_editor
     /// </summary>
     public partial class NewMap : Window
     {
-        public int MapWidth { get; set; }
-        public int MapHeight { get; set; }
+        private int _mapWidth;
+        public int MapWidth { get { return _mapWidth; } set { _mapWidth = value; txtWidth.Text = _mapWidth.ToString(); } }
+        private int _mapHeight;
+        public int MapHeight { get { return _mapHeight; } set { _mapHeight = value; txtHeight.Text = _mapHeight.ToString(); } }
         public NewMap()
         {
             InitializeComponent();

@@ -84,10 +84,13 @@ void PhysicsComponent::ActionMove(bool up, bool down, bool left, bool right)
 		m_velocity.y += speed;
 	if (down)
 		m_velocity.y -= speed;
+
+	SetMovedBB();
 }
 
 void PhysicsComponent::SetDefaults(std::string name)
 {
+	m_ethereal = false;
 	m_modelName = name;
 
 	Model::GetInstance().loadModel(name);
@@ -156,6 +159,14 @@ void PhysicsComponent::SetMovedBB()
 std::array<float, 6> PhysicsComponent::GetMoveBoundingBox()
 {
 	return m_moveBoundingBox;
+}
+
+std::array<float, 6> PhysicsComponent::GetEtherealMoveBoundingBox()
+{
+	if (m_ethereal)
+		return std::array<float, 6>();
+	else
+		return m_moveBoundingBox;
 }
 
 Vector3f PhysicsComponent::BBSize()
@@ -324,5 +335,10 @@ void PhysicsComponent::SetConversationLock(bool locked)
 {
 	m_conversationLock = locked;
 	RemoveVelocity();
+}
+
+void PhysicsComponent::SetEthereal(bool ethereal)
+{
+	m_ethereal = ethereal;
 }
 

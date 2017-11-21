@@ -17,8 +17,8 @@ std::shared_ptr<Entity> EntityFactory::BuildEntity(std::map<std::string, EntityA
 
 	bool isPlayer = args.count("player") ? std::get<bool>(args.at("player")) : false;
 
-	 std::string sprite = "res/sprites/";
-	 sprite += args.count("sprite") ? std::get<std::string>(args.at("sprite")) : "default.png";
+	std::string sprite = "res/sprites/";
+	sprite += args.count("sprite") ? std::get<std::string>(args.at("sprite")) : "default.png";
 
 	// ID
 	if (args.count("id"))
@@ -40,6 +40,12 @@ std::shared_ptr<Entity> EntityFactory::BuildEntity(std::map<std::string, EntityA
 	}
 	else
 		result->Physics()->AbsolutePosition(Vector3f(1.f, 1.f, 4.f));
+
+	// Ethereal
+	bool ethereal = false;
+	if (args.count("ethereal"))
+		ethereal = std::get<bool>(args.at("ethereal"));
+	result->Physics()->SetEthereal(ethereal);
 
 	return result;
 }

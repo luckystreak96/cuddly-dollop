@@ -7,6 +7,12 @@ EventManager::EventManager() : m_queues(std::vector<std::shared_ptr<EventQueue>>
 
 }
 
+EventManager::~EventManager()
+{
+	m_locks.clear();
+	UpdateLockLevel();
+}
+
 void EventManager::Update(double elapsedTime)
 {
 	for (int k = 0; k < m_queues.size(); k++)

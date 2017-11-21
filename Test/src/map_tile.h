@@ -15,7 +15,7 @@ public:
 	std::shared_ptr<PhysicsComponent> Physics() { return m_phys; }
 	std::string GetTexture() { return m_texPath; }
 	Transformation* GetTransformation() { return &m_trans; }
-	static inline bool SortFunc(std::shared_ptr<MapTile> d, std::shared_ptr<MapTile> d2) { return d->Physics()->Position().z < d2->Physics()->Position().z; }
+	static inline bool SortFunc(std::shared_ptr<MapTile> d, std::shared_ptr<MapTile> d2) { return d->Physics()->Position().z > d2->Physics()->Position().z; }
 private:
 	std::shared_ptr<PhysicsComponent> m_phys;
 	Transformation m_trans;

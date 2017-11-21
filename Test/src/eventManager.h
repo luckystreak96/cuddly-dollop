@@ -13,6 +13,7 @@ class EventManager
 {
 public:
 	EventManager();
+	~EventManager();
 	void PushBack(std::shared_ptr<EventQueue> ev);
 	void Update(double elapsedTime);
 	void SetEntitiesMap(std::map<unsigned int, std::shared_ptr<Entity>>* ents);

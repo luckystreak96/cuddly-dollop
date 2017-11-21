@@ -14,6 +14,8 @@
 #include <vector>
 #include "renderer.h"
 #include "jsonHandler.h"
+#include "particleGenerator.h"
+
 
 class MapHandler
 {

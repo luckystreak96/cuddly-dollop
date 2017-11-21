@@ -1,5 +1,11 @@
 #include "map_handler.h"
 
+#include <linq\linq.h>
+#include <boost\assign.hpp>
+
+using boost::assign::list_of;
+using boost::assign::map_list_of;
+
 #define COMPOSITION "TILE"
 
 MapHandler::MapHandler() : m_mesh(Mesh()), m_id(1)
@@ -68,27 +74,16 @@ void MapHandler::FinalizeSetup()
 	std::sort(m_tiles.begin(), m_tiles.end(), TileSort);
 
 	SetupMesh();
+
 	for (auto x : m_tiles)
 		x->Physics()->Update();
 
-	int x = 0;
-	int y = 0;
-	int z = 0;
-	for (auto t : m_tiles)
-	{
-		int tx = t->Physics()->Position().x;
-		if (tx > x)
-			x = tx;
-		int ty = t->Physics()->Position().y;
-		if (ty > y)
-			y = ty;
-		int tz = t->Physics()->Position().z;
-		if (tz > z)
-			z = tz;
-	}
+	auto maxX = m_tiles | linq::select([](std::shared_ptr<MapTile> mt) { return (int)mt->Physics()->Position().x; }) | linq::max;
+	auto maxY = m_tiles | linq::select([](std::shared_ptr<MapTile> mt) { return (int)mt->Physics()->Position().y; }) | linq::max;
+	auto maxZ = m_tiles | linq::select([](std::shared_ptr<MapTile> mt) { return (int)mt->Physics()->Position().z; }) | linq::max;
 
 	// +1 to add the size of the tile as well
-	m_mapSize = Vector3f(x + 1, y + 1, z);
+	m_mapSize = Vector3f(maxX + 1, maxY + 1, maxZ);
 }
 
 MapHandler::~MapHandler()
@@ -119,29 +114,12 @@ void MapHandler::SetupMesh()
 
 void MapHandler::Update()
 {
-	//This shit doesnt need an update
-	//for (auto d : m_tiles)
-	//	d->Update();
-
-	//Drawable::Update();
-
 	//INEFFICIENT BECAUSE THE MATRIX NEEDS TO BE SENT 4 TIMES - 1 PER VERTEX
 	//THE PURPOSE OF THIS IS SO THAT THE VERTEX SHADER CAN KNOW THE Y COORD OF THE BITCH AND CHANGE
 	//	THE Z ACCORDINGLY. THIS IS DONE THIS WAY BECAUSE OF MESHES, THEY CALCULATE POS AHEAD OF
 	//	TIME AND CHANGE THE VERTEX POSITIONS -- BUT NOT ANY OTHER OBJECT. TO KEEP THE Z CONSISTENT,
 	//	I USE THE MATRIX INSTEAD OF MULTIPLYING THE OTHER OBJECTS VERTEX POS BY THEIR POS.
-	if (m_graphics->GetModels()->size() == 0)
-	{
-		//m_graphics->GetModels() = new std::vector<Vector3f>();
-
-		for (auto x : m_tiles)
-		{
-			Vector3f pos = x->Physics()->Position();
-			m_graphics->GetModels()->insert(m_graphics->GetModels()->end(), 4, pos);
-		}
-	}
-
-	if (m_graphics->GetMModels()->size() == 0)
+	if (m_graphics->GetMModels().size() == 0)
 	{
 		//m_graphics->GetModels() = new std::vector<Vector3f>();
 
@@ -151,26 +129,13 @@ void MapHandler::Update()
 			Transformation t;
 			t.SetTranslation(pos);
 			auto temp = t.GetWorldTrans();
-			m_graphics->GetMModels()->insert(m_graphics->GetMModels()->end(), 4, temp);
+			m_graphics->GetMModels().insert(m_graphics->GetMModels().end(), 4, temp);
 		}
 	}
-
-	//m_graphics->Update();
-
-	//if (m_models.size() == 0)
-	//{
-	//	m_models = std::vector<Mat4f>();
-
-	//	for (auto x : m_tiles)
-	//		m_models.insert(m_models.end(), 4, x->GetModelMat()->GetWorldTrans());
-
-	//	m_MBO_instances = m_models.size();
-	//}
 }
 
 void MapHandler::SetRender()
 {
-	m_graphics->GetModelMat()->SetTranslation(Vector3f(0, 0, 0));
 	Renderer::GetInstance().Add(m_graphics);
 }
 

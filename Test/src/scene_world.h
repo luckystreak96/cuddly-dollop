@@ -41,16 +41,16 @@ public:
 	SceneWorld(unsigned int map_id);
 	~SceneWorld();
 	bool Init();
-	std::shared_ptr<Scene> Act();
+	SceneGenData Act();
 	void Draw();
-	std::shared_ptr<Scene> Update();
+	SceneGenData Update();
 	void Interact();
 	void TriggerEvents(unsigned int entity_id);
 	void LoadAllResources();
 	void UnloadAllResources();
 	void ManageInput();
 	void SetAudioPosition();
-	static void SetNextScene(std::shared_ptr<Scene> s);
+	static void SetNextScene(SceneGenData sgd);
 	
 public:
 	void RenderPass();
@@ -58,10 +58,9 @@ public:
 private:
 	std::shared_ptr<Entity> m_player = NULL;
 	std::shared_ptr<Camera> m_camera;
-	static std::shared_ptr<Scene> NextScene;
+	static SceneGenData NextScene;
 	std::shared_ptr<Scene> m_nextScene;
 	EventManager m_eventManager;
-	//Map* m_map = NULL;
 	std::shared_ptr<MapHandler> m_mapHandler;
 	std::shared_ptr<Transformation> m_World;
 	std::map<unsigned int, std::shared_ptr<Entity>> m_celist;
@@ -81,7 +80,6 @@ private:
 	Fade m_fade;
 	ParticleGenerator m_particles;
 	HeightFog m_fog;
-	const std::string DATA_FILE = "res/data/001.json";
 };
 
 #endif

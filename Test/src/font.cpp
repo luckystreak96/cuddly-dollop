@@ -202,20 +202,13 @@ void Font::SetupMesh(float xBndry, float yBndry)
 	m_graphics->SetPhysics(m_phys.Position(), Vector3f());
 	m_graphics->SetStatic(m_static);
 
-	m_graphics->GetModels()->clear();
-	for (auto x : m_message)
-	{
-		Vector3f pos = Vector3f();
-		m_graphics->GetModels()->insert(m_graphics->GetModels()->end(), 4, pos);
-	}
-
-	m_graphics->GetMModels()->clear();
+	m_graphics->GetMModels().clear();
 	for (auto x : m_letterPositions)
 	{
 		Transformation t;
 		t.SetTranslation(x);
 		t.SetScale(Vector3f(m_xScale, m_yScale, 1));
-		m_graphics->GetMModels()->insert(m_graphics->GetMModels()->end(), 4, t.GetWorldTrans());
+		m_graphics->GetMModels().insert(m_graphics->GetMModels().end(), 4, t.GetWorldTrans());
 	}
 }
 
@@ -303,13 +296,13 @@ void Font::SetRender()
 
 void Font::SetScale(float xScale, float yScale)
 {
-	m_graphics->GetMModels()->clear();
+	m_graphics->GetMModels().clear();
 	for (auto x : m_letterPositions)
 	{
 		Transformation t;
 		t.SetTranslation(x);
 		t.SetScale(Vector3f(xScale, yScale, 1));
-		m_graphics->GetMModels()->insert(m_graphics->GetMModels()->end(), 4, t.GetWorldTrans());
+		m_graphics->GetMModels().insert(m_graphics->GetMModels().end(), 4, t.GetWorldTrans());
 	}
 
 	m_xScale = xScale;

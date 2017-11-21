@@ -32,13 +32,13 @@ float Vector3f::PercentDistance(Vector3f& other)
 {
 	float a, b, c;
 	a = other.x != 0 ? (x / other.x) : 0;
-	if(a > 1)
+	if (a > 1)
 		a = (other.x / x);
 	b = other.y != 0 ? (y / other.y) : 0;
-	if(b > 1)
+	if (b > 1)
 		b = (other.y / y);
 	c = other.z != 0 ? (z / other.z) : 0;
-	if(c > 1)
+	if (c > 1)
 		c = (other.z / z);
 
 	float result = a;
@@ -129,6 +129,34 @@ bool Vector3f::operator<(const Vector3f& r)
 	else
 	{
 		return x < r.x;
+	}
+
+	return false;
+}
+
+bool Vector3f::operator>(const Vector3f& r)
+{
+	if (z == r.z)
+	{
+		if (y == r.y)
+		{
+			if (x == r.x)
+			{
+
+			}
+			else
+			{
+				return x > r.x;
+			}
+		}
+		else
+		{
+			return y > r.y;
+		}
+	}
+	else
+	{
+		return z > r.z;
 	}
 
 	return false;

@@ -3,13 +3,27 @@
 
 #include <memory>
 
+enum SceneType { ST_World };
+
+struct SceneGenData 
+{
+	SceneType sceneType;
+	unsigned int id;
+	bool operator!=(const SceneGenData& sgd)
+	{
+		if (this->id != sgd.id || this->sceneType != sgd.sceneType)
+			return true;
+		return false;
+	}
+};
+
 class Scene
 {
 public:
 	virtual bool Init() = 0;
-	virtual std::shared_ptr<Scene> Act() = 0;
+	virtual SceneGenData Act() = 0;
 	virtual void Draw() = 0;
-	virtual std::shared_ptr<Scene> Update() = 0;
+	virtual SceneGenData Update() = 0;
 	virtual void LoadAllResources() = 0;
 	virtual void UnloadAllResources() = 0;
 };

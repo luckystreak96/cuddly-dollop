@@ -37,6 +37,9 @@ namespace dollop_editor
         {
             InitializeComponent();
 
+            cnvMap.RenderTransform = new ScaleTransform(0, -1);
+            cnvMap.RenderTransform = new TranslateTransform(0, 16);
+
             editor = new Editor();
             Setup(32, 18);
 
@@ -189,18 +192,18 @@ namespace dollop_editor
 
         private void EntitySelected(int x, int y, double z)
         {
-            Point3D point = new Point3D(x, y, z);
+            Point3D point = new Point3D(x, editor.InvertHeight(y), z);
             if (editor.Entities.ContainsKey(point))
             {
                 // Load up that entity into the new window
-                EntityWindow window = new EntityWindow(new Point3D(x, editor.Height - 1 - y, z), editor.Entities, editor.Height, this, editor);
+                EntityWindow window = new EntityWindow(point, editor.Entities, editor.Height, this, editor);
                 window.ShowDialog();
                 ReSyncOnEditor();
             }
             else
             {
                 // Open entity window
-                EntityWindow window = new EntityWindow(new Point3D(x, editor.Height - 1 - y, z), editor.Entities, editor.Height, this, editor);
+                EntityWindow window = new EntityWindow(point, editor.Entities, editor.Height, this, editor);
                 window.ShowDialog();
 
                 if (window.Entity.id == -1)
@@ -232,12 +235,18 @@ namespace dollop_editor
 
             // Draw the tiles
             foreach (var x in editor.Tiles)
+            {
+                ((TranslateTransform)x.Value.RenderTransform).Y = (float)(editor.InvertHeight((float)x.Key.Y)) * editor.TileSize;
                 cnvMap.Children.Add(x.Value);
+            }
 
             // Draw the entities
             if (entityMode)
                 foreach (var x in editor.Entities)
+                {
+                    ((TranslateTransform)x.Value.Item2.RenderTransform).Y = (float)(editor.InvertHeight((float)x.Key.Y)) * editor.TileSize;
                     cnvMap.Children.Add(x.Value.Item2);
+                }
         }
 
         private void AddCurrentMapToHistory()
@@ -374,6 +383,24 @@ namespace dollop_editor
         private void Modify_Click(object sender, RoutedEventArgs e)
         {
             EntitySelected(contextMenuX, contextMenuY, slrDepth.Value);
+        }
+
+        private void menuChangeSize_Click(object sender, RoutedEventArgs e)
+        {
+            NewMap newMap = new NewMap();
+            newMap.MapWidth = editor.Width;
+            newMap.MapHeight = editor.Height;
+            newMap.ShowDialog();
+            if (newMap.MapWidth == -1 || newMap.Height == -1 ||
+                ((newMap.MapWidth < editor.Width || newMap.MapHeight < editor.Height) &&
+                    MessageBox.Show("The new size is smaller than your current size. Continuing may result in loss of tiles. Continue?", "Are you sure?", MessageBoxButton.YesNo) == MessageBoxResult.No))
+                        return;
+
+            editor.Width = newMap.MapWidth;
+            editor.Height = newMap.MapHeight;
+            cnvMap.Width = editor.Width * editor.TileSize;
+            cnvMap.Height = editor.Height * editor.TileSize;
+            ReSyncOnEditor();
         }
     }
 }

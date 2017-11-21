@@ -16,6 +16,7 @@ public:
 
 	void SetScene(std::shared_ptr<Scene> s);
 	void Act();
+	std::shared_ptr<Scene> CreateScene(SceneGenData sgd);
 
 private:
 	SceneManager() {}

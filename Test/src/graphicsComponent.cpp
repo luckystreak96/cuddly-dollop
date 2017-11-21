@@ -8,8 +8,6 @@ void GraphicsComponent::ReceiveMessage(std::vector<std::string> msg)
 GraphicsComponent::~GraphicsComponent()
 {
 	UnloadGLResources();
-	delete m_models;
-	delete m_mmodels;
 }
 
 void GraphicsComponent::FullReset(std::vector<Vertex>* verts, std::vector<GLuint>* inds)
@@ -18,7 +16,6 @@ void GraphicsComponent::FullReset(std::vector<Vertex>* verts, std::vector<GLuint
 
 	m_IBO = 0;
 	m_VBO = 0;
-	m_MBO = 0;
 	m_MMBO = 0;
 
 	m_vertices = std::vector<Vertex>(*verts);
@@ -37,7 +34,7 @@ void GraphicsComponent::Construct()
 
 	//When this z is small - transparency fucks up????
 	m_pos = Vector3f(0.0f, 0.0f, 10.0f);
-	m_modelMat.SetTranslation(m_pos);
+	//m_modelMat.SetTranslation(m_pos);
 
 	SetDefaults(m_modelName);
 
@@ -49,7 +46,6 @@ GraphicsComponent::GraphicsComponent(std::string modelName, std::string texPath)
 {
 	m_IBO = 0;
 	m_VBO = 0;
-	m_MBO = 0;
 	m_MMBO = 0;
 	Construct();
 }
@@ -58,7 +54,6 @@ GraphicsComponent::GraphicsComponent(std::vector<Vertex>* verts, std::vector<GLu
 {
 	m_IBO = 0;
 	m_VBO = 0;
-	m_MBO = 0;
 	m_MMBO = 0;
 
 	m_vertices = std::vector<Vertex>(*verts);
@@ -75,19 +70,8 @@ void GraphicsComponent::Update()
 {
 	m_modelMat.SetTranslation(m_pos);
 
-	if (m_models != NULL)
-		delete m_models;
-
-	m_models = new std::vector<Vector3f>();
-	m_models->insert(m_models->end(), 4, m_pos);
-
-	if (m_mmodels != NULL)
-		delete m_mmodels;
-
-	m_mmodels = new std::vector<Mat4f>();
-	//Transformation t;
-	//t.SetTranslation(m_pos);
-	m_mmodels->insert(m_mmodels->end(), 4, m_modelMat.GetWorldTrans());
+	m_mmodels.clear();
+	m_mmodels.insert(m_mmodels.end(), 4, m_modelMat.GetWorldTrans());
 
 	//Might not be ideal to have this here
 	//BasicEffect::GetInstance().Enable();
@@ -136,8 +120,6 @@ bool GraphicsComponent::UnloadGLResources()
 		glDeleteBuffers(1, &m_IBO);
 	if (m_VBO != 0)
 		glDeleteBuffers(1, &m_VBO);
-	if (m_MBO != 0)
-		glDeleteBuffers(1, &m_MBO);
 	if (m_MMBO != 0)
 		glDeleteBuffers(1, &m_MMBO);
 
@@ -148,13 +130,12 @@ bool GraphicsComponent::UnloadGLResources()
 
 void GraphicsComponent::Draw(bool withTex)
 {
-	Mat4f mat = m_modelMat.GetWorldTrans();
-	Effect::SetModelPosition(&m_modelMat.GetWorldTrans().m[0][0]);
+	//Effect::SetModelPosition(&m_modelMat.GetWorldTrans().m[0][0]);
 
 	if (!m_external_loaded || !m_GL_loaded || !mustDraw || (m_modelName == "NONE" && m_vertices.size() <= 0))
 		return;
 
-	for (int i = 0; i < 10; i++)//0 to 5
+	for (int i = 0; i < 9; i++)//0 to 5
 		glEnableVertexAttribArray(i);
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
@@ -167,15 +148,11 @@ void GraphicsComponent::Draw(bool withTex)
 	if (withTex)
 		ResourceManager::GetInstance().GetTexture(m_texture)->Bind(GL_TEXTURE0);
 
-	glBindBuffer(GL_ARRAY_BUFFER, m_MBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(Vector3f) * m_models->size(), &m_models->at(0), GL_DYNAMIC_DRAW);
-	glVertexAttribPointer(5, 3, GL_FLOAT, GL_FALSE, sizeof(Vector3f), 0);
-
 	glBindBuffer(GL_ARRAY_BUFFER, m_MMBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(Mat4f) * m_mmodels->size(), &m_mmodels->at(0), GL_DYNAMIC_DRAW);
-	for (int i = 6; i < 10; i++)
+	glBufferData(GL_ARRAY_BUFFER, sizeof(Mat4f) * m_mmodels.size(), &m_mmodels.at(0), GL_DYNAMIC_DRAW);
+	for (int i = 5; i < 9; i++)
 	{
-		glVertexAttribPointer(i, 4, GL_FLOAT, GL_FALSE, sizeof(Mat4f), (const GLvoid*)(sizeof(float) * (i - 6) * 4));
+		glVertexAttribPointer(i, 4, GL_FLOAT, GL_FALSE, sizeof(Mat4f), (const GLvoid*)(sizeof(float) * (i - 5) * 4));
 		glVertexAttribDivisor(i, 0);
 	}
 
@@ -194,7 +171,7 @@ void GraphicsComponent::Draw(bool withTex)
 		glEnd();
 	}
 
-	for (int i = 9; i >= 0; i--)//5 to 0
+	for (int i = 8; i >= 0; i--)//5 to 0
 		glDisableVertexAttribArray(i);
 }
 
@@ -204,8 +181,6 @@ void GraphicsComponent::SetBuffers()
 		glGenBuffers(1, &m_IBO);
 	if (m_VBO == 0)
 		glGenBuffers(1, &m_VBO);
-	if (m_MBO == 0)
-		glGenBuffers(1, &m_MBO);
 	if (m_MMBO == 0)
 		glGenBuffers(1, &m_MMBO);
 
@@ -340,3 +315,9 @@ void GraphicsComponent::SetDirection(std::shared_ptr<GraphicsComponent> graph)
 
 	m_lastInteraction = m_direction;
 }
+
+std::vector<Mat4f>& GraphicsComponent::GetMModels()
+{
+	return m_mmodels;
+}
+

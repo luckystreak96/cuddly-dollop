@@ -10,7 +10,7 @@
 #include "renderer.h"
 #include <time.h>
 
-enum ParticleType { PT_Snow, PT_Rain };
+enum ParticleType { PT_Snow, PT_Rain, PT_ObjectRain };
 
 struct Particle
 {
@@ -21,24 +21,24 @@ struct Particle
 	Vector3f position;
 	Vector3f velocity;
 	float counter;
-	virtual void Update(Vector3f mapSize) {};
-	virtual void ResetLocation(Vector3f mapSize, bool firstSpawn = false) {};
+	virtual void Update(Vector3f& mapSize) {};
+	virtual void ResetLocation(Vector3f& mapSize, bool firstSpawn = false) {};
 	virtual void SetTrans(Transformation& trans) {};
 };
 
 struct Snow : public Particle
 {
 	Snow(Vector3f zoneSize);
-	void Update(Vector3f mapSize);
-	void ResetLocation(Vector3f mapSize, bool firstSpawn = false);
+	void Update(Vector3f& mapSize);
+	void ResetLocation(Vector3f& mapSize, bool firstSpawn = false);
 	void SetTrans(Transformation& trans);
 };
 
 struct Rain : public Particle
 {
-	Rain(Vector3f zoneSize);
-	void Update(Vector3f mapSize);
-	void ResetLocation(Vector3f mapSize, bool firstSpawn = false);
+	Rain(Vector3f& zoneSize, std::string texture = "res/sprites/rain.png");
+	void Update(Vector3f& mapSize);
+	void ResetLocation(Vector3f& mapSize, bool firstSpawn = false);
 	void SetTrans(Transformation& trans);
 };
 
@@ -47,7 +47,7 @@ class ParticleGenerator
 public:
 	ParticleGenerator();
 	~ParticleGenerator();
-	void Init(ParticleType c, unsigned int num_particles = 1, Vector3f zoneSize = Vector3f(32, 16, 0));
+	void Init(ParticleType c, unsigned int num_particles = 1, Vector3f zoneSize = Vector3f(32, 16, 0), std::string tex = "res/sprites/snowflake.png");
 	void FinalizeSetup();
 	void SetRender();
 	void Draw();

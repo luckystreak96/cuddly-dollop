@@ -1,6 +1,6 @@
 #include "scene_world.h"
 
-std::shared_ptr<Scene> SceneWorld::NextScene = std::shared_ptr<Scene>(NULL);
+SceneGenData SceneWorld::NextScene = SceneGenData();
 
 SceneWorld::SceneWorld(unsigned int map_id) : m_acceptInput(false), m_currentMap(map_id), m_drawinited(false)
 {
@@ -11,11 +11,11 @@ SceneWorld::SceneWorld(unsigned int map_id) : m_acceptInput(false), m_currentMap
 
 bool SceneWorld::Init()
 {
-	NextScene = std::shared_ptr<Scene>(NULL);
+	NextScene = SceneGenData();
 	m_jsonHandler = std::shared_ptr<JsonHandler>(new JsonHandler());
 	m_jsonHandler->LoadJsonFromFile("res/data/" + std::to_string(m_currentMap) + ".json");
 
-	m_bloomEffect = true;
+	m_bloomEffect = false;
 
 	m_camera = std::shared_ptr<Camera>(new Camera((float)glutGet(GLUT_WINDOW_WIDTH), (float)glutGet(GLUT_WINDOW_HEIGHT)));
 	m_camera->Pos.z = -25;
@@ -29,8 +29,8 @@ bool SceneWorld::Init()
 
 	m_mapHandler = std::shared_ptr<MapHandler>(new MapHandler(m_currentMap, m_jsonHandler));
 	m_collisionManager.SetMapTiles(m_mapHandler->Tiles());
-	m_particles.Init(PT_Rain, 600, m_mapHandler->GetMapSize());
-	//m_particles.Init(PT_Snow, 300, m_mapHandler->GetMapSize());
+	//m_particles.Init(PT_ObjectRain, 100, m_mapHandler->GetMapSize(), "res/sprites/ghosticon.png");
+	m_particles.Init(PT_Snow, 1000, m_mapHandler->GetMapSize());
 
 	m_celist = EntityFactory::GetEntities(m_currentMap, m_jsonHandler);
 	m_eventManager.SetEntitiesMap(&m_celist);
@@ -93,6 +93,11 @@ void SceneWorld::ManageInput()
 	if (InputManager::GetInstance().FrameKeyStatus('b', AnyRelease))
 		m_bloomEffect = !m_bloomEffect;
 
+	if (InputManager::GetInstance().FrameKeyStatus('f', AnyRelease))
+		m_fade.SetFade(true);
+	if (InputManager::GetInstance().FrameKeyStatus('g', AnyRelease))
+		m_fade.SetFade(false);
+
 	if (InputManager::GetInstance().FrameKeyStatus('t', AnyRelease))
 		m_World->AddTranslation(0, 0, 1);
 
@@ -113,9 +118,11 @@ void SceneWorld::ManageInput()
 	}
 }
 
-std::shared_ptr<Scene> SceneWorld::Act()
+SceneGenData SceneWorld::Act()
 {
-	std::shared_ptr<Scene> result = std::shared_ptr<Scene>(NULL);
+	SceneGenData result;
+	result.id = 0;
+	result.sceneType = ST_World;
 	ManageInput();
 
 	//RENDER SETUP WITH FRAME BY FRAME
@@ -135,7 +142,10 @@ std::shared_ptr<Scene> SceneWorld::Act()
 	Draw();
 
 	if (!m_fade.IsDone())
-		return std::shared_ptr<Scene>(NULL);
+	{
+		result.id = 0;
+		return result;
+	}
 	return result;
 }
 
@@ -191,9 +201,9 @@ void SceneWorld::TriggerEvents(unsigned int entity_id)
 				m_eventManager.PushBack(x);
 }
 
-std::shared_ptr<Scene> SceneWorld::Update()
+SceneGenData SceneWorld::Update()
 {
-	std::shared_ptr<Scene> next = NextScene;
+	SceneGenData next = NextScene;
 
 	// Needs to be called here so the EventQueues can set render
 	Renderer::GetInstance().Clear();
@@ -280,7 +290,6 @@ void SceneWorld::RenderPass()
 	}
 
 	BasicEffect::GetInstance().Enable();
-	Effect::SetWorldPosition(*m_World->GetWOTrans().m);
 
 	// Set the renders
 	m_mapHandler->SetRender();
@@ -292,6 +301,8 @@ void SceneWorld::RenderPass()
 
 	if (!m_fade.IsDone())
 		m_fade.Begin();
+
+	Effect::SetWorldPosition(*m_World->GetWOTrans().m);
 
 	// BLOOM
 	if (m_bloomEffect)
@@ -333,7 +344,7 @@ void SceneWorld::SetAudioPosition()
 		SoundManager::GetInstance().SetListenerPosition();
 }
 
-void SceneWorld::SetNextScene(std::shared_ptr<Scene> s)
+void SceneWorld::SetNextScene(SceneGenData sgd)
 {
-	NextScene = s;
+	NextScene = sgd;
 }

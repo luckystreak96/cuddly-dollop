@@ -475,23 +475,22 @@ namespace Physics_2D {
 		for (auto xs : *clist)
 		{
 			std::shared_ptr<Entity> x = xs.second;
+			if (x->Physics()->Velocity() == 0)
+				continue;
 			int id = x->GetID();
 			touching.emplace(id, std::vector<std::shared_ptr<PhysicsComponent>>());
 
 
 			//Create list of touching
+			auto bb1 = x->Physics()->GetMoveBoundingBox();
+			//std::vector<std::shared_ptr<MapTile>> closeList = (*mt)
+			//	| linq::where([bb1](std::shared_ptr<MapTile> maptile)
+			//{ return maptile->Physics()->Position().x >= floorf(bb1.at(AABB::Left)) &&
+			//		maptile->Physics()->Position().x <= bb1.at(AABB::Right); }) | linq::to_container;
 			for (auto ts : *mt)
 			{
-				auto bb1 = x->Physics()->GetMoveBoundingBox();
 				auto bb2 = ts->Physics()->GetMoveBoundingBox();
-				float bb2c = bb2.at(AABB::Close);
-				float bb1c = bb1.at(AABB::Close);
-				float bb2l = bb2.at(AABB::Left);
-				float bb1r = bb1.at(AABB::Right);
 
-				if (bb2.at(AABB::Close) == 5.0f)
-					if (bb2l > bb1r)
-						break;
 				if (Physics::Intersect2D(bb1, bb2))
 					touching.at(id).push_back(ts->Physics());
 			}
@@ -521,7 +520,24 @@ namespace Physics_2D {
 
 			dupes.clear();
 
-			if (touchCounter < mustTouch)
+			//If youre trying to touch 2 different heights at once or you arent touching enough blocks...
+			if (abs(min - max) > STEP_HEIGHT)
+			{
+				if (x->GetID() == 1)
+					int lol = 69;
+				//...collide with everything not at your exact height
+				for (auto t : touching.at(id))
+				{
+					float z = t->Position().z;
+
+					if (z != oz + STAND_HEIGHT)
+					{
+						ApplyCollision(x->Physics(), t);
+						dupes.push_back(t);
+					}
+				}
+			}
+			else if (touchCounter < mustTouch)
 			{
 				// X + Y movement is illegal
 				// If moving in only X or Y is legal and only the other illegal, just collide in that axis
@@ -557,14 +573,14 @@ namespace Physics_2D {
 				{
 					if (touchingX == mustTouchX)
 					{
-						for (auto tx : touchX)
+						for (auto tx : touchY)
 							if (!IsLegalHeight(tx->Position().z, oz))
 								ApplyCollision(x->Physics(), tx, Axis::Y);
 						touching.at(id) = touchX;
 					}
 					else if (touchingY == mustTouchY)
 					{
-						for (auto tx : touchY)
+						for (auto tx : touchX)
 							if (!IsLegalHeight(tx->Position().z, oz))
 								ApplyCollision(x->Physics(), tx, Axis::X);
 						touching.at(id) = touchY;
@@ -585,23 +601,7 @@ namespace Physics_2D {
 						}
 					}
 			}
-			//If youre trying to touch 2 different heights at once or you arent touching enough blocks...
-			else if (abs(min - max) > STEP_HEIGHT)
-			{
-				if (x->GetID() == 1)
-					int lol = 69;
-				//...collide with everything not at your exact height
-				for (auto t : touching.at(id))
-				{
-					float z = t->Position().z;
 
-					if (z != oz + STAND_HEIGHT)
-					{
-						ApplyCollision(x->Physics(), t);
-						dupes.push_back(t);
-					}
-				}
-			}
 
 			// Remove the invalid blocks we arent colliding with anymore to set the height
 			for (auto x : dupes)
@@ -613,9 +613,9 @@ namespace Physics_2D {
 			auto temp = std::vector<std::shared_ptr<PhysicsComponent>>(touching.at(id));
 			touching.at(id).clear();
 			//Create list of touching
+			//bb1 = x->Physics()->GetMoveBoundingBox();
 			for (auto ts : temp)
 			{
-				auto bb1 = x->Physics()->GetMoveBoundingBox();
 				auto bb2 = ts->GetMoveBoundingBox();
 				if (Physics::Intersect2D(bb1, bb2))
 					touching.at(id).push_back(ts);
@@ -660,15 +660,23 @@ namespace Physics_2D {
 					//Are the objects inside each other right now? (nothing will go fast enough to skip this)
 					std::array<float, 6> lol1 = x->Physics()->GetMoveBoundingBox();
 					std::array<float, 6> lol2 = x2->Physics()->GetMoveBoundingBox();
+					std::array<float, 6> lol3 = x->Physics()->GetEtherealMoveBoundingBox();
+					std::array<float, 6> lol4 = x2->Physics()->GetEtherealMoveBoundingBox();
+
+					bool absoluteCollision = Physics::Intersect2D(lol1, lol2);
+					bool etherealCollision = Physics::Intersect2D(lol3, lol4);
 
 					// This is all assuming that the models are 2d, lets make sure that they are
 					assert(lol1.at(AABB::Close) == lol1.at(AABB::Far));
 					assert(lol2.at(AABB::Close) == lol2.at(AABB::Far));
-					if (!(abs(lol1.at(AABB::Close) - lol2.at(AABB::Close)) < STAND_HEIGHT && Physics::Intersect2D(lol1, lol2)))
+					if (!(abs(lol1.at(AABB::Close) - lol2.at(AABB::Close)) < STAND_HEIGHT && (absoluteCollision || etherealCollision)))
 						continue;
 
-					ApplyCollision(x->Physics(), x2->Physics());
-					redo = true;
+					if (etherealCollision)
+					{
+						ApplyCollision(x->Physics(), x2->Physics());
+						redo = true;
+					}
 
 					// Shoot out the event cause its touching the player
 					if (playerId != -1)

@@ -10,19 +10,23 @@ EventMapChange::EventMapChange(unsigned int map) : m_map(map), m_firstSetup(true
 EventUpdateResponse EventMapChange::UpdateEvent(double elapsedTime, std::map<unsigned int, std::shared_ptr<Entity>>* ents)
 {
 	EventUpdateResponse eur = EventUpdateResponse();
-	eur.IsDone = true;
+	//eur.IsDone = true;
 
 	if (m_firstSetup)
 	{
 		// Start a fadeout?
 		m_firstSetup = false;
+		SceneGenData sgd;
+		sgd.id = m_map;
+		sgd.sceneType = ST_World;
+		SceneWorld::SetNextScene(sgd);
 	}
-	else if(1/*fadeout is done*/)
-	{
-		SceneWorld::SetNextScene(std::shared_ptr<Scene>(new SceneWorld(m_map)));
-		m_completed = true;
-		return eur;
-	}
+	//else if(1/*fadeout is done*/)
+	//{
+		//m_completed = true;
+		//eur.IsDone = false;
+		//return eur;
+	//}
 
 	eur.IsDone = false;
 	return eur;

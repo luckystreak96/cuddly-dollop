@@ -37,8 +37,7 @@ public:
 	std::vector<GLuint> GetIndices();
 	std::string GetTexture();
 	void SetTexture(std::string newTex);
-	std::vector<Vector3f>* GetModels() { if (m_models == NULL) m_models = new std::vector<Vector3f>(); return m_models; }
-	std::vector<Mat4f>* GetMModels() { if (m_mmodels == NULL) m_mmodels = new std::vector<Mat4f>(); return m_mmodels; }
+	std::vector<Mat4f>& GetMModels();
 	float GetZ() { return m_pos.z; }
 	GLuint GetMVBO() { return m_VBO; }
 	Vector3f GetPosition();
@@ -62,7 +61,6 @@ protected:
 	GLuint m_mlMatLoc;
 	GLuint m_IBO;
 	GLuint m_VBO;
-	GLuint m_MBO = 0;
 	GLuint m_MMBO = 0;
 	Direction m_direction;
 	Direction m_lastInteraction;
@@ -70,8 +68,7 @@ protected:
 	std::vector<GLuint> m_indices;
 	std::vector<Vertex> m_vertices;
 	std::vector<Vertex> m_originalVertices;
-	std::vector<Vector3f>* m_models = NULL;
-	std::vector<Mat4f>* m_mmodels = NULL;
+	std::vector<Mat4f> m_mmodels;
 	Vector3f m_size = Vector3f(-1, -1, -1);
 	Vector3f m_normalSize = Vector3f(-1, -1, -1);
 	Vector3f m_pos;

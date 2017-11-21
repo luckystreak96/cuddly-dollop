@@ -32,6 +32,11 @@
                     <Separator />
                     <MenuItem Header="_Exit" />
                 </MenuItem>
+                <MenuItem Header="_Edit">
+                    <MenuItem x:Name="menuChangeSize" Header="_Change Size" Click="menuChangeSize_Click" />
+                    <Separator />
+                    <MenuItem Header="_Exit" />
+                </MenuItem>
             </Menu>
         </DockPanel>
         <CheckBox Name="chkEntityMode" Content="Entity Mode" FontWeight="Bold" HorizontalAlignment="Left" Margin="876,39,0,0" VerticalAlignment="Top" Click="chkEntityMode_Click"/>

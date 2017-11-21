@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:dollop_editor"
         mc:Ignorable="d"
-        Title="Entity" Height="504" Width="422.025" WindowStartupLocation="CenterScreen">
+        Title="Entity" Height="504" Width="724.692" WindowStartupLocation="CenterScreen">
     <Grid>
         <TextBox Name="txtID" HorizontalAlignment="Left" Height="23" Margin="87,14,0,0" TextWrapping="Wrap" Text="1" VerticalAlignment="Top" Width="120"/>
         <Label Content="ID" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
@@ -16,21 +16,23 @@
         <TextBox Name="txtX" HorizontalAlignment="Left" Height="23" Margin="87,76,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="120"/>
         <TextBox Name="txtY" HorizontalAlignment="Left" Height="23" Margin="87,107,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="120"/>
         <TextBox Name="txtZ" HorizontalAlignment="Left" Height="23" Margin="87,137,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="120"/>
-        <CheckBox Name="chkPlayer" Content="CheckBox" HorizontalAlignment="Left" Margin="87,47,0,0" VerticalAlignment="Top"/>
+        <CheckBox Name="chkPlayer" Content="" HorizontalAlignment="Left" Margin="87,47,0,0" VerticalAlignment="Top"/>
         <Label Content="Sprite" HorizontalAlignment="Left" Margin="10,165,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="txtSprite" HorizontalAlignment="Left" Height="23" Margin="87,169,0,0" TextWrapping="Wrap" Text="ghost.png" VerticalAlignment="Top" Width="120"/>
         <Button Name="btnSave" Content="Save" HorizontalAlignment="Left" Margin="10,438,0,0" VerticalAlignment="Top" Width="75" Click="btnSave_Click"/>
-        <Button Name="btnCancel" Content="Cancel" HorizontalAlignment="Left" Margin="317,438,0,0" VerticalAlignment="Top" Width="75" Click="btnCancel_Click"/>
-        <ListBox Name="lstQueue" HorizontalAlignment="Left" Height="151" Margin="212,41,0,0" VerticalAlignment="Top" Width="180" Background="#FFE8F6FF" SelectionChanged="lstQueue_SelectionChanged" PreviewMouseDown="lstQueue_PreviewMouseDown"/>
-        <ListBox Name="lstEvent" HorizontalAlignment="Left" Height="206" Margin="10,227,0,0" VerticalAlignment="Top" Width="382" Background="#FFE8F6FF" PreviewMouseDown="lstEvent_PreviewMouseDown"/>
-        <Label Content="Queues:" HorizontalAlignment="Left" Margin="212,10,0,0" VerticalAlignment="Top"/>
+        <Button Name="btnCancel" Content="Cancel" HorizontalAlignment="Left" Margin="632,438,0,0" VerticalAlignment="Top" Width="75" Click="btnCancel_Click"/>
+        <ListBox Name="lstQueue" HorizontalAlignment="Left" Height="151" Margin="527,41,0,0" VerticalAlignment="Top" Width="180" Background="#FFE8F6FF" SelectionChanged="lstQueue_SelectionChanged" PreviewMouseDown="lstQueue_PreviewMouseDown"/>
+        <ListBox Name="lstEvent" HorizontalAlignment="Left" Height="206" Margin="10,227,0,0" VerticalAlignment="Top" Width="697" Background="#FFE8F6FF" PreviewMouseDown="lstEvent_PreviewMouseDown"/>
+        <Label Content="Queues:" HorizontalAlignment="Left" Margin="527,10,0,0" VerticalAlignment="Top"/>
         <Label Content="Events:" HorizontalAlignment="Left" Margin="10,196,0,0" VerticalAlignment="Top"/>
-        <Button Name="btnAddQueue" Content="+" HorizontalAlignment="Left" Margin="347,16,0,0" VerticalAlignment="Top" Width="20" RenderTransformOrigin="-0.095,0.55" FontWeight="Bold" Click="btnAddQueue_Click"/>
-        <Button Name="btnRemoveQueue" Content="-" HorizontalAlignment="Left" Margin="372,16,0,0" VerticalAlignment="Top" Width="20" FontWeight="Bold" Click="btnRemoveQueue_Click"/>
-        <Button Name="btnAddEvent" Content="+" HorizontalAlignment="Left" Margin="347,202,0,0" VerticalAlignment="Top" Width="20" RenderTransformOrigin="-0.095,0.55" FontWeight="Bold" Click="btnAddEvent_Click"/>
-        <Button Name="btnRemoveEvent" Content="-" HorizontalAlignment="Left" Margin="372,202,0,0" VerticalAlignment="Top" Width="20" FontWeight="Bold" Click="btnRemoveEvent_Click"/>
-        <Button Name="btnMoveUp" Content="↑" HorizontalAlignment="Left" Margin="273,202,0,0" VerticalAlignment="Top" Width="20" Click="btnMoveUp_Click"/>
-        <Button Name="btnMoveDown" Content="↓" HorizontalAlignment="Left" Margin="298,202,0,0" VerticalAlignment="Top" Width="20" Click="btnMoveDown_Click"/>
+        <Button Name="btnAddQueue" Content="+" HorizontalAlignment="Left" Margin="662,16,0,0" VerticalAlignment="Top" Width="20" RenderTransformOrigin="-0.095,0.55" FontWeight="Bold" Click="btnAddQueue_Click"/>
+        <Button Name="btnRemoveQueue" Content="-" HorizontalAlignment="Left" Margin="687,16,0,0" VerticalAlignment="Top" Width="20" FontWeight="Bold" Click="btnRemoveQueue_Click"/>
+        <Button Name="btnAddEvent" Content="+" HorizontalAlignment="Left" Margin="660,202,0,0" VerticalAlignment="Top" Width="20" RenderTransformOrigin="-0.095,0.55" FontWeight="Bold" Click="btnAddEvent_Click"/>
+        <Button Name="btnRemoveEvent" Content="-" HorizontalAlignment="Left" Margin="685,202,0,0" VerticalAlignment="Top" Width="20" FontWeight="Bold" Click="btnRemoveEvent_Click"/>
+        <Button Name="btnMoveUp" Content="↑" HorizontalAlignment="Left" Margin="586,202,0,0" VerticalAlignment="Top" Width="20" Click="btnMoveUp_Click"/>
+        <Button Name="btnMoveDown" Content="↓" HorizontalAlignment="Left" Margin="611,202,0,0" VerticalAlignment="Top" Width="20" Click="btnMoveDown_Click"/>
+        <CheckBox Name="chkEthereal" Content="" HorizontalAlignment="Left" Margin="281,16,0,0" VerticalAlignment="Top"/>
+        <Label Content="Ethereal" HorizontalAlignment="Left" Margin="223,11,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>

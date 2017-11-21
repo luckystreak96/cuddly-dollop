@@ -89,6 +89,7 @@ namespace dollop_editor
             // Plz dont crash
             if (Width == 0 || Height == 0 || !Brushes.ContainsKey(brush))
             {
+                y = (int)InvertHeight(y);
                 Rectangle rekt = null;
                 if (!Brushes.ContainsKey(brush))
                 {
@@ -112,7 +113,7 @@ namespace dollop_editor
             rectangle.RenderTransform = new TranslateTransform(x * 32, y * 32);
 
             Rectangle r = null;
-            Point3D pos = new Point3D(x, y, z);
+            Point3D pos = new Point3D(x, (int)InvertHeight((float)y), z);
             if (Tiles.ContainsKey(pos))
             {
                 r = Tiles[pos];
@@ -164,7 +165,7 @@ namespace dollop_editor
                     {
                         x = (float)x.Key.X,
                         // -1 because height - y on its own makes an off by 1 error
-                        y = Height - (float)x.Key.Y - 1,
+                        y = (float)x.Key.Y,
                         z = (float)x.Key.Z,
                         // Get the name of the sprite
                         sprite = ((BitmapImage)(x.Value.Fill.GetValue(ImageBrush.ImageSourceProperty))).UriSource.ToString().Split('\\').Last()
@@ -201,8 +202,8 @@ namespace dollop_editor
                 string data = File.ReadAllText(filename);
                 Map loadedMap = JsonConvert.DeserializeObject<Map>(data);
 
-                Width = (int)loadedMap.tiles.Max(x => x.x);
-                Height = (int)loadedMap.tiles.Max(x => x.y);
+                Width = (int)loadedMap.tiles.Max(x => x.x) + 1;
+                Height = (int)loadedMap.tiles.Max(x => x.y) + 1;
 
                 // Setup the tiles in the dictionary
                 foreach (Tile tile in loadedMap.tiles)
@@ -217,9 +218,9 @@ namespace dollop_editor
                     };
                     rectangle.SetCurrentValue(Canvas.ZIndexProperty, GameToCanvasZ(tile.z));
                     rectangle.RenderTransform = new TranslateTransform((tile.x) * 32, InvertHeight(tile.y) * 32);
-                    if (!(tile.x >= Width || InvertHeight(tile.y) >= Height))
+                    if (!(tile.x >= Width || /*InvertHeight(tile.y)*/tile.y >= Height))
                     {
-                        Point3D point3D = new Point3D(tile.x, InvertHeight(tile.y), tile.z);
+                        Point3D point3D = new Point3D(tile.x,/* InvertHeight(tile.y)*/tile.y, tile.z);
                         if (dictionary.ContainsKey(point3D))
                             dictionary.Remove(point3D);
                         dictionary.Add(point3D, rectangle);
@@ -229,12 +230,12 @@ namespace dollop_editor
                 Tiles = dictionary;
 
                 // Setup the entities in the dictionary
-                foreach(Entity e in loadedMap.entities)
+                foreach (Entity e in loadedMap.entities)
                 {
                     Rectangle rectangle = EntityRectangle(e);
                     int z = GameToCanvasZ((float)Math.Floor(e.z));
-                    if (!(e.x >= Width || InvertHeight(e.y) >= Height))
-                        entities.Add(new Point3D(Math.Floor(e.x), InvertHeight((float)Math.Floor(e.y)), e.z), new Tuple<Entity, Rectangle>(e, rectangle));
+                    if (!(e.x >= Width || e.y >= Height))
+                        entities.Add(new Point3D(Math.Floor(e.x), (float)Math.Floor(e.y), e.z), new Tuple<Entity, Rectangle>(e, rectangle));
                 }
 
                 Entities.Clear();

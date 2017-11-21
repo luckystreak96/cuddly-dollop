@@ -56,10 +56,11 @@ namespace dollop_editor
                 }
             }
 
-            Point3D p = new Point3D(pos.X, mapHeight - 1 - pos.Y, pos.Z);
+            Point3D p = new Point3D(pos.X, pos.Y, pos.Z);
             if (dictionary.ContainsKey(p))
             {
                 Entity = dictionary[p].Item1;
+                chkEthereal.IsChecked = dictionary[p].Item1.ethereal;
                 txtX.Text = dictionary[p].Item1.x.ToString();
                 txtY.Text = dictionary[p].Item1.y.ToString();
                 txtZ.Text = dictionary[p].Item1.z.ToString();
@@ -87,11 +88,13 @@ namespace dollop_editor
             int id = -1;
             float x, y, z = -1;
             bool player = false;
+            bool ethereal = false;
             int.TryParse(txtID.Text, out id);
             float.TryParse(txtX.Text, out x);
             float.TryParse(txtY.Text, out y);
             float.TryParse(txtZ.Text, out z);
             player = chkPlayer.IsChecked == true;
+            ethereal = chkEthereal.IsChecked == true;
 
             if (x == -1 || y == -1 || z == -1)
             {
@@ -110,12 +113,13 @@ namespace dollop_editor
             Entity.y = y;
             Entity.z = z;
             Entity.player = player;
+            Entity.ethereal = ethereal;
             Entity.sprite = txtSprite.Text;
 
-            Point3D p = new Point3D(location.X, mapHeight - 1 - location.Y, location.Z);
+            Point3D p = new Point3D(location.X, location.Y, location.Z);
             if (dictionary.ContainsKey(p))
             {
-                Point3D current = new Point3D(Math.Floor(Entity.x), Editor.InvertHeight((float)Math.Floor(Entity.y)), Entity.z);
+                Point3D current = new Point3D(Math.Floor(Entity.x), Math.Floor(Entity.y), Entity.z);
                 Tuple<Entity, Rectangle> tu = new Tuple<Entity, Rectangle>(Entity, Editor.EntityRectangle(Entity));
                 if (current != p)
                 {

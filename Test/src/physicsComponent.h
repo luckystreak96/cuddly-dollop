@@ -19,12 +19,14 @@ public:
 	void SetDefaults(std::string name = "TILE");//cancer
 	std::string GetName();
 	void ActionMove(bool up, bool down, bool left, bool right);
+	void SetEthereal(bool ethereal);
 	void Move();
 	void MoveBB(Vector3f distance);
 	void SetBoundingBox();
 	void SetBoundingBoxSize(Vector3f size, Vector3f numSquare = Vector3f(1, 1, 1));
 	std::array<float, 6> GetBoundingBox();
 	std::array<float, 6> GetMoveBoundingBox();
+	std::array<float, 6> GetEtherealMoveBoundingBox();
 	Vector3f BBSize();
 	void RelativePosition(Vector3f movementPos);
 	void AbsolutePosition(Vector3f absolutePos, Vector3f useAxis = Vector3f(1, 1, 1));
@@ -49,6 +51,7 @@ public:
 
 	bool mustCollide = true;
 protected:
+	bool m_ethereal;
 	Vector3f m_pos;
 	Vector3f m_velocity;
 	std::vector<GLuint> m_indices;

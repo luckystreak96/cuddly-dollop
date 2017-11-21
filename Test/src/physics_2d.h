@@ -8,20 +8,11 @@
 #include "entity.h"
 #include "map_handler.h"
 #include <array>
+#include <linq\linq.h>
+#include <boost\assign.hpp>
 
-//struct CollidedSurfaces
-//{
-//	//CollidedSurfaces(Drawable* b, Drawable* f, Triangle t) : collider(b), collidee(f), surface(t) {}
-//	//Drawable* collider;
-//	//Drawable* collidee;
-//	Triangle surface;
-//	bool operator==(CollidedSurfaces cs)
-//	{
-//		if (cs.collidee == collidee && cs.collider == collider)
-//			return true;
-//		return false;
-//	}
-//};
+using boost::assign::list_of;
+using boost::assign::map_list_of;
 
 enum Axis { X, Y, Z };
 
