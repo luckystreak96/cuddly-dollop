@@ -1,11 +1,5 @@
 #include "map_handler.h"
 
-#include <linq\linq.h>
-#include <boost\assign.hpp>
-
-using boost::assign::list_of;
-using boost::assign::map_list_of;
-
 #define COMPOSITION "TILE"
 
 MapHandler::MapHandler() : m_mesh(Mesh()), m_id(1)
@@ -75,15 +69,25 @@ void MapHandler::FinalizeSetup()
 
 	SetupMesh();
 
-	for (auto x : m_tiles)
-		x->Physics()->Update();
-
-	auto maxX = m_tiles | linq::select([](std::shared_ptr<MapTile> mt) { return (int)mt->Physics()->Position().x; }) | linq::max;
-	auto maxY = m_tiles | linq::select([](std::shared_ptr<MapTile> mt) { return (int)mt->Physics()->Position().y; }) | linq::max;
-	auto maxZ = m_tiles | linq::select([](std::shared_ptr<MapTile> mt) { return (int)mt->Physics()->Position().z; }) | linq::max;
+	int x = 0;
+	int y = 0;
+	int z = 0;
+	for (auto t : m_tiles)
+	{
+		t->Physics()->Update();
+		int tx = t->Physics()->Position().x;
+		if (tx > x)
+			x = tx;
+		int ty = t->Physics()->Position().y;
+		if (ty > y)
+			y = ty;
+		int tz = t->Physics()->Position().z;
+		if (tz > z)
+			z = tz;
+	}
 
 	// +1 to add the size of the tile as well
-	m_mapSize = Vector3f(maxX + 1, maxY + 1, maxZ);
+	m_mapSize = Vector3f(x + 1, y + 1, z);
 }
 
 MapHandler::~MapHandler()

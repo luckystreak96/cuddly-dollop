@@ -1,16 +1,16 @@
-#version 330
+#version 300 es
 
-in vec2 TexCoord0;
-out vec4 FragColor;
+in highp vec2 TexCoord0;
+out highp vec4 FragColor;
 
 uniform sampler2D gSampler;
 uniform sampler2D gSampler2;
-uniform float gIntensity = 0.3f;
+uniform highp float gIntensity;
 
 void main()
 {
-	vec4 color = texture2D(gSampler, TexCoord0.st);
-	vec4 highlightColor = texture2D(gSampler2, TexCoord0.st);
+	highp vec4 color = texture2D(gSampler, TexCoord0.st);
+	highp vec4 highlightColor = texture2D(gSampler2, TexCoord0.st);
 
 	FragColor = color + highlightColor * gIntensity;
 }

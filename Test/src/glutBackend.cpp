@@ -76,7 +76,7 @@ bool GLUTBackendCreateWindow(unsigned int windowWidth, unsigned int windowHeight
     if(isFullScreen)
         glutFullScreen();
 
-    glutInitContextVersion(3, 3);
+    glutInitContextVersion(3, 0);
     glutInitContextFlags (GLUT_CORE_PROFILE | GLUT_DEBUG);
 
     //Must be initialized after glut

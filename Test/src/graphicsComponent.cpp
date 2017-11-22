@@ -131,7 +131,6 @@ bool GraphicsComponent::UnloadGLResources()
 void GraphicsComponent::Draw(bool withTex)
 {
 	//Effect::SetModelPosition(&m_modelMat.GetWorldTrans().m[0][0]);
-
 	if (!m_external_loaded || !m_GL_loaded || !mustDraw || (m_modelName == "NONE" && m_vertices.size() <= 0))
 		return;
 
@@ -153,7 +152,7 @@ void GraphicsComponent::Draw(bool withTex)
 	for (int i = 5; i < 9; i++)
 	{
 		glVertexAttribPointer(i, 4, GL_FLOAT, GL_FALSE, sizeof(Mat4f), (const GLvoid*)(sizeof(float) * (i - 5) * 4));
-		glVertexAttribDivisor(i, 0);
+		//glVertexAttribDivisor(i, 0);
 	}
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO);

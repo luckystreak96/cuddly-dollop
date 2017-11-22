@@ -5,7 +5,7 @@ ParticleGenerator::ParticleGenerator() : m_mesh(Mesh())
 
 }
 
-Particle::Particle() : physics(PhysicsComponent(Vector3f(0, 0, 0.6f), "CENTERED_TILE")), texture("res/sprites/default.png")
+Particle::Particle() : physics(PhysicsComponent(Vector3f(0, 0, 0.6f), "CENTERED_TILE")), texture("res/sprites/default.png"), position(Vector3f(0, 0, 0.6f))
 {
 }
 
@@ -33,7 +33,7 @@ void Snow::ResetLocation(Vector3f& zoneSize, bool firstSpawn)
 		counter = fmod(((float)rand() / 100.0f), 1.0f);
 	position.x = fmod(((float)rand() / 10.0f), zoneSize.x + 2.0f) - 2.0f;
 	position.y = rand() % ((firstSpawn ? (int)zoneSize.y : 5)) + (firstSpawn ? 0 : zoneSize.y);
-	velocity.y = -fmod(((float)rand() / 1000.0f), 0.05f) - 0.05f;
+	velocity.y = -fmod(((float)rand() / 1000.0f), 0.03f) - 0.03f;
 	float value = fmod(((float)rand() / 1000.0f), 0.1f);
 	velocity.x = (rand() % 2) == 0 ? value : -value;
 }
@@ -141,6 +141,7 @@ void ParticleGenerator::SetupMesh()
 	m_texture = "res/tiles.png";
 	//m_mesh.Finalize(m_texture);
 	m_graphics = std::shared_ptr<GraphicsComponent>(new GraphicsComponent(m_mesh.GetMeshVertices(), m_mesh.GetMeshIndices(), m_texture));
+	m_graphics->SetPhysics(Vector3f(0, 0, 0.6f), Vector3f());
 }
 
 void ParticleGenerator::Update()

@@ -19,7 +19,7 @@ bool Effect::Init(GLuint& program)
 	if (program == 0)
 	{
 		std::cout << "Error creating shader program" << std::endl;
-		system("PAUSE");
+		//system("PAUSE");
 		exit(1);
 		return false;
 	}
@@ -66,7 +66,7 @@ bool Effect::AddShader(const char* shaderFileName, GLenum shaderType, GLuint& pr
 	if (ShaderObj == 0)
 	{
 		std::cout << "Error creating shader type " << shaderType << std::endl;
-		system("PAUSE");
+		//system("PAUSE");
 		exit(0);
 	}
 
@@ -85,8 +85,8 @@ bool Effect::AddShader(const char* shaderFileName, GLenum shaderType, GLuint& pr
 	if (!success) {
 		GLchar InfoLog[1024];
 		glGetShaderInfoLog(ShaderObj, 1024, NULL, InfoLog);
-		std::cout << "Error compiling shader type " << shaderType << ": " << InfoLog << std::endl;
-		system("PAUSE");
+		std::cout << "Error compiling shader " << shaderFileName << ": " << InfoLog << std::endl;
+		//system("PAUSE");
 		return false;
 	}
 

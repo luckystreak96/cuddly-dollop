@@ -79,7 +79,7 @@ float& Vector3f::operator[](int i)
 	if (i == 2)
 		return z;
 	std::cout << "ACCESSING IMPOSSIBLE VECTOR [] THINGY" << std::endl;
-	system("PAUSE");
+	//system("PAUSE");
 	exit(1);
 }
 

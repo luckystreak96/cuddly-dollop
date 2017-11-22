@@ -8,11 +8,6 @@
 #include "entity.h"
 #include "map_handler.h"
 #include <array>
-#include <linq\linq.h>
-#include <boost\assign.hpp>
-
-using boost::assign::list_of;
-using boost::assign::map_list_of;
 
 enum Axis { X, Y, Z };
 

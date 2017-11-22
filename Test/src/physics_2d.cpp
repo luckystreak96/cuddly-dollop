@@ -483,10 +483,7 @@ namespace Physics_2D {
 
 			//Create list of touching
 			auto bb1 = x->Physics()->GetMoveBoundingBox();
-			//std::vector<std::shared_ptr<MapTile>> closeList = (*mt)
-			//	| linq::where([bb1](std::shared_ptr<MapTile> maptile)
-			//{ return maptile->Physics()->Position().x >= floorf(bb1.at(AABB::Left)) &&
-			//		maptile->Physics()->Position().x <= bb1.at(AABB::Right); }) | linq::to_container;
+
 			for (auto ts : *mt)
 			{
 				auto bb2 = ts->Physics()->GetMoveBoundingBox();
@@ -520,24 +517,7 @@ namespace Physics_2D {
 
 			dupes.clear();
 
-			//If youre trying to touch 2 different heights at once or you arent touching enough blocks...
-			if (abs(min - max) > STEP_HEIGHT)
-			{
-				if (x->GetID() == 1)
-					int lol = 69;
-				//...collide with everything not at your exact height
-				for (auto t : touching.at(id))
-				{
-					float z = t->Position().z;
-
-					if (z != oz + STAND_HEIGHT)
-					{
-						ApplyCollision(x->Physics(), t);
-						dupes.push_back(t);
-					}
-				}
-			}
-			else if (touchCounter < mustTouch)
+			if (touchCounter < mustTouch)
 			{
 				// X + Y movement is illegal
 				// If moving in only X or Y is legal and only the other illegal, just collide in that axis
@@ -601,6 +581,23 @@ namespace Physics_2D {
 						}
 					}
 			}
+			//If youre trying to touch 2 different heights at once or you arent touching enough blocks...
+			else if (abs(min - max) > STEP_HEIGHT)
+			{
+				if (x->GetID() == 1)
+					int lol = 69;
+				//...collide with everything not at your exact height
+				for (auto t : touching.at(id))
+				{
+					float z = t->Position().z;
+
+					if (z != oz + STAND_HEIGHT)
+					{
+						ApplyCollision(x->Physics(), t);
+						dupes.push_back(t);
+					}
+				}
+			}
 
 
 			// Remove the invalid blocks we arent colliding with anymore to set the height
@@ -638,9 +635,13 @@ namespace Physics_2D {
 			}
 
 			if (min != 1000)
+			{
 				x->Physics()->AbsolutePosition(Vector3f(-1, -1, min - STAND_HEIGHT), Vector3f(0, 0, 1));
+			}
 		}
 
+		//if (clist->at(3)->Physics()->Velocity() != 0)
+		//	clist->at(3)->Physics()->AbsolutePosition(Vector3f(-1, -1, 5.0f - STAND_HEIGHT), Vector3f(0, 0, 1));
 
 		bool redo = false;
 		for (int i = 0; i < 2; i++)

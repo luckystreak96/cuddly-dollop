@@ -329,6 +329,7 @@ void PhysicsComponent::DesiredMove()
 void PhysicsComponent::RemoveVelocity()
 {
 	m_velocity = Vector3f();
+	SetMovedBB();
 }
 
 void PhysicsComponent::SetConversationLock(bool locked)

@@ -574,12 +574,6 @@
     <None Include="shaders\combine.fs">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="shaders\directionalLight.fs">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="shaders\directionalLight.vs">
-      <Filter>Shaders</Filter>
-    </None>
     <None Include="shaders\gaussian3.fs">
       <Filter>Shaders</Filter>
     </None>
@@ -593,12 +587,6 @@
       <Filter>Shaders</Filter>
     </None>
     <None Include="shaders\heightFog.vs">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="shaders\pointLight.fs">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="shaders\pointLight.vs">
       <Filter>Shaders</Filter>
     </None>
     <None Include="shaders\shader.fs">

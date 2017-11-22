@@ -1,14 +1,14 @@
-#version 330
+#version 300 es
 
-in vec2 TexCoord0;
-out vec4 FragColor;
+in highp vec2 TexCoord0;
+out highp vec4 FragColor;
 
 uniform sampler2D gSampler;
 
 void main()
 {
-	vec4 color = texture2D(gSampler, TexCoord0.st);
-	float brightness = (color.y * 0.2126) + (color.x * 0.7152) + (color.z * 0.0722);
+	highp vec4 color = texture2D(gSampler, TexCoord0.st);
+	highp float brightness = (color.y * 0.2126) + (color.x * 0.7152) + (color.z * 0.0722);
 	//can also set up an if brightness < 0.8, FragColor = black
 	if(brightness > 0.6)
     {

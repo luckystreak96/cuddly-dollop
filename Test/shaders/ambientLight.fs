@@ -1,4 +1,4 @@
-#version 330
+#version 300 es
 
 //in vec4 Color;
 in vec2 TexCoord0;
