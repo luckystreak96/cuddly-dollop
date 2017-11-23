@@ -9,8 +9,8 @@ uniform highp float gIntensity;
 
 void main()
 {
-	highp vec4 color = texture2D(gSampler, TexCoord0.st);
-	highp vec4 highlightColor = texture2D(gSampler2, TexCoord0.st);
+	highp vec4 color = texture(gSampler, TexCoord0.st);
+	highp vec4 highlightColor = texture(gSampler2, TexCoord0.st);
 
 	FragColor = color + highlightColor * gIntensity;
 }

@@ -45,5 +45,5 @@ void main()
             }
         }
 
-    FragColor = texture2D(gSampler, TexCoord0.st) * (AmbientColor + DiffuseColor + SpecularColor - SpecularColor);
+    FragColor = texture(gSampler, TexCoord0.st) * (AmbientColor + DiffuseColor + SpecularColor - SpecularColor);
 }

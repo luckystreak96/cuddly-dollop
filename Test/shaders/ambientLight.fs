@@ -15,5 +15,5 @@ uniform DirectionalLight gDirectionalLight;
 
 void main()
 {
-    FragColor = texture2D(gSampler, TexCoord0.st) * vec4(gDirectionalLight.Color, 1) * gDirectionalLight.AmbientIntensity;
+    FragColor = texture(gSampler, TexCoord0.st) * vec4(gDirectionalLight.Color, 1) * gDirectionalLight.AmbientIntensity;
 }

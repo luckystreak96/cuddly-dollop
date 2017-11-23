@@ -7,7 +7,7 @@ uniform sampler2D gSampler;
 
 void main()
 {
-	highp vec4 color = texture2D(gSampler, TexCoord0.st);
+	highp vec4 color = texture(gSampler, TexCoord0.st);
 	highp float brightness = (color.y * 0.1126) + (color.x * 0.3722) + (color.z * 0.6152);
 	//can also set up an if brightness < 0.8, FragColor = black
 	//color.x = 1 - color.x;

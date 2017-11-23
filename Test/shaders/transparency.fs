@@ -7,7 +7,7 @@ uniform sampler2D gSampler;
 
 void main()
 {
-		highp vec4 color = texture2D(gSampler, TexCoord0.st);
+		highp vec4 color = texture(gSampler, TexCoord0.st);
 		color.a /= 10.0;
 		FragColor = color;
 }

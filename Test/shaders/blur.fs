@@ -10,7 +10,7 @@ uniform sampler2D gSampler;
 
 void main()
 {
-	vec4 color = texture2D(gSampler, TexCoord0.st);
+	vec4 color = texture(gSampler, TexCoord0.st);
 	if(color.a < 0.2)
 		discard;
 

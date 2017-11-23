@@ -16,7 +16,7 @@ void main()
    highp vec3 player = playerOut;
    player.z += 1.0;
 
-   highp vec4 color = texture2D(gSampler, TexCoord0.st);
+   highp vec4 color = texture(gSampler, TexCoord0.st);
    if(color.a < 0.2)
       discard;
    //color.x += 0.03 * ((playerzo + 1) - zpos);
