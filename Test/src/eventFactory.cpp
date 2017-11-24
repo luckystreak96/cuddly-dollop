@@ -1,4 +1,5 @@
 #include "eventFactory.h"
+#include "map_handler.h"
 
 std::map<std::string, unsigned int> EventFactory::TypeDict =
 {
@@ -9,7 +10,8 @@ std::map<std::string, unsigned int> EventFactory::TypeDict =
 	{ "move_up", ET_MoveUp },
 	{ "move_left", ET_MoveLeft },
 	{ "call_queue", ET_CallQueue },
-	{ "map_change", ET_MapChange }
+	{ "map_change", ET_MapChange },
+	{ "weather", ET_Weather }
 };
 
 std::map<std::string, unsigned int> EventFactory::EEMDict =
@@ -24,12 +26,12 @@ float EventFactory::GetFloat(EventArgType eat)
 		return std::get<float>(eat);
 	if (std::holds_alternative<int>(eat))
 		return (float)std::get<int>(eat);
-	
+
 	// If we get here then its not even an int so wtf -_-
 	return std::get<float>(eat);
 }
 
-std::shared_ptr<IEvent> EventFactory::BuildEvent(EventTypes et, std::map<std::string, EventArgType> args, unsigned int entity_id)
+std::shared_ptr<IEvent> EventFactory::BuildEvent(EventTypes et, std::map<std::string, EventArgType> args, MapHandler* map, unsigned int entity_id)
 {
 	//if (s.size() <= 0)
 	//	return NULL;
@@ -70,6 +72,11 @@ std::shared_ptr<IEvent> EventFactory::BuildEvent(EventTypes et, std::map<std::st
 		result = std::shared_ptr<IEvent>(new EventMove(id,
 			args.count("distance") ? GetFloat(args.at("distance")) : 3.0f,
 			3));
+		break;
+	case EventTypes::ET_Weather:
+		result = std::shared_ptr<IEvent>(new EventWeather(args.count("count") ? std::get<int>(args.at("count")) : 50,
+			(ParticleType)(args.count("type") ? std::get<int>(args.at("type")) : 0),
+			map->GetMapSize()));
 		break;
 	case EventTypes::ET_CallQueue:
 		result = std::shared_ptr<IEvent>(new EventCaller(id, args.count("queue_id") ? std::get<int>(args.at("queue_id")) : 0));
@@ -156,7 +163,7 @@ void EventFactory::SetActivationType(std::shared_ptr<EventQueue> eq, std::string
 	}
 }
 
-std::vector<std::shared_ptr<EventQueue>> EventFactory::LoadEvent(int map_id, unsigned int entity_id, std::shared_ptr<JsonHandler> jh)
+std::vector<std::shared_ptr<EventQueue>> EventFactory::LoadEvent(int map_id, unsigned int entity_id, std::shared_ptr<JsonHandler> jh, MapHandler* map)
 {
 	std::vector<std::shared_ptr<EventQueue>> result = std::vector<std::shared_ptr<EventQueue>>();
 
@@ -192,7 +199,7 @@ std::vector<std::shared_ptr<EventQueue>> EventFactory::LoadEvent(int map_id, uns
 					if (e.HasMember("args"))
 						for (rapidjson::Value::MemberIterator iter = e["args"].MemberBegin(); iter != e["args"].MemberEnd(); ++iter)
 						{
-							EventArgType eat = AddArg(iter, false);
+							EventArgType eat = AddArg(iter, false, map);
 							args.emplace(std::string(iter->name.GetString()), eat);
 						}
 
@@ -201,10 +208,10 @@ std::vector<std::shared_ptr<EventQueue>> EventFactory::LoadEvent(int map_id, uns
 					{
 						EventArgType eat;
 						rapidjson::Value val = e["queues"].GetArray();
-						args.emplace("queue", LoadEvent(val));
+						args.emplace("queue", LoadEvent(val, map));
 					}
 
-					std::shared_ptr<IEvent> ev = EventFactory::BuildEvent((EventTypes)TypeDict.at(e["type"].GetString()), args, entity_id);
+					std::shared_ptr<IEvent> ev = EventFactory::BuildEvent((EventTypes)TypeDict.at(e["type"].GetString()), args, map, entity_id);
 
 					// Set execution mode if necessary
 					if (e.HasMember("execution_type") && EEMDict.find(e["execution_type"].GetString()) != EEMDict.end())
@@ -221,7 +228,7 @@ std::vector<std::shared_ptr<EventQueue>> EventFactory::LoadEvent(int map_id, uns
 	return result;
 }
 
-std::shared_ptr<EventQueue> EventFactory::LoadEvent(int map_id, unsigned int entity_id, unsigned int queue_id, std::shared_ptr<JsonHandler> jh)
+std::shared_ptr<EventQueue> EventFactory::LoadEvent(int map_id, unsigned int entity_id, unsigned int queue_id, std::shared_ptr<JsonHandler> jh, MapHandler* map)
 {
 	std::shared_ptr<EventQueue> result = std::shared_ptr<EventQueue>(new EventQueue(-1));
 
@@ -261,7 +268,7 @@ std::shared_ptr<EventQueue> EventFactory::LoadEvent(int map_id, unsigned int ent
 					if (e.HasMember("args"))
 						for (rapidjson::Value::MemberIterator iter = e["args"].MemberBegin(); iter != e["args"].MemberEnd(); ++iter)
 						{
-							EventArgType eat = AddArg(iter, false);
+							EventArgType eat = AddArg(iter, false, map);
 							args.emplace(std::string(iter->name.GetString()), eat);
 						}
 
@@ -270,10 +277,10 @@ std::shared_ptr<EventQueue> EventFactory::LoadEvent(int map_id, unsigned int ent
 					{
 						EventArgType eat;
 						rapidjson::Value val = e["queues"].GetArray();
-						args.emplace("queue", LoadEvent(val));
+						args.emplace("queue", LoadEvent(val, map));
 					}
 
-					std::shared_ptr<IEvent> ev = EventFactory::BuildEvent((EventTypes)TypeDict.at(e["type"].GetString()), args, entity_id);
+					std::shared_ptr<IEvent> ev = EventFactory::BuildEvent((EventTypes)TypeDict.at(e["type"].GetString()), args, map, entity_id);
 
 					// Set execution mode if necessary
 					if (e.HasMember("execution_type") && EEMDict.find(e["execution_type"].GetString()) != EEMDict.end())
@@ -291,7 +298,7 @@ std::shared_ptr<EventQueue> EventFactory::LoadEvent(int map_id, unsigned int ent
 	return result;
 }
 
-EventArgType EventFactory::AddArg(rapidjson::Value::MemberIterator iter, bool secondIteration)
+EventArgType EventFactory::AddArg(rapidjson::Value::MemberIterator iter, bool secondIteration, MapHandler* maphandler)
 {
 	std::map<std::string, std::variant<bool, float, int, std::string, std::vector<std::shared_ptr<EventQueue>>>> map = std::map<std::string, std::variant<bool, float, int, std::string, std::vector<std::shared_ptr<EventQueue>>>>();
 	EventArgType eat = false;
@@ -318,19 +325,19 @@ EventArgType EventFactory::AddArg(rapidjson::Value::MemberIterator iter, bool se
 		if (secondIteration)
 			break;
 		for (rapidjson::Value::MemberIterator it = iter->value.MemberBegin(); it != iter->value.MemberEnd(); ++it)
-			map.emplace(std::string(it->name.GetString()), AddArg(it));
+			map.emplace(std::string(it->name.GetString()), AddArg(it, maphandler));
 		eat = map;
 		break;
 	case rapidjson::Type::kArrayType:
 		rapidjson::Value val = iter->value.GetArray();
-		eat = LoadEvent(val);
+		eat = LoadEvent(val, maphandler);
 		break;
 	}
 
 	return eat;
 }
 
-std::variant<bool, float, int, std::string, std::vector<std::shared_ptr<EventQueue>>> EventFactory::AddArg(rapidjson::Value::MemberIterator iter)
+std::variant<bool, float, int, std::string, std::vector<std::shared_ptr<EventQueue>>> EventFactory::AddArg(rapidjson::Value::MemberIterator iter, MapHandler* maphandler)
 {
 	std::map<std::string, std::variant<bool, float, int, std::string, std::vector<std::shared_ptr<EventQueue>>>> map = std::map<std::string, std::variant<bool, float, int, std::string, std::vector<std::shared_ptr<EventQueue>>>>();
 	std::variant<bool, float, int, std::string, std::vector<std::shared_ptr<EventQueue>>> eat = false;
@@ -355,7 +362,7 @@ std::variant<bool, float, int, std::string, std::vector<std::shared_ptr<EventQue
 		break;
 	case rapidjson::Type::kArrayType:
 		rapidjson::Value val = iter->value.GetArray();
-		eat = LoadEvent(val);
+		eat = LoadEvent(val, maphandler);
 		break;
 	}
 
@@ -364,7 +371,7 @@ std::variant<bool, float, int, std::string, std::vector<std::shared_ptr<EventQue
 
 
 // Recursive AS FUCK
-std::vector<std::shared_ptr<EventQueue>> EventFactory::LoadEvent(rapidjson::Value& v)
+std::vector<std::shared_ptr<EventQueue>> EventFactory::LoadEvent(rapidjson::Value& v, MapHandler* map)
 {
 	std::vector<std::shared_ptr<EventQueue>> result = std::vector<std::shared_ptr<EventQueue>>();
 
@@ -423,10 +430,10 @@ std::vector<std::shared_ptr<EventQueue>> EventFactory::LoadEvent(rapidjson::Valu
 				{
 					EventArgType eat;
 					rapidjson::Value val = e["queues"].GetArray();
-					args.emplace("queue", LoadEvent(val));
+					args.emplace("queue", LoadEvent(val, map));
 				}
 
-				std::shared_ptr<IEvent> ev = EventFactory::BuildEvent((EventTypes)TypeDict.at(e["type"].GetString()), args);
+				std::shared_ptr<IEvent> ev = EventFactory::BuildEvent((EventTypes)TypeDict.at(e["type"].GetString()), args, map);
 
 				// Set execution mode if necessary
 				if (e.HasMember("execution_type") && EEMDict.find(e["execution_type"].GetString()) != EEMDict.end())

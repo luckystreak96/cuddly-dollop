@@ -78,7 +78,7 @@ private:
 	Trail m_trail;
 	Bloom m_bloom;
 	Fade m_fade;
-	ParticleGenerator m_particles;
+	//ParticleGenerator m_particles;
 	HeightFog m_fog;
 };
 

@@ -356,6 +356,7 @@ namespace dollop_editor
                 // Open document 
                 string filename = fileDialog.FileName;
                 editor.Load(filename);
+                ReleaseMouse();
                 cnvMap.Height = editor.Height * editor.TileSize;
                 cnvMap.Width = editor.Width * editor.TileSize;
                 ReSyncOnEditor();

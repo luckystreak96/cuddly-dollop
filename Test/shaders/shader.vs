@@ -18,7 +18,7 @@ void main()
 	}
 	else if (gType == 1) // Dont draw flat
 	{
-		gl_Position = gWorld * transpose(Model) * vec4(Position.x, Position.y, ((-0.3f + Position.y) * -2.0f), 1.0f);
+		gl_Position = gWorld * transpose(Model) * vec4(Position.x, Position.y, ((-0.3f + Position.y) * -1.4f), 1.0f);
 	}
     TexCoord0 = TexCoord;
 }

@@ -19,6 +19,8 @@ enum EventExecutionMode
 	BLOCKING, ASYNC
 };
 
+enum EventTypes { ET_Teleport, ET_DialogueBox, ET_MoveRight, ET_MoveUp, ET_MoveDown, ET_MoveLeft, ET_CallQueue, ET_MapChange, ET_Weather };
+
 class IEvent
 {
 public:
@@ -28,6 +30,7 @@ public:
 	// Returns true if the event is done updating
 	virtual EventUpdateResponse UpdateEvent(double elapsedTime, std::map<unsigned int, std::shared_ptr<Entity>>* ents);
 	virtual void ResetEvent();
+	virtual EventTypes GetEventType();
 	unsigned int GetLockLevel();
 	bool IsCompleted();
 	EventExecutionMode GetExecutionMode();
@@ -39,6 +42,7 @@ protected:
 	EventExecutionMode m_mode;
 	unsigned int m_lockLevel;
 	unsigned int m_target;
+	EventTypes m_eventType;
 };
 
 #endif // !DIALOGUE_GRAPH_H__

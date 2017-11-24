@@ -195,6 +195,7 @@ namespace dollop_editor
                 Entities.Clear();
                 Tiles.Clear();
                 TileHistory.Clear();
+                HistoryProgress = -1;
 
                 Dictionary<Point3D, Rectangle> dictionary = new Dictionary<Point3D, Rectangle>();
                 Dictionary<Point3D, Tuple<Entity, Rectangle>> entities = new Dictionary<Point3D, Tuple<Entity, Rectangle>>();

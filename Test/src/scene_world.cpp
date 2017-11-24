@@ -30,7 +30,7 @@ bool SceneWorld::Init()
 	m_mapHandler = std::shared_ptr<MapHandler>(new MapHandler(m_currentMap, m_jsonHandler));
 	m_collisionManager.SetMapTiles(m_mapHandler->Tiles());
 	//m_particles.Init(PT_ObjectRain, 100, m_mapHandler->GetMapSize(), "res/sprites/ghosticon.png");
-	m_particles.Init(PT_Snow, 50, m_mapHandler->GetMapSize());
+	//m_particles.Init(PT_Snow, 50, m_mapHandler->GetMapSize());
 
 	m_celist = EntityFactory::GetEntities(m_currentMap, m_jsonHandler);
 	m_eventManager.SetEntitiesMap(&m_celist);
@@ -47,11 +47,13 @@ bool SceneWorld::Init()
 	// Autorun events
 	for (auto e : m_celist)
 	{
-		for (auto x : EventFactory::LoadEvent(m_currentMap, e.first, m_jsonHandler))
+		for (auto x : EventFactory::LoadEvent(m_currentMap, e.first, m_jsonHandler, m_mapHandler.get()))
 		{
 			e.second->AddEventQueue(x);
 			if (x->GetActivationType() == AT_Autorun)
+			{
 				m_eventManager.PushBack(x);
+			}
 		}
 	}
 
@@ -232,7 +234,7 @@ SceneGenData SceneWorld::Update()
 
 	m_mapHandler->Update();
 
-	m_particles.Update();
+	//m_particles.Update();
 
 	SetAudioPosition();
 	//SoundManager::GetInstance().SetListenerOrientation(((PlayerGraphicsComponent*)m_player->Graphics())->GetDirection());
@@ -293,7 +295,7 @@ void SceneWorld::RenderPass()
 
 	// Set the renders
 	m_mapHandler->SetRender();
-	m_particles.SetRender();
+	//m_particles.SetRender();
 
 	for (auto it : m_celist)
 		it.second->SetRender();

@@ -36,3 +36,8 @@ bool IEvent::IsCompleted()
 {
 	return m_completed;
 }
+
+EventTypes IEvent::GetEventType()
+{
+	return m_eventType;
+}
