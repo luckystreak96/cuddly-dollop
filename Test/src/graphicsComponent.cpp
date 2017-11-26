@@ -320,3 +320,11 @@ std::vector<Mat4f>& GraphicsComponent::GetMModels()
 	return m_mmodels;
 }
 
+//Vector3f GraphicsComponent::GetGraphicSize()
+//{
+//	float w = m_vertices.;
+//	float h;
+//	float d;
+//	return Vector3f(w, h, d);
+//}
+

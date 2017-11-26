@@ -1,4 +1,5 @@
 #include "font.h"
+#include "utils.h"
 
 Font::Font(bool sTatic, bool temporary, bool lightSpeed, std::string path) : m_texture(path), m_phys(PhysicsComponent(Vector3f(), "TEXT")),
 m_elapsedTime(0), m_textSpeed(1.0), m_timePerLetter(0.03), m_static(sTatic), m_temporary(temporary), m_lifetime(5.0), LetterSpacing(0.5f), MaxTime(30000),
@@ -77,31 +78,12 @@ void Font::ChangeLetter(unsigned int index, char newChar)
 	m_graphics->ResetVBO();
 }
 
-
-
-template<typename Out>
-void split(const std::string &s, char delim, Out result) {
-	std::stringstream ss;
-	ss.str(s);
-	std::string item;
-	while (std::getline(ss, item, delim)) {
-		*(result++) = item;
-	}
-}
-
-std::vector<std::string> split(const std::string &s, char delim) {
-	std::vector<std::string> elems;
-	split(s, delim, std::back_inserter(elems));
-	return elems;
-}
-
-
 void Font::SetupMesh(float xBndry, float yBndry)
 {
 	m_mesh.Reset();
 
 	// Split the text into words for op word wrap
-	std::vector<std::string> temp = split(m_message, ' ');
+	std::vector<std::string> temp = Utils::Split(m_message, ' ');
 	std::vector<std::string> words = std::vector<std::string>();//split(m_message, ' ');
 
 	// Iterate through the words
@@ -114,7 +96,7 @@ void Font::SetupMesh(float xBndry, float yBndry)
 			int numBSN = std::count(x.begin(), x.end(), '\n');
 
 			// Little hack to find out how many \n's and where they go
-			auto s = split(x, '\n');
+			auto s = Utils::Split(x, '\n');
 			for (auto b : s)
 			{
 				// An empty string indicates \n at the start of the word
@@ -168,7 +150,7 @@ void Font::SetupMesh(float xBndry, float yBndry)
 			newmessage += w + " ";
 			m_x += (w.size() + 1) * LetterSpacing * m_xScale;
 		}
-		else if (w.size() * LetterSpacing * m_xScale + m_x > xBndry / m_xScale)
+		else if (w.size() * LetterSpacing * m_xScale + m_x > xBndry)
 		{
 			// Increment y and start on new line
 			m_y -= 0.5f;

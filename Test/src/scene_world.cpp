@@ -12,8 +12,7 @@ SceneWorld::SceneWorld(unsigned int map_id) : m_acceptInput(false), m_currentMap
 bool SceneWorld::Init()
 {
 	NextScene = SceneGenData();
-	m_jsonHandler = std::shared_ptr<JsonHandler>(new JsonHandler());
-	m_jsonHandler->LoadJsonFromFile("res/data/" + std::to_string(m_currentMap) + ".json");
+	m_jsonHandler = std::shared_ptr<JsonHandler>(new JsonHandler(m_currentMap));
 
 	m_bloomEffect = false;
 

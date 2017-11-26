@@ -1,13 +1,17 @@
 #include "particleGenerator.h"
+#include "define.h"
 
 ParticleGenerator::ParticleGenerator() : m_mesh(Mesh())
 {
 
 }
 
-Particle::Particle() : physics(PhysicsComponent(Vector3f(0, 0, 0.6f), "CENTERED_TILE")), texture("res/sprites/default.png"), position(Vector3f(0, 0, 0.6f))
+Particle::Particle() : physics(PhysicsComponent(Vector3f(0, 0, 0.6f), "CENTERED_TILE")), texture("snowflake.png"), position(Vector3f(0, 0, 0.6f))
 {
 }
+
+
+//========= SNOW ============
 
 void Snow::Update(Vector3f& zoneSize)
 {
@@ -20,7 +24,7 @@ void Snow::Update(Vector3f& zoneSize)
 
 Snow::Snow(Vector3f zoneSize)
 {
-	texture = "res/sprites/snowflake2.png";
+	texture = "snowflake.png";
 	ResetLocation(zoneSize, true);
 }
 
@@ -44,6 +48,9 @@ void Snow::SetTrans(Transformation& trans)
 	trans.SetScale(Vector3f(0.3f, 0.3f, 0.3f));
 }
 
+
+//========= RAIN ============
+
 void Rain::Update(Vector3f& zoneSize)
 {
 	position += velocity;
@@ -61,7 +68,7 @@ Rain::Rain(Vector3f& zoneSize, std::string tex)
 
 void Rain::SetTrans(Transformation& trans)
 {
-	if (texture == "res/sprites/rain.png")
+	if (texture == "rain.png")
 	{
 		trans.SetRotation(0, 0, velocity.x);
 		trans.SetScale(Vector3f(0.12f, 0.6f, 1.0f));
@@ -80,8 +87,52 @@ void Rain::ResetLocation(Vector3f& zoneSize, bool firstSpawn)
 	position.x = fmod(((float)rand() / 10.0f), zoneSize.x + 4.0f) - 4.0f;
 	position.y = rand() % ((firstSpawn ? (int)zoneSize.y : 10)) + (firstSpawn ? 0 : zoneSize.y);
 	velocity.y = -fmod(((float)rand() / 1000.0f), 0.3f);
-	velocity.y -= texture == "res/sprites/rain.png" ? 0.4f : 0.1f;
+	velocity.y -= texture == "rain.png" ? 0.4f : 0.1f;
 	float value = fmod(((float)rand() / 1000.0f), 0.1f);
+}
+
+//========= MUSIC ============
+
+void Music::Update(Vector3f& spawnPos)
+{
+	position += velocity;
+	if (counter > 180)
+	{
+		counter = 0;
+		ResetLocation(spawnPos);
+	}
+	counter += 1;
+};
+
+Music::Music(Vector3f& spawnPos, std::vector<std::string> tex)
+{
+	textures = tex;
+	ResetLocation(spawnPos, true);
+	velocity.x = fmod((float)rand() / 10, 0.02f) + 0.01f;
+}
+
+void Music::SetTrans(Transformation& trans)
+{
+	trans.SetScale(Vector3f(0.5f, 0.5f, 1.0f));
+}
+
+
+void Music::ResetLocation(Vector3f& spawnPos, bool firstSpawn)
+{
+	texture = textures.at(rand() % textures.size());
+	if (firstSpawn)
+	{
+		position.x = -10;
+		position.y = -10;
+		counter = rand() % 180;
+	}
+	else
+	{
+		counter = rand() % 20;
+		position.x = spawnPos.x;
+		position.y = spawnPos.y;
+		velocity.y = fmod(((float)rand() / 1000.0f), 0.02f);
+	}
 }
 
 void ParticleGenerator::Init(ParticleType c, unsigned int num_particles, Vector3f zoneSize, std::string tex)
@@ -102,6 +153,10 @@ void ParticleGenerator::Init(ParticleType c, unsigned int num_particles, Vector3
 	case PT_ObjectRain:
 		for (unsigned int i = 0; i < num_particles; i++)
 			m_particles.push_back(std::shared_ptr<Particle>(new Rain(zoneSize, tex)));
+		break;
+	case PT_Music:
+		for (unsigned int i = 0; i < num_particles; i++)
+			m_particles.push_back(std::shared_ptr<Particle>(new Music(zoneSize)));
 		break;
 	default:
 		for (unsigned int i = 0; i < num_particles; i++)
@@ -132,9 +187,7 @@ void ParticleGenerator::SetupMesh()
 	m_mesh.Reset();
 	std::sort(m_particles.begin(), m_particles.end(), ParticleSort);
 	for (auto t : m_particles)
-	{
-		m_mesh.AddToMesh(t->physics.GetVertices(), t->physics.GetIndices(), t->physics.GetHighestIndex(), t->position, t->texture, -1);
-	}
+		m_mesh.AddToMesh(t->physics.GetVertices(), t->physics.GetIndices(), t->physics.GetHighestIndex(), t->position, t->texture);
 
 	m_MBO_instances = m_particles.size();
 
@@ -144,7 +197,7 @@ void ParticleGenerator::SetupMesh()
 	m_graphics->SetPhysics(Vector3f(0, 0, 0.6f), Vector3f());
 }
 
-void ParticleGenerator::Update()
+void ParticleGenerator::LogicUpdate()
 {
 	for (auto d : m_particles)
 		d->Update(m_zoneSize);
@@ -165,6 +218,17 @@ void ParticleGenerator::Update()
 		x->SetTrans(t);
 		mmodels.insert(mmodels.end(), 4, t.GetWorldTrans());
 	}
+}
+
+void ParticleGenerator::Update()
+{
+	LogicUpdate();
+}
+
+void ParticleGenerator::Update(Vector3f pos)
+{
+	m_zoneSize = pos;
+	LogicUpdate();
 }
 
 void ParticleGenerator::SetRender()

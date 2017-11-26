@@ -10,7 +10,13 @@
 #include "renderer.h"
 #include <time.h>
 
-enum ParticleType { PT_Snow, PT_Rain, PT_ObjectRain };
+enum ParticleType { PT_Snow, PT_Rain, PT_ObjectRain, PT_Music };
+static const std::map<std::string, ParticleType> ParticleFromString = { 
+	std::make_pair("snow", PT_Snow),
+	std::make_pair("rain", PT_Rain), 
+	std::make_pair("object", PT_ObjectRain),
+	std::make_pair("music", PT_Music)
+};
 
 struct Particle
 {
@@ -36,10 +42,19 @@ struct Snow : public Particle
 
 struct Rain : public Particle
 {
-	Rain(Vector3f& zoneSize, std::string texture = "res/sprites/rain.png");
+	Rain(Vector3f& zoneSize, std::string texture = "rain.png");
 	void Update(Vector3f& mapSize);
 	void ResetLocation(Vector3f& mapSize, bool firstSpawn = false);
 	void SetTrans(Transformation& trans);
+};
+
+struct Music : public Particle
+{
+	Music(Vector3f& spawnPos, std::vector<std::string> texture = { "note_s.png", "note_d.png" });
+	void Update(Vector3f& spawnPos);
+	void ResetLocation(Vector3f& spawnPos, bool firstSpawn = false);
+	void SetTrans(Transformation& trans);
+	std::vector<std::string> textures;
 };
 
 class ParticleGenerator
@@ -47,11 +62,13 @@ class ParticleGenerator
 public:
 	ParticleGenerator();
 	~ParticleGenerator();
-	void Init(ParticleType c, unsigned int num_particles = 1, Vector3f zoneSize = Vector3f(32, 16, 0), std::string tex = "res/sprites/snowflake.png");
+	void Init(ParticleType c, unsigned int num_particles = 1, Vector3f zoneSize = Vector3f(32, 16, 0), std::string tex = "snowflake.png");
 	void FinalizeSetup();
 	void SetRender();
 	void Draw();
+	void LogicUpdate();
 	void Update();
+	void Update(Vector3f pos);
 	std::vector<std::shared_ptr<Particle>>* Particles();
 	unsigned int Size();
 	void SetupMesh();

@@ -66,12 +66,12 @@ namespace dollop_editor
         private void PopulateBrushes()
         {
             // Need to automate this to find all png files in res folder (make it res/tiles?)
-            string[] files = Directory.GetFiles(@"..\..\..\Test\res\sprites", "*.png", SearchOption.TopDirectoryOnly);
+            string[] files = Directory.GetFiles(@"..\..\..\Test\res\sprites\tiles", "*.png", SearchOption.TopDirectoryOnly);
             List<string> ls = new List<string>(files);
+            ls.AddRange(Directory.GetFiles(@"..\..\..\Test\res\sprites\entities", "*.png", SearchOption.TopDirectoryOnly));
             foreach (var x in ls)
             {
                 ImageBrush brush = new ImageBrush();
-                string source = @"..\..\..\Test\res\" + x;
                 BitmapImage bmi = new BitmapImage(new Uri(x, UriKind.Relative));
                 if (bmi.PixelWidth > 32 || bmi.PixelHeight > 32)
                 {

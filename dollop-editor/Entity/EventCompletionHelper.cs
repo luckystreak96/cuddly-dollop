@@ -18,6 +18,7 @@ namespace dollop_editor
             { (int)EventType.map_change, typeof(EventArgMapChange) },
             { (int)EventType.teleport, typeof(EventArgTeleport) },
             { (int)EventType.weather, typeof(EventArgWeather) },
+            { (int)EventType.particle, typeof(EventArgParticle) },
         };
         public static Dictionary<string, string> eventArgComplexExamples = new Dictionary<string, string>() {
             { EventType.dialogue.ToString(), @"--choice 1--{

@@ -13,19 +13,29 @@ bool Game::init(float width, float height)
 	std::vector<std::string> vs;
 	HANDLE hFind;
 	WIN32_FIND_DATA FindFileData;
-	hFind = FindFirstFile(L"res/sprites/*.png", &FindFileData);
+	hFind = FindFirstFile(L"res/sprites/tiles/*.png", &FindFileData);
 	if (hFind != INVALID_HANDLE_VALUE)
 	{
 		do {
 			std::wstring w = FindFileData.cFileName;
-			vs.push_back(std::string(w.begin(), w.end()));
+			vs.push_back("res/sprites/tiles/" + std::string(w.begin(), w.end()));
+		} while (FindNextFile(hFind, &FindFileData));
+		FindClose(hFind);
+	}
+	hFind = FindFirstFile(L"res/sprites/particles/*.png", &FindFileData);
+	if (hFind != INVALID_HANDLE_VALUE)
+	{
+		do {
+			std::wstring w = FindFileData.cFileName;
+			vs.push_back("res/sprites/particles/" + std::string(w.begin(), w.end()));
 		} while (FindNextFile(hFind, &FindFileData));
 		FindClose(hFind);
 	}
 
 	for (std::string s : vs)
-		TextureAtlas::m_textureAtlas.AddTexture("res/sprites/" + s);
+		TextureAtlas::m_textureAtlas.AddTexture(s);
 	TextureAtlas::m_textureAtlas.Generate(32, false, "res/tiles.png");
+	TextureAtlas::m_textureAtlas.ShortenTextureList();
 
 
 	Model::GetInstance().init("res/models.data");

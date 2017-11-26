@@ -52,6 +52,7 @@ public:
 	bool LoadGLResources();
 	bool UnloadGLResources();
 	void SetPhysics(Vector3f pos, Vector3f vel) { m_pos = pos; m_vel = vel; m_modelMat.SetTranslation(pos); };
+	//Vector3f GetGraphicSize();
 	//static inline bool SortFunc(GraphicsComponent* d, GraphicsComponent* d2) { return d->Position().z < d2->Position().z; }
 
 public:

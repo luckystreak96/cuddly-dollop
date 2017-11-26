@@ -21,6 +21,21 @@ TextureAtlas::~TextureAtlas()
         glDeleteTextures(1, &m_textureId);
 }
 
+TextureAtlas::TextureList& TextureAtlas::GetTextureList()
+{
+	return m_textureList;
+}
+
+void TextureAtlas::ShortenTextureList()
+{
+	TextureList temp;
+	for (auto x : m_textureList)
+		temp.emplace(Utils::Split(x.first, '/').back(), x.second);
+	m_textureList = temp;
+}
+
+
+
 GLuint TextureAtlas::GetID()
 {
 	return m_textureId;

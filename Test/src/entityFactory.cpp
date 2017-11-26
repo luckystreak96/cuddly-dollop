@@ -17,8 +17,7 @@ std::shared_ptr<Entity> EntityFactory::BuildEntity(std::map<std::string, EntityA
 
 	bool isPlayer = args.count("player") ? std::get<bool>(args.at("player")) : false;
 
-	std::string sprite = "res/sprites/";
-	sprite += args.count("sprite") ? std::get<std::string>(args.at("sprite")) : "default.png";
+	std::string sprite = "res/sprites/entities/" + (args.count("sprite") ? std::get<std::string>(args.at("sprite")) : "ghost.png");
 
 	// ID
 	if (args.count("id"))
@@ -53,9 +52,6 @@ std::shared_ptr<Entity> EntityFactory::BuildEntity(std::map<std::string, EntityA
 std::map<unsigned int, std::shared_ptr<Entity>> EntityFactory::GetEntities(unsigned int map_id, std::shared_ptr<JsonHandler> jh)
 {
 	std::map<unsigned int, std::shared_ptr<Entity>> result = std::map<unsigned int, std::shared_ptr<Entity>>();
-
-	if (!jh->DocumentNotNull())
-		return result;
 
 	auto& entities = jh->LoadEntities(map_id);
 	if (entities.IsNull())

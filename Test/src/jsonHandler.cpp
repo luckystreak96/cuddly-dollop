@@ -1,35 +1,57 @@
 #include "jsonHandler.h"
 
-JsonHandler::JsonHandler()
+std::map<int, rapidjson::Document> JsonHandler::ReferenceDocument;
+bool JsonHandler::FilesLoaded = false;
+
+
+JsonHandler::JsonHandler(int map_id) : m_mapId(map_id)
 {
-	JsonHandler::DataDocument = rapidjson::Document();
-	JsonHandler::ReferenceDocument = rapidjson::Document();
+	LoadJsonFromFile();
+
+	rapidjson::Document::AllocatorType& a = ReferenceDocument.at(map_id).GetAllocator();
+	DataDocument.CopyFrom(ReferenceDocument.at(map_id), a);
+	//JsonHandler::ReferenceDocument = rapidjson::Document();
 	JsonHandler::File = "";
 }
 
 bool JsonHandler::DocumentNotNull()
 {
-	return ReferenceDocument.IsObject();
+	return false;
+	//return ReferenceDocument.IsObject();
 }
 
-rapidjson::Document& JsonHandler::LoadJsonFromFile(std::string filename)
+void JsonHandler::LoadJsonFromFile()
 {
-	File = Utils::ReadFile(filename);
-	//rapidjson::Document doc;
+	if (FilesLoaded)
+		return;
 
-	ReferenceDocument.Parse(File.c_str());
+	std::vector<std::string> vs;
+	HANDLE hFind;
+	WIN32_FIND_DATA FindFileData;
+	hFind = FindFirstFile(L"res/data/*.json", &FindFileData);
+	if (hFind != INVALID_HANDLE_VALUE)
+	{
+		do {
+			std::wstring w = FindFileData.cFileName;
+			vs.push_back(std::string(w.begin(), w.end()));
+		} while (FindNextFile(hFind, &FindFileData));
+		FindClose(hFind);
+	}
+	for (auto f : vs)
+	{
+		File = Utils::ReadFile("res/data/" + f);
+		int id = std::stoi(Utils::Split(f, '.').at(0));
+		ReferenceDocument.emplace(id, rapidjson::Document());
+		ReferenceDocument.at(id).Parse(File.c_str());
 
-	if (ReferenceDocument.IsObject())
-	{
-		return ReferenceDocument;
-		//if (doc.HasMember("hello"))
-		//	std::cout << doc["hello"].GetString() << std::endl;
+		//Make sure its kk
+		if (!ReferenceDocument.at(id).IsObject())
+		{
+			std::cout << "The following JSON document is invalid: " << f << std::endl;
+		}
 	}
-	else
-	{
-		std::cout << "The following JSON document is invalid: " << filename << std::endl;
-		return ReferenceDocument;
-	}
+
+	FilesLoaded = true;
 }
 
 rapidjson::Value JsonHandler::LoadEntities(int map_id)
@@ -62,10 +84,10 @@ rapidjson::Value JsonHandler::LoadQueues(int map_id, int entity_id)
 	return rapidjson::Value(rapidjson::Type::kArrayType);
 }
 
-rapidjson::Value JsonHandler::LoadMaps()
+rapidjson::Value JsonHandler::LoadMaps(int map_id)
 {
-	rapidjson::Document::AllocatorType& a = ReferenceDocument.GetAllocator();
-	DataDocument.CopyFrom(ReferenceDocument, a);
+	rapidjson::Document::AllocatorType& a = ReferenceDocument.at(map_id).GetAllocator();
+	DataDocument.CopyFrom(ReferenceDocument.at(map_id), a);
 
 	if (DataDocument.IsObject())
 		// If the json file has entities and the entities is an array
@@ -85,7 +107,7 @@ rapidjson::Value JsonHandler::LoadMap(int map_id)
 	//auto& temp = LoadMaps();
 	//if (temp.IsNull())
 	//	return;
-	auto& ms = LoadMaps();
+	auto& ms = LoadMaps(map_id);
 
 	if (ms.IsArray())
 		// Go through the entities
@@ -108,5 +130,6 @@ rapidjson::Value JsonHandler::LoadMap(int map_id)
 
 void JsonHandler::SetFile(std::string filename)
 {
-	LoadJsonFromFile(filename);
+	//LoadJsonFromFile(filename);
 }
+

@@ -1,5 +1,6 @@
 #include "eventFactory.h"
 #include "map_handler.h"
+#include "eventParticle.h"
 
 std::map<std::string, unsigned int> EventFactory::TypeDict =
 {
@@ -11,7 +12,8 @@ std::map<std::string, unsigned int> EventFactory::TypeDict =
 	{ "move_left", ET_MoveLeft },
 	{ "call_queue", ET_CallQueue },
 	{ "map_change", ET_MapChange },
-	{ "weather", ET_Weather }
+	{ "weather", ET_Weather },
+	{ "particle", ET_Particle }
 };
 
 std::map<std::string, unsigned int> EventFactory::EEMDict =
@@ -41,6 +43,9 @@ std::shared_ptr<IEvent> EventFactory::BuildEvent(EventTypes et, std::map<std::st
 	// Target id setup
 	unsigned int id = args.count("id") ? std::get<int>(args.at("id")) : 0;
 	if (id == 0) id = entity_id;
+
+	std::string str;
+	Vector3f vec;
 
 	switch (et)
 	{
@@ -74,9 +79,16 @@ std::shared_ptr<IEvent> EventFactory::BuildEvent(EventTypes et, std::map<std::st
 			3));
 		break;
 	case EventTypes::ET_Weather:
+		str = args.count("type") ? std::get<std::string>(args.at("type")) : "snow";
 		result = std::shared_ptr<IEvent>(new EventWeather(args.count("count") ? std::get<int>(args.at("count")) : 50,
-			(ParticleType)(args.count("type") ? std::get<int>(args.at("type")) : 0),
+			ParticleFromString.count(str) ? ParticleFromString.at(str) : PT_Snow,
 			map->GetMapSize()));
+		break;
+	case EventTypes::ET_Particle:
+		str = args.count("type") ? std::get<std::string>(args.at("type")) : "music";
+		result = std::shared_ptr<IEvent>(new EventParticle(args.count("count") ? std::get<int>(args.at("count")) : 50,
+			ParticleFromString.count(str) ? ParticleFromString.at(str) : PT_Music,
+			id));
 		break;
 	case EventTypes::ET_CallQueue:
 		result = std::shared_ptr<IEvent>(new EventCaller(id, args.count("queue_id") ? std::get<int>(args.at("queue_id")) : 0));

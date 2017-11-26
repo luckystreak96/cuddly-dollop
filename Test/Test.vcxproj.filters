@@ -348,6 +348,9 @@
     <ClInclude Include="src\eventWeather.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\eventParticle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -561,6 +564,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\eventWeather.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\eventParticle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

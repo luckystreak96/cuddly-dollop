@@ -55,7 +55,7 @@ MapHandler::MapHandler(unsigned int id, std::shared_ptr<JsonHandler> jh) : m_mes
 		pos.x = x["x"].GetFloat();
 		pos.y = x["y"].GetFloat();
 		pos.z = x["z"].GetFloat();
-		sprite = std::string("res/sprites/") + std::string(x["sprite"].GetString());
+		sprite = std::string(x["sprite"].GetString());
 		m_tiles.push_back(std::shared_ptr<MapTile>(new MapTile(pos, COMPOSITION, sprite)));
 	}
 
@@ -104,10 +104,7 @@ void MapHandler::SetupMesh()
 	m_mesh.Reset();
 	std::sort(m_tiles.begin(), m_tiles.end(), MapTile::SortFunc);
 	for (auto t : m_tiles)
-	{
-		std::shared_ptr<MapTile> temp = t;
-		m_mesh.AddToMesh(temp->Physics()->GetVertices(), temp->Physics()->GetIndices(), temp->Physics()->GetHighestIndex(), temp->Physics()->Position(), temp->GetTexture()/*, temp->GetTransformation()*/);
-	}
+		m_mesh.AddToMesh(t->Physics()->GetVertices(), t->Physics()->GetIndices(), t->Physics()->GetHighestIndex(), t->Physics()->Position(), t->GetTexture());
 
 	m_MBO_instances = m_tiles.size();
 
