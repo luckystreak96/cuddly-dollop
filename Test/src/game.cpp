@@ -38,7 +38,7 @@ bool Game::init(float width, float height)
 	TextureAtlas::m_textureAtlas.ShortenTextureList();
 
 
-	Model::GetInstance().init("res/models.data");
+	Model::GetInstance().init("res/models/models.data");
 
 	//Setup viewport to fit the window size
 	glViewport(0, 0, (GLsizei)(glutGet(GLUT_WINDOW_WIDTH)), (GLsizei)(glutGet(GLUT_WINDOW_HEIGHT)));

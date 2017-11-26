@@ -5,7 +5,7 @@ DialogueBox::DialogueBox(unsigned int entity_id, DialogueGraph* dg) : m_box(NULL
 	m_dialogueGraph = dg;
 	m_target = entity_id;
 
-	m_box = std::shared_ptr<FontGraphicsComponent>(new FontGraphicsComponent("DIALOGUE_BOX", "res/dialogue.png"));
+	m_box = std::shared_ptr<FontGraphicsComponent>(new FontGraphicsComponent("DIALOGUE_BOX", "res/sprites/special/dialogue.png"));
 	m_box->SetPhysics(Vector3f(0, 0, 0.5f), Vector3f(0, 0, 0));
 	m_box->Update();
 	m_box->SetStatic(true);
@@ -23,7 +23,7 @@ DialogueBox::DialogueBox(unsigned int entity_id, std::vector<Dialogue> d, std::v
 	m_dialogueGraph = new DialogueGraph(d, dc);
 	m_target = entity_id;
 
-	m_box = std::shared_ptr<FontGraphicsComponent>(new FontGraphicsComponent("DIALOGUE_BOX", "res/dialogue.png"));
+	m_box = std::shared_ptr<FontGraphicsComponent>(new FontGraphicsComponent("DIALOGUE_BOX", "res/sprites/special/dialogue.png"));
 	m_box->SetPhysics(Vector3f(0, 0, 0.5f), Vector3f(0, 0, 0));
 	m_box->Update();
 	m_box->SetStatic(true);
