@@ -68,6 +68,9 @@ GraphicsComponent::GraphicsComponent(std::vector<Vertex>* verts, std::vector<GLu
 
 void GraphicsComponent::Update()
 {
+	//Vector3f temp = m_pos;
+	//m_pos.x *= 32.0f;
+	//m_pos.y *= 32.0f;
 	m_modelMat.SetTranslation(m_pos);
 
 	m_mmodels.clear();

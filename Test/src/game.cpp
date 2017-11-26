@@ -163,7 +163,7 @@ void Game::specialKeyboardUpCB(int key, int x, int y)
 	case GLUT_KEY_F11:
 		if (m_isFullscreen)
 		{
-			glutReshapeWindow(WINDOW_WIDTH, WINDOW_HEIGHT);
+			glutReshapeWindow(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
 			glutPositionWindow(0, 0);
 			m_isFullscreen = false;
 		}
@@ -172,10 +172,10 @@ void Game::specialKeyboardUpCB(int key, int x, int y)
 			glutFullScreen();
 			m_isFullscreen = true;
 		}
-	case GLUT_KEY_F10:
-		glutReshapeWindow(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
-		glutPositionWindow(0, 0);
-		m_isFullscreen = false;
+	//case GLUT_KEY_F10:
+	//	glutReshapeWindow(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
+	//	glutPositionWindow(0, 0);
+	//	m_isFullscreen = false;
 	default:
 		break;
 	}
@@ -184,5 +184,7 @@ void Game::specialKeyboardUpCB(int key, int x, int y)
 void Game::windowResizeCB(int w, int h)
 {
 	//Stretches to fit window size
+	if (h % 32 != 0)
+		h = (h / 32) * 32;
 	glViewport(0, 0, (GLsizei)w, (GLsizei)h);
 }
