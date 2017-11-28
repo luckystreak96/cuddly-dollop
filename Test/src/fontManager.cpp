@@ -102,14 +102,6 @@ void FontManager::RemoveFont(unsigned int font)
 	}
 }
 
-
-unsigned int FontManager::AddDialogueBox(std::string texPath)
-{
-	unsigned int key = GenerateKey();
-	m_fonts.emplace(key, new DialogueBox(0));
-	return key;
-}
-
 unsigned int FontManager::GenerateKey()
 {
 	unsigned int key;

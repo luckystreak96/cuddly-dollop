@@ -51,13 +51,13 @@ public:
 	void ManageInput();
 	void SetAudioPosition();
 	static void SetNextScene(SceneGenData sgd);
-	
-public:
 	void RenderPass();
+	
+private:
+	void SetOrthoStuffs();
 
 private:
 	std::shared_ptr<Entity> m_player = NULL;
-	std::shared_ptr<Camera> m_camera;
 	static SceneGenData NextScene;
 	std::shared_ptr<Scene> m_nextScene;
 	EventManager m_eventManager;
@@ -75,6 +75,7 @@ private:
 	unsigned int m_currentMap;
 	unsigned int m_fontTitle;
 	unsigned int m_fontFPS;
+	Vector3f m_backupTrans;
 	Trail m_trail;
 	Bloom m_bloom;
 	Fade m_fade;

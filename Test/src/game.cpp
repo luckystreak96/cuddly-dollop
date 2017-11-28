@@ -10,6 +10,31 @@ Game::~Game()
 
 bool Game::init(float width, float height)
 {
+	SetupTextureAtlas();
+
+	Model::GetInstance().init("res/models/models.data");
+
+	//Setup viewport to fit the window size
+	glViewport(0, 0, (GLsizei)(glutGet(GLUT_WINDOW_WIDTH)), (GLsizei)(glutGet(GLUT_WINDOW_HEIGHT)));
+
+	std::shared_ptr<SceneWorld> world = std::shared_ptr<SceneWorld>(new SceneWorld(1));
+	SceneManager::GetInstance().SetScene(world);
+
+	OrthoProjInfo::GetRegularInstance().Bottom = -512.0f;
+	OrthoProjInfo::GetRegularInstance().Top = 512.0f;
+	OrthoProjInfo::GetRegularInstance().Left = -960.0f;
+	OrthoProjInfo::GetRegularInstance().Right = 960.f;
+	OrthoProjInfo::GetRegularInstance().zNear = 100.f;
+	OrthoProjInfo::GetRegularInstance().zFar = -100.f;
+	OrthoProjInfo::GetRegularInstance().Size = 64.f;
+	OrthoProjInfo::GetRegularInstance().changed = true;
+
+	return true;
+}
+
+// Finds all the png files to make the texture atlas for tiles/particles
+void Game::SetupTextureAtlas()
+{
 	std::vector<std::string> vs;
 	HANDLE hFind;
 	WIN32_FIND_DATA FindFileData;
@@ -36,41 +61,6 @@ bool Game::init(float width, float height)
 		TextureAtlas::m_textureAtlas.AddTexture(s);
 	TextureAtlas::m_textureAtlas.Generate(32, false, "res/tiles.png");
 	TextureAtlas::m_textureAtlas.ShortenTextureList();
-
-
-	Model::GetInstance().init("res/models/models.data");
-
-	//Setup viewport to fit the window size
-	glViewport(0, 0, (GLsizei)(glutGet(GLUT_WINDOW_WIDTH)), (GLsizei)(glutGet(GLUT_WINDOW_HEIGHT)));
-
-	std::shared_ptr<SceneWorld> world = std::shared_ptr<SceneWorld>(new SceneWorld(1));
-	SceneManager::GetInstance().SetScene(world);
-
-	int hheight = glutGet(GLUT_WINDOW_HEIGHT);
-	int wwidth = glutGet(GLUT_WINDOW_WIDTH);
-
-	//m_shadowMapSize = (float)(wwidth > hheight ? wwidth : hheight);
-	//if (!ShadowMapFBO::GetInstance().Init((unsigned int)m_shadowMapSize, (unsigned int)m_shadowMapSize))
-	//	return false;
-
-	OrthoProjInfo::GetRegularInstance().Bottom = ORTHO_BOTTOM;//-(hheight / 64 / 2);// divide by 2 cuz yeah
-	OrthoProjInfo::GetRegularInstance().Top = ORTHO_TOP;//(hheight / 64 / 2);
-	OrthoProjInfo::GetRegularInstance().Left = ORTHO_LEFT;//-(wwidth / 64 / 2);
-	OrthoProjInfo::GetRegularInstance().Right = ORTHO_RIGHT;//(wwidth / 64 / 2);
-	OrthoProjInfo::GetRegularInstance().zNear = ORTHO_NEAR;
-	OrthoProjInfo::GetRegularInstance().zFar = ORTHO_FAR;
-
-	PersProjInfo::GetRegularInstance().FOV = 30.0f;
-	PersProjInfo::GetRegularInstance().Width = width;
-	PersProjInfo::GetRegularInstance().Height = height;
-
-	PersProjInfo::GetShadowInstance().FOV = 90.0f;
-	PersProjInfo::GetShadowInstance().Width = m_shadowMapSize;
-	PersProjInfo::GetShadowInstance().Height = m_shadowMapSize;
-
-	//glEnable(GL_TEXTURE_CUBE_MAP);
-
-	return true;
 }
 
 void Game::run()
@@ -183,8 +173,10 @@ void Game::specialKeyboardUpCB(int key, int x, int y)
 
 void Game::windowResizeCB(int w, int h)
 {
-	//Stretches to fit window size
-	if (h % 32 != 0)
-		h = (h / 32) * 32;
 	glViewport(0, 0, (GLsizei)w, (GLsizei)h);
+	OrthoProjInfo::GetRegularInstance().Bottom = -(h / 2.0f);
+	OrthoProjInfo::GetRegularInstance().Top = (h / 2.0f);
+	OrthoProjInfo::GetRegularInstance().Left = -(w / 2.0f);
+	OrthoProjInfo::GetRegularInstance().Right = (w / 2.0f);
+	OrthoProjInfo::GetRegularInstance().changed = true;
 }

@@ -111,6 +111,7 @@ void MapHandler::SetupMesh()
 	m_texture = "res/tiles.png";
 	//m_mesh.Finalize(m_texture);
 	m_graphics = std::shared_ptr<GraphicsComponent>(new GraphicsComponent(m_mesh.GetMeshVertices(), m_mesh.GetMeshIndices(), m_texture));
+	m_graphics->SetPhysics(Vector3f(0, 0, 20.0f), Vector3f());
 }
 
 void MapHandler::Update()
@@ -122,15 +123,12 @@ void MapHandler::Update()
 	//	I USE THE MATRIX INSTEAD OF MULTIPLYING THE OTHER OBJECTS VERTEX POS BY THEIR POS.
 	if (m_graphics->GetMModels().size() == 0)
 	{
-		//m_graphics->GetModels() = new std::vector<Vector3f>();
-
 		for (auto x : m_tiles)
 		{
 			Vector3f pos = x->Physics()->Position();
 			Transformation t;
 			t.SetTranslation(pos);
-			auto temp = t.GetWorldTrans();
-			m_graphics->GetMModels().insert(m_graphics->GetMModels().end(), 4, temp);
+			m_graphics->InsertMModels(t);
 		}
 	}
 }

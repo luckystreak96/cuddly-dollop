@@ -40,12 +40,16 @@ public:
 		return regularInstance;
 	}
 
-	float Top = 0;
-	float Bottom = 0;
-	float Left = 0;
-	float Right = 0;
-	float zNear = 0.0f;
-	float zFar = 1000.0f;
+	float Top;
+	float Bottom;
+	float Left;
+	float Right;
+	float zNear;
+	float zFar;
+
+	float Size;
+
+	bool changed = true;
 private:
 	OrthoProjInfo() {};
 };

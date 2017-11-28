@@ -190,7 +190,7 @@ void Font::SetupMesh(float xBndry, float yBndry)
 		Transformation t;
 		t.SetTranslation(x);
 		t.SetScale(Vector3f(m_xScale, m_yScale, 1));
-		m_graphics->GetMModels().insert(m_graphics->GetMModels().end(), 4, t.GetWorldTrans());
+		m_graphics->InsertMModels(t);
 	}
 }
 
@@ -284,7 +284,7 @@ void Font::SetScale(float xScale, float yScale)
 		Transformation t;
 		t.SetTranslation(x);
 		t.SetScale(Vector3f(xScale, yScale, 1));
-		m_graphics->GetMModels().insert(m_graphics->GetMModels().end(), 4, t.GetWorldTrans());
+		m_graphics->InsertMModels(t);
 	}
 
 	m_xScale = xScale;

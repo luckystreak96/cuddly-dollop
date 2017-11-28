@@ -1,6 +1,6 @@
 #include "textureatlas.h"
 
-TextureAtlas TextureAtlas::m_textureAtlas = TextureAtlas(64);
+TextureAtlas TextureAtlas::m_textureAtlas = TextureAtlas(128);
 
 TextureAtlas::TextureAtlas(unsigned int nbTexture) : m_isValid(false), m_currentTextureIndex(0)
 {

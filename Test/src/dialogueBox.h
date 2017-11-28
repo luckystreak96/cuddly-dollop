@@ -10,7 +10,6 @@
 class DialogueBox : public Font, public IEvent
 {
 public:
-	DialogueBox(unsigned int entity_id, DialogueGraph* dg = NULL);
 	DialogueBox(unsigned int entity_id, std::vector<Dialogue> d, std::vector<DialogueChoice> dc);
 	~DialogueBox();
 	void Update(double elapsedTime);
@@ -26,6 +25,7 @@ private:
 	std::vector<std::shared_ptr<Font>> m_choices;
 	float m_maxWidth;
 	float m_maxHeight;
+	bool m_firstTime;
 	DialogueGraph* m_dialogueGraph;
 };
 

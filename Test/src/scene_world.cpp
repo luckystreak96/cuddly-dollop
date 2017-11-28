@@ -16,9 +16,7 @@ bool SceneWorld::Init()
 
 	m_bloomEffect = false;
 
-	m_camera = std::shared_ptr<Camera>(new Camera((float)glutGet(GLUT_WINDOW_WIDTH), (float)glutGet(GLUT_WINDOW_HEIGHT)));
-	m_camera->Pos.z = -25;
-
+	OrthoProjInfo::GetRegularInstance().changed = true;
 	m_World = std::shared_ptr<Transformation>(new Transformation());
 
 	BasicEffect::GetInstance();
@@ -28,8 +26,6 @@ bool SceneWorld::Init()
 
 	m_mapHandler = std::shared_ptr<MapHandler>(new MapHandler(m_currentMap, m_jsonHandler));
 	m_collisionManager.SetMapTiles(m_mapHandler->Tiles());
-	//m_particles.Init(PT_ObjectRain, 100, m_mapHandler->GetMapSize(), "res/sprites/ghosticon.png");
-	//m_particles.Init(PT_Snow, 50, m_mapHandler->GetMapSize());
 
 	m_celist = EntityFactory::GetEntities(m_currentMap, m_jsonHandler);
 	m_eventManager.SetEntitiesMap(&m_celist);
@@ -187,7 +183,6 @@ void SceneWorld::Interact()
 
 		if (inter != NULL)
 		{
-			//m_player->Communicate(inter->Input()->Interact(&m_eventQueue, inter->GetID()));
 			inter->Graphics()->SetDirection(m_player->Graphics());
 			TriggerEvents(inter->GetID());
 		}
@@ -233,24 +228,16 @@ SceneGenData SceneWorld::Update()
 
 	m_mapHandler->Update();
 
-	//m_particles.Update();
-
 	SetAudioPosition();
 	//SoundManager::GetInstance().SetListenerOrientation(((PlayerGraphicsComponent*)m_player->Graphics())->GetDirection());
 
-	//std::cout << m_player->GetDirection() << std::endl;
-	//std::cout << /*m_player->Position().x << ", " << m_player->Position().y << ", " <<*/ m_player->Physics()->Position().z << std::endl;// << ", " << m_clist.at(1)->GetMoveBoundingBox().Get(AABB::Down) << ", " << m_clist.at(1)->GetMoveBoundingBox().Get(AABB::Close) << std::endl;
-
 	if (m_player)
 		m_World->Follow(m_player->Physics()->Position(), m_mapHandler->GetMapSize());
-	//m_camera->Update(m_player->Position());//this needs to change LOLOLOLOL
 
 	//Display FPS
 	FontManager::GetInstance().SetText(m_fontFPS, std::to_string(ElapsedTime::GetInstance().GetFPS()), Vector3f(0, 15.5f, 0));
-	//FontManager::GetInstance().GetFont(m_fontFPS)->GetGraphics()->SetScale(Vector3f(0.5, 0.5, 1));
 
 	srand(clock());
-	//FontManager::GetInstance().ChangeLetter(m_fontTitle, 0, rand() % 4 == 1 ? '_' : 'I');
 	FontManager::GetInstance().Update(ElapsedTime::GetInstance().GetElapsedTime());
 
 	return NextScene;
@@ -261,34 +248,7 @@ void SceneWorld::RenderPass()
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	if (!m_drawinited)
-	{
-		m_World->SetOrthoProj(&OrthoProjInfo::GetRegularInstance());
-		m_World->SetTranslation(OrthoProjInfo::GetRegularInstance().Left, OrthoProjInfo::GetRegularInstance().Bottom, 0);
-		//m_World->SetRotation(0.0f, 0.0f, 0.1f);
-
-		BasicEffect::GetInstance().Enable();
-		BasicEffect::GetInstance().SetWorldPosition(*m_World->GetWOTrans().m);
-		BlurEffect::GetInstance().Enable();
-		BlurEffect::GetInstance().SetWorldPosition(*m_World->GetWOTrans().m);
-		BloomEffect::GetInstance().Enable();
-		BloomEffect::GetInstance().SetWorldPosition(*m_World->GetWOTrans().m);
-		BloomEffect::GetInstance().Enable(BloomEffect::GetInstance().GetDark());
-		BloomEffect::GetInstance().SetWorldPosition(*m_World->GetWOTrans().m);
-		FadeEffect::GetInstance().Enable();
-		FadeEffect::GetInstance().SetWorldPosition(*m_World->GetWOTrans().m);
-		CombineEffect::GetInstance().Enable();
-		CombineEffect::GetInstance().SetWorldPosition(*m_World->GetWOTrans().m);
-		TransparencyEffect::GetInstance().Enable();
-		TransparencyEffect::GetInstance().SetWorldPosition(*m_World->GetWOTrans().m);
-		HeightEffect::GetInstance().Enable();
-		HeightEffect::GetInstance().SetWorldPosition(*m_World->GetWOTrans().m);
-
-		for (int i = 0; i < 30; i++)
-			m_World->Follow(m_player->Physics()->Position(), m_mapHandler->GetMapSize());
-
-		m_drawinited = true;
-	}
+	SetOrthoStuffs();
 
 	BasicEffect::GetInstance().Enable();
 
@@ -334,6 +294,8 @@ void SceneWorld::RenderPass()
 		glEnd();
 	}
 
+	m_World->SetTranslation(m_backupTrans);
+
 	GLUTBackendSwapBuffers();
 }
 
@@ -349,3 +311,35 @@ void SceneWorld::SetNextScene(SceneGenData sgd)
 {
 	NextScene = sgd;
 }
+
+void SceneWorld::SetOrthoStuffs()
+{
+	if (OrthoProjInfo::GetRegularInstance().changed)
+	{
+		m_World->SetOrthoProj(&OrthoProjInfo::GetRegularInstance());
+		m_World->SetTranslation(OrthoProjInfo::GetRegularInstance().Left, OrthoProjInfo::GetRegularInstance().Bottom, 0);
+
+		BasicEffect::GetInstance().Enable();
+		BasicEffect::GetInstance().SetWorldPosition(*m_World->GetWOTrans().m);
+		Effect::SetTileSize(OrthoProjInfo::GetRegularInstance().Size);
+		FadeEffect::GetInstance().Enable();
+		FadeEffect::GetInstance().SetWorldPosition(*m_World->GetWOTrans().m);
+		Effect::SetTileSize(OrthoProjInfo::GetRegularInstance().Size);
+
+		for (int i = 0; i < 30; i++)
+			m_World->Follow(m_player->Physics()->Position(), m_mapHandler->GetMapSize());
+
+		OrthoProjInfo::GetRegularInstance().changed = false;
+	}
+
+	m_backupTrans = m_World->GetTranslation();
+
+	Vector3f temp = m_backupTrans;
+	temp.x *= OrthoProjInfo::GetRegularInstance().Size;
+	temp.y *= OrthoProjInfo::GetRegularInstance().Size;
+	// Floor so we dont move the camera half a pixel and fuck up the graphics
+	temp.x = floorf(temp.x);
+	temp.y = floorf(temp.y);
+	m_World->SetTranslation(temp);
+}
+

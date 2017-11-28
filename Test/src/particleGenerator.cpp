@@ -211,12 +211,11 @@ void ParticleGenerator::LogicUpdate()
 	m_graphics->GetMModels().clear();
 
 	Transformation t;
-	std::vector<Mat4f>& mmodels = m_graphics->GetMModels();
 	for (auto x : m_particles)
 	{
 		t.SetTranslation(x->position);
 		x->SetTrans(t);
-		mmodels.insert(mmodels.end(), 4, t.GetWorldTrans());
+		m_graphics->InsertMModels(t);
 	}
 }
 
