@@ -187,13 +187,10 @@ void Font::SetupMesh(float xBndry, float yBndry)
 	m_graphics->GetMModels().clear();
 	for (auto x : m_letterPositions)
 	{
-		Vector3f temp = x;
-		temp.x *= 64.0f;
-		temp.y *= 64.0f;
 		Transformation t;
-		t.SetTranslation(temp);
+		t.SetTranslation(x);
 		t.SetScale(Vector3f(m_xScale, m_yScale, 1));
-		m_graphics->GetMModels().insert(m_graphics->GetMModels().end(), 4, t.GetWorldTrans());
+		m_graphics->InsertMModels(t);
 	}
 }
 
@@ -287,7 +284,7 @@ void Font::SetScale(float xScale, float yScale)
 		Transformation t;
 		t.SetTranslation(x);
 		t.SetScale(Vector3f(xScale, yScale, 1));
-		m_graphics->GetMModels().insert(m_graphics->GetMModels().end(), 4, t.GetWorldTrans());
+		m_graphics->InsertMModels(t);
 	}
 
 	m_xScale = xScale;

@@ -38,6 +38,11 @@ void Effect::SetWorldPosition(float* mat)
 	m_prevWorld = mat;
 }
 
+void Effect::SetTileSize(float size)
+{
+	glUniform1f(GetUniformLocation("gSize"), (const GLfloat)size);
+}
+
 void Effect::SetDrawType(DrawType dt)
 {
 	glUniform1i(GetUniformLocation("gType"), (const GLint)dt);

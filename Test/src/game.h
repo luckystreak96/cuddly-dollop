@@ -34,6 +34,7 @@ class Game : public ICallBacks
 
         bool init(float width, float height);
         void run();
+		void SetupTextureAtlas();
     private:
 		float m_shadowMapSize;
 		int m_numFrames;

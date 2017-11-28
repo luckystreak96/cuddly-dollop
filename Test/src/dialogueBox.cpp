@@ -1,24 +1,6 @@
 #include "dialogueBox.h"
 
-DialogueBox::DialogueBox(unsigned int entity_id, DialogueGraph* dg) : m_box(NULL), Font()
-{
-	m_dialogueGraph = dg;
-	m_target = entity_id;
-
-	m_box = std::shared_ptr<FontGraphicsComponent>(new FontGraphicsComponent("DIALOGUE_BOX", "res/sprites/special/dialogue.png"));
-	m_box->SetPhysics(Vector3f(0, 0, 0.5f), Vector3f(0, 0, 0));
-	m_box->Update();
-	m_box->SetStatic(true);
-
-	m_phys.SetPosition(Vector3f());
-	m_static = true;
-	m_lockLevel = 1;
-	m_mode = BLOCKING;
-
-	SetScale(0.5f, 0.5f);
-}
-
-DialogueBox::DialogueBox(unsigned int entity_id, std::vector<Dialogue> d, std::vector<DialogueChoice> dc)
+DialogueBox::DialogueBox(unsigned int entity_id, std::vector<Dialogue> d, std::vector<DialogueChoice> dc) : m_firstTime(true)
 {
 	m_dialogueGraph = new DialogueGraph(d, dc);
 	m_target = entity_id;
@@ -33,7 +15,8 @@ DialogueBox::DialogueBox(unsigned int entity_id, std::vector<Dialogue> d, std::v
 	m_lockLevel = 1;
 	m_mode = BLOCKING;
 
-	SetScale(0.5f, 0.5f);
+	m_xScale = 0.5f;
+	m_yScale = 0.5f;
 }
 
 
@@ -76,6 +59,12 @@ EventUpdateResponse DialogueBox::UpdateEvent(double elapsedTime, std::map<unsign
 	EventUpdateResponse eur = EventUpdateResponse();
 	eur.IsDone = true;
 	eur.Queue = std::shared_ptr<EventQueue>(new EventQueue());
+
+	if (m_firstTime)
+	{
+		SetScale(m_xScale, m_yScale);
+		m_firstTime = false;
+	}
 
 	// Don't update it if its completed
 	if (m_completed)
@@ -184,7 +173,7 @@ void DialogueBox::SetScale(float xScale, float yScale)
 {
 	Font::SetScale(xScale, yScale);
 
-	m_maxWidth = 29.0f/* / xScale*/;
+	m_maxWidth = (OrthoProjInfo::GetRegularInstance().Right / 32.0f) - 1.0f/* / xScale*/;
 	m_maxHeight = 4.0f/* / yScale*/;
 
 	if (m_dialogueGraph != NULL)

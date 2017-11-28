@@ -45,7 +45,7 @@ void GraphicsComponent::Construct()
 	m_direction = dir_Down;
 
 	//When this z is small - transparency fucks up????
-	m_pos = Vector3f(0.0f, 0.0f, 10.0f);
+	m_pos = Vector3f(0.0f, 0.0f, 0.0f);
 	//m_modelMat.SetTranslation(m_pos);
 
 	SetDefaults(m_modelName);
@@ -71,8 +71,6 @@ GraphicsComponent::GraphicsComponent(std::vector<Vertex>* verts, std::vector<GLu
 	m_vertices = std::vector<Vertex>(*verts);
 	m_indices = std::vector<GLuint>(*inds);
 
-	//MathUtils::CalcNormals(m_indices, m_vertices);
-
 	m_originalVertices = std::vector<Vertex>(m_vertices);
 
 	Construct();
@@ -80,20 +78,10 @@ GraphicsComponent::GraphicsComponent(std::vector<Vertex>* verts, std::vector<GLu
 
 void GraphicsComponent::Update()
 {
-	//Vector3f temp = m_pos;
-	//m_pos.x *= 32.0f;
-	//m_pos.y *= 32.0f;
-	Vector3f temp = m_pos;
-	temp.x *= 64.0f;
-	temp.y *= 64.0f;
-	m_modelMat.SetTranslation(temp);
+	m_modelMat.SetTranslation(m_pos);
 
 	m_mmodels.clear();
-	m_mmodels.insert(m_mmodels.end(), 4, m_modelMat.GetWorldTrans());
-
-	//Might not be ideal to have this here
-	//BasicEffect::GetInstance().Enable();
-	//Effect::SetModelPosition(&m_modelMat.GetWorldTrans().m[0][0]);
+	InsertMModels(m_modelMat);
 }
 
 bool GraphicsComponent::LoadExternalResources()
@@ -214,12 +202,20 @@ void GraphicsComponent::ResetVBO()
 	glBufferData(GL_ARRAY_BUFFER, m_vertices.size() * sizeof(Vertex), &m_vertices[0], GL_STATIC_DRAW);
 }
 
+void GraphicsComponent::InsertMModels(Transformation& t)
+{
+	Vector3f temp = t.GetTranslation();
+	temp.x *= OrthoProjInfo::GetRegularInstance().Size;
+	temp.y *= OrthoProjInfo::GetRegularInstance().Size;
+	t.SetTranslation(temp);
+	m_mmodels.insert(m_mmodels.end(), 4, t.GetWorldTrans());
+}
+
+
 void GraphicsComponent::SetDefaults(std::string name)
 {
 	m_modelName = name;
-	if (name == "PLAYER")
-		int lol = 0;
-	if (name == "NONE")
+	if (name == "NONE" || name == "")
 		return;
 
 	m_IBO = 0;
@@ -244,22 +240,17 @@ void GraphicsComponent::SetDefaults(std::string name)
 				Vector2f(x * 2 < tex.size() ? tex[x * 2] : 0, x * 2 + 1 < tex.size() ? tex[x * 2 + 1] : 0)));
 	}
 
+	std::vector<GLuint> indices = Model::GetInstance().getIndices();
+	assert(indices.size() % 3 == 0);
 
-	{
-		std::vector<GLuint> indices = Model::GetInstance().getIndices();
-		assert(indices.size() % 3 == 0);
+	m_indices = std::vector<GLuint>();
 
-		m_indices = std::vector<GLuint>();
-
-		for (auto i : indices)
-			m_indices.push_back(i);
-	}
+	for (auto i : indices)
+		m_indices.push_back(i);
 
 	MathUtils::CalcNormals(m_indices, m_originalVertices);
 
 	m_vertices = std::vector<Vertex>(m_originalVertices);
-
-	//SetBoundingBox();
 }
 
 
@@ -339,11 +330,4 @@ std::vector<Mat4f>& GraphicsComponent::GetMModels()
 	return m_mmodels;
 }
 
-//Vector3f GraphicsComponent::GetGraphicSize()
-//{
-//	float w = m_vertices.;
-//	float h;
-//	float d;
-//	return Vector3f(w, h, d);
-//}
 

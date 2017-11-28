@@ -20,7 +20,8 @@ public:
 private:
 	Renderer();
 	void Sort();
-	static inline bool ComponentSort(GraphicsComponent* i, GraphicsComponent* j) { return i->GetZ() > j->GetZ(); }
+	static inline bool PositionSort(Vector3f a, Vector3f b) { return a.z == b.z ? a.y > b.y : a.z > b.z; }
+	static inline bool ComponentSort(GraphicsComponent* i, GraphicsComponent* j) { return PositionSort(i->GetPos(), j->GetPos()); }
 private:
 	std::vector<GraphicsComponent*> m_toDraw;
 };
