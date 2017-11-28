@@ -261,7 +261,7 @@ void SceneWorld::RenderPass()
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	if (!m_drawinited)
+	if (OrthoProjInfo::GetRegularInstance().changed || !m_drawinited)
 	{
 		m_World->SetOrthoProj(&OrthoProjInfo::GetRegularInstance());
 		m_World->SetTranslation(OrthoProjInfo::GetRegularInstance().Left, OrthoProjInfo::GetRegularInstance().Bottom, 0);
@@ -288,7 +288,16 @@ void SceneWorld::RenderPass()
 			m_World->Follow(m_player->Physics()->Position(), m_mapHandler->GetMapSize());
 
 		m_drawinited = true;
+		OrthoProjInfo::GetRegularInstance().changed = false;
 	}
+
+	Vector3f temp = m_World->GetTranslation();
+	Vector3f backup = m_World->GetTranslation();
+	temp.x *= 64.0f;
+	temp.y *= 64.0f;
+	temp.x = floorf(temp.x);
+	temp.y = floorf(temp.y);
+	m_World->SetTranslation(temp);
 
 	BasicEffect::GetInstance().Enable();
 
@@ -333,6 +342,8 @@ void SceneWorld::RenderPass()
 		}
 		glEnd();
 	}
+
+	m_World->SetTranslation(backup);
 
 	GLUTBackendSwapBuffers();
 }

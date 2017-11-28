@@ -183,8 +183,10 @@ void Game::specialKeyboardUpCB(int key, int x, int y)
 
 void Game::windowResizeCB(int w, int h)
 {
-	//Stretches to fit window size
-	if (h % 32 != 0)
-		h = (h / 32) * 32;
 	glViewport(0, 0, (GLsizei)w, (GLsizei)h);
+	OrthoProjInfo::GetRegularInstance().Bottom = -(h / 2.0f);
+	OrthoProjInfo::GetRegularInstance().Top = (h / 2.0f);
+	OrthoProjInfo::GetRegularInstance().Left = -(w / 2.0f);
+	OrthoProjInfo::GetRegularInstance().Right = (w / 2.0f);
+	OrthoProjInfo::GetRegularInstance().changed = true;
 }

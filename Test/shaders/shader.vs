@@ -14,11 +14,11 @@ void main()
 {
 	if(gType == 0) //Draw it flat
 	{
-		gl_Position = gWorld * transpose(Model) * vec4(Position.x, Position.y, Position.z, 1.0f);
+		gl_Position = gWorld * transpose(Model) * vec4(Position.x * 64.0f, Position.y * 64.0f, Position.z, 1.0f);
 	}
 	else if (gType == 1) // Dont draw flat
 	{
-		gl_Position = gWorld * transpose(Model) * vec4(Position.x, Position.y, ((-0.3f + Position.y) * -1.4f), 1.0f);
+		gl_Position = gWorld * transpose(Model) * vec4(Position.x * 64.0f, Position.y * 64.0f, ((-0.3f + Position.y) * -1.4f), 1.0f);
 	}
     TexCoord0 = TexCoord;
 }

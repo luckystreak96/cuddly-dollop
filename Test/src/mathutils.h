@@ -46,6 +46,7 @@ public:
 	float Right = 0;
 	float zNear = 0.0f;
 	float zFar = 1000.0f;
+	bool changed = true;
 private:
 	OrthoProjInfo() {};
 };

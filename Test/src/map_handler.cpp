@@ -127,6 +127,8 @@ void MapHandler::Update()
 		for (auto x : m_tiles)
 		{
 			Vector3f pos = x->Physics()->Position();
+			pos.x *= 64.0f;
+			pos.y *= 64.0f;
 			Transformation t;
 			t.SetTranslation(pos);
 			auto temp = t.GetWorldTrans();

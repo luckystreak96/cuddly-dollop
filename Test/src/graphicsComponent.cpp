@@ -24,12 +24,24 @@ void GraphicsComponent::FullReset(std::vector<Vertex>* verts, std::vector<GLuint
 	//MathUtils::CalcNormals(m_indices, m_vertices);
 
 	m_originalVertices = std::vector<Vertex>(m_vertices);
+	for (auto x : m_originalVertices)
+	{
+		x.vertex.x *= 64.0f;
+		x.vertex.y *= 64.0f;
+	}
+	for (auto x : m_vertices)
+	{
+		x.vertex.x *= 64.0f;
+		x.vertex.y *= 64.0f;
+	}
+
 
 	Construct();
 }
 
 void GraphicsComponent::Construct()
 {
+
 	m_direction = dir_Down;
 
 	//When this z is small - transparency fucks up????
@@ -71,7 +83,10 @@ void GraphicsComponent::Update()
 	//Vector3f temp = m_pos;
 	//m_pos.x *= 32.0f;
 	//m_pos.y *= 32.0f;
-	m_modelMat.SetTranslation(m_pos);
+	Vector3f temp = m_pos;
+	temp.x *= 64.0f;
+	temp.y *= 64.0f;
+	m_modelMat.SetTranslation(temp);
 
 	m_mmodels.clear();
 	m_mmodels.insert(m_mmodels.end(), 4, m_modelMat.GetWorldTrans());
@@ -241,6 +256,7 @@ void GraphicsComponent::SetDefaults(std::string name)
 	}
 
 	MathUtils::CalcNormals(m_indices, m_originalVertices);
+
 	m_vertices = std::vector<Vertex>(m_originalVertices);
 
 	//SetBoundingBox();

@@ -214,7 +214,10 @@ void ParticleGenerator::LogicUpdate()
 	std::vector<Mat4f>& mmodels = m_graphics->GetMModels();
 	for (auto x : m_particles)
 	{
-		t.SetTranslation(x->position);
+		Vector3f temp = x->position;
+		temp.x *= 64.0f;
+		temp.y *= 64.0f;
+		t.SetTranslation(temp);
 		x->SetTrans(t);
 		mmodels.insert(mmodels.end(), 4, t.GetWorldTrans());
 	}

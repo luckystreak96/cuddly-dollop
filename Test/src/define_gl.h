@@ -16,14 +16,14 @@
 #define SHADOW_CUBE_SIZE 500
 #define NUM_OF_LAYERS 6
 
-//#define ORTHO_BOTTOM -256
-//#define ORTHO_TOP 256
-//#define ORTHO_LEFT -480
-//#define ORTHO_RIGHT 480
-#define ORTHO_BOTTOM -8
-#define ORTHO_TOP 8
-#define ORTHO_LEFT -15
-#define ORTHO_RIGHT 15
+#define ORTHO_BOTTOM -512
+#define ORTHO_TOP 512
+#define ORTHO_LEFT -960
+#define ORTHO_RIGHT 960
+#define ORTHO_BOTTOM_R -8
+#define ORTHO_TOP_R 8
+#define ORTHO_LEFT_R -15
+#define ORTHO_RIGHT_R 15
 #define ORTHO_NEAR 100
 #define ORTHO_FAR -100
 
