@@ -197,7 +197,7 @@ namespace dollop_editor
             {
                 // Load up that entity into the new window
                 EntityWindow window = new EntityWindow(point, editor.Entities, editor.Height, this, editor);
-                window.ShowDialog();
+                bool? result = window.ShowDialog();
                 ReSyncOnEditor();
             }
             else

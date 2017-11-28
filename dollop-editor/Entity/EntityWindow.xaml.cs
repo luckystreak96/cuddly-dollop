@@ -59,7 +59,7 @@ namespace dollop_editor
             Point3D p = new Point3D(pos.X, pos.Y, pos.Z);
             if (dictionary.ContainsKey(p))
             {
-                Entity = dictionary[p].Item1;
+                Entity = new Entity(dictionary[p].Item1);
                 chkEthereal.IsChecked = dictionary[p].Item1.ethereal;
                 txtX.Text = dictionary[p].Item1.x.ToString();
                 txtY.Text = dictionary[p].Item1.y.ToString();
@@ -131,11 +131,13 @@ namespace dollop_editor
 
             }
 
+            DialogResult = true;
             Close();
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
         {
+            DialogResult = false;
             Close();
         }
 
@@ -214,6 +216,7 @@ namespace dollop_editor
             {
                 Entity.queues.RemoveAt(lstQueue.SelectedIndex);
                 lstQueue.Items.Refresh();
+                lstEvent.ItemsSource = null;
             }
         }
 

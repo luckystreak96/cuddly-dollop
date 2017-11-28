@@ -340,9 +340,6 @@
     <None Include="shaders\shadow_map.vs" />
     <None Include="shaders\transparency.fs" />
   </ItemGroup>
-  <ItemGroup>
-    <Text Include="TODO.txt" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

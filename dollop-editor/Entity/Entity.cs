@@ -19,6 +19,20 @@ namespace dollop_editor
             z = 0;
             queues = new List<EventQueue>();// { new EventQueue() };
         }
+
+        public Entity(Entity entity)
+        {
+            ethereal = entity.ethereal;
+            sprite = entity.sprite;
+            id = entity.id;
+            player = entity.player;
+            x = entity.x;
+            y = entity.y;
+            z = entity.z;
+            EventQueue[] queue = new EventQueue[entity.queues.Count];
+            entity.queues.CopyTo(queue);
+            queues = new List<EventQueue>(queue);
+        }
         public int id { get; set; }
         public bool player { get; set; }
         public bool ethereal { get; set; }

@@ -623,7 +623,4 @@
     <None Include="shaders\fade.fs" />
     <None Include="res\data\3.json" />
   </ItemGroup>
-  <ItemGroup>
-    <Text Include="TODO.txt" />
-  </ItemGroup>
 </Project>
