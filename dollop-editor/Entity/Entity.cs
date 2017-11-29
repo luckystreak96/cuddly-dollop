@@ -8,11 +8,16 @@ namespace dollop_editor
 {
     public class Entity
     {
+        //~Entity()
+        //{
+        //    IdManager.EntityId.UnAssign(ID);
+        //}
+
         public Entity()
         {
             ethereal = false;
             sprite = "";
-            id = 1;
+            ID = IdManager.EntityId.Assign();
             player = true;
             x = 0;
             y = 0;
@@ -24,16 +29,21 @@ namespace dollop_editor
         {
             ethereal = entity.ethereal;
             sprite = entity.sprite;
-            id = entity.id;
+            ID = IdManager.EntityId.Assign();
             player = entity.player;
             x = entity.x;
             y = entity.y;
             z = entity.z;
-            EventQueue[] queue = new EventQueue[entity.queues.Count];
-            entity.queues.CopyTo(queue);
-            queues = new List<EventQueue>(queue);
+            queues = new List<EventQueue>();
+            foreach (EventQueue eq in entity.queues)
+                queues.Add(new EventQueue(eq));
         }
-        public int id { get; set; }
+        public void SneakyId(int id)
+        {
+            ID = id;
+        }
+        public int id { get { return ID; } set { IdManager.EntityId.UnAssign(ID); ID = value; IdManager.EntityId.ManualAssign(ID); } }
+        private int ID;
         public bool player { get; set; }
         public bool ethereal { get; set; }
         public string sprite { get; set; }

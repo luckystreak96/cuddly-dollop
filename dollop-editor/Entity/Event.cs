@@ -22,23 +22,20 @@ namespace dollop_editor
         public string execution_type { get; set; }
         public Dictionary<string, object> args { get; set; }
 
-        public Event(/*int value*/)
+        public Event()
         {
             type = EventType.move_down.ToString();
             execution_type = EventExecution.blocking.ToString();
             args = new Dictionary<string, object>();
-            //if (value == 1)
-            //{
-            //    type = "move_down";
-            //    execution_type = "blocking";
-            //    args = new Dictionary<string, object>() { { "id", 0 }, { "distance", 3.0 } };
-            //}
-            //else if (value == 2)
-            //{
-            //    type = "move_up";
-            //    execution_type = "blocking";
-            //    args = new Dictionary<string, object>() { { "id", 0 }, { "distance", 3.0 } };
-            //}
+        }
+
+        public Event(Event e)
+        {
+            type = e.type;
+            execution_type = e.execution_type;
+            args = new Dictionary<string, object>();
+            foreach (var o in e.args)
+                args.Add(o.Key, o.Value);
         }
 
         public override string ToString()

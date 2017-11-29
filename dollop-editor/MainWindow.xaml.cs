@@ -14,6 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.IO;
 
 namespace dollop_editor
 {
@@ -23,15 +24,19 @@ namespace dollop_editor
     public partial class MainWindow : Window
     {
         private Editor editor;
+        private Entity entityCopy;
         private string selTile = "";
         private int prevx = -1;
         private int prevy = -1;
+        private int clickprevx = -1;
+        private int clickprevy = -1;
         private bool opaqueView = false;
         private bool entityMode = false;
         private int contextMenuX = 0;
         private int contextMenuY = 0;
         private Rectangle selectedPickerTile;
         private Rectangle selectedMapTile;
+        private string prevPath = "";
 
         public MainWindow()
         {
@@ -79,6 +84,20 @@ namespace dollop_editor
             //    cnvMap.Children.Add(t.Value);
         }
 
+        private void UpdateSelectedMapTile()
+        {
+            selectedMapTile.RenderTransform = new TranslateTransform(clickprevx * editor.TileSize, clickprevy * editor.TileSize);
+            if (!cnvMap.Children.Contains(selectedMapTile))
+                cnvMap.Children.Add(selectedMapTile);
+        }
+
+        private void UpdateSelectedMapTile(int x, int y)
+        {
+            selectedMapTile.RenderTransform = new TranslateTransform((x / editor.TileSize) * editor.TileSize, (y / editor.TileSize) * editor.TileSize);
+            if (!cnvMap.Children.Contains(selectedMapTile))
+                cnvMap.Children.Add(selectedMapTile);
+        }
+
         private void CnvMap_MouseDown(object sender, MouseButtonEventArgs e)
         {
             int x = (int)e.GetPosition(cnvMap).X;
@@ -86,23 +105,20 @@ namespace dollop_editor
 
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                if (entityMode && e.ClickCount == 2 ||
-                    !entityMode && x > 0 && x < cnvMap.Width && y > 0 && y < cnvMap.Height)
-                    SetMapTile(x, y, selTile);
-                else // Entitymode && clickcount == 1
+                if (entityMode)
                 {
-                    if (entityMode)
-                    {
-                        selectedMapTile.RenderTransform = new TranslateTransform((x / 32) * 32, (y / 32) * 32);
-                        if (!cnvMap.Children.Contains(selectedMapTile))
-                            cnvMap.Children.Add(selectedMapTile);
-                    }
+                    UpdateSelectedMapTile(x, y);
+                }
+                if (!entityMode && x > 0 && x < cnvMap.Width && y > 0 && y < cnvMap.Height)
+                {
+                    SetMapTile(x, y, selTile);
+
                 }
             }
             else if (e.RightButton == MouseButtonState.Pressed)
             {
-                contextMenuX = x / 32;
-                contextMenuY = y / 32;
+                contextMenuX = x / editor.TileSize;
+                contextMenuY = y / editor.TileSize;
                 FrameworkElement fe = e.Source as FrameworkElement;
                 if (entityMode)
                 {
@@ -121,6 +137,14 @@ namespace dollop_editor
                 else
                     fe.ContextMenu.Items.Clear();
             }
+
+            if (entityMode && e.ClickCount == 2 && (x / 32) == clickprevx && (y / 32) == clickprevy)
+            {
+                SetMapTile(x, y, selTile);
+            }
+
+            clickprevx = x / editor.TileSize;
+            clickprevy = y / editor.TileSize;
         }
 
         private void CnvTilePicker_MouseDown(object sender, MouseButtonEventArgs e)
@@ -129,9 +153,9 @@ namespace dollop_editor
             int y = (int)e.GetPosition(cnvTilePicker).Y;
 
             selTile = "";
-            selectedPickerTile.RenderTransform = new TranslateTransform((x / 32) * 32, (y / 32) * 32);
+            selectedPickerTile.RenderTransform = new TranslateTransform((x / editor.TileSize) * editor.TileSize, (y / editor.TileSize) * editor.TileSize);
             // -1 at the end because of the empty tile at the beginning for erasing
-            int index = (x / 32) + ((y / 32) * ((int)cnvTilePicker.Width / 32)) - 1;
+            int index = (x / editor.TileSize) + ((y / editor.TileSize) * ((int)cnvTilePicker.Width / editor.TileSize)) - 1;
 
             // DONT CRASH PLZZ
             if (index >= editor.Brushes.Count || index < 0)
@@ -143,34 +167,34 @@ namespace dollop_editor
         // Sets up the images for the sprite selecter
         private void SetupTileSelecter()
         {
-            int offx = 32;
+            int offx = editor.TileSize;
             int offy = 0;
             int width = (int)cnvTilePicker.Width;
             foreach (var x in editor.Brushes)
             {
                 Rectangle r = new Rectangle
                 {
-                    Width = 32,
-                    Height = 32,
+                    Width = editor.TileSize,
+                    Height = editor.TileSize,
                     Fill = x.Value,
                     RenderTransform = new TranslateTransform(offx, offy)
                 };
                 cnvTilePicker.Children.Add(r);
-                offx += 32;
+                offx += editor.TileSize;
                 if (offx >= width)
                 {
                     offx = 0;
-                    offy += 32;
+                    offy += editor.TileSize;
                 }
             }
 
-            cnvTilePicker.Height = offy + 32;
+            cnvTilePicker.Height = offy + editor.TileSize;
         }
 
         private void SetMapTile(int x, int y, string brush)
         {
-            x /= 32;
-            y /= 32;
+            x /= editor.TileSize;
+            y /= editor.TileSize;
 
             if (entityMode)
             {
@@ -223,8 +247,10 @@ namespace dollop_editor
                 int x = (int)e.GetPosition(cnvMap).X;
                 int y = (int)e.GetPosition(cnvMap).Y;
 
+                prevx = x / editor.TileSize;
+                prevy = y / editor.TileSize;
 
-                if (x > 0 && x < cnvMap.Width && y > 0 && y < cnvMap.Height)
+                if (!entityMode && x > 0 && x < cnvMap.Width && y > 0 && y < cnvMap.Height)
                     SetMapTile(x, y, selTile);
             }
         }
@@ -260,34 +286,6 @@ namespace dollop_editor
             editor.HistoryProgress++;
         }
 
-        private void Window_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyboardDevice.IsKeyDown(Key.LeftCtrl) && e.KeyboardDevice.IsKeyDown(Key.Z))
-            {
-                if (editor.HistoryProgress > 0 && editor.HistoryProgress < editor.TileHistory.Count)
-                {
-                    editor.HistoryProgress--;
-                    Dictionary<Point3D, Rectangle> dictionary = new Dictionary<Point3D, Rectangle>(editor.TileHistory[editor.HistoryProgress].Count);
-                    foreach (var x in editor.TileHistory[editor.HistoryProgress])
-                        dictionary.Add(x.Key, x.Value);
-                    editor.Tiles = dictionary;
-                    ReSyncOnEditor();
-                }
-            }
-            if (e.KeyboardDevice.IsKeyDown(Key.LeftCtrl) && e.KeyboardDevice.IsKeyDown(Key.Y))
-            {
-                if (editor.HistoryProgress >= 0 && editor.HistoryProgress < editor.TileHistory.Count - 1)
-                {
-                    editor.HistoryProgress++;
-                    Dictionary<Point3D, Rectangle> dictionary = new Dictionary<Point3D, Rectangle>(editor.TileHistory[editor.HistoryProgress].Count);
-                    foreach (var x in editor.TileHistory[editor.HistoryProgress])
-                        dictionary.Add(x.Key, x.Value);
-                    editor.Tiles = dictionary;
-                    ReSyncOnEditor();
-                }
-            }
-        }
-
         private void ReleaseMouse()
         {
             AddCurrentMapToHistory();
@@ -319,32 +317,25 @@ namespace dollop_editor
             newMap.ShowDialog();
             if (newMap.MapWidth != -1 && newMap.Height != -1)
                 Setup(newMap.MapWidth, newMap.MapHeight);
+            prevPath = "";
         }
 
         private void MenuSave_Click(object sender, RoutedEventArgs e)
         {
-            FileDialog fileDialog = new SaveFileDialog();
-            fileDialog.FileName = "001";
-            fileDialog.DefaultExt = ".json";
-            fileDialog.Filter = "JSON files (.json)|*.json";
-
-            bool? result;
-            while ((result = fileDialog.ShowDialog()) == true)
-            {
-                // Open document 
-                string filename = fileDialog.FileName;
-                if (int.TryParse(filename.Split('\\').Last().Split('.').First(), out int temp) != true)
-                {
-                    MessageBox.Show("Name must be a number (ex: 001.json)");
-                    continue;
-                }
-                editor.Serialize(filename);
-                break;
-            }
+            SaveMap();
         }
 
         private void MenuOpen_Click(object sender, RoutedEventArgs e)
         {
+            if (prevPath != "")
+            {
+                MessageBoxResult mbr = MessageBoxResult.Cancel;
+                mbr = MessageBox.Show("Would you like to save before changing maps?", "Save", MessageBoxButton.YesNoCancel);
+                if (mbr == MessageBoxResult.Cancel)
+                    return;
+                else if (mbr == MessageBoxResult.Yes)
+                    SaveMap();
+            }
             FileDialog fileDialog = new OpenFileDialog();
             fileDialog.DefaultExt = ".json";
             fileDialog.Filter = "JSON files (.json)|*.json";
@@ -355,6 +346,7 @@ namespace dollop_editor
             {
                 // Open document 
                 string filename = fileDialog.FileName;
+                prevPath = filename;
                 editor.Load(filename);
                 ReleaseMouse();
                 cnvMap.Height = editor.Height * editor.TileSize;
@@ -369,11 +361,12 @@ namespace dollop_editor
         {
             entityMode = chkEntityMode.IsChecked ?? false;
             ReSyncOnEditor();
+            Editor.ChangeOpacity(cnvMap.Children, slrDepth.Value, opaqueView);
         }
 
         private void Delete_Click(object sender, RoutedEventArgs e)
         {
-            Point3D p = new Point3D(contextMenuX, contextMenuY, slrDepth.Value);
+            Point3D p = new Point3D(contextMenuX, editor.InvertHeight(contextMenuY), slrDepth.Value);
             if (editor.Entities.ContainsKey(p))
             {
                 editor.Entities.Remove(p);
@@ -395,13 +388,155 @@ namespace dollop_editor
             if (newMap.MapWidth == -1 || newMap.Height == -1 ||
                 ((newMap.MapWidth < editor.Width || newMap.MapHeight < editor.Height) &&
                     MessageBox.Show("The new size is smaller than your current size. Continuing may result in loss of tiles. Continue?", "Are you sure?", MessageBoxButton.YesNo) == MessageBoxResult.No))
-                        return;
+                return;
 
             editor.Width = newMap.MapWidth;
             editor.Height = newMap.MapHeight;
             cnvMap.Width = editor.Width * editor.TileSize;
             cnvMap.Height = editor.Height * editor.TileSize;
             ReSyncOnEditor();
+        }
+
+        private void Window_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            // Save
+            if (e.KeyboardDevice.IsKeyDown(Key.LeftCtrl) && e.KeyboardDevice.IsKeyDown(Key.S))
+            {
+                SaveMap();
+            }
+
+            if (entityMode)
+            {
+                // Entity delete
+                if (!(clickprevx == -1 || clickprevy == -1))
+                {
+                    if (e.KeyboardDevice.IsKeyDown(Key.Left))
+                    {
+                        if (clickprevx > 0)
+                            clickprevx -= 1;
+                    }
+                    else if (e.KeyboardDevice.IsKeyDown(Key.Right))
+                    {
+                        if (clickprevx < editor.Width - 1)
+                            clickprevx += 1;
+                    }
+                    else if (e.KeyboardDevice.IsKeyDown(Key.Up))
+                    {
+                        if (clickprevy > 0)
+                            clickprevy -= 1;
+                    }
+                    else if (e.KeyboardDevice.IsKeyDown(Key.Down))
+                    {
+                        if (clickprevy < editor.Height - 1)
+                            clickprevy += 1;
+                    }
+                    UpdateSelectedMapTile();
+                }
+
+                // Entity delete
+                if (e.KeyboardDevice.IsKeyDown(Key.Delete))
+                {
+                    Point3D point3D = new Point3D(clickprevx, editor.InvertHeight(clickprevy), slrDepth.Value);
+                    if (editor.Entities.ContainsKey(point3D))
+                    {
+                        editor.Entities.Remove(point3D);
+                        ReSyncOnEditor();
+                    }
+                }
+
+                // Entity copy pasta
+                if (e.KeyboardDevice.IsKeyDown(Key.LeftCtrl) && e.KeyboardDevice.IsKeyDown(Key.C))
+                {
+                    Point3D point3D = new Point3D(clickprevx, editor.InvertHeight(clickprevy), slrDepth.Value);
+                    if (editor.Entities.ContainsKey(point3D))
+                    {
+                        entityCopy = new Entity(editor.Entities[point3D].Item1);
+                    }
+                }
+
+                // Entity copy pasta
+                if (e.KeyboardDevice.IsKeyDown(Key.LeftCtrl) && e.KeyboardDevice.IsKeyDown(Key.V))
+                {
+                    Point3D point3D = new Point3D(clickprevx, editor.InvertHeight(clickprevy), slrDepth.Value);
+                    if (!editor.Entities.ContainsKey(point3D))
+                    {
+                        Entity ent = new Entity(entityCopy);
+                        ent.x = clickprevx;
+                        ent.y = editor.InvertHeight(clickprevy);
+                        ent.z = (float)slrDepth.Value;
+                        editor.Entities.Add(point3D, new Tuple<Entity, Rectangle>(ent, editor.EntityRectangle(ent)));
+
+                        ReSyncOnEditor();
+                    }
+                }
+            }
+            else
+            {
+                // Undo tiling
+                if (e.KeyboardDevice.IsKeyDown(Key.LeftCtrl) && e.KeyboardDevice.IsKeyDown(Key.Z))
+                {
+                    if (editor.HistoryProgress > 0 && editor.HistoryProgress < editor.TileHistory.Count)
+                    {
+                        editor.HistoryProgress--;
+                        Dictionary<Point3D, Rectangle> dictionary = new Dictionary<Point3D, Rectangle>(editor.TileHistory[editor.HistoryProgress].Count);
+                        foreach (var x in editor.TileHistory[editor.HistoryProgress])
+                            dictionary.Add(x.Key, x.Value);
+                        editor.Tiles = dictionary;
+                        ReSyncOnEditor();
+                    }
+                }
+
+                // Redo tiling
+                if (e.KeyboardDevice.IsKeyDown(Key.LeftCtrl) && e.KeyboardDevice.IsKeyDown(Key.Y))
+                {
+                    if (editor.HistoryProgress >= 0 && editor.HistoryProgress < editor.TileHistory.Count - 1)
+                    {
+                        editor.HistoryProgress++;
+                        Dictionary<Point3D, Rectangle> dictionary = new Dictionary<Point3D, Rectangle>(editor.TileHistory[editor.HistoryProgress].Count);
+                        foreach (var x in editor.TileHistory[editor.HistoryProgress])
+                            dictionary.Add(x.Key, x.Value);
+                        editor.Tiles = dictionary;
+                        ReSyncOnEditor();
+                    }
+                }
+            }
+        }
+
+        private void menuSaveAs_Click(object sender, RoutedEventArgs e)
+        {
+            SaveAs();
+        }
+
+        private void SaveAs()
+        {
+            FileDialog fileDialog = new SaveFileDialog();
+            fileDialog.FileName = "1";
+            if (prevPath != "")
+                fileDialog.FileName = prevPath;
+            fileDialog.DefaultExt = ".json";
+            fileDialog.Filter = "JSON files (.json)|*.json";
+
+            bool? result;
+            while ((result = fileDialog.ShowDialog()) == true)
+            {
+                // Open document 
+                string filename = fileDialog.FileName;
+                if (int.TryParse(filename.Split('\\').Last().Split('.').First(), out int temp) != true)
+                {
+                    MessageBox.Show("Name must be a number (ex: 1.json)");
+                    continue;
+                }
+                editor.Serialize(filename);
+                break;
+            }
+        }
+
+        private void SaveMap()
+        {
+            if (File.Exists(prevPath))
+                editor.Serialize(prevPath);
+            else
+                SaveAs();
         }
     }
 }

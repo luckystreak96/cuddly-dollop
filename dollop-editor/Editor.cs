@@ -196,6 +196,8 @@ namespace dollop_editor
                 Tiles.Clear();
                 TileHistory.Clear();
                 HistoryProgress = -1;
+                IdManager.EntityId.Reset();
+                IdManager.QueueId.Reset();
 
                 Dictionary<Point3D, Rectangle> dictionary = new Dictionary<Point3D, Rectangle>();
                 Dictionary<Point3D, Tuple<Entity, Rectangle>> entities = new Dictionary<Point3D, Tuple<Entity, Rectangle>>();
@@ -236,7 +238,11 @@ namespace dollop_editor
                     Rectangle rectangle = EntityRectangle(e);
                     int z = GameToCanvasZ((float)Math.Floor(e.z));
                     if (!(e.x >= Width || e.y >= Height))
-                        entities.Add(new Point3D(Math.Floor(e.x), (float)Math.Floor(e.y), e.z), new Tuple<Entity, Rectangle>(e, rectangle));
+                    {
+                        Point3D point3D = new Point3D(Math.Floor(e.x), (float)Math.Floor(e.y), e.z);
+                        if(!entities.ContainsKey(point3D))
+                        entities.Add(point3D, new Tuple<Entity, Rectangle>(e, rectangle));
+                    }
                 }
 
                 Entities.Clear();

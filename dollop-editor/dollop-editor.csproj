@@ -58,6 +58,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Entity\EventCompletionHelper.cs" />
+    <Compile Include="Entity\IdManager.cs" />
     <Compile Include="Entity\QueueWindow.xaml.cs">
       <DependentUpon>QueueWindow.xaml</DependentUpon>
     </Compile>

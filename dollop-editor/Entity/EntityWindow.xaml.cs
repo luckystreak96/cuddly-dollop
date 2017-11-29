@@ -60,6 +60,7 @@ namespace dollop_editor
             if (dictionary.ContainsKey(p))
             {
                 Entity = new Entity(dictionary[p].Item1);
+                Entity.SneakyId(dictionary[p].Item1.id);
                 chkEthereal.IsChecked = dictionary[p].Item1.ethereal;
                 txtX.Text = dictionary[p].Item1.x.ToString();
                 txtY.Text = dictionary[p].Item1.y.ToString();

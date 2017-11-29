@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:dollop_editor"
         mc:Ignorable="d"
-        Title="Dollop-Editor" Height="981.117" Width="1443.715" WindowState="Maximized" KeyDown="Window_KeyDown" MinWidth="1140" MinHeight="800">
+        Title="Dollop-Editor" Height="981.117" Width="1443.715" WindowState="Maximized" MinWidth="1140" MinHeight="800" PreviewKeyDown="Window_PreviewKeyDown">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -29,6 +29,7 @@
                     <MenuItem x:Name="menuNew" Header="_New" Click="MenuNew_Click" />
                     <MenuItem Name="menuOpen" Header="_Open" Click="MenuOpen_Click" />
                     <MenuItem Name="menuSave" Header="_Save" Click="MenuSave_Click" />
+                    <MenuItem Name="menuSaveAs" Header="_Save As" Click="menuSaveAs_Click" />
                     <Separator />
                     <MenuItem Header="_Exit" />
                 </MenuItem>

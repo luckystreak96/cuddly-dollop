@@ -10,16 +10,32 @@ namespace dollop_editor
 
     public class EventQueue
     {
-        private static int eyedee = 0;
+        ~EventQueue()
+        {
+            IdManager.QueueId.UnAssign(ID);
+        }
         public EventQueue()
         {
-            id = ++eyedee;
+            ID = IdManager.QueueId.Assign();
             flag = 1;
             repeating = true;
             events = new List<Event>();// { new Event(1), new Event(2) };
         }
+
+        public EventQueue(EventQueue queue)
+        {
+            ID = queue.id;
+            flag = queue.flag;
+            repeating = queue.repeating;
+            activation = queue.activation;
+            name = queue.name;
+            events = new List<Event>();
+            foreach (Event e in queue.events)
+                events.Add(new Event(e));
+        }
         public string name { get; set; }
-        public int id { get; set; }
+        public int id { get { return ID; } set { IdManager.QueueId.UnAssign(ID); ID = value; IdManager.QueueId.ManualAssign(ID); } }
+        private int ID;
         public int flag { get; set; }
         public string activation { get; set; }
         public bool repeating { get; set; }
