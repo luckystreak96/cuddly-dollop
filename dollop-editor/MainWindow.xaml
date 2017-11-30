@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:dollop_editor"
         mc:Ignorable="d"
-        Title="Dollop-Editor" Height="981.117" Width="1443.715" WindowState="Maximized" MinWidth="1140" MinHeight="800" PreviewKeyDown="Window_PreviewKeyDown">
+        Title="Dollop-Editor" Height="981.117" Width="1443.715" WindowState="Maximized" MinWidth="1140" MinHeight="800" PreviewKeyDown="Window_PreviewKeyDown" Closing="Window_Closing">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -20,8 +20,8 @@
         <ScrollViewer HorizontalAlignment="Left" Margin="10,32,0,84" Width="273" VerticalScrollBarVisibility="Auto">
             <Canvas x:Name="cnvTilePicker" Width="256" Background="#FFDADADA" MouseDown="CnvTilePicker_MouseDown" Height="834" VerticalAlignment="Top"/>
         </ScrollViewer>
-        <Slider x:Name="slrDepth" Margin="321,33,0,0" VerticalAlignment="Top" Minimum="0.5" SmallChange="0.5" Value="5" TickPlacement="TopLeft" TickFrequency="0.5" IsSnapToTickEnabled="True" ValueChanged="SlrDepth_ValueChanged" HorizontalAlignment="Left" Width="433"/>
-        <TextBox x:Name="txtDepth" HorizontalAlignment="Left" Height="24" Margin="288,33,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="28" Text="{Binding ElementName=slrDepth,Path=Value}"/>
+        <Slider x:Name="slrDepth" Margin="321,33,0,0" VerticalAlignment="Top" Minimum="0.0" SmallChange="0.1" Value="5" TickPlacement="TopLeft" TickFrequency="0.5" IsSnapToTickEnabled="True" ValueChanged="SlrDepth_ValueChanged" HorizontalAlignment="Left" Width="433"/>
+        <TextBox x:Name="txtDepth" HorizontalAlignment="Left" Height="24" Margin="288,33,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="28" Text="{Binding ElementName=slrDepth,Path=Value,UpdateSourceTrigger=PropertyChanged}" PreviewKeyUp="txtDepth_PreviewKeyUp"/>
         <CheckBox x:Name="chkOpaqueView" Content="Opaque View" Margin="992,39,0,0" VerticalAlignment="Top" FontWeight="Bold" Click="ChkOpaqueView_Checked" HorizontalAlignment="Left" Width="110"/>
         <DockPanel VerticalAlignment="Top">
             <Menu DockPanel.Dock="Top" Height="20" VerticalAlignment="Top">

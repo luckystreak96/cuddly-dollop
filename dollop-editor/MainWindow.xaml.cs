@@ -37,9 +37,11 @@ namespace dollop_editor
         private Rectangle selectedPickerTile;
         private Rectangle selectedMapTile;
         private string prevPath = "";
+        public bool mustSave = false;
 
         public MainWindow()
         {
+            System.Windows.FrameworkCompatibilityPreferences.KeepTextBoxDisplaySynchronizedWithTextProperty = false;
             InitializeComponent();
 
             cnvMap.RenderTransform = new ScaleTransform(0, -1);
@@ -112,7 +114,6 @@ namespace dollop_editor
                 if (!entityMode && x > 0 && x < cnvMap.Width && y > 0 && y < cnvMap.Height)
                 {
                     SetMapTile(x, y, selTile);
-
                 }
             }
             else if (e.RightButton == MouseButtonState.Pressed)
@@ -134,7 +135,7 @@ namespace dollop_editor
 
                     fe.ContextMenu = theMenu;
                 }
-                else
+                else if(fe.ContextMenu != null)
                     fe.ContextMenu.Items.Clear();
             }
 
@@ -193,6 +194,7 @@ namespace dollop_editor
 
         private void SetMapTile(int x, int y, string brush)
         {
+            mustSave = true;
             x /= editor.TileSize;
             y /= editor.TileSize;
 
@@ -325,17 +327,24 @@ namespace dollop_editor
             SaveMap();
         }
 
-        private void MenuOpen_Click(object sender, RoutedEventArgs e)
+        private bool SaveQuery()
         {
-            if (prevPath != "")
+            if (prevPath != "" || mustSave)
             {
                 MessageBoxResult mbr = MessageBoxResult.Cancel;
-                mbr = MessageBox.Show("Would you like to save before changing maps?", "Save", MessageBoxButton.YesNoCancel);
+                mbr = MessageBox.Show("Save changes?", "Save", MessageBoxButton.YesNoCancel);
                 if (mbr == MessageBoxResult.Cancel)
-                    return;
+                    return false;
                 else if (mbr == MessageBoxResult.Yes)
                     SaveMap();
             }
+            return true;
+        }
+
+        private void MenuOpen_Click(object sender, RoutedEventArgs e)
+        {
+            if(!SaveQuery())
+                return;
             FileDialog fileDialog = new OpenFileDialog();
             fileDialog.DefaultExt = ".json";
             fileDialog.Filter = "JSON files (.json)|*.json";
@@ -371,6 +380,7 @@ namespace dollop_editor
             {
                 editor.Entities.Remove(p);
                 ReSyncOnEditor();
+                mustSave = true;
             }
         }
 
@@ -440,6 +450,7 @@ namespace dollop_editor
                     if (editor.Entities.ContainsKey(point3D))
                     {
                         editor.Entities.Remove(point3D);
+                        mustSave = true;
                         ReSyncOnEditor();
                     }
                 }
@@ -465,6 +476,7 @@ namespace dollop_editor
                         ent.y = editor.InvertHeight(clickprevy);
                         ent.z = (float)slrDepth.Value;
                         editor.Entities.Add(point3D, new Tuple<Entity, Rectangle>(ent, editor.EntityRectangle(ent)));
+                        mustSave = true;
 
                         ReSyncOnEditor();
                     }
@@ -483,6 +495,7 @@ namespace dollop_editor
                             dictionary.Add(x.Key, x.Value);
                         editor.Tiles = dictionary;
                         ReSyncOnEditor();
+                        mustSave = true;
                     }
                 }
 
@@ -497,6 +510,7 @@ namespace dollop_editor
                             dictionary.Add(x.Key, x.Value);
                         editor.Tiles = dictionary;
                         ReSyncOnEditor();
+                        mustSave = true;
                     }
                 }
             }
@@ -527,6 +541,7 @@ namespace dollop_editor
                     continue;
                 }
                 editor.Serialize(filename);
+                mustSave = false;
                 break;
             }
         }
@@ -534,9 +549,24 @@ namespace dollop_editor
         private void SaveMap()
         {
             if (File.Exists(prevPath))
+            {
+                mustSave = false;
                 editor.Serialize(prevPath);
+            }
             else
                 SaveAs();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            SaveQuery();
+        }
+
+        // When you type your own depth, it'll update
+        private void txtDepth_PreviewKeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+                Keyboard.ClearFocus();
         }
     }
 }

@@ -132,6 +132,7 @@ namespace dollop_editor
 
             }
 
+            mainWindow.mustSave = true;
             DialogResult = true;
             Close();
         }
