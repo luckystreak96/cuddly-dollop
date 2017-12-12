@@ -87,7 +87,7 @@ void Rain::ResetLocation(Vector3f& zoneSize, bool firstSpawn)
 	position.x = fmod(((float)rand() / 10.0f), zoneSize.x + 4.0f) - 4.0f;
 	position.y = rand() % ((firstSpawn ? (int)zoneSize.y : 10)) + (firstSpawn ? 0 : zoneSize.y);
 	velocity.y = -fmod(((float)rand() / 1000.0f), 0.3f);
-	velocity.y -= texture == "rain.png" ? 0.4f : 0.1f;
+	velocity.y -= texture == "rain.png" ? 0.6f : 0.1f;
 	float value = fmod(((float)rand() / 1000.0f), 0.1f);
 }
 

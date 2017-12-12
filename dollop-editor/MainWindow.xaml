@@ -22,7 +22,7 @@
         </ScrollViewer>
         <Slider x:Name="slrDepth" Margin="321,33,0,0" VerticalAlignment="Top" Minimum="0.0" SmallChange="0.1" Value="5" TickPlacement="TopLeft" TickFrequency="0.5" IsSnapToTickEnabled="True" ValueChanged="SlrDepth_ValueChanged" HorizontalAlignment="Left" Width="433"/>
         <TextBox x:Name="txtDepth" HorizontalAlignment="Left" Height="24" Margin="288,33,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="28" Text="{Binding ElementName=slrDepth,Path=Value,UpdateSourceTrigger=PropertyChanged}" PreviewKeyUp="txtDepth_PreviewKeyUp"/>
-        <CheckBox x:Name="chkOpaqueView" Content="Opaque View" Margin="992,39,0,0" VerticalAlignment="Top" FontWeight="Bold" Click="ChkOpaqueView_Checked" HorizontalAlignment="Left" Width="110"/>
+        <CheckBox x:Name="chkOpaqueView" Content="Opaque View" Margin="938,32,0,0" VerticalAlignment="Top" FontWeight="Bold" Click="ChkOpaqueView_Checked" HorizontalAlignment="Left" Width="110"/>
         <DockPanel VerticalAlignment="Top">
             <Menu DockPanel.Dock="Top" Height="20" VerticalAlignment="Top">
                 <MenuItem Header="_File">
@@ -40,7 +40,15 @@
                 </MenuItem>
             </Menu>
         </DockPanel>
-        <CheckBox Name="chkEntityMode" Content="Entity Mode" FontWeight="Bold" HorizontalAlignment="Left" Margin="876,39,0,0" VerticalAlignment="Top" Click="chkEntityMode_Click"/>
+        <Grid Name="grdEntityMode" HorizontalAlignment="Left" Height="32" Margin="817,24,0,0" VerticalAlignment="Top" Width="32" Background="#FFE2E2E2">
+            <Image Name="imgEntityMode" HorizontalAlignment="Left" Height="32" VerticalAlignment="Top" Width="32" Source="res/EntityMode.png" PreviewMouseUp="imgEntityMode_PreviewMouseUp"/>
+        </Grid>
+        <Grid Name="grdNormalMode" HorizontalAlignment="Left" Height="32" Margin="780,24,0,0" VerticalAlignment="Top" Width="32" Background="#FFE2E2E2">
+            <Image Name="imgNormalMode" HorizontalAlignment="Left" Height="32" VerticalAlignment="Top" Width="32" Source="res/NormalMode.png" PreviewMouseUp="imgNormalMode_PreviewMouseUp"/>
+        </Grid>
+        <Grid Name="grdAttributeMode" HorizontalAlignment="Left" Height="32" Margin="860,24,0,0" VerticalAlignment="Top" Width="32" Background="#FFE2E2E2">
+            <Image Name="imgAttributeMode" HorizontalAlignment="Left" Height="32" VerticalAlignment="Top" Width="32" Source="res/AttributeMode.png" PreviewMouseUp="imgAttributeMode_PreviewMouseUp"/>
+        </Grid>
 
 
     </Grid>

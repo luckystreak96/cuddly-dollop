@@ -15,7 +15,8 @@ void PhysicsComponent::ReceiveMessage(std::vector<std::string> msg)
 	}
 }
 
-PhysicsComponent::PhysicsComponent(Vector3f pos, std::string modelName, Vector3f size, Vector3f numTiles) : m_size(size), m_BBcenter(numTiles), m_conversationLock(false)
+PhysicsComponent::PhysicsComponent(Vector3f pos, std::string modelName, Vector3f size, Vector3f numTiles) : m_size(size), 
+m_BBcenter(numTiles), m_conversationLock(false), walkOn(true)
 {
 	m_pos = pos;
 	m_velocity = Vector3f();
@@ -342,4 +343,6 @@ void PhysicsComponent::SetEthereal(bool ethereal)
 {
 	m_ethereal = ethereal;
 }
+
+
 

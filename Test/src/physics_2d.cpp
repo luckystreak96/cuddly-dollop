@@ -716,8 +716,11 @@ namespace Physics_2D {
 			assert(lol1.at(AABB::Close) == lol1.at(AABB::Far));
 			assert(lol2.at(AABB::Close) == lol2.at(AABB::Far));
 			float dif = lol1.at(AABB::Close) - lol2.at(AABB::Close);
+
+			// If the tile is legal, skip it
 			if (!(dif <= STEP_HEIGHT && dif >= 0.0f && Physics::Intersect2D(lol1, lol2)))
-				continue;
+				if (tou->walkOn)
+					continue;
 
 			ApplyCollision(x->Physics(), tou);
 		}

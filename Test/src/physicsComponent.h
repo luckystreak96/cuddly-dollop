@@ -50,6 +50,7 @@ public:
 	//static inline bool SortFunc(Drawable* d, Drawable* d2) { return d->Position().z < d2->Position().z; }
 
 	bool mustCollide = true;
+	bool walkOn;
 protected:
 	bool m_ethereal;
 	Vector3f m_pos;

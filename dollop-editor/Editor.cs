@@ -124,7 +124,7 @@ namespace dollop_editor
             return new Tuple<Rectangle, Rectangle>(rectangle, r);
         }
 
-        public static void ChangeOpacity(UIElementCollection children, double depth, bool opaqueView)
+        public static void ChangeOpacity(UIElementCollection children, double depth, bool opaqueView, CanvasState state)
         {
             foreach (Rectangle x in children)
             {
@@ -137,9 +137,18 @@ namespace dollop_editor
                         x.Fill.Opacity = opacity;
                     if (x.Stroke != null)
                         x.Stroke.Opacity = opacity + 0.1;
+                    if (state == CanvasState.TileAttributeMode)
+                    {
+                        if ((string)x.Tag == "noWalkOn")
+                            x.Stroke = new SolidColorBrush(Colors.Red);
+                    }
+                    else if ((string)x.Tag == "noWalkOn")
+                        x.Stroke = null;
                 }
                 else
                 {
+                    if ((string)x.Tag == "noWalkOn")
+                        x.Stroke = null;
                     if (x.Fill != null)
                         x.Fill.Opacity = 1.0;
                     if (x.Stroke != null)
@@ -147,6 +156,11 @@ namespace dollop_editor
                             x.Stroke.Opacity = 0;
                         else
                             x.Stroke.Opacity = 1.0;
+                    if (state == CanvasState.TileAttributeMode && !opaqueView)
+                    {
+                        if ((string)x.Tag == "noWalkOn")
+                            x.Stroke = new SolidColorBrush(Colors.Red);
+                    }
                 }
             }
         }
@@ -168,7 +182,8 @@ namespace dollop_editor
                         y = (float)x.Key.Y,
                         z = (float)x.Key.Z,
                         // Get the name of the sprite
-                        sprite = ((BitmapImage)(x.Value.Fill.GetValue(ImageBrush.ImageSourceProperty))).UriSource.ToString().Split('\\').Last()
+                        sprite = ((BitmapImage)(x.Value.Fill.GetValue(ImageBrush.ImageSourceProperty))).UriSource.ToString().Split('\\').Last(),
+                        walkOn = (string)x.Value.Tag != "noWalkOn"
                     };
 
                     tiles.Add(tile);
@@ -217,13 +232,15 @@ namespace dollop_editor
                     {
                         Fill = Brushes[tile.sprite].Clone(),
                         Width = TileSize,
-                        Height = TileSize
+                        Height = TileSize,
+                        Tag = tile.walkOn ? null : "noWalkOn"
                     };
                     rectangle.SetCurrentValue(Canvas.ZIndexProperty, GameToCanvasZ(tile.z));
                     rectangle.RenderTransform = new TranslateTransform((tile.x) * 32, InvertHeight(tile.y) * 32);
                     if (!(tile.x >= Width || /*InvertHeight(tile.y)*/tile.y >= Height))
                     {
-                        Point3D point3D = new Point3D(tile.x,/* InvertHeight(tile.y)*/tile.y, tile.z);
+                        // tile.z needs to be converted this way otherwise the cast makes 4.9 become 4.90000000023 xd
+                        Point3D point3D = new Point3D(tile.x, tile.y, System.Convert.ToDouble(tile.z.ToString()));
                         if (dictionary.ContainsKey(point3D))
                             dictionary.Remove(point3D);
                         dictionary.Add(point3D, rectangle);
@@ -240,8 +257,8 @@ namespace dollop_editor
                     if (!(e.x >= Width || e.y >= Height))
                     {
                         Point3D point3D = new Point3D(Math.Floor(e.x), (float)Math.Floor(e.y), e.z);
-                        if(!entities.ContainsKey(point3D))
-                        entities.Add(point3D, new Tuple<Entity, Rectangle>(e, rectangle));
+                        if (!entities.ContainsKey(point3D))
+                            entities.Add(point3D, new Tuple<Entity, Rectangle>(e, rectangle));
                     }
                 }
 

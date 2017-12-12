@@ -12,11 +12,13 @@ namespace dollop_editor
         {
             x = y = z = 0;
             sprite = "ghost.png";
+            walkOn = true;
         }
         public float x;
         public float y;
         public float z;
         public string sprite;
+        public bool walkOn;
         //public string tile_type;
     }
 }

@@ -18,11 +18,13 @@ using System.IO;
 
 namespace dollop_editor
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
+
+    public enum CanvasState { NormalMode, EntityMode, TileAttributeMode }
+
     public partial class MainWindow : Window
     {
+        private SolidColorBrush unselectedMode = new SolidColorBrush(Colors.LightGray);
+        private SolidColorBrush selectedMode = new SolidColorBrush(Colors.OrangeRed);
         private Editor editor;
         private Entity entityCopy;
         private string selTile = "";
@@ -31,7 +33,7 @@ namespace dollop_editor
         private int clickprevx = -1;
         private int clickprevy = -1;
         private bool opaqueView = false;
-        private bool entityMode = false;
+        private CanvasState cnvState = CanvasState.NormalMode;
         private int contextMenuX = 0;
         private int contextMenuY = 0;
         private Rectangle selectedPickerTile;
@@ -52,6 +54,7 @@ namespace dollop_editor
 
             SetupTileSelecter();
             ReleaseMouse();
+            SetCnvMode(CanvasState.NormalMode);
 
             selectedPickerTile = new Rectangle()
             {
@@ -107,11 +110,11 @@ namespace dollop_editor
 
             if (e.LeftButton == MouseButtonState.Pressed)
             {
-                if (entityMode)
+                if (cnvState == CanvasState.EntityMode)
                 {
                     UpdateSelectedMapTile(x, y);
                 }
-                if (!entityMode && x > 0 && x < cnvMap.Width && y > 0 && y < cnvMap.Height)
+                else if ((cnvState == CanvasState.NormalMode || cnvState == CanvasState.TileAttributeMode) && x > 0 && x < cnvMap.Width && y > 0 && y < cnvMap.Height)
                 {
                     SetMapTile(x, y, selTile);
                 }
@@ -121,7 +124,7 @@ namespace dollop_editor
                 contextMenuX = x / editor.TileSize;
                 contextMenuY = y / editor.TileSize;
                 FrameworkElement fe = e.Source as FrameworkElement;
-                if (entityMode)
+                if (cnvState == CanvasState.EntityMode)
                 {
                     ContextMenu theMenu = new ContextMenu();
                     MenuItem modify = new MenuItem();
@@ -135,11 +138,11 @@ namespace dollop_editor
 
                     fe.ContextMenu = theMenu;
                 }
-                else if(fe.ContextMenu != null)
+                else if (fe.ContextMenu != null)
                     fe.ContextMenu.Items.Clear();
             }
 
-            if (entityMode && e.ClickCount == 2 && (x / 32) == clickprevx && (y / 32) == clickprevy)
+            if (cnvState == CanvasState.EntityMode && e.ClickCount == 2 && (x / 32) == clickprevx && (y / 32) == clickprevy)
             {
                 SetMapTile(x, y, selTile);
             }
@@ -198,7 +201,7 @@ namespace dollop_editor
             x /= editor.TileSize;
             y /= editor.TileSize;
 
-            if (entityMode)
+            if (cnvState == CanvasState.EntityMode)
             {
                 EntitySelected(x, y, slrDepth.Value);
                 return;
@@ -209,11 +212,31 @@ namespace dollop_editor
                 return;
             prevx = x;
             prevy = y;
-            var t = editor.AddTile(x, y, slrDepth.Value, brush);
-            if (cnvMap.Children.Contains(t.Item2))
-                cnvMap.Children.Remove(t.Item2);
-            if (t.Item1 != null)
-                cnvMap.Children.Add(t.Item1);
+            if (cnvState == CanvasState.NormalMode)
+            {
+                var t = editor.AddTile(x, y, slrDepth.Value, brush);
+                if (cnvMap.Children.Contains(t.Item2))
+                    cnvMap.Children.Remove(t.Item2);
+                if (t.Item1 != null)
+                    cnvMap.Children.Add(t.Item1);
+            }
+            else if (cnvState == CanvasState.TileAttributeMode)
+            {
+                Point3D key = new Point3D(x, editor.InvertHeight(y), slrDepth.Value);
+                if (editor.Tiles.ContainsKey(key))
+                {
+                    if (editor.Tiles[key].Tag != null)
+                    {
+                        editor.Tiles[key].Stroke = null;
+                        editor.Tiles[key].Tag = null;
+                    }
+                    else
+                    {
+                        editor.Tiles[key].Tag = "noWalkOn";
+                        editor.Tiles[key].Stroke = new SolidColorBrush(Colors.Red);
+                    }
+                }
+            }
         }
 
         private void EntitySelected(int x, int y, double z)
@@ -244,15 +267,16 @@ namespace dollop_editor
 
         private void CnvMap_MouseMove(object sender, MouseEventArgs e)
         {
+
             if (e.LeftButton == MouseButtonState.Pressed)
             {
                 int x = (int)e.GetPosition(cnvMap).X;
                 int y = (int)e.GetPosition(cnvMap).Y;
 
-                prevx = x / editor.TileSize;
-                prevy = y / editor.TileSize;
+                //prevx = x / editor.TileSize;
+                //prevy = y / editor.TileSize;
 
-                if (!entityMode && x > 0 && x < cnvMap.Width && y > 0 && y < cnvMap.Height)
+                if (cnvState == CanvasState.NormalMode && x > 0 && x < cnvMap.Width && y > 0 && y < cnvMap.Height)
                     SetMapTile(x, y, selTile);
             }
         }
@@ -269,7 +293,7 @@ namespace dollop_editor
             }
 
             // Draw the entities
-            if (entityMode)
+            if (cnvState == CanvasState.EntityMode)
                 foreach (var x in editor.Entities)
                 {
                     ((TranslateTransform)x.Value.Item2.RenderTransform).Y = (float)(editor.InvertHeight((float)x.Key.Y)) * editor.TileSize;
@@ -303,14 +327,14 @@ namespace dollop_editor
 
         private void SlrDepth_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            Editor.ChangeOpacity(cnvMap.Children, slrDepth.Value, opaqueView);
+            Editor.ChangeOpacity(cnvMap.Children, slrDepth.Value, opaqueView, cnvState);
         }
 
 
         private void ChkOpaqueView_Checked(object sender, RoutedEventArgs e)
         {
             opaqueView = chkOpaqueView.IsChecked ?? false;
-            Editor.ChangeOpacity(cnvMap.Children, slrDepth.Value, opaqueView);
+            Editor.ChangeOpacity(cnvMap.Children, slrDepth.Value, opaqueView, cnvState);
         }
 
         private void MenuNew_Click(object sender, RoutedEventArgs e)
@@ -329,7 +353,7 @@ namespace dollop_editor
 
         private bool SaveQuery()
         {
-            if (prevPath != "" || mustSave)
+            if ((prevPath != "" && mustSave) || mustSave)
             {
                 MessageBoxResult mbr = MessageBoxResult.Cancel;
                 mbr = MessageBox.Show("Save changes?", "Save", MessageBoxButton.YesNoCancel);
@@ -343,7 +367,7 @@ namespace dollop_editor
 
         private void MenuOpen_Click(object sender, RoutedEventArgs e)
         {
-            if(!SaveQuery())
+            if (!SaveQuery())
                 return;
             FileDialog fileDialog = new OpenFileDialog();
             fileDialog.DefaultExt = ".json";
@@ -363,14 +387,7 @@ namespace dollop_editor
                 ReSyncOnEditor();
             }
 
-            Editor.ChangeOpacity(cnvMap.Children, slrDepth.Value, opaqueView);
-        }
-
-        private void chkEntityMode_Click(object sender, RoutedEventArgs e)
-        {
-            entityMode = chkEntityMode.IsChecked ?? false;
-            ReSyncOnEditor();
-            Editor.ChangeOpacity(cnvMap.Children, slrDepth.Value, opaqueView);
+            Editor.ChangeOpacity(cnvMap.Children, slrDepth.Value, opaqueView, cnvState);
         }
 
         private void Delete_Click(object sender, RoutedEventArgs e)
@@ -415,7 +432,7 @@ namespace dollop_editor
                 SaveMap();
             }
 
-            if (entityMode)
+            if (cnvState == CanvasState.EntityMode)
             {
                 // Entity delete
                 if (!(clickprevx == -1 || clickprevy == -1))
@@ -567,6 +584,53 @@ namespace dollop_editor
         {
             if (e.Key == Key.Enter)
                 Keyboard.ClearFocus();
+        }
+
+        private void SetToGray()
+        {
+            grdEntityMode.Background = unselectedMode;
+            grdNormalMode.Background = unselectedMode;
+            grdAttributeMode.Background = unselectedMode;
+        }
+
+        private void SetCnvMode(CanvasState state)
+        {
+            SetToGray();
+
+            if (state == cnvState)
+                state = CanvasState.NormalMode;
+
+            cnvState = state;
+            ReSyncOnEditor();
+            Editor.ChangeOpacity(cnvMap.Children, slrDepth.Value, opaqueView, cnvState);
+
+            switch (state)
+            {
+                case CanvasState.NormalMode:
+                    grdNormalMode.Background = selectedMode;
+                    break;
+                case CanvasState.EntityMode:
+                    grdEntityMode.Background = selectedMode;
+                    break;
+                case CanvasState.TileAttributeMode:
+                    grdAttributeMode.Background = selectedMode;
+                    break;
+            }
+        }
+
+        private void imgEntityMode_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            SetCnvMode(CanvasState.EntityMode);
+        }
+
+        private void imgNormalMode_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            SetCnvMode(CanvasState.NormalMode);
+        }
+
+        private void imgAttributeMode_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            SetCnvMode(CanvasState.TileAttributeMode);
         }
     }
 }

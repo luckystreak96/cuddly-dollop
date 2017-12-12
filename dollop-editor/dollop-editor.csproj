@@ -137,5 +137,14 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\EntityMode.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\NormalMode.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="res\AttributeMode.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

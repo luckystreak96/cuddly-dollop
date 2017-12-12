@@ -56,7 +56,10 @@ MapHandler::MapHandler(unsigned int id, std::shared_ptr<JsonHandler> jh) : m_mes
 		pos.y = x["y"].GetFloat();
 		pos.z = x["z"].GetFloat();
 		sprite = std::string(x["sprite"].GetString());
-		m_tiles.push_back(std::shared_ptr<MapTile>(new MapTile(pos, COMPOSITION, sprite)));
+		std::shared_ptr<MapTile> tile = std::shared_ptr<MapTile>(new MapTile(pos, COMPOSITION, sprite));
+		if (x.HasMember("walkOn") && x["walkOn"].GetBool() == false)
+			tile->Physics()->walkOn = false;
+		m_tiles.push_back(tile);
 	}
 
 	FinalizeSetup();
