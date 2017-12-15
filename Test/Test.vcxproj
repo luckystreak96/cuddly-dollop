@@ -191,6 +191,7 @@
     <ClInclude Include="src\eventQueue.h" />
     <ClInclude Include="src\eventMove.h" />
     <ClInclude Include="src\eventManager.h" />
+    <ClInclude Include="src\eventSound.h" />
     <ClInclude Include="src\eventTeleport.h" />
     <ClInclude Include="src\eventWeather.h" />
     <ClInclude Include="src\fade.h" />
@@ -269,6 +270,7 @@
     <ClCompile Include="src\eventQueue.cpp" />
     <ClCompile Include="src\eventMove.cpp" />
     <ClCompile Include="src\eventManager.cpp" />
+    <ClCompile Include="src\eventSound.cpp" />
     <ClCompile Include="src\eventTeleport.cpp" />
     <ClCompile Include="src\eventWeather.cpp" />
     <ClCompile Include="src\fade.cpp" />

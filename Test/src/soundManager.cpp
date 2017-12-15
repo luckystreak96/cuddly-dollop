@@ -5,6 +5,8 @@ SoundManager::SoundManager()
 	// Initialize Open AL
 	m_device = alcOpenDevice(nullptr); // open default device
 	if (m_device != 0) {
+		char* DefaultDevice = (char*)alcGetString(m_device, ALC_DEFAULT_DEVICE_SPECIFIER);
+		std::cout << DefaultDevice << std::endl;
 		m_context = alcCreateContext(m_device, nullptr); // create context
 		if (m_context != nullptr) {
 			alcMakeContextCurrent(m_context); // set active context
@@ -109,6 +111,17 @@ void SoundManager::Play(unsigned int source, std::string path)
 	CheckErrors();
 }
 
+bool SoundManager::IsPlaying(unsigned int source)
+{
+	ALint source_state;
+	alGetSourcei(source, AL_SOURCE_STATE, &source_state);
+	if (source_state == AL_PLAYING) {
+		return true;
+	}
+
+	return false;
+}
+
 void SoundManager::CreateBuffer(std::string path)
 {
 	if (m_buffers.count(path))
@@ -121,7 +134,8 @@ void SoundManager::CreateBuffer(std::string path)
 	alutLoadWAVFile((ALbyte*)path.c_str(), &buf.format, &buf.data, &buf.size, &buf.freq, &buf.loop);
 
 	//set buffer data
-	alBufferData(buf.buffer, AL_FORMAT_MONO16, buf.data, buf.size, buf.freq);
+	alBufferData(buf.buffer, buf.format, buf.data, buf.size, buf.freq);
+	//alBufferData(buf.buffer, AL_FORMAT_STEREO16, buf.data, buf.size, buf.freq);
 
 	CheckErrors();
 
@@ -171,13 +185,13 @@ unsigned int SoundManager::CreateSource()
 	alSource3f(source, AL_VELOCITY, 0, 0, 0);
 	alSourcei(source, AL_LOOPING, AL_FALSE);
 
-	//alDistanceModel(AL_LINEAR_DISTANCE_CLAMPED);
+	alDistanceModel(AL_LINEAR_DISTANCE_CLAMPED);
 
 	//float value = 0;
-	////alGetSourcef(source, AL_REFERENCE_DISTANCE, &value);
-	////std::cout << "Default Reference Distance: " << value << std::endl;
-	////alSourcef(source, AL_REFERENCE_DISTANCE, 10);
-	////alSourcef(source, AL_MAX_DISTANCE, 100);
+	//alGetSourcef(source, AL_REFERENCE_DISTANCE, &value);
+	//std::cout << "Default Reference Distance: " << value << std::endl;
+	alSourcef(source, AL_REFERENCE_DISTANCE, 10);
+	alSourcef(source, AL_MAX_DISTANCE, 100);
 	//alGetSourcef(source, AL_MAX_DISTANCE, &value);
 	//std::cout << "Max Distance: " << value << std::endl;
 

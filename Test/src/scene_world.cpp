@@ -11,6 +11,11 @@ SceneWorld::SceneWorld(unsigned int map_id) : m_acceptInput(false), m_currentMap
 
 bool SceneWorld::Init()
 {
+	//SoundManager::GetInstance().CreateBuffer("res/audio/fx/washeslow.wav");
+	//unsigned int m_source = SoundManager::GetInstance().CreateSource();
+	//SoundManager::GetInstance().CreateBuffer("res/audio/fx/swish_2.wav");
+	//SoundManager::GetInstance().Play(m_source, "res/audio/fx/swish_2.wav");
+
 	NextScene = SceneGenData();
 	m_jsonHandler = std::shared_ptr<JsonHandler>(new JsonHandler(m_currentMap));
 
@@ -32,6 +37,7 @@ bool SceneWorld::Init()
 	m_collisionManager.SetEntities(&m_celist);
 
 	// THIS IS NOT GOOD - THE PLAYER NEEDS TO BE FOUND, NOT JUST BE ID 1
+	// NVM THIS IS GOOD
 	if (m_celist.count(1))
 		m_player = m_celist.at(1);
 
@@ -235,7 +241,7 @@ SceneGenData SceneWorld::Update()
 		m_World->Follow(m_player->Physics()->Position(), m_mapHandler->GetMapSize());
 
 	//Display FPS
-	FontManager::GetInstance().SetText(m_fontFPS, std::to_string(ElapsedTime::GetInstance().GetFPS()), Vector3f(0, 15.5f, 0));
+	FontManager::GetInstance().SetText(m_fontFPS, std::to_string(ElapsedTime::GetInstance().GetFPS()), Vector3f(0, OrthoProjInfo::GetRegularInstance().Top / 32.0f - 0.5f, 0));
 
 	srand(clock());
 	FontManager::GetInstance().Update(ElapsedTime::GetInstance().GetElapsedTime());
@@ -301,9 +307,9 @@ void SceneWorld::RenderPass()
 
 void SceneWorld::SetAudioPosition()
 {
-	if (m_player != NULL)
-		SoundManager::GetInstance().SetListenerPosition(m_player->Physics()->Position(), m_player->Physics()->Velocity());
-	else
+	//if (m_player != NULL)
+	//	SoundManager::GetInstance().SetListenerPosition(m_player->Physics()->Position(), m_player->Physics()->Velocity());
+	//else
 		SoundManager::GetInstance().SetListenerPosition();
 }
 

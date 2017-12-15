@@ -14,6 +14,7 @@
 #include "eventMapChange.h"
 #include "eventTeleport.h"
 #include "eventWeather.h"
+#include "eventSound.h"
 
 typedef std::variant<bool, float, int, std::string, std::vector<std::shared_ptr<EventQueue>>, std::map<std::string, std::variant<bool, float, int, std::string, std::vector<std::shared_ptr<EventQueue>>>>> EventArgType;
 

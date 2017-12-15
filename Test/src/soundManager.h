@@ -38,16 +38,17 @@ public:
 	};
 
 	void SetListenerPosition(Vector3f pos = Vector3f(), Vector3f vel = Vector3f());
-	void SetListenerOrientation(unsigned int dir);
 	unsigned int CreateSource();
+	void SetListenerOrientation(unsigned int dir);
 	void DeleteSource(unsigned int source);
+	void SetPosition(unsigned int source, Vector3f pos);
 	void SetPitch(unsigned int source, float pitch);
 	void SetGain(unsigned int source, float gain);
-	void SetPosition(unsigned int source, Vector3f pos);
 	void SetVelocity(unsigned int source, Vector3f vel);
 	void SetLoop(unsigned int source, bool loop);
 	void CreateBuffer(std::string path = "res/audio/fx/swish_2.wav");
 	void Play(unsigned int source, std::string path);
+	bool IsPlaying(unsigned int source);
 private:
 	SoundManager();
 	~SoundManager();

@@ -109,6 +109,12 @@
     <Filter Include="Source Files\Engine\Graphics\Fonts">
       <UniqueIdentifier>{3cc710e6-9bb5-4e79-bb63-cf4e3262103d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Events">
+      <UniqueIdentifier>{bf1f47a0-5499-4fd7-b6e1-0dde136dde08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Events">
+      <UniqueIdentifier>{d905e1a4-2a0c-4128-9627-94768f8c9250}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\scenes.h">
@@ -306,31 +312,10 @@
     <ClInclude Include="src\iEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\eventFactory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\jsonHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\eventMove.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\eventManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\eventQueue.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\entityFactory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\eventCaller.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\eventMapChange.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\eventTeleport.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\collisionManager.h">
@@ -345,11 +330,35 @@
     <ClInclude Include="src\particleGenerator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\eventWeather.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\eventCaller.h">
+      <Filter>Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\eventFactory.h">
+      <Filter>Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\eventManager.h">
+      <Filter>Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\eventMapChange.h">
+      <Filter>Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\eventMove.h">
+      <Filter>Header Files\Events</Filter>
     </ClInclude>
     <ClInclude Include="src\eventParticle.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\eventQueue.h">
+      <Filter>Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\eventTeleport.h">
+      <Filter>Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\eventWeather.h">
+      <Filter>Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\eventSound.h">
+      <Filter>Header Files\Events</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -568,6 +577,9 @@
     </ClCompile>
     <ClCompile Include="src\eventParticle.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\eventSound.cpp">
+      <Filter>Source Files\Events</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

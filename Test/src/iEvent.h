@@ -19,7 +19,7 @@ enum EventExecutionMode
 	BLOCKING, ASYNC
 };
 
-enum EventTypes { ET_Teleport, ET_DialogueBox, ET_MoveRight, ET_MoveUp, ET_MoveDown, ET_MoveLeft, ET_CallQueue, ET_MapChange, ET_Weather, ET_Particle };
+enum EventTypes { ET_Teleport, ET_DialogueBox, ET_MoveRight, ET_MoveUp, ET_MoveDown, ET_MoveLeft, ET_CallQueue, ET_MapChange, ET_Weather, ET_Particle, ET_PlaySound };
 
 class IEvent
 {

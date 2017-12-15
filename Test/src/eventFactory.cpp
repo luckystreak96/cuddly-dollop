@@ -13,7 +13,8 @@ std::map<std::string, unsigned int> EventFactory::TypeDict =
 	{ "call_queue", ET_CallQueue },
 	{ "map_change", ET_MapChange },
 	{ "weather", ET_Weather },
-	{ "particle", ET_Particle }
+	{ "particle", ET_Particle },
+	{ "play_sound", ET_PlaySound }
 };
 
 std::map<std::string, unsigned int> EventFactory::EEMDict =
@@ -57,6 +58,10 @@ std::shared_ptr<IEvent> EventFactory::BuildEvent(EventTypes et, std::map<std::st
 			args.count("x") ? GetFloat(args.at("x")) : 0.0f,
 			args.count("y") ? GetFloat(args.at("y")) : 0.0f,
 			args.count("z") ? GetFloat(args.at("z")) : 0.0f));
+		break;
+	case EventTypes::ET_PlaySound:
+		result = std::shared_ptr<IEvent>(new EventSound(
+			args.count("sound_file") ? std::get<std::string>(args.at("sound_file")) : "res/audio/fx/swish_2.wav"));
 		break;
 	case EventTypes::ET_MoveRight:
 		result = std::shared_ptr<IEvent>(new EventMove(id,
