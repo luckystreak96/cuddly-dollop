@@ -8,6 +8,12 @@ EventSound::EventSound(std::string soundFile) : m_soundFile(soundFile), m_firstT
 	m_mode = EventExecutionMode::ASYNC;
 }
 
+EventSound::~EventSound()
+{
+	SoundManager::GetInstance().Stop(m_source);
+	SoundManager::GetInstance().DeleteSource(m_source);
+}
+
 EventUpdateResponse EventSound::UpdateEvent(double elapsedTime, std::map<unsigned int, std::shared_ptr<Entity>>* ents)
 {
 	EventUpdateResponse eur = EventUpdateResponse();
@@ -18,6 +24,7 @@ EventUpdateResponse EventSound::UpdateEvent(double elapsedTime, std::map<unsigne
 		m_source = SoundManager::GetInstance().CreateSource();
 		SoundManager::GetInstance().CreateBuffer(m_soundFile);
 		SoundManager::GetInstance().Play(m_source, m_soundFile);
+		m_firstTime = false;
 	}
 
 	if (SoundManager::GetInstance().IsPlaying(m_source))
@@ -26,6 +33,7 @@ EventUpdateResponse EventSound::UpdateEvent(double elapsedTime, std::map<unsigne
 		return eur;
 	}
 
+	SoundManager::GetInstance().Stop(m_source);
 	SoundManager::GetInstance().DeleteSource(m_source);
 
 	m_completed = true;
@@ -35,4 +43,5 @@ EventUpdateResponse EventSound::UpdateEvent(double elapsedTime, std::map<unsigne
 void EventSound::ResetEvent()
 {
 	IEvent::ResetEvent();
+	m_firstTime = true;
 }

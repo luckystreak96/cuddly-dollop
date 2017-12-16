@@ -50,7 +50,7 @@ namespace dollop_editor
             cnvMap.RenderTransform = new TranslateTransform(0, 16);
 
             editor = new Editor();
-            Setup(32, 18);
+            Setup(32, 18, true);
 
             SetupTileSelecter();
             ReleaseMouse();
@@ -77,13 +77,14 @@ namespace dollop_editor
             cnvTilePicker.Children.Add(selectedPickerTile);
         }
 
-        private void Setup(int x, int y)
+        private void Setup(int x, int y, bool newMap = false)
         {
-            editor.Setup(x, y);
+            editor.Setup(x, y, newMap);
 
             cnvMap.Children.Clear();
             cnvMap.Width = editor.Width * editor.TileSize;
             cnvMap.Height = editor.Height * editor.TileSize;
+            ReSyncOnEditor();
             //editor.AddTile(2, 2, slrDepth.Value, "pumpkin.png");
             //foreach (var t in editor.Tiles)
             //    cnvMap.Children.Add(t.Value);
@@ -342,7 +343,7 @@ namespace dollop_editor
             NewMap newMap = new NewMap();
             newMap.ShowDialog();
             if (newMap.MapWidth != -1 && newMap.Height != -1)
-                Setup(newMap.MapWidth, newMap.MapHeight);
+                Setup(newMap.MapWidth, newMap.MapHeight, true);
             prevPath = "";
         }
 

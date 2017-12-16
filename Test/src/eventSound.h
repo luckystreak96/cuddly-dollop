@@ -8,7 +8,7 @@ class EventSound : public IEvent
 {
 public:
 	EventSound(std::string file);
-	~EventSound() {}
+	~EventSound();
 	EventUpdateResponse UpdateEvent(double elapsedTime, std::map<unsigned int, std::shared_ptr<Entity>>* ents);
 	void ResetEvent();
 

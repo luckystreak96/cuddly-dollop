@@ -18,7 +18,7 @@ namespace dollop_editor
         {
             ID = IdManager.QueueId.Assign();
             flag = 1;
-            repeating = true;
+            repeating = false;
             events = new List<Event>();// { new Event(1), new Event(2) };
         }
 

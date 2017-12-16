@@ -20,6 +20,7 @@ namespace dollop_editor
             { (int)EventType.weather, typeof(EventArgWeather) },
             { (int)EventType.particle, typeof(EventArgParticle) },
             { (int)EventType.play_sound, typeof(EventArgPlaySound) },
+            { (int)EventType.play_bgm, typeof(EventArgPlaySound) },
         };
         public static Dictionary<string, string> eventArgComplexExamples = new Dictionary<string, string>() {
             { EventType.dialogue.ToString(), @"--choice 1--{

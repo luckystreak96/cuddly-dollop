@@ -28,6 +28,8 @@ struct SourceInfo
 	ALboolean loop = AL_TRUE;
 };
 
+enum BGM_State { BGM_Stopping, BGM_Starting, BGM_Playing };
+
 class SoundManager
 {
 public:
@@ -48,7 +50,11 @@ public:
 	void SetLoop(unsigned int source, bool loop);
 	void CreateBuffer(std::string path = "res/audio/fx/swish_2.wav");
 	void Play(unsigned int source, std::string path);
+	void Stop(unsigned int source);
 	bool IsPlaying(unsigned int source);
+	unsigned int GetBGM();
+	void SetBGM(std::string buffer);
+	void Update();
 private:
 	SoundManager();
 	~SoundManager();
@@ -57,6 +63,12 @@ private:
 
 private:
 	std::map<std::string, WavBuffer> m_buffers;
+	float m_bgmMaxVolume;
+	ALuint m_bgmSource;
+	std::string m_nextBGM;
+	std::string m_currentBGM;
+	BGM_State m_bgmState;
+	float m_bgmVolume;
 	ALCcontext* m_context;
 	ALCdevice* m_device;
 };

@@ -235,7 +235,7 @@ SceneGenData SceneWorld::Update()
 	m_mapHandler->Update();
 
 	SetAudioPosition();
-	//SoundManager::GetInstance().SetListenerOrientation(((PlayerGraphicsComponent*)m_player->Graphics())->GetDirection());
+	SoundManager::GetInstance().Update();
 
 	if (m_player)
 		m_World->Follow(m_player->Physics()->Position(), m_mapHandler->GetMapSize());
@@ -307,9 +307,9 @@ void SceneWorld::RenderPass()
 
 void SceneWorld::SetAudioPosition()
 {
-	//if (m_player != NULL)
-	//	SoundManager::GetInstance().SetListenerPosition(m_player->Physics()->Position(), m_player->Physics()->Velocity());
-	//else
+	if (m_player != NULL)
+		SoundManager::GetInstance().SetListenerPosition(m_player->Physics()->Position(), m_player->Physics()->Velocity());
+	else
 		SoundManager::GetInstance().SetListenerPosition();
 }
 

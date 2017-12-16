@@ -18,10 +18,10 @@ namespace dollop_editor
             ethereal = false;
             sprite = "";
             ID = IdManager.EntityId.Assign();
-            player = true;
+            player = false;
             x = 0;
             y = 0;
-            z = 0;
+            z = 4.0f;
             queues = new List<EventQueue>();// { new EventQueue() };
         }
 

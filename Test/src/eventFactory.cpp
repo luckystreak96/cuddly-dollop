@@ -1,6 +1,7 @@
 #include "eventFactory.h"
 #include "map_handler.h"
 #include "eventParticle.h"
+#include "eventBGM.h"
 
 std::map<std::string, unsigned int> EventFactory::TypeDict =
 {
@@ -14,7 +15,8 @@ std::map<std::string, unsigned int> EventFactory::TypeDict =
 	{ "map_change", ET_MapChange },
 	{ "weather", ET_Weather },
 	{ "particle", ET_Particle },
-	{ "play_sound", ET_PlaySound }
+	{ "play_sound", ET_PlaySound },
+	{ "play_bgm", ET_PlayBGM }
 };
 
 std::map<std::string, unsigned int> EventFactory::EEMDict =
@@ -62,6 +64,10 @@ std::shared_ptr<IEvent> EventFactory::BuildEvent(EventTypes et, std::map<std::st
 	case EventTypes::ET_PlaySound:
 		result = std::shared_ptr<IEvent>(new EventSound(
 			args.count("sound_file") ? std::get<std::string>(args.at("sound_file")) : "res/audio/fx/swish_2.wav"));
+		break;
+	case EventTypes::ET_PlayBGM:
+		result = std::shared_ptr<IEvent>(new EventBGM(
+			args.count("sound_file") ? std::get<std::string>(args.at("sound_file")) : "res/audio/fx/washeslow.wav"));
 		break;
 	case EventTypes::ET_MoveRight:
 		result = std::shared_ptr<IEvent>(new EventMove(id,

@@ -39,11 +39,48 @@ namespace dollop_editor
             PopulateBrushes();
             ResetTiles();
         }
-        public void Setup(int width, int height)
+        public void Setup(int width, int height, bool newMap)
         {
             Width = width;
             Height = height;
             ResetTiles();
+            Entities.Clear();
+            if (newMap)
+            {
+                Entity entity = new Entity()
+                {
+                    sprite = "",
+                    y = height - 1,
+                    queues = new List<EventQueue>()
+                {
+                    new EventQueue()
+                    {
+                        activation = "autorun",
+                        events = new List<Event>()
+                        {
+                            new Event()
+                            {
+                                execution_type = "async", type = "play_bgm",
+                                args = new Dictionary<string, object>()
+                                {
+                                    { "sound_file", "res/audio/bgm/washeslow.wav" }
+                                }
+                            },
+                            new Event()
+                            {
+                                execution_type = "async", type = "weather",
+                                args = new Dictionary<string, object>()
+                                {
+                                    { "type", "snow" },
+                                    { "count", 60 }
+                                }
+                            }
+                        }
+                    }
+                }
+                };
+                Entities.Add(new Point3D(0, height - 1, 4.0), new Tuple<Entity, Rectangle>(entity, EntityRectangle(entity)));
+            }
         }
 
         public void ChangeTileSize(int size)

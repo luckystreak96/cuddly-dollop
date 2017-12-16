@@ -1,6 +1,8 @@
 #include "soundManager.h"
+#include "elapsedTime.h"
 
-SoundManager::SoundManager()
+
+SoundManager::SoundManager() : m_bgmSource(0), m_bgmState(BGM_Starting), m_bgmVolume(0), m_bgmMaxVolume(0.2f)
 {
 	// Initialize Open AL
 	m_device = alcOpenDevice(nullptr); // open default device
@@ -17,12 +19,12 @@ SoundManager::SoundManager()
 
 	//Setup listener
 	SetListenerPosition();
-	alListenerf(AL_GAIN, 0.9f);
+	alListenerf(AL_GAIN, 1.0f);
 	ALfloat listenerOri[] = { 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f };
 	alListenerfv(AL_ORIENTATION, listenerOri);
 
-
-	CreateBuffer();
+	m_bgmSource = CreateSource();
+	//CreateBuffer();
 
 	////Generate sources
 	//ALuint source;
@@ -31,7 +33,7 @@ SoundManager::SoundManager()
 	//alSourcef(source, AL_GAIN, 1);
 	//alSource3f(source, AL_POSITION, 0, 0, 0);
 	//alSource3f(source, AL_VELOCITY, 0, 0, 0);
-	//alSourcei(source, AL_LOOPING, AL_FALSE);
+	alSourcei(m_bgmSource, AL_LOOPING, AL_TRUE);
 
 	//CheckErrors();
 
@@ -91,6 +93,20 @@ SoundManager::~SoundManager()
 	CheckErrors();
 }
 
+void SoundManager::SetBGM(std::string sourceFile)
+{
+	if (sourceFile == m_currentBGM)
+		return;
+	if (sourceFile != "")
+	{
+		m_nextBGM = sourceFile;
+		CreateBuffer(sourceFile);
+	}
+
+	m_bgmState = BGM_Stopping;
+
+}
+
 void SoundManager::SetSource(unsigned int source, unsigned int buffer)
 {
 	alSourcei(source, AL_BUFFER, buffer);
@@ -107,6 +123,19 @@ void SoundManager::Play(unsigned int source, std::string path)
 
 	SetSource(source, m_buffers.at(path).buffer);
 	alSourcePlay(source);
+
+	CheckErrors();
+}
+
+void SoundManager::Stop(unsigned int source)
+{
+	if (source == 0)
+	{
+		std::cout << "Invalid source for Stop()." << std::endl;
+		return;
+	}
+
+	alSourceStop(source);
 
 	CheckErrors();
 }
@@ -172,15 +201,55 @@ void SoundManager::DeleteSource(unsigned int source)
 	alDeleteSources((ALsizei)1, &source);
 }
 
+void SoundManager::Update()
+{
+	if (m_bgmState == BGM_Starting)
+	{
+		if (m_bgmVolume < m_bgmMaxVolume)
+			m_bgmVolume += 0.6f * (float)ElapsedTime::GetInstance().GetElapsedTime();
+		else
+		{
+			m_bgmState = BGM_Playing;
+			m_bgmVolume = m_bgmMaxVolume;
+		}
+	}
+	else if (m_bgmState == BGM_Stopping)
+	{
+		if (m_bgmVolume > 0.0f)
+			m_bgmVolume -= 0.6f * (float)ElapsedTime::GetInstance().GetElapsedTime();
+		else
+		{
+			m_bgmVolume = 0;
+			alSourceStop(m_bgmSource);
+			if (m_nextBGM == "")
+				m_bgmState = BGM_Playing;
+			else
+			{
+				m_bgmState = BGM_Starting;
+				SetSource(m_bgmSource, m_buffers.at(m_nextBGM).buffer);
+				//ALint source_state;
+				//alGetSourcei(m_bgmSource, AL_SOURCE_STATE, &source_state);
+				//if (source_state == AL_STOPPED) {
+					alSourcePlay(m_bgmSource);
+				//}
+			}
+			m_currentBGM = m_nextBGM;
+			m_nextBGM = "";
+		}
+	}
+
+	alSourcef(m_bgmSource, AL_GAIN, m_bgmVolume);
+}
+
 unsigned int SoundManager::CreateSource()
 {
 	ALuint source;
 	alGenSources((ALuint)1, &source);
-	
+
 	CheckErrors();
 
 	alSourcef(source, AL_PITCH, 1);
-	alSourcef(source, AL_GAIN, 1);
+	alSourcef(source, AL_GAIN, 1.f);
 	alSource3f(source, AL_POSITION, 0, 0, 0);
 	alSource3f(source, AL_VELOCITY, 0, 0, 0);
 	alSourcei(source, AL_LOOPING, AL_FALSE);

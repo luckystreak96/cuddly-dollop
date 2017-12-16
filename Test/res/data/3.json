@@ -2350,7 +2350,7 @@
                         {
                             "type": "play_sound",
                             "execution_type": "async",
-                            "args": { "sound_file": "res/audio/fx/swish_2.wav" }
+                            "args": { "sound_file": "res/audio/fx/washeslow.wav" }
                         }
                     ]
                 }
