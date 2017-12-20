@@ -1,4 +1,5 @@
 #include "game.h"
+#include "gameData.h"
 
 Game::Game() : m_numFrames(0), m_exit(false)
 {
@@ -10,6 +11,7 @@ Game::~Game()
 
 bool Game::init(float width, float height)
 {
+	GameData::LoadFromFile();
 	SetupTextureAtlas();
 
 	Model::GetInstance().init("res/models/models.data");
@@ -71,7 +73,10 @@ void Game::run()
 void Game::renderSceneCB()
 {
 	if (m_exit)
+	{
+		GameData::SaveToFile();
 		glutLeaveMainLoop();
+	}
 
 	//FPS
 	ElapsedTime::GetInstance().CalculateElapsedTime();

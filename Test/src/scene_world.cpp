@@ -1,4 +1,5 @@
 #include "scene_world.h"
+#include "gameData.h"
 
 SceneGenData SceneWorld::NextScene = SceneGenData();
 
@@ -39,11 +40,14 @@ bool SceneWorld::Init()
 	// THIS IS NOT GOOD - THE PLAYER NEEDS TO BE FOUND, NOT JUST BE ID 1
 	// NVM THIS IS GOOD
 	if (m_celist.count(1))
+	{
 		m_player = m_celist.at(1);
+		m_player->Graphics()->SetTexture(GameData::PlayerSprite);
+	}
 
-	m_fontTitle = FontManager::GetInstance().AddFont(false, false);
-	m_fontFPS = FontManager::GetInstance().AddFont(true, false, true);
-	FontManager::GetInstance().SetScale(m_fontFPS, 0.5f, 0.5f);
+	//m_fontTitle = FontManager::GetInstance().AddFont(false, false);
+	//m_fontFPS = FontManager::GetInstance().AddFont(true, false, true);
+	//FontManager::GetInstance().SetScale(m_fontFPS, 0.5f, 0.5f);
 
 	// Autorun events
 	for (auto e : m_celist)
@@ -64,8 +68,8 @@ bool SceneWorld::Init()
 
 SceneWorld::~SceneWorld()
 {
-	FontManager::GetInstance().RemoveFont(m_fontFPS);
-	FontManager::GetInstance().RemoveFont(m_fontTitle);
+	//FontManager::GetInstance().RemoveFont(m_fontFPS);
+	//FontManager::GetInstance().RemoveFont(m_fontTitle);
 }
 
 
@@ -241,7 +245,7 @@ SceneGenData SceneWorld::Update()
 		m_World->Follow(m_player->Physics()->Position(), m_mapHandler->GetMapSize());
 
 	//Display FPS
-	FontManager::GetInstance().SetText(m_fontFPS, std::to_string(ElapsedTime::GetInstance().GetFPS()), Vector3f(0, OrthoProjInfo::GetRegularInstance().Top / 32.0f - 0.5f, 0));
+	//FontManager::GetInstance().SetText(m_fontFPS, std::to_string(ElapsedTime::GetInstance().GetFPS()), Vector3f(0, OrthoProjInfo::GetRegularInstance().Top / 32.0f - 0.5f, 0));
 
 	srand(clock());
 	FontManager::GetInstance().Update(ElapsedTime::GetInstance().GetElapsedTime());

@@ -2,7 +2,7 @@
 #include "elapsedTime.h"
 
 
-SoundManager::SoundManager() : m_bgmSource(0), m_bgmState(BGM_Starting), m_bgmVolume(0), m_bgmMaxVolume(0.2f)
+SoundManager::SoundManager() : m_bgmSource(0), m_bgmState(BGM_Starting), m_bgmVolume(0), m_bgmMaxVolume(0.4f)
 {
 	// Initialize Open AL
 	m_device = alcOpenDevice(nullptr); // open default device
@@ -227,11 +227,8 @@ void SoundManager::Update()
 			{
 				m_bgmState = BGM_Starting;
 				SetSource(m_bgmSource, m_buffers.at(m_nextBGM).buffer);
-				//ALint source_state;
-				//alGetSourcei(m_bgmSource, AL_SOURCE_STATE, &source_state);
-				//if (source_state == AL_STOPPED) {
-					alSourcePlay(m_bgmSource);
-				//}
+
+				alSourcePlay(m_bgmSource);
 			}
 			m_currentBGM = m_nextBGM;
 			m_nextBGM = "";

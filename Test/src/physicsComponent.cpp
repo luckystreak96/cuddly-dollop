@@ -86,6 +86,15 @@ void PhysicsComponent::ActionMove(bool up, bool down, bool left, bool right)
 	if (down)
 		m_velocity.y -= speed;
 
+	if (m_velocity.x > speed * 2)
+		m_velocity.x = speed * 2;
+	if (m_velocity.x < speed * -2)
+		m_velocity.x = speed * -2;
+	if (m_velocity.y > speed * 2)
+		m_velocity.y = speed * 2;
+	if (m_velocity.y < speed * -2)
+		m_velocity.y = speed * -2;
+
 	SetMovedBB();
 }
 

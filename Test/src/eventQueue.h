@@ -8,6 +8,7 @@
 class IEvent;
 
 enum ActivationType { AT_Autorun, AT_Interact, AT_Touch };
+enum FlagCondition { FC_Value, FC_NotValue, FC_GreaterThan, FC_LessThan };
 
 class EventQueue
 {
@@ -26,6 +27,12 @@ public:
 	ActivationType GetActivationType();
 	void SetActivationType(ActivationType at);
 	void ClearEvents();
+
+public:
+	std::string Flag;
+	int FlagValue;
+	FlagCondition Condition;
+
 private:
 	int m_id;
 	ActivationType m_activation;

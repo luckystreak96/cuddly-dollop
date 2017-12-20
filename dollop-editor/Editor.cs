@@ -290,10 +290,10 @@ namespace dollop_editor
                 foreach (Entity e in loadedMap.entities)
                 {
                     Rectangle rectangle = EntityRectangle(e);
-                    int z = GameToCanvasZ((float)Math.Floor(e.z));
+                    //int z = GameToCanvasZ((float)Math.Floor(e.z));
                     if (!(e.x >= Width || e.y >= Height))
                     {
-                        Point3D point3D = new Point3D(Math.Floor(e.x), (float)Math.Floor(e.y), e.z);
+                        Point3D point3D = new Point3D(Math.Round(e.x), Math.Round(e.y), e.z);
                         if (!entities.ContainsKey(point3D))
                             entities.Add(point3D, new Tuple<Entity, Rectangle>(e, rectangle));
                     }

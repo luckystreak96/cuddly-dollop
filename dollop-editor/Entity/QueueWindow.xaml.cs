@@ -29,8 +29,11 @@ namespace dollop_editor
             FillComboBox();
 
             txtID.Text = Queue.id.ToString();
-            txtFlag.Text = 1.ToString();
             txtName.Text = "queue";
+            cmbActivation.SelectedIndex = 2;
+            txtFlag.Text = "";
+            txtFlag_value.Text = 1.ToString();
+            cmbCondition.SelectedIndex = 0;
         }
 
         private void FillComboBox()
@@ -38,7 +41,11 @@ namespace dollop_editor
             foreach (var val in Enum.GetValues(typeof(EventActivation)))
                 cmbActivation.Items.Add(val.ToString());
 
+            foreach (var val in Enum.GetValues(typeof(FlagCondition)))
+                cmbCondition.Items.Add(val.ToString());
+
             cmbActivation.Items.Refresh();
+            cmbCondition.Items.Refresh();
         }
 
         public QueueWindow(EventQueue eventQueue)
@@ -51,8 +58,11 @@ namespace dollop_editor
                 if (Queue.activation == x.ToString())
                     cmbActivation.SelectedItem = x;
 
+            cmbCondition.SelectedIndex = Queue.flag_condition;
+
             txtID.Text = Queue.id.ToString();
-            txtFlag.Text = Queue.flag.ToString();
+            txtFlag.Text = Queue.flag;
+            txtFlag_value.Text = Queue.flag_value.ToString();
             txtName.Text = Queue.name;
             chkRepeat.IsChecked = Queue.repeating;
         }
@@ -74,7 +84,9 @@ namespace dollop_editor
             try
             {
                 Queue.id = int.Parse(txtID.Text);
-                Queue.flag = int.Parse(txtFlag.Text);
+                Queue.flag_value = int.Parse(txtFlag_value.Text);
+                Queue.flag_condition = cmbCondition.SelectedIndex;
+                Queue.flag = txtFlag.Text;
                 Queue.name = txtName.Text;
                 Queue.repeating = (bool)chkRepeat.IsChecked;
                 Queue.activation = cmbActivation.SelectedItem.ToString();

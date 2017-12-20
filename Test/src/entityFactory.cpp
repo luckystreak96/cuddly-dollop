@@ -16,6 +16,7 @@ std::shared_ptr<Entity> EntityFactory::BuildEntity(std::map<std::string, EntityA
 	std::shared_ptr<Entity> result = NULL;
 
 	bool isPlayer = args.count("player") ? std::get<bool>(args.at("player")) : false;
+	bool isFullSize = args.count("full_size") ? std::get<bool>(args.at("full_size")) : false;
 
 	std::string sprite = "res/sprites/entities/" + (args.count("sprite") ? std::get<std::string>(args.at("sprite")) : "ghost.png");
 
@@ -23,7 +24,7 @@ std::shared_ptr<Entity> EntityFactory::BuildEntity(std::map<std::string, EntityA
 	if (args.count("id"))
 	{
 		unsigned int id = std::get<unsigned int>(args.at("id"));
-		result = std::shared_ptr<Entity>(new Entity(id, sprite, isPlayer));
+		result = std::shared_ptr<Entity>(new Entity(id, sprite, isPlayer, isFullSize));
 	}
 	else
 		// Sketchy af

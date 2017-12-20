@@ -110,10 +110,17 @@ namespace dollop_editor
 
         private void AddArg()
         {
-            if (chkJsonObject.IsChecked == true)
-                Event.args.Add(txtKey.Text, JsonConvert.DeserializeObject(txtArg.Text));
-            else
-                Event.args.Add(txtKey.Text, TryBasicParse(txtArg.Text));
+            try
+            {
+                if (chkJsonObject.IsChecked == true)
+                    Event.args.Add(txtKey.Text, JsonConvert.DeserializeObject(txtArg.Text));
+                else
+                    Event.args.Add(txtKey.Text, TryBasicParse(txtArg.Text));
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
         }
 
         private void btnAddArg_Click(object sender, RoutedEventArgs e)

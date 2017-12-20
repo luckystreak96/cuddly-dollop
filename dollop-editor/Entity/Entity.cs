@@ -16,6 +16,7 @@ namespace dollop_editor
         public Entity()
         {
             ethereal = false;
+            full_size = false;
             sprite = "";
             ID = IdManager.EntityId.Assign();
             player = false;
@@ -28,6 +29,7 @@ namespace dollop_editor
         public Entity(Entity entity)
         {
             ethereal = entity.ethereal;
+            full_size = entity.full_size;
             sprite = entity.sprite;
             ID = IdManager.EntityId.Assign();
             player = entity.player;
@@ -46,6 +48,7 @@ namespace dollop_editor
         private int ID;
         public bool player { get; set; }
         public bool ethereal { get; set; }
+        public bool full_size { get; set; }
         public string sprite { get; set; }
         public float x { get; set; }
         public float y { get; set; }

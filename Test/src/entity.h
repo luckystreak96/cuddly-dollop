@@ -17,7 +17,7 @@
 class Entity
 {
 public:
-	Entity(unsigned int id, std::string spritesheet, bool playerInput = false);
+	Entity(unsigned int id, std::string spritesheet, bool playerInput = false, bool fullSize = false);
 	~Entity();
 	void SetRender();
 	void Update();
@@ -33,6 +33,7 @@ public:
 private:
 	unsigned int m_id;
 	bool m_hasEvents;
+	bool m_fullSize;
 	std::vector<std::shared_ptr<EventQueue>> m_events;
 	std::shared_ptr<PhysicsComponent> m_physicsComponent;
 	std::shared_ptr<GraphicsComponent> m_graphicsComponent;

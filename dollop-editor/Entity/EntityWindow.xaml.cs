@@ -62,6 +62,7 @@ namespace dollop_editor
                 Entity = new Entity(dictionary[p].Item1);
                 Entity.SneakyId(dictionary[p].Item1.id);
                 chkEthereal.IsChecked = dictionary[p].Item1.ethereal;
+                chkFullSize.IsChecked = dictionary[p].Item1.full_size;
                 txtX.Text = dictionary[p].Item1.x.ToString();
                 txtY.Text = dictionary[p].Item1.y.ToString();
                 txtZ.Text = dictionary[p].Item1.z.ToString();
@@ -89,13 +90,14 @@ namespace dollop_editor
             int id = -1;
             float x, y, z = -1;
             bool player = false;
-            bool ethereal = false;
+            bool ethereal, full_size = false;
             int.TryParse(txtID.Text, out id);
             float.TryParse(txtX.Text, out x);
             float.TryParse(txtY.Text, out y);
             float.TryParse(txtZ.Text, out z);
             player = chkPlayer.IsChecked == true;
             ethereal = chkEthereal.IsChecked == true;
+            full_size = chkFullSize.IsChecked == true;
 
             if (x == -1 || y == -1 || z == -1)
             {
@@ -115,6 +117,7 @@ namespace dollop_editor
             Entity.z = z;
             Entity.player = player;
             Entity.ethereal = ethereal;
+            Entity.full_size = full_size;
             Entity.sprite = txtSprite.Text;
 
             Point3D p = new Point3D(location.X, location.Y, location.Z);
@@ -207,7 +210,7 @@ namespace dollop_editor
         {
             if (lstEvent.SelectedIndex >= 0 && lstEvent.SelectedIndex < lstEvent.Items.Count)
             {
-                Entity.queues[lstEvent.SelectedIndex].events.RemoveAt(lstEvent.SelectedIndex);
+                Entity.queues[lstQueue.SelectedIndex].events.RemoveAt(lstEvent.SelectedIndex);
                 lstEvent.Items.Refresh();
             }
         }

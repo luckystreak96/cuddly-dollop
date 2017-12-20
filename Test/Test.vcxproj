@@ -192,6 +192,7 @@
     <ClInclude Include="src\eventQueue.h" />
     <ClInclude Include="src\eventMove.h" />
     <ClInclude Include="src\eventManager.h" />
+    <ClInclude Include="src\eventSetFlag.h" />
     <ClInclude Include="src\eventSound.h" />
     <ClInclude Include="src\eventTeleport.h" />
     <ClInclude Include="src\eventWeather.h" />
@@ -202,6 +203,7 @@
     <ClInclude Include="src\fontGraphicsComponent.h" />
     <ClInclude Include="src\fontManager.h" />
     <ClInclude Include="src\game.h" />
+    <ClInclude Include="src\gameData.h" />
     <ClInclude Include="src\glutBackend.h" />
     <ClInclude Include="src\graphicsComponent.h" />
     <ClInclude Include="src\heightEffect.h" />
@@ -272,6 +274,7 @@
     <ClCompile Include="src\eventQueue.cpp" />
     <ClCompile Include="src\eventMove.cpp" />
     <ClCompile Include="src\eventManager.cpp" />
+    <ClCompile Include="src\eventSetFlag.cpp" />
     <ClCompile Include="src\eventSound.cpp" />
     <ClCompile Include="src\eventTeleport.cpp" />
     <ClCompile Include="src\eventWeather.cpp" />
@@ -282,6 +285,7 @@
     <ClCompile Include="src\fontGraphicsComponent.cpp" />
     <ClCompile Include="src\fontManager.cpp" />
     <ClCompile Include="src\game.cpp" />
+    <ClCompile Include="src\gameData.cpp" />
     <ClCompile Include="src\glutBackend.cpp" />
     <ClCompile Include="src\graphicsComponent.cpp" />
     <ClCompile Include="src\heightEffect.cpp" />

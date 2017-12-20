@@ -1,4 +1,5 @@
 #include "eventManager.h"
+#include "gameData.h"
 
 std::vector<std::shared_ptr<IEvent>> EventManager::m_locks = std::vector<std::shared_ptr<IEvent>>();
 
@@ -33,75 +34,82 @@ void EventManager::Update(double elapsedTime)
 		// Keep track of i to use it after the loop
 		int i = 0;
 
-		// Iterate through the queue until a blocking event is hit
-		for (i; i < q->Count(); i++)
+		if (GameData::RespectsCondition(q))
 		{
-			// If the event is completed, dont bother looking at it
-			if (!q->Get(i)->IsCompleted())
+
+			// Iterate through the queue until a blocking event is hit
+			for (i; i < q->Count(); i++)
 			{
-				// Add to lock vector if the level is > 0
-				AddToLockVector(q->Get(i));
-
-				// The eventexecutionmode determines the end of the loop -> when its blocking
-				EventExecutionMode eem = q->Get(i)->GetExecutionMode();
-
-				// Is the event done?
-				EventUpdateResponse eur = q->Get(i)->UpdateEvent(elapsedTime, m_entities);
-				if (!eur.IsDone)
-					allDone = false;
-				else
-					RemoveLock(q->Get(i));
-
-				if (eur.Queue && eur.Queue->Count() > 0)
+				// If the event is completed, dont bother looking at it
+				if (!q->Get(i)->IsCompleted())
 				{
-					temp = eur.Queue;
-				}
+					// Add to lock vector if the level is > 0
+					AddToLockVector(q->Get(i));
 
-				// Loop breaks to handle stuff
-				if (eem == EventExecutionMode::BLOCKING && allDone == false)
-				{
-					// Update is done
-					break;
-				}
-			}
-		}
-		// The order is i++, then check the condition, so it needs to be decremented
-		if (i >= q->Count())
-			i--;
+					// The eventexecutionmode determines the end of the loop -> when its blocking
+					EventExecutionMode eem = q->Get(i)->GetExecutionMode();
 
-		// If they are all done, remove the specific events
-		// Re-call this function to start the next ones
-		if (allDone)
-		{
-			// If repeat is on, send it to the back of the queue
-			if (q->IsRepeating())
-			{
-				for (int i = 0; i < q->Count(); i++)
-				{
-					if (q->Get(0)->GetExecutionMode() == BLOCKING)
+					// Is the event done?
+					EventUpdateResponse eur = q->Get(i)->UpdateEvent(elapsedTime, m_entities);
+					if (!eur.IsDone)
+						allDone = false;
+					else
+						RemoveLock(q->Get(i));
+
+					if (eur.Queue && eur.Queue->Count() > 0)
 					{
-						q->Get(0)->ResetEvent();
-						q->SendToBack();
+						temp = eur.Queue;
+					}
+
+					// Loop breaks to handle stuff
+					if (eem == EventExecutionMode::BLOCKING && allDone == false)
+					{
+						// Update is done
 						break;
 					}
-					q->Get(0)->ResetEvent();
-					q->SendToBack();
 				}
 			}
-			else
+
+			// The order is i++, then check the condition, so it needs to be decremented
+			if (i >= q->Count())
+				i--;
+
+			// If they are all done, remove the specific events
+			// Re-call this function to start the next ones
+			if (allDone)
 			{
-				// Remove the events from the queue
-				Erase(k);
+				// If repeat is on, send it to the back of the queue
+				if (q->IsRepeating())
+				{
+					for (int i = 0; i < q->Count(); i++)
+					{
+						if (q->Get(0)->GetExecutionMode() == BLOCKING)
+						{
+							q->Get(0)->ResetEvent();
+							q->SendToBack();
+							break;
+						}
+						q->Get(0)->ResetEvent();
+						q->SendToBack();
+					}
+				}
+				else
+				{
+					// Remove the events from the queue
+					Erase(k);
+				}
+
+				// If the queue is not done, continue updates
+				if (q && !q->IsRepeating() && q->IsDone())
+					Update(elapsedTime);
 			}
 
-			// If the queue is not done, continue updates
-			if (q && !q->IsRepeating() && q->IsDone())
+			// Add the returned queue
+			if (temp->GetID() != -69)
+			{
+				PushBack(temp);
 				Update(elapsedTime);
-		}
-		if (temp->GetID() != -69)
-		{
-			PushBack(temp);
-			Update(elapsedTime);
+			}
 		}
 	}
 }
@@ -116,9 +124,12 @@ void EventManager::PushBack(std::shared_ptr<EventQueue> ev)
 
 	if (!found || ev->GetID() == -1)
 	{
-		for (int i = 0; i < ev->Count(); i++)
-			ev->Get(i)->ResetEvent();
-		m_queues.push_back(ev);
+		if (ev->Flag == "" || GameData::RespectsCondition(ev) || ev->GetActivationType() == AT_Autorun)
+		{
+			for (int i = 0; i < ev->Count(); i++)
+				ev->Get(i)->ResetEvent();
+			m_queues.push_back(ev);
+		}
 	}
 }
 

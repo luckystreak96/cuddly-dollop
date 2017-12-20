@@ -2,6 +2,7 @@
 #include "map_handler.h"
 #include "eventParticle.h"
 #include "eventBGM.h"
+#include "eventSetFlag.h"
 
 std::map<std::string, unsigned int> EventFactory::TypeDict =
 {
@@ -16,7 +17,8 @@ std::map<std::string, unsigned int> EventFactory::TypeDict =
 	{ "weather", ET_Weather },
 	{ "particle", ET_Particle },
 	{ "play_sound", ET_PlaySound },
-	{ "play_bgm", ET_PlayBGM }
+	{ "play_bgm", ET_PlayBGM },
+	{ "set_flag", ET_SetFlag },
 };
 
 std::map<std::string, unsigned int> EventFactory::EEMDict =
@@ -60,6 +62,11 @@ std::shared_ptr<IEvent> EventFactory::BuildEvent(EventTypes et, std::map<std::st
 			args.count("x") ? GetFloat(args.at("x")) : 0.0f,
 			args.count("y") ? GetFloat(args.at("y")) : 0.0f,
 			args.count("z") ? GetFloat(args.at("z")) : 0.0f));
+		break;
+	case EventTypes::ET_SetFlag:
+		result = std::shared_ptr<IEvent>(new EventSetFlag(
+			args.count("name") ? std::get<std::string>(args.at("name")) : "",
+			args.count("value") ? std::get<int>(args.at("value")) : 1));
 		break;
 	case EventTypes::ET_PlaySound:
 		result = std::shared_ptr<IEvent>(new EventSound(
@@ -193,60 +200,80 @@ std::vector<std::shared_ptr<EventQueue>> EventFactory::LoadEvent(int map_id, uns
 	auto& ques = jh->LoadQueues(map_id, entity_id).GetArray();
 	for (auto& x : ques)
 	{
-		//Make sure that the event is flagged as valid
-		if (!x.HasMember("flag") || x["flag"].GetInt() == 1)
+		// Get flag name
+		std::string flag = "";
+		if (x.HasMember("flag") && x["flag"].IsString())
+			flag = x["flag"].GetString();
+
+		// Get flag expected value
+		int flag_value = 1;
+		if (x.HasMember("flag_value") && x["flag_value"].IsInt())
+			flag_value = x["flag_value"].GetInt();
+
+		// Get flag condition
+		FlagCondition flag_condition = FC_Value;
+		if (x.HasMember("flag_condition") && x["flag_condition"].IsInt())
+			flag_condition = (FlagCondition)x["flag_condition"].GetInt();
+
+		// Get queue id
+		int id = -1;
+		if (x.HasMember("id"))
+			id = x["id"].GetInt();
+
+		// Create queue object
+		std::shared_ptr<EventQueue> queue = std::shared_ptr<EventQueue>(new EventQueue(id));
+
+		// Set attributes
+		queue->Flag = flag;
+		queue->FlagValue = flag_value;
+		queue->Condition = flag_condition;
+
+		// Set repeating if necessary
+		if (x.HasMember("repeating") && x["repeating"].GetBool() == true)
+			queue->SetRepeating(true);
+
+		// Find activation type
+		if (x.HasMember("activation") && x["activation"].GetType() == rapidjson::Type::kStringType)
+			SetActivationType(queue, std::string(x["activation"].GetString()));
+
+		// Add your events to the event queue
+		const auto& evts = x["events"].GetArray();
+		for (auto& e : evts)
 		{
-			int id = -1;
-			if (x.HasMember("id"))
-				id = x["id"].GetInt();
-			std::shared_ptr<EventQueue> queue = std::shared_ptr<EventQueue>(new EventQueue(id));
-
-			// Set repeating if necessary
-			if (x.HasMember("repeating") && x["repeating"].GetBool() == true)
-				queue->SetRepeating(true);
-
-			// Find activation type
-			if (x.HasMember("activation") && x["activation"].GetType() == rapidjson::Type::kStringType)
-				SetActivationType(queue, std::string(x["activation"].GetString()));
-
-			// Add your events to the event queue
-			const auto& evts = x["events"].GetArray();
-			for (auto& e : evts)
+			// Make sure the event exists
+			if (TypeDict.find(e["type"].GetString()) != TypeDict.end())
 			{
-				// Make sure the event exists
-				if (TypeDict.find(e["type"].GetString()) != TypeDict.end())
-				{
-					std::map<std::string, EventArgType> args = std::map<std::string, EventArgType>();
+				std::map<std::string, EventArgType> args = std::map<std::string, EventArgType>();
 
-					// If there are args
-					if (e.HasMember("args"))
-						for (rapidjson::Value::MemberIterator iter = e["args"].MemberBegin(); iter != e["args"].MemberEnd(); ++iter)
-						{
-							EventArgType eat = AddArg(iter, false, map);
-							args.emplace(std::string(iter->name.GetString()), eat);
-						}
-
-					// If the event has a queue in it
-					if (e.HasMember("queues"))
+				// If there are args
+				if (e.HasMember("args"))
+					for (rapidjson::Value::MemberIterator iter = e["args"].MemberBegin(); iter != e["args"].MemberEnd(); ++iter)
 					{
-						EventArgType eat;
-						rapidjson::Value val = e["queues"].GetArray();
-						args.emplace("queue", LoadEvent(val, map));
+						EventArgType eat = AddArg(iter, false, map);
+						args.emplace(std::string(iter->name.GetString()), eat);
 					}
 
-					std::shared_ptr<IEvent> ev = EventFactory::BuildEvent((EventTypes)TypeDict.at(e["type"].GetString()), args, map, entity_id);
-
-					// Set execution mode if necessary
-					if (e.HasMember("execution_type") && EEMDict.find(e["execution_type"].GetString()) != EEMDict.end())
-						ev->SetExecutionMode((EventExecutionMode)EEMDict.at(e["execution_type"].GetString()));
-
-
-					queue->PushBack(ev);
+				// If the event has a queue in it
+				if (e.HasMember("queues"))
+				{
+					EventArgType eat;
+					rapidjson::Value val = e["queues"].GetArray();
+					args.emplace("queue", LoadEvent(val, map));
 				}
+
+				std::shared_ptr<IEvent> ev = EventFactory::BuildEvent((EventTypes)TypeDict.at(e["type"].GetString()), args, map, entity_id);
+
+				// Set execution mode if necessary
+				if (e.HasMember("execution_type") && EEMDict.find(e["execution_type"].GetString()) != EEMDict.end())
+					ev->SetExecutionMode((EventExecutionMode)EEMDict.at(e["execution_type"].GetString()));
+
+
+				queue->PushBack(ev);
 			}
-			if (queue->Count() > 0)
-				result.push_back(queue);
 		}
+		if (queue->Count() > 0)
+			result.push_back(queue);
+		//}
 	}
 	return result;
 }
@@ -434,7 +461,7 @@ std::vector<std::shared_ptr<EventQueue>> EventFactory::LoadEvent(rapidjson::Valu
 								eat = iter->value.GetInt();
 							break;
 						case rapidjson::Type::kStringType:
-							eat = iter->value.GetString();
+							eat = std::string(iter->value.GetString());
 							break;
 						case rapidjson::Type::kTrueType:
 							eat = iter->value.GetBool();
@@ -443,6 +470,9 @@ std::vector<std::shared_ptr<EventQueue>> EventFactory::LoadEvent(rapidjson::Valu
 							eat = iter->value.GetBool();
 							break;
 						}
+
+						if (iter->name.GetString() == "name")
+							int lol = 69;
 
 						args.emplace(std::string(iter->name.GetString()), eat);
 					}

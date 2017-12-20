@@ -33,6 +33,8 @@
         <Button Name="btnMoveDown" Content="↓" HorizontalAlignment="Left" Margin="611,202,0,0" VerticalAlignment="Top" Width="20" Click="btnMoveDown_Click"/>
         <CheckBox Name="chkEthereal" Content="" HorizontalAlignment="Left" Margin="281,16,0,0" VerticalAlignment="Top"/>
         <Label Content="Ethereal" HorizontalAlignment="Left" Margin="223,11,0,0" VerticalAlignment="Top"/>
+        <Label Content="Full Size" HorizontalAlignment="Left" Margin="223,41,0,0" VerticalAlignment="Top"/>
+        <CheckBox x:Name="chkFullSize" Content="" HorizontalAlignment="Left" Margin="281,47,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>
