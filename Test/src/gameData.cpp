@@ -2,7 +2,7 @@
 
 using namespace rapidjson;
 
-std::string GameData::PlayerSprite = "res/sprites/entities/ghost_blue.png";
+std::string GameData::PlayerSprite = "res/sprites/entities/entity_ghost_blue.png";
 std::map<std::string, int> GameData::Flags = std::map<std::string, int>();
 
 rapidjson::Document GameData::m_document;
@@ -22,30 +22,30 @@ bool GameData::RespectsCondition(std::shared_ptr<EventQueue> ev)
 	if (ev->Flag == "")
 		return true;
 
-	if (Flags.count(ev->Flag))
+	if (!Flags.count(ev->Flag))
+		Flags.emplace(ev->Flag, 0);
+
+	switch (ev->Condition)
 	{
-		switch (ev->Condition)
-		{
-		case FlagCondition::FC_Value:
-			if (Flags.at(ev->Flag) == ev->FlagValue)
-				return true;
-			break;
-		case FlagCondition::FC_NotValue:
-			if (Flags.at(ev->Flag) != ev->FlagValue)
-				return true;
-			break;
-		case FlagCondition::FC_GreaterThan:
-			if (Flags.at(ev->Flag) > ev->FlagValue)
-				return true;
-			break;
-		case FlagCondition::FC_LessThan:
-			if (Flags.at(ev->Flag) < ev->FlagValue)
-				return true;
-			break;
-		default:
-			return false;
-			break;
-		}
+	case FlagCondition::FC_Value:
+		if (Flags.at(ev->Flag) == ev->FlagValue)
+			return true;
+		break;
+	case FlagCondition::FC_NotValue:
+		if (Flags.at(ev->Flag) != ev->FlagValue)
+			return true;
+		break;
+	case FlagCondition::FC_GreaterThan:
+		if (Flags.at(ev->Flag) > ev->FlagValue)
+			return true;
+		break;
+	case FlagCondition::FC_LessThan:
+		if (Flags.at(ev->Flag) < ev->FlagValue)
+			return true;
+		break;
+	default:
+		return false;
+		break;
 	}
 
 	return false;

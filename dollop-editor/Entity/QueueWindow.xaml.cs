@@ -30,10 +30,12 @@ namespace dollop_editor
 
             txtID.Text = Queue.id.ToString();
             txtName.Text = "queue";
-            cmbActivation.SelectedIndex = 2;
+            cmbActivation.SelectedIndex = 0;
             txtFlag.Text = "";
             txtFlag_value.Text = 1.ToString();
             cmbCondition.SelectedIndex = 0;
+            txtFlag_value.IsEnabled = false;
+            cmbCondition.IsEnabled = false;
         }
 
         private void FillComboBox()
@@ -108,6 +110,20 @@ namespace dollop_editor
         {
             if (e.Key == Key.Enter)
                 Save();
+        }
+
+        private void txtFlag_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if(txtFlag.Text == "")
+            {
+                txtFlag_value.IsEnabled = false;
+                cmbCondition.IsEnabled = false;
+            }
+            else
+            {
+                txtFlag_value.IsEnabled = true;
+                cmbCondition.IsEnabled = true;
+            }
         }
     }
 }

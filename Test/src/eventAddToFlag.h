@@ -1,20 +1,20 @@
-#ifndef EVENT_SET_FLAG_H__
-#define EVENT_SET_FLAG_H__
+#ifndef EVENT_ADD_TO_FLAG_H__
+#define EVENT_ADD_TO_FLAG_H__
 
 #include "iEvent.h"
 #include "entity.h"
 
-class EventSetFlag : public IEvent
+class EventAddToFlag : public IEvent
 {
 public:
-	EventSetFlag(std::string name, int value);
-	~EventSetFlag() {}
+	EventAddToFlag(std::string name, int value);
+	~EventAddToFlag() {}
 	EventUpdateResponse UpdateEvent(double elapsedTime, std::map<unsigned int, std::shared_ptr<Entity>>* ents);
 	void ResetEvent();
 
 private:
 	std::string m_flag;
-	int m_flagValue;
+	int m_value;
 };
 
 #endif // !EVENT_SET_FLAG_H__

@@ -39,6 +39,8 @@ namespace dollop_editor
 
         public void ManualAssign(int id)
         {
+            if (id == -1)
+                return;
             if (!Values.Contains(id))
                 Values.Add(id);
         }

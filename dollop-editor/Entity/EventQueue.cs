@@ -6,15 +6,11 @@ using System.Threading.Tasks;
 
 namespace dollop_editor
 {
-    public enum EventActivation { interact, touch, autorun}
+    public enum EventActivation { interact, touch, autorun }
     public enum FlagCondition { Value, NotValue, LessThan, GreaterThan }
 
     public class EventQueue
     {
-        ~EventQueue()
-        {
-            IdManager.QueueId.UnAssign(ID);
-        }
         public EventQueue()
         {
             ID = IdManager.QueueId.Assign();
@@ -22,7 +18,7 @@ namespace dollop_editor
             flag_condition = 0;
             flag_value = 1;
             repeating = false;
-            events = new List<Event>();// { new Event(1), new Event(2) };
+            events = new List<Event>();
         }
 
         public EventQueue(EventQueue queue)

@@ -18,7 +18,6 @@
         <TextBox Name="txtZ" HorizontalAlignment="Left" Height="23" Margin="87,137,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="120"/>
         <CheckBox Name="chkPlayer" Content="" HorizontalAlignment="Left" Margin="87,47,0,0" VerticalAlignment="Top"/>
         <Label Content="Sprite" HorizontalAlignment="Left" Margin="10,165,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtSprite" HorizontalAlignment="Left" Height="23" Margin="87,169,0,0" TextWrapping="Wrap" Text="ghost.png" VerticalAlignment="Top" Width="120"/>
         <Button Name="btnSave" Content="Save" HorizontalAlignment="Left" Margin="10,438,0,0" VerticalAlignment="Top" Width="75" Click="btnSave_Click"/>
         <Button Name="btnCancel" Content="Cancel" HorizontalAlignment="Left" Margin="632,438,0,0" VerticalAlignment="Top" Width="75" Click="btnCancel_Click"/>
         <ListBox Name="lstQueue" HorizontalAlignment="Left" Height="151" Margin="527,41,0,0" VerticalAlignment="Top" Width="180" Background="#FFE8F6FF" SelectionChanged="lstQueue_SelectionChanged" PreviewMouseDown="lstQueue_PreviewMouseDown"/>
@@ -35,6 +34,7 @@
         <Label Content="Ethereal" HorizontalAlignment="Left" Margin="223,11,0,0" VerticalAlignment="Top"/>
         <Label Content="Full Size" HorizontalAlignment="Left" Margin="223,41,0,0" VerticalAlignment="Top"/>
         <CheckBox x:Name="chkFullSize" Content="" HorizontalAlignment="Left" Margin="281,47,0,0" VerticalAlignment="Top"/>
+        <ComboBox Name="cmbSprites" HorizontalAlignment="Left" Margin="87,170,0,0" VerticalAlignment="Top" Width="120" IsEditable="True"/>
 
     </Grid>
 </Window>

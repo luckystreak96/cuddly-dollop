@@ -1,1 +1,1 @@
-{"flags":[{"01_noMove":0},{"test1":1}],"sprite":"res/sprites/entities/ghost_blue.png"}
+{"flags":[{"01_incrementTest":6},{"01_noMove":0}],"sprite":"res/sprites/entities/entity_ghost_blue.png"}

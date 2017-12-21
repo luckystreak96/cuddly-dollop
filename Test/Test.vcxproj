@@ -184,6 +184,7 @@
     <ClInclude Include="src\elapsedTime.h" />
     <ClInclude Include="src\entity.h" />
     <ClInclude Include="src\entityFactory.h" />
+    <ClInclude Include="src\eventAddToFlag.h" />
     <ClInclude Include="src\eventBGM.h" />
     <ClInclude Include="src\eventCaller.h" />
     <ClInclude Include="src\eventFactory.h" />
@@ -194,7 +195,9 @@
     <ClInclude Include="src\eventManager.h" />
     <ClInclude Include="src\eventSetFlag.h" />
     <ClInclude Include="src\eventSound.h" />
+    <ClInclude Include="src\eventSpriteChange.h" />
     <ClInclude Include="src\eventTeleport.h" />
+    <ClInclude Include="src\eventToggleFlag.h" />
     <ClInclude Include="src\eventWeather.h" />
     <ClInclude Include="src\fade.h" />
     <ClInclude Include="src\fadeEffect.h" />
@@ -266,6 +269,7 @@
     <ClCompile Include="src\elapsedTime.cpp" />
     <ClCompile Include="src\entity.cpp" />
     <ClCompile Include="src\entityFactory.cpp" />
+    <ClCompile Include="src\eventAddToFlag.cpp" />
     <ClCompile Include="src\eventBGM.cpp" />
     <ClCompile Include="src\eventCaller.cpp" />
     <ClCompile Include="src\eventFactory.cpp" />
@@ -276,7 +280,9 @@
     <ClCompile Include="src\eventManager.cpp" />
     <ClCompile Include="src\eventSetFlag.cpp" />
     <ClCompile Include="src\eventSound.cpp" />
+    <ClCompile Include="src\eventSpriteChange.cpp" />
     <ClCompile Include="src\eventTeleport.cpp" />
+    <ClCompile Include="src\eventToggleFlag.cpp" />
     <ClCompile Include="src\eventWeather.cpp" />
     <ClCompile Include="src\fade.cpp" />
     <ClCompile Include="src\fadeEffect.cpp" />

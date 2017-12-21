@@ -75,6 +75,10 @@ namespace dollop_editor
             selectedMapTile.SetCurrentValue(Canvas.ZIndexProperty, 20);
             selectedMapTile.RenderTransform = new TranslateTransform(0, 0);
             cnvTilePicker.Children.Add(selectedPickerTile);
+
+            if (File.Exists("..\\..\\..\\Test\\res\\data\\1.json"))
+                LoadMap("..\\..\\..\\Test\\res\\data\\1.json");
+            //ReSyncOnEditor();
         }
 
         private void Setup(int x, int y, bool newMap = false)
@@ -92,14 +96,20 @@ namespace dollop_editor
 
         private void UpdateSelectedMapTile()
         {
+            selectedMapTile.SetCurrentValue(Canvas.ZIndexProperty, 20);
             selectedMapTile.RenderTransform = new TranslateTransform(clickprevx * editor.TileSize, clickprevy * editor.TileSize);
+            if (!opaqueView)
+                selectedMapTile.Stroke.Opacity = 1;
             if (!cnvMap.Children.Contains(selectedMapTile))
                 cnvMap.Children.Add(selectedMapTile);
         }
 
         private void UpdateSelectedMapTile(int x, int y)
         {
+            selectedMapTile.SetCurrentValue(Canvas.ZIndexProperty, 20);
             selectedMapTile.RenderTransform = new TranslateTransform((x / editor.TileSize) * editor.TileSize, (y / editor.TileSize) * editor.TileSize);
+            if (!opaqueView)
+                selectedMapTile.Stroke.Opacity = 1;
             if (!cnvMap.Children.Contains(selectedMapTile))
                 cnvMap.Children.Add(selectedMapTile);
         }
@@ -184,6 +194,13 @@ namespace dollop_editor
                     Fill = x.Value,
                     RenderTransform = new TranslateTransform(offx, offy)
                 };
+
+                if (x.Key.Contains("entity"))
+                {
+                    r.StrokeThickness = 2;
+                    r.Stroke = new SolidColorBrush(Colors.OrangeRed);
+                }
+
                 cnvTilePicker.Children.Add(r);
                 offx += editor.TileSize;
                 if (offx >= width)
@@ -379,14 +396,27 @@ namespace dollop_editor
             if (result == true)
             {
                 // Open document 
-                string filename = fileDialog.FileName;
-                prevPath = filename;
-                editor.Load(filename);
-                ReleaseMouse();
-                cnvMap.Height = editor.Height * editor.TileSize;
-                cnvMap.Width = editor.Width * editor.TileSize;
-                ReSyncOnEditor();
+                LoadMap(fileDialog.FileName);
+                //string filename = fileDialog.FileName;
+                //prevPath = filename;
+                //editor.Load(filename);
+                //ReleaseMouse();
+                //cnvMap.Height = editor.Height * editor.TileSize;
+                //cnvMap.Width = editor.Width * editor.TileSize;
+                //ReSyncOnEditor();
             }
+
+            //Editor.ChangeOpacity(cnvMap.Children, slrDepth.Value, opaqueView, cnvState);
+        }
+
+        private void LoadMap(string path)
+        {
+            prevPath = path;
+            editor.Load(path);
+            ReleaseMouse();
+            cnvMap.Height = editor.Height * editor.TileSize;
+            cnvMap.Width = editor.Width * editor.TileSize;
+            ReSyncOnEditor();
 
             Editor.ChangeOpacity(cnvMap.Children, slrDepth.Value, opaqueView, cnvState);
         }

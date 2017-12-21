@@ -11,7 +11,7 @@
         <Label Content="ID" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
         <TextBox Name="txtName" HorizontalAlignment="Left" Height="23" Margin="130,45,0,0" TextWrapping="Wrap" Text="queue" VerticalAlignment="Top" Width="120"/>
         <Label Content="Name" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top"/>
-        <TextBox Name="txtFlag" HorizontalAlignment="Left" Height="22" Margin="130,138,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120"/>
+        <TextBox Name="txtFlag" HorizontalAlignment="Left" Height="22" Margin="130,138,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" TextChanged="txtFlag_TextChanged"/>
         <Label Content="Flag" HorizontalAlignment="Left" Margin="10,134,0,0" VerticalAlignment="Top"/>
         <Label Content="Repeating" HorizontalAlignment="Left" Margin="10,103,0,0" VerticalAlignment="Top"/>
         <CheckBox Name="chkRepeat" Content="" HorizontalAlignment="Left" Margin="130,110,0,0" VerticalAlignment="Top"/>

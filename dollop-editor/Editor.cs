@@ -289,6 +289,12 @@ namespace dollop_editor
                 // Setup the entities in the dictionary
                 foreach (Entity e in loadedMap.entities)
                 {
+                    IdManager.EntityId.ManualAssign(e.id);
+                    foreach(EventQueue eq in e.queues)
+                    {
+                        IdManager.QueueId.ManualAssign(eq.id);
+                    }
+
                     Rectangle rectangle = EntityRectangle(e);
                     //int z = GameToCanvasZ((float)Math.Floor(e.z));
                     if (!(e.x >= Width || e.y >= Height))
@@ -299,7 +305,6 @@ namespace dollop_editor
                     }
                 }
 
-                Entities.Clear();
                 Entities = entities;
 
                 return true;

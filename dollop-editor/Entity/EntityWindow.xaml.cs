@@ -39,6 +39,9 @@ namespace dollop_editor
 
             InitializeComponent();
 
+            cmbSprites.ItemsSource = new List<String>(Editor.Brushes.Keys.Where(x => x.Contains("entity")));
+            cmbSprites.Items.Refresh();
+
             for (int i = 1; i < 999999; i++)
             {
                 bool exists = false;
@@ -67,7 +70,7 @@ namespace dollop_editor
                 txtY.Text = dictionary[p].Item1.y.ToString();
                 txtZ.Text = dictionary[p].Item1.z.ToString();
                 txtID.Text = dictionary[p].Item1.id.ToString();
-                txtSprite.Text = dictionary[p].Item1.sprite.ToString();
+                cmbSprites.Text = dictionary[p].Item1.sprite.ToString();
                 chkPlayer.IsChecked = dictionary[p].Item1.player;
             }
             else
@@ -118,7 +121,7 @@ namespace dollop_editor
             Entity.player = player;
             Entity.ethereal = ethereal;
             Entity.full_size = full_size;
-            Entity.sprite = txtSprite.Text;
+            Entity.sprite = cmbSprites.Text;
 
             Point3D p = new Point3D(location.X, location.Y, location.Z);
             if (dictionary.ContainsKey(p))

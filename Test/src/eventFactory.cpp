@@ -3,6 +3,9 @@
 #include "eventParticle.h"
 #include "eventBGM.h"
 #include "eventSetFlag.h"
+#include "eventSpriteChange.h"
+#include "eventAddToFlag.h"
+#include "eventToggleFlag.h"
 
 std::map<std::string, unsigned int> EventFactory::TypeDict =
 {
@@ -19,6 +22,9 @@ std::map<std::string, unsigned int> EventFactory::TypeDict =
 	{ "play_sound", ET_PlaySound },
 	{ "play_bgm", ET_PlayBGM },
 	{ "set_flag", ET_SetFlag },
+	{ "toggle_flag", ET_ToggleFlag },
+	{ "add_to_flag", ET_AddToFlag },
+	{ "sprite_change", ET_SpriteChange },
 };
 
 std::map<std::string, unsigned int> EventFactory::EEMDict =
@@ -67,6 +73,20 @@ std::shared_ptr<IEvent> EventFactory::BuildEvent(EventTypes et, std::map<std::st
 		result = std::shared_ptr<IEvent>(new EventSetFlag(
 			args.count("name") ? std::get<std::string>(args.at("name")) : "",
 			args.count("value") ? std::get<int>(args.at("value")) : 1));
+		break;
+	case EventTypes::ET_ToggleFlag:
+		result = std::shared_ptr<IEvent>(new EventToggleFlag(
+			args.count("name") ? std::get<std::string>(args.at("name")) : ""));
+		break;
+	case EventTypes::ET_AddToFlag:
+		result = std::shared_ptr<IEvent>(new EventAddToFlag(
+			args.count("name") ? std::get<std::string>(args.at("name")) : "",
+			args.count("value") ? std::get<int>(args.at("value")) : 1));
+		break;
+	case EventTypes::ET_SpriteChange:
+		result = std::shared_ptr<IEvent>(new EventSpriteChange(
+			args.count("sprite") ? std::get<std::string>(args.at("sprite")) : "",
+			args.count("id") ? std::get<int>(args.at("id")) : 1));
 		break;
 	case EventTypes::ET_PlaySound:
 		result = std::shared_ptr<IEvent>(new EventSound(

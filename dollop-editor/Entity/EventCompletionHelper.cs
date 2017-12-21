@@ -22,6 +22,9 @@ namespace dollop_editor
             { (int)EventType.play_sound, typeof(EventArgPlaySound) },
             { (int)EventType.play_bgm, typeof(EventArgPlaySound) },
             { (int)EventType.set_flag, typeof(EventArgSetFlag) },
+            { (int)EventType.sprite_change, typeof(EventArgSpriteChange) },
+            { (int)EventType.add_to_flag, typeof(EventArgSetFlag) },
+            { (int)EventType.toggle_flag, typeof(EventArgToggleFlag) },
         };
         public static Dictionary<string, string> eventArgComplexExamples = new Dictionary<string, string>() {
             { EventType.dialogue.ToString(), @"--choice 1--{

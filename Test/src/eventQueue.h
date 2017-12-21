@@ -8,7 +8,7 @@
 class IEvent;
 
 enum ActivationType { AT_Autorun, AT_Interact, AT_Touch };
-enum FlagCondition { FC_Value, FC_NotValue, FC_GreaterThan, FC_LessThan };
+enum FlagCondition { FC_Value, FC_NotValue, FC_LessThan, FC_GreaterThan};
 
 class EventQueue
 {
