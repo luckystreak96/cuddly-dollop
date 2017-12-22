@@ -18,7 +18,7 @@ namespace dollop_editor
         public float y;
         public float z;
         public string sprite;
-        public bool walkOn;
+        public bool? walkOn;
         //public string tile_type;
     }
 }

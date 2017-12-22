@@ -57,6 +57,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Entity\Choice.cs" />
+    <Compile Include="Entity\ChoiceModify.xaml.cs">
+      <DependentUpon>ChoiceModify.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\Dialogue.cs" />
+    <Compile Include="Entity\DialogueModify.xaml.cs">
+      <DependentUpon>DialogueModify.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Entity\DialogueWindow.xaml.cs">
+      <DependentUpon>DialogueWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Entity\EventCompletionHelper.cs" />
     <Compile Include="Entity\IdManager.cs" />
     <Compile Include="Entity\QueueWindow.xaml.cs">
@@ -80,6 +91,18 @@
     </Compile>
     <Compile Include="Tile.cs" />
     <Compile Include="Tiles.cs" />
+    <Page Include="Entity\ChoiceModify.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Entity\DialogueModify.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Entity\DialogueWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Entity\QueueWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

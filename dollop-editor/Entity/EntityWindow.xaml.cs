@@ -20,12 +20,36 @@ namespace dollop_editor
     /// </summary>
     public partial class EntityWindow : Window
     {
-        public Entity Entity { get; set; }
+        public Entity Entity_ { get; set; }
         private Dictionary<Point3D, Tuple<Entity, Rectangle>> dictionary;
         private Point3D location;
         private MainWindow mainWindow;
         private Editor Editor;
         private int mapHeight;
+        private bool isEntity = true;
+
+        public EntityWindow(List<EventQueue> list)
+        {
+            InitializeComponent();
+            isEntity = false;
+            Entity_ = new Entity();
+            Entity_.queues = list;
+            if (Entity_.queues == null)
+                Entity_.queues = new List<EventQueue>();
+            txtID.IsEnabled = false;
+            txtX.IsEnabled = false;
+            txtY.IsEnabled = false;
+            txtZ.IsEnabled = false;
+            cmbSprites.IsEnabled = false;
+            chkEthereal.IsEnabled = false;
+            chkFullSize.IsEnabled = false;
+            chkPlayer.IsEnabled = false;
+
+            // At the end because otherwise it follows the queues of an empty entity if it existed (see line 62)
+            lstQueue.ItemsSource = Entity_.queues;
+            if (Entity_.queues.Count > 0)
+                lstQueue.SelectedIndex = 0;
+        }
 
         public EntityWindow(Point3D pos, Dictionary<Point3D, Tuple<Entity, Rectangle>> dict, int height, MainWindow window, Editor editor)
         {
@@ -34,8 +58,8 @@ namespace dollop_editor
             mainWindow = window;
             dictionary = dict;
             location = pos;
-            Entity = new Entity();
-            Entity.id = -1;
+            Entity_ = new Entity();
+            Entity_.id = -1;
 
             InitializeComponent();
 
@@ -62,8 +86,8 @@ namespace dollop_editor
             Point3D p = new Point3D(pos.X, pos.Y, pos.Z);
             if (dictionary.ContainsKey(p))
             {
-                Entity = new Entity(dictionary[p].Item1);
-                Entity.SneakyId(dictionary[p].Item1.id);
+                Entity_ = new Entity(dictionary[p].Item1);
+                Entity_.SneakyId(dictionary[p].Item1.id);
                 chkEthereal.IsChecked = dictionary[p].Item1.ethereal;
                 chkFullSize.IsChecked = dictionary[p].Item1.full_size;
                 txtX.Text = dictionary[p].Item1.x.ToString();
@@ -81,8 +105,8 @@ namespace dollop_editor
             }
 
             // At the end because otherwise it follows the queues of an empty entity if it existed (see line 62)
-            lstQueue.ItemsSource = Entity.queues;
-            if (Entity.queues.Count > 0)
+            lstQueue.ItemsSource = Entity_.queues;
+            if (Entity_.queues.Count > 0)
                 lstQueue.SelectedIndex = 0;
 
             btnAddEvent.IsEnabled = false;
@@ -90,55 +114,64 @@ namespace dollop_editor
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            int id = -1;
-            float x, y, z = -1;
-            bool player = false;
-            bool ethereal, full_size = false;
-            int.TryParse(txtID.Text, out id);
-            float.TryParse(txtX.Text, out x);
-            float.TryParse(txtY.Text, out y);
-            float.TryParse(txtZ.Text, out z);
-            player = chkPlayer.IsChecked == true;
-            ethereal = chkEthereal.IsChecked == true;
-            full_size = chkFullSize.IsChecked == true;
-
-            if (x == -1 || y == -1 || z == -1)
+            if (isEntity)
             {
-                MessageBox.Show("X, Y or Z are not valid.");
-                return;
-            }
 
-            if (id == -1)
-            {
-                MessageBox.Show("ID is not valid.");
-                return;
-            }
+                int id = -1;
+                float x, y, z = -1;
+                bool player = false;
+                bool ethereal, full_size = false;
+                int.TryParse(txtID.Text, out id);
+                float.TryParse(txtX.Text, out x);
+                float.TryParse(txtY.Text, out y);
+                float.TryParse(txtZ.Text, out z);
+                player = chkPlayer.IsChecked == true;
+                ethereal = chkEthereal.IsChecked == true;
+                full_size = chkFullSize.IsChecked == true;
 
-            Entity.id = id;
-            Entity.x = x;
-            Entity.y = y;
-            Entity.z = z;
-            Entity.player = player;
-            Entity.ethereal = ethereal;
-            Entity.full_size = full_size;
-            Entity.sprite = cmbSprites.Text;
-
-            Point3D p = new Point3D(location.X, location.Y, location.Z);
-            if (dictionary.ContainsKey(p))
-            {
-                Point3D current = new Point3D(Math.Floor(Entity.x), Math.Floor(Entity.y), Entity.z);
-                Tuple<Entity, Rectangle> tu = new Tuple<Entity, Rectangle>(Entity, Editor.EntityRectangle(Entity));
-                if (current != p)
+                if (x == -1 || y == -1 || z == -1)
                 {
-                    dictionary.Remove(p);
-                    dictionary.Add(current, tu);
+                    MessageBox.Show("X, Y or Z are not valid.");
+                    return;
                 }
-                else
-                    dictionary[p] = tu;
 
+                if (id == -1)
+                {
+                    MessageBox.Show("ID is not valid.");
+                    return;
+                }
+
+                Entity_.id = id;
+                Entity_.x = x;
+                Entity_.y = y;
+                Entity_.z = z;
+                Entity_.player = player;
+                Entity_.ethereal = ethereal;
+                Entity_.full_size = full_size;
+                Entity_.sprite = cmbSprites.Text;
+
+                Point3D p = new Point3D(location.X, location.Y, location.Z);
+                if (dictionary.ContainsKey(p))
+                {
+                    Point3D current = new Point3D(Math.Floor(Entity_.x), Math.Floor(Entity_.y), Entity_.z);
+                    Tuple<Entity, Rectangle> tu = new Tuple<Entity, Rectangle>(Entity_, Editor.EntityRectangle(Entity_));
+                    if (current != p)
+                    {
+                        dictionary.Remove(p);
+                        dictionary.Add(current, tu);
+                    }
+                    else
+                        dictionary[p] = tu;
+
+                }
+            mainWindow.mustSave = true;
+            }
+            else
+            {
+                if (Entity_.queues.Count == 0)
+                    Entity_.queues = null;
             }
 
-            mainWindow.mustSave = true;
             DialogResult = true;
             Close();
         }
@@ -151,9 +184,9 @@ namespace dollop_editor
 
         private void lstQueue_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (lstQueue.SelectedIndex >= 0 && Entity.queues.Count > lstQueue.SelectedIndex)
+            if (lstQueue.SelectedIndex >= 0 && Entity_.queues.Count > lstQueue.SelectedIndex)
             {
-                lstEvent.ItemsSource = Entity.queues[lstQueue.SelectedIndex].events;
+                lstEvent.ItemsSource = Entity_.queues[lstQueue.SelectedIndex].events;
                 btnAddEvent.IsEnabled = true;
             }
         }
@@ -162,7 +195,7 @@ namespace dollop_editor
         {
             QueueWindow queueWindow = new QueueWindow();
             if (queueWindow.ShowDialog() == true)
-                Entity.queues.Add(queueWindow.Queue);
+                Entity_.queues.Add(queueWindow.Queue);
 
             lstQueue.Items.Refresh();
         }
@@ -186,11 +219,18 @@ namespace dollop_editor
             if (e.ClickCount == 2 && lstEvent.SelectedIndex >= 0 && lstEvent.SelectedIndex < lstEvent.Items.Count && lstQueue.SelectedIndex >= 0 && lstQueue.SelectedIndex < lstQueue.Items.Count)
             {
                 Event ev = lstEvent.SelectedItem as Event;
-                EventWindow eventWindow = new EventWindow(ev);
-
-                if (eventWindow.ShowDialog() == true)
+                if (ev.type == "dialogue")
                 {
-                    Entity.queues[lstQueue.SelectedIndex].events[lstEvent.SelectedIndex] = eventWindow.Event;
+                    OpenDialogueWindow(ev);
+                }
+                else
+                {
+                    EventWindow eventWindow = new EventWindow(ev);
+
+                    if (eventWindow.ShowDialog() == true)
+                    {
+                        Entity_.queues[lstQueue.SelectedIndex].events[lstEvent.SelectedIndex] = eventWindow.Event;
+                    }
                 }
                 lstEvent.Items.Refresh();
             }
@@ -203,8 +243,14 @@ namespace dollop_editor
                 EventWindow eventWindow = new EventWindow();
                 if (eventWindow.ShowDialog() == true)
                 {
-                    Entity.queues[lstQueue.SelectedIndex].events.Add(eventWindow.Event);
+                    Event ev = eventWindow.Event;
+                    Entity_.queues[lstQueue.SelectedIndex].events.Add(ev);
                     lstEvent.Items.Refresh();
+                    lstEvent.SelectedItem = ev;
+                    if(ev.type == "dialogue")
+                    {
+                        OpenDialogueWindow(ev);
+                    }
                 }
             }
         }
@@ -213,7 +259,7 @@ namespace dollop_editor
         {
             if (lstEvent.SelectedIndex >= 0 && lstEvent.SelectedIndex < lstEvent.Items.Count)
             {
-                Entity.queues[lstQueue.SelectedIndex].events.RemoveAt(lstEvent.SelectedIndex);
+                Entity_.queues[lstQueue.SelectedIndex].events.RemoveAt(lstEvent.SelectedIndex);
                 lstEvent.Items.Refresh();
             }
         }
@@ -222,7 +268,7 @@ namespace dollop_editor
         {
             if (lstQueue.SelectedIndex >= 0 && lstQueue.SelectedIndex < lstQueue.Items.Count)
             {
-                Entity.queues.RemoveAt(lstQueue.SelectedIndex);
+                Entity_.queues.RemoveAt(lstQueue.SelectedIndex);
                 lstQueue.Items.Refresh();
                 lstEvent.ItemsSource = null;
             }
@@ -233,7 +279,7 @@ namespace dollop_editor
             if (lstEvent.SelectedIndex > 0)
             {
                 int index = lstEvent.SelectedIndex;
-                Entity.queues[lstQueue.SelectedIndex].events.Swap(index, index - 1);
+                Entity_.queues[lstQueue.SelectedIndex].events.Swap(index, index - 1);
                 lstEvent.Items.Refresh();
                 lstEvent.SelectedIndex = index - 1;
                 lstEvent.Focus();
@@ -245,13 +291,22 @@ namespace dollop_editor
             if (lstEvent.SelectedIndex < lstEvent.Items.Count - 1)
             {
                 int index = lstEvent.SelectedIndex;
-                Entity.queues[lstQueue.SelectedIndex].events.Swap(index, index + 1);
+                Entity_.queues[lstQueue.SelectedIndex].events.Swap(index, index + 1);
                 lstEvent.Items.Refresh();
                 lstEvent.SelectedIndex = index + 1;
                 lstEvent.Focus();
             }
         }
 
+        private void OpenDialogueWindow(Event ev)
+        {
+            DialogueWindow window = new DialogueWindow(ev);
 
+            if (window.ShowDialog() == true)
+            {
+                Entity_.queues[lstQueue.SelectedIndex].events[lstEvent.SelectedIndex] = window.Event_;
+                lstEvent.Items.Refresh();
+            }
+        }
     }
 }

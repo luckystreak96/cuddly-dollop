@@ -447,14 +447,19 @@ std::vector<std::shared_ptr<EventQueue>> EventFactory::LoadEvent(rapidjson::Valu
 
 	for (auto& p : v.GetArray())
 	{
-		std::shared_ptr<EventQueue> queue = std::shared_ptr<EventQueue>(new EventQueue());
+		int id = -1;
+		if (p.HasMember("id"))
+			id = p["id"].GetInt();
+
+		std::shared_ptr<EventQueue> queue = std::shared_ptr<EventQueue>(new EventQueue(id));
+
 		// Set repeating if necessary
 		if (p.HasMember("repeating") && p["repeating"].GetBool() == true)
 			queue->SetRepeating(true);
 
 		// Find activation type
 		if (p.HasMember("activation"))
-			SetActivationType(queue, p.GetString());
+			SetActivationType(queue, p["activation"].GetString());
 
 		// Add your events to the event queue
 		const auto& evts = p["events"].GetArray();

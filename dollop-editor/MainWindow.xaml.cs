@@ -273,12 +273,12 @@ namespace dollop_editor
                 EntityWindow window = new EntityWindow(point, editor.Entities, editor.Height, this, editor);
                 window.ShowDialog();
 
-                if (window.Entity.id == -1)
+                if (window.Entity_.id == -1)
                     return;
 
-                Rectangle rectangle = editor.EntityRectangle(window.Entity);
+                Rectangle rectangle = editor.EntityRectangle(window.Entity_);
 
-                editor.Entities.Add(point, new Tuple<Entity, Rectangle>(window.Entity, rectangle));
+                editor.Entities.Add(point, new Tuple<Entity, Rectangle>(window.Entity_, rectangle));
                 cnvMap.Children.Add(rectangle);
             }
         }

@@ -41,6 +41,6 @@ void EventParticle::SetMapSize(Vector3f mapsize)
 
 void EventParticle::ResetEvent()
 {
-	m_firstSetup = true;
+	//m_firstSetup = true;
 	IEvent::ResetEvent();
 }

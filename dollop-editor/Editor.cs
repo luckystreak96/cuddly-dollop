@@ -220,7 +220,7 @@ namespace dollop_editor
                         z = (float)x.Key.Z,
                         // Get the name of the sprite
                         sprite = ((BitmapImage)(x.Value.Fill.GetValue(ImageBrush.ImageSourceProperty))).UriSource.ToString().Split('\\').Last(),
-                        walkOn = (string)x.Value.Tag != "noWalkOn"
+                        walkOn = ((string)x.Value.Tag != "noWalkOn" ? (bool?)null : false)
                     };
 
                     tiles.Add(tile);
@@ -232,7 +232,7 @@ namespace dollop_editor
 
                 map.tiles = tiles;
                 map.entities = ents;
-                File.WriteAllText(filename, JsonConvert.SerializeObject(map));
+                File.WriteAllText(filename, JsonConvert.SerializeObject(map, Formatting.Indented, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
             }
             catch (Exception e)
             {
@@ -270,7 +270,7 @@ namespace dollop_editor
                         Fill = Brushes[tile.sprite].Clone(),
                         Width = TileSize,
                         Height = TileSize,
-                        Tag = tile.walkOn ? null : "noWalkOn"
+                        Tag = tile.walkOn == true ? null : "noWalkOn"
                     };
                     rectangle.SetCurrentValue(Canvas.ZIndexProperty, GameToCanvasZ(tile.z));
                     rectangle.RenderTransform = new TranslateTransform((tile.x) * 32, InvertHeight(tile.y) * 32);

@@ -182,6 +182,10 @@ namespace dollop_editor
 
         private void cmbType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if(e.AddedItems.Contains("dialogue"))
+            {
+                SaveAndClose();
+            }
             cmbArgKey.Items.Clear();
             if (EventCompletionHelper.eventArgDictionary.ContainsKey(cmbType.SelectedIndex))
                 foreach (var val in Enum.GetValues(EventCompletionHelper.eventArgDictionary[cmbType.SelectedIndex]))
@@ -251,6 +255,11 @@ namespace dollop_editor
         }
 
         private void btnSaveEvent_Click(object sender, RoutedEventArgs e)
+        {
+            SaveAndClose();
+        }
+
+        private void SaveAndClose()
         {
             Event.type = cmbType.SelectedItem.ToString();
             Event.execution_type = cmbExecution.SelectedItem.ToString();

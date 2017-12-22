@@ -104,7 +104,7 @@ DialogueResponse DialogueGraph::SendInput(InputType it)
 
 	// Set result queue
 	if (m_selectedChoice == -1)
-		result.Queue = std::shared_ptr<EventQueue>(new EventQueue());
+		result.Queue = d.Queue;//std::shared_ptr<EventQueue>(new EventQueue());
 	else
 		result.Queue = choices.at(m_selectedChoice).Queue;
 
