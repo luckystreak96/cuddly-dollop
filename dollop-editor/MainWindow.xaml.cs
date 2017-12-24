@@ -40,6 +40,7 @@ namespace dollop_editor
         private Rectangle selectedMapTile;
         private string prevPath = "";
         public bool mustSave = false;
+        private bool fill = false;
 
         public MainWindow()
         {
@@ -114,6 +115,66 @@ namespace dollop_editor
                 cnvMap.Children.Add(selectedMapTile);
         }
 
+        private void Fill(string tile, int x, int y, double z, bool firstTime, string otherTile)
+        {
+            if (x < 0 || y < 0)
+                return;
+
+            int x_ = x / editor.TileSize;
+            int y_ = y / editor.TileSize;
+
+            if (x_ >= editor.Width || y_ >= editor.Height)
+                return;
+
+            Point3D point3D = new Point3D(x_, editor.InvertHeight(y_), z);
+
+            string under;
+            if (!editor.Tiles.ContainsKey(point3D))
+                under = "";
+            else
+                under = ((BitmapImage)(editor.Tiles[point3D].Fill.GetValue(ImageBrush.ImageSourceProperty))).UriSource.ToString().Split('\\').Last();
+            if (under == tile)
+                return;
+
+            if (firstTime)
+            {
+                if (editor.Tiles.ContainsKey(point3D))
+                    otherTile = under;
+                else
+                    otherTile = "";
+            }
+
+            if (otherTile == "" || under == otherTile)
+                SetMapTile(x, y/*(int)editor.InvertHeight(float.Parse(y.ToString()))*/, selTile);
+            else
+                return;
+
+            // Horizontal
+            for (int h = -1; h < 2; h += 2)
+            {
+                point3D = new Point3D(((x + editor.TileSize * h) / editor.TileSize), editor.InvertHeight(y / editor.TileSize), z);
+                if (!editor.Tiles.ContainsKey(point3D))
+                    under = "";
+                else
+                    under = ((BitmapImage)(editor.Tiles[point3D].Fill.GetValue(ImageBrush.ImageSourceProperty))).UriSource.ToString().Split('\\').Last();
+                if (otherTile == "" || under == otherTile)
+                    Fill(tile, (int)point3D.X * editor.TileSize, (int)editor.InvertHeight(float.Parse(point3D.Y.ToString())) * editor.TileSize, z, false, otherTile);
+            }
+
+            // Vertical
+            for (int v = -1; v < 2; v += 2)
+            {
+                point3D = new Point3D((x / editor.TileSize), editor.InvertHeight((y + editor.TileSize * v) / editor.TileSize), z);
+                if (!editor.Tiles.ContainsKey(point3D))
+                    under = "";
+                else
+                    under = ((BitmapImage)(editor.Tiles[point3D].Fill.GetValue(ImageBrush.ImageSourceProperty))).UriSource.ToString().Split('\\').Last();
+                if (otherTile == "" || under == otherTile)
+                    Fill(tile, (int)point3D.X * editor.TileSize, (int)editor.InvertHeight(float.Parse((point3D.Y).ToString())) * editor.TileSize, z, false, otherTile);
+            }
+
+        }
+
         private void CnvMap_MouseDown(object sender, MouseButtonEventArgs e)
         {
             int x = (int)e.GetPosition(cnvMap).X;
@@ -127,7 +188,10 @@ namespace dollop_editor
                 }
                 else if ((cnvState == CanvasState.NormalMode || cnvState == CanvasState.TileAttributeMode) && x > 0 && x < cnvMap.Width && y > 0 && y < cnvMap.Height)
                 {
-                    SetMapTile(x, y, selTile);
+                    if (fill)
+                        Fill(selTile, x, y, slrDepth.Value, true, "");
+                    else
+                        SetMapTile(x, y, selTile);
                 }
             }
             else if (e.RightButton == MouseButtonState.Pressed)
@@ -662,6 +726,12 @@ namespace dollop_editor
         private void imgAttributeMode_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
             SetCnvMode(CanvasState.TileAttributeMode);
+        }
+
+        // Fill
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            fill = !fill;
         }
     }
 }

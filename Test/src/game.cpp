@@ -1,7 +1,7 @@
 #include "game.h"
 #include "gameData.h"
 
-Game::Game() : m_numFrames(0), m_exit(false)
+Game::Game() : m_numFrames(0), m_exit(false), m_muted(true)
 {
 }
 
@@ -13,6 +13,9 @@ bool Game::init(float width, float height)
 {
 	GameData::LoadFromFile();
 	SetupTextureAtlas();
+
+	// Mute by default
+	SoundManager::GetInstance().SetMasterVolume(m_muted ? 0.f : 1.f);
 
 	Model::GetInstance().init("res/models/models.data");
 
@@ -99,6 +102,10 @@ void Game::keyboardCB(unsigned char key, int x, int y)//x and y are mouse pos
 	{
 	case 27://ESC
 		m_exit = true;
+		break;
+	case 109://m
+		m_muted = !m_muted;
+		SoundManager::GetInstance().SetMasterVolume(m_muted ? 0.f : 1.f);
 		break;
 	}
 	InputManager::GetInstance().Input(key, true);

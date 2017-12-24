@@ -39,6 +39,7 @@ public:
 		return instance;
 	};
 
+	void SetMasterVolume(float volume);
 	void SetListenerPosition(Vector3f pos = Vector3f(), Vector3f vel = Vector3f());
 	unsigned int CreateSource();
 	void SetListenerOrientation(unsigned int dir);
@@ -64,6 +65,7 @@ private:
 private:
 	std::map<std::string, WavBuffer> m_buffers;
 	float m_bgmMaxVolume;
+	float m_masterVolume;
 	ALuint m_bgmSource;
 	std::string m_nextBGM;
 	std::string m_currentBGM;

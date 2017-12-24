@@ -303,9 +303,6 @@
     <ClInclude Include="src\fontManager.h">
       <Filter>Header Files\Engine\Graphics\Fonts</Filter>
     </ClInclude>
-    <ClInclude Include="src\dialogueBox.h">
-      <Filter>Header Files\Engine\Graphics\Fonts</Filter>
-    </ClInclude>
     <ClInclude Include="src\dialogueGraph.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -376,6 +373,9 @@
       <Filter>Header Files\Events</Filter>
     </ClInclude>
     <ClInclude Include="src\eventAddToFlag.h">
+      <Filter>Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\dialogueBox.h">
       <Filter>Header Files\Events</Filter>
     </ClInclude>
   </ItemGroup>
@@ -542,9 +542,6 @@
     <ClCompile Include="src\fontManager.cpp">
       <Filter>Source Files\Engine\Graphics\Fonts</Filter>
     </ClCompile>
-    <ClCompile Include="src\dialogueBox.cpp">
-      <Filter>Source Files\Engine\Graphics\Fonts</Filter>
-    </ClCompile>
     <ClCompile Include="src\dialogueGraph.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -615,6 +612,9 @@
       <Filter>Source Files\Events</Filter>
     </ClCompile>
     <ClCompile Include="src\eventAddToFlag.cpp">
+      <Filter>Source Files\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="src\dialogueBox.cpp">
       <Filter>Source Files\Events</Filter>
     </ClCompile>
   </ItemGroup>

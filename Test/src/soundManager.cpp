@@ -2,7 +2,7 @@
 #include "elapsedTime.h"
 
 
-SoundManager::SoundManager() : m_bgmSource(0), m_bgmState(BGM_Starting), m_bgmVolume(0), m_bgmMaxVolume(0.4f)
+SoundManager::SoundManager() : m_bgmSource(0), m_bgmState(BGM_Starting), m_bgmVolume(0), m_bgmMaxVolume(0.4f), m_masterVolume(1.0f)
 {
 	// Initialize Open AL
 	m_device = alcOpenDevice(nullptr); // open default device
@@ -296,4 +296,10 @@ void SoundManager::CheckErrors()
 	error = alGetError();
 	if (error != AL_NO_ERROR)
 		std::cout << alGetString(error) << std::endl;
+}
+
+void SoundManager::SetMasterVolume(float volume)
+{
+	m_masterVolume = volume;
+	alListenerf(AL_GAIN, m_masterVolume);
 }
