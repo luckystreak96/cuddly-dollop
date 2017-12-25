@@ -1,4 +1,5 @@
 #include "playerInputComponent.h"
+#include <GLFW\glfw3.h>
 
 PlayerInputComponent::PlayerInputComponent(std::shared_ptr<PhysicsComponent> phys, std::shared_ptr<GraphicsComponent> graph)
 {
@@ -21,10 +22,10 @@ void PlayerInputComponent::Update()
 	//for (auto a : *keys)
 	//	keyMap.emplace(a, false);
 
-	bool up = InputManager::GetInstance().FrameKeyStatus(GLUT_KEY_UP + InputManager::SpecialKeyValue) || InputManager::GetInstance().FrameKeyStatus('w');
-	bool down = InputManager::GetInstance().FrameKeyStatus(GLUT_KEY_DOWN + InputManager::SpecialKeyValue) || InputManager::GetInstance().FrameKeyStatus('s');
-	bool left = InputManager::GetInstance().FrameKeyStatus(GLUT_KEY_LEFT + InputManager::SpecialKeyValue) || InputManager::GetInstance().FrameKeyStatus('a');
-	bool right = InputManager::GetInstance().FrameKeyStatus(GLUT_KEY_RIGHT + InputManager::SpecialKeyValue) || InputManager::GetInstance().FrameKeyStatus('d');
+	bool up = InputManager::GetInstance().FrameKeyStatus(GLFW_KEY_UP) || InputManager::GetInstance().FrameKeyStatus('W');
+	bool down = InputManager::GetInstance().FrameKeyStatus(GLFW_KEY_DOWN) || InputManager::GetInstance().FrameKeyStatus('S');
+	bool left = InputManager::GetInstance().FrameKeyStatus(GLFW_KEY_LEFT) || InputManager::GetInstance().FrameKeyStatus('A');
+	bool right = InputManager::GetInstance().FrameKeyStatus(GLFW_KEY_RIGHT) || InputManager::GetInstance().FrameKeyStatus('D');
 
 	m_phys->ActionMove(up, down, left, right);
 	//if(InputManager::GetInstance().FrameKeyStatus(GLUT_KEY_UP + InputManager::SpecialKeyValue, ))

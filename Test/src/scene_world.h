@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include "scene.h"
-#include "shadowMapFBO.h"
 #include "transform.h"
 #include "array2d.h"
 #include "elapsedTime.h"
@@ -16,9 +15,7 @@
 #include "combineEffect.h"
 #include "transparencyEffect.h"
 #include "animation.h"
-#include "define_gl.h"
 #include "bloom.h"
-#include "trail.h"
 #include "graphicsComponent.h"
 #include "entity.h"
 #include "map_handler.h"
@@ -76,7 +73,6 @@ private:
 	unsigned int m_fontTitle;
 	unsigned int m_fontFPS;
 	Vector3f m_backupTrans;
-	Trail m_trail;
 	Bloom m_bloom;
 	Fade m_fade;
 	//ParticleGenerator m_particles;

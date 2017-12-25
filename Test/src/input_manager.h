@@ -29,11 +29,17 @@ public:
 	// Adds an input to the list, called when you press the key
 	void Input(unsigned int key, bool keydown);
 
+	// Adds an input to the list, you can specify the status
+	void Input(unsigned int key, KeyStatus status);
+
 	// Adds an input to the list, called when you press a special key
 	void SpecialInput(unsigned int key, bool keydown);
 
 	// Returns the list of keys, and resets it
 	std::list<std::pair<unsigned int, KeyStatus>> GetKeys();
+
+	// Returns the list of keys, and resets it
+	std::list<std::pair<unsigned int, KeyStatus>> GetKeysNoReset();
 
 	// Gets a list of currently held keys
 	std::map<unsigned int, bool> GetHeldKeys();

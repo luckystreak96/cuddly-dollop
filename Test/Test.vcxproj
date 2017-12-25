@@ -103,7 +103,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>ilut.lib;ilu.lib;openal32.lib;alut.lib;devil.lib;glew32.lib;freeglut.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ilut.lib;ilu.lib;openal32.lib;alut.lib;devil.lib;glew32.lib;freeglut.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -117,7 +117,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>ilut.lib;ilu.lib;openal32.lib;alut.lib;devil.lib;glew32.lib;freeglut.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ilut.lib;ilu.lib;openal32.lib;alut.lib;devil.lib;glew32.lib;freeglut.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -136,7 +136,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>ilut.lib;ilu.lib;openal32.lib;alut.lib;devil.lib;glew32.lib;freeglut.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ilut.lib;ilu.lib;openal32.lib;alut.lib;devil.lib;glew32.lib;freeglut.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -158,7 +158,7 @@
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
       <OptimizeReferences>false</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>ilut.lib;ilu.lib;openal32.lib;alut.lib;devil.lib;glew32.lib;freeglut.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ilut.lib;ilu.lib;openal32.lib;alut.lib;devil.lib;glew32.lib;freeglut.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Link>
@@ -207,6 +207,7 @@
     <ClInclude Include="src\fontManager.h" />
     <ClInclude Include="src\game.h" />
     <ClInclude Include="src\gameData.h" />
+    <ClInclude Include="src\glfwBackend.h" />
     <ClInclude Include="src\glutBackend.h" />
     <ClInclude Include="src\graphicsComponent.h" />
     <ClInclude Include="src\heightEffect.h" />
@@ -292,6 +293,7 @@
     <ClCompile Include="src\fontManager.cpp" />
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\gameData.cpp" />
+    <ClCompile Include="src\glfwBackend.cpp" />
     <ClCompile Include="src\glutBackend.cpp" />
     <ClCompile Include="src\graphicsComponent.cpp" />
     <ClCompile Include="src\heightEffect.cpp" />

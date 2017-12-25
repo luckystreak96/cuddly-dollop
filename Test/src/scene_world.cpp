@@ -1,5 +1,7 @@
 #include "scene_world.h"
 #include "gameData.h"
+#include "define_gl.h"
+
 
 SceneGenData SceneWorld::NextScene = SceneGenData();
 
@@ -97,29 +99,29 @@ void SceneWorld::ManageInput()
 {
 	InputManager::GetInstance().SetupFrameKeys();
 
-	if (InputManager::GetInstance().FrameKeyStatus('b', AnyRelease))
+	if (InputManager::GetInstance().FrameKeyStatus('B', AnyRelease))
 		m_bloomEffect = !m_bloomEffect;
 
-	if (InputManager::GetInstance().FrameKeyStatus('f', AnyRelease))
+	if (InputManager::GetInstance().FrameKeyStatus('F', AnyRelease))
 		m_fade.SetFade(true);
-	if (InputManager::GetInstance().FrameKeyStatus('g', AnyRelease))
+	if (InputManager::GetInstance().FrameKeyStatus('G', AnyRelease))
 		m_fade.SetFade(false);
 
-	if (InputManager::GetInstance().FrameKeyStatus('t', AnyRelease))
+	if (InputManager::GetInstance().FrameKeyStatus('T', AnyRelease))
 		m_World->AddTranslation(0, 0, 1);
 
-	if (InputManager::GetInstance().FrameKeyStatus('y', AnyRelease))
+	if (InputManager::GetInstance().FrameKeyStatus('Y', AnyRelease))
 		m_World->AddTranslation(0, 0, -1);
 
-	if (InputManager::GetInstance().FrameKeyStatus('p', AnyRelease))
+	if (InputManager::GetInstance().FrameKeyStatus('P', AnyRelease))
 		m_pause = !m_pause;
 
 	static float bloomint = 0.3f;
-	if (InputManager::GetInstance().FrameKeyStatus('u')) {
+	if (InputManager::GetInstance().FrameKeyStatus('U')) {
 		bloomint += 0.2f;
 		CombineEffect::GetInstance().SetIntensity(bloomint);
 	}
-	if (InputManager::GetInstance().FrameKeyStatus('j')) {
+	if (InputManager::GetInstance().FrameKeyStatus('J')) {
 		bloomint -= 0.2f;
 		CombineEffect::GetInstance().SetIntensity(bloomint);
 	}
@@ -306,7 +308,7 @@ void SceneWorld::RenderPass()
 
 	m_World->SetTranslation(m_backupTrans);
 
-	GLUTBackendSwapBuffers();
+	//GLUTBackendSwapBuffers();
 }
 
 void SceneWorld::SetAudioPosition()

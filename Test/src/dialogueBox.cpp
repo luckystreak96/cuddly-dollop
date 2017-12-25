@@ -1,4 +1,5 @@
 #include "dialogueBox.h"
+#include <GLFW\glfw3.h>
 
 DialogueBox::DialogueBox(unsigned int entity_id, std::vector<Dialogue> d, std::vector<DialogueChoice> dc) : m_firstTime(true)
 {
@@ -121,11 +122,11 @@ EventUpdateResponse DialogueBox::UpdateEvent(double elapsedTime, std::map<unsign
 				return eur;
 			}
 		}
-		else if (m_dialogueGraph != NULL && m_dialogueGraph->ChoiceAvailable() && InputManager::GetInstance().FrameKeyStatus(GLUT_KEY_DOWN + InputManager::SpecialKeyValue, KeyStatus::KeyPressed, 1))
+		else if (m_dialogueGraph != NULL && m_dialogueGraph->ChoiceAvailable() && InputManager::GetInstance().FrameKeyStatus(GLFW_KEY_DOWN, KeyStatus::KeyPressed, 1))
 		{
 			m_dialogueGraph->SendInput(IT_Down);
 		}
-		else if (m_dialogueGraph != NULL && InputManager::GetInstance().FrameKeyStatus(GLUT_KEY_UP + InputManager::SpecialKeyValue, KeyStatus::KeyPressed, 1))
+		else if (m_dialogueGraph != NULL && InputManager::GetInstance().FrameKeyStatus(GLFW_KEY_UP, KeyStatus::KeyPressed, 1))
 		{
 			m_dialogueGraph->SendInput(IT_Up);
 		}

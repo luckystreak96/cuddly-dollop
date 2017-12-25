@@ -1,7 +1,7 @@
 #ifndef DEFINE_GL_H__
 #define DEFINE_GL_H__
 
-#define IS_FULLSCREEN true
+#define IS_FULLSCREEN false
 
 #define HD true
 

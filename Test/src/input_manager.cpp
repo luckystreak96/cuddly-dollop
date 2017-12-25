@@ -37,6 +37,12 @@ std::list<std::pair<unsigned int, KeyStatus>> InputManager::GetKeys()
 	return temp;
 }
 
+std::list<std::pair<unsigned int, KeyStatus>> InputManager::GetKeysNoReset()
+{
+	std::list<std::pair<unsigned int, KeyStatus>> temp = std::list<std::pair<unsigned int, KeyStatus>>(m_inputQueue);
+	return temp;
+}
+
 std::map<unsigned int, bool> InputManager::GetHeldKeys()
 {
 	return m_inputHold;
@@ -45,6 +51,25 @@ std::map<unsigned int, bool> InputManager::GetHeldKeys()
 void InputManager::Input(unsigned int key, bool keydown)
 {
 	if (keydown)
+	{
+		if (m_inputHold.count(key) != 0)
+			m_inputQueue.push_back(std::pair<unsigned int, KeyStatus>(key, HoldDownPress));
+		else
+			m_inputQueue.push_back(std::pair<unsigned int, KeyStatus>(key, KeyPressed));
+
+		m_inputHold.emplace(key, true);
+	}
+	else
+	{
+		//implement ReleaseQuick and ReleaseLong
+		m_inputQueue.push_back(std::pair<unsigned int, KeyStatus>(key, Release));
+		m_inputHold.erase(key);
+	}
+}
+
+void InputManager::Input(unsigned int key, KeyStatus status)
+{
+	if (status == KeyStatus::HoldDownPress || status == KeyStatus::KeyPressed)
 	{
 		if (m_inputHold.count(key) != 0)
 			m_inputQueue.push_back(std::pair<unsigned int, KeyStatus>(key, HoldDownPress));

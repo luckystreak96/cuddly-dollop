@@ -378,6 +378,9 @@
     <ClInclude Include="src\dialogueBox.h">
       <Filter>Header Files\Events</Filter>
     </ClInclude>
+    <ClInclude Include="src\glfwBackend.h">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -616,6 +619,9 @@
     </ClCompile>
     <ClCompile Include="src\dialogueBox.cpp">
       <Filter>Source Files\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="src\glfwBackend.cpp">
+      <Filter>Source Files\Engine\Backend</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

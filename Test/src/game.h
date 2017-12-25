@@ -26,11 +26,14 @@ class Game : public ICallBacks
         ~Game();
 
         void renderSceneCB();
-        void keyboardCB(unsigned char key, int x, int y);
         void specialKeyboardCB(int key, int x, int y);
 		void keyboardUpCB(unsigned char key, int x, int y);
 		void specialKeyboardUpCB(int key, int x, int y);
 		void windowResizeCB(int w, int h);
+        void KeyBoardCB(unsigned char key);
+
+		void HandleInput();
+		void MuteButton();
 
         bool init(float width, float height);
         void run();

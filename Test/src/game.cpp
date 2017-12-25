@@ -19,16 +19,13 @@ bool Game::init(float width, float height)
 
 	Model::GetInstance().init("res/models/models.data");
 
-	//Setup viewport to fit the window size
-	glViewport(0, 0, (GLsizei)(glutGet(GLUT_WINDOW_WIDTH)), (GLsizei)(glutGet(GLUT_WINDOW_HEIGHT)));
-
 	std::shared_ptr<SceneWorld> world = std::shared_ptr<SceneWorld>(new SceneWorld(1));
 	SceneManager::GetInstance().SetScene(world);
 
-	OrthoProjInfo::GetRegularInstance().Bottom = -512.0f;
-	OrthoProjInfo::GetRegularInstance().Top = 512.0f;
-	OrthoProjInfo::GetRegularInstance().Left = -960.0f;
-	OrthoProjInfo::GetRegularInstance().Right = 960.f;
+	//OrthoProjInfo::GetRegularInstance().Bottom = -512.0f;
+	//OrthoProjInfo::GetRegularInstance().Top = 512.0f;
+	//OrthoProjInfo::GetRegularInstance().Left = -960.0f;
+	//OrthoProjInfo::GetRegularInstance().Right = 960.f;
 	OrthoProjInfo::GetRegularInstance().zNear = 100.f;
 	OrthoProjInfo::GetRegularInstance().zFar = -100.f;
 	OrthoProjInfo::GetRegularInstance().Size = 64.f;
@@ -75,6 +72,8 @@ void Game::run()
 
 void Game::renderSceneCB()
 {
+	HandleInput();
+
 	if (m_exit)
 	{
 		GameData::SaveToFile();
@@ -96,17 +95,35 @@ void Game::specialKeyboardCB(int key, int x, int y)
 	InputManager::GetInstance().SpecialInput(key, true);
 }
 
-void Game::keyboardCB(unsigned char key, int x, int y)//x and y are mouse pos
+void Game::HandleInput()
+{
+	//std::list<std::pair<unsigned int, KeyStatus>> keys = InputManager::GetInstance().GetKeysNoReset();
+	//for (auto x : keys)
+	//{
+		//switch (x.first)
+		//{
+		//case 27://ESC
+		//	m_exit = true;
+		//	break;
+		//case 77://m
+	if (InputManager::GetInstance().FrameKeyStatus(77, KeyStatus::AnyRelease))
+		MuteButton();
+	//	break;
+	//default:
+	//	break;
+	//}
+//}
+}
+
+void Game::KeyBoardCB(unsigned char key)
 {
 	switch (key)
 	{
 	case 27://ESC
 		m_exit = true;
 		break;
-	case 109://m
-		m_muted = !m_muted;
-		SoundManager::GetInstance().SetMasterVolume(m_muted ? 0.f : 1.f);
-		break;
+	case 77://m
+		MuteButton();
 	}
 	InputManager::GetInstance().Input(key, true);
 	//m_camera->OnKeyboard(key);
@@ -130,6 +147,12 @@ void Game::keyboardCB(unsigned char key, int x, int y)//x and y are mouse pos
 	//default:
 	//	break;
 	//}
+}
+
+void Game::MuteButton()
+{
+	m_muted = !m_muted;
+	SoundManager::GetInstance().SetMasterVolume(m_muted ? 0.f : 1.f);
 }
 
 void Game::keyboardUpCB(unsigned char key, int x, int y)
@@ -174,10 +197,10 @@ void Game::specialKeyboardUpCB(int key, int x, int y)
 			glutFullScreen();
 			m_isFullscreen = true;
 		}
-	//case GLUT_KEY_F10:
-	//	glutReshapeWindow(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
-	//	glutPositionWindow(0, 0);
-	//	m_isFullscreen = false;
+		//case GLUT_KEY_F10:
+		//	glutReshapeWindow(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
+		//	glutPositionWindow(0, 0);
+		//	m_isFullscreen = false;
 	default:
 		break;
 	}
