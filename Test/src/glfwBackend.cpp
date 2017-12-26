@@ -2,6 +2,9 @@
 #include "define_gl.h"
 #include "game.h"
 #include "input_manager.h"
+#include <IL\il.h>
+#include <IL\ilu.h>
+#include <IL\ilut.h>
 
 static bool FullScreen = true;
 GLFWwindow* GLFWManager::m_window = NULL;;
@@ -28,7 +31,7 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 	{
 		GLFWmonitor* monitor = glfwGetPrimaryMonitor();
 		const GLFWvidmode* mode = glfwGetVideoMode(monitor);
-		glfwSetWindowMonitor(window, FullScreen ? NULL : monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
+		glfwSetWindowMonitor(window, FullScreen ? NULL : monitor, 1, 30, mode->width, mode->height, mode->refreshRate);
 		FullScreen = !FullScreen;
 	}
 
@@ -63,6 +66,17 @@ GLFWManager::GLFWManager()
 		exit(1);
 	}
 
+	// Window icon
+	ResourceManager::GetInstance().LoadTexture("res/sprites/special/ghost_shiny_blue.png");
+	ResourceManager::GetInstance().LoadGLTexture("res/sprites/special/ghost_shiny_blue.png");
+	Texture* tex = ResourceManager::GetInstance().GetTexture("res/sprites/special/ghost_shiny_blue.png");
+	GLFWimage image = GLFWimage();
+	image.width = 32;
+	image.height = 32;
+	image.pixels = tex->GetPixels();
+
+	glfwSetWindowIcon(m_window, 1, &image);
+
 	// Set fullscreen, call again with null monitor to set windowed
 	GLFWmonitor* monitor = glfwGetPrimaryMonitor();
 	const GLFWvidmode* mode = glfwGetVideoMode(monitor);
@@ -70,7 +84,7 @@ GLFWManager::GLFWManager()
 	m_screenHeight = mode->height;
 	m_refreshRate = mode->refreshRate;
 
-	glfwSetWindowMonitor(m_window, monitor, 0, 0, m_screenWidth, m_screenHeight, m_refreshRate);
+	glfwSetWindowMonitor(m_window, monitor, 10, 10, m_screenWidth, m_screenHeight, m_refreshRate);
 
 	glfwMakeContextCurrent(m_window);
 

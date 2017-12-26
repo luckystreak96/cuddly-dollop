@@ -46,10 +46,10 @@ private:
 private:
 	std::shared_ptr<Entity> m_player = NULL;
 	static SceneGenData NextScene;
-	std::shared_ptr<Scene> m_nextScene;
+	std::shared_ptr<Scene> m_nextScene = NULL;
 	EventManager m_eventManager;
-	std::shared_ptr<MapHandler> m_mapHandler;
-	std::shared_ptr<Transformation> m_World;
+	std::shared_ptr<MapHandler> m_mapHandler = NULL;
+	std::shared_ptr<Transformation> m_World = NULL;
 	std::map<unsigned int, std::shared_ptr<Entity>> m_celist;
 	CollisionManager m_collisionManager;
 	bool m_pause;
@@ -58,7 +58,7 @@ private:
 	bool m_bloomEffect;
 	bool m_drawinited;
 	int m_numFrames = 0;
-	std::shared_ptr<JsonHandler> m_jsonHandler;
+	std::shared_ptr<JsonHandler> m_jsonHandler = NULL;
 	unsigned int m_currentMap;
 	unsigned int m_fontTitle;
 	unsigned int m_fontFPS;

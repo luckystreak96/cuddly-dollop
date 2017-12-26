@@ -72,22 +72,22 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Users\yanik\Documents\cuddly-dollop\Test\res\include;C:\Files\Programming\cuddly-dollop\Test\res\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\um;C:\Users\yanik\Documents\cuddly-dollop\Test\res\include;C:\Files\Programming\cuddly-dollop\Test\res\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Users\yanik\Documents\cuddly-dollop\Test\res\lib;C:\Files\Programming\cuddly-dollop\Test\res\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Users\yanik\Documents\cuddly-dollop\Test\res\include;C:\Files\Programming\cuddly-dollop\cuddly-dollop\Test\res\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\um;C:\Users\yanik\Documents\cuddly-dollop\Test\res\include;C:\Files\Programming\cuddly-dollop\cuddly-dollop\Test\res\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Users\yanik\Documents\cuddly-dollop\Test\res\lib;C:\Files\Programming\cuddly-dollop\cuddly-dollop\Test\res\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Users\yanik\Documents\cuddly-dollop\Test\res\include;C:\Files\Programming\cuddly-dollop\Test\res\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\um;C:\Users\yanik\Documents\cuddly-dollop\Test\res\include;C:\Files\Programming\cuddly-dollop\Test\res\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Users\yanik\Documents\cuddly-dollop\Test\res\lib;C:\Files\Programming\cuddly-dollop\Test\res\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Users\yanik\Documents\cuddly-dollop\Test\res\include;C:\Files\Programming\cuddly-dollop\cuddly-dollop\Test\res\include;$(IncludePath)</IncludePath>
+    <IncludePath>C:\Program Files (x86)\Windows Kits\10\Include\10.0.15063.0\um;C:\Users\yanik\Documents\cuddly-dollop\Test\res\include;C:\Files\Programming\cuddly-dollop\cuddly-dollop\Test\res\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Users\yanik\Documents\cuddly-dollop\Test\res\lib;C:\Files\Programming\cuddly-dollop\cuddly-dollop\Test\res\include;$(LibraryPath)</LibraryPath>
     <TargetName>$(ProjectName)</TargetName>
   </PropertyGroup>
@@ -353,6 +353,9 @@
     <None Include="shaders\shadow_map.fs" />
     <None Include="shaders\shadow_map.vs" />
     <None Include="shaders\transparency.fs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\sprites\special\ghost_shiny_blue.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

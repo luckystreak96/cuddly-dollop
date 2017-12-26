@@ -88,7 +88,7 @@ bool GraphicsComponent::LoadExternalResources()
 {
 	if (!ResourceManager::GetInstance().LoadTexture(m_texture))
 	{
-		std::cout << "Texture failed to load!" << std::endl;
+		std::cout << "Texture '" << m_texture << "' could not load" << std::endl;
 		m_external_loaded = false;
 		return false;
 	}

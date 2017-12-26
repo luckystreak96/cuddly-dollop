@@ -24,8 +24,8 @@ class GraphicsComponent : public IComponent, public ResourceUser
 public:
 	void ReceiveMessage(std::vector<std::string> msg);
 
-	GraphicsComponent(std::string modelName = "TILE", std::string texPath = std::string("res/mushroom.png"));
-	GraphicsComponent(std::vector<Vertex>* verts, std::vector<GLuint>* inds, std::string texPath = std::string("res/mushroom.png"));
+	GraphicsComponent(std::string modelName = "TILE", std::string texPath = std::string("res/sprites/tiles/mushroom.png"));
+	GraphicsComponent(std::vector<Vertex>* verts, std::vector<GLuint>* inds, std::string texPath = std::string("res/sprites/tiles/mushroom.png"));
 	~GraphicsComponent();
 	void FullReset(std::vector<Vertex>* verts, std::vector<GLuint>* inds);
 	void Construct();

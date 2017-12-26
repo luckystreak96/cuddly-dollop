@@ -10,6 +10,9 @@ Texture* ResourceManager::GetTexture(std::string texture)
 
 bool ResourceManager::LoadTexture(std::string tex)
 {
+	if (tex == "")
+		return false;
+
 	static std::mutex mutex;
 	mutex.lock();
 	if (m_textures.count(tex) > 0)

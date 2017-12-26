@@ -668,4 +668,14 @@
     <None Include="shaders\fade.fs" />
     <None Include="res\data\3.json" />
   </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Cuddly-dollop.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\sprites\special\ghost_shiny_blue.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
 </Project>

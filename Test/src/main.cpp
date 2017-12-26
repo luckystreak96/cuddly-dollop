@@ -6,6 +6,7 @@
 int main(int argc, char** argv)
 {
 	GLFWManager manager = GLFWManager();
+	FreeConsole();
 	manager.GLFWMainLoop();
 
     return 0;

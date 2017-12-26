@@ -25,6 +25,9 @@ public:
 	bool Unload();
 	bool IsValid();
 
+	unsigned char* GetPixels();
+	void CleanUpPixelData();
+
 	void Bind(GLenum TextureUnit);
 public:
 	bool loaded = false;
@@ -34,6 +37,7 @@ private:
 	GLenum m_textureTarget;
 	GLuint m_textureId;
 	const char* m_filename;
+	std::string m_filenameS;
 };
 
 #endif

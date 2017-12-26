@@ -12,13 +12,13 @@ FBO::FBO(int width, int height, int depthBufferType) {
 	status = glCheckFramebufferStatusEXT(GL_FRAMEBUFFER_EXT);
 	if (status != GL_FRAMEBUFFER_COMPLETE_EXT)
 	{
-		int i = 0;
+		std::cout << "Frambuffer not completed!" << std::endl;
 	}
 
-	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-	{
-		int i = 3422;
-	}//std::cout << "\n Error:: FrameBufferObject::Initialize() :: FBO loading not complete \n";
+	//if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+	//{
+	//	std::cout << "Frambuffer not loaded properly!" << std::endl;
+	//}//std::cout << "\n Error:: FrameBufferObject::Initialize() :: FBO loading not complete \n";
 
 }
 
@@ -33,7 +33,7 @@ FBO::~FBO()
 * Deletes the frame buffer and its attachments when the game closes.
 */
 void FBO::cleanUp() {
-	glDeleteFramebuffers(1, &frameBuffer);
+	glDeleteFramebuffersEXT(1, &frameBuffer);
 	glDeleteTextures(1, &colourTexture);
 	glDeleteTextures(1, &depthTexture);
 	glDeleteRenderbuffers(1, &depthBuffer);
@@ -45,7 +45,7 @@ void FBO::cleanUp() {
 * rendered after this will be rendered to this FBO, and not to the screen.
 */
 void FBO::bindFrameBuffer() {
-	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, frameBuffer);
+	glBindFramebufferEXT(GL_DRAW_FRAMEBUFFER, frameBuffer);
 	//glEnable(GL_BLEND);
 	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	//glDrawBuffer(GL_COLOR_ATTACHMENT0);
@@ -63,7 +63,7 @@ void FBO::bindFrameBuffer() {
 * screen, and not this FBO.
 */
 void FBO::unbindFrameBuffer() {
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glBindFramebufferEXT(GL_FRAMEBUFFER, 0);
 	glBindTexture(GL_TEXTURE_2D, 0);
 	//int w, h;
 	//glfwGetWindowSize(GLFWManager::m_window, &w, &h);
@@ -76,7 +76,7 @@ void FBO::unbindFrameBuffer() {
 */
 void FBO::bindToRead() {
 	glBindTexture(GL_TEXTURE_2D, 0);
-	glBindFramebuffer(GL_READ_FRAMEBUFFER, frameBuffer);
+	glBindFramebufferEXT(GL_READ_FRAMEBUFFER, frameBuffer);
 	glReadBuffer(GL_COLOR_ATTACHMENT0);
 }
 
@@ -121,8 +121,8 @@ void FBO::initialiseFrameBuffer(int type) {
 *
 */
 void FBO::createFrameBuffer() {
-	glGenFramebuffers(1, &frameBuffer);
-	glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
+	glGenFramebuffersEXT(1, &frameBuffer);
+	glBindFramebufferEXT(GL_FRAMEBUFFER, frameBuffer);
 	glDrawBuffer(GL_COLOR_ATTACHMENT0);
 	//glDisable(GL_DEPTH_TEST);
 	//glEnable(GL_BLEND);
@@ -141,7 +141,7 @@ void FBO::createTextureAttachment() {
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, colourTexture,
+	glFramebufferTexture2DEXT(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, colourTexture,
 		0);
 }
 
@@ -156,7 +156,7 @@ void FBO::createDepthTextureAttachment() {
 		GL_FLOAT, nullptr);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthTexture, 0);
+	glFramebufferTexture2DEXT(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthTexture, 0);
 }
 
 /**
@@ -175,7 +175,7 @@ void FBO::resetTextures(int width, int height)
 	m_width = width;
 	m_height = height;
 
-	glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
+	glBindFramebufferEXT(GL_FRAMEBUFFER, frameBuffer);
 
 	glDeleteTextures(1, &colourTexture);
 	glDeleteRenderbuffers(1, &depthBuffer);
@@ -187,7 +187,7 @@ void FBO::resetTextures(int width, int height)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, colourTexture, 0);
+	glFramebufferTexture2DEXT(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, colourTexture, 0);
 
 	if (m_depthBufferType == FBO::DEPTH_TEXTURE)
 	{
@@ -199,7 +199,7 @@ void FBO::resetTextures(int width, int height)
 			GL_FLOAT, nullptr);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthTexture, 0);
+		glFramebufferTexture2DEXT(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthTexture, 0);
 	}
 
 	glGenRenderbuffers(1, &depthBuffer);

@@ -5,7 +5,6 @@
 #include "basicEffect.h"
 #include "fadeEffect.h"
 #include "combineEffect.h"
-#include "post_processing_screen.h"
 
 class Fade
 {

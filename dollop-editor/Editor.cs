@@ -232,7 +232,7 @@ namespace dollop_editor
 
                 map.tiles = tiles;
                 map.entities = ents;
-                File.WriteAllText(filename, JsonConvert.SerializeObject(map, Formatting.Indented, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
+                File.WriteAllText(filename, JsonConvert.SerializeObject(map, Formatting.Indented, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }).Replace("\r", "").Replace("\\r", ""));
             }
             catch (Exception e)
             {
@@ -311,7 +311,7 @@ namespace dollop_editor
             }
             catch (Exception e)
             {
-                MessageBox.Show("Error loading file : " + e.Message);
+                MessageBox.Show("Error loading file : " + e.Message + "\n" + e.StackTrace);
             }
 
             return true;
