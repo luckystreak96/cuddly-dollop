@@ -1,4 +1,5 @@
 #include "entity.h"
+#include "define.h"
 
 Entity::Entity(unsigned int id, std::string spritesheet, bool playerInput, bool fullSize) : m_id(id), m_hasEvents(false), m_fullSize(fullSize)
 {

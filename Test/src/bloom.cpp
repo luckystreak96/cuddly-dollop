@@ -1,4 +1,5 @@
 #include "bloom.h"
+#include "glfwBackend.h"
 
 Bloom::Bloom() : m_width(1), m_height(1)
 {
@@ -10,8 +11,10 @@ Bloom::Bloom() : m_width(1), m_height(1)
 
 void Bloom::Begin()
 {
-	int current_window_width = glutGet(GLUT_WINDOW_WIDTH);
-	int current_window_height = glutGet(GLUT_WINDOW_HEIGHT);
+	int w, h;
+	glfwGetWindowSize(GLFWManager::m_window, &w, &h);
+	int current_window_width = w;
+	int current_window_height = h;
 
 	//If the window size changes, the fbo texture sizes need to adjust
 	if (m_width != current_window_width || m_height != current_window_height)

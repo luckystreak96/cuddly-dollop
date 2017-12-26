@@ -17,7 +17,7 @@ bool Fade::IsDone()
 
 void Fade::Begin()
 {
-	m_fadeProgress += m_fadeIn ? 0.06f : -0.06;
+	m_fadeProgress += m_fadeIn ? 0.06f : -0.06f;
 	FadeEffect::GetInstance().Enable();
 	FadeEffect::GetInstance().SetFade(m_fadeProgress);
 }

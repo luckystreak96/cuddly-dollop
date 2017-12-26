@@ -124,11 +124,11 @@ void Music::ResetLocation(Vector3f& spawnPos, bool firstSpawn)
 	{
 		position.x = -10;
 		position.y = -10;
-		counter = rand() % 180;
+		counter = (float)(rand() % 180);
 	}
 	else
 	{
-		counter = rand() % 20;
+		counter = (float)(rand() % 20);
 		position.x = spawnPos.x;
 		position.y = spawnPos.y;
 		velocity.y = fmod(((float)rand() / 1000.0f), 0.02f);

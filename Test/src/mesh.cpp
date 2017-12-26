@@ -1,4 +1,5 @@
 #include "mesh.h"
+#include "define.h"
 
 Mesh::Mesh(unsigned int atlasSize) : m_texAtlas(TextureAtlas(atlasSize))
 {

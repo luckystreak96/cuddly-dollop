@@ -2,8 +2,6 @@
 #define FBO_H__
 
 #include <gl/glew.h>
-#include "define_gl.h"
-//#include "drawable.h"
 
 class FBO
 {

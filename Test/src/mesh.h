@@ -10,7 +10,6 @@
 #include "model.h"
 #include "math.h"
 #include "array2d.h"
-#include "define.h"
 #include <vector>
 #include <map>
 #include "textureatlas.h"

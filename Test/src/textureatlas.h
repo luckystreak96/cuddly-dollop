@@ -1,6 +1,5 @@
 #ifndef TEXTUREATLAS_H__
 #define TEXTUREATLAS_H__
-#include "define.h"
 #include <string>
 #include <map>
 #include <IL/ilu.h>

@@ -3,12 +3,41 @@
 #include "game.h"
 #include "input_manager.h"
 
+static bool FullScreen = true;
+GLFWwindow* GLFWManager::m_window = NULL;;
+
+void Resize(GLFWwindow* window)
+{
+	//Setup viewport to fit the window size
+	int w, h;
+	glfwGetWindowSize(window, &w, &h);
+	glViewport(0, 0, (GLsizei)(w), (GLsizei)(h));
+	OrthoProjInfo::GetRegularInstance().Bottom = -(h / 2.0f);
+	OrthoProjInfo::GetRegularInstance().Top = (h / 2.0f);
+	OrthoProjInfo::GetRegularInstance().Left = -(w / 2.0f);
+	OrthoProjInfo::GetRegularInstance().Right = (w / 2.0f);
+	OrthoProjInfo::GetRegularInstance().changed = true;
+}
+
 static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, GLFW_TRUE);
 
+	if (key == GLFW_KEY_F11 && action == GLFW_RELEASE)
+	{
+		GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+		const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+		glfwSetWindowMonitor(window, FullScreen ? NULL : monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
+		FullScreen = !FullScreen;
+	}
+
 	InputManager::GetInstance().Input((unsigned int)key, action);
+}
+
+static void window_size_callback(GLFWwindow* window, int width, int height)
+{
+	Resize(window);
 }
 
 GLFWManager::GLFWManager()
@@ -36,17 +65,18 @@ GLFWManager::GLFWManager()
 
 	// Set fullscreen, call again with null monitor to set windowed
 	GLFWmonitor* monitor = glfwGetPrimaryMonitor();
-	int width, height;
 	const GLFWvidmode* mode = glfwGetVideoMode(monitor);
 	m_screenWidth = mode->width;
 	m_screenHeight = mode->height;
+	m_refreshRate = mode->refreshRate;
 
-	glfwSetWindowMonitor(m_window, monitor, 0, 0, m_screenWidth, m_screenHeight, mode->refreshRate);
+	glfwSetWindowMonitor(m_window, monitor, 0, 0, m_screenWidth, m_screenHeight, m_refreshRate);
 
 	glfwMakeContextCurrent(m_window);
 
 	// Key callback
 	glfwSetKeyCallback(m_window, key_callback);
+	glfwSetWindowSizeCallback(m_window, window_size_callback);
 
 	// GLEW init
 	GLenum res = glewInit();
@@ -68,7 +98,7 @@ GLFWManager::GLFWManager()
 
 	printf("GL version: %s\n", glGetString(GL_VERSION));
 
-	Resize();
+	Resize(m_window);
 }
 
 void GLFWManager::GLFWMainLoop()
@@ -83,21 +113,11 @@ void GLFWManager::GLFWMainLoop()
 
 	while (!glfwWindowShouldClose(m_window))
 	{
+		glfwPollEvents();
 		game->renderSceneCB();
 		glfwSwapBuffers(m_window);
-		glfwPollEvents();
 	}
-}
 
-void GLFWManager::Resize()
-{
-	//Setup viewport to fit the window size
-	int w, h;
-	glfwGetWindowSize(m_window, &w, &h);
-	glViewport(0, 0, (GLsizei)(w), (GLsizei)(h));
-	OrthoProjInfo::GetRegularInstance().Bottom = -(h / 2.0f);
-	OrthoProjInfo::GetRegularInstance().Top = (h / 2.0f);
-	OrthoProjInfo::GetRegularInstance().Left = -(w / 2.0f);
-	OrthoProjInfo::GetRegularInstance().Right = (w / 2.0f);
-	OrthoProjInfo::GetRegularInstance().changed = true;
+	glfwDestroyWindow(m_window);
+	glfwTerminate();
 }

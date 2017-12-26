@@ -112,7 +112,7 @@ void Font::SetupMesh(float xBndry, float yBndry)
 			}
 
 			// If the \n count was larger than the
-			if (numBSN > s.size())
+			if ((size_t)numBSN > s.size())
 				words.push_back("\n");
 		}
 		else
@@ -196,7 +196,7 @@ void Font::SetupMesh(float xBndry, float yBndry)
 
 void Font::AddWordToMesh(std::string word, float x, float y)
 {
-	for (int i = 0; i < (int)word.size(); i++)
+	for (unsigned int i = 0; i < (int)word.size(); i++)
 	{
 		char c = i >= m_messageProgress.size() ? ' ' : m_messageProgress.at(i);
 		unsigned int index = CharToCode(c);

@@ -1,10 +1,9 @@
 #ifndef TEXTURE_H__
 #define TEXTURE_H__
 
-#include <GL/glew.h>
-#include <GL/freeglut.h>
 #include <iostream>
 #include <string>
+#include <GL/glew.h>
 #include <IL/il.h>
 #include <IL/ilu.h>
 #include <IL/ilut.h>
@@ -15,26 +14,26 @@ class Texture
 {
 public:
 	Texture(GLuint texID, GLenum target = GL_TEXTURE_2D);
-   Texture(GLenum TextureTarget, char* FileName);
-   Texture(GLenum TextureTarget, const char* FileName);
-   ~Texture();
+	Texture(GLenum TextureTarget, char* FileName);
+	Texture(GLenum TextureTarget, const char* FileName);
+	~Texture();
 
-   bool LoadFromFile();
-   void LoadGL();
+	bool LoadFromFile();
+	void LoadGL();
 
-   bool Load();
-   bool Unload();
-   bool IsValid();
+	bool Load();
+	bool Unload();
+	bool IsValid();
 
-   void Bind(GLenum TextureUnit);
+	void Bind(GLenum TextureUnit);
 public:
-   bool loaded = false;
+	bool loaded = false;
 private:
 	ILuint m_texId;
 	bool m_isValid;
-   GLenum m_textureTarget;
-   GLuint m_textureId;
-   const char* m_filename;
+	GLenum m_textureTarget;
+	GLuint m_textureId;
+	const char* m_filename;
 };
 
 #endif

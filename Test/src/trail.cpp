@@ -1,4 +1,5 @@
 #include "trail.h"
+#include "glfwBackend.h"
 
 Trail::Trail() : m_width(1), m_height(1)
 {
@@ -12,8 +13,10 @@ Trail::Trail() : m_width(1), m_height(1)
 
 void Trail::Begin()
 {
-	int current_window_width = glutGet(GLUT_WINDOW_WIDTH);
-	int current_window_height = glutGet(GLUT_WINDOW_HEIGHT);
+	int w, h;
+	glfwGetWindowSize(GLFWManager::m_window, &w, &h);
+	int current_window_width = w;
+	int current_window_height = h;
 
 	//If the window size changes, the fbo texture sizes need to adjust
 	if (m_width != current_window_width || m_height != current_window_height)
@@ -189,8 +192,8 @@ void Trail::End()
 void Trail::ResetTextureSizes()
 {
 	m_fbo.resetTextures(m_width, m_height);
-	m_gaussH.resetTextures(m_width / m_divisor, m_height / m_divisor);
-	m_gaussV.resetTextures(m_width / m_divisor, m_height / m_divisor);
+	m_gaussH.resetTextures((int)((float)m_width / m_divisor), (int)((float)m_height / m_divisor));
+	m_gaussV.resetTextures((int)((float)m_width / m_divisor), (int)(float)(m_height / m_divisor));
 	m_trans.resetTextures(m_width, m_height);
 	for (auto x : m_frames)
 		x.resetTextures(m_width, m_height);

@@ -2,7 +2,6 @@
 #define SHADOW_MAP_FBO_H__
 
 #include <GL/glew.h>
-#include <GL/freeglut.h>
 #include <stdio.h>
 #include "effect.h"
 

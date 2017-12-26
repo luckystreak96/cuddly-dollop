@@ -139,7 +139,7 @@ DialogueResponse DialogueGraph::SendInput(InputType it)
 	}
 	else if (it == IT_Down)
 	{
-		if (m_selectedChoice != -1 && m_selectedChoice + 1 < choices.size())
+		if (m_selectedChoice != -1 && m_selectedChoice + 1 < (int)choices.size())
 			m_selectedChoice++;
 	}
 
@@ -173,6 +173,9 @@ DialogueType DialogueGraph::StringToDialogueType(std::string s)
 		break;
 	case 'c':
 		return Choice;
+		break;
+	default:
+		return Simple;
 		break;
 	}
 }

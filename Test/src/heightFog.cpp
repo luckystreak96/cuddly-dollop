@@ -1,4 +1,5 @@
 #include "heightFog.h"
+#include "glfwBackend.h"
 
 HeightFog::HeightFog() : m_width(1), m_height(1)
 {
@@ -10,8 +11,10 @@ HeightFog::HeightFog() : m_width(1), m_height(1)
 
 void HeightFog::Begin()
 {
-	int current_window_width = glutGet(GLUT_WINDOW_WIDTH);
-	int current_window_height = glutGet(GLUT_WINDOW_HEIGHT);
+	int w, h;
+	glfwGetWindowSize(GLFWManager::m_window, &w, &h);
+	int current_window_width = w;
+	int current_window_height = h;
 
 	//If the window size changes, the fbo texture sizes need to adjust
 	if (m_width != current_window_width || m_height != current_window_height)
@@ -134,7 +137,7 @@ void HeightFog::End(Vector3f playerPos)
 void HeightFog::ResetTextureSizes()
 {
 	m_fbo.resetTextures(m_width, m_height);
-	m_gaussH.resetTextures(m_width / m_divisor, m_height / m_divisor);
+	m_gaussH.resetTextures((float)m_width / m_divisor, (float)m_height / m_divisor);
 	m_gaussV.resetTextures(m_width / m_divisor, m_height / m_divisor);
 	m_fog.resetTextures(m_width, m_height);
 }

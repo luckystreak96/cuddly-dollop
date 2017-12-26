@@ -78,19 +78,19 @@ void MapHandler::FinalizeSetup()
 	for (auto t : m_tiles)
 	{
 		t->Physics()->Update();
-		int tx = t->Physics()->Position().x;
+		int tx = (int)t->Physics()->Position().x;
 		if (tx > x)
 			x = tx;
-		int ty = t->Physics()->Position().y;
+		int ty = (int)t->Physics()->Position().y;
 		if (ty > y)
 			y = ty;
-		int tz = t->Physics()->Position().z;
+		int tz = (int)t->Physics()->Position().z;
 		if (tz > z)
 			z = tz;
 	}
 
 	// +1 to add the size of the tile as well
-	m_mapSize = Vector3f(x + 1, y + 1, z);
+	m_mapSize = Vector3f((float)x + 1.f, (float)y + 1.f, (float)z);
 }
 
 MapHandler::~MapHandler()

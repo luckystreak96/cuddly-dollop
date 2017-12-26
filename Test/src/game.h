@@ -8,42 +8,29 @@
 #include <vector>
 
 #include <GL/glew.h>//duh
-#include <GL/freeglut.h>//duh
 
 #include "textureatlas.h"
-#include "callbacks.h"
-#include "glutBackend.h"
-#include "array2d.h"
-#include "shadowMapFBO.h"
-#include "define.h"
 #include "scenes.h"
 #include "input_manager.h"
 
-class Game : public ICallBacks
+class Game
 {
-    public:
-        Game();
-        ~Game();
+public:
+	Game();
+	~Game();
 
-        void renderSceneCB();
-        void specialKeyboardCB(int key, int x, int y);
-		void keyboardUpCB(unsigned char key, int x, int y);
-		void specialKeyboardUpCB(int key, int x, int y);
-		void windowResizeCB(int w, int h);
-        void KeyBoardCB(unsigned char key);
+	void renderSceneCB();
+	void HandleInput();
 
-		void HandleInput();
-		void MuteButton();
+	void MuteButton();
 
-        bool init(float width, float height);
-        void run();
-		void SetupTextureAtlas();
-    private:
-		float m_shadowMapSize;
-		int m_numFrames;
-		bool m_muted;
-		bool m_exit;
-		bool m_isFullscreen = IS_FULLSCREEN;
+	bool init(float width, float height);
+	void SetupTextureAtlas();
+private:
+	float m_shadowMapSize;
+	int m_numFrames;
+	bool m_muted;
+	bool m_exit;
 };
 
 #endif

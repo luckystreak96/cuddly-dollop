@@ -164,17 +164,17 @@ void GraphicsComponent::Draw(bool withTex)
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO);
 	glDrawElements(GL_TRIANGLES, (GLsizei)m_indices.size() /** sizeof(GLuint)*/, GL_UNSIGNED_INT, 0);
 
-	if (Globals::DEBUG_DRAW_NORMALS)
-	{
-		glBegin(GL_LINES);
-		glColor3f(1.0, 1.0, 1.0);
-		for (Vertex& v : m_vertices)
-		{
-			glVertex3f(v.vertex.x, v.vertex.y, v.vertex.z);
-			glVertex3f(v.vertex.x + v.normal.x, v.vertex.y + v.normal.y, v.vertex.z + v.normal.z);
-		}
-		glEnd();
-	}
+	//if (Globals::DEBUG_DRAW_NORMALS)
+	//{
+	//	glBegin(GL_LINES);
+	//	glColor3f(1.0, 1.0, 1.0);
+	//	for (Vertex& v : m_vertices)
+	//	{
+	//		glVertex3f(v.vertex.x, v.vertex.y, v.vertex.z);
+	//		glVertex3f(v.vertex.x + v.normal.x, v.vertex.y + v.normal.y, v.vertex.z + v.normal.z);
+	//	}
+	//	glEnd();
+	//}
 
 	for (int i = 8; i >= 0; i--)//5 to 0
 		glDisableVertexAttribArray(i);
@@ -237,7 +237,7 @@ void GraphicsComponent::SetDefaults(std::string name)
 	{
 		m_originalVertices.push_back(
 			Vertex(Vector3f(verts[x * 3], verts[x * 3 + 1], verts[x * 3 + 2]),
-				Vector2f(x * 2 < tex.size() ? tex[x * 2] : 0, x * 2 + 1 < tex.size() ? tex[x * 2 + 1] : 0)));
+				Vector2f(x * 2 < (int)tex.size() ? tex[x * 2] : 0, x * 2 + 1 < (int)tex.size() ? tex[x * 2 + 1] : 0)));
 	}
 
 	std::vector<GLuint> indices = Model::GetInstance().getIndices();

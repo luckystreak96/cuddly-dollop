@@ -4,23 +4,13 @@
 #include <iostream>
 #include "scene.h"
 #include "transform.h"
-#include "array2d.h"
-#include "elapsedTime.h"
-#include "glutBackend.h"
 #include "resource_manager.h"
 #include "input_manager.h"
-#include <gl/freeglut.h>
-#include "basicEffect.h"
-#include "bloomEffect.h"
-#include "combineEffect.h"
-#include "transparencyEffect.h"
-#include "animation.h"
 #include "bloom.h"
 #include "graphicsComponent.h"
 #include "entity.h"
 #include "map_handler.h"
 #include "soundManager.h"
-#include "heightFog.h"
 #include "renderer.h"
 #include "font.h"
 #include "fontManager.h"
@@ -75,8 +65,6 @@ private:
 	Vector3f m_backupTrans;
 	Bloom m_bloom;
 	Fade m_fade;
-	//ParticleGenerator m_particles;
-	HeightFog m_fog;
 };
 
 #endif

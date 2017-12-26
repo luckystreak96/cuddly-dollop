@@ -1,6 +1,8 @@
 #include "scene_world.h"
 #include "gameData.h"
 #include "define_gl.h"
+#include "basicEffect.h"
+#include "elapsedTime.h"
 
 
 SceneGenData SceneWorld::NextScene = SceneGenData();
@@ -14,11 +16,6 @@ SceneWorld::SceneWorld(unsigned int map_id) : m_acceptInput(false), m_currentMap
 
 bool SceneWorld::Init()
 {
-	//SoundManager::GetInstance().CreateBuffer("res/audio/fx/washeslow.wav");
-	//unsigned int m_source = SoundManager::GetInstance().CreateSource();
-	//SoundManager::GetInstance().CreateBuffer("res/audio/fx/swish_2.wav");
-	//SoundManager::GetInstance().Play(m_source, "res/audio/fx/swish_2.wav");
-
 	NextScene = SceneGenData();
 	m_jsonHandler = std::shared_ptr<JsonHandler>(new JsonHandler(m_currentMap));
 
@@ -160,7 +157,6 @@ SceneGenData SceneWorld::Act()
 
 void SceneWorld::Draw()
 {
-	//ShadowMapPass();
 	RenderPass();
 }
 
@@ -307,8 +303,6 @@ void SceneWorld::RenderPass()
 	}
 
 	m_World->SetTranslation(m_backupTrans);
-
-	//GLUTBackendSwapBuffers();
 }
 
 void SceneWorld::SetAudioPosition()
@@ -349,6 +343,7 @@ void SceneWorld::SetOrthoStuffs()
 	Vector3f temp = m_backupTrans;
 	temp.x *= OrthoProjInfo::GetRegularInstance().Size;
 	temp.y *= OrthoProjInfo::GetRegularInstance().Size;
+
 	// Floor so we dont move the camera half a pixel and fuck up the graphics
 	temp.x = floorf(temp.x);
 	temp.y = floorf(temp.y);

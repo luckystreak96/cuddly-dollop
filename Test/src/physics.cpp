@@ -1,4 +1,5 @@
 #include "physics.h"
+#include "define.h"
 
 namespace Physics
 {
@@ -25,7 +26,7 @@ namespace Physics
 			r.P1 = v.vertex;
 
 
-			for (int u = 0; u < co2.inds.size(); u += 3)
+			for (size_t u = 0; u < co2.inds.size(); u += 3)
 			{
 				Triangle t = Triangle();
 				t.V0 = co2.verts[co2.inds[u]].vertex;

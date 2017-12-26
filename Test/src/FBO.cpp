@@ -1,4 +1,6 @@
 #include "FBO.h"
+#include "define_gl.h"
+#include "glfwBackend.h"
 
 FBO::FBO(int width, int height, int depthBufferType) {
 	m_width = width;
@@ -48,8 +50,8 @@ void FBO::bindFrameBuffer() {
 	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	//glDrawBuffer(GL_COLOR_ATTACHMENT0);
 	//glBindTexture(GL_TEXTURE_2D, colourTexture);
-	//float w = glutGet(GLUT_WINDOW_WIDTH);
-	//float h = glutGet(GLUT_WINDOW_HEIGHT);
+	//int w, h;
+	//glfwGetWindowSize(GLFWManager::m_window, &w, &h);
 	//float r = w / h;
 	//glViewport(0, 0, m_width, m_height);
 	//glViewport(0, 0, (GLsizei)(WINDOW_WIDTH * RATIO), (GLsizei)(WINDOW_HEIGHT * RATIO));
@@ -63,7 +65,9 @@ void FBO::bindFrameBuffer() {
 void FBO::unbindFrameBuffer() {
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glBindTexture(GL_TEXTURE_2D, 0);
-	//glViewport(0, 0, glutGet(GLUT_WINDOW_WIDTH), glutGet(GLUT_WINDOW_HEIGHT));
+	//int w, h;
+	//glfwGetWindowSize(GLFWManager::m_window, &w, &h);
+	//glViewport(0, 0, w, h);
 	//glViewport(0, 0, (GLsizei)(WINDOW_WIDTH * RATIO), (GLsizei)(WINDOW_HEIGHT * RATIO));
 }
 

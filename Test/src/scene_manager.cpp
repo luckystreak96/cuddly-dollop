@@ -1,5 +1,7 @@
 #include "scene_manager.h"
 #include "scene_world.h"
+#include <string>
+#include <iostream>
 
 void SceneManager::SetScene(std::shared_ptr<Scene> s)
 {
@@ -27,5 +29,10 @@ std::shared_ptr<Scene> SceneManager::CreateScene(SceneGenData sgd)
 	{
 	case ST_World:
 		return std::shared_ptr<Scene>(new SceneWorld(sgd.id));
+	default:
+		std::cout << "No map specified for change! Error! Loading map 1!" << std::endl;
+		std::string wait;
+		std::getline(std::cin, wait);
+		return std::shared_ptr<Scene>(new SceneWorld(1));
 	}
 }

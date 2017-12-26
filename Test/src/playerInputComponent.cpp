@@ -28,5 +28,4 @@ void PlayerInputComponent::Update()
 	bool right = InputManager::GetInstance().FrameKeyStatus(GLFW_KEY_RIGHT) || InputManager::GetInstance().FrameKeyStatus('D');
 
 	m_phys->ActionMove(up, down, left, right);
-	//if(InputManager::GetInstance().FrameKeyStatus(GLUT_KEY_UP + InputManager::SpecialKeyValue, ))
 }

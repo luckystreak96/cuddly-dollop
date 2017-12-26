@@ -1,7 +1,6 @@
 #ifndef INPUT_MANAGER_H__
 #define INPUT_MANAGER_H__
 
-#include "array2d.h"
 #include <list>
 #include <map>
 #include <vector>

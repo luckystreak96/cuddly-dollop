@@ -77,7 +77,7 @@ EventUpdateResponse DialogueBox::UpdateEvent(double elapsedTime, std::map<unsign
 	// Update the font
 	Font::Update(elapsedTime);
 
-	for (int i = 0; i < m_choices.size(); i++)
+	for (unsigned int i = 0; i < m_choices.size(); i++)
 	{
 		if (m_dialogueGraph->SelectedChoice() == i)
 			m_choices.at(i)->GetGraphics()->SetTexture("res/fonts/selected.png");

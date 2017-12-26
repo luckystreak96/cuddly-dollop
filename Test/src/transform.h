@@ -4,7 +4,6 @@
 #include "vector3f.h"
 #include "mat4f.h"
 #include "mathutils.h"
-#include "define_gl.h"
 
 class Transformation
 {

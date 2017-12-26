@@ -2,7 +2,6 @@
 #define ENTITY_H__
 
 #include <vector>
-#include "define.h"
 #include "iComponent.h"
 #include "physicsComponent.h"
 #include "playerPhysicsComponent.h"

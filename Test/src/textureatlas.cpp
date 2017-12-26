@@ -1,4 +1,5 @@
 #include "textureatlas.h"
+#include "define.h"
 
 TextureAtlas TextureAtlas::m_textureAtlas = TextureAtlas(128);
 

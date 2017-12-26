@@ -1,7 +1,6 @@
 #ifndef PHYSICS_H__
 #define PHYSICS_H__
 
-#include "define.h"
 #include <string>
 #include <gl/glew.h>
 #define _USE_MATH_DEFINES

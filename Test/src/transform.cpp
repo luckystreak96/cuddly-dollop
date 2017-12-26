@@ -1,4 +1,5 @@
 #include "transform.h"
+#include "define_gl.h"
 
 Transformation::Transformation()
 {

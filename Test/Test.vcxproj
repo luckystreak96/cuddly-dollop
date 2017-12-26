@@ -78,7 +78,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>C:\Users\yanik\Documents\cuddly-dollop\Test\res\include;C:\Files\Programming\cuddly-dollop\cuddly-dollop\Test\res\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\yanik\Documents\cuddly-dollop\Test\res\lib;C:\Files\Programming\cuddly-dollop\cuddly-dollop\Test\res\include;$(LibraryPath)</LibraryPath>
+    <LibraryPath>C:\Users\yanik\Documents\cuddly-dollop\Test\res\lib;C:\Files\Programming\cuddly-dollop\cuddly-dollop\Test\res\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -97,13 +97,13 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Files\Programming\cuddly-dollop\Test\res\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\yanik\Documents\cuddly-dollop\Test\res\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/std:c++latest</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>ilut.lib;ilu.lib;openal32.lib;alut.lib;devil.lib;glew32.lib;freeglut.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ilut.lib;ilu.lib;openal32.lib;alut.lib;devil.lib;glew32.lib;glu32.lib;opengl32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -111,13 +111,13 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\yanik\Documents\cuddly-dollop\Test\res\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/std:c++latest</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>ilut.lib;ilu.lib;openal32.lib;alut.lib;devil.lib;glew32.lib;freeglut.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ilut.lib;ilu.lib;openal32.lib;alut.lib;devil.lib;glew32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -128,7 +128,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>C:\Files\Programming\cuddly-dollop\Test\res\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Users\yanik\Documents\cuddly-dollop\Test\res\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/std:c++latest</AdditionalOptions>
     </ClCompile>
     <Link>
@@ -136,7 +136,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>ilut.lib;ilu.lib;openal32.lib;alut.lib;devil.lib;glew32.lib;freeglut.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ilut.lib;ilu.lib;openal32.lib;alut.lib;devil.lib;glew32.lib;glu32.lib;opengl32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -152,13 +152,14 @@
       <InlineFunctionExpansion>Default</InlineFunctionExpansion>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <AdditionalOptions>/std:c++latest</AdditionalOptions>
+      <AdditionalIncludeDirectories>C:\Users\yanik\Documents\cuddly-dollop\Test\res\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
       <OptimizeReferences>false</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>ilut.lib;ilu.lib;openal32.lib;alut.lib;devil.lib;glew32.lib;freeglut.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>ilut.lib;ilu.lib;openal32.lib;alut.lib;devil.lib;glew32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <LinkTimeCodeGeneration>Default</LinkTimeCodeGeneration>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
     </Link>
@@ -173,7 +174,6 @@
     <ClInclude Include="src\bloomEffect.h" />
     <ClInclude Include="src\blurEffect.h" />
     <ClInclude Include="src\blur_framebuffer.h" />
-    <ClInclude Include="src\callbacks.h" />
     <ClInclude Include="src\collisionManager.h" />
     <ClInclude Include="src\combineEffect.h" />
     <ClInclude Include="src\define.h" />
@@ -208,7 +208,6 @@
     <ClInclude Include="src\game.h" />
     <ClInclude Include="src\gameData.h" />
     <ClInclude Include="src\glfwBackend.h" />
-    <ClInclude Include="src\glutBackend.h" />
     <ClInclude Include="src\graphicsComponent.h" />
     <ClInclude Include="src\heightEffect.h" />
     <ClInclude Include="src\heightFog.h" />
@@ -294,7 +293,6 @@
     <ClCompile Include="src\game.cpp" />
     <ClCompile Include="src\gameData.cpp" />
     <ClCompile Include="src\glfwBackend.cpp" />
-    <ClCompile Include="src\glutBackend.cpp" />
     <ClCompile Include="src\graphicsComponent.cpp" />
     <ClCompile Include="src\heightEffect.cpp" />
     <ClCompile Include="src\heightFog.cpp" />

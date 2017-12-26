@@ -16,7 +16,7 @@ EventManager::~EventManager()
 
 void EventManager::Update(double elapsedTime)
 {
-	for (int k = 0; k < m_queues.size(); k++)
+	for (size_t k = 0; k < m_queues.size(); k++)
 	{
 		std::shared_ptr<EventQueue> temp = std::shared_ptr<EventQueue>(new EventQueue(-69));
 		std::shared_ptr<EventQueue> q = m_queues.at(k);
@@ -32,7 +32,7 @@ void EventManager::Update(double elapsedTime)
 		bool allDone = true;
 
 		// Keep track of i to use it after the loop
-		int i = 0;
+		unsigned int i = 0;
 
 		if (GameData::RespectsCondition(q))
 		{
@@ -81,7 +81,7 @@ void EventManager::Update(double elapsedTime)
 				// If repeat is on, send it to the back of the queue
 				if (q->IsRepeating())
 				{
-					for (int i = 0; i < q->Count(); i++)
+					for (unsigned int i = 0; i < q->Count(); i++)
 					{
 						if (q->Get(0)->GetExecutionMode() == BLOCKING)
 						{
@@ -126,7 +126,7 @@ void EventManager::PushBack(std::shared_ptr<EventQueue> ev)
 	{
 		if (ev->Flag == "" || GameData::RespectsCondition(ev) || ev->GetActivationType() == AT_Autorun)
 		{
-			for (int i = 0; i < ev->Count(); i++)
+			for (unsigned int i = 0; i < ev->Count(); i++)
 				ev->Get(i)->ResetEvent();
 			m_queues.push_back(ev);
 		}
@@ -135,7 +135,7 @@ void EventManager::PushBack(std::shared_ptr<EventQueue> ev)
 
 void EventManager::RemoveLock(std::shared_ptr<IEvent> ev)
 {
-	int i = 0;
+	size_t i = 0;
 	for (i; i < m_locks.size(); i++)
 		if (m_locks.at(i).get() == ev.get())
 			break;
@@ -155,7 +155,7 @@ void EventManager::Erase(unsigned int queueIndex)
 	}
 
 	//Remove all events from the lock
-	for (int e = 0; e < q->Count(); e++)
+	for (unsigned int e = 0; e < q->Count(); e++)
 	{
 		std::shared_ptr<IEvent> ev = q->Get(e);
 		RemoveLock(ev);

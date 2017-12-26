@@ -5081,13 +5081,15 @@
       "x": 20.0,
       "y": 9.0,
       "z": 4.0,
-      "sprite": "snowman.png"
+      "sprite": "snowman.png",
+      "walkOn": false
     },
     {
       "x": 20.0,
       "y": 7.0,
       "z": 4.0,
-      "sprite": "snowman.png"
+      "sprite": "snowman.png",
+      "walkOn": false
     },
     {
       "x": 27.0,
@@ -5105,13 +5107,15 @@
       "x": 10.0,
       "y": 4.0,
       "z": 4.0,
-      "sprite": "snowman.png"
+      "sprite": "snowman.png",
+      "walkOn": false
     },
     {
       "x": 12.0,
       "y": 4.0,
       "z": 4.0,
-      "sprite": "snowman.png"
+      "sprite": "snowman.png",
+      "walkOn": false
     }
   ],
   "entities": [
@@ -5651,8 +5655,8 @@
     {
       "id": 10,
       "player": false,
-      "ethereal": false,
-      "full_size": false,
+      "ethereal": true,
+      "full_size": true,
       "sprite": "",
       "x": 20.0,
       "y": 9.0,
