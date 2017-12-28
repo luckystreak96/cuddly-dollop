@@ -8,11 +8,12 @@
 class EventParticle : public IEvent
 {
 public:
-	EventParticle(int particleCount, ParticleType type, unsigned int entity_id);
+	EventParticle(int particleCount, ParticleType type, unsigned int entity_id, std::string sprite_override = "");
 	~EventParticle() {}
 	EventUpdateResponse UpdateEvent(double elapsedTime, std::map<unsigned int, std::shared_ptr<Entity>>* ents);
 	void ResetEvent();
 	void SetMapSize(Vector3f mapsize);
+	void SetPower(float power);
 
 private:
 	//unsigned int m_target;
@@ -20,7 +21,9 @@ private:
 	ParticleGenerator m_particles;
 	Vector3f m_mapSize;
 	ParticleType m_particleType;
+	std::string m_sprite;
 	unsigned int m_count;
+	float m_power;
 };
 
 #endif // !DIALOGUE_BOX_H__

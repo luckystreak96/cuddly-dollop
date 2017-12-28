@@ -213,7 +213,7 @@ namespace dollop_editor
             if (txtArg.Text == "true")
                 return true;
             if (txtArg.Text == "false")
-                return true;
+                return false;
             return text;
         }
 

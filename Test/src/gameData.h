@@ -14,18 +14,17 @@
 class GameData
 {
 public:
-	//GameData();
-	//~GameData();
-
-public:
 	static void LoadFromFile();
 	static void SaveToFile();
+	static void SaveGameData();
+	static void SaveSettings();
 	static void EmplaceFlag(std::string name, int value);
 	static bool RespectsCondition(std::shared_ptr<EventQueue> ev);
 	
 public:
 	static std::string PlayerSprite;
 	static std::map<std::string, int> Flags;
+	//static std::map<std::string, int> Flags;
 	
 	
 private:

@@ -123,8 +123,9 @@ void Font::SetupMesh(float xBndry, float yBndry)
 	}
 
 	// Letter position
-	m_x = 0;
-	m_y = 0;
+	float offset = 0.5f;
+	m_x = offset;
+	m_y = offset;
 
 	unsigned int progress = 0;
 	// This string is message but without \n's in it because
@@ -140,7 +141,7 @@ void Font::SetupMesh(float xBndry, float yBndry)
 		if (w == "\n")
 		{
 			m_y -= 0.5f;
-			m_x = 0;
+			m_x = offset;
 		}
 		// Is the word too big to fit in the first place?
 		else if (w.size() * LetterSpacing > xBndry)
@@ -154,7 +155,7 @@ void Font::SetupMesh(float xBndry, float yBndry)
 		{
 			// Increment y and start on new line
 			m_y -= 0.5f;
-			m_x = 0;
+			m_x = offset;
 
 			AddWordToMesh(w + " ", m_x, m_y);
 			newmessage += w + " ";

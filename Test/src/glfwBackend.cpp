@@ -67,9 +67,10 @@ GLFWManager::GLFWManager()
 	}
 
 	// Window icon
-	ResourceManager::GetInstance().LoadTexture("res/sprites/special/ghost_shiny_blue.png");
-	ResourceManager::GetInstance().LoadGLTexture("res/sprites/special/ghost_shiny_blue.png");
-	Texture* tex = ResourceManager::GetInstance().GetTexture("res/sprites/special/ghost_shiny_blue.png");
+	std::string text = "res/sprites/special/ghost_shiny_blue.png";
+	ResourceManager::GetInstance().LoadTexture(text);
+	ResourceManager::GetInstance().LoadGLTexture(text);
+	Texture* tex = ResourceManager::GetInstance().GetTexture(text);
 	GLFWimage image = GLFWimage();
 	image.width = 32;
 	image.height = 32;
@@ -101,7 +102,13 @@ GLFWManager::GLFWManager()
 		exit(1);
 	}
 
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	glClearStencil(0x0);
+	glEnable(GL_STENCIL_TEST);
+	glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+	//glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
+	//glStencilMask(0x00);
+
+	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

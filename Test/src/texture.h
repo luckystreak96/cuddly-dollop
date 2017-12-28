@@ -26,7 +26,6 @@ public:
 	bool IsValid();
 
 	unsigned char* GetPixels();
-	void CleanUpPixelData();
 
 	void Bind(GLenum TextureUnit);
 public:

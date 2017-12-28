@@ -86,8 +86,9 @@ void GameData::LoadFromFile()
 		PlayerSprite = m_document["sprite"].GetString();
 }
 
-void GameData::SaveToFile()
+void GameData::SaveGameData()
 {
+	//============ GAME SAVE FILE ===============
 	Document saveFile;
 	saveFile.SetObject();
 
@@ -115,4 +116,41 @@ void GameData::SaveToFile()
 	Writer<FileWriteStream> writer(os);
 	saveFile.Accept(writer);
 	fclose(fp);
+}
+void GameData::SaveSettings()
+{
+	//============ CONFIG SAVE FILE ===============
+	Document configFile;
+	configFile.SetObject();
+
+	Document::AllocatorType& allocator = configFile.GetAllocator();
+
+	Value flags(kArrayType);
+	for (auto x : Flags)
+	{
+		Value ob(kObjectType);
+		Value first(kStringType);
+		first.SetString(StringRef(x.first.c_str()), allocator);
+		Value second;
+		second.SetInt(x.second);
+
+		ob.AddMember(first, second, allocator);
+		flags.PushBack(ob, allocator);
+	}
+
+	configFile.AddMember("flags", flags, allocator);
+	configFile.AddMember("sprite", StringRef(PlayerSprite.c_str()), allocator);
+
+	FILE* fp = fopen("res/data/save", "wb"); // non-Windows use "w"
+	char writeBuffer[65536];
+	FileWriteStream os(fp, writeBuffer, sizeof(writeBuffer));
+	Writer<FileWriteStream> writer(os);
+	configFile.Accept(writer);
+	fclose(fp);
+}
+
+void GameData::SaveToFile()
+{
+	SaveGameData();
+	SaveSettings();
 }

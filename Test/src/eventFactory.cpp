@@ -120,13 +120,17 @@ std::shared_ptr<IEvent> EventFactory::BuildEvent(EventTypes et, std::map<std::st
 		str = args.count("type") ? std::get<std::string>(args.at("type")) : "snow";
 		result = std::shared_ptr<IEvent>(new EventWeather(args.count("count") ? std::get<int>(args.at("count")) : 50,
 			ParticleFromString.count(str) ? ParticleFromString.at(str) : PT_Snow,
-			map->GetMapSize()));
+			map->GetMapSize(),
+			args.count("smooth") ? std::get<bool>(args.at("smooth")) : false));
 		break;
 	case EventTypes::ET_Particle:
 		str = args.count("type") ? std::get<std::string>(args.at("type")) : "music";
 		result = std::shared_ptr<IEvent>(new EventParticle(args.count("count") ? std::get<int>(args.at("count")) : 50,
 			ParticleFromString.count(str) ? ParticleFromString.at(str) : PT_Music,
-			id));
+			id,
+			args.count("sprite") ? std::get<std::string>(args.at("sprite")) : ""));
+		if (args.count("power"))
+			dynamic_cast<EventParticle*>(result.get())->SetPower(GetFloat(args.at("power")));
 		break;
 	case EventTypes::ET_CallQueue:
 		result = std::shared_ptr<IEvent>(new EventCaller(id, args.count("queue_id") ? std::get<int>(args.at("queue_id")) : 0));

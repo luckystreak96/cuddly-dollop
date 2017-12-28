@@ -1,12 +1,14 @@
 #include "particleGenerator.h"
 #include "define.h"
 
-ParticleGenerator::ParticleGenerator() : m_mesh(Mesh())
+ParticleGenerator::ParticleGenerator() : m_mesh(Mesh()), m_power(2.0f), completed(false)
 {
 
 }
 
-Particle::Particle() : physics(PhysicsComponent(Vector3f(0, 0, 0.6f), "CENTERED_TILE")), texture("snowflake.png"), position(Vector3f(0, 0, 0.6f))
+Particle::Particle()
+	: physics(PhysicsComponent(Vector3f(0, 0, 0.6f), "CENTERED_PARTICLE_TILE")),
+	texture("snowflake.png"), position(Vector3f(0, 0, 0.6f)), done(false)
 {
 }
 
@@ -16,27 +18,31 @@ Particle::Particle() : physics(PhysicsComponent(Vector3f(0, 0, 0.6f), "CENTERED_
 void Snow::Update(Vector3f& zoneSize)
 {
 	velocity.x = sin(counter * 3.0f) / 20.0f;
-	position += velocity;
+	position += velocity * ElapsedTime::GetInstance().GetElapsedTime() * 60.0;
 	if (position.y < -1 || position.x < -2 || position.x > zoneSize.x + 2)
 		ResetLocation(zoneSize);
 	counter += 0.01f;
 };
 
-Snow::Snow(Vector3f zoneSize)
+Snow::Snow(Vector3f zoneSize, bool smooth)
 {
 	texture = "snowflake.png";
-	ResetLocation(zoneSize, true);
+	ResetLocation(zoneSize, true, smooth);
 }
 
 
-void Snow::ResetLocation(Vector3f& zoneSize, bool firstSpawn)
+void Snow::ResetLocation(Vector3f& zoneSize, bool firstSpawn, bool smooth)
 {
 	if (zoneSize.x == 0 || zoneSize.y == 0)
 		return;
-	if (firstSpawn)
+	if (firstSpawn || smooth)
 		counter = fmod(((float)rand() / 100.0f), 1.0f);
+
+	if (smooth)
+		firstSpawn = false;
+
 	position.x = fmod(((float)rand() / 10.0f), zoneSize.x + 2.0f) - 2.0f;
-	position.y = rand() % ((firstSpawn ? (int)zoneSize.y : 5)) + (firstSpawn ? 0 : zoneSize.y);
+	position.y = rand() % ((firstSpawn ? (int)zoneSize.y * 2 : (int)zoneSize.y)) + (firstSpawn ? 0 : zoneSize.y);
 	velocity.y = -fmod(((float)rand() / 1000.0f), 0.03f) - 0.03f;
 	float value = fmod(((float)rand() / 1000.0f), 0.1f);
 	velocity.x = (rand() % 2) == 0 ? value : -value;
@@ -53,16 +59,16 @@ void Snow::SetTrans(Transformation& trans)
 
 void Rain::Update(Vector3f& zoneSize)
 {
-	position += velocity;
+	position += velocity * ElapsedTime::GetInstance().GetElapsedTime() * 60.0;
 	if (/*rand() % 20 == 0 || */position.y < -1.0f || position.x < -4.0f || position.x > zoneSize.x + 1)
 		ResetLocation(zoneSize);
 	counter -= 0.01f;
 };
 
-Rain::Rain(Vector3f& zoneSize, std::string tex)
+Rain::Rain(Vector3f& zoneSize, std::string tex, bool smooth)
 {
 	texture = tex;
-	ResetLocation(zoneSize, true);
+	ResetLocation(zoneSize, true, smooth);
 	velocity.x = fmod((float)rand() / 10, 0.03f) + 0.04f;
 }
 
@@ -81,8 +87,11 @@ void Rain::SetTrans(Transformation& trans)
 }
 
 
-void Rain::ResetLocation(Vector3f& zoneSize, bool firstSpawn)
+void Rain::ResetLocation(Vector3f& zoneSize, bool firstSpawn, bool smooth)
 {
+	if (smooth)
+		firstSpawn = false;
+
 	counter = fmod(((float)rand() / 100.0f), 1.0f);
 	position.x = fmod(((float)rand() / 10.0f), zoneSize.x + 4.0f) - 4.0f;
 	position.y = rand() % ((firstSpawn ? (int)zoneSize.y : 10)) + (firstSpawn ? 0 : zoneSize.y);
@@ -95,7 +104,7 @@ void Rain::ResetLocation(Vector3f& zoneSize, bool firstSpawn)
 
 void Music::Update(Vector3f& spawnPos)
 {
-	position += velocity;
+	position += velocity * ElapsedTime::GetInstance().GetElapsedTime() * 60.0;
 	if (counter > 180)
 	{
 		counter = 0;
@@ -104,10 +113,10 @@ void Music::Update(Vector3f& spawnPos)
 	counter += 1;
 };
 
-Music::Music(Vector3f& spawnPos, std::vector<std::string> tex)
+Music::Music(Vector3f& spawnPos, std::vector<std::string> tex, bool smooth)
 {
 	textures = tex;
-	ResetLocation(spawnPos, true);
+	ResetLocation(spawnPos, true, smooth);
 	velocity.x = fmod((float)rand() / 10, 0.02f) + 0.01f;
 }
 
@@ -117,7 +126,7 @@ void Music::SetTrans(Transformation& trans)
 }
 
 
-void Music::ResetLocation(Vector3f& spawnPos, bool firstSpawn)
+void Music::ResetLocation(Vector3f& spawnPos, bool firstSpawn, bool smooth)
 {
 	texture = textures.at(rand() % textures.size());
 	if (firstSpawn)
@@ -135,7 +144,62 @@ void Music::ResetLocation(Vector3f& spawnPos, bool firstSpawn)
 	}
 }
 
-void ParticleGenerator::Init(ParticleType c, unsigned int num_particles, Vector3f zoneSize, std::string tex)
+//========= EXPLOSION ============
+
+void Explosion::Update(Vector3f& spawnpos)
+{
+	position += velocity * ElapsedTime::GetInstance().GetElapsedTime() * 60.0;
+	velocity.x *= 0.95f;
+	velocity.y += 0.0005f;
+	if (counter >= 60)
+		done = true;//ResetLocation(spawnpos);
+	else
+		counter += 1.f;
+};
+
+Explosion::Explosion(Vector3f& spawnPos, std::string tex, bool smooth, float pow)
+{
+	if (tex == "")
+		texture = "dust.png";
+	else
+		texture = tex;
+
+	power = pow;
+	ResetLocation(spawnPos, true, smooth);
+}
+
+void Explosion::SetTrans(Transformation& trans)
+{
+	//if (texture == "rain.png")
+	//{
+	//	trans.SetRotation(0, 0, velocity.x);
+	//	trans.SetScale(Vector3f(0.12f, 0.6f, 1.0f));
+	//}
+	//else
+	//{
+	trans.SetRotation(counter / 60.f, 0, counter / 4.f);
+	float value = 0.1f * counter;
+	float scale = (36.f - value * value) / 36.f;
+	if (scale < 0)
+		int lol = 69;
+	trans.SetScale(Vector3f(0.5f * scale, 0.5f * scale, 1.0f));
+	//}
+}
+
+
+void Explosion::ResetLocation(Vector3f& spawnPos, bool firstSpawn, bool smooth)
+{
+	counter = 0;
+	position.x = spawnPos.x;
+	position.y = spawnPos.y;
+	velocity.x = (fmod((float)rand() / 1000.f, power) - power / 2.f);
+	velocity.x = velocity.x < 0 ? min(velocity.x, -0.02f) : max(velocity.x, 0.02f);
+	velocity.y = fmod(((float)rand() / 1000.0f), 0.06f) - 0.03f;
+}
+
+//========= PARTICLE GENERATOR ============
+
+void ParticleGenerator::Init(ParticleType c, unsigned int num_particles, Vector3f zoneSize, bool smooth, std::string tex)
 {
 	m_zoneSize = zoneSize;
 
@@ -144,7 +208,7 @@ void ParticleGenerator::Init(ParticleType c, unsigned int num_particles, Vector3
 	{
 	case PT_Snow:
 		for (unsigned int i = 0; i < num_particles; i++)
-			m_particles.push_back(std::shared_ptr<Particle>(new Snow(zoneSize)));
+			m_particles.push_back(std::shared_ptr<Particle>(new Snow(zoneSize, smooth)));
 		break;
 	case PT_Rain:
 		for (unsigned int i = 0; i < num_particles; i++)
@@ -157,6 +221,10 @@ void ParticleGenerator::Init(ParticleType c, unsigned int num_particles, Vector3
 	case PT_Music:
 		for (unsigned int i = 0; i < num_particles; i++)
 			m_particles.push_back(std::shared_ptr<Particle>(new Music(zoneSize)));
+		break;
+	case PT_Explosion:
+		for (unsigned int i = 0; i < num_particles; i++)
+			m_particles.push_back(std::shared_ptr<Particle>(new Explosion(zoneSize, "dust.png", false, m_power)));
 		break;
 	default:
 		for (unsigned int i = 0; i < num_particles; i++)
@@ -199,8 +267,16 @@ void ParticleGenerator::SetupMesh()
 
 void ParticleGenerator::LogicUpdate()
 {
+	int count = 0;
 	for (auto d : m_particles)
+	{
 		d->Update(m_zoneSize);
+		if (d->done)
+			count++;
+	}
+
+	if (count == m_particles.size())
+		completed = true;
 
 	//INEFFICIENT BECAUSE THE MATRIX NEEDS TO BE SENT 4 TIMES - 1 PER VERTEX
 	//THE PURPOSE OF THIS IS SO THAT THE VERTEX SHADER CAN KNOW THE Y COORD OF THE BITCH AND CHANGE
@@ -253,4 +329,9 @@ unsigned int ParticleGenerator::Size()
 Vector3f ParticleGenerator::GetRange()
 {
 	return m_zoneSize;
+}
+
+void ParticleGenerator::SetPowerLevel(float power)
+{
+	m_power = power;
 }

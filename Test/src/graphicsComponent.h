@@ -40,6 +40,8 @@ public:
 	void SetTexture(std::string newTex);
 	std::vector<Mat4f>& GetMModels();
 	void InsertMModels(Transformation& t);
+	void UpdateMModels();
+	void UpdateTranslation();
 	Vector3f& GetPos() { return m_pos; }
 	GLuint GetMVBO() { return m_VBO; }
 	Vector3f GetPosition();
@@ -77,6 +79,7 @@ protected:
 	std::string m_modelName;
 	bool m_external_loaded = false;
 	bool m_GL_loaded = false;
+	bool m_outline;
 	Transformation m_modelMat;
 	Vector3f m_vel = Vector3f();
 	Vector3f m_rot = Vector3f(0, 0, 0);

@@ -10,15 +10,19 @@
 
 class Bloom {
 public:
-	Bloom();
-
+	static Bloom& GetInstance()
+	{
+		static Bloom instance;
+		return instance;
+	}
 	void Begin();
 	void End(bool dark);
 	void ResetTextureSizes();
 
 private:
+	Bloom();
 	//Decides how much to blur
-	const float m_divisor = 2.0f;
+	const float m_divisor = 4.0f;
 
 	int m_width;
 	int m_height;

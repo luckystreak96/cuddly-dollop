@@ -1,6 +1,7 @@
 #include "effect.h"
 
 float* Effect::m_prevWorld = NULL;
+GLuint Effect::m_prevShaderProgram = 0;
 GLuint Effect::m_currentShaderProgram = 0;
 
 Effect::Effect()
@@ -57,6 +58,7 @@ void Effect::Enable(GLuint program)
 	if (m_currentShaderProgram != program)
 		glUseProgram(program);
 
+	m_prevShaderProgram = m_currentShaderProgram;
 	m_currentShaderProgram = program;
 }
 

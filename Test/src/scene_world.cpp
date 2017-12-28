@@ -3,15 +3,21 @@
 #include "define_gl.h"
 #include "basicEffect.h"
 #include "elapsedTime.h"
+#include "singleColorEffect.h"
+#include "effectManager.h"
 
 
 SceneGenData SceneWorld::NextScene = SceneGenData();
 
-SceneWorld::SceneWorld(unsigned int map_id) : m_acceptInput(false), m_currentMap(map_id), m_drawinited(false)
+SceneWorld::SceneWorld(unsigned int map_id) : m_acceptInput(false), m_currentMap(map_id), m_drawinited(false), m_zoom(false)
 {
 	Init();
 	SoundManager::GetInstance();
 	m_fade.SetFade(true);
+	static bool firstEverLoad = true;
+	if (firstEverLoad)
+		m_fade.ForceFadeValue(-0.5f);
+	firstEverLoad = false;
 }
 
 bool SceneWorld::Init()
@@ -24,7 +30,7 @@ bool SceneWorld::Init()
 	OrthoProjInfo::GetRegularInstance().changed = true;
 	m_World = std::shared_ptr<Transformation>(new Transformation());
 
-	BasicEffect::GetInstance();
+	//BasicEffect::GetInstance();
 
 	m_pause = false;
 	m_acceptInput = true;
@@ -44,9 +50,11 @@ bool SceneWorld::Init()
 		m_player->Graphics()->SetTexture(GameData::PlayerSprite);
 	}
 
+#ifdef _DEBUG
 	//m_fontTitle = FontManager::GetInstance().AddFont(false, false);
-	//m_fontFPS = FontManager::GetInstance().AddFont(true, false, true);
-	//FontManager::GetInstance().SetScale(m_fontFPS, 0.5f, 0.5f);
+	m_fontFPS = FontManager::GetInstance().AddFont(true, false, true);
+	FontManager::GetInstance().SetScale(m_fontFPS, 0.5f, 0.5f);
+#endif
 
 	// Autorun events
 	for (auto e : m_celist)
@@ -112,6 +120,15 @@ void SceneWorld::ManageInput()
 
 	if (InputManager::GetInstance().FrameKeyStatus('P', AnyRelease))
 		m_pause = !m_pause;
+
+	if (InputManager::GetInstance().FrameKeyStatus('Z', AnyRelease))
+	{
+		m_zoom = !m_zoom;
+		float value = m_zoom ? 2.0f : 1.0f;
+		m_World->SetScale(value, value, 1);
+		for (int i = 0; i < 30; i++)
+			m_World->Follow(m_player->Physics()->Position(), m_mapHandler->GetMapSize());
+	}
 
 	static float bloomint = 0.3f;
 	if (InputManager::GetInstance().FrameKeyStatus('U')) {
@@ -215,6 +232,7 @@ SceneGenData SceneWorld::Update()
 	Interact();
 	m_eventManager.Update(ElapsedTime::GetInstance().GetElapsedTime());
 
+
 	if (next != NextScene)
 		m_fade.SetFade(false);
 
@@ -243,7 +261,9 @@ SceneGenData SceneWorld::Update()
 		m_World->Follow(m_player->Physics()->Position(), m_mapHandler->GetMapSize());
 
 	//Display FPS
-	//FontManager::GetInstance().SetText(m_fontFPS, std::to_string(ElapsedTime::GetInstance().GetFPS()), Vector3f(0, OrthoProjInfo::GetRegularInstance().Top / 32.0f - 0.5f, 0));
+#ifdef _DEBUG
+	FontManager::GetInstance().SetText(m_fontFPS, std::to_string(ElapsedTime::GetInstance().GetFPS()), Vector3f(0, OrthoProjInfo::GetRegularInstance().Top / 32.0f - 0.5f, 0));
+#endif
 
 	srand(clock());
 	FontManager::GetInstance().Update(ElapsedTime::GetInstance().GetElapsedTime());
@@ -253,16 +273,21 @@ SceneGenData SceneWorld::Update()
 
 void SceneWorld::RenderPass()
 {
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+	glStencilMask(0xFF);
+	glClearStencil(0x00);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+	glStencilMask(0x00);
 
 	SetOrthoStuffs();
 
-	BasicEffect::GetInstance().Enable();
+	EffectManager::GetInstance().SetWorldTrans(*m_World->GetWOTrans().m);
+	EffectManager::GetInstance().ResetWorldUpdateFlag();
+
+	EffectManager::GetInstance().Enable(E_Basic);
 
 	// Set the renders
 	m_mapHandler->SetRender();
-	//m_particles.SetRender();
 
 	for (auto it : m_celist)
 		it.second->SetRender();
@@ -271,36 +296,34 @@ void SceneWorld::RenderPass()
 	if (!m_fade.IsDone())
 		m_fade.Begin();
 
-	Effect::SetWorldPosition(*m_World->GetWOTrans().m);
-
 	// BLOOM
 	if (m_bloomEffect)
-		m_bloom.Begin();
+		Bloom::GetInstance().Begin();
 
 	// DRAW
 	Renderer::GetInstance().Draw();
 
 	// BLOOM END
 	if (m_bloomEffect)
-		m_bloom.End(false);
+		Bloom::GetInstance().End(false);
 
 	//Debug tile outline drawing
-	if (Globals::DEBUG_DRAW_TILE_OUTLINES)
-	{
-		glBegin(GL_LINES);
-		glColor3f(1.0, 0.0, 0.0);
-		for (int x = 1; x < 32; x++)
-		{
-			glVertex3f((GLfloat)x, (GLfloat)0, (GLfloat)-8);
-			glVertex3f((GLfloat)x, (GLfloat)18, (GLfloat)-8);
-		}
-		for (int y = 1; y < 18; y++)
-		{
-			glVertex3f((GLfloat)0, (GLfloat)y, (GLfloat)-8);
-			glVertex3f((GLfloat)32, (GLfloat)y, (GLfloat)-8);
-		}
-		glEnd();
-	}
+	//if (Globals::DEBUG_DRAW_TILE_OUTLINES)
+	//{
+	//	glBegin(GL_LINES);
+	//	glColor3f(1.0, 0.0, 0.0);
+	//	for (int x = 1; x < 32; x++)
+	//	{
+	//		glVertex3f((GLfloat)x, (GLfloat)0, (GLfloat)0);
+	//		glVertex3f((GLfloat)x, (GLfloat)18, (GLfloat)0);
+	//	}
+	//	for (int y = 1; y < 18; y++)
+	//	{
+	//		glVertex3f((GLfloat)0, (GLfloat)y, (GLfloat)0);
+	//		glVertex3f((GLfloat)32, (GLfloat)y, (GLfloat)0);
+	//	}
+	//	glEnd();
+	//}
 
 	m_World->SetTranslation(m_backupTrans);
 }
@@ -325,18 +348,18 @@ void SceneWorld::SetOrthoStuffs()
 		m_World->SetOrthoProj(&OrthoProjInfo::GetRegularInstance());
 		m_World->SetTranslation(OrthoProjInfo::GetRegularInstance().Left, OrthoProjInfo::GetRegularInstance().Bottom, 0);
 
-		BasicEffect::GetInstance().Enable();
-		BasicEffect::GetInstance().SetWorldPosition(*m_World->GetWOTrans().m);
-		Effect::SetTileSize(OrthoProjInfo::GetRegularInstance().Size);
-		FadeEffect::GetInstance().Enable();
-		FadeEffect::GetInstance().SetWorldPosition(*m_World->GetWOTrans().m);
-		Effect::SetTileSize(OrthoProjInfo::GetRegularInstance().Size);
+		EffectManager::GetInstance().SetAllTilePositions(OrthoProjInfo::GetRegularInstance().Size);
 
 		for (int i = 0; i < 30; i++)
 			m_World->Follow(m_player->Physics()->Position(), m_mapHandler->GetMapSize());
 
 		OrthoProjInfo::GetRegularInstance().changed = false;
 	}
+
+	static float tempdfdsfs = 0.0f;
+	tempdfdsfs += 0.002f;
+	float value = m_zoom ? 2.0f : 1.0f;
+	m_World->SetScale(value, value, 1);
 
 	m_backupTrans = m_World->GetTranslation();
 

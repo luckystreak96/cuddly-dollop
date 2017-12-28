@@ -6,8 +6,8 @@ DialogueBox::DialogueBox(unsigned int entity_id, std::vector<Dialogue> d, std::v
 	m_dialogueGraph = new DialogueGraph(d, dc);
 	m_target = entity_id;
 
-	m_box = std::shared_ptr<FontGraphicsComponent>(new FontGraphicsComponent("DIALOGUE_BOX", "res/sprites/special/dialogue.png"));
-	m_box->SetPhysics(Vector3f(0, 0, 0.5f), Vector3f(0, 0, 0));
+	m_box = std::shared_ptr<FontGraphicsComponent>(new FontGraphicsComponent("TILE", "res/sprites/special/dialogue.png"));
+	m_box->SetPhysics(Vector3f(0.5f, 0.5f, 0.5f), Vector3f(0, 0, 0));
 	m_box->Update();
 	m_box->SetStatic(true);
 
@@ -42,7 +42,7 @@ void DialogueBox::SetText(std::string text)
 	m_choices.clear();
 	if (m_dialogueGraph && m_dialogueGraph->ChoiceAvailable())
 	{
-		m_y -= m_yScale / 2.0f;
+		m_y -= m_yScale * 1.25f;
 		for (auto x : m_dialogueGraph->GetChoices())
 		{
 			m_y -= m_yScale * 1.25f;
@@ -76,6 +76,7 @@ EventUpdateResponse DialogueBox::UpdateEvent(double elapsedTime, std::map<unsign
 
 	// Update the font
 	Font::Update(elapsedTime);
+	UpdateBox();
 
 	for (unsigned int i = 0; i < m_choices.size(); i++)
 	{
@@ -147,9 +148,18 @@ EventUpdateResponse DialogueBox::UpdateEvent(double elapsedTime, std::map<unsign
 	return eur;
 }
 
+void DialogueBox::UpdateBox()
+{
+	float width = OrthoProjInfo::GetRegularInstance().Right * 2.f / OrthoProjInfo::GetRegularInstance().Size - 1.f;
+	m_box->SetScale(Vector3f(width, 5.f, 0));
+	m_box->Update();
+}
+
+// Deprecated method
 void DialogueBox::Update(double elapsedTime)
 {
 	Font::Update(elapsedTime);
+	m_box->Update();
 
 	// When you press space, set up the textbox to be destroyed next frame
 	if (TextDisplayDone() && InputManager::GetInstance().FrameKeyStatus(' ', KeyStatus::KeyPressed, 1))
@@ -174,8 +184,8 @@ void DialogueBox::SetScale(float xScale, float yScale)
 {
 	Font::SetScale(xScale, yScale);
 
-	m_maxWidth = (OrthoProjInfo::GetRegularInstance().Right / 32.0f) - 1.0f/* / xScale*/;
-	m_maxHeight = 4.0f/* / yScale*/;
+	m_maxWidth = (OrthoProjInfo::GetRegularInstance().Right * 2.f / OrthoProjInfo::GetRegularInstance().Size) - 1.5f/* / xScale*/;
+	m_maxHeight = 4.5f;
 
 	if (m_dialogueGraph != NULL)
 		SetText(m_dialogueGraph->GetCurrentText());

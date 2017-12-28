@@ -13,6 +13,7 @@ public:
 	DialogueBox(unsigned int entity_id, std::vector<Dialogue> d, std::vector<DialogueChoice> dc);
 	~DialogueBox();
 	void Update(double elapsedTime);
+	void UpdateBox();
 	void ResetEvent();
 	EventUpdateResponse UpdateEvent(double elapsedTime, std::map<unsigned int, std::shared_ptr<Entity>>* ents);
 	void Draw();

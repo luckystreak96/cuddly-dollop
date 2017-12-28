@@ -16,6 +16,8 @@ void main()
     //if(texture(gSampler, TexCoord0).a < 0.2)
     //  discard;
     highp vec3 result = texture(gSampler, TexCoord0).rgb * weight[0]; // current fragment's contribution
+    if(result.r == 0.0)
+        discard;
     if(horizontal)
     {
         for(int i = 1; i < 6; ++i)

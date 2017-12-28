@@ -41,7 +41,7 @@ void GraphicsComponent::FullReset(std::vector<Vertex>* verts, std::vector<GLuint
 
 void GraphicsComponent::Construct()
 {
-
+	m_outline = false;
 	m_direction = dir_Down;
 
 	//When this z is small - transparency fucks up????
@@ -78,10 +78,22 @@ GraphicsComponent::GraphicsComponent(std::vector<Vertex>* verts, std::vector<GLu
 
 void GraphicsComponent::Update()
 {
-	m_modelMat.SetTranslation(m_pos);
+	UpdateTranslation();
+	UpdateMModels();
+}
 
+void GraphicsComponent::UpdateMModels()
+{
 	m_mmodels.clear();
 	InsertMModels(m_modelMat);
+}
+
+void GraphicsComponent::UpdateTranslation()
+{
+	if (m_modelName == "CENTERED_TILE")
+		m_modelMat.SetTranslation(m_pos + Vector3f(0.5f, 0.5f, 0));
+	else
+		m_modelMat.SetTranslation(m_pos);
 }
 
 bool GraphicsComponent::LoadExternalResources()
@@ -163,18 +175,6 @@ void GraphicsComponent::Draw(bool withTex)
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO);
 	glDrawElements(GL_TRIANGLES, (GLsizei)m_indices.size() /** sizeof(GLuint)*/, GL_UNSIGNED_INT, 0);
-
-	//if (Globals::DEBUG_DRAW_NORMALS)
-	//{
-	//	glBegin(GL_LINES);
-	//	glColor3f(1.0, 1.0, 1.0);
-	//	for (Vertex& v : m_vertices)
-	//	{
-	//		glVertex3f(v.vertex.x, v.vertex.y, v.vertex.z);
-	//		glVertex3f(v.vertex.x + v.normal.x, v.vertex.y + v.normal.y, v.vertex.z + v.normal.z);
-	//	}
-	//	glEnd();
-	//}
 
 	for (int i = 8; i >= 0; i--)//5 to 0
 		glDisableVertexAttribArray(i);

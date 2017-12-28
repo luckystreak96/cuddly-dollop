@@ -145,34 +145,41 @@ void Transformation::SetFollowSpeed(float percentSpeed)
 //Target is the object that the camera should pan towards
 void Transformation::Follow(Vector3f target, Vector3f upperRightLimit)
 {
-	float distanceX = -target.x - m_translate.x;//find the distance between the 2, -target so that the movement of the world will be proper
-	float distanceY = -target.y - m_translate.y;
+	// Follow the center of the character
+	target.x += 0.5f;
+	target.y += 0.5f;
 
-	float percentage = abs(distanceX) > 15.f || abs(distanceY) > 8.f ? 8.0f : 40.0f;
+	float size = OrthoProjInfo::GetRegularInstance().Size;
+
+	float distanceX = -(target.x * m_scale.x) - m_translate.x;//find the distance between the 2, -target so that the movement of the world will be proper
+	float distanceY = -(target.y * m_scale.y) - m_translate.y;
+
+	float percentagex = abs(distanceX) / 15.f / m_scale.x / 2.f;
+	float percentagey = abs(distanceY) / 10.f / m_scale.x / 2.f;
 
 	// Sets how much the camera will move in this frame
-	m_translate.x += distanceX / (percentage * m_followSpeed);
-	m_translate.y += distanceY / (percentage * m_followSpeed);
+	m_translate.x += distanceX * (percentagex * m_followSpeed);
+	m_translate.y += distanceY * (percentagey * m_followSpeed);
 
 	// If the pan would bring you left further than the left limit OR the map is too small to fit the screen width,
 	//  just pan at the left limit
-	if (m_translate.x - (OrthoProjInfo::GetRegularInstance().Left / OrthoProjInfo::GetRegularInstance().Size) > 0 || 
-		upperRightLimit.x < (OrthoProjInfo::GetRegularInstance().Right / OrthoProjInfo::GetRegularInstance().Size) * 2)
-		m_translate.x = (OrthoProjInfo::GetRegularInstance().Left / OrthoProjInfo::GetRegularInstance().Size);
+	if (m_translate.x - ((OrthoProjInfo::GetRegularInstance().Left) / size) > 0 ||
+		upperRightLimit.x < ((OrthoProjInfo::GetRegularInstance().Right) / size) * 2)
+		m_translate.x = ((OrthoProjInfo::GetRegularInstance().Left) / size);
 	// If the map is big enough for the screen to pan it right and you would normally pass the limits,
 	//  set the pan to the exact right limit
-	else if (abs(m_translate.x - (OrthoProjInfo::GetRegularInstance().Right / OrthoProjInfo::GetRegularInstance().Size)) > upperRightLimit.x)
-		m_translate.x = -(upperRightLimit.x - (OrthoProjInfo::GetRegularInstance().Right / OrthoProjInfo::GetRegularInstance().Size));
+	else if (abs(m_translate.x - ((OrthoProjInfo::GetRegularInstance().Right) / size)) > upperRightLimit.x * m_scale.x)
+		m_translate.x = -(upperRightLimit.x * m_scale.x - ((OrthoProjInfo::GetRegularInstance().Right) / size));
 
 	// If the pan would bring you down further than the bottom OR the map isnt high enough to fill the screen,
 	//  just stay at the bottom
-	if (m_translate.y - (OrthoProjInfo::GetRegularInstance().Bottom / OrthoProjInfo::GetRegularInstance().Size) > 0 || 
-		upperRightLimit.y < (OrthoProjInfo::GetRegularInstance().Top / OrthoProjInfo::GetRegularInstance().Size) * 2)
-		m_translate.y = (OrthoProjInfo::GetRegularInstance().Bottom / OrthoProjInfo::GetRegularInstance().Size);
+	if (m_translate.y - ((OrthoProjInfo::GetRegularInstance().Bottom) / size) > 0 ||
+		upperRightLimit.y < ((OrthoProjInfo::GetRegularInstance().Top) / size) * 2)
+		m_translate.y = ((OrthoProjInfo::GetRegularInstance().Bottom) / size);
 	// If the map is big enough for the screen to pan it upwards and you would normally pass the limits,
 	//  set the pan to the exact top
-	else if (abs(m_translate.y - (OrthoProjInfo::GetRegularInstance().Top / OrthoProjInfo::GetRegularInstance().Size)) > upperRightLimit.y)
-		m_translate.y = -(upperRightLimit.y - (OrthoProjInfo::GetRegularInstance().Top / OrthoProjInfo::GetRegularInstance().Size));
+	else if (abs(m_translate.y - ((OrthoProjInfo::GetRegularInstance().Top) / size)) > upperRightLimit.y * m_scale.y)
+		m_translate.y = -(upperRightLimit.y * m_scale.y - ((OrthoProjInfo::GetRegularInstance().Top) / size));
 }
 
 bool Transformation::operator!=(const Transformation& t)

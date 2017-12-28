@@ -9,10 +9,6 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="Header Files\Effects">
       <UniqueIdentifier>{efe575ae-a245-4be3-8205-7fa06bfebb88}</UniqueIdentifier>
     </Filter>
@@ -375,6 +371,12 @@
     <ClInclude Include="src\glfwBackend.h">
       <Filter>Header Files\Engine</Filter>
     </ClInclude>
+    <ClInclude Include="src\singleColorEffect.h">
+      <Filter>Header Files\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\effectManager.h">
+      <Filter>Header Files\Effects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -614,6 +616,12 @@
     <ClCompile Include="src\glfwBackend.cpp">
       <Filter>Source Files\Engine\Backend</Filter>
     </ClCompile>
+    <ClCompile Include="src\singleColorEffect.cpp">
+      <Filter>Source Files\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\effectManager.cpp">
+      <Filter>Source Files\Effects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\ambientLight.fs">
@@ -667,15 +675,8 @@
     <None Include="res\data\data.json" />
     <None Include="shaders\fade.fs" />
     <None Include="res\data\3.json" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="Cuddly-dollop.rc">
-      <Filter>Resource Files</Filter>
-    </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="res\sprites\special\ghost_shiny_blue.ico">
-      <Filter>Resource Files</Filter>
-    </Image>
+    <None Include="shaders\singleColor.fs">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

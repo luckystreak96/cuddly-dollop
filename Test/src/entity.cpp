@@ -3,8 +3,8 @@
 
 Entity::Entity(unsigned int id, std::string spritesheet, bool playerInput, bool fullSize) : m_id(id), m_hasEvents(false), m_fullSize(fullSize)
 {
-	m_graphicsComponent = !playerInput ? std::shared_ptr<GraphicsComponent>(new PlayerGraphicsComponent(spritesheet, "TILE")) : 
-		std::shared_ptr<GraphicsComponent>(new PlayerGraphicsComponent(spritesheet, "TILE"));
+	m_graphicsComponent = !playerInput ? std::shared_ptr<GraphicsComponent>(new PlayerGraphicsComponent(spritesheet, "CENTERED_TILE")) : 
+		std::shared_ptr<GraphicsComponent>(new PlayerGraphicsComponent(spritesheet, "CENTERED_TILE"));
 	components.push_back(m_graphicsComponent);
 
 	//m_physicsComponent = playerInput ? new PlayerPhysicsComponent(Vector3f(), "TILE", Vector3f(0.9f, 0.4f, -0.45f), Vector3f(1.0f, 0, 0)) : new PlayerPhysicsComponent(Vector3f(), "TILE", Vector3f(0.9f, 0.4f, -0.45f), Vector3f(1.0f, 0, 0));

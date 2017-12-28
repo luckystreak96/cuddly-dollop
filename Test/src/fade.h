@@ -12,6 +12,7 @@ public:
 	Fade();
 	void Begin();
 	void SetFade(bool fadeIn);
+	void ForceFadeValue(float value);
 	bool IsDone();
 private:
 	float m_fadeProgress;

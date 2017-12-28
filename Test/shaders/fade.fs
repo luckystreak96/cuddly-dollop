@@ -14,7 +14,9 @@ void main()
 	if(color.a < 0.1)
 		discard;
 
-	color.xyz *= gFade;
+	//color.xyz -=  1.0 - gFade;
+	highp float temp = clamp(gFade, 0.0, 1.0);
+	color.xyz *= temp;
 
 	FragColor = color;
 }

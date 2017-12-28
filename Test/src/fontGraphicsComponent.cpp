@@ -10,6 +10,11 @@ FontGraphicsComponent::FontGraphicsComponent(std::string model, std::string path
 {
 }
 
+void FontGraphicsComponent::Update()
+{
+	GraphicsComponent::Update();
+}
+
 void FontGraphicsComponent::Draw(bool withTex)
 {
 	// For drawing the font at a fixed location and not be affected by the moving screen

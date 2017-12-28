@@ -1,4 +1,6 @@
 #include "playerGraphicsComponent.h"
+#include "effectManager.h"
+#include "bloom.h"
 
 PlayerGraphicsComponent::PlayerGraphicsComponent(std::string tex, std::string model) : m_firstLoad(true)
 {
@@ -7,13 +9,63 @@ PlayerGraphicsComponent::PlayerGraphicsComponent(std::string tex, std::string mo
 	Construct();
 	Update();
 	m_firstLoad = false;
+	m_outline = false;
 }
 
-void PlayerGraphicsComponent::Draw(bool withTex)
+void PlayerGraphicsComponent::NormalDraw(bool withTex)
 {
 	Effect::SetDrawType(DrawType::DT_ENTITY);
 	GraphicsComponent::Draw(withTex);
 	Effect::SetDrawType(DrawType::DT_FLAT);
+}
+
+void PlayerGraphicsComponent::DrawOutline(bool withTex)
+{
+	glStencilFunc(GL_ALWAYS, 1, 0xFF);
+	glStencilMask(0xFF);
+	glStencilOp(GL_REPLACE, GL_REPLACE, GL_REPLACE);
+
+	Effect::SetDrawType(DrawType::DT_ENTITY);
+	GraphicsComponent::Draw(withTex);
+
+	glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
+	glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+	glStencilMask(0x00);
+	glDisable(GL_DEPTH_TEST);
+	EffectManager::GetInstance().Enable(E_SingleColor);
+	//SingleColorEffect::GetInstance().Enable();
+	Effect::SetDrawType(DrawType::DT_ENTITY);
+	m_modelMat.SetScale(Vector3f(1.1f, 1.1f, 1));
+	UpdateTranslation();
+
+	//Bloom::GetInstance().Begin();
+
+	GraphicsComponent::UpdateMModels();
+	GraphicsComponent::Draw(withTex);
+	
+	//Bloom::GetInstance().End(false);
+
+	glEnable(GL_DEPTH_TEST);
+
+	glStencilFunc(GL_ALWAYS, 1, 0xFF);
+	glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+	m_modelMat.SetScale(Vector3f(1, 1, 1));
+
+	Effect::SetDrawType(DrawType::DT_FLAT);
+	EffectManager::GetInstance().EnablePrevious();
+	Effect::SetDrawType(DrawType::DT_FLAT);
+}
+
+void PlayerGraphicsComponent::Draw(bool withTex)
+{
+	if (m_outline)
+	{
+		DrawOutline(withTex);
+	}
+	else
+	{
+		NormalDraw(withTex);
+	}
 }
 
 

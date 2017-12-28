@@ -53,6 +53,7 @@ private:
 	std::map<unsigned int, std::shared_ptr<Entity>> m_celist;
 	CollisionManager m_collisionManager;
 	bool m_pause;
+	bool m_zoom;
 	bool m_resources_loaded;
 	bool m_acceptInput;
 	bool m_bloomEffect;
@@ -63,7 +64,6 @@ private:
 	unsigned int m_fontTitle;
 	unsigned int m_fontFPS;
 	Vector3f m_backupTrans;
-	Bloom m_bloom;
 	Fade m_fade;
 };
 

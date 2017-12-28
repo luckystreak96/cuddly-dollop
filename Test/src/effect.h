@@ -78,6 +78,7 @@ protected:
 	static GLuint GetUniformLocation(const GLchar* name);
 	GLuint m_shaderProg;
 	static GLuint m_currentShaderProgram;
+	static GLuint m_prevShaderProgram;
 	static float* m_prevWorld;
 private:
 	typedef std::list<GLuint> ShaderObjList;

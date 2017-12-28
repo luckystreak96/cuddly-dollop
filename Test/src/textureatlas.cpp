@@ -75,7 +75,7 @@ bool TextureAtlas::Generate(int textureSize, bool mipmap, std::string filename)
         ILuint texid = it->second.texId;
         if(texid == (ILuint)-1)
         {
-            std::cout << "Loading " << it->first << " (id=" << it->second.texIdx << ")..." << std::endl;
+            //std::cout << "Loading " << it->first << " (id=" << it->second.texIdx << ")..." << std::endl;
             ilGenImages(1, &texid);
             ilBindImage(texid);
 

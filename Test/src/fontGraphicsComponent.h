@@ -10,6 +10,7 @@ public:
 	FontGraphicsComponent(std::string model = "DIALOGUE_BOX", std::string path = "res/sprites/special/dialogue.png");
 	FontGraphicsComponent(std::vector<Vertex>* verts, std::vector<GLuint>* inds, std::string texPath = std::string("res/sprites/entities/mushroom_guy.png"));
 	void Draw(bool withTex = true);
+	void Update();
 	void SetStatic(bool sTatic);
 	void SetScale(Vector3f scale);
 

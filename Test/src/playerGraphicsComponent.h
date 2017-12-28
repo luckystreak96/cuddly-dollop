@@ -12,6 +12,8 @@ public:
 	PlayerGraphicsComponent(std::string tex = "res/entities/player.png", std::string model = "TILE");
 	void Update();
 	void Draw(bool withTex = true);
+	void NormalDraw(bool withTex = true);
+	void DrawOutline(bool withTex = true);
 private:
 	bool m_firstLoad;
 };

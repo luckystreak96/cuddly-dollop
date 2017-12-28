@@ -57,10 +57,6 @@ unsigned char* Texture::GetPixels()
 	return pixels;
 }
 
-void Texture::CleanUpPixelData()
-{
-}
-
 void Texture::LoadGL()
 {
 	if (m_isValid)

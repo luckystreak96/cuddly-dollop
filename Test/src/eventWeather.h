@@ -8,7 +8,7 @@
 class EventWeather : public IEvent
 {
 public:
-	EventWeather(int particleCount, ParticleType type, Vector3f mapsize);
+	EventWeather(int particleCount, ParticleType type, Vector3f mapsize, bool smooth);
 	~EventWeather() {}
 	EventUpdateResponse UpdateEvent(double elapsedTime, std::map<unsigned int, std::shared_ptr<Entity>>* ents);
 	void ResetEvent();
@@ -21,6 +21,7 @@ private:
 	Vector3f m_mapSize;
 	ParticleType m_particleType;
 	unsigned int m_count;
+	bool m_smooth;
 };
 
 #endif // !DIALOGUE_BOX_H__

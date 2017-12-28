@@ -17,7 +17,9 @@ bool Game::init(float width, float height)
 	SetupTextureAtlas();
 
 	// Mute by default
+#ifdef NDEBUG
 	m_muted = false;
+#endif
 	SoundManager::GetInstance().SetMasterVolume(m_muted ? 0.f : 1.f);
 
 	Model::GetInstance().init("res/models/models.data");
@@ -70,7 +72,7 @@ void Game::renderSceneCB()
 
 	if (m_exit)
 	{
-		//GameData::SaveToFile();
+		GameData::SaveToFile();
 		return;
 	}
 

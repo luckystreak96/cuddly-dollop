@@ -165,6 +165,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\effectManager.h" />
     <ClInclude Include="src\animation.h" />
     <ClInclude Include="src\array2d.h" />
     <ClInclude Include="src\array3d.h" />
@@ -242,6 +243,7 @@
     <ClInclude Include="src\scene_manager.h" />
     <ClInclude Include="src\scene_world.h" />
     <ClInclude Include="src\shadowMapFBO.h" />
+    <ClInclude Include="src\singleColorEffect.h" />
     <ClInclude Include="src\soundManager.h" />
     <ClInclude Include="src\texture.h" />
     <ClInclude Include="src\textureatlas.h" />
@@ -253,6 +255,7 @@
     <ClInclude Include="src\vertex.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\effectManager.cpp" />
     <ClCompile Include="src\animation.cpp" />
     <ClCompile Include="src\audioComponent.cpp" />
     <ClCompile Include="src\basicEffect.cpp" />
@@ -323,6 +326,7 @@
     <ClCompile Include="src\scene_manager.cpp" />
     <ClCompile Include="src\scene_world.cpp" />
     <ClCompile Include="src\shadowMapFBO.cpp" />
+    <ClCompile Include="src\singleColorEffect.cpp" />
     <ClCompile Include="src\soundManager.cpp" />
     <ClCompile Include="src\texture.cpp" />
     <ClCompile Include="src\textureatlas.cpp" />
@@ -352,10 +356,8 @@
     <None Include="shaders\shader.vs" />
     <None Include="shaders\shadow_map.fs" />
     <None Include="shaders\shadow_map.vs" />
+    <None Include="shaders\singleColor.fs" />
     <None Include="shaders\transparency.fs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="res\sprites\special\ghost_shiny_blue.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

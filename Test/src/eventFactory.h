@@ -16,7 +16,24 @@
 #include "eventWeather.h"
 #include "eventSound.h"
 
-typedef std::variant<bool, float, int, std::string, std::vector<std::shared_ptr<EventQueue>>, std::map<std::string, std::variant<bool, float, int, std::string, std::vector<std::shared_ptr<EventQueue>>>>> EventArgType;
+class EventTest;
+using EventTestInner = std::variant<bool, std::map<std::string, EventTest>>;
+class EventTest
+{
+public:
+	EventTestInner inner;
+	template<typename T>
+	T get();
+};
+
+template<typename T>
+T EventTest::get()
+{
+	return std::get<T>(inner);
+}
+
+typedef std::variant<bool, float, int, std::string, std::vector<std::shared_ptr<EventQueue>>, 
+	std::map<std::string, std::variant<bool, float, int, std::string, std::vector<std::shared_ptr<EventQueue>>>>> EventArgType;
 
 class MapHandler;
 
