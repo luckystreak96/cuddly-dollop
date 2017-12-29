@@ -10,7 +10,7 @@ Texture* ResourceManager::GetTexture(std::string texture)
 
 bool ResourceManager::LoadTexture(std::string tex)
 {
-	if (tex == "")
+	if (tex == "" || tex[tex.size() - 1] == '\\' || tex[tex.size() - 1] == '/')
 		return false;
 
 	static std::mutex mutex;

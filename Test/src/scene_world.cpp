@@ -76,7 +76,7 @@ bool SceneWorld::Init()
 
 SceneWorld::~SceneWorld()
 {
-	//FontManager::GetInstance().RemoveFont(m_fontFPS);
+	FontManager::GetInstance().RemoveFont(m_fontFPS);
 	//FontManager::GetInstance().RemoveFont(m_fontTitle);
 }
 
@@ -242,7 +242,7 @@ SceneGenData SceneWorld::Update()
 		it.second->Physics()->DesiredMove();
 
 	//Collision
-	std::vector<std::shared_ptr<Entity>> collided = m_collisionManager.CalculateCollision();//Physics_2D::Collision(&m_celist, m_mapHandler);
+	std::vector<std::shared_ptr<Entity>> collided = m_collisionManager.CalculateCollision();
 	for (auto entity : collided)
 	{
 		for (auto x : *entity->GetQueues())

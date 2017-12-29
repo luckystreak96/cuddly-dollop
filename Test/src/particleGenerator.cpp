@@ -170,30 +170,21 @@ Explosion::Explosion(Vector3f& spawnPos, std::string tex, bool smooth, float pow
 
 void Explosion::SetTrans(Transformation& trans)
 {
-	//if (texture == "rain.png")
-	//{
-	//	trans.SetRotation(0, 0, velocity.x);
-	//	trans.SetScale(Vector3f(0.12f, 0.6f, 1.0f));
-	//}
-	//else
-	//{
 	trans.SetRotation(counter / 60.f, 0, counter / 4.f);
 	float value = 0.1f * counter;
 	float scale = (36.f - value * value) / 36.f;
-	if (scale < 0)
-		int lol = 69;
 	trans.SetScale(Vector3f(0.5f * scale, 0.5f * scale, 1.0f));
-	//}
 }
 
 
 void Explosion::ResetLocation(Vector3f& spawnPos, bool firstSpawn, bool smooth)
 {
-	counter = 0;
+	counter = rand() % 10;
 	position.x = spawnPos.x;
 	position.y = spawnPos.y;
 	velocity.x = (fmod((float)rand() / 1000.f, power) - power / 2.f);
-	velocity.x = velocity.x < 0 ? min(velocity.x, -0.02f) : max(velocity.x, 0.02f);
+	// Velocity minimum clamp
+	velocity.x = velocity.x < 0 ? fmin(velocity.x, -0.02f) : fmax(velocity.x, 0.02f);
 	velocity.y = fmod(((float)rand() / 1000.0f), 0.06f) - 0.03f;
 }
 

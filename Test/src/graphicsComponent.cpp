@@ -100,7 +100,9 @@ bool GraphicsComponent::LoadExternalResources()
 {
 	if (!ResourceManager::GetInstance().LoadTexture(m_texture))
 	{
-		std::cout << "Texture '" << m_texture << "' could not load" << std::endl;
+		// If its not something stupid, send error message
+		if (!(m_texture == "" || m_texture[m_texture.size() - 1] == '\\' || m_texture[m_texture.size() - 1] == '/'))
+			std::cout << "Texture '" << m_texture << "' could not load" << std::endl;
 		m_external_loaded = false;
 		return false;
 	}
@@ -126,7 +128,7 @@ bool GraphicsComponent::LoadGLResources()
 	}
 
 	SetBuffers();
-	ResourceManager::GetInstance().LoadGLTexture(m_texture);
+	//ResourceManager::GetInstance().LoadGLTexture(m_texture);
 
 	m_GL_loaded = true;
 	return true;

@@ -35,6 +35,7 @@ SoundManager::SoundManager() : m_bgmSource(0), m_bgmState(BGM_Starting), m_bgmVo
 	//alSource3f(source, AL_VELOCITY, 0, 0, 0);
 	alSourcei(m_bgmSource, AL_LOOPING, AL_TRUE);
 
+	CheckErrors();
 	//CheckErrors();
 
 	//Buffer generation
@@ -85,6 +86,14 @@ SoundManager::SoundManager() : m_bgmSource(0), m_bgmState(BGM_Starting), m_bgmVo
 
 SoundManager::~SoundManager()
 {
+	// Clear buffers
+	for (auto &x : m_buffers)
+		alDeleteSources(1, &x.second.buffer);
+
+	// Clear BGM source
+	alDeleteSources(1, &m_bgmSource);
+
+	// Free AL context
 	m_device = alcGetContextsDevice(m_context);
 	alcMakeContextCurrent(nullptr);
 	alcDestroyContext(m_context);
@@ -104,7 +113,7 @@ void SoundManager::SetBGM(std::string sourceFile)
 	}
 
 	m_bgmState = BGM_Stopping;
-
+	CheckErrors();
 }
 
 void SoundManager::SetSource(unsigned int source, unsigned int buffer)
@@ -135,7 +144,14 @@ void SoundManager::Stop(unsigned int source)
 		return;
 	}
 
-	alSourceStop(source);
+	if (alIsSource(source))
+	{
+		ALint source_state;
+		alGetSourcei(source, AL_SOURCE_STATE, &source_state);
+		if (source_state == AL_PLAYING) {
+			alSourceStop(source);
+		}
+	}
 
 	CheckErrors();
 }
@@ -147,6 +163,8 @@ bool SoundManager::IsPlaying(unsigned int source)
 	if (source_state == AL_PLAYING) {
 		return true;
 	}
+
+	CheckErrors();
 
 	return false;
 }
@@ -173,9 +191,10 @@ void SoundManager::CreateBuffer(std::string path)
 
 void SoundManager::SetListenerPosition(Vector3f pos, Vector3f vel)
 {
-	alListener3f(AL_POSITION, pos.x, pos.y, pos.z);
+	alListener3f(AL_POSITION, (ALfloat)pos.x, (ALfloat)pos.y, (ALfloat)pos.z);
 	//alListener3f(AL_VELOCITY, vel.x, vel.y, vel.z);
 	//CheckErrors();
+	CheckErrors();
 }
 
 void SoundManager::SetListenerOrientation(unsigned int dir)
@@ -198,7 +217,9 @@ void SoundManager::SetListenerOrientation(unsigned int dir)
 
 void SoundManager::DeleteSource(unsigned int source)
 {
-	alDeleteSources((ALsizei)1, &source);
+	if (alIsSource(source))
+		alDeleteSources((ALsizei)1, &source);
+	CheckErrors();
 }
 
 void SoundManager::Update()
@@ -206,7 +227,10 @@ void SoundManager::Update()
 	if (m_bgmState == BGM_Starting)
 	{
 		if (m_bgmVolume < m_bgmMaxVolume)
+		{
 			m_bgmVolume += 0.6f * (float)ElapsedTime::GetInstance().GetElapsedTime();
+			m_bgmVolume = fmin(m_bgmMaxVolume, m_bgmVolume);
+		}
 		else
 		{
 			m_bgmState = BGM_Playing;
@@ -216,19 +240,31 @@ void SoundManager::Update()
 	else if (m_bgmState == BGM_Stopping)
 	{
 		if (m_bgmVolume > 0.0f)
+		{
 			m_bgmVolume -= 0.6f * (float)ElapsedTime::GetInstance().GetElapsedTime();
+			m_bgmVolume = fmax(0.0f, m_bgmVolume);
+		}
 		else
 		{
 			m_bgmVolume = 0;
-			alSourceStop(m_bgmSource);
+
+			ALint source_state;
+			alGetSourcei(m_bgmSource, AL_SOURCE_STATE, &source_state);
+			if (source_state == AL_PLAYING) {
+				alSourceStop(m_bgmSource);
+			}
+			CheckErrors();
+
 			if (m_nextBGM == "")
 				m_bgmState = BGM_Playing;
 			else
 			{
 				m_bgmState = BGM_Starting;
 				SetSource(m_bgmSource, m_buffers.at(m_nextBGM).buffer);
+				CheckErrors();
 
 				alSourcePlay(m_bgmSource);
+				CheckErrors();
 			}
 			m_currentBGM = m_nextBGM;
 			m_nextBGM = "";
@@ -236,6 +272,7 @@ void SoundManager::Update()
 	}
 
 	alSourcef(m_bgmSource, AL_GAIN, m_bgmVolume);
+	CheckErrors();
 }
 
 unsigned int SoundManager::CreateSource()
@@ -260,6 +297,7 @@ unsigned int SoundManager::CreateSource()
 	alSourcef(source, AL_MAX_DISTANCE, 100);
 	//alGetSourcef(source, AL_MAX_DISTANCE, &value);
 	//std::cout << "Max Distance: " << value << std::endl;
+	CheckErrors();
 
 	return source;
 }
@@ -267,26 +305,31 @@ unsigned int SoundManager::CreateSource()
 void SoundManager::SetPitch(unsigned int source, float pitch)
 {
 	alSourcef(source, AL_PITCH, pitch);
+	CheckErrors();
 }
 
 void SoundManager::SetGain(unsigned int source, float gain)
 {
 	alSourcef(source, AL_GAIN, gain);
+	CheckErrors();
 }
 
 void SoundManager::SetPosition(unsigned int source, Vector3f pos)
 {
 	alSource3f(source, AL_POSITION, pos.x, pos.y, pos.z);
+	CheckErrors();
 }
 
 void SoundManager::SetVelocity(unsigned int source, Vector3f vel)
 {
 	alSource3f(source, AL_VELOCITY, vel.x, vel.y, vel.z);
+	CheckErrors();
 }
 
 void SoundManager::SetLoop(unsigned int source, bool loop)
 {
 	alSourcei(source, AL_LOOPING, loop);
+	CheckErrors();
 }
 
 
@@ -302,4 +345,5 @@ void SoundManager::SetMasterVolume(float volume)
 {
 	m_masterVolume = volume;
 	alListenerf(AL_GAIN, m_masterVolume);
+	CheckErrors();
 }
