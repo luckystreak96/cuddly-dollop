@@ -18,6 +18,13 @@ EventUpdateResponse EventTeleport::UpdateEvent(double elapsedTime, std::map<unsi
 	return eur;
 }
 
+std::shared_ptr<IEvent> EventTeleport::Clone()
+{
+	std::shared_ptr<IEvent> result = std::shared_ptr<IEvent>(new EventTeleport(m_target, m_x, m_y, m_z));
+	SetCloneBaseAttributes(result);
+	return result;
+}
+
 void EventTeleport::ResetEvent()
 {
 	IEvent::ResetEvent();

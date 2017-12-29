@@ -10,6 +10,7 @@ public:
 	EventToggleFlag(std::string name);
 	~EventToggleFlag() {}
 	EventUpdateResponse UpdateEvent(double elapsedTime, std::map<unsigned int, std::shared_ptr<Entity>>* ents);
+	std::shared_ptr<IEvent> Clone();
 	void ResetEvent();
 
 private:

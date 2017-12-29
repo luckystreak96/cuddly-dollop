@@ -242,12 +242,25 @@ SceneGenData SceneWorld::Update()
 		it.second->Physics()->DesiredMove();
 
 	//Collision
-	std::vector<std::shared_ptr<Entity>> collided = m_collisionManager.CalculateCollision();
-	for (auto entity : collided)
+	std::map<unsigned int, std::shared_ptr<Entity>> collided = m_collisionManager.CalculateCollision();
+	for (auto &pair : collided)
 	{
-		for (auto x : *entity->GetQueues())
-			if (x->GetActivationType() == AT_Touch)
-				m_eventManager.PushBack(x);
+		auto entity = pair.second;
+		// If he wasn't just touched...
+		if (!entity->_justTouched)
+			// ...push back the event
+			for (auto x : *entity->GetQueues())
+				if (x->GetActivationType() == AT_Touch)
+					m_eventManager.PushBack(x);
+
+		entity->_justTouched = true;
+	}
+
+	// Handle just-touched
+	for (auto &pair : m_celist)
+	{
+		if (!collided.count(pair.first))
+			pair.second->_justTouched = false;
 	}
 
 	//Update

@@ -31,8 +31,10 @@ public:
 
 	// Returns true if the event is done updating
 	virtual EventUpdateResponse UpdateEvent(double elapsedTime, std::map<unsigned int, std::shared_ptr<Entity>>* ents);
+	virtual std::shared_ptr<IEvent> Clone();
 	virtual void ResetEvent();
 	virtual EventTypes GetEventType();
+	void SetCloneBaseAttributes(std::shared_ptr<IEvent>);
 	unsigned int GetLockLevel();
 	bool IsCompleted();
 	EventExecutionMode GetExecutionMode();

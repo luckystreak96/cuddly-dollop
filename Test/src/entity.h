@@ -29,6 +29,10 @@ public:
 	std::shared_ptr<InputComponent> Input() { return m_inputComponent; }
 	std::vector<std::shared_ptr<IComponent>> components;
 	void Communicate(std::vector<std::string> msg);
+
+public:
+	bool _justTouched;
+
 private:
 	unsigned int m_id;
 	bool m_hasEvents;

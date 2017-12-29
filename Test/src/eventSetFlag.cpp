@@ -18,6 +18,13 @@ EventUpdateResponse EventSetFlag::UpdateEvent(double elapsedTime, std::map<unsig
 	return eur;
 }
 
+std::shared_ptr<IEvent> EventSetFlag::Clone()
+{
+	std::shared_ptr<IEvent> result = std::shared_ptr<IEvent>(new EventSetFlag(m_flag, m_flagValue));
+	SetCloneBaseAttributes(result);
+	return result;
+}
+
 void EventSetFlag::ResetEvent()
 {
 	IEvent::ResetEvent();

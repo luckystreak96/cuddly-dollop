@@ -122,13 +122,17 @@ void EventManager::PushBack(std::shared_ptr<EventQueue> ev)
 		if (ev->GetID() != -1 && x->GetID() == ev->GetID())
 			found = true;
 
-	if (!found || ev->GetID() == -1)
+	if (ev->Flag == "" || GameData::RespectsCondition(ev) || ev->GetActivationType() == AT_Autorun)
 	{
-		if (ev->Flag == "" || GameData::RespectsCondition(ev) || ev->GetActivationType() == AT_Autorun)
+		if (!found && ev->GetID() != -1)
 		{
 			for (unsigned int i = 0; i < ev->Count(); i++)
 				ev->Get(i)->ResetEvent();
 			m_queues.push_back(ev);
+		}
+		else if (ev->GetID() == -1)
+		{
+			m_queues.push_back(ev->Clone());
 		}
 	}
 }

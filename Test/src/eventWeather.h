@@ -11,6 +11,7 @@ public:
 	EventWeather(int particleCount, ParticleType type, Vector3f mapsize, bool smooth);
 	~EventWeather() {}
 	EventUpdateResponse UpdateEvent(double elapsedTime, std::map<unsigned int, std::shared_ptr<Entity>>* ents);
+	std::shared_ptr<IEvent> Clone();
 	void ResetEvent();
 	void SetMapSize(Vector3f mapsize);
 

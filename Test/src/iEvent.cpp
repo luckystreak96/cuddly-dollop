@@ -17,6 +17,22 @@ EventUpdateResponse IEvent::UpdateEvent(double elapsedTime, std::map<unsigned in
 	return eur;
 }
 
+std::shared_ptr<IEvent> IEvent::Clone()
+{
+	std::shared_ptr<IEvent> result = std::shared_ptr<IEvent>(new IEvent());
+	return result;
+}
+
+void IEvent::SetCloneBaseAttributes(std::shared_ptr<IEvent> ev)
+{
+	ev->m_completed = m_completed;
+	ev->m_eventType = m_eventType;
+	ev->m_lockLevel = m_lockLevel;
+	ev->m_mode = m_mode;
+	ev->m_target = m_target;
+}
+
+
 EventExecutionMode IEvent::GetExecutionMode()
 {
 	return m_mode;

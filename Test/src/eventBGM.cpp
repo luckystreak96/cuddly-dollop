@@ -27,6 +27,13 @@ EventUpdateResponse EventBGM::UpdateEvent(double elapsedTime, std::map<unsigned 
 	return eur;
 }
 
+std::shared_ptr<IEvent> EventBGM::Clone()
+{
+	std::shared_ptr<IEvent> result = std::shared_ptr<IEvent>(new EventBGM(m_soundFile));
+	SetCloneBaseAttributes(result);
+	return result;
+}
+
 void EventBGM::ResetEvent()
 {
 	IEvent::ResetEvent();

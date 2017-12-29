@@ -1,7 +1,8 @@
 #include "entity.h"
 #include "define.h"
 
-Entity::Entity(unsigned int id, std::string spritesheet, bool playerInput, bool fullSize) : m_id(id), m_hasEvents(false), m_fullSize(fullSize)
+Entity::Entity(unsigned int id, std::string spritesheet, bool playerInput, bool fullSize) 
+	: m_id(id), m_hasEvents(false), m_fullSize(fullSize), _justTouched(false)
 {
 	m_graphicsComponent = !playerInput ? std::shared_ptr<GraphicsComponent>(new PlayerGraphicsComponent(spritesheet, "CENTERED_TILE")) : 
 		std::shared_ptr<GraphicsComponent>(new PlayerGraphicsComponent(spritesheet, "CENTERED_TILE"));

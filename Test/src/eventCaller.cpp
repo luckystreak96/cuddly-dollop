@@ -7,6 +7,13 @@ EventCaller::EventCaller(unsigned int entity_id, unsigned int queue_id) : m_targ
 	m_mode = EventExecutionMode::BLOCKING;
 }
 
+std::shared_ptr<IEvent> EventCaller::Clone()
+{
+	std::shared_ptr<IEvent> result = std::shared_ptr<IEvent>(new EventCaller(m_target, m_targetQueue));
+	SetCloneBaseAttributes(result);
+	return result;
+}
+
 // Update method is in EventFactory
 
 void EventCaller::ResetEvent()

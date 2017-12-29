@@ -23,6 +23,13 @@ EventUpdateResponse EventSpriteChange::UpdateEvent(double elapsedTime, std::map<
 	return eur;
 }
 
+std::shared_ptr<IEvent> EventSpriteChange::Clone()
+{
+	std::shared_ptr<IEvent> result = std::shared_ptr<IEvent>(new EventSpriteChange(m_newSprite, m_target));
+	SetCloneBaseAttributes(result);
+	return result;
+}
+
 void EventSpriteChange::ResetEvent()
 {
 	IEvent::ResetEvent();

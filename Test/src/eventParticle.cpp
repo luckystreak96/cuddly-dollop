@@ -50,6 +50,15 @@ EventUpdateResponse EventParticle::UpdateEvent(double elapsedTime, std::map<unsi
 	return eur;
 }
 
+std::shared_ptr<IEvent> EventParticle::Clone()
+{
+	std::shared_ptr<IEvent> result = std::shared_ptr<IEvent>(new EventParticle(m_count, m_particleType, m_target, m_sprite));
+	dynamic_cast<EventParticle*>(result.get())->SetPower(m_power);
+	SetCloneBaseAttributes(result);
+	return result;
+}
+
+
 void EventParticle::SetMapSize(Vector3f mapsize)
 {
 	m_mapSize = mapsize;

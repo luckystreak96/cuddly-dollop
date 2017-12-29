@@ -10,6 +10,7 @@ public:
 	EventTeleport(unsigned int entity_id, float x, float y, float z);
 	~EventTeleport() {}
 	EventUpdateResponse UpdateEvent(double elapsedTime, std::map<unsigned int, std::shared_ptr<Entity>>* ents);
+	std::shared_ptr<IEvent> Clone();
 	void ResetEvent();
 
 private:

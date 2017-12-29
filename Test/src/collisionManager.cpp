@@ -17,7 +17,7 @@ void CollisionManager::SetMapTiles(std::vector<std::shared_ptr<MapTile>>* t)
 	m_tiles = t;
 }
 
-std::vector<std::shared_ptr<Entity>> CollisionManager::CalculateCollision()
+std::map<unsigned int, std::shared_ptr<Entity>> CollisionManager::CalculateCollision()
 {
 	assert(m_entities != NULL);
 	assert(m_tiles != NULL);

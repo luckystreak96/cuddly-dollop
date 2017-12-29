@@ -444,9 +444,9 @@ namespace Physics_2D {
 	// 1 - The object is going somewhere that lacks any valid blocks (ex: walking off a cliff -- the other blocks are too far)
 	// 2 - The object bumps into something within his z-range (if the z is 4, then any object within the range [4,5[ )
 	//		For objects greater than 1.5 higher, the object goes under it.
-	std::vector<std::shared_ptr<Entity>> CollisionRemastered(std::map<unsigned int, std::shared_ptr<Entity>>* clist, std::vector<std::shared_ptr<MapTile>>* mt)
+	std::map<unsigned int, std::shared_ptr<Entity>> CollisionRemastered(std::map<unsigned int, std::shared_ptr<Entity>>* clist, std::vector<std::shared_ptr<MapTile>>* mt)
 	{
-		std::vector<std::shared_ptr<Entity>> result = std::vector<std::shared_ptr<Entity>>();
+		std::map<unsigned int, std::shared_ptr<Entity>> result = std::map<unsigned int, std::shared_ptr<Entity>>();
 
 		int playerId = -1;
 
@@ -682,7 +682,7 @@ namespace Physics_2D {
 					// Shoot out the event cause its touching the player
 					if (playerId != -1)
 						if (x->GetID() == playerId || x2->GetID() == playerId)
-							result.push_back(x->GetID() == playerId ? x2 : x);
+							result.emplace(x->GetID() == playerId ? x2->GetID() : x->GetID(), x->GetID() == playerId ? x2 : x);
 				}
 
 			}

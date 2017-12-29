@@ -31,6 +31,13 @@ EventUpdateResponse EventToggleFlag::UpdateEvent(double elapsedTime, std::map<un
 	return eur;
 }
 
+std::shared_ptr<IEvent> EventToggleFlag::Clone()
+{
+	std::shared_ptr<IEvent> result = std::shared_ptr<IEvent>(new EventToggleFlag(m_flag));
+	SetCloneBaseAttributes(result);
+	return result;
+}
+
 void EventToggleFlag::ResetEvent()
 {
 	IEvent::ResetEvent();

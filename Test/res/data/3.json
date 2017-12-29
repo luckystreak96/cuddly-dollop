@@ -1,1 +1,4332 @@
-{"id":3,"tiles":[{"x":999.0,"y":15.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":998.0,"y":15.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":997.0,"y":15.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":996.0,"y":15.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":995.0,"y":15.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":995.0,"y":14.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":994.0,"y":14.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":993.0,"y":14.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":992.0,"y":14.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":991.0,"y":14.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":991.0,"y":13.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":990.0,"y":13.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":989.0,"y":13.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":989.0,"y":12.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":989.0,"y":11.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":989.0,"y":10.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":990.0,"y":9.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":991.0,"y":9.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":992.0,"y":9.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":992.0,"y":10.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":993.0,"y":10.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":994.0,"y":10.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":995.0,"y":10.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":995.0,"y":11.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":996.0,"y":11.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":997.0,"y":11.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":997.0,"y":12.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":998.0,"y":12.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":998.0,"y":13.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":999.0,"y":13.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":999.0,"y":14.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":994.0,"y":13.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":993.0,"y":12.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":993.0,"y":11.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":993.0,"y":9.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":992.0,"y":8.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":992.0,"y":7.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":993.0,"y":7.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":993.0,"y":6.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":994.0,"y":7.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":994.0,"y":8.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":994.0,"y":9.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":994.0,"y":11.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":994.0,"y":12.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":993.0,"y":15.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":992.0,"y":15.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":992.0,"y":13.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":992.0,"y":12.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":992.0,"y":11.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":992.0,"y":6.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":992.0,"y":5.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":991.0,"y":6.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":991.0,"y":7.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":991.0,"y":8.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":991.0,"y":10.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":991.0,"y":11.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":991.0,"y":12.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":990.0,"y":12.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":990.0,"y":14.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":990.0,"y":15.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":990.0,"y":11.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":990.0,"y":10.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":990.0,"y":8.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":989.0,"y":15.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":989.0,"y":14.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":991.0,"y":15.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":993.0,"y":13.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":994.0,"y":15.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":996.0,"y":14.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":996.0,"y":13.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":997.0,"y":13.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":999.0,"y":12.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":998.0,"y":14.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":996.0,"y":12.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":995.0,"y":12.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":997.0,"y":14.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":995.0,"y":13.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":997.0,"y":10.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":997.0,"y":9.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":997.0,"y":8.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":998.0,"y":8.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":998.0,"y":9.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":998.0,"y":10.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":998.0,"y":11.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":999.0,"y":11.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":999.0,"y":10.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":999.0,"y":9.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":999.0,"y":8.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":999.0,"y":7.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":999.0,"y":6.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":999.0,"y":5.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":999.0,"y":4.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":999.0,"y":0.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":999.0,"y":1.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":999.0,"y":3.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":999.0,"y":2.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":998.0,"y":5.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":998.0,"y":4.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":998.0,"y":3.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":998.0,"y":2.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":998.0,"y":1.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":998.0,"y":0.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":998.0,"y":6.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":998.0,"y":7.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":997.0,"y":5.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":997.0,"y":6.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":997.0,"y":7.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":997.0,"y":4.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":997.0,"y":3.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":997.0,"y":2.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":997.0,"y":1.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":997.0,"y":0.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":996.0,"y":5.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":996.0,"y":4.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":996.0,"y":3.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":996.0,"y":2.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":996.0,"y":1.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":996.0,"y":0.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":996.0,"y":6.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":996.0,"y":7.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":995.0,"y":8.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":995.0,"y":9.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":995.0,"y":7.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":995.0,"y":6.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":995.0,"y":5.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":995.0,"y":4.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":995.0,"y":3.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":995.0,"y":2.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":995.0,"y":1.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":995.0,"y":0.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":996.0,"y":8.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":996.0,"y":9.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":996.0,"y":10.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":994.0,"y":5.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":994.0,"y":6.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":993.0,"y":5.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":993.0,"y":4.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":993.0,"y":3.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":993.0,"y":2.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":993.0,"y":1.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":993.0,"y":0.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":993.0,"y":8.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":994.0,"y":3.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":994.0,"y":4.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":994.0,"y":2.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":994.0,"y":1.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":994.0,"y":0.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":992.0,"y":0.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":992.0,"y":1.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":992.0,"y":2.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":992.0,"y":3.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":992.0,"y":4.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":991.0,"y":5.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":991.0,"y":4.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":991.0,"y":3.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":991.0,"y":2.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":991.0,"y":1.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":991.0,"y":0.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":990.0,"y":1.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":990.0,"y":2.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":990.0,"y":3.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":990.0,"y":0.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":990.0,"y":7.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":990.0,"y":6.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":990.0,"y":5.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":990.0,"y":4.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":989.0,"y":2.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":989.0,"y":1.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":989.0,"y":0.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":989.0,"y":3.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":989.0,"y":4.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":989.0,"y":5.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":989.0,"y":6.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":989.0,"y":7.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":989.0,"y":8.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":989.0,"y":9.0,"z":5.0,"sprite":"grass_01.png","walkOn":true},{"x":0.0,"y":0.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":0.0,"y":1.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":0.0,"y":2.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":0.0,"y":3.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":0.0,"y":11.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":0.0,"y":12.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":0.0,"y":13.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":0.0,"y":14.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":0.0,"y":15.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":0.0,"y":10.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":0.0,"y":9.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":0.0,"y":8.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":0.0,"y":7.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":0.0,"y":6.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":0.0,"y":5.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":0.0,"y":4.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":1.0,"y":3.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":1.0,"y":4.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":1.0,"y":5.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":1.0,"y":6.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":1.0,"y":7.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":1.0,"y":8.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":1.0,"y":9.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":1.0,"y":10.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":1.0,"y":11.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":1.0,"y":12.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":2.0,"y":13.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":2.0,"y":14.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":2.0,"y":15.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":1.0,"y":14.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":1.0,"y":13.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":2.0,"y":11.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":2.0,"y":10.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":2.0,"y":9.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":2.0,"y":8.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":2.0,"y":7.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":2.0,"y":6.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":2.0,"y":5.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":2.0,"y":4.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":2.0,"y":3.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":1.0,"y":2.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":1.0,"y":1.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":1.0,"y":0.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":1.0,"y":15.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":2.0,"y":2.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":2.0,"y":1.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":2.0,"y":0.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":2.0,"y":12.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":3.0,"y":1.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":3.0,"y":0.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":3.0,"y":2.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":3.0,"y":3.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":3.0,"y":4.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":3.0,"y":5.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":3.0,"y":6.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":3.0,"y":7.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":3.0,"y":8.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":3.0,"y":9.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":3.0,"y":10.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":3.0,"y":11.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":3.0,"y":12.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":3.0,"y":13.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":3.0,"y":14.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":3.0,"y":15.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":4.0,"y":4.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":4.0,"y":3.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":4.0,"y":2.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":4.0,"y":1.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":4.0,"y":0.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":4.0,"y":5.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":4.0,"y":6.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":4.0,"y":7.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":4.0,"y":8.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":4.0,"y":9.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":4.0,"y":10.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":4.0,"y":11.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":4.0,"y":12.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":4.0,"y":13.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":4.0,"y":14.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":4.0,"y":15.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":0.0,"y":16.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":1.0,"y":16.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":2.0,"y":16.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":3.0,"y":16.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":4.0,"y":16.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":23.0,"y":16.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":22.0,"y":16.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":21.0,"y":16.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":20.0,"y":16.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":19.0,"y":16.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":18.0,"y":16.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":17.0,"y":16.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":16.0,"y":16.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":15.0,"y":16.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":14.0,"y":16.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":13.0,"y":16.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":12.0,"y":16.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":11.0,"y":16.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":10.0,"y":16.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":9.0,"y":16.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":8.0,"y":16.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":7.0,"y":16.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":5.0,"y":16.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":5.0,"y":15.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":5.0,"y":14.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":5.0,"y":13.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":5.0,"y":12.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":5.0,"y":10.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":5.0,"y":11.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":5.0,"y":9.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":5.0,"y":7.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":5.0,"y":8.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":5.0,"y":6.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":5.0,"y":4.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":5.0,"y":5.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":5.0,"y":3.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":5.0,"y":2.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":5.0,"y":1.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":5.0,"y":0.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":6.0,"y":0.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":6.0,"y":1.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":6.0,"y":2.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":6.0,"y":4.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":6.0,"y":3.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":6.0,"y":5.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":6.0,"y":6.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":6.0,"y":7.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":6.0,"y":8.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":6.0,"y":9.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":6.0,"y":10.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":6.0,"y":11.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":6.0,"y":12.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":6.0,"y":13.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":6.0,"y":14.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":6.0,"y":15.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":6.0,"y":16.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":24.0,"y":16.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":25.0,"y":16.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":26.0,"y":16.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":27.0,"y":16.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":27.0,"y":15.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":28.0,"y":15.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":28.0,"y":14.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":28.0,"y":13.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":28.0,"y":12.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":28.0,"y":11.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":28.0,"y":10.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":28.0,"y":9.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":27.0,"y":9.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":27.0,"y":8.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":27.0,"y":7.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":27.0,"y":6.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":27.0,"y":5.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":27.0,"y":4.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":27.0,"y":3.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":27.0,"y":2.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":27.0,"y":1.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":28.0,"y":1.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":28.0,"y":0.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":28.0,"y":2.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":28.0,"y":3.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":28.0,"y":4.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":28.0,"y":5.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":28.0,"y":6.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":28.0,"y":7.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":28.0,"y":8.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":28.0,"y":16.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":27.0,"y":14.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":26.0,"y":13.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":26.0,"y":12.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":26.0,"y":11.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":27.0,"y":10.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":27.0,"y":11.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":27.0,"y":12.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":27.0,"y":13.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":26.0,"y":14.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":26.0,"y":15.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":26.0,"y":7.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":26.0,"y":8.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":26.0,"y":9.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":26.0,"y":10.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":25.0,"y":12.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":25.0,"y":11.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":25.0,"y":10.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":25.0,"y":13.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":25.0,"y":14.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":25.0,"y":15.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":18.0,"y":15.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":17.0,"y":15.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":16.0,"y":15.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":15.0,"y":15.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":14.0,"y":15.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":13.0,"y":15.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":12.0,"y":15.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":11.0,"y":15.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":10.0,"y":15.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":9.0,"y":15.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":8.0,"y":15.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":7.0,"y":15.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":19.0,"y":15.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":20.0,"y":15.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":21.0,"y":15.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":22.0,"y":15.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":23.0,"y":15.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":24.0,"y":15.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":24.0,"y":14.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":23.0,"y":14.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":22.0,"y":13.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":21.0,"y":13.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":20.0,"y":13.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":19.0,"y":13.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":19.0,"y":14.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":18.0,"y":14.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":17.0,"y":14.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":16.0,"y":14.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":15.0,"y":14.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":14.0,"y":14.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":13.0,"y":14.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":12.0,"y":14.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":11.0,"y":14.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":10.0,"y":14.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":9.0,"y":14.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":8.0,"y":14.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":7.0,"y":14.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":20.0,"y":14.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":21.0,"y":14.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":22.0,"y":14.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":23.0,"y":13.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":24.0,"y":13.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":18.0,"y":13.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":17.0,"y":13.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":16.0,"y":13.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":15.0,"y":13.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":14.0,"y":13.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":13.0,"y":13.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":12.0,"y":13.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":11.0,"y":13.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":10.0,"y":13.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":9.0,"y":13.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":8.0,"y":13.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":7.0,"y":13.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":7.0,"y":12.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":8.0,"y":12.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":9.0,"y":12.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":10.0,"y":12.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":11.0,"y":12.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":12.0,"y":12.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":13.0,"y":12.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":14.0,"y":12.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":15.0,"y":12.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":16.0,"y":12.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":17.0,"y":12.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":18.0,"y":12.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":19.0,"y":12.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":20.0,"y":12.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":21.0,"y":12.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":22.0,"y":12.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":23.0,"y":12.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":24.0,"y":12.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":24.0,"y":11.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":23.0,"y":11.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":22.0,"y":11.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":21.0,"y":11.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":20.0,"y":11.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":19.0,"y":11.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":18.0,"y":11.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":17.0,"y":11.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":16.0,"y":11.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":15.0,"y":11.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":14.0,"y":11.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":13.0,"y":11.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":12.0,"y":11.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":11.0,"y":11.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":10.0,"y":11.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":9.0,"y":11.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":8.0,"y":11.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":7.0,"y":11.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":7.0,"y":10.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":8.0,"y":10.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":9.0,"y":10.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":10.0,"y":10.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":11.0,"y":10.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":12.0,"y":10.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":13.0,"y":10.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":14.0,"y":10.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":15.0,"y":10.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":16.0,"y":10.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":17.0,"y":10.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":18.0,"y":10.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":19.0,"y":10.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":20.0,"y":10.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":22.0,"y":10.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":23.0,"y":10.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":24.0,"y":10.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":21.0,"y":10.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":12.0,"y":9.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":11.0,"y":9.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":10.0,"y":9.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":9.0,"y":9.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":8.0,"y":9.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":7.0,"y":9.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":13.0,"y":9.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":14.0,"y":9.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":15.0,"y":9.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":16.0,"y":9.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":17.0,"y":9.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":18.0,"y":9.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":19.0,"y":9.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":20.0,"y":9.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":21.0,"y":9.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":22.0,"y":9.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":23.0,"y":9.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":24.0,"y":9.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":25.0,"y":9.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":25.0,"y":8.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":24.0,"y":8.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":23.0,"y":8.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":22.0,"y":8.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":21.0,"y":8.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":20.0,"y":8.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":19.0,"y":8.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":18.0,"y":8.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":17.0,"y":8.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":16.0,"y":8.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":15.0,"y":8.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":14.0,"y":8.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":13.0,"y":8.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":12.0,"y":8.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":11.0,"y":8.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":10.0,"y":8.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":9.0,"y":8.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":8.0,"y":8.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":7.0,"y":8.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":7.0,"y":7.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":8.0,"y":7.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":9.0,"y":7.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":10.0,"y":7.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":11.0,"y":7.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":12.0,"y":7.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":13.0,"y":7.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":14.0,"y":7.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":15.0,"y":7.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":16.0,"y":7.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":17.0,"y":7.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":18.0,"y":7.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":19.0,"y":7.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":20.0,"y":7.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":21.0,"y":7.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":22.0,"y":7.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":23.0,"y":7.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":24.0,"y":7.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":25.0,"y":7.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":26.0,"y":6.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":25.0,"y":6.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":24.0,"y":6.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":23.0,"y":6.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":22.0,"y":6.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":21.0,"y":6.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":20.0,"y":6.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":19.0,"y":6.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":18.0,"y":6.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":17.0,"y":6.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":16.0,"y":6.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":15.0,"y":6.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":14.0,"y":6.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":13.0,"y":6.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":12.0,"y":6.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":11.0,"y":6.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":10.0,"y":6.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":9.0,"y":6.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":8.0,"y":6.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":7.0,"y":6.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":7.0,"y":5.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":8.0,"y":5.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":9.0,"y":5.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":10.0,"y":5.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":11.0,"y":5.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":12.0,"y":5.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":13.0,"y":5.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":14.0,"y":5.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":15.0,"y":5.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":16.0,"y":5.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":17.0,"y":5.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":18.0,"y":5.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":19.0,"y":5.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":20.0,"y":5.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":21.0,"y":5.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":22.0,"y":5.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":23.0,"y":5.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":24.0,"y":5.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":25.0,"y":5.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":26.0,"y":5.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":26.0,"y":4.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":25.0,"y":4.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":24.0,"y":4.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":23.0,"y":4.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":22.0,"y":4.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":21.0,"y":4.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":20.0,"y":4.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":19.0,"y":4.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":18.0,"y":4.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":17.0,"y":4.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":16.0,"y":4.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":15.0,"y":4.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":14.0,"y":4.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":13.0,"y":4.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":12.0,"y":4.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":11.0,"y":4.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":10.0,"y":4.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":9.0,"y":4.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":8.0,"y":4.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":7.0,"y":4.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":7.0,"y":3.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":8.0,"y":3.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":9.0,"y":3.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":10.0,"y":3.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":11.0,"y":3.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":12.0,"y":3.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":13.0,"y":3.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":14.0,"y":3.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":15.0,"y":3.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":16.0,"y":3.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":17.0,"y":3.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":18.0,"y":3.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":19.0,"y":3.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":20.0,"y":3.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":21.0,"y":3.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":22.0,"y":3.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":23.0,"y":3.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":24.0,"y":3.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":25.0,"y":3.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":26.0,"y":3.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":26.0,"y":2.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":25.0,"y":2.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":24.0,"y":2.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":23.0,"y":2.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":22.0,"y":2.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":21.0,"y":2.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":20.0,"y":2.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":19.0,"y":2.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":18.0,"y":2.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":17.0,"y":2.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":16.0,"y":2.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":15.0,"y":2.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":14.0,"y":2.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":13.0,"y":2.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":12.0,"y":2.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":11.0,"y":2.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":10.0,"y":2.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":9.0,"y":2.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":8.0,"y":2.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":7.0,"y":2.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":7.0,"y":1.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":8.0,"y":1.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":9.0,"y":1.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":10.0,"y":1.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":11.0,"y":1.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":12.0,"y":1.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":13.0,"y":1.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":14.0,"y":1.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":15.0,"y":1.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":16.0,"y":1.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":17.0,"y":1.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":18.0,"y":1.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":19.0,"y":1.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":20.0,"y":1.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":21.0,"y":1.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":22.0,"y":1.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":23.0,"y":1.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":24.0,"y":1.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":25.0,"y":1.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":26.0,"y":1.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":27.0,"y":0.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":26.0,"y":0.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":25.0,"y":0.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":24.0,"y":0.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":23.0,"y":0.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":22.0,"y":0.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":21.0,"y":0.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":20.0,"y":0.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":19.0,"y":0.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":18.0,"y":0.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":17.0,"y":0.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":16.0,"y":0.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":15.0,"y":0.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":14.0,"y":0.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":13.0,"y":0.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":12.0,"y":0.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":11.0,"y":0.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":10.0,"y":0.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":9.0,"y":0.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":8.0,"y":0.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":7.0,"y":0.0,"z":5.0,"sprite":"wood_plank_floor.png","walkOn":true},{"x":13.0,"y":0.0,"z":4.0,"sprite":"trench_v.png","walkOn":false},{"x":13.0,"y":1.0,"z":4.0,"sprite":"trench_v.png","walkOn":false},{"x":13.0,"y":2.0,"z":4.0,"sprite":"trench_v.png","walkOn":false},{"x":13.0,"y":3.0,"z":4.0,"sprite":"trench_v.png","walkOn":false},{"x":13.0,"y":4.0,"z":4.0,"sprite":"trench_v.png","walkOn":false},{"x":13.0,"y":5.0,"z":4.0,"sprite":"trench_v.png","walkOn":false},{"x":13.0,"y":6.0,"z":4.0,"sprite":"trench_v.png","walkOn":false},{"x":13.0,"y":7.0,"z":4.0,"sprite":"trench_v.png","walkOn":false},{"x":13.0,"y":8.0,"z":4.0,"sprite":"trench_v.png","walkOn":false},{"x":13.0,"y":9.0,"z":4.0,"sprite":"trench_v.png","walkOn":true},{"x":13.0,"y":10.0,"z":4.0,"sprite":"trench_v.png","walkOn":false},{"x":13.0,"y":11.0,"z":4.0,"sprite":"trench_v.png","walkOn":false},{"x":13.0,"y":12.0,"z":4.0,"sprite":"trench_v.png","walkOn":false},{"x":13.0,"y":13.0,"z":4.0,"sprite":"trench_v.png","walkOn":false},{"x":13.0,"y":14.0,"z":4.0,"sprite":"trench_v.png","walkOn":false},{"x":13.0,"y":15.0,"z":4.0,"sprite":"trench_v.png","walkOn":false},{"x":13.0,"y":16.0,"z":4.0,"sprite":"trench_v.png","walkOn":false},{"x":14.0,"y":9.0,"z":3.5,"sprite":"bridge.png","walkOn":true},{"x":13.0,"y":9.0,"z":3.0,"sprite":"bridge.png","walkOn":true},{"x":12.0,"y":9.0,"z":3.5,"sprite":"bridge.png","walkOn":true},{"x":15.0,"y":14.0,"z":4.0,"sprite":"sapin.png","walkOn":true},{"x":14.0,"y":9.0,"z":2.5,"sprite":"snowman.png","walkOn":true},{"x":17.0,"y":4.0,"z":4.0,"sprite":"mushroom.png","walkOn":true},{"x":22.0,"y":16.0,"z":4.0,"sprite":"trench_v.png","walkOn":true},{"x":22.0,"y":15.0,"z":4.0,"sprite":"trench_ru.png","walkOn":true},{"x":23.0,"y":15.0,"z":4.0,"sprite":"trench_h.png","walkOn":true},{"x":24.0,"y":15.0,"z":4.0,"sprite":"trench_h.png","walkOn":true},{"x":25.0,"y":15.0,"z":4.0,"sprite":"trench_h.png","walkOn":true},{"x":26.0,"y":15.0,"z":4.0,"sprite":"trench_h.png","walkOn":true},{"x":27.0,"y":15.0,"z":4.0,"sprite":"trench_h.png","walkOn":true},{"x":28.0,"y":15.0,"z":4.0,"sprite":"trench_h.png","walkOn":true}],"entities":[{"id":1,"player":true,"ethereal":false,"full_size":false,"sprite":"entity_ghost_blue.png","x":3.0,"y":7.0,"z":4.0,"queues":[]},{"id":3,"player":false,"ethereal":false,"full_size":false,"sprite":"entity_pumpkin.png","x":2.0,"y":13.0,"z":4.0,"queues":[{"name":"queue","id":2,"flag":"","flag_value":1,"flag_condition":0,"activation":"interact","repeating":false,"events":[{"type":"dialogue","execution_type":"blocking","args":{"dialogue":{"id":0,"text":"Get out of my sight!","next":-1,"type":"end"}}},{"type":"map_change","execution_type":"blocking","args":{"id":1}}]},{"name":"queue","id":3,"flag":"","flag_value":1,"flag_condition":0,"activation":"autorun","repeating":false,"events":[{"type":"particle","execution_type":"blocking","args":{"type":"music","count":5,"id":0}}]}]},{"id":2,"player":false,"ethereal":true,"full_size":true,"sprite":"","x":14.0,"y":9.0,"z":2.5,"queues":[{"name":"queue","id":4,"flag":"","flag_value":1,"flag_condition":0,"activation":"interact","repeating":false,"events":[{"type":"dialogue","execution_type":"blocking","args":{"dialogue 0":{"id":0,"text":"You shall not pass!","next":-1,"type":"end"}}}]}]}]}
+{
+  "id": 3,
+  "tiles": [
+    {
+      "x": 999.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 998.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 997.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 996.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 995.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 995.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 994.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 993.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 992.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 991.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 991.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 990.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 989.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 989.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 989.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 989.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 990.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 991.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 992.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 992.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 993.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 994.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 995.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 995.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 996.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 997.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 997.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 998.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 998.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 999.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 999.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 994.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 993.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 993.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 993.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 992.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 992.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 993.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 993.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 994.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 994.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 994.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 994.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 994.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 993.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 992.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 992.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 992.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 992.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 992.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 992.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 991.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 991.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 991.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 991.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 991.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 991.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 990.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 990.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 990.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 990.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 990.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 990.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 989.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 989.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 991.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 993.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 994.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 996.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 996.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 997.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 999.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 998.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 996.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 995.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 997.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 995.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 997.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 997.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 997.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 998.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 998.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 998.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 998.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 999.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 999.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 999.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 999.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 999.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 999.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 999.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 999.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 999.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 999.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 999.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 999.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 998.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 998.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 998.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 998.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 998.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 998.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 998.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 998.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 997.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 997.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 997.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 997.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 997.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 997.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 997.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 997.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 996.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 996.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 996.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 996.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 996.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 996.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 996.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 996.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 995.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 995.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 995.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 995.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 995.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 995.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 995.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 995.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 995.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 995.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 996.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 996.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 996.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 994.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 994.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 993.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 993.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 993.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 993.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 993.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 993.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 993.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 994.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 994.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 994.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 994.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 994.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 992.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 992.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 992.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 992.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 992.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 991.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 991.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 991.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 991.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 991.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 991.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 990.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 990.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 990.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 990.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 990.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 990.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 990.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 990.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 989.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 989.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 989.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 989.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 989.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 989.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 989.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 989.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 989.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 989.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 0.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 0.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 0.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 0.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 0.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 0.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 0.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 0.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 0.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 0.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 0.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 0.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 0.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 0.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 0.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 1.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 1.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 1.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 1.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 1.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 1.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 1.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 1.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 1.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 1.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 2.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 2.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 2.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 1.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 1.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 2.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 2.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 2.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 2.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 2.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 2.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 2.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 2.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 2.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 1.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 1.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 1.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 2.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 2.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 2.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 2.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 3.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 3.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 3.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 3.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 3.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 3.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 3.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 3.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 3.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 3.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 3.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 3.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 3.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 3.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 3.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 3.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 4.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 4.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 4.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 4.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 4.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 4.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 4.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 4.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 4.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 4.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 4.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 4.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 4.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 4.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 4.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 4.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 0.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 1.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 2.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 3.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 4.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 23.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 22.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 21.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 20.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 19.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 18.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 17.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 16.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 15.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 14.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 13.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "trench_v.png",
+      "walkOn": false
+    },
+    {
+      "x": 12.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 11.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 10.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 9.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 8.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 7.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 5.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 5.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 5.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 5.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 5.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 5.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 5.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 5.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 5.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 5.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 5.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 5.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 5.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 5.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 5.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 5.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 5.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 6.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 6.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 6.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 6.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 6.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 6.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 6.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 6.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 6.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 6.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 6.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 6.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 6.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 6.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 6.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 6.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 6.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 24.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 25.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 26.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 27.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 27.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 28.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 28.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 28.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 28.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 28.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 28.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 28.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 27.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 27.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 27.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 27.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 27.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 27.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 27.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 27.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 27.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 28.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 28.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 28.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 28.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 28.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 28.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 28.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 28.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 28.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 28.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 27.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 26.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 26.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 26.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 27.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 27.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 27.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 27.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 26.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 26.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 26.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 26.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 26.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 26.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 25.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 25.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 25.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 25.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 25.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 25.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 18.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 17.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 16.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 15.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 14.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 12.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 11.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 10.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 9.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 8.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 7.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 19.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 20.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 21.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 22.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 23.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 24.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 24.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 23.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 22.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 21.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 20.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 19.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 19.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 18.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 17.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 16.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 15.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 14.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 12.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 11.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 10.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 9.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 8.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 7.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 20.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 21.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 22.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 23.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 24.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 18.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 17.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 16.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 15.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 14.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 12.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 11.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 10.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 9.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 8.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 7.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 7.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 8.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 9.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 10.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 11.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 12.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 14.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 15.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 16.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 17.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 18.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 19.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 20.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 21.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 22.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 23.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 24.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 24.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 23.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 22.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 21.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 20.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 19.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 18.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 17.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 16.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 15.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 14.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 12.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 11.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 10.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 9.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 8.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 7.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 7.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 8.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 9.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 10.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 11.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 12.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 14.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 15.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 16.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 17.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 18.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 19.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 20.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 22.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 23.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 24.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 21.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 12.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 11.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 10.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 9.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 8.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 7.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 14.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 15.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 16.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 17.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 18.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 19.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 20.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 21.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 22.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 23.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 24.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 25.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 25.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 24.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 23.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 22.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 21.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 20.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 19.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 18.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 17.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 16.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 15.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 14.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 12.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 11.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 10.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 9.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 8.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 7.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 7.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 8.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 9.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 10.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 11.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 12.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 14.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 15.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 16.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 17.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 18.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 19.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 20.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 21.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 22.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 23.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 24.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 25.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 26.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 25.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 24.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 23.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 22.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 21.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 20.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 19.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 18.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 17.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 16.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 15.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 14.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 12.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 11.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 10.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 9.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 8.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 7.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 7.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 8.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 9.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 10.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 11.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 12.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 14.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 15.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 16.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 17.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 18.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 19.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 20.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 21.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 22.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 23.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 24.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 25.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 26.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 26.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 25.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 24.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 23.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 22.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 21.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 20.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 19.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 18.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 17.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 16.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 15.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 14.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 12.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 11.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 10.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 9.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 8.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 7.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 7.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 8.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 9.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 10.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 11.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 12.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 14.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 15.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 16.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 17.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 18.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 19.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 20.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 21.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 22.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 23.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 24.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 25.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 26.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 26.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 25.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 24.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 23.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 22.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 21.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 20.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 19.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 18.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 17.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 16.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 15.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 14.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 12.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 11.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 10.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 9.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 8.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 7.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 7.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 8.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 9.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 10.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 11.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 12.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 14.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 15.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 16.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 17.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 18.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 19.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 20.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 21.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 22.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 23.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 24.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 25.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 26.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 27.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 26.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 25.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 24.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 23.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 22.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 21.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 20.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 19.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 18.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 17.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 16.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 15.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 14.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 12.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 11.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 10.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 9.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 8.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 7.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 13.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "trench_v.png",
+      "walkOn": false
+    },
+    {
+      "x": 13.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "trench_v.png",
+      "walkOn": false
+    },
+    {
+      "x": 13.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "trench_v.png",
+      "walkOn": false
+    },
+    {
+      "x": 13.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "trench_v.png",
+      "walkOn": false
+    },
+    {
+      "x": 13.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "trench_v.png",
+      "walkOn": false
+    },
+    {
+      "x": 13.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "trench_v.png",
+      "walkOn": false
+    },
+    {
+      "x": 13.0,
+      "y": 9.0,
+      "z": 4.0,
+      "sprite": "bridge.png"
+    },
+    {
+      "x": 12.0,
+      "y": 9.0,
+      "z": 4.5,
+      "sprite": "bridge.png"
+    },
+    {
+      "x": 14.0,
+      "y": 9.0,
+      "z": 4.5,
+      "sprite": "bridge.png"
+    },
+    {
+      "x": 15.0,
+      "y": 14.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 14.0,
+      "y": 9.0,
+      "z": 2.5,
+      "sprite": "snowman.png"
+    },
+    {
+      "x": 17.0,
+      "y": 4.0,
+      "z": 4.0,
+      "sprite": "mushroom.png"
+    },
+    {
+      "x": 22.0,
+      "y": 16.0,
+      "z": 4.0,
+      "sprite": "trench_v.png"
+    },
+    {
+      "x": 22.0,
+      "y": 15.0,
+      "z": 4.0,
+      "sprite": "trench_ru.png"
+    },
+    {
+      "x": 23.0,
+      "y": 15.0,
+      "z": 4.0,
+      "sprite": "trench_h.png"
+    },
+    {
+      "x": 24.0,
+      "y": 15.0,
+      "z": 4.0,
+      "sprite": "trench_h.png"
+    },
+    {
+      "x": 25.0,
+      "y": 15.0,
+      "z": 4.0,
+      "sprite": "trench_h.png"
+    },
+    {
+      "x": 26.0,
+      "y": 15.0,
+      "z": 4.0,
+      "sprite": "trench_h.png"
+    },
+    {
+      "x": 27.0,
+      "y": 15.0,
+      "z": 4.0,
+      "sprite": "trench_h.png"
+    },
+    {
+      "x": 28.0,
+      "y": 15.0,
+      "z": 4.0,
+      "sprite": "trench_h.png"
+    },
+    {
+      "x": 13.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "trench_v.png",
+      "walkOn": false
+    },
+    {
+      "x": 13.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "trench_v.png",
+      "walkOn": false
+    },
+    {
+      "x": 13.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "trench_v.png",
+      "walkOn": false
+    },
+    {
+      "x": 13.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "trench_v.png",
+      "walkOn": false
+    },
+    {
+      "x": 13.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "trench_v.png",
+      "walkOn": false
+    },
+    {
+      "x": 13.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "trench_v.png",
+      "walkOn": false
+    },
+    {
+      "x": 13.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "trench_v.png",
+      "walkOn": false
+    },
+    {
+      "x": 13.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "trench_v.png",
+      "walkOn": false
+    },
+    {
+      "x": 13.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "trench_v.png",
+      "walkOn": false
+    },
+    {
+      "x": 13.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "trench_v.png",
+      "walkOn": false
+    },
+    {
+      "x": 13.0,
+      "y": 0.0,
+      "z": 5.5,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 13.0,
+      "y": 1.0,
+      "z": 5.5,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 13.0,
+      "y": 2.0,
+      "z": 5.5,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 13.0,
+      "y": 3.0,
+      "z": 5.5,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 13.0,
+      "y": 4.0,
+      "z": 5.5,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 13.0,
+      "y": 5.0,
+      "z": 5.5,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 13.0,
+      "y": 6.0,
+      "z": 5.5,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 13.0,
+      "y": 7.0,
+      "z": 5.5,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 13.0,
+      "y": 8.0,
+      "z": 5.5,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 13.0,
+      "y": 9.0,
+      "z": 5.5,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 13.0,
+      "y": 10.0,
+      "z": 5.5,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 13.0,
+      "y": 11.0,
+      "z": 5.5,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 13.0,
+      "y": 12.0,
+      "z": 5.5,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 13.0,
+      "y": 13.0,
+      "z": 5.5,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 13.0,
+      "y": 14.0,
+      "z": 5.5,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 13.0,
+      "y": 15.0,
+      "z": 5.5,
+      "sprite": "wood_plank_floor.png"
+    },
+    {
+      "x": 13.0,
+      "y": 16.0,
+      "z": 5.5,
+      "sprite": "wood_plank_floor.png"
+    }
+  ],
+  "entities": [
+    {
+      "id": 1,
+      "player": true,
+      "ethereal": false,
+      "full_size": false,
+      "sprite": "entity_ghost_blue.png",
+      "x": 3.0,
+      "y": 7.0,
+      "z": 4.0,
+      "queues": []
+    },
+    {
+      "id": 3,
+      "player": false,
+      "ethereal": false,
+      "full_size": false,
+      "sprite": "entity_pumpkin.png",
+      "x": 2.0,
+      "y": 13.0,
+      "z": 4.0,
+      "queues": [
+        {
+          "name": "queue",
+          "id": 2,
+          "flag": "",
+          "flag_value": 1,
+          "flag_condition": 0,
+          "activation": "interact",
+          "repeating": false,
+          "events": [
+            {
+              "type": "dialogue",
+              "execution_type": "blocking",
+              "args": {
+                "dialogue": {
+                  "id": 0,
+                  "text": "Get out of my sight!",
+                  "next": -1,
+                  "type": "end"
+                }
+              }
+            },
+            {
+              "type": "map_change",
+              "execution_type": "blocking",
+              "args": {
+                "id": 1
+              }
+            }
+          ]
+        },
+        {
+          "name": "queue",
+          "id": 3,
+          "flag": "",
+          "flag_value": 1,
+          "flag_condition": 0,
+          "activation": "autorun",
+          "repeating": false,
+          "events": [
+            {
+              "type": "particle",
+              "execution_type": "blocking",
+              "args": {
+                "type": "music",
+                "count": 5,
+                "id": 0
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "player": false,
+      "ethereal": true,
+      "full_size": true,
+      "sprite": "",
+      "x": 14.0,
+      "y": 9.0,
+      "z": 3.5,
+      "queues": [
+        {
+          "name": "queue",
+          "id": 4,
+          "flag": "",
+          "flag_value": 1,
+          "flag_condition": 0,
+          "activation": "interact",
+          "repeating": false,
+          "events": [
+            {
+              "type": "dialogue",
+              "execution_type": "blocking",
+              "args": {
+                "dialogue 0": {
+                  "id": 0,
+                  "text": "You shall not pass!",
+                  "next": -1,
+                  "type": "end"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -19,6 +19,24 @@ bool EventQueue::IsDone()
 	return true;
 }
 
+std::shared_ptr<EventQueue> EventQueue::Clone()
+{
+	std::shared_ptr<EventQueue> result = std::shared_ptr<EventQueue>(new EventQueue(m_id));
+	result->Condition = Condition;
+	result->Flag = Flag;
+	result->FlagValue = FlagValue;
+	result->m_activation = m_activation;
+	result->m_repeat = m_repeat;
+
+	// Deque
+	std::deque<std::shared_ptr<IEvent>> deque;
+	for (auto &x : m_queue)
+		deque.emplace_back(x->Clone());
+	result->m_queue = deque;
+
+	return result;
+}
+
 
 void EventQueue::ClearEvents()
 {

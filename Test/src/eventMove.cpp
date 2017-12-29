@@ -1,6 +1,7 @@
 #include "eventMove.h"
 
-EventMove::EventMove(unsigned int entity_id, float distance, unsigned int direction) : m_firstSetup(true), m_distance(distance), m_direction(direction)
+EventMove::EventMove(unsigned int entity_id, float distance, unsigned int direction) 
+	: m_firstSetup(true), m_distance(distance), m_direction(direction)
 {
 	m_target = entity_id;
 	m_moveAxis = (direction == 0 || direction == 2) ? 1 : 0;
@@ -35,6 +36,13 @@ EventUpdateResponse EventMove::UpdateEvent(double elapsedTime, std::map<unsigned
 
 	eur.IsDone = false;
 	return eur;
+}
+
+std::shared_ptr<IEvent> EventMove::Clone()
+{
+	std::shared_ptr<IEvent> result = std::shared_ptr<IEvent>(new EventMove(m_target, m_distance, m_direction));
+	SetCloneBaseAttributes(result);
+	return result;
 }
 
 void EventMove::ResetEvent()

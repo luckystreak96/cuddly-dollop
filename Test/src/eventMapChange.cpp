@@ -32,6 +32,12 @@ EventUpdateResponse EventMapChange::UpdateEvent(double elapsedTime, std::map<uns
 	return eur;
 }
 
+std::shared_ptr<IEvent> EventMapChange::Clone()
+{
+	std::shared_ptr<IEvent> result = std::shared_ptr<IEvent>(new EventMapChange(m_map));
+	SetCloneBaseAttributes(result);
+	return result;
+}
 
 void EventMapChange::ResetEvent()
 {

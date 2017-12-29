@@ -21,6 +21,13 @@ EventUpdateResponse EventAddToFlag::UpdateEvent(double elapsedTime, std::map<uns
 	return eur;
 }
 
+std::shared_ptr<IEvent> EventAddToFlag::Clone()
+{
+	std::shared_ptr<IEvent> result = std::shared_ptr<IEvent>(new EventAddToFlag(m_flag, m_value));
+	SetCloneBaseAttributes(result);
+	return result;
+}
+
 void EventAddToFlag::ResetEvent()
 {
 	IEvent::ResetEvent();

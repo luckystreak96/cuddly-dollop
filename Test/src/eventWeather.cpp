@@ -29,6 +29,13 @@ EventUpdateResponse EventWeather::UpdateEvent(double elapsedTime, std::map<unsig
 	return eur;
 }
 
+std::shared_ptr<IEvent> EventWeather::Clone()
+{
+	std::shared_ptr<IEvent> result = std::shared_ptr<IEvent>(new EventWeather(m_count, m_particleType, m_mapSize, m_smooth));
+	SetCloneBaseAttributes(result);
+	return result;
+}
+
 void EventWeather::SetMapSize(Vector3f mapsize)
 {
 	m_mapSize = mapsize;

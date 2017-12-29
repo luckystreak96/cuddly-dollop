@@ -27,6 +27,7 @@ public:
 	ActivationType GetActivationType();
 	void SetActivationType(ActivationType at);
 	void ClearEvents();
+	std::shared_ptr<EventQueue> Clone();
 
 public:
 	std::string Flag;

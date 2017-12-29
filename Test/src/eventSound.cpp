@@ -40,6 +40,13 @@ EventUpdateResponse EventSound::UpdateEvent(double elapsedTime, std::map<unsigne
 	return eur;
 }
 
+std::shared_ptr<IEvent> EventSound::Clone()
+{
+	std::shared_ptr<IEvent> result = std::shared_ptr<IEvent>(new EventSound(m_soundFile));
+	SetCloneBaseAttributes(result);
+	return result;
+}
+
 void EventSound::ResetEvent()
 {
 	IEvent::ResetEvent();
