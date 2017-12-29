@@ -10,11 +10,17 @@
 #include <memory>
 #include "utils.h"
 #include "eventQueue.h"
+#include <variant>
+
+typedef std::map<std::string, std::variant<bool, float, int, std::string>> OptionMap;
 
 class GameData
 {
 public:
 	static void LoadFromFile();
+	static void LoadSettings();
+	static void EnsureBaseSettings();
+	static void LoadGameData();
 	static void SaveToFile();
 	static void SaveGameData();
 	static void SaveSettings();
@@ -23,9 +29,12 @@ public:
 	
 public:
 	static std::string PlayerSprite;
+
+	// Game flags
 	static std::map<std::string, int> Flags;
-	//static std::map<std::string, int> Flags;
 	
+	// Options
+	static OptionMap Options;
 	
 private:
 	static rapidjson::Document m_document;

@@ -17,8 +17,6 @@ class Transformation
 		void AddTranslation(float x, float y, float z);
         void SetRotation(float x, float y, float z);
         void SetRotation(Vector3f& vec);
-        void SetCamera(Camera cam);
-        void SetCamera(Vector3f up, Vector3f pos, Vector3f target);
         void SetPersProjInfo(PersProjInfo* p);
 		void SetOrthoProj(OrthoProjInfo* o);
 		void SetFollowSpeed(float percentSpeed);
@@ -32,8 +30,8 @@ class Transformation
 		Mat4f GetWOTransNoTranslate();
         Mat4f GetWPTrans();
         Mat4f GetTrans();
-		Camera& GetCamera();
 		Vector3f GetTranslation() { return m_translate; };
+		Vector3f GetScale() { return m_scale; };
 
     private:
 		float m_followSpeed = 1;
@@ -44,7 +42,6 @@ class Transformation
         Vector3f m_scale = Vector3f(1, 1, 1);
         Vector3f m_translate = Vector3f(0, 0, 0);
         Vector3f m_rotate = Vector3f(0, 0, 0);
-        Camera m_camera;
         PersProjInfo* m_persProjInfo = NULL;
 		OrthoProjInfo* m_orthoProj = NULL;
 };

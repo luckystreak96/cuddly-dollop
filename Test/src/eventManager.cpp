@@ -108,7 +108,7 @@ void EventManager::Update(double elapsedTime)
 			if (temp->GetID() != -69)
 			{
 				PushBack(temp);
-				Update(elapsedTime);
+				//Update(elapsedTime);
 			}
 		}
 	}

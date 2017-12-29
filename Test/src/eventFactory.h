@@ -16,24 +16,26 @@
 #include "eventWeather.h"
 #include "eventSound.h"
 
-class EventTest;
-using EventTestInner = std::variant<bool, std::map<std::string, EventTest>>;
-class EventTest
+class EventArgType;
+using EventArgInner = std::variant<bool, float, int, std::string, std::vector<std::shared_ptr<EventQueue>>,
+	std::map<std::string, EventArgType>>;
+class EventArgType
 {
 public:
-	EventTestInner inner;
+	EventArgType();
+	EventArgType(EventArgInner);
+	EventArgInner inner;
+
+	float getFloat();
 	template<typename T>
-	T get();
+	T get()
+	{
+		return std::get<T>(inner);
+	}
 };
 
-template<typename T>
-T EventTest::get()
-{
-	return std::get<T>(inner);
-}
-
-typedef std::variant<bool, float, int, std::string, std::vector<std::shared_ptr<EventQueue>>, 
-	std::map<std::string, std::variant<bool, float, int, std::string, std::vector<std::shared_ptr<EventQueue>>>>> EventArgType;
+//typedef std::variant<bool, float, int, std::string, std::vector<std::shared_ptr<EventQueue>>, 
+//	std::map<std::string, std::variant<bool, float, int, std::string, std::vector<std::shared_ptr<EventQueue>>>>> EventArgType;
 
 class MapHandler;
 
@@ -46,12 +48,11 @@ public:
 	static std::vector<std::shared_ptr<EventQueue>> LoadEvent(int map_id, unsigned int entity_id, std::shared_ptr<JsonHandler> jh, MapHandler* map);
 	static std::shared_ptr<EventQueue> LoadEvent(int map_id, unsigned int entity_id, unsigned int queue_id, std::shared_ptr<JsonHandler> jh, MapHandler* map);
 	static std::vector<std::shared_ptr<EventQueue>> LoadEvent(rapidjson::Value& v, MapHandler* map);
-	static void FlagEvent(int map_id, unsigned int entity_id, unsigned int queue_id, int flag, std::string DATA_FILE = "res/data/data.json");
-	static EventArgType AddArg(rapidjson::Value::MemberIterator iter, bool secondIteration, MapHandler* map);
-	static std::variant<bool, float, int, std::string, std::vector<std::shared_ptr<EventQueue>>> AddArg(rapidjson::Value::MemberIterator iter, MapHandler* maphandler);
+	static EventArgType AddArg(rapidjson::Value::MemberIterator iter, MapHandler* map);
 	static void SetActivationType(std::shared_ptr<EventQueue> eq, std::string s);
-	static float GetFloat(EventArgType eat);
+private:
+	static int m_entity_id;
 };
 
-#endif // !DIALOGUE_GRAPH_H__
+#endif // !EVENT_FACTORY_H__
 

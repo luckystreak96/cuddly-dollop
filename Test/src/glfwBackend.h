@@ -5,11 +5,13 @@
 #include <GL/glew.h>
 #include <GLFW\glfw3.h>
 
+class Game;
+
 class GLFWManager
 {
 public:
 	GLFWManager();
-	void GLFWMainLoop();
+	void GLFWMainLoop(Game* game);
 public:
 	static GLFWwindow* m_window;
 private:

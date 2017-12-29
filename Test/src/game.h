@@ -24,12 +24,9 @@ public:
 
 	void MuteButton();
 
-	bool init(float width, float height);
+	bool init();
 	void SetupTextureAtlas();
 private:
-	float m_shadowMapSize;
-	int m_numFrames;
-	bool m_muted;
 	bool m_exit;
 };
 

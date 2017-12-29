@@ -28,6 +28,7 @@ private:
 	float m_maxHeight;
 	bool m_firstTime;
 	DialogueGraph* m_dialogueGraph;
+	static DialogueBox* m_owner;
 };
 
 #endif // !DIALOGUE_BOX_H__

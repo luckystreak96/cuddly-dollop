@@ -4,18 +4,10 @@ using namespace rapidjson;
 
 std::string GameData::PlayerSprite = "res/sprites/entities/entity_ghost_blue.png";
 std::map<std::string, int> GameData::Flags = std::map<std::string, int>();
+OptionMap GameData::Options = OptionMap();
 
 rapidjson::Document GameData::m_document;
 std::string GameData::m_file;
-
-//GameData::GameData() : PlayerSprite("res/sprites/entities/ghost_blue.png")
-//{
-//}
-//
-//GameData::~GameData()
-//{
-//	SaveToFile();
-//}
 
 bool GameData::RespectsCondition(std::shared_ptr<EventQueue> ev)
 {
@@ -60,8 +52,13 @@ void GameData::EmplaceFlag(std::string name, int value)
 	Flags.emplace(name, value);
 }
 
-
 void GameData::LoadFromFile()
+{
+	LoadGameData();
+	LoadSettings();
+}
+
+void GameData::LoadGameData()
 {
 	Flags = std::map<std::string, int>();
 
@@ -84,6 +81,55 @@ void GameData::LoadFromFile()
 	// Get the player sprite
 	if (m_document.HasMember("sprite") && m_document["sprite"].IsString())
 		PlayerSprite = m_document["sprite"].GetString();
+}
+
+void GameData::LoadSettings()
+{
+	Options = OptionMap();
+
+	struct stat buffer;
+	bool exists = (stat("res/data/config", &buffer) == 0);
+	if (!exists)
+	{
+		EnsureBaseSettings();
+		return;
+	}
+	m_file = Utils::ReadFile("res/data/config");
+	m_document.Parse(m_file.c_str());
+
+	// Get the options
+	if (m_document.HasMember("options") && m_document["options"].IsArray())
+	{
+		auto& options = m_document["options"].GetArray();
+		for (auto& v : options)
+			for (Value::ConstMemberIterator itr = v.MemberBegin(); itr != v.MemberEnd(); ++itr)
+			{
+				std::variant<bool, float, int, std::string> sec = -123456;
+				std::string name = itr->name.GetString();
+				if (itr->value.IsBool())
+				{
+					if (name == "mute")
+						sec = itr->value.GetBool();
+					else if (name == "fullscreen")
+						sec = itr->value.GetBool();
+				}
+
+				// If the key isnt defined, just skip
+				else
+					continue;
+
+				Options.emplace(name, sec);
+			}
+	}
+	EnsureBaseSettings();
+}
+
+void GameData::EnsureBaseSettings()
+{
+	if (!Options.count("mute"))
+		Options.emplace("mute", false);
+	if (!Options.count("fullscreen"))
+		Options.emplace("fullscreen", true);
 }
 
 void GameData::SaveGameData()
@@ -117,6 +163,8 @@ void GameData::SaveGameData()
 	saveFile.Accept(writer);
 	fclose(fp);
 }
+
+
 void GameData::SaveSettings()
 {
 	//============ CONFIG SAVE FILE ===============
@@ -125,23 +173,26 @@ void GameData::SaveSettings()
 
 	Document::AllocatorType& allocator = configFile.GetAllocator();
 
-	Value flags(kArrayType);
-	for (auto x : Flags)
+	Value options(kArrayType);
+	for (auto x : Options)
 	{
 		Value ob(kObjectType);
 		Value first(kStringType);
 		first.SetString(StringRef(x.first.c_str()), allocator);
 		Value second;
-		second.SetInt(x.second);
+
+		if (x.first == "mute")
+			second.SetBool(std::get<bool>(x.second));
+		else if (x.first == "fullscreen")
+			second.SetBool(std::get<bool>(x.second));
 
 		ob.AddMember(first, second, allocator);
-		flags.PushBack(ob, allocator);
+		options.PushBack(ob, allocator);
 	}
 
-	configFile.AddMember("flags", flags, allocator);
-	configFile.AddMember("sprite", StringRef(PlayerSprite.c_str()), allocator);
+	configFile.AddMember("options", options, allocator);
 
-	FILE* fp = fopen("res/data/save", "wb"); // non-Windows use "w"
+	FILE* fp = fopen("res/data/config", "wb"); // non-Windows use "w"
 	char writeBuffer[65536];
 	FileWriteStream os(fp, writeBuffer, sizeof(writeBuffer));
 	Writer<FileWriteStream> writer(os);

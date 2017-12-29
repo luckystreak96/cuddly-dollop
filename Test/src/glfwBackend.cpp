@@ -1,12 +1,11 @@
-#include "glfwBackend.h"
-#include "define_gl.h"
-#include "game.h"
-#include "input_manager.h"
+#include "glfwBackend.h" // include this first or get gl b4 glew error
 #include <IL\il.h>
 #include <IL\ilu.h>
 #include <IL\ilut.h>
+#include "game.h"
+#include "input_manager.h"
+#include "gameData.h"
 
-static bool FullScreen = true;
 GLFWwindow* GLFWManager::m_window = NULL;;
 
 void Resize(GLFWwindow* window)
@@ -31,8 +30,9 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 	{
 		GLFWmonitor* monitor = glfwGetPrimaryMonitor();
 		const GLFWvidmode* mode = glfwGetVideoMode(monitor);
-		glfwSetWindowMonitor(window, FullScreen ? NULL : monitor, 1, 30, mode->width, mode->height, mode->refreshRate);
-		FullScreen = !FullScreen;
+		glfwSetWindowMonitor(window, std::get<bool>(GameData::Options.at("fullscreen")) ? NULL : monitor, 5, 35, mode->width - 10, mode->height - 80, mode->refreshRate);
+		GameData::Options.at("fullscreen") = !std::get<bool>(GameData::Options.at("fullscreen"));
+		glfwSwapInterval(1);
 	}
 
 	InputManager::GetInstance().Input((unsigned int)key, action);
@@ -46,24 +46,43 @@ static void window_size_callback(GLFWwindow* window, int width, int height)
 GLFWManager::GLFWManager()
 {
 	// Init glfw
-	if(!glfwInit())
+	if (!glfwInit())
 	{
-	    std::cout << "Failed to initialize glfw" << std::endl;
+		std::cout << "Failed to initialize glfw" << std::endl;
 		std::getchar();
-	    exit(1);
+		exit(1);
 	}
 
 	// GL Version
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
 
+	// Set fullscreen, call again with null monitor to set windowed
+	GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+	const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+	m_screenWidth = mode->width;
+	m_screenHeight = mode->height;
+	m_refreshRate = mode->refreshRate;
+
 	// Create window
-	m_window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Cuddly-Dollop", NULL, NULL);
+	m_window = glfwCreateWindow(m_screenWidth - 10, m_screenHeight - 80, "Cuddly-Dollop", NULL, NULL);
 	if (!m_window)
 	{
 		std::cout << "Window failed to be created!" << std::endl;
 		std::getchar();
 		exit(1);
+	}
+
+	// Fullscreen / windowed initialization
+	if (std::get<bool>(GameData::Options.at("fullscreen")))
+	{
+		glfwSetWindowMonitor(m_window, monitor, 5, 35, m_screenWidth - 10, m_screenHeight - 80, m_refreshRate);
+	}
+	else
+	{
+		glfwHideWindow(m_window);
+		glfwSetWindowPos(m_window, 5, 35);
+		glfwShowWindow(m_window);
 	}
 
 	// Window icon
@@ -78,15 +97,7 @@ GLFWManager::GLFWManager()
 
 	glfwSetWindowIcon(m_window, 1, &image);
 
-	// Set fullscreen, call again with null monitor to set windowed
-	GLFWmonitor* monitor = glfwGetPrimaryMonitor();
-	const GLFWvidmode* mode = glfwGetVideoMode(monitor);
-	m_screenWidth = mode->width;
-	m_screenHeight = mode->height;
-	m_refreshRate = mode->refreshRate;
-
-	glfwSetWindowMonitor(m_window, monitor, 10, 10, m_screenWidth, m_screenHeight, m_refreshRate);
-
+	// GL context
 	glfwMakeContextCurrent(m_window);
 
 	// Key callback
@@ -122,16 +133,17 @@ GLFWManager::GLFWManager()
 	Resize(m_window);
 }
 
-void GLFWManager::GLFWMainLoop()
+void GLFWManager::GLFWMainLoop(Game* game)
 {
-	Game* game = new Game();
-	if (!game->init(WINDOW_WIDTH, WINDOW_HEIGHT))
+	// Game init
+	if (!game->init())
 	{
 		std::cout << "Game class init failed" << std::endl;
 		std::getchar();
 		exit(1);
 	}
 
+	// Main loop
 	while (!glfwWindowShouldClose(m_window))
 	{
 		glfwPollEvents();
@@ -139,6 +151,7 @@ void GLFWManager::GLFWMainLoop()
 		glfwSwapBuffers(m_window);
 	}
 
+	// Destroy GLFW context
 	glfwDestroyWindow(m_window);
 	glfwTerminate();
 }

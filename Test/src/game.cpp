@@ -3,24 +3,21 @@
 #include "textureatlas.h"
 #include <GLFW\glfw3.h>
 
-Game::Game() : m_numFrames(0), m_exit(false), m_muted(true)
+Game::Game() : m_exit(false)
 {
+	GameData::LoadFromFile();
 }
 
 Game::~Game()
 {
 }
 
-bool Game::init(float width, float height)
+bool Game::init()
 {
-	GameData::LoadFromFile();
 	SetupTextureAtlas();
 
 	// Mute by default
-#ifdef NDEBUG
-	m_muted = false;
-#endif
-	SoundManager::GetInstance().SetMasterVolume(m_muted ? 0.f : 1.f);
+	SoundManager::GetInstance().SetMasterVolume(std::get<bool>(GameData::Options.at("mute")) ? 0.f : 1.f);
 
 	Model::GetInstance().init("res/models/models.data");
 
@@ -88,6 +85,10 @@ void Game::renderSceneCB()
 
 void Game::HandleInput()
 {
+	// Exit
+	if (InputManager::GetInstance().FrameKeyStatus(GLFW_KEY_ESCAPE, KeyStatus::AnyPress))
+		m_exit = true;
+
 	// Draw normals
 	if (InputManager::GetInstance().FrameKeyStatus(GLFW_KEY_F1, KeyStatus::AnyRelease))
 		Globals::DEBUG_DRAW_NORMALS = !Globals::DEBUG_DRAW_NORMALS;
@@ -108,7 +109,7 @@ void Game::HandleInput()
 
 void Game::MuteButton()
 {
-	m_muted = !m_muted;
-	SoundManager::GetInstance().SetMasterVolume(m_muted ? 0.f : 1.f);
+	GameData::Options.at("mute") = !std::get<bool>(GameData::Options.at("mute"));
+	SoundManager::GetInstance().SetMasterVolume(std::get<bool>(GameData::Options.at("mute")) ? 0.f : 1.f);
 }
 

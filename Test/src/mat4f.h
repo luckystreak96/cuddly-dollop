@@ -19,17 +19,11 @@ class Mat4f
         Mat4f operator*(const Mat4f &mat) const;
 		Vector3f Multiply(Vector3f &vec, float pretendVec4) const;
 
-        void SetScale(Vector3f scale);
-        void SetRotation(Vector3f rotation);
-        void SetTranslation(Vector3f translation);
-
         void ToIdentityMatrix(float (&matrix)[4][4]);
 
         void InitScaleMat(Vector3f &scale);
         void InitTranslateMat(Vector3f &translation);
         void InitRotateMat(Vector3f &rot);
-
-        void InitCameraTransform(Vector3f& Target, Vector3f& Up);
 
         void InitProjPers(PersProjInfo p);
         void InitOrthoProj(OrthoProjInfo o);
@@ -38,12 +32,7 @@ class Mat4f
         void Multiply(float (&first)[4][4], const float (&mat)[4][4]);
 
     public:
-        //Camera camera;
         float m[4][4];
-
-        //Vector3f m_scale;
-        //Vector3f m_rotation;
-        //Vector3f m_translation;
 };
 
 #endif

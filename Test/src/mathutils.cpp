@@ -1,49 +1,62 @@
 #include "mathutils.h"
+#include "transform.h"
 
 static const float StepSize = 0.2f;
+int Camera::Target = 1;
+Vector3f Camera::Mapsize = Vector3f();
 
-Camera::Camera()
+void Camera::Follow(Vector3f target, Transformation* t)
 {
-	InitCam();
+	Vector3f translate, scale;
+	translate = t->GetTranslation();
+	scale = t->GetScale();
+
+	// Follow the center of the character
+	target.x += 0.5f;
+	target.y += 0.5f;
+
+	float size = OrthoProjInfo::GetRegularInstance().Size;
+
+	float distanceX = -(target.x * scale.x) - translate.x;//find the distance between the 2, -target so that the movement of the world will be proper
+	float distanceY = -(target.y * scale.y) - translate.y;
+
+	//float percentagex = abs(distanceX) / 15.f / scale.x / 2.f;
+	//float percentagey = abs(distanceY) / 10.f / scale.x / 2.f;
+
+	float percentagex = (0.005f * pow(distanceX, 2)) * scale.x + 0.02f;
+	float percentagey = (0.005f * pow(distanceY, 2)) * scale.y + 0.02f;
+
+	percentagex = fmin(percentagex, 1.0f);
+	percentagey = fmin(percentagey, 1.0f);
+
+	// Sets how much the camera will move in this frame
+	translate.x += distanceX * percentagex;
+	translate.y += distanceY * percentagey;
+
+	// If the pan would bring you left further than the left limit OR the map is too small to fit the screen width,
+	//  just pan at the left limit
+	if (translate.x - ((OrthoProjInfo::GetRegularInstance().Left) / size) > 0 ||
+		Mapsize.x < ((OrthoProjInfo::GetRegularInstance().Right) / size) * 2)
+		translate.x = ((OrthoProjInfo::GetRegularInstance().Left) / size);
+	// If the map is big enough for the screen to pan it right and you would normally pass the limits,
+	//  set the pan to the exact right limit
+	else if (abs(translate.x - ((OrthoProjInfo::GetRegularInstance().Right) / size)) > Mapsize.x * scale.x)
+		translate.x = -(Mapsize.x * scale.x - ((OrthoProjInfo::GetRegularInstance().Right) / size));
+
+	// If the pan would bring you down further than the bottom OR the map isnt high enough to fill the screen,
+	//  just stay at the bottom
+	if (translate.y - ((OrthoProjInfo::GetRegularInstance().Bottom) / size) > 0 ||
+		Mapsize.y < ((OrthoProjInfo::GetRegularInstance().Top) / size) * 2)
+		translate.y = ((OrthoProjInfo::GetRegularInstance().Bottom) / size);
+	// If the map is big enough for the screen to pan it upwards and you would normally pass the limits,
+	//  set the pan to the exact top
+	else if (abs(translate.y - ((OrthoProjInfo::GetRegularInstance().Top) / size)) > Mapsize.y * scale.y)
+		translate.y = -(Mapsize.y * scale.y - ((OrthoProjInfo::GetRegularInstance().Top) / size));
+
+	t->SetTranslation(translate);
 }
 
-Camera::Camera(float Window_Width, float Window_Height) : m_windowWidth(Window_Width), m_windowHeight(Window_Height)
-{
-	InitCam();
-}
 
-void Camera::InitCam()
-{
-	Pos = Vector3f(0.0f, 0.0f, -z_distance);
-	Target = Pos - Vector3f(0.0f, 0.0f, 1.0f);
-	Up = Vector3f(0.0f, 1.0f, 0.0f);
-}
-
-void Camera::Update(Vector3f player_pos)
-{
-	player_pos.z -= 0.8f;
-	Vector3f movement = ((player_pos - Vector3f(0, 0, z_distance)) - Vector3f(Pos.x, Pos.y, Pos.z));
-	movement.x /= 60;
-	movement.y /= 60;
-	movement.z /= 60;
-
-	Pos += movement;
-}
-
-void Camera::RotateHorizontal(bool right)
-{
-	Target.x += right ? 0.1f : -0.1f;
-}
-
-void Camera::RotateVertical(bool up)
-{
-	Target.z += up ? 0.1f : -0.1f;
-}
-
-void Camera::RotateSpiral(bool clockwise)
-{
-	Target.y += clockwise ? 0.1f : -0.1f;
-}
 
 namespace MathUtils
 {

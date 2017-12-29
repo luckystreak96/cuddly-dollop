@@ -36,6 +36,7 @@ bool SceneWorld::Init()
 	m_acceptInput = true;
 
 	m_mapHandler = std::shared_ptr<MapHandler>(new MapHandler(m_currentMap, m_jsonHandler));
+	Camera::Mapsize = m_mapHandler->GetMapSize();
 	m_collisionManager.SetMapTiles(m_mapHandler->Tiles());
 
 	m_celist = EntityFactory::GetEntities(m_currentMap, m_jsonHandler);
@@ -126,8 +127,9 @@ void SceneWorld::ManageInput()
 		m_zoom = !m_zoom;
 		float value = m_zoom ? 2.0f : 1.0f;
 		m_World->SetScale(value, value, 1);
-		for (int i = 0; i < 30; i++)
-			m_World->Follow(m_player->Physics()->Position(), m_mapHandler->GetMapSize());
+		if (m_celist.count(Camera::Target))
+			for (int i = 0; i < 30; i++)
+				Camera::Follow(m_celist.at(Camera::Target)->Physics()->Position(), m_World.get());
 	}
 
 	static float bloomint = 0.3f;
@@ -257,8 +259,8 @@ SceneGenData SceneWorld::Update()
 	SetAudioPosition();
 	SoundManager::GetInstance().Update();
 
-	if (m_player)
-		m_World->Follow(m_player->Physics()->Position(), m_mapHandler->GetMapSize());
+	if (m_celist.count(Camera::Target))
+		Camera::Follow(m_celist.at(Camera::Target)->Physics()->Position(), m_World.get());
 
 	//Display FPS
 #ifdef _DEBUG
@@ -307,24 +309,6 @@ void SceneWorld::RenderPass()
 	if (m_bloomEffect)
 		Bloom::GetInstance().End(false);
 
-	//Debug tile outline drawing
-	//if (Globals::DEBUG_DRAW_TILE_OUTLINES)
-	//{
-	//	glBegin(GL_LINES);
-	//	glColor3f(1.0, 0.0, 0.0);
-	//	for (int x = 1; x < 32; x++)
-	//	{
-	//		glVertex3f((GLfloat)x, (GLfloat)0, (GLfloat)0);
-	//		glVertex3f((GLfloat)x, (GLfloat)18, (GLfloat)0);
-	//	}
-	//	for (int y = 1; y < 18; y++)
-	//	{
-	//		glVertex3f((GLfloat)0, (GLfloat)y, (GLfloat)0);
-	//		glVertex3f((GLfloat)32, (GLfloat)y, (GLfloat)0);
-	//	}
-	//	glEnd();
-	//}
-
 	m_World->SetTranslation(m_backupTrans);
 }
 
@@ -350,14 +334,13 @@ void SceneWorld::SetOrthoStuffs()
 
 		EffectManager::GetInstance().SetAllTilePositions(OrthoProjInfo::GetRegularInstance().Size);
 
-		for (int i = 0; i < 30; i++)
-			m_World->Follow(m_player->Physics()->Position(), m_mapHandler->GetMapSize());
+		if (m_celist.count(Camera::Target))
+			for (int i = 0; i < 30; i++)
+				Camera::Follow(m_celist.at(Camera::Target)->Physics()->Position(), m_World.get());
 
 		OrthoProjInfo::GetRegularInstance().changed = false;
 	}
 
-	static float tempdfdsfs = 0.0f;
-	tempdfdsfs += 0.002f;
 	float value = m_zoom ? 2.0f : 1.0f;
 	m_World->SetScale(value, value, 1);
 

@@ -1,6 +1,8 @@
 #include "dialogueBox.h"
 #include <GLFW\glfw3.h>
 
+DialogueBox* DialogueBox::m_owner = NULL;
+
 DialogueBox::DialogueBox(unsigned int entity_id, std::vector<Dialogue> d, std::vector<DialogueChoice> dc) : m_firstTime(true)
 {
 	m_dialogueGraph = new DialogueGraph(d, dc);
@@ -61,17 +63,27 @@ EventUpdateResponse DialogueBox::UpdateEvent(double elapsedTime, std::map<unsign
 	eur.IsDone = true;
 	eur.Queue = std::shared_ptr<EventQueue>(new EventQueue());
 
+	if (m_owner != this && m_owner != NULL)
+	{
+		eur.IsDone = false;
+		return eur;
+	}
+
 	if (m_firstTime)
 	{
+		m_owner = this;
 		SetScale(m_xScale, m_yScale);
 		m_firstTime = false;
 	}
 
 	// Don't update it if its completed
 	if (m_completed)
+	{
+		m_owner = NULL;
 		return eur;
+	}
 	else
-		if (m_target <= ents->size())
+		if (m_target <= ents->size() && m_target != 0)
 			ents->at(m_target)->Physics()->SetConversationLock(true);
 
 	// Update the font
@@ -105,6 +117,7 @@ EventUpdateResponse DialogueBox::UpdateEvent(double elapsedTime, std::map<unsign
 				m_completed = true;
 				if (m_target <= ents->size())
 					ents->at(m_target)->Physics()->SetConversationLock(false);
+				m_owner = NULL;
 				return eur;
 			}
 
@@ -120,6 +133,7 @@ EventUpdateResponse DialogueBox::UpdateEvent(double elapsedTime, std::map<unsign
 				m_completed = true;
 				if (m_target <= ents->size())
 					ents->at(m_target)->Physics()->SetConversationLock(false);
+				m_owner = NULL;
 				return eur;
 			}
 		}

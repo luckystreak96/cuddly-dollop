@@ -5695,11 +5695,47 @@
                       "events": [
                         {
                           "type": "particle",
-                          "execution_type": "blocking",
+                          "execution_type": "async",
                           "args": {
                             "type": "music",
                             "count": 5,
                             "id": 10
+                          }
+                        },
+                        {
+                          "type": "dialogue",
+                          "execution_type": "blocking",
+                          "args": {
+                            "dialogue 0": {
+                              "id": 0,
+                              "text": "OMG",
+                              "next": -1,
+                              "type": "end",
+                              "queues": [
+                                {
+                                  "name": "queue",
+                                  "id": 14,
+                                  "flag": "",
+                                  "flag_value": 1,
+                                  "flag_condition": 0,
+                                  "activation": "interact",
+                                  "repeating": false,
+                                  "events": [
+                                    {
+                                      "type": "particle",
+                                      "execution_type": "blocking",
+                                      "args": {
+                                        "type": "explosion",
+                                        "count": 50,
+                                        "id": 10,
+                                        "power": 0.3,
+                                        "sprite": "snowflake.png"
+                                      }
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
                           }
                         }
                       ]
@@ -5711,28 +5747,6 @@
                   "next": 2,
                   "text": "No"
                 }
-              }
-            }
-          ]
-        },
-        {
-          "name": "explode",
-          "id": 9,
-          "flag": "",
-          "flag_value": 1,
-          "flag_condition": 0,
-          "activation": "autorun",
-          "repeating": false,
-          "events": [
-            {
-              "type": "particle",
-              "execution_type": "async",
-              "args": {
-                "type": "explosion",
-                "count": 200,
-                "id": 10,
-                "power": 0.5,
-                "sprite": "dust.png"
               }
             }
           ]

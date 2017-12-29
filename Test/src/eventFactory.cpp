@@ -7,6 +7,8 @@
 #include "eventAddToFlag.h"
 #include "eventToggleFlag.h"
 
+int EventFactory::m_entity_id = 0;
+
 std::map<std::string, unsigned int> EventFactory::TypeDict =
 {
 	{ "teleport", ET_Teleport },
@@ -33,16 +35,22 @@ std::map<std::string, unsigned int> EventFactory::EEMDict =
 	{ "async", ASYNC }
 };
 
-float EventFactory::GetFloat(EventArgType eat)
+float EventArgType::getFloat()
 {
-	if (std::holds_alternative<float>(eat))
-		return std::get<float>(eat);
-	if (std::holds_alternative<int>(eat))
-		return (float)std::get<int>(eat);
+	if (std::holds_alternative<float>(inner))
+		return std::get<float>(inner);
+	if (std::holds_alternative<int>(inner))
+		return (float)std::get<int>(inner);
 
 	// If we get here then its not even an int so wtf -_-
-	return std::get<float>(eat);
+	return std::get<float>(inner);
 }
+
+EventArgType::EventArgType() : inner(true) {}
+EventArgType::EventArgType(EventArgInner eai) : inner(eai)
+{
+}
+
 
 std::shared_ptr<IEvent> EventFactory::BuildEvent(EventTypes et, std::map<std::string, EventArgType> args, MapHandler* map, unsigned int entity_id)
 {
@@ -52,7 +60,7 @@ std::shared_ptr<IEvent> EventFactory::BuildEvent(EventTypes et, std::map<std::st
 	std::shared_ptr<IEvent> result = NULL;
 
 	// Target id setup
-	unsigned int id = args.count("id") ? std::get<int>(args.at("id")) : 0;
+	unsigned int id = args.count("id") ? args.at("id").get<int>() : 0;
 	if (id == 0) id = entity_id;
 
 	std::string str;
@@ -65,75 +73,75 @@ std::shared_ptr<IEvent> EventFactory::BuildEvent(EventTypes et, std::map<std::st
 		break;
 	case EventTypes::ET_Teleport:
 		result = std::shared_ptr<IEvent>(new EventTeleport(id,
-			args.count("x") ? GetFloat(args.at("x")) : 0.0f,
-			args.count("y") ? GetFloat(args.at("y")) : 0.0f,
-			args.count("z") ? GetFloat(args.at("z")) : 0.0f));
+			args.count("x") ? args.at("x").getFloat() : 0.0f,
+			args.count("y") ? args.at("y").getFloat() : 0.0f,
+			args.count("z") ? args.at("z").getFloat() : 0.0f));
 		break;
 	case EventTypes::ET_SetFlag:
 		result = std::shared_ptr<IEvent>(new EventSetFlag(
-			args.count("name") ? std::get<std::string>(args.at("name")) : "",
-			args.count("value") ? std::get<int>(args.at("value")) : 1));
+			args.count("name") ? args.at("name").get<std::string>() : "",
+			args.count("value") ? args.at("value").get<int>() : 1));
 		break;
 	case EventTypes::ET_ToggleFlag:
 		result = std::shared_ptr<IEvent>(new EventToggleFlag(
-			args.count("name") ? std::get<std::string>(args.at("name")) : ""));
+			args.count("name") ? args.at("name").get<std::string>() : ""));
 		break;
 	case EventTypes::ET_AddToFlag:
 		result = std::shared_ptr<IEvent>(new EventAddToFlag(
-			args.count("name") ? std::get<std::string>(args.at("name")) : "",
-			args.count("value") ? std::get<int>(args.at("value")) : 1));
+			args.count("name") ? args.at("name").get<std::string>() : "",
+			args.count("value") ? args.at("value").get<int>() : 1));
 		break;
 	case EventTypes::ET_SpriteChange:
 		result = std::shared_ptr<IEvent>(new EventSpriteChange(
-			args.count("sprite") ? std::get<std::string>(args.at("sprite")) : "",
-			args.count("id") ? std::get<int>(args.at("id")) : 1));
+			args.count("sprite") ? args.at("sprite").get<std::string>() : "",
+			args.count("id") ? args.at("id").get<int>() : 1));
 		break;
 	case EventTypes::ET_PlaySound:
 		result = std::shared_ptr<IEvent>(new EventSound(
-			args.count("sound_file") ? std::get<std::string>(args.at("sound_file")) : "res/audio/fx/swish_2.wav"));
+			args.count("sound_file") ? args.at("sound_file").get<std::string>() : "res/audio/fx/swish_2.wav"));
 		break;
 	case EventTypes::ET_PlayBGM:
 		result = std::shared_ptr<IEvent>(new EventBGM(
-			args.count("sound_file") ? std::get<std::string>(args.at("sound_file")) : "res/audio/fx/washeslow.wav"));
+			args.count("sound_file") ? args.at("sound_file").get<std::string>() : "res/audio/fx/washeslow.wav"));
 		break;
 	case EventTypes::ET_MoveRight:
 		result = std::shared_ptr<IEvent>(new EventMove(id,
-			args.count("distance") ? GetFloat(args.at("distance")) : 3.0f,
+			args.count("distance") ? args.at("distance").getFloat() : 3.0f,
 			1));
 		break;
 	case EventTypes::ET_MoveUp:
 		result = std::shared_ptr<IEvent>(new EventMove(id,
-			args.count("distance") ? GetFloat(args.at("distance")) : 3.0f,
+			args.count("distance") ? args.at("distance").getFloat() : 3.0f,
 			0));
 		break;
 	case EventTypes::ET_MoveDown:
 		result = std::shared_ptr<IEvent>(new EventMove(id,
-			args.count("distance") ? GetFloat(args.at("distance")) : 3.0f,
+			args.count("distance") ? args.at("distance").getFloat() : 3.0f,
 			2));
 		break;
 	case EventTypes::ET_MoveLeft:
 		result = std::shared_ptr<IEvent>(new EventMove(id,
-			args.count("distance") ? GetFloat(args.at("distance")) : 3.0f,
+			args.count("distance") ? args.at("distance").getFloat() : 3.0f,
 			3));
 		break;
 	case EventTypes::ET_Weather:
-		str = args.count("type") ? std::get<std::string>(args.at("type")) : "snow";
-		result = std::shared_ptr<IEvent>(new EventWeather(args.count("count") ? std::get<int>(args.at("count")) : 50,
+		str = args.count("type") ? args.at("type").get<std::string>() : "snow";
+		result = std::shared_ptr<IEvent>(new EventWeather(args.count("count") ? args.at("count").get<int>() : 50,
 			ParticleFromString.count(str) ? ParticleFromString.at(str) : PT_Snow,
 			map->GetMapSize(),
-			args.count("smooth") ? std::get<bool>(args.at("smooth")) : false));
+			args.count("smooth") ? args.at("smooth").get<bool>() : false));
 		break;
 	case EventTypes::ET_Particle:
-		str = args.count("type") ? std::get<std::string>(args.at("type")) : "music";
-		result = std::shared_ptr<IEvent>(new EventParticle(args.count("count") ? std::get<int>(args.at("count")) : 50,
+		str = args.count("type") ? args.at("type").get<std::string>() : "music";
+		result = std::shared_ptr<IEvent>(new EventParticle(args.count("count") ? args.at("count").get<int>() : 50,
 			ParticleFromString.count(str) ? ParticleFromString.at(str) : PT_Music,
 			id,
-			args.count("sprite") ? std::get<std::string>(args.at("sprite")) : ""));
+			args.count("sprite") ? args.at("sprite").get<std::string>() : ""));
 		if (args.count("power"))
-			dynamic_cast<EventParticle*>(result.get())->SetPower(GetFloat(args.at("power")));
+			dynamic_cast<EventParticle*>(result.get())->SetPower(args.at("power").getFloat());
 		break;
 	case EventTypes::ET_CallQueue:
-		result = std::shared_ptr<IEvent>(new EventCaller(id, args.count("queue_id") ? std::get<int>(args.at("queue_id")) : 0));
+		result = std::shared_ptr<IEvent>(new EventCaller(id, args.count("queue_id") ? args.at("queue_id").get<int>() : 0));
 		break;
 	case EventTypes::ET_DialogueBox:
 	{
@@ -151,17 +159,17 @@ std::shared_ptr<IEvent> EventFactory::BuildEvent(EventTypes et, std::map<std::st
 					DialogueChoice dc;
 
 					// For each param in the choice
-					for (auto t : std::get<std::map<std::string, std::variant<bool, float, int, std::string, std::vector<std::shared_ptr<EventQueue>>>>>(x.second))
+					for (auto t : x.second.get<std::map<std::string, EventArgType>>())
 					{
 						// Dialogue id
 						if (t.first == "d")
-							dc.DialogueId = std::get<int>(t.second);
+							dc.DialogueId = t.second.get<int>();
 						else if (t.first == "text")
-							dc.Text = std::get<std::string>(t.second);
+							dc.Text = t.second.get<std::string>();
 						else if (t.first == "next")
-							dc.NextTextId = std::get<int>(t.second);
+							dc.NextTextId = t.second.get<int>();
 						else if (t.first == "queues")
-							dc.Queue = (std::get<std::vector<std::shared_ptr<EventQueue>>>(t.second)).at(0);
+							dc.Queue = t.second.get<std::vector<std::shared_ptr<EventQueue>>>().at(0);
 					}
 
 					choices.push_back(dc);
@@ -171,19 +179,19 @@ std::shared_ptr<IEvent> EventFactory::BuildEvent(EventTypes et, std::map<std::st
 					Dialogue d;
 
 					// For each param in the dialogue
-					for (auto t : (std::get<std::map<std::string, std::variant<bool, float, int, std::string, std::vector<std::shared_ptr<EventQueue>>>>>(x.second)))
+					for (auto t : x.second.get<std::map<std::string, EventArgType>>())
 					{
 						// Dialogue id
 						if (t.first == "id")
-							d.Id = std::get<int>(t.second);
+							d.Id = t.second.get<int>();
 						else if (t.first == "text")
-							d.Text = std::get<std::string>(t.second);
+							d.Text = t.second.get<std::string>();
 						else if (t.first == "next")
-							d.NextTextId = std::get<int>(t.second);
+							d.NextTextId = t.second.get<int>();
 						else if (t.first == "queues")
-							d.Queue = (std::get<std::vector<std::shared_ptr<EventQueue>>>(t.second)).at(0);
+							d.Queue = t.second.get<std::vector<std::shared_ptr<EventQueue>>>().at(0);
 						else if (t.first == "type")
-							d.Type = DialogueGraph::StringToDialogueType(std::get<std::string>(t.second));
+							d.Type = DialogueGraph::StringToDialogueType(t.second.get<std::string>());
 					}
 
 					dialogues.push_back(d);
@@ -220,6 +228,8 @@ void EventFactory::SetActivationType(std::shared_ptr<EventQueue> eq, std::string
 std::vector<std::shared_ptr<EventQueue>> EventFactory::LoadEvent(int map_id, unsigned int entity_id, std::shared_ptr<JsonHandler> jh, MapHandler* map)
 {
 	std::vector<std::shared_ptr<EventQueue>> result = std::vector<std::shared_ptr<EventQueue>>();
+
+	m_entity_id = entity_id;
 
 	auto& ques = jh->LoadQueues(map_id, entity_id).GetArray();
 	for (auto& x : ques)
@@ -273,7 +283,7 @@ std::vector<std::shared_ptr<EventQueue>> EventFactory::LoadEvent(int map_id, uns
 				if (e.HasMember("args"))
 					for (rapidjson::Value::MemberIterator iter = e["args"].MemberBegin(); iter != e["args"].MemberEnd(); ++iter)
 					{
-						EventArgType eat = AddArg(iter, false, map);
+						EventArgType eat = AddArg(iter, map);
 						args.emplace(std::string(iter->name.GetString()), eat);
 					}
 
@@ -342,7 +352,7 @@ std::shared_ptr<EventQueue> EventFactory::LoadEvent(int map_id, unsigned int ent
 					if (e.HasMember("args"))
 						for (rapidjson::Value::MemberIterator iter = e["args"].MemberBegin(); iter != e["args"].MemberEnd(); ++iter)
 						{
-							EventArgType eat = AddArg(iter, false, map);
+							EventArgType eat = AddArg(iter, map);
 							args.emplace(std::string(iter->name.GetString()), eat);
 						}
 
@@ -372,71 +382,37 @@ std::shared_ptr<EventQueue> EventFactory::LoadEvent(int map_id, unsigned int ent
 	return result;
 }
 
-EventArgType EventFactory::AddArg(rapidjson::Value::MemberIterator iter, bool secondIteration, MapHandler* maphandler)
+EventArgType EventFactory::AddArg(rapidjson::Value::MemberIterator iter, MapHandler* maphandler)
 {
-	std::map<std::string, std::variant<bool, float, int, std::string, std::vector<std::shared_ptr<EventQueue>>>> map = std::map<std::string, std::variant<bool, float, int, std::string, std::vector<std::shared_ptr<EventQueue>>>>();
-	EventArgType eat = false;
+	std::map<std::string, EventArgType> map = std::map<std::string, EventArgType>();
+	EventArgType eat(false);
 	rapidjson::Type t;
 	t = iter->value.GetType();
 	switch (t)
 	{
 	case rapidjson::Type::kNumberType:
 		if (iter->value.IsFloat())
-			eat = iter->value.GetFloat();
+			eat.inner = iter->value.GetFloat();
 		if (iter->value.IsInt())
-			eat = iter->value.GetInt();
+			eat.inner = iter->value.GetInt();
 		break;
 	case rapidjson::Type::kStringType:
-		eat = std::string(iter->value.GetString());
+		eat.inner = std::string(iter->value.GetString());
 		break;
 	case rapidjson::Type::kTrueType:
-		eat = iter->value.GetBool();
+		eat.inner = iter->value.GetBool();
 		break;
 	case rapidjson::Type::kFalseType:
-		eat = iter->value.GetBool();
+		eat.inner = iter->value.GetBool();
 		break;
 	case rapidjson::Type::kObjectType:
-		if (secondIteration)
-			break;
 		for (rapidjson::Value::MemberIterator it = iter->value.MemberBegin(); it != iter->value.MemberEnd(); ++it)
 			map.emplace(std::string(it->name.GetString()), AddArg(it, maphandler));
-		eat = map;
+		eat.inner = map;
 		break;
 	case rapidjson::Type::kArrayType:
 		rapidjson::Value val = iter->value.GetArray();
-		eat = LoadEvent(val, maphandler);
-		break;
-	}
-
-	return eat;
-}
-
-std::variant<bool, float, int, std::string, std::vector<std::shared_ptr<EventQueue>>> EventFactory::AddArg(rapidjson::Value::MemberIterator iter, MapHandler* maphandler)
-{
-	std::map<std::string, std::variant<bool, float, int, std::string, std::vector<std::shared_ptr<EventQueue>>>> map = std::map<std::string, std::variant<bool, float, int, std::string, std::vector<std::shared_ptr<EventQueue>>>>();
-	std::variant<bool, float, int, std::string, std::vector<std::shared_ptr<EventQueue>>> eat = false;
-	rapidjson::Type t;
-	t = iter->value.GetType();
-	switch (t)
-	{
-	case rapidjson::Type::kNumberType:
-		if (iter->value.IsFloat())
-			eat = iter->value.GetFloat();
-		if (iter->value.IsInt())
-			eat = iter->value.GetInt();
-		break;
-	case rapidjson::Type::kStringType:
-		eat = std::string(iter->value.GetString());
-		break;
-	case rapidjson::Type::kTrueType:
-		eat = iter->value.GetBool();
-		break;
-	case rapidjson::Type::kFalseType:
-		eat = iter->value.GetBool();
-		break;
-	case rapidjson::Type::kArrayType:
-		rapidjson::Value val = iter->value.GetArray();
-		eat = LoadEvent(val, maphandler);
+		eat.inner = LoadEvent(val, maphandler);
 		break;
 	}
 
@@ -476,33 +452,9 @@ std::vector<std::shared_ptr<EventQueue>> EventFactory::LoadEvent(rapidjson::Valu
 
 				// If there are args
 				if (e.HasMember("args"))
-					for (rapidjson::Value::ConstMemberIterator iter = e["args"].MemberBegin(); iter != e["args"].MemberEnd(); ++iter)
+					for (rapidjson::Value::MemberIterator iter = e["args"].MemberBegin(); iter != e["args"].MemberEnd(); ++iter)
 					{
-						EventArgType eat;
-						rapidjson::Type t;
-						t = iter->value.GetType();
-						switch (t)
-						{
-						case rapidjson::Type::kNumberType:
-							if (iter->value.IsFloat())
-								eat = iter->value.GetFloat();
-							if (iter->value.IsInt())
-								eat = iter->value.GetInt();
-							break;
-						case rapidjson::Type::kStringType:
-							eat = std::string(iter->value.GetString());
-							break;
-						case rapidjson::Type::kTrueType:
-							eat = iter->value.GetBool();
-							break;
-						case rapidjson::Type::kFalseType:
-							eat = iter->value.GetBool();
-							break;
-						}
-
-						if (iter->name.GetString() == "name")
-							int lol = 69;
-
+						EventArgType eat = AddArg(iter, map);
 						args.emplace(std::string(iter->name.GetString()), eat);
 					}
 
@@ -515,7 +467,7 @@ std::vector<std::shared_ptr<EventQueue>> EventFactory::LoadEvent(rapidjson::Valu
 					args.emplace("queue", LoadEvent(val, map));
 				}
 
-				std::shared_ptr<IEvent> ev = EventFactory::BuildEvent((EventTypes)TypeDict.at(e["type"].GetString()), args, map);
+				std::shared_ptr<IEvent> ev = EventFactory::BuildEvent((EventTypes)TypeDict.at(e["type"].GetString()), args, map, m_entity_id);
 
 				// Set execution mode if necessary
 				if (e.HasMember("execution_type") && EEMDict.find(e["execution_type"].GetString()) != EEMDict.end())
@@ -530,24 +482,6 @@ std::vector<std::shared_ptr<EventQueue>> EventFactory::LoadEvent(rapidjson::Valu
 	return result;
 }
 
-
-
-void EventFactory::FlagEvent(int map_id, unsigned int entity_id, unsigned int queue_id, int flag, std::string DATA_FILE)
-{
-	// Check out all the queues
-	//const auto& ques = JsonHandler::LoadQueues(map_id, entity_id).GetArray();
-	//for (auto& x : ques)
-	//{
-	//	if (x.HasMember("id") && x["id"].GetInt() == queue_id)
-	//	{
-	//		//Make sure that the event has a flag property
-	//		if (x.HasMember("flag"))
-	//		{
-	//			x["flag"].SetInt(flag);
-	//		}
-	//	}
-	//}
-}
 
 // Defined here to avoid circular dependancies
 EventUpdateResponse EventCaller::UpdateEvent(double elapsedTime, std::map<unsigned int, std::shared_ptr<Entity>>* ents)

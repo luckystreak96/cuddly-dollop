@@ -7,6 +7,8 @@
 #include <cassert>
 #include <vector>
 
+class Transformation;
+
 class PersProjInfo
 {
 public:
@@ -55,26 +57,14 @@ private:
 
 class Camera
 {
-    public:
-        Camera();
-        Camera(float Window_Width, float Window_Height);
-		void Update(Vector3f player_pos = Vector3f());
-		void RotateHorizontal(bool right);
-		void RotateVertical(bool up);
-		void RotateSpiral(bool clockwise);
-    public:
-        Vector3f Up;
-        Vector3f Pos;
-        Vector3f Target;
-    private:
-        void InitCam();
-    private:
-		float z_distance = 15.0f;
-        float m_windowWidth = 800;
-        float m_windowHeight = 600;
+public:
+	static void Follow(Vector3f pos, Transformation* t);
+public:
+	static int Target;
+	static Vector3f Mapsize;
 };
 
-namespace MathUtils 
+namespace MathUtils
 {
 	void CalcNormals(std::vector<GLuint>& indices, std::vector<Vertex>& verts);
 }

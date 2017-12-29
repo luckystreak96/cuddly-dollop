@@ -123,7 +123,11 @@ void Font::SetupMesh(float xBndry, float yBndry)
 	}
 
 	// Letter position
-	float offset = 0.5f;
+	float offset;
+	if(xBndry == -1)
+		offset = 0.f;
+	else
+		offset = 0.5f;
 	m_x = offset;
 	m_y = offset;
 
