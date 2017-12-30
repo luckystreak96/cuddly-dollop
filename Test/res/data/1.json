@@ -5663,7 +5663,7 @@
                 },
                 "dialogue 1": {
                   "id": 1,
-                  "text": "You said yes :D",
+                  "text": "You said yes :D \n %name%, you're my hero!",
                   "next": -1,
                   "type": "end"
                 },
@@ -5686,22 +5686,13 @@
                   "queues": [
                     {
                       "name": "queue",
-                      "id": 13,
+                      "id": -1,
                       "flag": "",
                       "flag_value": 1,
                       "flag_condition": 0,
                       "activation": "interact",
                       "repeating": false,
                       "events": [
-                        {
-                          "type": "particle",
-                          "execution_type": "async",
-                          "args": {
-                            "type": "music",
-                            "count": 5,
-                            "id": 10
-                          }
-                        },
                         {
                           "type": "dialogue",
                           "execution_type": "blocking",
@@ -5714,7 +5705,7 @@
                               "queues": [
                                 {
                                   "name": "queue",
-                                  "id": 14,
+                                  "id": -1,
                                   "flag": "",
                                   "flag_value": 1,
                                   "flag_condition": 0,
@@ -5736,6 +5727,26 @@
                                 }
                               ]
                             }
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "name": "sing",
+                      "id": 9,
+                      "flag": "",
+                      "flag_value": 1,
+                      "flag_condition": 0,
+                      "activation": "autorun",
+                      "repeating": false,
+                      "events": [
+                        {
+                          "type": "particle",
+                          "execution_type": "blocking",
+                          "args": {
+                            "type": "music",
+                            "count": 5,
+                            "id": 10
                           }
                         }
                       ]
@@ -5804,11 +5815,15 @@
           "repeating": false,
           "events": [
             {
-              "type": "add_to_flag",
+              "type": "dialogue",
               "execution_type": "blocking",
               "args": {
-                "name": "01_incrementTest",
-                "value": -1
+                "dialogue 0": {
+                  "id": 0,
+                  "text": "Flag 01_noMove is currently set to : %01_noMove%",
+                  "next": -1,
+                  "type": "end"
+                }
               }
             }
           ]

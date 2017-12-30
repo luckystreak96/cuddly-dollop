@@ -5,9 +5,22 @@ DialogueBox* DialogueBox::m_owner = NULL;
 
 DialogueBox::DialogueBox(unsigned int entity_id, std::vector<Dialogue> d, std::vector<DialogueChoice> dc) : m_firstTime(true)
 {
-	m_dialogueGraph = new DialogueGraph(d, dc);
+	m_dialogueGraph = std::shared_ptr<DialogueGraph>(new DialogueGraph(d, dc));
 	m_target = entity_id;
 
+	Construct();
+}
+
+DialogueBox::DialogueBox(unsigned int entity_id, std::shared_ptr<DialogueGraph> dg) : m_firstTime(true)
+{
+	m_dialogueGraph = dg;
+	m_target = entity_id;
+
+	Construct();
+}
+
+void DialogueBox::Construct()
+{
 	m_box = std::shared_ptr<FontGraphicsComponent>(new FontGraphicsComponent("TILE", "res/sprites/special/dialogue.png"));
 	m_box->SetPhysics(Vector3f(0.5f, 0.5f, 0.5f), Vector3f(0, 0, 0));
 	m_box->Update();
@@ -25,8 +38,6 @@ DialogueBox::DialogueBox(unsigned int entity_id, std::vector<Dialogue> d, std::v
 
 DialogueBox::~DialogueBox()
 {
-	if (m_dialogueGraph)
-		delete m_dialogueGraph;
 }
 
 
@@ -79,7 +90,8 @@ EventUpdateResponse DialogueBox::UpdateEvent(double elapsedTime, std::map<unsign
 	// Don't update it if its completed
 	if (m_completed)
 	{
-		m_owner = NULL;
+		if (m_owner == this)
+			m_owner = NULL;
 		return eur;
 	}
 	else
@@ -207,7 +219,16 @@ void DialogueBox::SetScale(float xScale, float yScale)
 
 void DialogueBox::ResetEvent()
 {
+	m_firstTime = true;
 	m_completed = false;
 	m_dialogueGraph->SetToStart();
 	SetText(m_dialogueGraph->GetCurrentText());
+}
+
+std::shared_ptr<IEvent> DialogueBox::Clone()
+{
+	std::shared_ptr<DialogueGraph> dg = m_dialogueGraph->Clone();
+	std::shared_ptr<IEvent> result = std::shared_ptr<IEvent>(new DialogueBox(m_target, dg));
+	SetCloneBaseAttributes(result);
+	return result;
 }

@@ -24,6 +24,7 @@ void EventManager::Update(double elapsedTime)
 		if (!q->Count())
 		{
 			Erase(k);
+			k--;
 			continue;
 		}
 
@@ -74,8 +75,7 @@ void EventManager::Update(double elapsedTime)
 			if (i >= q->Count())
 				i--;
 
-			// If they are all done, remove the specific events
-			// Re-call this function to start the next ones
+			// If they are all done, remove the queue
 			if (allDone)
 			{
 				// If repeat is on, send it to the back of the queue
@@ -95,20 +95,19 @@ void EventManager::Update(double elapsedTime)
 				}
 				else
 				{
-					// Remove the events from the queue
+					// Remove the queue if necessary
 					Erase(k);
 				}
 
-				// If the queue is not done, continue updates
+				// If the queue is done, set k to continue
 				if (q && !q->IsRepeating() && q->IsDone())
-					Update(elapsedTime);
+					k--;
 			}
 
 			// Add the returned queue
 			if (temp->GetID() != -69)
 			{
 				PushBack(temp);
-				//Update(elapsedTime);
 			}
 		}
 	}

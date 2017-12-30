@@ -1,1 +1,1 @@
-{"flags":[{"01_incrementTest":6},{"01_noMove":0}],"sprite":"res/sprites/entities/entity_ghost_blue.png"}
+{"flags":[{"01_incrementTest":0},{"01_noMove":0}],"strings":[{"name":"Yanik"}],"sprite":"res/sprites/entities/entity_ghost_blue.png"}

@@ -27,6 +27,7 @@ public:
 	virtual void Draw();
 	virtual void Update(double elapsedTime);
 	virtual void SetRender();
+	void SetTextVariables();
 	void SetTextSpeed(double speed);
 	std::shared_ptr<FontGraphicsComponent> GetGraphics() { return m_graphics; }
 	bool IsDead();

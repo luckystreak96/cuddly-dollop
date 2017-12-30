@@ -1,46 +1,10 @@
 #include "dialogueGraph.h"
 
-DialogueGraph::DialogueGraph()
-{
-	std::shared_ptr<EventQueue> ev = std::shared_ptr<EventQueue>(new EventQueue(2));
-
-	DialogueChoice dc1 = { 0, "Know anything cool?", 1, std::shared_ptr<EventQueue>(new EventQueue()) };
-
-	m_choices.push_back(DialogueChoice{ 0, "Know anything cool?", 1, std::shared_ptr<EventQueue>(new EventQueue()) });
-
-	std::shared_ptr<IEvent> down = std::shared_ptr<IEvent>(new EventMove(2, 3.0, 2));
-	std::shared_ptr<IEvent> up = std::shared_ptr<IEvent>(new EventMove(2, 3.0, 0));
-	down->SetExecutionMode(EventExecutionMode::BLOCKING);
-	up->SetExecutionMode(EventExecutionMode::BLOCKING);
-
-	ev->SetRepeating(true);
-	ev->PushBack(down);
-	ev->PushBack(up);
-
-	DialogueChoice dc2 = { 0, "Can you walk down please?", 2, ev };
-	DialogueChoice dc3 = { 0, "I gotta go.", -1, std::shared_ptr<EventQueue>(new EventQueue()) };
-
-	m_choices.push_back(DialogueChoice{ 0, "Can you walk down please?", 2, ev });
-	m_choices.push_back(DialogueChoice{ 0, "I gotta go.", -1, std::shared_ptr<EventQueue>(new EventQueue()) });
-
-	std::vector<DialogueChoice> vdc = std::vector<DialogueChoice>();
-	vdc.push_back(dc1);
-	vdc.push_back(dc2);
-	vdc.push_back(dc3);
-
-	Dialogue d0 = { 0, 1, "Hey man, what's up?", Choice };
-	Dialogue d1 = { 1, 0, "Nope! Sorry!", Simple };
-	Dialogue d2 = { 2, 0, "Sure man, just move away after we're done talking!", Simple };
-	m_dialogues.emplace(d0.Id, d0);
-	m_dialogues.emplace(d1.Id, d1);
-	m_dialogues.emplace(d2.Id, d2);
-
-	m_currentDialogue = m_dialogues.at(0).Id;
-	m_selectedChoice = m_dialogues.at(m_currentDialogue).Type == Choice ? 0 : -1;
-}
-
 DialogueGraph::DialogueGraph(std::vector<Dialogue> d, std::vector<DialogueChoice> dc)
 {
+	Dialogues = d;
+	DialogueChoices = dc;
+
 	m_choices = dc;
 	for (auto x : d)
 		m_dialogues.emplace(x.Id, x);
@@ -49,10 +13,30 @@ DialogueGraph::DialogueGraph(std::vector<Dialogue> d, std::vector<DialogueChoice
 	m_selectedChoice = m_dialogues.at(m_currentDialogue).Type == Choice ? 0 : -1;
 }
 
-DialogueGraph::DialogueGraph(std::map<int, Dialogue> ds)
+std::shared_ptr<DialogueGraph> DialogueGraph::Clone()
 {
-	m_dialogues = ds;
+	std::vector<Dialogue> d;
+	std::vector<DialogueChoice> dc;
+
+	for (auto x : Dialogues)
+	{
+		Dialogue di = x;
+		if(di.Queue)
+		di.Queue = x.Queue->Clone();
+		d.push_back(di);
+	}
+
+	for (auto x : DialogueChoices)
+	{
+		DialogueChoice dcs = x;
+		if (dcs.Queue)
+			dcs.Queue = x.Queue->Clone();
+		dc.push_back(dcs);
+	}
+
+	return std::shared_ptr<DialogueGraph>(new DialogueGraph(d, dc));
 }
+
 
 DialogueGraph::~DialogueGraph()
 {

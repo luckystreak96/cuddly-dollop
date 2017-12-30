@@ -17,6 +17,7 @@ typedef std::map<std::string, std::variant<bool, float, int, std::string>> Optio
 class GameData
 {
 public:
+	static std::string Get(std::string key);
 	static void LoadFromFile();
 	static void LoadSettings();
 	static void EnsureBaseSettings();
@@ -33,6 +34,9 @@ public:
 	// Game flags
 	static std::map<std::string, int> Flags;
 	
+	// Game string variables
+	static std::map<std::string, std::string> Strings;
+
 	// Options
 	static OptionMap Options;
 	

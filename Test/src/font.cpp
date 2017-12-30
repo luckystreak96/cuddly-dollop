@@ -1,5 +1,6 @@
 #include "font.h"
 #include "utils.h"
+#include "gameData.h"
 
 Font::Font(bool sTatic, bool temporary, bool lightSpeed, std::string path) : m_texture(path), m_phys(PhysicsComponent(Vector3f(), "TEXT")),
 m_elapsedTime(0), m_textSpeed(1.0), m_timePerLetter(0.03), m_static(sTatic), m_temporary(temporary), m_lifetime(5.0), LetterSpacing(0.5f), MaxTime(30000),
@@ -124,7 +125,7 @@ void Font::SetupMesh(float xBndry, float yBndry)
 
 	// Letter position
 	float offset;
-	if(xBndry == -1)
+	if (xBndry == -1)
 		offset = 0.f;
 	else
 		offset = 0.5f;
@@ -238,6 +239,10 @@ void Font::SetText(std::string text, Vector3f location, bool centered, float xBo
 {
 	m_elapsedTime = 0;
 	m_message = text;
+
+	// Fill in variables if necessary
+	SetTextVariables();
+
 	m_totalTime = text.size() * m_timePerLetter;
 	m_lifetime = 2 + text.size() * 0.1;
 	m_messageProgress = "";
@@ -256,6 +261,37 @@ void Font::SetText(std::string text, Vector3f location, bool centered, float xBo
 	m_phys.SetPosition(location);
 
 	SetupMesh(xBoundry);
+}
+
+void Font::SetTextVariables()
+{
+	int counter = 0;
+	int location;
+	int beginning;
+	int end;
+	std::string temp = m_message;
+	while ((location = temp.find("%")) != std::string::npos)
+	{
+		counter++;
+		// replace these contents
+		if (counter % 2 == 0)
+		{
+			std::string result = temp.substr(0, location);
+			end = location + beginning + 2;
+			std::string var_name = result;//m_message.substr(beginning + 1, (end - 1) - beginning);
+			// If theres no illegal character, replace...
+			if (!(var_name.find(' ') != std::string::npos || var_name.find('\n') != std::string::npos))
+				m_message.replace(beginning, end - beginning, GameData::Get(var_name));
+
+			temp = m_message;
+			// ...else do nothing, it was probably a regular % in the text
+		}
+		else
+		{
+			temp = temp.substr(location + 1, m_message.size() - location);
+			beginning = location;
+		}
+	}
 }
 
 void Font::Draw()

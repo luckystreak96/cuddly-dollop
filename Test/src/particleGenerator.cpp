@@ -215,7 +215,7 @@ void ParticleGenerator::Init(ParticleType c, unsigned int num_particles, Vector3
 		break;
 	case PT_Explosion:
 		for (unsigned int i = 0; i < num_particles; i++)
-			m_particles.push_back(std::shared_ptr<Particle>(new Explosion(zoneSize, "dust.png", false, m_power)));
+			m_particles.push_back(std::shared_ptr<Particle>(new Explosion(zoneSize, tex, false, m_power)));
 		break;
 	default:
 		for (unsigned int i = 0; i < num_particles; i++)
