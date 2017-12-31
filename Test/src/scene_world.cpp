@@ -1,11 +1,17 @@
 #include "scene_world.h"
 #include "gameData.h"
-#include "define_gl.h"
 #include "basicEffect.h"
 #include "elapsedTime.h"
 #include "singleColorEffect.h"
 #include "effectManager.h"
-
+#include "eventFactory.h"
+#include "resource_manager.h"
+#include "soundManager.h"
+#include "renderer.h"
+#include "fontManager.h"
+#include "bloom.h"
+#include "input_manager.h"
+#include "entityFactory.h"
 
 SceneGenData SceneWorld::NextScene = SceneGenData();
 
@@ -234,7 +240,6 @@ SceneGenData SceneWorld::Update()
 	Interact();
 	m_eventManager.Update(ElapsedTime::GetInstance().GetElapsedTime());
 
-
 	if (next != NextScene)
 		m_fade.SetFade(false);
 
@@ -342,8 +347,9 @@ void SceneWorld::SetOrthoStuffs()
 {
 	if (OrthoProjInfo::GetRegularInstance().changed)
 	{
-		m_World->SetOrthoProj(&OrthoProjInfo::GetRegularInstance());
-		m_World->SetTranslation(OrthoProjInfo::GetRegularInstance().Left, OrthoProjInfo::GetRegularInstance().Bottom, 0);
+		OrthoProjInfo* o = &OrthoProjInfo::GetRegularInstance();
+		m_World->SetOrthoProj(o);
+		m_World->SetTranslation(-o->Right / o->Size, -o->Top  / o->Size, 0);
 
 		EffectManager::GetInstance().SetAllTilePositions(OrthoProjInfo::GetRegularInstance().Size);
 

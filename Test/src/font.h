@@ -18,7 +18,7 @@
 class Font
 {
 public:
-	Font(bool sTatic = false, bool temporary = false, bool lightSpeed = false, std::string path = "res/fonts/basic.png");
+	Font(bool sTatic = false, bool temporary = false, bool lightSpeed = false, std::string path = "res/fonts/lowercase.png");
 	~Font();
 
 public:

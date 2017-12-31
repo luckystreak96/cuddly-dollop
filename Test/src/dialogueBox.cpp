@@ -105,9 +105,9 @@ EventUpdateResponse DialogueBox::UpdateEvent(double elapsedTime, std::map<unsign
 	for (unsigned int i = 0; i < m_choices.size(); i++)
 	{
 		if (m_dialogueGraph->SelectedChoice() == i)
-			m_choices.at(i)->GetGraphics()->SetTexture("res/fonts/selected.png");
+			m_choices.at(i)->GetGraphics()->SetTexture("res/fonts/lowercase_selected.png");
 		else
-			m_choices.at(i)->GetGraphics()->SetTexture("res/fonts/basic.png");
+			m_choices.at(i)->GetGraphics()->SetTexture("res/fonts/lowercase.png");
 
 		if (TextDisplayDone())
 			m_choices.at(i)->Update(elapsedTime);

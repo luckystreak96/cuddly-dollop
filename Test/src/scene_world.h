@@ -4,23 +4,11 @@
 #include <iostream>
 #include "scene.h"
 #include "transform.h"
-#include "resource_manager.h"
-#include "input_manager.h"
-#include "bloom.h"
-#include "graphicsComponent.h"
 #include "entity.h"
 #include "map_handler.h"
-#include "soundManager.h"
-#include "renderer.h"
-#include "font.h"
-#include "fontManager.h"
-#include "eventManager.h"
-#include "jsonHandler.h"
-#include "eventFactory.h"
-#include "entityFactory.h"
 #include "collisionManager.h"
 #include "fade.h"
-#include "particleGenerator.h"
+#include "eventManager.h"
 
 class SceneWorld : public Scene
 {

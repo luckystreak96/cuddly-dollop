@@ -3,6 +3,7 @@
 using namespace rapidjson;
 
 std::string GameData::PlayerSprite = "res/sprites/entities/entity_ghost_blue.png";
+std::vector<Actor> GameData::Party = std::vector<Actor>();
 std::map<std::string, int> GameData::Flags = std::map<std::string, int>();
 std::map<std::string, std::string> GameData::Strings = std::map<std::string, std::string>();
 OptionMap GameData::Options = OptionMap();
@@ -152,6 +153,13 @@ void GameData::EnsureBaseSettings()
 		Options.emplace("fullscreen", true);
 	if (!Strings.count("name"))
 		Strings.emplace("name", "Yanik");
+	if (!Party.size() > 0)
+	{
+		Party.push_back(Actor("res/sprites/entities/entity_ghost_blue.png"));
+		Party.push_back(Actor("res/sprites/entities/entity_ghost_shiny_blue.png"));
+		Party.push_back(Actor("res/sprites/entities/entity_ghost_green.png"));
+		Party.push_back(Actor("res/sprites/entities/entity_ghost_purple.png"));
+	}
 }
 
 void GameData::SaveGameData()

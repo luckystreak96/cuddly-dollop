@@ -11,6 +11,7 @@
 #include "utils.h"
 #include "eventQueue.h"
 #include <variant>
+#include "actor.h"
 
 typedef std::map<std::string, std::variant<bool, float, int, std::string>> OptionMap;
 
@@ -30,6 +31,9 @@ public:
 	
 public:
 	static std::string PlayerSprite;
+
+	// Party
+	static std::vector<Actor> Party;
 
 	// Game flags
 	static std::map<std::string, int> Flags;

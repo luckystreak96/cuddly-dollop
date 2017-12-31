@@ -1,4 +1,5 @@
 #include "eventFactory.h"
+#include "eventBattle.h"
 #include "map_handler.h"
 #include "eventParticle.h"
 #include "eventBGM.h"
@@ -27,6 +28,7 @@ std::map<std::string, unsigned int> EventFactory::TypeDict =
 	{ "toggle_flag", ET_ToggleFlag },
 	{ "add_to_flag", ET_AddToFlag },
 	{ "sprite_change", ET_SpriteChange },
+	{ "battle", ET_Battle },
 };
 
 std::map<std::string, unsigned int> EventFactory::EEMDict =
@@ -68,6 +70,9 @@ std::shared_ptr<IEvent> EventFactory::BuildEvent(EventTypes et, std::map<std::st
 
 	switch (et)
 	{
+	case EventTypes::ET_Battle:
+		result = std::shared_ptr<IEvent>(new EventBattle());
+		break;
 	case EventTypes::ET_MapChange:
 		result = std::shared_ptr<IEvent>(new EventMapChange(id));
 		break;

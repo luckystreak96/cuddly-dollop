@@ -165,6 +165,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\actor.h" />
+    <ClInclude Include="src\eventBattle.h" />
     <ClInclude Include="src\effectManager.h" />
     <ClInclude Include="src\animation.h" />
     <ClInclude Include="src\array2d.h" />
@@ -240,6 +242,7 @@
     <ClInclude Include="src\resource_user.h" />
     <ClInclude Include="src\scene.h" />
     <ClInclude Include="src\scenes.h" />
+    <ClInclude Include="src\scene_battle.h" />
     <ClInclude Include="src\scene_manager.h" />
     <ClInclude Include="src\scene_world.h" />
     <ClInclude Include="src\shadowMapFBO.h" />
@@ -255,6 +258,8 @@
     <ClInclude Include="src\vertex.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\actor.cpp" />
+    <ClCompile Include="src\eventBattle.cpp" />
     <ClCompile Include="src\effectManager.cpp" />
     <ClCompile Include="src\animation.cpp" />
     <ClCompile Include="src\audioComponent.cpp" />
@@ -323,6 +328,7 @@
     <ClCompile Include="src\renderer.cpp" />
     <ClCompile Include="src\resource_loader.cpp" />
     <ClCompile Include="src\resource_manager.cpp" />
+    <ClCompile Include="src\scene_battle.cpp" />
     <ClCompile Include="src\scene_manager.cpp" />
     <ClCompile Include="src\scene_world.cpp" />
     <ClCompile Include="src\shadowMapFBO.cpp" />

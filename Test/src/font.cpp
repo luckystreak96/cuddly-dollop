@@ -3,7 +3,7 @@
 #include "gameData.h"
 
 Font::Font(bool sTatic, bool temporary, bool lightSpeed, std::string path) : m_texture(path), m_phys(PhysicsComponent(Vector3f(), "TEXT")),
-m_elapsedTime(0), m_textSpeed(1.0), m_timePerLetter(0.03), m_static(sTatic), m_temporary(temporary), m_lifetime(5.0), LetterSpacing(0.5f), MaxTime(30000),
+m_elapsedTime(0), m_textSpeed(1.0), m_timePerLetter(0.03), m_static(sTatic), m_temporary(temporary), m_lifetime(5.0), LetterSpacing(1.0f), MaxTime(30000),
 m_lettersPerRow(16), m_lettersPerColumn(16), m_xScale(1.0f), m_lightSpeed(lightSpeed)
 {
 	m_mesh = Mesh(m_lettersPerRow * m_lettersPerColumn);

@@ -5784,12 +5784,9 @@
           "repeating": false,
           "events": [
             {
-              "type": "add_to_flag",
+              "type": "battle",
               "execution_type": "blocking",
-              "args": {
-                "name": "01_incrementTest",
-                "value": -1
-              }
+              "args": {}
             }
           ]
         }

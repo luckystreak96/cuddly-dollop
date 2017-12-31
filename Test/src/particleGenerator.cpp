@@ -27,6 +27,7 @@ void Snow::Update(Vector3f& zoneSize)
 Snow::Snow(Vector3f zoneSize, bool smooth)
 {
 	texture = "snowflake.png";
+	size = fmod((float)rand() / 10.f, 0.1f) + 0.2f;
 	ResetLocation(zoneSize, true, smooth);
 }
 
@@ -36,14 +37,15 @@ void Snow::ResetLocation(Vector3f& zoneSize, bool firstSpawn, bool smooth)
 	if (zoneSize.x == 0 || zoneSize.y == 0)
 		return;
 	if (firstSpawn || smooth)
-		counter = fmod(((float)rand() / 100.0f), 1.0f);
+		counter = fmod(((float)rand() / 1000.0f), 2.0f);
 
 	if (smooth)
 		firstSpawn = false;
 
 	position.x = fmod(((float)rand() / 10.0f), zoneSize.x + 2.0f) - 2.0f;
 	position.y = rand() % ((firstSpawn ? (int)zoneSize.y * 2 : (int)zoneSize.y)) + (firstSpawn ? 0 : zoneSize.y);
-	velocity.y = -fmod(((float)rand() / 1000.0f), 0.03f) - 0.03f;
+	velocity.y = -fmod(((float)rand() / 1000.0f), 0.003f) - 0.003f;
+	velocity.y *= pow(size * 10.f, 2);
 	float value = fmod(((float)rand() / 1000.0f), 0.1f);
 	velocity.x = (rand() % 2) == 0 ? value : -value;
 }
@@ -51,7 +53,7 @@ void Snow::ResetLocation(Vector3f& zoneSize, bool firstSpawn, bool smooth)
 void Snow::SetTrans(Transformation& trans)
 {
 	trans.SetRotation(0, 0, counter * 10);
-	trans.SetScale(Vector3f(0.3f, 0.3f, 0.3f));
+	trans.SetScale(Vector3f(size, size, 0.3f));
 }
 
 

@@ -8,7 +8,8 @@ namespace dollop_editor
 {
     public enum EventType { move_down, move_up, move_left, move_right,
         dialogue, call_queue, map_change, teleport, weather, particle,
-        play_sound, play_bgm, set_flag, toggle_flag, add_to_flag, sprite_change}
+        play_sound, play_bgm, set_flag, toggle_flag, add_to_flag, sprite_change,
+        battle}
     public enum EventExecution { blocking, async }
     public enum EventArgEventCall { id, queue_id }
     public enum EventArgMove { id, distance }
@@ -21,6 +22,7 @@ namespace dollop_editor
     public enum EventArgSetFlag { name, value }
     public enum EventArgSpriteChange { sprite, id }
     public enum EventArgToggleFlag { name }
+    public enum EventArgBattle { }
 
     public class Event
     {
