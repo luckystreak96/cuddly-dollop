@@ -48,6 +48,7 @@ class Vector2f
 {
 public:
 	Vector2f(float x, float y);
+	bool operator==(const Vector2f& r);
 public:
 	float x = 0.0f;
 	float y = 0.0f;

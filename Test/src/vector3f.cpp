@@ -266,3 +266,8 @@ float Vector3f::Distance2D(Vector3f& other)
 }
 
 Vector2f::Vector2f(float x, float y) : x(x), y(y) {}
+
+bool Vector2f::operator==(const Vector2f& r)
+{
+	return (this->x == r.x && this->y == r.y);
+}

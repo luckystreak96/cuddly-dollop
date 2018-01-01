@@ -6,7 +6,9 @@
 #include "blurEffect.h"
 #include "fadeEffect.h"
 
-EffectManager::EffectManager() : m_prevEffect(std::pair<Effect*, Effects>(NULL, E_Basic)), m_currentEffect(std::pair<Effect*, Effects>(NULL, E_Basic))
+EffectManager::EffectManager()
+	: m_prevEffect(std::pair<Effect*, Effects>(NULL, E_Basic)), m_currentEffect(std::pair<Effect*, Effects>(NULL, E_Basic)),
+	m_noTranslateMode(false)
 {
 	for (int i = 0; i < E_Last; i++)
 		m_firstUpdates.emplace((Effects)i, false);
@@ -34,9 +36,10 @@ void EffectManager::SetAllTilePositions(float size)
 	}
 }
 
-void EffectManager::SetWorldTrans(float* f)
+void EffectManager::SetWorldTrans(float* t1, float* t2)
 {
-	m_worldTrans = f;
+	m_worldTrans = t1;
+	m_worldNoTrans = t2;
 }
 
 void EffectManager::Enable(Effects ef, GLuint program)
@@ -63,12 +66,27 @@ void EffectManager::EnablePrevious()
 	UpdateWorld();
 }
 
+void EffectManager::SetNoTranslateMode(bool tm)
+{
+	if (tm == m_noTranslateMode)
+		return;
+
+	ResetWorldUpdateFlag();
+	m_noTranslateMode = tm;
+	UpdateWorld();
+}
+
 void EffectManager::UpdateWorld()
 {
 	// World trans not updated yet
 	if (!m_firstUpdates.at(m_currentEffect.second))
 	{
-		m_currentEffect.first->SetWorldPosition(m_worldTrans);
+		// Set right translation according to whether the NoTranslateMode is active
+		if (m_noTranslateMode)
+			m_currentEffect.first->SetWorldPosition(m_worldNoTrans);
+		else
+			m_currentEffect.first->SetWorldPosition(m_worldTrans);
+
 		m_firstUpdates.at(m_currentEffect.second) = true;
 	}
 }

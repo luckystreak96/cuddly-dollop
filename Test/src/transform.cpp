@@ -22,7 +22,7 @@ Mat4f Transformation::GetWorldTransNoTranslate()
 	Mat4f scale, translate, rotate;
 
 	scale.InitScaleMat(m_scale);
-	translate.InitTranslateMat(Vector3f());
+	translate.InitTranslateMat(Vector3f(m_orthoProj->Left, m_orthoProj->Bottom, 0));
 	rotate.InitRotateMat(m_rotate);
 	m_WTrans = translate * rotate * scale;
 
@@ -42,9 +42,9 @@ Mat4f Transformation::GetWOTransNoTranslate()
 {
 	m_WTrans = GetWorldTransNoTranslate();
 	m_Proj.InitOrthoProj(*m_orthoProj);
-	m_WPTrans = m_Proj * m_WTrans;
+	m_WPTransNoTranslate = m_Proj * m_WTrans;
 
-	return m_WPTrans;
+	return m_WPTransNoTranslate;
 }
 
 Mat4f Transformation::GetWPTrans()

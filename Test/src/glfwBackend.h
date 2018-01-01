@@ -14,6 +14,7 @@ public:
 	void GLFWMainLoop(Game* game);
 public:
 	static GLFWwindow* m_window;
+
 private:
 	int m_screenWidth, m_screenHeight, m_refreshRate;
 };

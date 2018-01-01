@@ -18,10 +18,11 @@ public:
 
 	void Enable(Effects ef = E_Basic, GLuint program = 0);
 	void EnablePrevious();
-	void SetWorldTrans(float* f);
+	void SetWorldTrans(float* withTranslate, float* noTranslate);
 	void UpdateWorld();
 	void ResetWorldUpdateFlag();
 	void SetAllTilePositions(float size);
+	void SetNoTranslateMode(bool translateMode);
 
 private:
 	EffectManager();
@@ -30,6 +31,8 @@ private:
 	std::map<Effects, bool> m_firstUpdates;
 	std::map<Effects, Effect*> m_effects;
 	float* m_worldTrans;
+	float* m_worldNoTrans;
+	bool m_noTranslateMode;
 };
 
 #endif

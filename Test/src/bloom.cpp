@@ -49,6 +49,8 @@ void Bloom::End(bool dark)
 {
 	m_fbo.unbindFrameBuffer();
 
+	EffectManager::GetInstance().SetNoTranslateMode(true);
+
 	//END FBO
 
 	float size = OrthoProjInfo::GetRegularInstance().Size;
@@ -148,14 +150,15 @@ void Bloom::End(bool dark)
 	}
 	else
 	{
-		BasicEffect::GetInstance().Enable();
-		BasicEffect::GetInstance().SetModelPosition(&pps.GetModelMat()->GetWorldTrans().m[0][0]);
+		EffectManager::GetInstance().Enable(E_Basic);
 		glBindTexture(GL_TEXTURE_2D, m_fbo.getColourTexture());
 	}
 
 	//Draw only base frame
 
 	pps.Draw(false);
+
+	EffectManager::GetInstance().SetNoTranslateMode(false);
 }
 
 void Bloom::ResetTextureSizes()

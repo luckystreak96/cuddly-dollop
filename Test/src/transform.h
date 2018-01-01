@@ -38,6 +38,7 @@ class Transformation
         Mat4f m_WTrans;
         Mat4f m_Proj;
         Mat4f m_WPTrans;
+        Mat4f m_WPTransNoTranslate;
         Mat4f m_transformation;
         Vector3f m_scale = Vector3f(1, 1, 1);
         Vector3f m_translate = Vector3f(0, 0, 0);

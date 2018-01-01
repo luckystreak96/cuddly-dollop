@@ -2,9 +2,12 @@
 #include <IL\il.h>
 #include <IL\ilu.h>
 #include <IL\ilut.h>
+#include <vector>
+#include <algorithm>
 #include "game.h"
 #include "input_manager.h"
 #include "gameData.h"
+#include "vector3f.h"
 
 GLFWwindow* GLFWManager::m_window = NULL;;
 
@@ -53,24 +56,36 @@ GLFWManager::GLFWManager()
 		exit(1);
 	}
 
-	// GL Version
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
-
-	// Set fullscreen, call again with null monitor to set windowed
+	// Get screen info
 	GLFWmonitor* monitor = glfwGetPrimaryMonitor();
 	const GLFWvidmode* mode = glfwGetVideoMode(monitor);
 	m_screenWidth = mode->width;
 	m_screenHeight = mode->height;
 	m_refreshRate = mode->refreshRate;
 
-	// Create window
-	m_window = glfwCreateWindow(m_screenWidth - 10, m_screenHeight - 80, "Cuddly-Dollop", NULL, NULL);
-	if (!m_window)
+	std::vector<Vector2f> versions{ /*Vector2f(4, 6), Vector2f(3, 3),*/ Vector2f(2, 0) };
+
+	// Try the different GL contexts
+	for (auto x : versions)
 	{
-		std::cout << "Window failed to be created!" << std::endl;
-		std::getchar();
-		exit(1);
+		// GL Version
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, x.x);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, x.y);
+
+		// Create window
+		m_window = glfwCreateWindow(m_screenWidth - 10, m_screenHeight - 80, "Cuddly-Dollop", NULL, NULL);
+		if (!m_window)
+		{
+			std::cout << "Window failed to be created on context: " << x.x << "," << x.y << std::endl;
+			if (x == versions.at(versions.size() - 1))
+			{
+				std::cout << "OpenGL version not supported, press any key to exit..." << std::endl;
+				std::getchar();
+				exit(1);
+			}
+		}
+
+		break;
 	}
 
 	// Fullscreen / windowed initialization

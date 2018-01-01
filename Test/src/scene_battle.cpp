@@ -1,4 +1,4 @@
-#include "scene_world.h"
+#include "scene_battle.h"
 #include "gameData.h"
 #include "basicEffect.h"
 #include "elapsedTime.h"
@@ -13,9 +13,9 @@
 #include "input_manager.h"
 #include "entityFactory.h"
 
-SceneGenData SceneWorld::NextScene = SceneGenData();
+SceneGenData SceneBattle::NextScene = SceneGenData();
 
-SceneWorld::SceneWorld(unsigned int map_id) : m_acceptInput(false), m_currentMap(map_id), m_drawinited(false), m_zoom(false)
+SceneBattle::SceneBattle() : m_acceptInput(false), m_currentMap(3), m_drawinited(false), m_zoom(false)
 {
 	Init();
 	SoundManager::GetInstance();
@@ -26,7 +26,7 @@ SceneWorld::SceneWorld(unsigned int map_id) : m_acceptInput(false), m_currentMap
 	firstEverLoad = false;
 }
 
-bool SceneWorld::Init()
+bool SceneBattle::Init()
 {
 	NextScene = SceneGenData();
 	m_jsonHandler = std::shared_ptr<JsonHandler>(new JsonHandler(m_currentMap));
@@ -36,30 +36,29 @@ bool SceneWorld::Init()
 	OrthoProjInfo::GetRegularInstance().changed = true;
 	m_World = std::shared_ptr<Transformation>(new Transformation());
 
-	//BasicEffect::GetInstance();
-
 	m_pause = false;
 	m_acceptInput = true;
 
 	m_mapHandler = std::shared_ptr<MapHandler>(new MapHandler(m_currentMap, m_jsonHandler));
 	Camera::Mapsize = m_mapHandler->GetMapSize();
-	m_collisionManager.SetMapTiles(m_mapHandler->Tiles());
 
-	m_celist = EntityFactory::GetEntities(m_currentMap, m_jsonHandler);
+	for (auto x : GameData::Party)
+		m_party.push_back(std::shared_ptr<PlayerGraphicsComponent>(new PlayerGraphicsComponent(x.Sprite)));
+
+	for (int i = 0; i < m_party.size(); i++)
+		m_party.at(i)->SetPhysics(Vector3f(3.0f, 4.0f + i, 4.0f), Vector3f());
+
+	for (int i = 0; i < 2; i++)
+		m_enemies.push_back(std::shared_ptr<PlayerGraphicsComponent>(new PlayerGraphicsComponent("res/sprites/entities/entity_mushroom.png")));
+
+	for (int i = 0; i < m_enemies.size(); i++)
+		m_enemies.at(i)->SetPhysics(Vector3f(12.0f, 4.0f + i, 4.0f), Vector3f());
+
 	m_eventManager.SetEntitiesMap(&m_celist);
-	m_collisionManager.SetEntities(&m_celist);
-
-	// THIS IS NOT GOOD - THE PLAYER NEEDS TO BE FOUND, NOT JUST BE ID 1
-	// NVM THIS IS GOOD
-	if (m_celist.count(1))
-	{
-		m_player = m_celist.at(1);
-		m_player->Graphics()->SetTexture(GameData::PlayerSprite);
-	}
 
 #ifdef _DEBUG
 	//m_fontTitle = FontManager::GetInstance().AddFont(false, false);
-	m_fontFPS = FontManager::GetInstance().AddFont(true, false, true);
+	m_fontFPS = FontManager::GetInstance().AddFont(true, false, true, "res/fonts/lowercase.png");
 	FontManager::GetInstance().SetScale(m_fontFPS, 0.5f, 0.5f);
 #endif
 
@@ -80,34 +79,13 @@ bool SceneWorld::Init()
 	return true;
 }
 
-SceneWorld::~SceneWorld()
+SceneBattle::~SceneBattle()
 {
 	FontManager::GetInstance().RemoveFont(m_fontFPS);
 	//FontManager::GetInstance().RemoveFont(m_fontTitle);
 }
 
-
-//Loads GL resources
-void SceneWorld::LoadAllResources()
-{
-	//for (Drawable* x : *m_objList)
-	//	x->LoadGLResources();
-
-	//m_test->LoadGLResources();
-	//m_mapHandler->Graphics()->LoadGLResources();
-
-	m_resources_loaded = true;
-}
-
-void SceneWorld::UnloadAllResources()
-{
-	//for (Drawable* x : *m_objList)
-	//	x->UnloadExternalResources();
-
-	m_resources_loaded = false;
-}
-
-void SceneWorld::ManageInput()
+void SceneBattle::ManageInput()
 {
 	InputManager::GetInstance().SetupFrameKeys();
 
@@ -149,7 +127,7 @@ void SceneWorld::ManageInput()
 	}
 }
 
-SceneGenData SceneWorld::Act()
+SceneGenData SceneBattle::Act()
 {
 	SceneGenData result;
 	result.id = 0;
@@ -180,57 +158,17 @@ SceneGenData SceneWorld::Act()
 	return result;
 }
 
-void SceneWorld::Draw()
+void SceneBattle::Draw()
 {
 	RenderPass();
 }
 
-void SceneWorld::Interact()
+// Handle input?
+void SceneBattle::Interact()
 {
-	if (InputManager::GetInstance().FrameKeyStatus(' ', KeyStatus::KeyPressed) && m_player) {
-		Vector3f pos = m_player->Physics()->GetCenter();
-		Direction dir = m_player->Graphics()->GetDirection();
-
-		float distance = 0.2f;
-		if (dir == dir_Left || dir == dir_Right)
-			distance += m_player->Physics()->GetSize().x / 2;
-		else if (dir == dir_Up || dir == dir_Down)
-			distance += m_player->Physics()->GetSize().y / 2;
-
-		dir == dir_Up ? pos.y += distance : pos.y = pos.y;
-		dir == dir_Down ? pos.y -= distance : pos.y = pos.y;
-		dir == dir_Right ? pos.x += distance : pos.x = pos.x;
-		dir == dir_Left ? pos.x -= distance : pos.x = pos.x;
-
-		std::shared_ptr<Entity> inter = NULL;
-		for (auto x : m_celist)
-		{
-			if (Physics::Intersect2D(x.second->Physics()->GetBoundingBox(), pos))
-			{
-				if (x.second == m_player)
-					break;
-				inter = x.second;
-				break;
-			}
-		}
-
-		if (inter != NULL)
-		{
-			inter->Graphics()->SetDirection(m_player->Graphics());
-			TriggerEvents(inter->GetID());
-		}
-	}
 }
 
-void SceneWorld::TriggerEvents(unsigned int entity_id)
-{
-	if (m_celist.count(entity_id))
-		for (auto x : *m_celist.at(entity_id)->GetQueues())
-			if (x->GetActivationType() == AT_Interact)
-				m_eventManager.PushBack(x);
-}
-
-SceneGenData SceneWorld::Update()
+SceneGenData SceneBattle::Update()
 {
 	SceneGenData next = NextScene;
 
@@ -246,31 +184,15 @@ SceneGenData SceneWorld::Update()
 	for (auto it : m_celist)
 		it.second->Physics()->DesiredMove();
 
-	//Collision
-	std::map<unsigned int, std::shared_ptr<Entity>> collided = m_collisionManager.CalculateCollision();
-	for (auto &pair : collided)
-	{
-		auto entity = pair.second;
-		// If he wasn't just touched...
-		if (!entity->_justTouched)
-			// ...push back the event
-			for (auto x : *entity->GetQueues())
-				if (x->GetActivationType() == AT_Touch)
-					m_eventManager.PushBack(x);
-
-		entity->_justTouched = true;
-	}
-
-	// Handle just-touched
-	for (auto &pair : m_celist)
-	{
-		if (!collided.count(pair.first))
-			pair.second->_justTouched = false;
-	}
-
 	//Update
 	for (auto it : m_celist)
 		it.second->Update();
+
+	for (auto a : m_party)
+		a->Update();
+
+	for (auto a : m_enemies)
+		a->Update();
 
 	m_mapHandler->Update();
 
@@ -291,7 +213,7 @@ SceneGenData SceneWorld::Update()
 	return NextScene;
 }
 
-void SceneWorld::RenderPass()
+void SceneBattle::RenderPass()
 {
 	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
 	glStencilMask(0xFF);
@@ -313,6 +235,12 @@ void SceneWorld::RenderPass()
 		it.second->SetRender();
 	FontManager::GetInstance().SetRender();
 
+	for (auto a : m_party)
+		Renderer::GetInstance().Add(a);
+
+	for (auto a : m_enemies)
+		Renderer::GetInstance().Add(a);
+
 	if (!m_fade.IsDone())
 		m_fade.Begin();
 
@@ -330,20 +258,17 @@ void SceneWorld::RenderPass()
 	m_World->SetTranslation(m_backupTrans);
 }
 
-void SceneWorld::SetAudioPosition()
+void SceneBattle::SetAudioPosition()
 {
-	if (m_player != NULL)
-		SoundManager::GetInstance().SetListenerPosition(m_player->Physics()->Position(), m_player->Physics()->Velocity());
-	else
-		SoundManager::GetInstance().SetListenerPosition();
+	SoundManager::GetInstance().SetListenerPosition();
 }
 
-void SceneWorld::SetNextScene(SceneGenData sgd)
+void SceneBattle::SetNextScene(SceneGenData sgd)
 {
 	NextScene = sgd;
 }
 
-void SceneWorld::SetOrthoStuffs()
+void SceneBattle::SetOrthoStuffs()
 {
 	if (OrthoProjInfo::GetRegularInstance().changed)
 	{
@@ -374,4 +299,3 @@ void SceneWorld::SetOrthoStuffs()
 	temp.y = floorf(temp.y);
 	m_World->SetTranslation(temp);
 }
-
