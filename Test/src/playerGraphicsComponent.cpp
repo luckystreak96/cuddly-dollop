@@ -92,7 +92,7 @@ void PlayerGraphicsComponent::Update()
 	}
 
 	//use the backup to reset the texture coordinates for proper analysis from the animator
-	m_vertices = std::vector<Vertex>(m_originalVertices);
+	//m_vertices = std::vector<Vertex>(m_originalVertices);
 
 	//Change the sprite depending on direction
 	//m_animation = m_direction;

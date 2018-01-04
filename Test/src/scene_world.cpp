@@ -291,42 +291,50 @@ SceneGenData SceneWorld::Update()
 	return NextScene;
 }
 
+void GLErrorCheck()
+{
+	GLenum err = glGetError();
+	if (err != GL_NO_ERROR)
+		std::cout << glewGetErrorString(err) << std::endl;
+}
+
 void SceneWorld::RenderPass()
 {
-	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+	// Allow modifications to stencil buffer
 	glStencilMask(0xFF);
+	// Clear stencil buffer to all 0's
 	glClearStencil(0x00);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+	// Don't allow modifications to stencil buffer
 	glStencilMask(0x00);
 
+	// Setup world trans and change for effects
 	SetOrthoStuffs();
-
-	EffectManager::GetInstance().SetWorldTrans(&m_World->GetWOTrans().m[0][0], &m_World->GetWOTransNoTranslate().m[0][0]);
-	EffectManager::GetInstance().ResetWorldUpdateFlag();
 
 	EffectManager::GetInstance().Enable(E_Basic);
 
 	// Set the renders
 	m_mapHandler->SetRender();
-
 	for (auto it : m_celist)
 		it.second->SetRender();
 	FontManager::GetInstance().SetRender();
 
+	// Enable fade
 	if (!m_fade.IsDone())
 		m_fade.Begin();
 
-	// BLOOM
+	// Enable bloom
 	if (m_bloomEffect)
 		Bloom::GetInstance().Begin();
 
-	// DRAW
+	// Draw
 	Renderer::GetInstance().Draw();
 
-	// BLOOM END
+	// End bloom
 	if (m_bloomEffect)
 		Bloom::GetInstance().End(false);
 
+	// Set translation back to real value, not adjusted by tilesize (64)
 	m_World->SetTranslation(m_backupTrans);
 }
 
@@ -345,6 +353,7 @@ void SceneWorld::SetNextScene(SceneGenData sgd)
 
 void SceneWorld::SetOrthoStuffs()
 {
+	// Adjust the shaders and camera to new screen size
 	if (OrthoProjInfo::GetRegularInstance().changed)
 	{
 		OrthoProjInfo* o = &OrthoProjInfo::GetRegularInstance();
@@ -373,5 +382,8 @@ void SceneWorld::SetOrthoStuffs()
 	temp.x = floorf(temp.x);
 	temp.y = floorf(temp.y);
 	m_World->SetTranslation(temp);
+
+	EffectManager::GetInstance().SetWorldTrans(&m_World->GetWOTrans().m[0][0], &m_World->GetWOTransNoTranslate().m[0][0]);
+	EffectManager::GetInstance().ResetWorldUpdateFlag();
 }
 

@@ -2,6 +2,7 @@
 #define FBO_H__
 
 #include <gl/glew.h>
+#include "vector3f.h"
 
 class FBO
 {
@@ -9,6 +10,7 @@ public:
 	static const int NONE = 0;
 	static const int DEPTH_TEXTURE = 1;
 	static const int DEPTH_RENDER_BUFFER = 2;
+	static Vector2f _fboGLVersion;
 
 private:
 	int m_width;
@@ -59,6 +61,7 @@ public:
 	*/
 	void bindFrameBuffer();
 
+	//void bindTexture();
 
 	/**
 	* Unbinds the frame buffer, setting the default frame buffer as the current

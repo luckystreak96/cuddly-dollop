@@ -16,6 +16,7 @@ void GraphicsComponent::FullReset(std::vector<Vertex>* verts, std::vector<GLuint
 
 	m_IBO = 0;
 	m_VBO = 0;
+	m_VAO = 0;
 	m_MMBO = 0;
 
 	m_vertices = std::vector<Vertex>(*verts);
@@ -43,6 +44,8 @@ void GraphicsComponent::Construct()
 {
 	m_outline = false;
 	m_direction = dir_Down;
+	_instancedDraw = false;
+	m_lastMModelSize = 0;
 
 	//When this z is small - transparency fucks up????
 	m_pos = Vector3f(0.0f, 0.0f, 0.0f);
@@ -58,6 +61,7 @@ GraphicsComponent::GraphicsComponent(std::string modelName, std::string texPath)
 {
 	m_IBO = 0;
 	m_VBO = 0;
+	m_VAO = 0;
 	m_MMBO = 0;
 	Construct();
 }
@@ -66,6 +70,7 @@ GraphicsComponent::GraphicsComponent(std::vector<Vertex>* verts, std::vector<GLu
 {
 	m_IBO = 0;
 	m_VBO = 0;
+	m_VAO = 0;
 	m_MMBO = 0;
 
 	m_vertices = std::vector<Vertex>(*verts);
@@ -140,6 +145,8 @@ bool GraphicsComponent::UnloadGLResources()
 		glDeleteBuffers(1, &m_IBO);
 	if (m_VBO != 0)
 		glDeleteBuffers(1, &m_VBO);
+	if (m_VAO != 0)
+		glDeleteVertexArrays(1, &m_VAO);
 	if (m_MMBO != 0)
 		glDeleteBuffers(1, &m_MMBO);
 
@@ -148,38 +155,79 @@ bool GraphicsComponent::UnloadGLResources()
 	return true;
 }
 
+void GLErrorCheck2()
+{
+	GLenum err = glGetError();
+	if (err != GL_NO_ERROR)
+		std::cout << glewGetErrorString(err) << std::endl;
+}
+
 void GraphicsComponent::Draw(bool withTex)
 {
-	//Effect::SetModelPosition(&m_modelMat.GetWorldTrans().m[0][0]);
+	// Must be drawn?
 	if (!m_external_loaded || !m_GL_loaded || !mustDraw || (m_modelName == "NONE" && m_vertices.size() <= 0))
 		return;
 
-	for (int i = 0; i < 9; i++)//0 to 5
+	// Bind VAO (which binds vbo + IBO)
+	glBindVertexArray(m_VAO);
+
+	// Bind texture
+	if (withTex)
+		ResourceManager::GetInstance().GetTexture(m_texture)->Bind(GL_TEXTURE0);
+
+	// Bind mmbo
+	glBindBuffer(GL_ARRAY_BUFFER, m_MMBO);
+	if (m_mmodels.size() > m_lastMModelSize)
+		glBufferData(GL_ARRAY_BUFFER, sizeof(Mat4f) * m_mmodels.size(), &m_mmodels.at(0), GL_DYNAMIC_DRAW);
+	else
+		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(Mat4f) * m_mmodels.size(), &m_mmodels.at(0));
+
+	m_lastMModelSize = sizeof(Mat4f) * m_mmodels.size();
+
+	for (int i = 5; i < 9; i++)
+	{
+		glVertexAttribPointer(i, 4, GL_FLOAT, GL_FALSE, sizeof(Mat4f), (const GLvoid*)(sizeof(float) * (i - 5) * 4));
+		glVertexAttribDivisor(i, _instancedDraw ? 1 : 0);
+	}
+
+	// Draw
+	if (_instancedDraw)
+	{
+		glDrawElementsInstanced(GL_TRIANGLES, (GLsizei)m_indices.size(), GL_UNSIGNED_INT, 0, m_mmodels.size());
+	}
+	else
+	{
+		glDrawElements(GL_TRIANGLES, (GLsizei)m_indices.size(), GL_UNSIGNED_INT, 0);
+	}
+
+	//Unbind VAO
+	glBindVertexArray(0);
+}
+
+void GraphicsComponent::SetupVAO()
+{
+	// Bind VAO
+	glBindVertexArray(m_VAO);
+
+	// Setup binds
+	for (int i = 0; i < 9; i++)
 		glEnableVertexAttribArray(i);
 
+	// Bind IBO
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_indices.size() * sizeof(GLuint), &m_indices[0], GL_STATIC_DRAW);
+
+	// Bind VBO
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
+	glBufferData(GL_ARRAY_BUFFER, m_vertices.size() * sizeof(Vertex), &m_vertices[0], GL_STATIC_DRAW);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);//vertex position
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*)(sizeof(float) * 3));//texcoords
 	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*)(sizeof(float) * 5));//normal
 	glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*)(sizeof(float) * 8));//specPow
 	glVertexAttribPointer(4, 1, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*)(sizeof(float) * 9));//specIntens
 
-	if (withTex)
-		ResourceManager::GetInstance().GetTexture(m_texture)->Bind(GL_TEXTURE0);
-
-	glBindBuffer(GL_ARRAY_BUFFER, m_MMBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(Mat4f) * m_mmodels.size(), &m_mmodels.at(0), GL_DYNAMIC_DRAW);
-	for (int i = 5; i < 9; i++)
-	{
-		glVertexAttribPointer(i, 4, GL_FLOAT, GL_FALSE, sizeof(Mat4f), (const GLvoid*)(sizeof(float) * (i - 5) * 4));
-		//glVertexAttribDivisor(i, 0);
-	}
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO);
-	glDrawElements(GL_TRIANGLES, (GLsizei)m_indices.size() /** sizeof(GLuint)*/, GL_UNSIGNED_INT, 0);
-
-	for (int i = 8; i >= 0; i--)//5 to 0
-		glDisableVertexAttribArray(i);
+	// Unbind VAO
+	glBindVertexArray(0);
 }
 
 void GraphicsComponent::SetBuffers()
@@ -190,27 +238,29 @@ void GraphicsComponent::SetBuffers()
 		glGenBuffers(1, &m_VBO);
 	if (m_MMBO == 0)
 		glGenBuffers(1, &m_MMBO);
+	if (m_VAO == 0)
+		glGenVertexArrays(1, &m_VAO);
 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IBO);//Give it a purpose
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_indices.size() * sizeof(GLuint), &m_indices[0], GL_STATIC_DRAW);
-
-	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);//Give it a purpose
-	glBufferData(GL_ARRAY_BUFFER, m_vertices.size() * sizeof(Vertex), &m_vertices[0], GL_STATIC_DRAW);
+	SetupVAO();
 }
 
 void GraphicsComponent::ResetVBO()
 {
-	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);//Give it a purpose
-	glBufferData(GL_ARRAY_BUFFER, m_vertices.size() * sizeof(Vertex), &m_vertices[0], GL_STATIC_DRAW);
+	// This doesn't work well if the number of vertices changes - to be kept in mind (glBufferSubData)
+	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
+	glBufferSubData(GL_ARRAY_BUFFER, 0, m_vertices.size() * sizeof(Vertex), &m_vertices[0]);
 }
 
+// Adds 4 model matrices to MModels (does not clear MModels first)
 void GraphicsComponent::InsertMModels(Transformation& t)
 {
 	Vector3f temp = t.GetTranslation();
 	temp.x *= OrthoProjInfo::GetRegularInstance().Size;
 	temp.y *= OrthoProjInfo::GetRegularInstance().Size;
 	t.SetTranslation(temp);
-	m_mmodels.insert(m_mmodels.end(), 4, t.GetWorldTrans());
+	m_mmodels.insert(m_mmodels.end(), _instancedDraw ? 1 : 4, t.GetWorldTrans());
+	//m_mmodels.push_back(Mat4f(t.GetWorldTrans()));
+	//m_mmodels.insert(m_mmodels.end(), 1, t.GetWorldTrans());
 }
 
 

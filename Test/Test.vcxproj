@@ -166,6 +166,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\actor.h" />
+    <ClInclude Include="src\battleAnimation.h" />
+    <ClInclude Include="src\battleManager.h" />
     <ClInclude Include="src\eventBattle.h" />
     <ClInclude Include="src\effectManager.h" />
     <ClInclude Include="src\animation.h" />
@@ -212,8 +214,6 @@
     <ClInclude Include="src\gameData.h" />
     <ClInclude Include="src\glfwBackend.h" />
     <ClInclude Include="src\graphicsComponent.h" />
-    <ClInclude Include="src\heightEffect.h" />
-    <ClInclude Include="src\heightFog.h" />
     <ClInclude Include="src\iComponent.h" />
     <ClInclude Include="src\iEvent.h" />
     <ClInclude Include="src\inputComponent.h" />
@@ -247,10 +247,10 @@
     <ClInclude Include="src\scene_world.h" />
     <ClInclude Include="src\shadowMapFBO.h" />
     <ClInclude Include="src\singleColorEffect.h" />
+    <ClInclude Include="src\skill.h" />
     <ClInclude Include="src\soundManager.h" />
     <ClInclude Include="src\texture.h" />
     <ClInclude Include="src\textureatlas.h" />
-    <ClInclude Include="src\trail.h" />
     <ClInclude Include="src\transform.h" />
     <ClInclude Include="src\transparencyEffect.h" />
     <ClInclude Include="src\utils.h" />
@@ -259,6 +259,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\actor.cpp" />
+    <ClCompile Include="src\battleManager.cpp" />
     <ClCompile Include="src\eventBattle.cpp" />
     <ClCompile Include="src\effectManager.cpp" />
     <ClCompile Include="src\animation.cpp" />
@@ -302,8 +303,6 @@
     <ClCompile Include="src\gameData.cpp" />
     <ClCompile Include="src\glfwBackend.cpp" />
     <ClCompile Include="src\graphicsComponent.cpp" />
-    <ClCompile Include="src\heightEffect.cpp" />
-    <ClCompile Include="src\heightFog.cpp" />
     <ClCompile Include="src\iComponent.cpp" />
     <ClCompile Include="src\iEvent.cpp" />
     <ClCompile Include="src\inputComponent.cpp" />
@@ -333,12 +332,11 @@
     <ClCompile Include="src\scene_world.cpp" />
     <ClCompile Include="src\shadowMapFBO.cpp" />
     <ClCompile Include="src\singleColorEffect.cpp" />
+    <ClCompile Include="src\skill.cpp" />
     <ClCompile Include="src\soundManager.cpp" />
     <ClCompile Include="src\texture.cpp" />
     <ClCompile Include="src\textureatlas.cpp" />
-    <ClCompile Include="src\trail.cpp" />
     <ClCompile Include="src\transform.cpp" />
-    <ClCompile Include="src\transparencyEffect.cpp" />
     <ClCompile Include="src\utils.cpp" />
     <ClCompile Include="src\vector3f.cpp" />
     <ClCompile Include="src\vertex.cpp" />
@@ -346,7 +344,6 @@
   <ItemGroup>
     <None Include="res\data\3.json" />
     <None Include="res\data\data.json" />
-    <None Include="shaders\ambientLight.fs" />
     <None Include="shaders\bloom.fs" />
     <None Include="shaders\bloomDark.fs" />
     <None Include="shaders\blur.fs" />
@@ -356,14 +353,9 @@
     <None Include="shaders\gaussian11.fs" />
     <None Include="shaders\gaussian3.fs" />
     <None Include="shaders\gaussian9.fs" />
-    <None Include="shaders\heightFog.fs" />
-    <None Include="shaders\heightFog.vs" />
     <None Include="shaders\shader.fs" />
     <None Include="shaders\shader.vs" />
-    <None Include="shaders\shadow_map.fs" />
-    <None Include="shaders\shadow_map.vs" />
     <None Include="shaders\singleColor.fs" />
-    <None Include="shaders\transparency.fs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

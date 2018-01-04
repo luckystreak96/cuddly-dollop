@@ -8,19 +8,31 @@ BloomEffect::BloomEffect()
 
 bool BloomEffect::Init()
 {
-	const char* vs = "shaders/shader.vs";
-	const char* fs = "shaders/bloom.fs";
+	std::string vs = "shaders/" + GetGLVersionString() + "/shader.vs";
+	std::string fs = "shaders/" + GetGLVersionString() + "/bloom.fs";
 
 	AddShader(vs, GL_VERTEX_SHADER, m_shaderProg);
 	AddShader(fs, GL_FRAGMENT_SHADER, m_shaderProg);
+	if (_efctGLVersion.x == 1.0f)
+	{
+		glBindAttribLocation(m_shaderProg, 0, "Position");
+		glBindAttribLocation(m_shaderProg, 1, "TexCoord");
+		glBindAttribLocation(m_shaderProg, 5, "Model");
+	}
 	bool isFinalized = Finalize(m_shaderProg);
 	assert(isFinalized == true);
 
-	const char* vs2 = "shaders/shader.vs";
-	const char* fs2 = "shaders/bloomDark.fs";
+	std::string vs2 = "shaders/" + GetGLVersionString() + "/shader.vs";
+	std::string fs2 = "shaders/" + GetGLVersionString() + "/bloomDark.fs";
 
 	AddShader(vs2, GL_VERTEX_SHADER, m_darkBloomProgram);
 	AddShader(fs2, GL_FRAGMENT_SHADER, m_darkBloomProgram);
+	if (_efctGLVersion.x == 1.0f)
+	{
+		glBindAttribLocation(m_shaderProg, 0, "Position");
+		glBindAttribLocation(m_shaderProg, 1, "TexCoord");
+		glBindAttribLocation(m_shaderProg, 5, "Model");
+	}
 	isFinalized = Finalize(m_darkBloomProgram);
 	assert(isFinalized == true);
 

@@ -155,10 +155,10 @@ void GameData::EnsureBaseSettings()
 		Strings.emplace("name", "Yanik");
 	if (!Party.size() > 0)
 	{
-		Party.push_back(Actor("res/sprites/entities/entity_ghost_blue.png"));
-		Party.push_back(Actor("res/sprites/entities/entity_ghost_shiny_blue.png"));
-		Party.push_back(Actor("res/sprites/entities/entity_ghost_green.png"));
-		Party.push_back(Actor("res/sprites/entities/entity_ghost_purple.png"));
+		Party.push_back(Actor());
+		Party.push_back(Actor());
+		Party.push_back(Actor());
+		Party.push_back(Actor());
 	}
 }
 

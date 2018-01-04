@@ -24,12 +24,12 @@ class Transformation
 
 		bool operator!=(const Transformation& t);
 
-		Mat4f GetWorldTrans();
-		Mat4f GetWorldTransNoTranslate();
-		Mat4f GetWOTrans();
-		Mat4f GetWOTransNoTranslate();
-        Mat4f GetWPTrans();
-        Mat4f GetTrans();
+		Mat4f& GetWorldTrans();
+		Mat4f& GetWorldTransNoTranslate();
+		Mat4f& GetWOTrans();
+		Mat4f& GetWOTransNoTranslate();
+        Mat4f& GetWPTrans();
+        Mat4f& GetTrans();
 		Vector3f GetTranslation() { return m_translate; };
 		Vector3f GetScale() { return m_scale; };
 

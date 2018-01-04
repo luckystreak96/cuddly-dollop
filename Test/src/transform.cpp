@@ -5,19 +5,19 @@ Transformation::Transformation()
 {
 }
 
-Mat4f Transformation::GetWorldTrans()
+Mat4f& Transformation::GetWorldTrans()
 {
     Mat4f scale, translate, rotate;
 
     scale.InitScaleMat(m_scale);
-    translate.InitTranslateMat(m_translate);
     rotate.InitRotateMat(m_rotate);
+    translate.InitTranslateMat(m_translate);
     m_WTrans = translate * rotate * scale;
 
     return m_WTrans;
 }
 
-Mat4f Transformation::GetWorldTransNoTranslate()
+Mat4f& Transformation::GetWorldTransNoTranslate()
 {
 	Mat4f scale, translate, rotate;
 
@@ -29,7 +29,7 @@ Mat4f Transformation::GetWorldTransNoTranslate()
 	return m_WTrans;
 }
 
-Mat4f Transformation::GetWOTrans()
+Mat4f& Transformation::GetWOTrans()
 {
 	m_WTrans = GetWorldTrans();
 	m_Proj.InitOrthoProj(*m_orthoProj);
@@ -38,7 +38,7 @@ Mat4f Transformation::GetWOTrans()
 	return m_WPTrans;
 }
 
-Mat4f Transformation::GetWOTransNoTranslate()
+Mat4f& Transformation::GetWOTransNoTranslate()
 {
 	m_WTrans = GetWorldTransNoTranslate();
 	m_Proj.InitOrthoProj(*m_orthoProj);
@@ -47,7 +47,7 @@ Mat4f Transformation::GetWOTransNoTranslate()
 	return m_WPTransNoTranslate;
 }
 
-Mat4f Transformation::GetWPTrans()
+Mat4f& Transformation::GetWPTrans()
 {
     m_WTrans = GetWorldTrans();
     m_Proj.InitProjPers(*m_persProjInfo);
@@ -56,7 +56,7 @@ Mat4f Transformation::GetWPTrans()
     return m_WPTrans;
 }
 
-Mat4f Transformation::GetTrans()
+Mat4f& Transformation::GetTrans()
 {
     Mat4f scale, translate, rotate, persProjTrans;
     scale.InitScaleMat(m_scale);

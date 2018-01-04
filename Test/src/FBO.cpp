@@ -3,6 +3,8 @@
 #include "glfwBackend.h"
 #include <iostream>
 
+Vector2f FBO::_fboGLVersion = Vector2f(2, 0);
+
 FBO::FBO(int width, int height, int depthBufferType) {
 	m_width = width;
 	m_height = height;

@@ -31,6 +31,7 @@ public:
 public:
 	bool loaded = false;
 private:
+	int m_width, m_height;
 	ILuint m_texId;
 	bool m_isValid;
 	GLenum m_textureTarget;

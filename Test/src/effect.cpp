@@ -3,6 +3,7 @@
 float* Effect::m_prevWorld = NULL;
 GLuint Effect::m_prevShaderProgram = 0;
 GLuint Effect::m_currentShaderProgram = 0;
+Vector2f Effect::_efctGLVersion = Vector2f(2, 0);
 
 Effect::Effect()
 {
@@ -12,6 +13,14 @@ Effect::Effect()
 Effect::~Effect()
 {
 	glDeleteProgram(m_shaderProg);
+}
+
+std::string Effect::GetGLVersionString()
+{
+	std::string result = "";
+	result += std::to_string((int)_efctGLVersion.x);
+	result += std::to_string((int)_efctGLVersion.y);
+	return result;
 }
 
 bool Effect::Init(GLuint& program)
@@ -62,7 +71,7 @@ void Effect::Enable(GLuint program)
 	m_currentShaderProgram = program;
 }
 
-bool Effect::AddShader(const char* shaderFileName, GLenum shaderType, GLuint& program)
+bool Effect::AddShader(std::string shaderFileName, GLenum shaderType, GLuint& program)
 {
 	std::string shaderString;
 	shaderString = Utils::ReadFile(shaderFileName);

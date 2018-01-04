@@ -12,53 +12,7 @@
 #include <list>
 #include <iterator>
 
-#define SHADOW_TEXTURE_UNIT GL_TEXTURE1
-
 enum DrawType { DT_FLAT, DT_ENTITY };
-
-struct BaseLight
-{
-	Vector3f Color;
-	float AmbientIntensity;
-	float DiffuseIntensity;
-
-	BaseLight()
-	{
-		Color = Vector3f(0.0f, 0.0f, 0.0f);
-		AmbientIntensity = 0.5f;
-		DiffuseIntensity = 0.0f;
-	}
-};
-
-struct PointLight : public BaseLight
-{
-	Vector3f Position;
-
-	struct
-	{
-		float Constant;
-		float Linear;
-		float Exp;
-	} Attenuation;
-
-	PointLight()
-	{
-		Position = Vector3f(0.0f, 0.0f, 0.0f);
-		Attenuation.Constant = 1.0f;
-		Attenuation.Linear = 0.0f;
-		Attenuation.Exp = 0.0f;
-	}
-};
-
-struct DirectionalLight : BaseLight
-{
-	Vector3f Direction;
-
-	DirectionalLight()
-	{
-		Direction = Vector3f(0.0f, 0.0f, 0.0f);
-	}
-};
 
 class Effect
 {
@@ -72,8 +26,10 @@ public:
 	static void SetTileSize(float size);
 	static void SetDrawType(DrawType dt);
 	static float* GetPrevWorldPos();
+	static Vector2f _efctGLVersion;
+	std::string GetGLVersionString();
 protected:
-	bool AddShader(const char* shaderFileName, GLenum shaderType, GLuint& program);//add a shader thru its contents
+	bool AddShader(std::string shaderFileName, GLenum shaderType, GLuint& program);//add a shader thru its contents
 	bool Finalize(GLuint& program);//Link objects
 	static GLuint GetUniformLocation(const GLchar* name);
 	GLuint m_shaderProg;

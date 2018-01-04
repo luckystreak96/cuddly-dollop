@@ -2,6 +2,9 @@
 #include "gameData.h"
 #include "textureatlas.h"
 #include <GLFW\glfw3.h>
+#include "vector3f.h"
+#include "effect.h"
+#include "FBO.h"
 
 Game::Game() : m_exit(false)
 {
@@ -12,8 +15,10 @@ Game::~Game()
 {
 }
 
-bool Game::init()
+bool Game::init(Vector2f version)
 {
+	FBO::_fboGLVersion = version;
+	Effect::_efctGLVersion = version;
 	SetupTextureAtlas();
 
 	// Mute by default

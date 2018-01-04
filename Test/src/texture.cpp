@@ -77,6 +77,10 @@ void Texture::LoadGL()
 	glBindTexture(m_textureTarget, 0);
 	ilDeleteImages(1, &m_texId);
 
+	int miplevel = 0;
+	glGetTexLevelParameteriv(GL_TEXTURE_2D, miplevel, GL_TEXTURE_WIDTH, &m_width);
+	glGetTexLevelParameteriv(GL_TEXTURE_2D, miplevel, GL_TEXTURE_HEIGHT, &m_height);
+
 	m_isValid = true;
 }
 

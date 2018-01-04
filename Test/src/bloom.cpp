@@ -86,6 +86,15 @@ void Bloom::End(bool dark)
 
 	glBindTextureEXT(GL_TEXTURE_2D, m_bloom.getColourTexture());
 	EffectManager::GetInstance().Enable(E_Blur);
+	// GLSL 1.1 requires to send texture size to the shader
+	if (Effect::_efctGLVersion.x == 1)
+	{
+		int w, h;
+		int miplevel = 0;
+		glGetTexLevelParameteriv(GL_TEXTURE_2D, miplevel, GL_TEXTURE_WIDTH, &w);
+		glGetTexLevelParameteriv(GL_TEXTURE_2D, miplevel, GL_TEXTURE_HEIGHT, &h);
+		BlurEffect::GetInstance().SetTextureSize(w, h);
+	}
 	pps.Draw(false);
 
 	m_gaussH.unbindFrameBuffer();

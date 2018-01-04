@@ -24,7 +24,7 @@ public:
 
 	void MuteButton();
 
-	bool init();
+	bool init(Vector2f version);
 	void SetupTextureAtlas();
 private:
 	bool m_exit;

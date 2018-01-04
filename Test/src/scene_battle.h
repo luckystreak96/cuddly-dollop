@@ -9,6 +9,7 @@
 #include "collisionManager.h"
 #include "fade.h"
 #include "eventManager.h"
+#include "battleManager.h"
 
 class SceneBattle : public Scene
 {
@@ -24,6 +25,9 @@ public:
 	void SetAudioPosition();
 	static void SetNextScene(SceneGenData sgd);
 	void RenderPass();
+
+public:
+	std::vector<std::shared_ptr<Actor>> _actors;
 	
 private:
 	void SetOrthoStuffs();
@@ -32,6 +36,7 @@ private:
 	static SceneGenData NextScene;
 	std::shared_ptr<Scene> m_nextScene = NULL;
 	EventManager m_eventManager;
+	BattleManager m_battle;
 	std::shared_ptr<MapHandler> m_mapHandler = NULL;
 	std::shared_ptr<Transformation> m_World = NULL;
 	std::vector<std::shared_ptr<PlayerGraphicsComponent>> m_party;

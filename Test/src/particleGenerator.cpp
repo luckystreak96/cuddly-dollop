@@ -1,5 +1,6 @@
 #include "particleGenerator.h"
 #include "define.h"
+#include <thread>
 
 ParticleGenerator::ParticleGenerator() : m_mesh(Mesh()), m_power(2.0f), completed(false)
 {
@@ -42,8 +43,8 @@ void Snow::ResetLocation(Vector3f& zoneSize, bool firstSpawn, bool smooth)
 	if (smooth)
 		firstSpawn = false;
 
-	position.x = fmod(((float)rand() / 10.0f), zoneSize.x + 2.0f) - 2.0f;
-	position.y = rand() % ((firstSpawn ? (int)zoneSize.y * 2 : (int)zoneSize.y)) + (firstSpawn ? 0 : zoneSize.y);
+	position.x = fmod(((float)rand() / 1000.0f), zoneSize.x + 2.0f) - 2.0f;
+	position.y = fmod(rand() / 1000.0f, ((firstSpawn ? (int)zoneSize.y * 2 : (int)zoneSize.y)) + (firstSpawn ? 0 : zoneSize.y));
 	velocity.y = -fmod(((float)rand() / 1000.0f), 0.003f) - 0.003f;
 	velocity.y *= pow(size * 10.f, 2);
 	float value = fmod(((float)rand() / 1000.0f), 0.1f);
@@ -233,8 +234,8 @@ void ParticleGenerator::FinalizeSetup()
 	std::sort(m_particles.begin(), m_particles.end(), ParticleSort);
 
 	SetupMesh();
-	for (auto x : m_particles)
-		x->Update(m_zoneSize);
+	//for (auto x : m_particles)
+	//	x->Update(m_zoneSize);
 
 	Update();
 }
@@ -246,6 +247,7 @@ ParticleGenerator::~ParticleGenerator()
 void ParticleGenerator::SetupMesh()
 {
 	m_mesh.Reset();
+	//m_mesh._instancedDraw = true;
 	std::sort(m_particles.begin(), m_particles.end(), ParticleSort);
 	for (auto t : m_particles)
 		m_mesh.AddToMesh(t->physics.GetVertices(), t->physics.GetIndices(), t->physics.GetHighestIndex(), t->position, t->texture);
@@ -255,13 +257,14 @@ void ParticleGenerator::SetupMesh()
 	m_texture = "res/tiles.png";
 	//m_mesh.Finalize(m_texture);
 	m_graphics = std::shared_ptr<GraphicsComponent>(new GraphicsComponent(m_mesh.GetMeshVertices(), m_mesh.GetMeshIndices(), m_texture));
+	//m_graphics->_instancedDraw = true;
 	m_graphics->SetPhysics(Vector3f(0, 0, 0.6f), Vector3f());
 }
 
 void ParticleGenerator::LogicUpdate()
 {
 	int count = 0;
-	for (auto d : m_particles)
+	for (auto &d : m_particles)
 	{
 		d->Update(m_zoneSize);
 		if (d->done)
@@ -280,7 +283,7 @@ void ParticleGenerator::LogicUpdate()
 	m_graphics->GetMModels().clear();
 
 	Transformation t;
-	for (auto x : m_particles)
+	for (auto &x : m_particles)
 	{
 		t.SetTranslation(x->position);
 		x->SetTrans(t);

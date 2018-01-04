@@ -7,9 +7,9 @@
 #include "game.h"
 #include "input_manager.h"
 #include "gameData.h"
-#include "vector3f.h"
 
-GLFWwindow* GLFWManager::m_window = NULL;;
+GLFWwindow* GLFWManager::m_window = NULL;
+Vector2f GLFWManager::_mngrGLVersion = Vector2f(2, 0);
 
 void Resize(GLFWwindow* window)
 {
@@ -63,7 +63,7 @@ GLFWManager::GLFWManager()
 	m_screenHeight = mode->height;
 	m_refreshRate = mode->refreshRate;
 
-	std::vector<Vector2f> versions{ /*Vector2f(4, 6), Vector2f(3, 3),*/ Vector2f(2, 0) };
+	std::vector<Vector2f> versions{ Vector2f(4, 6), Vector2f(3, 3), Vector2f(2, 0), Vector2f(1, 1) };
 
 	// Try the different GL contexts
 	for (auto x : versions)
@@ -76,7 +76,7 @@ GLFWManager::GLFWManager()
 		m_window = glfwCreateWindow(m_screenWidth - 10, m_screenHeight - 80, "Cuddly-Dollop", NULL, NULL);
 		if (!m_window)
 		{
-			std::cout << "Window failed to be created on context: " << x.x << "," << x.y << std::endl;
+			std::cout << "Window failed to be created on context: " << x.x << "." << x.y << std::endl;
 			if (x == versions.at(versions.size() - 1))
 			{
 				std::cout << "OpenGL version not supported, press any key to exit..." << std::endl;
@@ -84,7 +84,9 @@ GLFWManager::GLFWManager()
 				exit(1);
 			}
 		}
-
+		std::cout << "GL context opened on OpenGL version " << x.x << "." << x.y << std::endl;
+		// Set the gl version to be accessed from the effects
+		_mngrGLVersion = x;
 		break;
 	}
 
@@ -151,7 +153,7 @@ GLFWManager::GLFWManager()
 void GLFWManager::GLFWMainLoop(Game* game)
 {
 	// Game init
-	if (!game->init())
+	if (!game->init(_mngrGLVersion))
 	{
 		std::cout << "Game class init failed" << std::endl;
 		std::getchar();

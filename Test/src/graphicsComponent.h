@@ -50,6 +50,7 @@ public:
 	void SetDirection(std::shared_ptr<GraphicsComponent> graph);
 	int GetHighestIndex();
 	void SetBuffers();
+	void SetupVAO();
 	void ResetVBO();
 	bool LoadExternalResources();
 	bool UnloadExternalResources();
@@ -59,12 +60,15 @@ public:
 
 public:
 	bool mustDraw = true;
+	bool _instancedDraw;
 
 protected:
+	GLsizei m_lastMModelSize;
 	GLuint m_mlMatLoc;
 	GLuint m_IBO;
 	GLuint m_VBO;
 	GLuint m_MMBO = 0;
+	GLuint m_VAO;
 	Direction m_direction;
 	Direction m_lastInteraction;
 	int m_MBO_instances = 1;
@@ -81,8 +85,8 @@ protected:
 	bool m_GL_loaded = false;
 	bool m_outline;
 	Transformation m_modelMat;
-	Vector3f m_vel = Vector3f();
-	Vector3f m_rot = Vector3f(0, 0, 0);
+	Vector3f m_vel;
+	Vector3f m_rot;
 };
 
 #endif

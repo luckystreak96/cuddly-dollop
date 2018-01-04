@@ -4,6 +4,7 @@
 #include <iostream>
 #include <GL/glew.h>
 #include <GLFW\glfw3.h>
+#include "vector3f.h"
 
 class Game;
 
@@ -14,6 +15,7 @@ public:
 	void GLFWMainLoop(Game* game);
 public:
 	static GLFWwindow* m_window;
+	static Vector2f _mngrGLVersion;
 
 private:
 	int m_screenWidth, m_screenHeight, m_refreshRate;

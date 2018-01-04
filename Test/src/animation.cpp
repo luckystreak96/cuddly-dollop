@@ -18,6 +18,13 @@ void Animation::AnimationCounter(float et)
 
 bool Animation::SetTileModelTC(std::vector<Vertex>* verts, int direction, bool forceUpdate)
 {
+	const std::vector<Vector2f> vecs = {
+	Vector2f(0, 0),
+	Vector2f(1, 0),
+	Vector2f(0, 1),
+	Vector2f(1, 1)
+	};
+
 	if (direction != -1)
 		m_animation = direction;
 
@@ -37,8 +44,8 @@ bool Animation::SetTileModelTC(std::vector<Vertex>* verts, int direction, bool f
 
 	for (int i = 0; i < verts->size(); i++)
 	{
-		verts->at(i).tex.x = verts->at(i).tex.x == 0 ? x + halfPixX : x + x_increment - halfPixX;
-		verts->at(i).tex.y = verts->at(i).tex.y == 0 ? y + halfpixY : y + y_increment - halfpixY;
+		verts->at(i).tex.x = vecs[i].x == 0 ? x + halfPixX : x + x_increment - halfPixX;
+		verts->at(i).tex.y = vecs[i].y == 0 ? y + halfpixY : y + y_increment - halfpixY;
 	}
 	return true;
 }

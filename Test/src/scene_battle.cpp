@@ -15,8 +15,15 @@
 
 SceneGenData SceneBattle::NextScene = SceneGenData();
 
-SceneBattle::SceneBattle() : m_acceptInput(false), m_currentMap(3), m_drawinited(false), m_zoom(false)
+SceneBattle::SceneBattle() : m_acceptInput(false), m_currentMap(3), m_drawinited(false), m_zoom(false),
+m_battle(_actors)
 {
+	_actors.push_back(std::shared_ptr<Actor>(new Actor()));
+	_actors.push_back(std::shared_ptr<Actor>(new Actor()));
+	_actors.at(1)->Team = 1;
+	_actors.at(1)->Speed = 3;
+	_actors.at(1)->Name = "Toad";
+	m_battle = BattleManager(_actors);
 	Init();
 	SoundManager::GetInstance();
 	m_fade.SetFade(true);
@@ -75,7 +82,6 @@ bool SceneBattle::Init()
 		}
 	}
 
-
 	return true;
 }
 
@@ -97,12 +103,6 @@ void SceneBattle::ManageInput()
 	if (InputManager::GetInstance().FrameKeyStatus('G', AnyRelease))
 		m_fade.SetFade(false);
 
-	if (InputManager::GetInstance().FrameKeyStatus('T', AnyRelease))
-		m_World->AddTranslation(0, 0, 1);
-
-	if (InputManager::GetInstance().FrameKeyStatus('Y', AnyRelease))
-		m_World->AddTranslation(0, 0, -1);
-
 	if (InputManager::GetInstance().FrameKeyStatus('P', AnyRelease))
 		m_pause = !m_pause;
 
@@ -114,16 +114,6 @@ void SceneBattle::ManageInput()
 		if (m_celist.count(Camera::Target))
 			for (int i = 0; i < 30; i++)
 				Camera::Follow(m_celist.at(Camera::Target)->Physics()->Position(), m_World.get());
-	}
-
-	static float bloomint = 0.3f;
-	if (InputManager::GetInstance().FrameKeyStatus('U')) {
-		bloomint += 0.2f;
-		CombineEffect::GetInstance().SetIntensity(bloomint);
-	}
-	if (InputManager::GetInstance().FrameKeyStatus('J')) {
-		bloomint -= 0.2f;
-		CombineEffect::GetInstance().SetIntensity(bloomint);
 	}
 }
 
@@ -175,7 +165,7 @@ SceneGenData SceneBattle::Update()
 	// Needs to be called here so the EventQueues can set render
 	Renderer::GetInstance().Clear();
 	Animation::AnimationCounter((float)ElapsedTime::GetInstance().GetElapsedTime());
-	Interact();
+	//Interact();
 	m_eventManager.Update(ElapsedTime::GetInstance().GetElapsedTime());
 
 	if (next != NextScene)
@@ -183,6 +173,9 @@ SceneGenData SceneBattle::Update()
 
 	for (auto it : m_celist)
 		it.second->Physics()->DesiredMove();
+
+	if (m_fade.IsDone())
+		m_battle.Update();
 
 	//Update
 	for (auto it : m_celist)

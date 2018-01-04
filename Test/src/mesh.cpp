@@ -1,7 +1,7 @@
 #include "mesh.h"
 #include "define.h"
 
-Mesh::Mesh(unsigned int atlasSize) : m_texAtlas(TextureAtlas(atlasSize))
+Mesh::Mesh(unsigned int atlasSize) : m_texAtlas(TextureAtlas(atlasSize)), _instancedDraw(false)
 {
 	m_IBO = 0;
 	m_VBO = 0;
@@ -39,28 +39,33 @@ void Mesh::AddToMesh(std::vector<Vertex>& verts, std::vector<GLuint>& inds, int 
 	//	m_textures.emplace(tex, TextureAtlas::m_textureAtlas.AddTexture(tex));
 	//}
 
-	for (auto v : verts)
-	{
-		Vertex temp = Vertex(v);
-		//temp.vertex += pos;
-		//if (t != Transformation())
-		//{
-		//	t.SetTranslation(temp.vertex.x, temp.vertex.y, temp.vertex.z);
-		//	Mat4f mat = t.GetWorldTrans();
-		//	temp.vertex.x = mat.m[0][3];
-		//	temp.vertex.y = mat.m[1][3];
-		//	temp.vertex.z = mat.m[2][3];
-		//}
-		if (index == -1)
-			TextureAtlas::m_textureAtlas.TextureIndexToCoord(m_textures.at(tex), temp.tex.x, temp.tex.y);
-		else
-			m_texAtlas.TextureIndexToCoord(index, temp.tex.x, temp.tex.y);
+	std::vector<Vector2f> vecs = {
+	Vector2f(0, 0),
+	Vector2f(1, 0),
+	Vector2f(0, 1),
+	Vector2f(1, 1)
+	};
 
-		m_vertexList.push_back(temp);
+	int counter = 0;
+	for (auto &v : verts)
+	{
+		Vector2f temp = Vector2f(vecs[counter % 4].x, vecs[counter % 4].y);
+		if (index == -1)
+			TextureAtlas::m_textureAtlas.TextureIndexToCoord(m_textures.at(tex), temp.x, temp.y);
+		else
+			m_texAtlas.TextureIndexToCoord(index, temp.x, temp.y);
+
+		v.tex = temp;
+
+		if (!_instancedDraw || m_indexProgress < 4)
+			m_vertexList.push_back(v);
+
+		counter++;
 	}
 
 	for (auto i : inds)
-		m_indices.push_back(i + m_indexProgress);
+		if (!_instancedDraw || m_indexProgress < 4)
+			m_indices.push_back(i + m_indexProgress);
 
 	//m_models.push_back(t);
 

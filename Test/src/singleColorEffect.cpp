@@ -8,11 +8,17 @@ SingleColorEffect::SingleColorEffect()
 
 bool SingleColorEffect::Init()
 {
-	const char* vs = "shaders/shader.vs";
-	const char* fs = "shaders/singleColor.fs";
+	std::string vs = "shaders/" + GetGLVersionString() + "/shader.vs";
+	std::string fs = "shaders/" + GetGLVersionString() + "/singleColor.fs";
 
 	AddShader(vs, GL_VERTEX_SHADER, m_shaderProg);
 	AddShader(fs, GL_FRAGMENT_SHADER, m_shaderProg);
+	if (_efctGLVersion.x == 1.0f)
+	{
+		glBindAttribLocation(m_shaderProg, 0, "Position");
+		glBindAttribLocation(m_shaderProg, 1, "TexCoord");
+		glBindAttribLocation(m_shaderProg, 5, "Model");
+	}
 	bool isFinalized = Finalize(m_shaderProg);
 	assert(isFinalized == true);
 
