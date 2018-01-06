@@ -20,6 +20,8 @@ public:
 	void ChangeLetter(unsigned int font, unsigned int index, char newChar);
 	void SetText(unsigned int font, std::string text = " ", Vector3f location = Vector3f(), bool centered = false);
 	unsigned int AddFont(bool sTatic = false, bool temporary = false, bool lightspeed = false, std::string texPath = "res/fonts/basic.png");
+	void DisableFont(unsigned int font);
+	void EnableFont(unsigned int font);
 	void RemoveFont(unsigned int font);
 	std::shared_ptr<Font> GetFont(unsigned int key);
 	void ClearFonts();

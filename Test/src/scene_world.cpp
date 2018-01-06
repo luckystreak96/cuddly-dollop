@@ -26,6 +26,18 @@ SceneWorld::SceneWorld(unsigned int map_id) : m_acceptInput(false), m_currentMap
 	firstEverLoad = false;
 }
 
+void SceneWorld::Brb()
+{
+	NextScene = SceneGenData();
+	FontManager::GetInstance().DisableFont(m_fontFPS);
+}
+
+void SceneWorld::Resume()
+{
+	FontManager::GetInstance().EnableFont(m_fontFPS);
+	Camera::Mapsize = m_mapHandler->GetMapSize();
+}
+
 bool SceneWorld::Init()
 {
 	NextScene = SceneGenData();
@@ -59,7 +71,7 @@ bool SceneWorld::Init()
 
 #ifdef _DEBUG
 	//m_fontTitle = FontManager::GetInstance().AddFont(false, false);
-	m_fontFPS = FontManager::GetInstance().AddFont(true, false, true);
+	m_fontFPS = FontManager::GetInstance().AddFont(true, false, true, "res/fonts/lowercase.png");
 	FontManager::GetInstance().SetScale(m_fontFPS, 0.5f, 0.5f);
 #endif
 
@@ -172,11 +184,12 @@ SceneGenData SceneWorld::Act()
 	//DRAW
 	Draw();
 
-	if (!m_fade.IsDone())
+	if (!m_fade.IsDone() || result.id == 0 && result.sceneType != ST_Battle)
 	{
 		result.id = 0;
 		return result;
 	}
+	Brb();
 	return result;
 }
 

@@ -42,9 +42,9 @@ public:
 	void InsertMModels(Transformation& t);
 	void UpdateMModels();
 	void UpdateTranslation();
-	Vector3f& GetPos() { return m_pos; }
+	Vector3f& GetPosRef() { return m_pos; }
 	GLuint GetMVBO() { return m_VBO; }
-	Vector3f GetPosition();
+	Vector3f GetPos();
 	Direction GetDirection();
 	void SetDirection(Direction dir);
 	void SetDirection(std::shared_ptr<GraphicsComponent> graph);

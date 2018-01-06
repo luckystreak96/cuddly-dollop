@@ -1,6 +1,5 @@
 #include "skill.h"
 #include "battleManager.h"
-#include <iostream>
 
 Skill::Skill()
 {
@@ -17,11 +16,13 @@ void Skill::DefaultSetup()
 }
 
 // Must return the new state
-BattleState Skill::Start(std::vector<std::shared_ptr<Actor>> targets, std::deque<std::shared_ptr<Actor>>* actors, std::deque<std::shared_ptr<BattleAnimation>>* anims)
+BattleState Skill::Start(std::vector<Actor_ptr>* targets, std::deque<Actor_ptr>* actors, std::deque<Anim_ptr>* anims, Actor_ptr owner)
 {
+	_owner = owner;
+	_targets = targets;
 	_actors = actors;
 	_anims = anims;
-	std::cout << "Did nothing to: " << targets.at(0)->Name << std::endl;
+	std::cout << "Did nothing to: " << targets->at(0)->Name << std::endl;
 	return BS_ActionDone;
 }
 

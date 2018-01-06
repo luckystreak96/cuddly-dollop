@@ -14,7 +14,7 @@ class BattleManager
 {
 public:
 	BattleManager();
-	BattleManager(std::vector<std::shared_ptr<Actor>> actors);
+	BattleManager(std::vector<Actor_ptr> actors);
 	void Update();
 	int FindWinner();
 
@@ -27,16 +27,17 @@ private:
 	void Select(int target);
 
 public:
-	std::deque<std::shared_ptr<Actor>> _actorQueue;
-	std::vector<std::shared_ptr<Actor>> _actors;
-	std::vector<std::shared_ptr<Actor>> _targets;
-	std::deque<std::shared_ptr<BattleAnimation>> _animations;
+	std::deque<Actor_ptr> _actorQueue;
+	std::vector<Actor_ptr> _actors;
+	std::vector<Actor_ptr> _targets;
+	std::deque<Anim_ptr> _animations;
 	std::vector<std::shared_ptr<Skill>>* _chooseSkill;
 	std::shared_ptr<Skill> _selectedSkill;
-	std::shared_ptr<Actor> _owner;
+	Actor_ptr _owner;
 	int _selectedIndex;
 	BattleState _state;
 	bool m_animating;
+	bool _done;
 	
 	int counter;
 };

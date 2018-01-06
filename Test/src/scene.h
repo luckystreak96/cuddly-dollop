@@ -24,9 +24,13 @@ class Scene
 {
 public:
 	virtual bool Init() = 0;
+	virtual void Brb() = 0;
+	virtual void Resume() = 0;
 	virtual SceneGenData Act() = 0;
 	virtual void Draw() = 0;
 	virtual SceneGenData Update() = 0;
+
+	bool isBrb;
 	//virtual void LoadAllResources() = 0;
 	//virtual void UnloadAllResources() = 0;
 };

@@ -22,6 +22,7 @@ public:
 	static void LoadFromFile();
 	static void LoadSettings();
 	static void EnsureBaseSettings();
+	static void NewGame();
 	static void LoadGameData();
 	static void SaveToFile();
 	static void SaveGameData();
@@ -33,7 +34,7 @@ public:
 	static std::string PlayerSprite;
 
 	// Party
-	static std::vector<Actor> Party;
+	static std::vector<Actor_ptr> Party;
 
 	// Game flags
 	static std::map<std::string, int> Flags;

@@ -10,7 +10,7 @@ BattleManager::BattleManager()
 	Init();
 }
 
-BattleManager::BattleManager(std::vector<std::shared_ptr<Actor>> actors)
+BattleManager::BattleManager(std::vector<Actor_ptr> actors)
 {
 	// Populate actors
 	for (auto a : actors)
@@ -29,25 +29,102 @@ void BattleManager::Init()
 	m_animating = false;
 	counter = 0;
 	_selectedIndex = 0;
+	_done = false;
 	if (_actorQueue.size() > 0)
+	{
 		_chooseSkill = &_actorQueue.front()->Skills;
+		_owner = _actorQueue.front();
+	}
 }
 
 void BattleManager::Update()
 {
+	// Return when the battle is over
+	if (_done)
+		return;
+
+	// Cout battle state
 	counter++;
 	if (counter % 120 == 0)
 		std::cout << "State: " << _state << std::endl;
+
 	int winner = FindWinner();
 	if (winner == -1)
 	{
 		// Battle stuffs
 		ManageInput();
 		UpdateLogic();
+		if (_animations.size() > 0)
+		{
+			_animations.front()->Update();
+			if (_animations.front()->_done)
+			{
+				_animations.pop_front();
+				//if (_animations.size() == 0)
+				//	_state = BS_ActionProgress;
+			}
+		}
 	}
 	else
 	{
 		// Battle is over, theres a winner etc
+		std::cout << "The winner is: team " << winner << std::endl;
+		_done = true;
+	}
+}
+
+void BattleManager::UpdateLogic()
+{
+	if (_state == BS_ActionDone)
+	{
+		_selectedSkill->Reset();
+		_selectedSkill = NULL;
+		_state = BS_SelectAction;
+		CycleActors();
+		Select(0);
+	}
+
+	// Let the animation pass before updating
+	if (_animations.size() < 1)
+	{
+		// End turn if the skill is done
+		if (_selectedSkill == NULL)
+		{
+			_owner = _actorQueue.front();
+
+			// If the actor is dead, cycle
+			if (_owner->Dead || _state == BS_ActionDone)
+			{
+				CycleActors();
+				Select(0);
+				return;
+			}
+
+			// Choose enemy action
+			if (_owner->Team != 0)
+			{
+				// ENEMY AI XD
+				CycleActors();
+			}
+		}
+		else
+		{
+			// Update skill
+			if (_state != BS_SelectTargets)
+			{
+				if (_selectedSkill != NULL)
+				{
+					if (_selectedSkill->_done)
+					{
+						_state = BS_ActionDone;
+					}
+					else
+					{
+						_selectedSkill->Update();
+					}
+				}
+			}
+		}
 	}
 }
 
@@ -55,10 +132,10 @@ void BattleManager::ManageInput()
 {
 	// Get input
 	std::set<int> input;
-	if (InputManager::GetInstance().FrameKeyStatus(GLFW_KEY_SPACE, KeyStatus::Release))
+	if (InputManager::GetInstance().FrameKeyStatus(GLFW_KEY_SPACE, KeyStatus::Release, 5))
 		input.emplace(GLFW_KEY_SPACE);
 	for (int i = GLFW_KEY_RIGHT; i < GLFW_KEY_UP + 1; i++)
-		if (InputManager::GetInstance().FrameKeyStatus(i, Release))
+		if (InputManager::GetInstance().FrameKeyStatus(i, Release, 5))
 			input.emplace(i);
 
 	// If theres an animation going, SEND THE INPUT TO THE SKILL
@@ -189,70 +266,18 @@ void BattleManager::Select(int target)
 	}
 }
 
-void BattleManager::UpdateLogic()
-{
-	if (_state == BS_ActionDone)
-	{
-		_selectedSkill->Reset();
-		_selectedSkill = NULL;
-		_state = BS_SelectAction;
-		CycleActors();
-		Select(0);
-	}
-
-	// Don't end turn if theres an animation going
-	if (_animations.size() < 1 && _selectedSkill == NULL)
-	{
-		_owner = _actorQueue.front();
-
-		// If the actor is dead, cycle
-		if (_owner->Dead || _state == BS_ActionDone)
-		{
-			CycleActors();
-			Select(0);
-			return;
-		}
-
-		// Choose enemy action
-		if (_owner->Team != 0)
-		{
-			// ENEMY AI XD
-			CycleActors();
-		}
-	}
-	else
-	{
-		// Update skill
-		if (_state != BS_SelectTargets)
-		{
-			if (_selectedSkill != NULL)
-			{
-				if (_selectedSkill->_done)
-				{
-					_state = BS_SelectAction;
-					_selectedSkill = NULL;
-				}
-				else
-				{
-					_selectedSkill->Update();
-				}
-			}
-		}
-	}
-}
-
 void BattleManager::UseSkill()
 {
 	std::cout << "Using skill: " << _selectedSkill->_name << std::endl;
 	if (_selectedSkill != NULL)
-		_state = _selectedSkill->Start(_targets, &_actorQueue, &_animations);
+		_state = _selectedSkill->Start(&_targets, &_actorQueue, &_animations, _owner);
 	else
 		_state = BS_SelectAction;
 }
 
 void BattleManager::CycleActors()
 {
-	std::shared_ptr<Actor> front = _actorQueue.front();
+	Actor_ptr front = _actorQueue.front();
 	_actorQueue.pop_front();
 	_actorQueue.push_back(front);
 	_actorQueue.front()->ChoosingAction = true;

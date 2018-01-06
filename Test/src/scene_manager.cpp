@@ -19,7 +19,7 @@ void SceneManager::Act()
 		sgd.scene = m_currentScene;
 
 	// If the next scene is ready, create it
-	if (sgd.id != 0 || sgd.scene != NULL)
+	if (sgd.id != 0/* || sgd.scene != NULL*/)
 		m_currentScene = CreateScene(sgd);
 
 	//Scenes have changed
@@ -32,6 +32,7 @@ void SceneManager::Act()
 
 std::shared_ptr<Scene> SceneManager::CreateScene(SceneGenData sgd)
 {
+	std::shared_ptr<Scene> result;
 	switch (sgd.sceneType)
 	{
 	case ST_World:
@@ -39,7 +40,9 @@ std::shared_ptr<Scene> SceneManager::CreateScene(SceneGenData sgd)
 			return sgd.scene;
 		return std::shared_ptr<Scene>(new SceneWorld(sgd.id));
 	case ST_Battle:
-		return std::shared_ptr<Scene>(new SceneBattle());
+		result = std::shared_ptr<Scene>(new SceneBattle());
+		dynamic_cast<SceneBattle*>(result.get())->_prevScene = sgd.scene;
+		return result;
 	default:
 		std::cout << "No map specified for change! Error! Loading map 1!" << std::endl;
 		std::string wait;

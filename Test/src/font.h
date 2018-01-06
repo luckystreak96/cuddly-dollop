@@ -34,6 +34,9 @@ public:
 	virtual void SetScale(float xScale, float yScale);
 	bool TextDisplayDone();
 
+public:
+	bool _enabled;
+
 protected:
 	void AddWordToMesh(std::string word, float x, float y);
 	void CreateHash();

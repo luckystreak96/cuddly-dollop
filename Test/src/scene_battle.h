@@ -19,6 +19,8 @@ public:
 	bool Init();
 	SceneGenData Act();
 	void Draw();
+	void Brb() {}
+	void Resume() {}
 	SceneGenData Update();
 	void Interact();
 	void ManageInput();
@@ -27,7 +29,8 @@ public:
 	void RenderPass();
 
 public:
-	std::vector<std::shared_ptr<Actor>> _actors;
+	std::vector<Actor_ptr> _actors;
+	std::shared_ptr<Scene> _prevScene;
 	
 private:
 	void SetOrthoStuffs();
@@ -39,8 +42,8 @@ private:
 	BattleManager m_battle;
 	std::shared_ptr<MapHandler> m_mapHandler = NULL;
 	std::shared_ptr<Transformation> m_World = NULL;
-	std::vector<std::shared_ptr<PlayerGraphicsComponent>> m_party;
-	std::vector<std::shared_ptr<PlayerGraphicsComponent>> m_enemies;
+	std::vector<Actor_ptr> m_party;
+	std::vector<Actor_ptr> m_enemies;
 	std::map<unsigned int, std::shared_ptr<Entity>> m_celist;
 	bool m_pause;
 	bool m_zoom;

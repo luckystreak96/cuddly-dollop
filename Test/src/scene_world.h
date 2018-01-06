@@ -16,6 +16,8 @@ public:
 	SceneWorld(unsigned int map_id);
 	~SceneWorld();
 	bool Init();
+	void Brb();
+	void Resume();
 	SceneGenData Act();
 	void Draw();
 	SceneGenData Update();
@@ -27,13 +29,13 @@ public:
 	void SetAudioPosition();
 	static void SetNextScene(SceneGenData sgd);
 	void RenderPass();
+	static SceneGenData NextScene;
 	
 private:
 	void SetOrthoStuffs();
 
 private:
 	std::shared_ptr<Entity> m_player = NULL;
-	static SceneGenData NextScene;
 	std::shared_ptr<Scene> m_nextScene = NULL;
 	EventManager m_eventManager;
 	std::shared_ptr<MapHandler> m_mapHandler = NULL;

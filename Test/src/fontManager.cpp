@@ -60,7 +60,8 @@ void FontManager::ChangeLetter(unsigned int font, unsigned int index, char newCh
 void FontManager::SetRender()
 {
 	for (auto x : m_fonts)
-		x.second->SetRender();
+		if (x.second->_enabled)
+			x.second->SetRender();
 }
 
 void FontManager::Update(double elapsedTime)
@@ -92,6 +93,16 @@ unsigned int FontManager::AddFont(bool sTatic, bool temporary, bool lightspeed, 
 	return key;
 }
 
+void FontManager::EnableFont(unsigned int font)
+{
+	m_fonts.at(font)->_enabled = true;
+}
+
+void FontManager::DisableFont(unsigned int font)
+{
+	m_fonts.at(font)->_enabled = false;
+}
+
 void FontManager::RemoveFont(unsigned int font)
 {
 	if (m_fonts.size() == 0)
@@ -117,8 +128,8 @@ unsigned int FontManager::GenerateKey()
 
 std::shared_ptr<Font> FontManager::GetFont(unsigned int key)
 {
-	if (m_fonts.count(key) > 0) 
+	if (m_fonts.count(key) > 0)
 		return m_fonts.at(key);
-	else 
+	else
 		return NULL;
 }

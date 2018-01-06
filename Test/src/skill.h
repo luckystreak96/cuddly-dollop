@@ -5,6 +5,7 @@
 #include <deque>
 #include <set>
 #include <memory>
+#include <iostream>
 #include "actor.h"
 #include "battleAnimation.h"
 
@@ -14,20 +15,23 @@ class Skill
 {
 public:
 	Skill();
-	virtual BattleState Start(std::vector<std::shared_ptr<Actor>> targets, std::deque<std::shared_ptr<Actor>>* actors, std::deque<std::shared_ptr<BattleAnimation>>* anims);
+	virtual BattleState Start(std::vector<Actor_ptr>* targets, std::deque<Actor_ptr>* actors, std::deque<Anim_ptr>* anims, Actor_ptr owner);
 	virtual void Update();
 	virtual void Reset();
 	virtual bool IsReady();
-	
+
 public:
-	std::deque<std::shared_ptr<Actor>>* _actors;
-	std::deque<std::shared_ptr<BattleAnimation>>* _anims;
+	std::deque<Actor_ptr>* _actors;
+	std::vector<Actor_ptr>* _targets;
+	std::deque<Anim_ptr>* _anims;
 	std::set<int> _input;
 	std::string _name;
 	bool _done;
+	int _animProg;
 	int _cooldown;
 	int _currentCooldown;
 	int _minTargets;
+	Actor_ptr _owner;
 
 
 protected:

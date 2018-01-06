@@ -341,7 +341,7 @@ void GraphicsComponent::SetTexture(std::string newTex)
 	LoadExternalResources();
 }
 
-Vector3f GraphicsComponent::GetPosition() { return m_pos; }
+Vector3f GraphicsComponent::GetPos() { return m_pos; }
 
 Direction GraphicsComponent::GetDirection() { return m_direction; }
 void GraphicsComponent::SetDirection(Direction dir) { m_direction = dir; }
@@ -350,8 +350,8 @@ void GraphicsComponent::SetDirection(std::shared_ptr<GraphicsComponent> graph)
 {
 	float x = m_pos.x;
 	float y = m_pos.y;
-	float ox = graph->GetPosition().x;
-	float oy = graph->GetPosition().y;
+	float ox = graph->GetPos().x;
+	float oy = graph->GetPos().y;
 
 	if (abs(x - ox) > abs(y - oy))
 	{

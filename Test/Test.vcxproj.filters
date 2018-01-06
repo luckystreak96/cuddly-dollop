@@ -386,6 +386,15 @@
     <ClInclude Include="src\battleAnimation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\skillSmack.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\actorFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\animJumpTo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -632,6 +641,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\skill.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\skillSmack.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\actorFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\animJumpTo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

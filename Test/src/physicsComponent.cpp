@@ -174,7 +174,11 @@ std::array<float, 6> PhysicsComponent::GetMoveBoundingBox()
 std::array<float, 6> PhysicsComponent::GetEtherealMoveBoundingBox()
 {
 	if (m_ethereal)
-		return std::array<float, 6>();
+	{
+		auto result = std::array<float, 6>();
+		result.fill(-99999999.f);
+		return result;
+	}
 	else
 		return m_moveBoundingBox;
 }

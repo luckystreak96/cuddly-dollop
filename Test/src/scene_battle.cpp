@@ -12,17 +12,15 @@
 #include "bloom.h"
 #include "input_manager.h"
 #include "entityFactory.h"
+#include "actorFactory.h"
 
 SceneGenData SceneBattle::NextScene = SceneGenData();
 
 SceneBattle::SceneBattle() : m_acceptInput(false), m_currentMap(3), m_drawinited(false), m_zoom(false),
 m_battle(_actors)
 {
-	_actors.push_back(std::shared_ptr<Actor>(new Actor()));
-	_actors.push_back(std::shared_ptr<Actor>(new Actor()));
-	_actors.at(1)->Team = 1;
-	_actors.at(1)->Speed = 3;
-	_actors.at(1)->Name = "Toad";
+	_actors.push_back(Actor_ptr(ActorFactory::BuildBaseAlly()));
+	_actors.push_back(Actor_ptr(ActorFactory::BuildBaseEnemy()));
 	m_battle = BattleManager(_actors);
 	Init();
 	SoundManager::GetInstance();
@@ -49,14 +47,16 @@ bool SceneBattle::Init()
 	m_mapHandler = std::shared_ptr<MapHandler>(new MapHandler(m_currentMap, m_jsonHandler));
 	Camera::Mapsize = m_mapHandler->GetMapSize();
 
-	for (auto x : GameData::Party)
-		m_party.push_back(std::shared_ptr<PlayerGraphicsComponent>(new PlayerGraphicsComponent(x.Sprite)));
+	for (auto x : _actors)
+	{
+		if (x->Team == 0)
+			m_party.push_back(x);
+		else
+			m_enemies.push_back(x);
+	}
 
 	for (int i = 0; i < m_party.size(); i++)
 		m_party.at(i)->SetPhysics(Vector3f(3.0f, 4.0f + i, 4.0f), Vector3f());
-
-	for (int i = 0; i < 2; i++)
-		m_enemies.push_back(std::shared_ptr<PlayerGraphicsComponent>(new PlayerGraphicsComponent("res/sprites/entities/entity_mushroom.png")));
 
 	for (int i = 0; i < m_enemies.size(); i++)
 		m_enemies.at(i)->SetPhysics(Vector3f(12.0f, 4.0f + i, 4.0f), Vector3f());
@@ -140,11 +140,13 @@ SceneGenData SceneBattle::Act()
 	//DRAW
 	Draw();
 
-	if (!m_fade.IsDone())
+	if (!m_fade.IsDone() || result.id == 0 || result.scene == NULL)
 	{
 		result.id = 0;
+		result.scene = NULL;
 		return result;
 	}
+	result.scene->Resume();
 	return result;
 }
 
@@ -168,23 +170,27 @@ SceneGenData SceneBattle::Update()
 	//Interact();
 	m_eventManager.Update(ElapsedTime::GetInstance().GetElapsedTime());
 
+	if (m_fade.IsDone())
+		m_battle.Update();
+
+	if (m_battle._done)
+	{
+		NextScene.scene = _prevScene;
+		NextScene.sceneType = ST_World;
+		NextScene.id = 1;
+	}
+
 	if (next != NextScene)
 		m_fade.SetFade(false);
 
 	for (auto it : m_celist)
 		it.second->Physics()->DesiredMove();
 
-	if (m_fade.IsDone())
-		m_battle.Update();
-
 	//Update
 	for (auto it : m_celist)
 		it.second->Update();
 
-	for (auto a : m_party)
-		a->Update();
-
-	for (auto a : m_enemies)
+	for (auto a : _actors)
 		a->Update();
 
 	m_mapHandler->Update();
@@ -232,7 +238,8 @@ void SceneBattle::RenderPass()
 		Renderer::GetInstance().Add(a);
 
 	for (auto a : m_enemies)
-		Renderer::GetInstance().Add(a);
+		if (!a->Dead)
+			Renderer::GetInstance().Add(a);
 
 	if (!m_fade.IsDone())
 		m_fade.Begin();
@@ -267,7 +274,7 @@ void SceneBattle::SetOrthoStuffs()
 	{
 		OrthoProjInfo* o = &OrthoProjInfo::GetRegularInstance();
 		m_World->SetOrthoProj(o);
-		m_World->SetTranslation(-o->Right / o->Size, -o->Top  / o->Size, 0);
+		m_World->SetTranslation(-o->Right / o->Size, -o->Top / o->Size, 0);
 
 		EffectManager::GetInstance().SetAllTilePositions(OrthoProjInfo::GetRegularInstance().Size);
 

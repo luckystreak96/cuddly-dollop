@@ -2,4221 +2,3766 @@
   "id": 3,
   "tiles": [
     {
-      "x": 999.0,
-      "y": 15.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 998.0,
-      "y": 15.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 997.0,
-      "y": 15.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 996.0,
-      "y": 15.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 995.0,
-      "y": 15.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 995.0,
-      "y": 14.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 994.0,
-      "y": 14.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 993.0,
-      "y": 14.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 992.0,
-      "y": 14.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 991.0,
-      "y": 14.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 991.0,
-      "y": 13.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 990.0,
-      "y": 13.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 989.0,
-      "y": 13.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 989.0,
-      "y": 12.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 989.0,
-      "y": 11.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 989.0,
-      "y": 10.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 990.0,
-      "y": 9.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 991.0,
-      "y": 9.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 992.0,
-      "y": 9.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 992.0,
-      "y": 10.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 993.0,
-      "y": 10.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 994.0,
-      "y": 10.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 995.0,
-      "y": 10.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 995.0,
-      "y": 11.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 996.0,
-      "y": 11.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 997.0,
-      "y": 11.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 997.0,
-      "y": 12.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 998.0,
-      "y": 12.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 998.0,
-      "y": 13.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 999.0,
-      "y": 13.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 999.0,
-      "y": 14.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 994.0,
-      "y": 13.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 993.0,
-      "y": 12.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 993.0,
-      "y": 11.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 993.0,
-      "y": 9.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 992.0,
-      "y": 8.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 992.0,
-      "y": 7.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 993.0,
-      "y": 7.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 993.0,
-      "y": 6.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 994.0,
-      "y": 7.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 994.0,
-      "y": 8.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 994.0,
-      "y": 9.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 994.0,
-      "y": 11.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 994.0,
-      "y": 12.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 993.0,
-      "y": 15.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 992.0,
-      "y": 15.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 992.0,
-      "y": 13.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 992.0,
-      "y": 12.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 992.0,
-      "y": 11.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 992.0,
-      "y": 6.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 992.0,
-      "y": 5.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 991.0,
-      "y": 6.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 991.0,
-      "y": 7.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 991.0,
-      "y": 8.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 991.0,
-      "y": 10.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 991.0,
-      "y": 11.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 991.0,
-      "y": 12.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 990.0,
-      "y": 12.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 990.0,
-      "y": 14.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 990.0,
-      "y": 15.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 990.0,
-      "y": 11.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 990.0,
-      "y": 10.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 990.0,
-      "y": 8.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 989.0,
-      "y": 15.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 989.0,
-      "y": 14.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 991.0,
-      "y": 15.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 993.0,
-      "y": 13.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 994.0,
-      "y": 15.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 996.0,
-      "y": 14.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 996.0,
-      "y": 13.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 997.0,
-      "y": 13.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 999.0,
-      "y": 12.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 998.0,
-      "y": 14.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 996.0,
-      "y": 12.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 995.0,
-      "y": 12.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 997.0,
-      "y": 14.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 995.0,
-      "y": 13.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 997.0,
-      "y": 10.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 997.0,
-      "y": 9.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 997.0,
-      "y": 8.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 998.0,
-      "y": 8.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 998.0,
-      "y": 9.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 998.0,
-      "y": 10.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 998.0,
-      "y": 11.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 999.0,
-      "y": 11.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 999.0,
-      "y": 10.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 999.0,
-      "y": 9.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 999.0,
-      "y": 8.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 999.0,
-      "y": 7.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 999.0,
-      "y": 6.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 999.0,
-      "y": 5.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 999.0,
-      "y": 4.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 999.0,
-      "y": 0.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 999.0,
-      "y": 1.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 999.0,
-      "y": 3.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 999.0,
-      "y": 2.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 998.0,
-      "y": 5.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 998.0,
-      "y": 4.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 998.0,
-      "y": 3.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 998.0,
-      "y": 2.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 998.0,
-      "y": 1.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 998.0,
-      "y": 0.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 998.0,
-      "y": 6.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 998.0,
-      "y": 7.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 997.0,
-      "y": 5.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 997.0,
-      "y": 6.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 997.0,
-      "y": 7.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 997.0,
-      "y": 4.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 997.0,
-      "y": 3.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 997.0,
-      "y": 2.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 997.0,
-      "y": 1.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 997.0,
-      "y": 0.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 996.0,
-      "y": 5.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 996.0,
-      "y": 4.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 996.0,
-      "y": 3.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 996.0,
-      "y": 2.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 996.0,
-      "y": 1.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 996.0,
-      "y": 0.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 996.0,
-      "y": 6.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 996.0,
-      "y": 7.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 995.0,
-      "y": 8.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 995.0,
-      "y": 9.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 995.0,
-      "y": 7.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 995.0,
-      "y": 6.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 995.0,
-      "y": 5.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 995.0,
-      "y": 4.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 995.0,
-      "y": 3.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 995.0,
-      "y": 2.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 995.0,
-      "y": 1.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 995.0,
-      "y": 0.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 996.0,
-      "y": 8.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 996.0,
-      "y": 9.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 996.0,
-      "y": 10.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 994.0,
-      "y": 5.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 994.0,
-      "y": 6.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 993.0,
-      "y": 5.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 993.0,
-      "y": 4.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 993.0,
-      "y": 3.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 993.0,
-      "y": 2.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 993.0,
-      "y": 1.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 993.0,
-      "y": 0.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 993.0,
-      "y": 8.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 994.0,
-      "y": 3.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 994.0,
-      "y": 4.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 994.0,
-      "y": 2.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 994.0,
-      "y": 1.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 994.0,
-      "y": 0.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 992.0,
-      "y": 0.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 992.0,
-      "y": 1.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 992.0,
-      "y": 2.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 992.0,
-      "y": 3.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 992.0,
-      "y": 4.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 991.0,
-      "y": 5.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 991.0,
-      "y": 4.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 991.0,
-      "y": 3.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 991.0,
-      "y": 2.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 991.0,
-      "y": 1.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 991.0,
-      "y": 0.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 990.0,
-      "y": 1.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 990.0,
-      "y": 2.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 990.0,
-      "y": 3.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 990.0,
-      "y": 0.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 990.0,
-      "y": 7.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 990.0,
-      "y": 6.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 990.0,
-      "y": 5.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 990.0,
-      "y": 4.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 989.0,
-      "y": 2.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 989.0,
-      "y": 1.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 989.0,
-      "y": 0.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 989.0,
-      "y": 3.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 989.0,
-      "y": 4.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 989.0,
-      "y": 5.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 989.0,
-      "y": 6.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 989.0,
-      "y": 7.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 989.0,
-      "y": 8.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 989.0,
-      "y": 9.0,
-      "z": 5.0,
-      "sprite": "grass_01.png"
-    },
-    {
-      "x": 0.0,
-      "y": 0.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 0.0,
-      "y": 1.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 0.0,
-      "y": 2.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 0.0,
-      "y": 3.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 0.0,
-      "y": 11.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 0.0,
-      "y": 12.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 0.0,
-      "y": 13.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 0.0,
-      "y": 14.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 0.0,
-      "y": 15.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 0.0,
-      "y": 10.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 0.0,
-      "y": 9.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 0.0,
-      "y": 8.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 0.0,
-      "y": 7.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 0.0,
-      "y": 6.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 0.0,
-      "y": 5.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 0.0,
-      "y": 4.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 1.0,
-      "y": 3.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 1.0,
-      "y": 4.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 1.0,
-      "y": 5.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 1.0,
-      "y": 6.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 1.0,
-      "y": 7.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 1.0,
-      "y": 8.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 1.0,
-      "y": 9.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 1.0,
-      "y": 10.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 1.0,
-      "y": 11.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 1.0,
-      "y": 12.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 2.0,
-      "y": 13.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 2.0,
-      "y": 14.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 2.0,
-      "y": 15.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 1.0,
-      "y": 14.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 1.0,
-      "y": 13.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 2.0,
-      "y": 11.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 2.0,
-      "y": 10.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 2.0,
-      "y": 9.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 2.0,
-      "y": 8.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 2.0,
-      "y": 7.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 2.0,
-      "y": 6.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 2.0,
-      "y": 5.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 2.0,
-      "y": 4.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 2.0,
-      "y": 3.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 1.0,
-      "y": 2.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 1.0,
-      "y": 1.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 1.0,
-      "y": 0.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 1.0,
-      "y": 15.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 2.0,
-      "y": 2.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 2.0,
-      "y": 1.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 2.0,
-      "y": 0.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 2.0,
-      "y": 12.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 3.0,
-      "y": 1.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 3.0,
-      "y": 0.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 3.0,
-      "y": 2.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 3.0,
-      "y": 3.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 3.0,
-      "y": 4.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 3.0,
-      "y": 5.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 3.0,
-      "y": 6.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 3.0,
-      "y": 7.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 3.0,
-      "y": 8.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 3.0,
-      "y": 9.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 3.0,
-      "y": 10.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 3.0,
-      "y": 11.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 3.0,
-      "y": 12.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 3.0,
-      "y": 13.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 3.0,
-      "y": 14.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 3.0,
-      "y": 15.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 4.0,
-      "y": 4.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 4.0,
-      "y": 3.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 4.0,
-      "y": 2.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 4.0,
-      "y": 1.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 4.0,
-      "y": 0.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 4.0,
-      "y": 5.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 4.0,
-      "y": 6.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 4.0,
-      "y": 7.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 4.0,
-      "y": 8.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 4.0,
-      "y": 9.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 4.0,
-      "y": 10.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 4.0,
-      "y": 11.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 4.0,
-      "y": 12.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 4.0,
-      "y": 13.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 4.0,
-      "y": 14.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 4.0,
-      "y": 15.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 0.0,
-      "y": 16.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 1.0,
-      "y": 16.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 2.0,
-      "y": 16.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 3.0,
-      "y": 16.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 4.0,
-      "y": 16.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 23.0,
-      "y": 16.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 22.0,
-      "y": 16.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 21.0,
-      "y": 16.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 20.0,
-      "y": 16.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 19.0,
-      "y": 16.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 18.0,
-      "y": 16.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 17.0,
-      "y": 16.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 16.0,
-      "y": 16.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 15.0,
-      "y": 16.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
       "x": 14.0,
-      "y": 16.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 13.0,
-      "y": 6.0,
-      "z": 5.0,
-      "sprite": "trench_v.png",
-      "walkOn": false
-    },
-    {
-      "x": 12.0,
-      "y": 16.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 11.0,
-      "y": 16.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 10.0,
-      "y": 16.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 9.0,
-      "y": 16.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 8.0,
-      "y": 16.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 7.0,
-      "y": 16.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 5.0,
-      "y": 16.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 5.0,
-      "y": 15.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 5.0,
-      "y": 14.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 5.0,
-      "y": 13.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 5.0,
-      "y": 12.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 5.0,
-      "y": 10.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 5.0,
-      "y": 11.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 5.0,
-      "y": 9.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 5.0,
-      "y": 7.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 5.0,
       "y": 8.0,
       "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 5.0,
-      "y": 6.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 5.0,
-      "y": 4.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 5.0,
-      "y": 5.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 5.0,
-      "y": 3.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 5.0,
-      "y": 2.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 5.0,
-      "y": 1.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 5.0,
-      "y": 0.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 6.0,
-      "y": 0.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 6.0,
-      "y": 1.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 6.0,
-      "y": 2.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 6.0,
-      "y": 4.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 6.0,
-      "y": 3.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 6.0,
-      "y": 5.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 6.0,
-      "y": 6.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 6.0,
-      "y": 7.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 6.0,
-      "y": 8.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 6.0,
-      "y": 9.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 6.0,
-      "y": 10.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 6.0,
-      "y": 11.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 6.0,
-      "y": 12.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 6.0,
-      "y": 13.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 6.0,
-      "y": 14.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 6.0,
-      "y": 15.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 6.0,
-      "y": 16.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 24.0,
-      "y": 16.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 25.0,
-      "y": 16.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 26.0,
-      "y": 16.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 27.0,
-      "y": 16.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 27.0,
-      "y": 15.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 28.0,
-      "y": 15.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 28.0,
-      "y": 14.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 28.0,
-      "y": 13.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 28.0,
-      "y": 12.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 28.0,
-      "y": 11.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 28.0,
-      "y": 10.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 28.0,
-      "y": 9.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 27.0,
-      "y": 9.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 27.0,
-      "y": 8.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 27.0,
-      "y": 7.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 27.0,
-      "y": 6.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 27.0,
-      "y": 5.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 27.0,
-      "y": 4.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 27.0,
-      "y": 3.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 27.0,
-      "y": 2.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 27.0,
-      "y": 1.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 28.0,
-      "y": 1.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 28.0,
-      "y": 0.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 28.0,
-      "y": 2.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 28.0,
-      "y": 3.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 28.0,
-      "y": 4.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 28.0,
-      "y": 5.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 28.0,
-      "y": 6.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 28.0,
-      "y": 7.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 28.0,
-      "y": 8.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 28.0,
-      "y": 16.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 27.0,
-      "y": 14.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 26.0,
-      "y": 13.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 26.0,
-      "y": 12.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 26.0,
-      "y": 11.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 27.0,
-      "y": 10.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 27.0,
-      "y": 11.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 27.0,
-      "y": 12.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 27.0,
-      "y": 13.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 26.0,
-      "y": 14.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 26.0,
-      "y": 15.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 26.0,
-      "y": 7.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 26.0,
-      "y": 8.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 26.0,
-      "y": 9.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 26.0,
-      "y": 10.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 25.0,
-      "y": 12.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 25.0,
-      "y": 11.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 25.0,
-      "y": 10.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 25.0,
-      "y": 13.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 25.0,
-      "y": 14.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 25.0,
-      "y": 15.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 18.0,
-      "y": 15.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 17.0,
-      "y": 15.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 16.0,
-      "y": 15.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 15.0,
-      "y": 15.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 14.0,
-      "y": 15.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 12.0,
-      "y": 15.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 11.0,
-      "y": 15.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 10.0,
-      "y": 15.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 9.0,
-      "y": 15.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 8.0,
-      "y": 15.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 7.0,
-      "y": 15.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 19.0,
-      "y": 15.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 20.0,
-      "y": 15.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 21.0,
-      "y": 15.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 22.0,
-      "y": 15.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 23.0,
-      "y": 15.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 24.0,
-      "y": 15.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 24.0,
-      "y": 14.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 23.0,
-      "y": 14.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 22.0,
-      "y": 13.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 21.0,
-      "y": 13.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 20.0,
-      "y": 13.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 19.0,
-      "y": 13.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 19.0,
-      "y": 14.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 18.0,
-      "y": 14.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 17.0,
-      "y": 14.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 16.0,
-      "y": 14.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 15.0,
-      "y": 14.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 14.0,
-      "y": 14.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 12.0,
-      "y": 14.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 11.0,
-      "y": 14.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 10.0,
-      "y": 14.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 9.0,
-      "y": 14.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 8.0,
-      "y": 14.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 7.0,
-      "y": 14.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 20.0,
-      "y": 14.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 21.0,
-      "y": 14.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 22.0,
-      "y": 14.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 23.0,
-      "y": 13.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 24.0,
-      "y": 13.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 18.0,
-      "y": 13.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 17.0,
-      "y": 13.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 16.0,
-      "y": 13.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 15.0,
-      "y": 13.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 14.0,
-      "y": 13.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 12.0,
-      "y": 13.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 11.0,
-      "y": 13.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 10.0,
-      "y": 13.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 9.0,
-      "y": 13.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 8.0,
-      "y": 13.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 7.0,
-      "y": 13.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 7.0,
-      "y": 12.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 8.0,
-      "y": 12.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 9.0,
-      "y": 12.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 10.0,
-      "y": 12.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 11.0,
-      "y": 12.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 12.0,
-      "y": 12.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 14.0,
-      "y": 12.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 15.0,
-      "y": 12.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 16.0,
-      "y": 12.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 17.0,
-      "y": 12.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 18.0,
-      "y": 12.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 19.0,
-      "y": 12.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 20.0,
-      "y": 12.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 21.0,
-      "y": 12.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 22.0,
-      "y": 12.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 23.0,
-      "y": 12.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 24.0,
-      "y": 12.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 24.0,
-      "y": 11.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 23.0,
-      "y": 11.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 22.0,
-      "y": 11.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 21.0,
-      "y": 11.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 20.0,
-      "y": 11.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 19.0,
-      "y": 11.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 18.0,
-      "y": 11.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 17.0,
-      "y": 11.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 16.0,
-      "y": 11.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 15.0,
-      "y": 11.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 14.0,
-      "y": 11.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 12.0,
-      "y": 11.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 11.0,
-      "y": 11.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 10.0,
-      "y": 11.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 9.0,
-      "y": 11.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 8.0,
-      "y": 11.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 7.0,
-      "y": 11.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 7.0,
-      "y": 10.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 8.0,
-      "y": 10.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 9.0,
-      "y": 10.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 10.0,
-      "y": 10.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 11.0,
-      "y": 10.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 12.0,
-      "y": 10.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 14.0,
-      "y": 10.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 15.0,
-      "y": 10.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 16.0,
-      "y": 10.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 17.0,
-      "y": 10.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 18.0,
-      "y": 10.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 19.0,
-      "y": 10.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 20.0,
-      "y": 10.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 22.0,
-      "y": 10.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 23.0,
-      "y": 10.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 24.0,
-      "y": 10.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 21.0,
-      "y": 10.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 12.0,
-      "y": 9.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 11.0,
-      "y": 9.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 10.0,
-      "y": 9.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 9.0,
-      "y": 9.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 8.0,
-      "y": 9.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 7.0,
-      "y": 9.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 14.0,
-      "y": 9.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 15.0,
-      "y": 9.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
+      "sprite": "grass_01.png"
     },
     {
       "x": 16.0,
       "y": 9.0,
       "z": 5.0,
-      "sprite": "wood_plank_floor.png"
+      "sprite": "grass_01.png"
     },
     {
       "x": 17.0,
       "y": 9.0,
       "z": 5.0,
-      "sprite": "wood_plank_floor.png"
+      "sprite": "grass_01.png"
     },
     {
-      "x": 18.0,
-      "y": 9.0,
+      "x": 6.0,
+      "y": 10.0,
       "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 19.0,
-      "y": 9.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 20.0,
-      "y": 9.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 21.0,
-      "y": 9.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 22.0,
-      "y": 9.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 23.0,
-      "y": 9.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 24.0,
-      "y": 9.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 25.0,
-      "y": 9.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 25.0,
-      "y": 8.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 24.0,
-      "y": 8.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 23.0,
-      "y": 8.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 22.0,
-      "y": 8.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 21.0,
-      "y": 8.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 20.0,
-      "y": 8.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 19.0,
-      "y": 8.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 18.0,
-      "y": 8.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 17.0,
-      "y": 8.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 16.0,
-      "y": 8.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 15.0,
-      "y": 8.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 14.0,
-      "y": 8.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 12.0,
-      "y": 8.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 11.0,
-      "y": 8.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 10.0,
-      "y": 8.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 9.0,
-      "y": 8.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 8.0,
-      "y": 8.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
+      "sprite": "grass_01.png"
     },
     {
       "x": 7.0,
-      "y": 8.0,
+      "y": 10.0,
       "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 7.0,
-      "y": 7.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
+      "sprite": "grass_01.png"
     },
     {
       "x": 8.0,
-      "y": 7.0,
+      "y": 10.0,
       "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 9.0,
-      "y": 7.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 10.0,
-      "y": 7.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 11.0,
-      "y": 7.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 12.0,
-      "y": 7.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 14.0,
-      "y": 7.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 15.0,
-      "y": 7.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 16.0,
-      "y": 7.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 17.0,
-      "y": 7.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 18.0,
-      "y": 7.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 19.0,
-      "y": 7.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 20.0,
-      "y": 7.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 21.0,
-      "y": 7.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 22.0,
-      "y": 7.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 23.0,
-      "y": 7.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 24.0,
-      "y": 7.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 25.0,
-      "y": 7.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
+      "sprite": "grass_01.png"
     },
     {
       "x": 26.0,
-      "y": 6.0,
+      "y": 11.0,
       "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 25.0,
-      "y": 6.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 24.0,
-      "y": 6.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 23.0,
-      "y": 6.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 22.0,
-      "y": 6.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 21.0,
-      "y": 6.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 20.0,
-      "y": 6.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 19.0,
-      "y": 6.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 18.0,
-      "y": 6.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 17.0,
-      "y": 6.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 16.0,
-      "y": 6.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 15.0,
-      "y": 6.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 14.0,
-      "y": 6.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 12.0,
-      "y": 6.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 11.0,
-      "y": 6.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 10.0,
-      "y": 6.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 9.0,
-      "y": 6.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 8.0,
-      "y": 6.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 7.0,
-      "y": 6.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 7.0,
-      "y": 5.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 8.0,
-      "y": 5.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 9.0,
-      "y": 5.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 10.0,
-      "y": 5.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 11.0,
-      "y": 5.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 12.0,
-      "y": 5.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 14.0,
-      "y": 5.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 15.0,
-      "y": 5.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 16.0,
-      "y": 5.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 17.0,
-      "y": 5.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 18.0,
-      "y": 5.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 19.0,
-      "y": 5.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 20.0,
-      "y": 5.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 21.0,
-      "y": 5.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 22.0,
-      "y": 5.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 23.0,
-      "y": 5.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 24.0,
-      "y": 5.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 25.0,
-      "y": 5.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 26.0,
-      "y": 5.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 26.0,
-      "y": 4.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 25.0,
-      "y": 4.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 24.0,
-      "y": 4.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 23.0,
-      "y": 4.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 22.0,
-      "y": 4.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 21.0,
-      "y": 4.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 20.0,
-      "y": 4.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 19.0,
-      "y": 4.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 18.0,
-      "y": 4.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 17.0,
-      "y": 4.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 16.0,
-      "y": 4.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 15.0,
-      "y": 4.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 14.0,
-      "y": 4.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 12.0,
-      "y": 4.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 11.0,
-      "y": 4.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 10.0,
-      "y": 4.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 9.0,
-      "y": 4.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 8.0,
-      "y": 4.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 7.0,
-      "y": 4.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 7.0,
-      "y": 3.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 8.0,
-      "y": 3.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 9.0,
-      "y": 3.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 10.0,
-      "y": 3.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 11.0,
-      "y": 3.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 12.0,
-      "y": 3.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 14.0,
-      "y": 3.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 15.0,
-      "y": 3.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 16.0,
-      "y": 3.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 17.0,
-      "y": 3.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 18.0,
-      "y": 3.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 19.0,
-      "y": 3.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 20.0,
-      "y": 3.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 21.0,
-      "y": 3.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 22.0,
-      "y": 3.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 23.0,
-      "y": 3.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 24.0,
-      "y": 3.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 25.0,
-      "y": 3.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 26.0,
-      "y": 3.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 26.0,
-      "y": 2.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 25.0,
-      "y": 2.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 24.0,
-      "y": 2.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 23.0,
-      "y": 2.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 22.0,
-      "y": 2.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 21.0,
-      "y": 2.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 20.0,
-      "y": 2.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 19.0,
-      "y": 2.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 18.0,
-      "y": 2.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 17.0,
-      "y": 2.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 16.0,
-      "y": 2.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 15.0,
-      "y": 2.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 14.0,
-      "y": 2.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 12.0,
-      "y": 2.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 11.0,
-      "y": 2.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 10.0,
-      "y": 2.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 9.0,
-      "y": 2.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 8.0,
-      "y": 2.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 7.0,
-      "y": 2.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 7.0,
-      "y": 1.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 8.0,
-      "y": 1.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 9.0,
-      "y": 1.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 10.0,
-      "y": 1.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 11.0,
-      "y": 1.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 12.0,
-      "y": 1.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 14.0,
-      "y": 1.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 15.0,
-      "y": 1.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 16.0,
-      "y": 1.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 17.0,
-      "y": 1.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 18.0,
-      "y": 1.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 19.0,
-      "y": 1.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 20.0,
-      "y": 1.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 21.0,
-      "y": 1.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 22.0,
-      "y": 1.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 23.0,
-      "y": 1.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 24.0,
-      "y": 1.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 25.0,
-      "y": 1.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 26.0,
-      "y": 1.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
+      "sprite": "grass_01.png"
     },
     {
       "x": 27.0,
-      "y": 0.0,
+      "y": 11.0,
       "z": 5.0,
-      "sprite": "wood_plank_floor.png"
+      "sprite": "grass_01.png"
     },
     {
-      "x": 26.0,
-      "y": 0.0,
+      "x": 28.0,
+      "y": 11.0,
       "z": 5.0,
-      "sprite": "wood_plank_floor.png"
+      "sprite": "grass_01.png"
     },
     {
-      "x": 25.0,
-      "y": 0.0,
+      "x": 29.0,
+      "y": 11.0,
       "z": 5.0,
-      "sprite": "wood_plank_floor.png"
+      "sprite": "grass_01.png"
     },
     {
-      "x": 24.0,
-      "y": 0.0,
+      "x": 31.0,
+      "y": 11.0,
       "z": 5.0,
-      "sprite": "wood_plank_floor.png"
+      "sprite": "grass_01.png"
     },
     {
-      "x": 23.0,
-      "y": 0.0,
+      "x": 30.0,
+      "y": 11.0,
       "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 22.0,
-      "y": 0.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 21.0,
-      "y": 0.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 20.0,
-      "y": 0.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 19.0,
-      "y": 0.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 18.0,
-      "y": 0.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
+      "sprite": "grass_01.png"
     },
     {
       "x": 17.0,
-      "y": 0.0,
+      "y": 8.0,
       "z": 5.0,
-      "sprite": "wood_plank_floor.png"
+      "sprite": "grass_01.png"
     },
     {
-      "x": 16.0,
-      "y": 0.0,
+      "x": 21.0,
+      "y": 9.0,
       "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 15.0,
-      "y": 0.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 14.0,
-      "y": 0.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 12.0,
-      "y": 0.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 11.0,
-      "y": 0.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 10.0,
-      "y": 0.0,
-      "z": 5.0,
-      "sprite": "wood_plank_floor.png"
+      "sprite": "grass_01.png"
     },
     {
       "x": 9.0,
-      "y": 0.0,
+      "y": 10.0,
       "z": 5.0,
-      "sprite": "wood_plank_floor.png"
+      "sprite": "grass_01.png"
     },
     {
-      "x": 8.0,
-      "y": 0.0,
+      "x": 16.0,
+      "y": 8.0,
       "z": 5.0,
-      "sprite": "wood_plank_floor.png"
+      "sprite": "grass_01.png"
     },
     {
-      "x": 7.0,
-      "y": 0.0,
+      "x": 19.0,
+      "y": 8.0,
       "z": 5.0,
-      "sprite": "wood_plank_floor.png"
+      "sprite": "grass_01.png"
     },
     {
-      "x": 13.0,
-      "y": 3.0,
+      "x": 18.0,
+      "y": 8.0,
       "z": 5.0,
-      "sprite": "trench_v.png",
-      "walkOn": false
+      "sprite": "grass_01.png"
     },
     {
-      "x": 13.0,
-      "y": 2.0,
+      "x": 15.0,
+      "y": 8.0,
       "z": 5.0,
-      "sprite": "trench_v.png",
-      "walkOn": false
+      "sprite": "grass_01.png"
     },
     {
-      "x": 13.0,
-      "y": 5.0,
+      "x": 10.0,
+      "y": 10.0,
       "z": 5.0,
-      "sprite": "trench_v.png",
-      "walkOn": false
+      "sprite": "grass_01.png"
     },
     {
-      "x": 13.0,
-      "y": 4.0,
+      "x": 11.0,
+      "y": 10.0,
       "z": 5.0,
-      "sprite": "trench_v.png",
-      "walkOn": false
+      "sprite": "grass_01.png"
     },
     {
-      "x": 13.0,
-      "y": 0.0,
+      "x": 20.0,
+      "y": 9.0,
       "z": 5.0,
-      "sprite": "trench_v.png",
-      "walkOn": false
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 19.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 18.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 12.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
     },
     {
       "x": 13.0,
       "y": 1.0,
       "z": 5.0,
-      "sprite": "trench_v.png",
-      "walkOn": false
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 25.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 24.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 20.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 4.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 5.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 30.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 31.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 21.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 6.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 7.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 27.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 26.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 1.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 0.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 23.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 0.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 2.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 25.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 28.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 8.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 5.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 22.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 19.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 3.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 7.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 28.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 30.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 29.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 6.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 18.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 23.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 4.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 9.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 29.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 24.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 3.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 1.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 22.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 26.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 14.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 11.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 31.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 27.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 15.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 10.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 2.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 16.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 9.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 28.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 21.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 2.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 4.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 23.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 30.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 10.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 3.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 24.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 17.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 1.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 8.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 27.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 29.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 3.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 20.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 29.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 17.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 8.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 5.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 22.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 31.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 11.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 2.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 25.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 16.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 0.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 9.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 26.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 28.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 7.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 8.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 9.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 10.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 11.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 19.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 18.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 17.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 16.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 15.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 14.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 12.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 27.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 25.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 10.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 0.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 26.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 15.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 1.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 31.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 12.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 21.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 4.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 6.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 19.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 30.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 18.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 7.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 6.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 19.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 31.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 5.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 18.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 7.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 20.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 30.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 13.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 0.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 27.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 14.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 1.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 11.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 24.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 26.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 13.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 20.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 24.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 4.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 13.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 23.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 14.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 12.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 13.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 20.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 15.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 22.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 12.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 5.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 25.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 19.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 20.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 21.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 22.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 23.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 24.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 25.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 18.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 19.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 20.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 21.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 22.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 23.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 17.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 16.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 15.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 14.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 13.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 12.0,
+      "y": 6.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 2.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 3.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 4.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 5.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 6.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 7.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 21.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 22.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 23.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 24.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 25.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 26.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 27.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 28.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 29.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 30.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 31.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 17.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 18.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 19.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 20.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 8.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 9.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 10.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 11.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 12.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 13.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 28.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 2.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 3.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 4.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 5.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 6.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 20.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 21.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 22.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 23.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 1.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 0.0,
+      "y": 5.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 19.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 18.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 17.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 16.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 15.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 14.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 29.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 28.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 27.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 26.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 25.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 24.0,
+      "y": 4.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 23.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 22.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 19.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 18.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 17.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 16.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 15.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 14.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 13.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 12.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 11.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 10.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 9.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 14.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 15.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 16.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 17.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 18.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 19.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 8.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 9.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 10.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 11.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 12.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 13.0,
+      "y": 3.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 8.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 7.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 6.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 5.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 4.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 3.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 2.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 1.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 0.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 0.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 1.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 2.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 3.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 14.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 15.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 16.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 17.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 18.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 19.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 20.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 21.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 22.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 23.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 24.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 25.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 26.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 11.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 10.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 9.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 8.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 7.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 6.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 17.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 16.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 15.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 14.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 13.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 12.0,
+      "y": 2.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 27.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 28.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 29.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 30.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 31.0,
+      "y": 10.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 31.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 30.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 29.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 28.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 27.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 26.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 25.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 24.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
     },
     {
       "x": 13.0,
       "y": 9.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 12.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 11.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 10.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 9.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 8.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 7.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 6.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 5.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 4.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 3.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 2.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 1.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 26.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 27.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 28.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 29.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 30.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 31.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 20.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 21.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 22.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 23.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 24.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 25.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 0.0,
+      "y": 9.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 0.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 1.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 2.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 3.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 4.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 5.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 6.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 7.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 8.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 9.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 10.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 11.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 21.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 22.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 23.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 24.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 25.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 26.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 27.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 28.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 29.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 30.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 31.0,
+      "y": 8.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 31.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 30.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 29.0,
+      "y": 7.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 0.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 1.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 2.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 3.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 4.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 5.0,
+      "y": 1.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 15.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 14.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 13.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 12.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 11.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 10.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 9.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 8.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 7.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 16.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 6.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 5.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 4.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 3.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 2.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 1.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 9.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 10.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 9.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 6.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 7.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 8.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 8.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 7.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 6.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 5.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 4.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 3.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 2.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 1.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 0.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 0.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 1.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 2.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 3.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 4.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 5.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 6.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 7.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 8.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 9.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 10.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 11.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 12.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 13.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 14.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 15.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 15.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 16.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 17.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 18.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 19.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 19.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 20.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 21.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 22.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 23.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 24.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 25.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 26.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 27.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 21.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 20.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 22.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 18.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 17.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 16.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 28.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 29.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 30.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 31.0,
+      "y": 16.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 31.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 30.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 29.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 28.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 27.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 26.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 25.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 24.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 23.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 14.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 13.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 12.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 11.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 10.0,
+      "y": 15.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 3.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 2.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 1.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 0.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 4.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 5.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 11.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 12.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 13.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 14.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 15.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 16.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 17.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 18.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 19.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 20.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 21.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 22.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 23.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 24.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 25.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 26.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 27.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 28.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 29.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 29.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 30.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 31.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 28.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 27.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 26.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 25.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 30.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 31.0,
+      "y": 14.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 31.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 30.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 29.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 28.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 27.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 26.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 25.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 24.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 24.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 23.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 22.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 21.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 20.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 19.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 18.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 17.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 16.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 15.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 15.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 14.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 13.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 12.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 11.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 10.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 9.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 8.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 7.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 6.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 5.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 5.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 4.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 3.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 2.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 1.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 1.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 0.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 2.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 0.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 4.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 3.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 6.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 7.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 8.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 9.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 10.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 11.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 12.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 13.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 14.0,
+      "y": 13.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 17.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 16.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 18.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 20.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 21.0,
+      "y": 11.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 21.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 22.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 23.0,
+      "y": 12.0,
+      "z": 5.0,
+      "sprite": "grass_01.png"
+    },
+    {
+      "x": 2.0,
+      "y": 13.0,
       "z": 4.0,
-      "sprite": "bridge.png"
+      "sprite": "sapin.png"
     },
     {
-      "x": 12.0,
-      "y": 9.0,
-      "z": 4.5,
-      "sprite": "bridge.png"
+      "x": 1.0,
+      "y": 16.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
     },
     {
-      "x": 14.0,
-      "y": 9.0,
-      "z": 4.5,
-      "sprite": "bridge.png"
+      "x": 0.0,
+      "y": 15.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
     },
     {
-      "x": 15.0,
+      "x": 0.0,
+      "y": 12.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 1.0,
+      "y": 12.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 4.0,
       "y": 14.0,
       "z": 4.0,
       "sprite": "sapin.png"
     },
     {
-      "x": 14.0,
-      "y": 9.0,
-      "z": 2.5,
-      "sprite": "snowman.png"
+      "x": 2.0,
+      "y": 15.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 1.0,
+      "y": 14.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 5.0,
+      "y": 12.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 8.0,
+      "y": 15.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 5.0,
+      "y": 15.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 4.0,
+      "y": 16.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 9.0,
+      "y": 13.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 13.0,
+      "y": 15.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 8.0,
+      "y": 14.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 6.0,
+      "y": 13.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 11.0,
+      "y": 15.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 12.0,
+      "y": 13.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 16.0,
+      "y": 15.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
     },
     {
       "x": 17.0,
-      "y": 4.0,
+      "y": 13.0,
       "z": 4.0,
-      "sprite": "mushroom.png"
+      "sprite": "sapin.png"
     },
     {
-      "x": 22.0,
-      "y": 16.0,
+      "x": 17.0,
+      "y": 12.0,
       "z": 4.0,
-      "sprite": "trench_v.png"
+      "sprite": "sapin.png"
     },
     {
-      "x": 22.0,
+      "x": 20.0,
       "y": 15.0,
       "z": 4.0,
-      "sprite": "trench_ru.png"
-    },
-    {
-      "x": 23.0,
-      "y": 15.0,
-      "z": 4.0,
-      "sprite": "trench_h.png"
-    },
-    {
-      "x": 24.0,
-      "y": 15.0,
-      "z": 4.0,
-      "sprite": "trench_h.png"
-    },
-    {
-      "x": 25.0,
-      "y": 15.0,
-      "z": 4.0,
-      "sprite": "trench_h.png"
-    },
-    {
-      "x": 26.0,
-      "y": 15.0,
-      "z": 4.0,
-      "sprite": "trench_h.png"
-    },
-    {
-      "x": 27.0,
-      "y": 15.0,
-      "z": 4.0,
-      "sprite": "trench_h.png"
+      "sprite": "sapin.png"
     },
     {
       "x": 28.0,
       "y": 15.0,
       "z": 4.0,
-      "sprite": "trench_h.png"
+      "sprite": "sapin.png"
     },
     {
-      "x": 13.0,
-      "y": 7.0,
-      "z": 5.0,
-      "sprite": "trench_v.png",
-      "walkOn": false
-    },
-    {
-      "x": 13.0,
-      "y": 8.0,
-      "z": 5.0,
-      "sprite": "trench_v.png",
-      "walkOn": false
-    },
-    {
-      "x": 13.0,
-      "y": 9.0,
-      "z": 5.0,
-      "sprite": "trench_v.png",
-      "walkOn": false
-    },
-    {
-      "x": 13.0,
-      "y": 10.0,
-      "z": 5.0,
-      "sprite": "trench_v.png",
-      "walkOn": false
-    },
-    {
-      "x": 13.0,
-      "y": 11.0,
-      "z": 5.0,
-      "sprite": "trench_v.png",
-      "walkOn": false
-    },
-    {
-      "x": 13.0,
-      "y": 12.0,
-      "z": 5.0,
-      "sprite": "trench_v.png",
-      "walkOn": false
-    },
-    {
-      "x": 13.0,
+      "x": 30.0,
       "y": 13.0,
-      "z": 5.0,
-      "sprite": "trench_v.png",
-      "walkOn": false
+      "z": 4.0,
+      "sprite": "sapin.png"
     },
     {
-      "x": 13.0,
+      "x": 23.0,
       "y": 14.0,
-      "z": 5.0,
-      "sprite": "trench_v.png",
-      "walkOn": false
+      "z": 4.0,
+      "sprite": "sapin.png"
     },
     {
-      "x": 13.0,
+      "x": 27.0,
+      "y": 16.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 26.0,
+      "y": 16.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 22.0,
+      "y": 16.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 20.0,
+      "y": 14.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 20.0,
+      "y": 13.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 19.0,
+      "y": 13.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 18.0,
+      "y": 14.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 18.0,
       "y": 15.0,
-      "z": 5.0,
-      "sprite": "trench_v.png",
-      "walkOn": false
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 16.0,
+      "y": 16.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 15.0,
+      "y": 16.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 14.0,
+      "y": 16.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
     },
     {
       "x": 13.0,
       "y": 16.0,
-      "z": 5.0,
-      "sprite": "trench_v.png",
-      "walkOn": false
+      "z": 4.0,
+      "sprite": "sapin.png"
     },
     {
-      "x": 13.0,
+      "x": 12.0,
+      "y": 16.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 9.0,
+      "y": 16.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 8.0,
+      "y": 16.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 9.0,
+      "y": 14.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 21.0,
+      "y": 12.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 14.0,
+      "y": 13.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 21.0,
+      "y": 15.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 21.0,
+      "y": 16.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 18.0,
+      "y": 16.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 29.0,
+      "y": 15.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 31.0,
+      "y": 16.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 31.0,
+      "y": 15.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 31.0,
+      "y": 14.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 29.0,
+      "y": 13.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 29.0,
+      "y": 14.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 26.0,
+      "y": 15.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 24.0,
+      "y": 15.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 30.0,
+      "y": 12.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 28.0,
+      "y": 12.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 27.0,
+      "y": 12.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 26.0,
+      "y": 13.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 25.0,
+      "y": 13.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 24.0,
+      "y": 13.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 16.0,
+      "y": 13.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 11.0,
+      "y": 12.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 9.0,
+      "y": 12.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 4.0,
+      "y": 12.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 4.0,
+      "y": 13.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 3.0,
+      "y": 12.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 5.0,
+      "y": 11.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 15.0,
+      "y": 11.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 1.0,
       "y": 0.0,
-      "z": 5.5,
-      "sprite": "wood_plank_floor.png"
+      "z": 4.0,
+      "sprite": "sapin.png"
     },
     {
-      "x": 13.0,
+      "x": 9.0,
       "y": 1.0,
-      "z": 5.5,
-      "sprite": "wood_plank_floor.png"
+      "z": 4.0,
+      "sprite": "sapin.png"
     },
     {
-      "x": 13.0,
+      "x": 5.0,
+      "y": 0.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 22.0,
       "y": 2.0,
-      "z": 5.5,
-      "sprite": "wood_plank_floor.png"
+      "z": 4.0,
+      "sprite": "sapin.png"
     },
     {
-      "x": 13.0,
-      "y": 3.0,
-      "z": 5.5,
-      "sprite": "wood_plank_floor.png"
+      "x": 19.0,
+      "y": 0.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
     },
     {
-      "x": 13.0,
-      "y": 4.0,
-      "z": 5.5,
-      "sprite": "wood_plank_floor.png"
+      "x": 31.0,
+      "y": 0.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
     },
     {
-      "x": 13.0,
-      "y": 5.0,
-      "z": 5.5,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 13.0,
-      "y": 6.0,
-      "z": 5.5,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 13.0,
-      "y": 7.0,
-      "z": 5.5,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 13.0,
-      "y": 8.0,
-      "z": 5.5,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 13.0,
+      "x": 1.0,
       "y": 9.0,
-      "z": 5.5,
-      "sprite": "wood_plank_floor.png"
+      "z": 4.0,
+      "sprite": "sapin.png"
     },
     {
-      "x": 13.0,
+      "x": 0.0,
+      "y": 7.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 1.0,
+      "y": 6.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 0.0,
+      "y": 2.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 28.0,
+      "y": 3.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 31.0,
+      "y": 6.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 28.0,
+      "y": 8.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
+    },
+    {
+      "x": 29.0,
       "y": 10.0,
-      "z": 5.5,
-      "sprite": "wood_plank_floor.png"
+      "z": 4.0,
+      "sprite": "sapin.png"
     },
     {
-      "x": 13.0,
-      "y": 11.0,
-      "z": 5.5,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 13.0,
-      "y": 12.0,
-      "z": 5.5,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 13.0,
-      "y": 13.0,
-      "z": 5.5,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 13.0,
-      "y": 14.0,
-      "z": 5.5,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 13.0,
-      "y": 15.0,
-      "z": 5.5,
-      "sprite": "wood_plank_floor.png"
-    },
-    {
-      "x": 13.0,
-      "y": 16.0,
-      "z": 5.5,
-      "sprite": "wood_plank_floor.png"
+      "x": 29.0,
+      "y": 6.0,
+      "z": 4.0,
+      "sprite": "sapin.png"
     }
   ],
   "entities": [

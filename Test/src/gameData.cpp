@@ -1,9 +1,10 @@
 #include "gameData.h"
+#include "actorFactory.h"
 
 using namespace rapidjson;
 
 std::string GameData::PlayerSprite = "res/sprites/entities/entity_ghost_blue.png";
-std::vector<Actor> GameData::Party = std::vector<Actor>();
+std::vector<Actor_ptr> GameData::Party = std::vector<Actor_ptr>();
 std::map<std::string, int> GameData::Flags = std::map<std::string, int>();
 std::map<std::string, std::string> GameData::Strings = std::map<std::string, std::string>();
 OptionMap GameData::Options = OptionMap();
@@ -145,6 +146,12 @@ void GameData::LoadSettings()
 	EnsureBaseSettings();
 }
 
+void GameData::NewGame()
+{
+	if (!Party.size() > 0)
+		Party.push_back(ActorFactory::BuildBaseAlly());
+}
+
 void GameData::EnsureBaseSettings()
 {
 	if (!Options.count("mute"))
@@ -153,13 +160,6 @@ void GameData::EnsureBaseSettings()
 		Options.emplace("fullscreen", true);
 	if (!Strings.count("name"))
 		Strings.emplace("name", "Yanik");
-	if (!Party.size() > 0)
-	{
-		Party.push_back(Actor());
-		Party.push_back(Actor());
-		Party.push_back(Actor());
-		Party.push_back(Actor());
-	}
 }
 
 void GameData::SaveGameData()

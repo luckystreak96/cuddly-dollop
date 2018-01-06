@@ -165,6 +165,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\actorFactory.h" />
+    <ClInclude Include="src\animJumpTo.h" />
+    <ClInclude Include="src\skillSmack.h" />
     <ClInclude Include="src\actor.h" />
     <ClInclude Include="src\battleAnimation.h" />
     <ClInclude Include="src\battleManager.h" />
@@ -258,6 +261,9 @@
     <ClInclude Include="src\vertex.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\actorFactory.cpp" />
+    <ClCompile Include="src\animJumpTo.cpp" />
+    <ClCompile Include="src\skillSmack.cpp" />
     <ClCompile Include="src\actor.cpp" />
     <ClCompile Include="src\battleManager.cpp" />
     <ClCompile Include="src\eventBattle.cpp" />

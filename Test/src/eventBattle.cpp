@@ -22,6 +22,13 @@ EventUpdateResponse EventBattle::UpdateEvent(double elapsedTime, std::map<unsign
 		SceneWorld::SetNextScene(sgd);
 	}
 
+	if (SceneWorld::NextScene.id != 0)
+	{
+		eur.IsDone = false;
+		return eur;
+	}
+
+	m_completed = true;
 	return eur;
 }
 
