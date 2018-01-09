@@ -74,12 +74,14 @@ void Texture::LoadGL()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	glTexImage2D(m_textureTarget, 0, GL_RGBA, ilGetInteger(IL_IMAGE_WIDTH), ilGetInteger(IL_IMAGE_HEIGHT), 0, GL_RGBA, GL_UNSIGNED_BYTE, ilGetData());
+
+	// Get width and height
+	_width = ilGetInteger(IL_IMAGE_WIDTH);
+	_height = ilGetInteger(IL_IMAGE_HEIGHT);
+
+	// Unbind and delete the un-gl'd texture
 	glBindTexture(m_textureTarget, 0);
 	ilDeleteImages(1, &m_texId);
-
-	int miplevel = 0;
-	glGetTexLevelParameteriv(GL_TEXTURE_2D, miplevel, GL_TEXTURE_WIDTH, &m_width);
-	glGetTexLevelParameteriv(GL_TEXTURE_2D, miplevel, GL_TEXTURE_HEIGHT, &m_height);
 
 	m_isValid = true;
 }

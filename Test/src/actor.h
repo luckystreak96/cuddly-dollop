@@ -7,6 +7,7 @@
 #include "playerGraphicsComponent.h"
 
 class Skill;
+typedef std::shared_ptr<Skill> Skill_ptr;
 
 class Actor;
 typedef std::shared_ptr<Actor> Actor_ptr;
@@ -26,7 +27,7 @@ public:
 	int Team;
 	bool Selected;
 	bool ChoosingAction;
-	std::vector<std::shared_ptr<Skill>> Skills;
+	std::vector<Skill_ptr> Skills;
 	static inline bool ActorSpeedSort(Actor_ptr a, Actor_ptr b) { return a->Speed > b->Speed; }
 
 protected:

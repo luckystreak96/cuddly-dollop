@@ -17,7 +17,7 @@
 #include "resource_manager.h"
 #include <GL\glew.h>
 
-enum Direction { dir_Up, dir_Right, dir_Down, dir_Left };
+enum Direction { dir_Up, dir_Right, dir_Down, dir_Left};
 
 class GraphicsComponent : public IComponent, public ResourceUser
 {

@@ -12,6 +12,7 @@
 #include "eventQueue.h"
 #include <variant>
 #include "actor.h"
+#include "vector3f.h"
 
 typedef std::map<std::string, std::variant<bool, float, int, std::string>> OptionMap;
 
@@ -31,6 +32,10 @@ public:
 	static bool RespectsCondition(std::shared_ptr<EventQueue> ev);
 	
 public:
+	// Do we load stuff like position upon entering a new map
+	static bool Loading;
+
+	// Sprite
 	static std::string PlayerSprite;
 
 	// Party
@@ -42,12 +47,16 @@ public:
 	// Game string variables
 	static std::map<std::string, std::string> Strings;
 
+	// Game position variables
+	static std::map<std::string, Vector3f> Positions;
+
 	// Options
 	static OptionMap Options;
 	
 private:
 	static rapidjson::Document m_document;
 	static std::string m_file;
+	static std::string m_path;
 };
 
 #endif // !GAME_DATA_H__

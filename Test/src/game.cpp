@@ -8,7 +8,7 @@
 
 Game::Game() : m_exit(false)
 {
-	GameData::LoadFromFile();
+	GameData::LoadSettings();
 }
 
 Game::~Game()
@@ -17,6 +17,11 @@ Game::~Game()
 
 bool Game::init(Vector2f version)
 {
+	Model::GetInstance().init("res/models/models.data");
+	Animation::SetupAnimationMetaData();
+	GameData::NewGame();
+	GameData::LoadGameData();
+
 	FBO::_fboGLVersion = version;
 	Effect::_efctGLVersion = version;
 	SetupTextureAtlas();
@@ -24,9 +29,7 @@ bool Game::init(Vector2f version)
 	// Mute by default
 	SoundManager::GetInstance().SetMasterVolume(std::get<bool>(GameData::Options.at("mute")) ? 0.f : 1.f);
 
-	Model::GetInstance().init("res/models/models.data");
-
-	std::shared_ptr<SceneWorld> world = std::shared_ptr<SceneWorld>(new SceneWorld(1));
+	std::shared_ptr<SceneWorld> world = std::shared_ptr<SceneWorld>(new SceneWorld(GameData::Flags.count("map") ? GameData::Flags.at("map") : 1));
 	SceneManager::GetInstance().SetScene(world);
 
 	OrthoProjInfo::GetRegularInstance().zNear = 100.f;

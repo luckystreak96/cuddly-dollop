@@ -1,16 +1,20 @@
 #include "gameData.h"
 #include "actorFactory.h"
+#include "skill.h"
 
 using namespace rapidjson;
 
+bool GameData::Loading = true;
 std::string GameData::PlayerSprite = "res/sprites/entities/entity_ghost_blue.png";
 std::vector<Actor_ptr> GameData::Party = std::vector<Actor_ptr>();
 std::map<std::string, int> GameData::Flags = std::map<std::string, int>();
 std::map<std::string, std::string> GameData::Strings = std::map<std::string, std::string>();
+std::map<std::string, Vector3f> GameData::Positions = std::map<std::string, Vector3f>();
 OptionMap GameData::Options = OptionMap();
 
 rapidjson::Document GameData::m_document;
 std::string GameData::m_file;
+std::string GameData::m_path = "res/data/saves/";
 
 std::string GameData::Get(std::string key)
 {
@@ -76,10 +80,19 @@ void GameData::LoadGameData()
 	Flags = std::map<std::string, int>();
 
 	struct stat buffer;
-	bool exists = (stat("res/data/save", &buffer) == 0);
+
+#ifdef NDEBUG
+	bool exists = (stat((m_path + "save").c_str(), &buffer) == 0);
+#else
+	bool exists = (stat((m_path + "save.json").c_str(), &buffer) == 0);
+#endif
 	if (!exists)
 		return;
-	m_file = Utils::ReadFile("res/data/save");
+#ifdef NDEBUG
+	m_file = Utils::ReadFile(m_path + "save");
+#else
+	m_file = Utils::ReadFile(m_path + "save.json");
+#endif
 	m_document.Parse(m_file.c_str());
 
 	// Get the flags
@@ -91,6 +104,7 @@ void GameData::LoadGameData()
 				Flags.emplace(itr->name.GetString(), itr->value.GetInt());
 	}
 
+	Strings = std::map<std::string, std::string>();
 	// Get the strings
 	if (m_document.HasMember("strings") && m_document["strings"].IsArray())
 	{
@@ -100,9 +114,40 @@ void GameData::LoadGameData()
 				Strings.emplace(itr->name.GetString(), itr->value.GetString());
 	}
 
+	Positions = std::map<std::string, Vector3f>();
+	// Get the positions
+	if (m_document.HasMember("positions") && m_document["positions"].IsArray())
+	{
+		auto& positions = m_document["positions"].GetArray();
+		for (auto& v : positions)
+			for (Value::ConstMemberIterator itr = v.MemberBegin(); itr != v.MemberEnd(); ++itr)
+			{
+				std::string name = itr->name.GetString();
+				Vector3f result;
+				if (itr->value.HasMember("x"))
+					result.x = itr->value["x"].GetFloat();
+				if (itr->value.HasMember("y"))
+					result.y = itr->value["y"].GetFloat();
+				if (itr->value.HasMember("z"))
+					result.z = itr->value["z"].GetFloat();
+
+				Positions.emplace(name, result);
+			}
+	}
+
+	// Get the party
+	if (m_document.HasMember("party") && m_document["party"].IsArray())
+	{
+		auto& party = m_document["party"].GetArray();
+		Party = ActorFactory::BuildParty(party);
+	}
+
+	PlayerSprite = "res/sprites/entities/entity_ghost_blue.png";
 	// Get the player sprite
 	if (m_document.HasMember("sprite") && m_document["sprite"].IsString())
 		PlayerSprite = m_document["sprite"].GetString();
+
+	Loading = true;
 }
 
 void GameData::LoadSettings()
@@ -110,13 +155,21 @@ void GameData::LoadSettings()
 	Options = OptionMap();
 
 	struct stat buffer;
-	bool exists = (stat("res/data/config", &buffer) == 0);
+#ifdef NDEBUG
+	bool exists = (stat((m_path + "config").c_str(), &buffer) == 0);
+#else
+	bool exists = (stat((m_path + "config.json").c_str(), &buffer) == 0);
+#endif
 	if (!exists)
 	{
 		EnsureBaseSettings();
 		return;
 	}
-	m_file = Utils::ReadFile("res/data/config");
+#ifdef NDEBUG
+	m_file = Utils::ReadFile(m_path + "config");
+#else
+	m_file = Utils::ReadFile(m_path + "config.json");
+#endif
 	m_document.Parse(m_file.c_str());
 
 	// Get the options
@@ -205,8 +258,86 @@ void GameData::SaveGameData()
 	// Sprite
 	saveFile.AddMember("sprite", StringRef(PlayerSprite.c_str()), allocator);
 
+	// Save positions
+	Value positions_v(kArrayType);
+	for (auto x : Positions)
+	{
+		Value ob(kObjectType);
+		Value first(kStringType);
+		first.SetString(StringRef(x.first.c_str()), allocator);
+		Value vector(kObjectType);
+		Value firstx(kStringType);
+		Value secondx;
+		Value firsty(kStringType);
+		Value secondy;
+		Value firstz(kStringType);
+		Value secondz;
+		firstx.SetString(StringRef("x\0"), allocator);
+		secondx.SetFloat(x.second.x);
+		firsty.SetString(StringRef("y\0"), allocator);
+		secondy.SetFloat(x.second.y);
+		firstz.SetString(StringRef("z\0"), allocator);
+		secondz.SetFloat(x.second.z);
+		vector.AddMember(firstx, secondx, allocator);
+		vector.AddMember(firsty, secondy, allocator);
+		vector.AddMember(firstz, secondz, allocator);
+
+		ob.AddMember(first, vector, allocator);
+		positions_v.PushBack(ob, allocator);
+	}
+
+	saveFile.AddMember("positions", positions_v, allocator);
+
+	// Save party data
+	Value party_v(kArrayType);
+	for (auto actor : Party)
+	{
+		Value ob(kObjectType);
+		Value first(kStringType);
+		Value second;
+
+		// name
+		first.SetString(StringRef("name"), allocator);
+		second.SetString(StringRef(actor->Name.c_str()), allocator);
+		ob.AddMember(first, second, allocator);
+
+		// health
+		first.SetString(StringRef("health"), allocator);
+		second.SetInt(actor->Health);
+		ob.AddMember(first, second, allocator);
+
+		// speed 
+		first.SetString(StringRef("speed"), allocator);
+		second.SetInt(actor->Speed);
+		ob.AddMember(first, second, allocator);
+
+		// dead
+		first.SetString(StringRef("dead"), allocator);
+		second.SetBool(actor->Dead);
+		ob.AddMember(first, second, allocator);
+
+		// skills
+		first.SetString(StringRef("skills"), allocator);
+		second = Value(kArrayType);
+		for (auto skill : actor->Skills)
+		{
+			Value skl(kStringType);
+			skl.SetString(StringRef(skill->_name.c_str()), allocator);
+			second.PushBack(skl, allocator);
+		}
+		ob.AddMember(first, second, allocator);
+
+		party_v.PushBack(ob, allocator);
+	}
+
+	saveFile.AddMember("party", party_v, allocator);
+
 	// Save ot file
-	FILE* fp = fopen("res/data/save", "wb"); // non-Windows use "w"
+#ifdef NDEBUG
+	FILE* fp = fopen((m_path + "save").c_str(), "wb"); // non-Windows use "w"
+#else
+	FILE* fp = fopen((m_path + "save.json").c_str(), "wb"); // non-Windows use "w"
+#endif
 	char writeBuffer[65536];
 	FileWriteStream os(fp, writeBuffer, sizeof(writeBuffer));
 	Writer<FileWriteStream> writer(os);
@@ -242,7 +373,11 @@ void GameData::SaveSettings()
 
 	configFile.AddMember("options", options, allocator);
 
-	FILE* fp = fopen("res/data/config", "wb"); // non-Windows use "w"
+#ifdef NDEBUG
+	FILE* fp = fopen((m_path + "config").c_str(), "wb"); // non-Windows use "w"
+#else
+	FILE* fp = fopen((m_path + "config.json").c_str(), "wb"); // non-Windows use "w"
+#endif
 	char writeBuffer[65536];
 	FileWriteStream os(fp, writeBuffer, sizeof(writeBuffer));
 	Writer<FileWriteStream> writer(os);

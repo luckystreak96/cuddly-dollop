@@ -60,6 +60,27 @@ void Camera::Follow(Vector3f target, Transformation* t)
 
 namespace MathUtils
 {
+	// ProgressPercent = between 0 and 1
+	// The final result disregards the z value
+	Vector3f FindPositionInParabola(float progressPercent, Vector3f startPoint, Vector3f endPoint)
+	{
+		// The x to be used in the final calculation
+		float x = ((endPoint.x - startPoint.x) * progressPercent) + startPoint.x;
+		Vector3f result;
+		result.x = x;
+		float a = -0.08f;
+		float y1 = startPoint.y;
+		float y2 = endPoint.y;
+		float x1 = startPoint.x;
+		float x2 = endPoint.x;
+		float h = (y2 - a * pow(x2, 2) - y1 + a * pow(x1, 2)) / (2 * a * (x1 - x2));
+		float k = y1 - a * pow(x1 - h, 2);
+		
+		result.y = a * pow(x - h, 2) + k;
+
+		return result;
+	}
+
 	void CalcNormals(std::vector<GLuint>& indices, std::vector<Vertex>& verts)
 	{
 		int vertCount = 0;

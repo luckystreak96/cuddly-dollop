@@ -10,6 +10,8 @@
 #include "battleAnimation.h"
 
 enum BattleState;
+class Skill;
+typedef std::shared_ptr<Skill> Skill_ptr;
 
 class Skill
 {
@@ -37,5 +39,6 @@ public:
 protected:
 	void DefaultSetup();
 };
+
 
 #endif // !SKILL_H__

@@ -19,7 +19,9 @@ SceneGenData SceneBattle::NextScene = SceneGenData();
 SceneBattle::SceneBattle() : m_acceptInput(false), m_currentMap(3), m_drawinited(false), m_zoom(false),
 m_battle(_actors)
 {
-	_actors.push_back(Actor_ptr(ActorFactory::BuildBaseAlly()));
+	//_actors.push_back(Actor_ptr(ActorFactory::BuildBaseAlly()));
+	for (auto x : GameData::Party)
+		_actors.push_back(x);
 	_actors.push_back(Actor_ptr(ActorFactory::BuildBaseEnemy()));
 	m_battle = BattleManager(_actors);
 	Init();
@@ -106,15 +108,8 @@ void SceneBattle::ManageInput()
 	if (InputManager::GetInstance().FrameKeyStatus('P', AnyRelease))
 		m_pause = !m_pause;
 
-	if (InputManager::GetInstance().FrameKeyStatus('Z', AnyRelease))
-	{
+	if (InputManager::GetInstance().FrameKeyStatus('Z', AnyRelease, 5))
 		m_zoom = !m_zoom;
-		float value = m_zoom ? 2.0f : 1.0f;
-		m_World->SetScale(value, value, 1);
-		if (m_celist.count(Camera::Target))
-			for (int i = 0; i < 30; i++)
-				Camera::Follow(m_celist.at(Camera::Target)->Physics()->Position(), m_World.get());
-	}
 }
 
 SceneGenData SceneBattle::Act()
@@ -140,13 +135,14 @@ SceneGenData SceneBattle::Act()
 	//DRAW
 	Draw();
 
-	if (!m_fade.IsDone() || result.id == 0 || result.scene == NULL)
+	if (!m_fade.IsDone() || result.id == 0)
 	{
 		result.id = 0;
 		result.scene = NULL;
 		return result;
 	}
-	result.scene->Resume();
+	if (result.scene)
+		result.scene->Resume();
 	return result;
 }
 
@@ -173,11 +169,18 @@ SceneGenData SceneBattle::Update()
 	if (m_fade.IsDone())
 		m_battle.Update();
 
-	if (m_battle._done)
+	if (m_battle._done && m_battle._winner == 0)
 	{
 		NextScene.scene = _prevScene;
 		NextScene.sceneType = ST_World;
 		NextScene.id = 1;
+	}
+	else if (m_battle._done && m_battle._winner != 0 && !GameData::Loading)
+	{
+		GameData::LoadGameData();
+		NextScene.scene = NULL;
+		NextScene.sceneType = ST_World;
+		NextScene.id = GameData::Flags.at("map");
 	}
 
 	if (next != NextScene)
@@ -198,8 +201,7 @@ SceneGenData SceneBattle::Update()
 	SetAudioPosition();
 	SoundManager::GetInstance().Update();
 
-	if (m_celist.count(Camera::Target))
-		Camera::Follow(m_celist.at(Camera::Target)->Physics()->Position(), m_World.get());
+	//Camera::Follow(m_battle._owner->GetPos(), m_World.get());
 
 	//Display FPS
 #ifdef _DEBUG
@@ -285,7 +287,7 @@ void SceneBattle::SetOrthoStuffs()
 		OrthoProjInfo::GetRegularInstance().changed = false;
 	}
 
-	float value = m_zoom ? 2.0f : 1.0f;
+	float value = m_zoom ? 2.0f : 1.5f;
 	m_World->SetScale(value, value, 1);
 
 	m_backupTrans = m_World->GetTranslation();

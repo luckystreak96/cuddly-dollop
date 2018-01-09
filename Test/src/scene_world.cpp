@@ -40,6 +40,8 @@ void SceneWorld::Resume()
 
 bool SceneWorld::Init()
 {
+	GameData::EmplaceFlag("map", m_currentMap);
+
 	NextScene = SceneGenData();
 	m_jsonHandler = std::shared_ptr<JsonHandler>(new JsonHandler(m_currentMap));
 
@@ -67,6 +69,11 @@ bool SceneWorld::Init()
 	{
 		m_player = m_celist.at(1);
 		m_player->Graphics()->SetTexture(GameData::PlayerSprite);
+		if (GameData::Loading && GameData::Positions.count("player"))
+		{
+			GameData::Loading = false;
+			m_player->Physics()->AbsolutePosition(GameData::Positions.at("player"));
+		}
 	}
 
 #ifdef _DEBUG
@@ -284,6 +291,11 @@ SceneGenData SceneWorld::Update()
 	//Update
 	for (auto it : m_celist)
 		it.second->Update();
+
+	if (GameData::Positions.count("player"))
+		GameData::Positions.at("player") = m_player->Physics()->Position();
+	else
+		GameData::Positions.emplace("player", m_player->Physics()->Position());
 
 	m_mapHandler->Update();
 

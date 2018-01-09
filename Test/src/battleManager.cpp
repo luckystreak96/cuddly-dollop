@@ -28,6 +28,7 @@ void BattleManager::Init()
 	_state = BS_SelectAction;
 	m_animating = false;
 	counter = 0;
+	_winner = -1;
 	_selectedIndex = 0;
 	_done = false;
 	if (_actorQueue.size() > 0)
@@ -48,8 +49,8 @@ void BattleManager::Update()
 	if (counter % 120 == 0)
 		std::cout << "State: " << _state << std::endl;
 
-	int winner = FindWinner();
-	if (winner == -1)
+	_winner = FindWinner();
+	if (_winner == -1)
 	{
 		// Battle stuffs
 		ManageInput();
@@ -68,7 +69,7 @@ void BattleManager::Update()
 	else
 	{
 		// Battle is over, theres a winner etc
-		std::cout << "The winner is: team " << winner << std::endl;
+		std::cout << "The winner is: team " << _winner << std::endl;
 		_done = true;
 	}
 }
@@ -103,8 +104,15 @@ void BattleManager::UpdateLogic()
 			// Choose enemy action
 			if (_owner->Team != 0)
 			{
-				// ENEMY AI XD
-				CycleActors();
+				_selectedSkill = _owner->Skills.at(rand() % _owner->Skills.size());
+				
+				int targ = 0;
+				while (_actors.at(targ)->Team == _owner->Team)
+					targ = rand() % _actors.size();
+
+				_targets.push_back(_actors.at(targ));
+
+				UseSkill();
 			}
 		}
 		else
@@ -282,6 +290,7 @@ void BattleManager::CycleActors()
 	_actorQueue.push_back(front);
 	_actorQueue.front()->ChoosingAction = true;
 	_chooseSkill = &_actorQueue.front()->Skills;
+	_targets.clear();
 	if (!_actorQueue.front()->Dead)
 		std::cout << "It's " << _actorQueue.front()->Name << "'s turn!" << std::endl;
 }

@@ -6,6 +6,7 @@ PlayerGraphicsComponent::PlayerGraphicsComponent(std::string tex, std::string mo
 {
 	m_modelName = model;
 	m_texture = tex;
+	SetWidthHeight(tex);
 	Construct();
 	Update();
 	m_firstLoad = false;
@@ -96,8 +97,11 @@ void PlayerGraphicsComponent::Update()
 
 	//Change the sprite depending on direction
 	//m_animation = m_direction;
+	if (dir != m_direction && !_specialAnimation)
+		SetAnimation((Anim_Enum)((int)m_direction), m_texture);
 
-	if (SetTileModelTC(&m_vertices, m_direction, dir != m_direction || m_direction != m_lastInteraction || m_firstLoad))
+	bool forceUpdate = (dir != m_direction && !_specialAnimation) || (m_direction != m_lastInteraction) || m_firstLoad;
+	if (SetTileModelTC(&m_vertices, forceUpdate))
 		ResetVBO();
 
 	GraphicsComponent::Update();

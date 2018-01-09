@@ -31,13 +31,14 @@ public:
 	std::vector<Actor_ptr> _actors;
 	std::vector<Actor_ptr> _targets;
 	std::deque<Anim_ptr> _animations;
-	std::vector<std::shared_ptr<Skill>>* _chooseSkill;
-	std::shared_ptr<Skill> _selectedSkill;
+	std::vector<Skill_ptr>* _chooseSkill;
+	Skill_ptr _selectedSkill;
 	Actor_ptr _owner;
 	int _selectedIndex;
 	BattleState _state;
 	bool m_animating;
 	bool _done;
+	int _winner;
 	
 	int counter;
 };

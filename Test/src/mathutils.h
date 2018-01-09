@@ -67,6 +67,7 @@ public:
 namespace MathUtils
 {
 	void CalcNormals(std::vector<GLuint>& indices, std::vector<Vertex>& verts);
+	Vector3f FindPositionInParabola(float progressPercent, Vector3f startPoint, Vector3f endPoint);
 }
 
 #endif

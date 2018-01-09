@@ -9,6 +9,7 @@ class Scene;
 
 struct SceneGenData 
 {
+	SceneGenData() { sceneType = ST_World; id = 0; scene = NULL; }
 	SceneType sceneType;
 	unsigned int id;
 	std::shared_ptr<Scene> scene;
