@@ -81,36 +81,36 @@ namespace MathUtils
 		return result;
 	}
 
-	void CalcNormals(std::vector<GLuint>& indices, std::vector<Vertex>& verts)
-	{
-		int vertCount = 0;
-		for(Vertex& v : verts)
-		{
-			std::vector<Vector3f> norms = std::vector<Vector3f>();
-			for (unsigned int i = 0; i < indices.size(); i += 3) {
-				unsigned int Index0 = indices[i];
-				unsigned int Index1 = indices[i + 1];
-				unsigned int Index2 = indices[i + 2];
-				if (Index0 == vertCount || Index1 == vertCount || Index2 == vertCount)
-				{
-					Vector3f v1 = verts[Index1].vertex - verts[Index0].vertex;
-					Vector3f v2 = verts[Index2].vertex - verts[Index0].vertex;
-					Vector3f Normal = v1.Cross(v2);
-					Normal.Normalize();
-					if (std::find(norms.begin(), norms.end(), Normal) != norms.end())
-						continue;
+	//void CalcNormals(std::vector<GLuint>& indices, std::vector<Vertex>& verts)
+	//{
+	//	int vertCount = 0;
+	//	for(Vertex& v : verts)
+	//	{
+	//		std::vector<Vector3f> norms = std::vector<Vector3f>();
+	//		for (unsigned int i = 0; i < indices.size(); i += 3) {
+	//			unsigned int Index0 = indices[i];
+	//			unsigned int Index1 = indices[i + 1];
+	//			unsigned int Index2 = indices[i + 2];
+	//			if (Index0 == vertCount || Index1 == vertCount || Index2 == vertCount)
+	//			{
+	//				Vector3f v1 = verts[Index1].vertex - verts[Index0].vertex;
+	//				Vector3f v2 = verts[Index2].vertex - verts[Index0].vertex;
+	//				Vector3f Normal = v1.Cross(v2);
+	//				Normal.Normalize();
+	//				if (std::find(norms.begin(), norms.end(), Normal) != norms.end())
+	//					continue;
 
-					norms.push_back(Normal);
+	//				norms.push_back(Normal);
 
-					v.normal += Normal;
-				}
-			}
-			vertCount++;
-		}
+	//				v.normal += Normal;
+	//			}
+	//		}
+	//		vertCount++;
+	//	}
 
-		for(Vertex& v : verts)
-		{
-			v.normal.Normalize();
-		}
-	}
+	//	for(Vertex& v : verts)
+	//	{
+	//		v.normal.Normalize();
+	//	}
+	//}
 }

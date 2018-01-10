@@ -26,6 +26,7 @@ BattleManager::BattleManager(std::vector<Actor_ptr> actors)
 
 void BattleManager::Init()
 {
+	_showingSkills = false;
 	_state = BS_SelectAction;
 	m_animating = false;
 	counter = 0;
@@ -83,7 +84,23 @@ void BattleManager::UpdateLogic()
 		_selectedSkill = NULL;
 		_state = BS_SelectAction;
 		CycleActors();
+
+		if (_owner->Team == 0)
+		{
+			SetChooseSkillText();
+			_showingSkills = true;
+		}
+
 		Select(0);
+	}
+
+	if (_showingSkills)
+	{
+		if (_state != BS_SelectAction)
+		{
+			RemoveChooseSkillText();
+			_showingSkills = false;
+		}
 	}
 
 	// Let the animation pass before updating
@@ -106,7 +123,7 @@ void BattleManager::UpdateLogic()
 			if (_owner->Team != 0)
 			{
 				_selectedSkill = _owner->Skills.at(rand() % _owner->Skills.size());
-				
+
 				int targ = 0;
 				while (_actors.at(targ)->Team == _owner->Team)
 					targ = rand() % _actors.size();
@@ -136,6 +153,27 @@ void BattleManager::UpdateLogic()
 		}
 	}
 }
+
+void BattleManager::SetChooseSkillText()
+{
+	while (_fonts.size() < _chooseSkill->size())
+		_fonts.push_back(FontManager::GetInstance().AddFont(false, false, true, "res/fonts/lowercase.png"));
+
+	for (int i = 0; i < _chooseSkill->size(); i++)
+	{
+		FontManager::GetInstance().EnableFont(_fonts[i]);
+		FontManager::GetInstance().SetScale(_fonts[i], 0.5f, 0.5f);
+		FontManager::GetInstance().SetText(_fonts[i], _chooseSkill->at(i)->_name, Vector3f(4, 6 - i * 0.5f, 0));
+		//FontManager::GetInstance().GetFont(_fonts[i])->SetText(_chooseSkill->at(i)->_name, Vector3f(6, 7 - i, 1));
+	}
+}
+
+void BattleManager::RemoveChooseSkillText()
+{
+	for (int i = 0; i < _fonts.size(); i++)
+		FontManager::GetInstance().GetFont(_fonts[i])->_enabled = false;
+}
+
 
 void BattleManager::ManageInput()
 {
@@ -168,7 +206,7 @@ void BattleManager::ManageInput()
 		{
 			if (_selectedIndex > 0)
 			{
-				for (int i = _selectedIndex; i >= 0; i--)
+				for (int i = _selectedIndex - 1; i >= 0; i--)
 				{
 					if (!_actors[i]->Dead)
 					{
@@ -198,7 +236,7 @@ void BattleManager::ManageInput()
 		{
 			if (_selectedIndex < _actors.size() - 1)
 			{
-				for (int i = _selectedIndex; i < _actors.size(); i++)
+				for (int i = _selectedIndex + 1; i < _actors.size(); i++)
 				{
 					if (!_actors[i]->Dead)
 					{
@@ -242,6 +280,7 @@ void BattleManager::ManageInput()
 				if (x->Selected)
 				{
 					_targets.push_back(x);
+					x->SetColorAll();
 					x->Selected = false;
 				}
 
@@ -259,16 +298,26 @@ void BattleManager::Select(int target)
 	if (_state == BS_SelectTargets)
 	{
 		for (auto x : _actors)
+		{
+			if (x->Selected)
+				x->SetColorAll();
 			x->Selected = false;
+		}
 
 		_actors[_selectedIndex]->Selected = false;
 		_actors.at(target)->Selected = true;
+		_actors.at(target)->SetColorAll(Vector3f(1.f, 0.25f, 0.25f));
 		_selectedIndex = target;
 		if (_owner->Team == 0)
 			std::cout << "Selected: " << _actors.at(_selectedIndex)->Name << std::endl;
 	}
 	else if (_state == BS_SelectAction)
 	{
+		if (_owner->Team == 0)
+		{
+			FontManager::GetInstance().GetFont(_fonts[_selectedIndex])->GetGraphics()->SetColorAll();
+			FontManager::GetInstance().GetFont(_fonts[target])->GetGraphics()->SetColorAll(Vector3f(1, 0, 0));
+		}
 		_selectedIndex = target;
 		if (_owner->Team == 0)
 			std::cout << "Selected: " << _chooseSkill->at(_selectedIndex)->_name << std::endl;
@@ -284,6 +333,18 @@ void BattleManager::UseSkill()
 		_state = BS_SelectAction;
 }
 
+void BattleManager::UpdateVisuals()
+{
+	switch (_state)
+	{
+	case BS_SelectAction:
+		break;
+	case BS_SelectTargets:
+		break;
+	}
+}
+
+
 void BattleManager::CycleActors()
 {
 	Actor_ptr front = _actorQueue.front();
@@ -292,8 +353,11 @@ void BattleManager::CycleActors()
 	_actorQueue.front()->ChoosingAction = true;
 	_chooseSkill = &_actorQueue.front()->Skills;
 	_targets.clear();
+	_owner = _actorQueue.front();
 	if (!_actorQueue.front()->Dead)
 		std::cout << "It's " << _actorQueue.front()->Name << "'s turn!" << std::endl;
+	else
+		CycleActors();
 }
 
 // Return winning team, -1 if battle isn't over
@@ -317,3 +381,9 @@ int BattleManager::FindWinner()
 	// Only one team is alive, return that team
 	return *activeTeams.begin();
 }
+
+//void BattleManager::SetRender()
+//{
+//	for (auto x : _fonts)
+//		Renderer::GetInstance().Add(FontManager::GetInstance().GetFont(x)->GetGraphics());
+//}

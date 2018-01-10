@@ -35,7 +35,7 @@ void SkillSmack::Update()
 	int dmg = 0;
 	unsigned int fontId;
 	Vector3f pos;
-	std::shared_ptr<Font> font;
+	Font_ptr font;
 	switch (_animProg)
 	{
 	case 0:
@@ -46,10 +46,15 @@ void SkillSmack::Update()
 		std::cout << _targets->at(0)->Name << " has " << _targets->at(0)->Health << " HP left" << std::endl << std::endl;
 		_animProg++;
 
+		// Setup font
 		pos = _targets->at(0)->GetPos() + Vector3f(0.5f, 1.f, 0);
 		pos.z = 0;
-		font = std::shared_ptr<Font>(new FontFloat(0.7));
+
+		font = Font_ptr(new FontFloat(0.7));
 		font->SetText(std::to_string(-dmg), pos, true);
+		// color
+		if (dmg > 0)
+			dynamic_cast<FontFloat*>(font.get())->Color = Vector3f(1.0f, 0, 0);
 		fontId = FontManager::GetInstance().AddFont(font);
 		//FontManager::GetInstance().SetText(fontId, std::to_string(-dmg), pos, true);
 		break;

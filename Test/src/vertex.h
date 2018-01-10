@@ -13,9 +13,8 @@ class Vertex
     public:
         Vector3f vertex;
         Vector2f tex;
-		Vector3f normal;
-		float SpecularPower;
-		float SpecularIntensity;
+		Vector3f color;
+		float alpha;
 };
 
 #endif

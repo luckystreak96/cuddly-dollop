@@ -59,7 +59,7 @@ void DialogueBox::SetText(std::string text)
 		for (auto x : m_dialogueGraph->GetChoices())
 		{
 			m_y -= m_yScale * 1.25f;
-			std::shared_ptr<Font> temp = std::shared_ptr<Font>(new Font(true));
+			Font_ptr temp = Font_ptr(new Font(true));
 			temp->SetScale(m_xScale, m_yScale);
 			temp->SetTextSpeed(1);
 			temp->SetText(x, Vector3f(0.75f, 4.0f + m_y, 0), false, m_maxWidth);

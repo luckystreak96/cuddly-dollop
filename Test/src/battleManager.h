@@ -7,6 +7,7 @@
 #include <memory>
 #include "actor.h"
 #include "skill.h"
+#include "fontManager.h"
 
 enum BattleState { BS_Animation, BS_Attacking, BS_SelectAction, BS_SelectTargets, BS_ActionProgress, BS_ActionDone };
 
@@ -22,9 +23,13 @@ private:
 	void Init();
 	void ManageInput();
 	void UpdateLogic();
+	void UpdateVisuals();
 	void CycleActors();
 	void UseSkill();
 	void Select(int target);
+	void RemoveChooseSkillText();
+	void SetChooseSkillText();
+	//void SetRender();
 
 public:
 	std::deque<Actor_ptr> _actorQueue;
@@ -32,12 +37,14 @@ public:
 	std::vector<Actor_ptr> _targets;
 	std::deque<Anim_ptr> _animations;
 	std::vector<Skill_ptr>* _chooseSkill;
+	std::vector<unsigned int> _fonts;
 	Skill_ptr _selectedSkill;
 	Actor_ptr _owner;
 	int _selectedIndex;
 	BattleState _state;
 	bool m_animating;
 	bool _done;
+	bool _showingSkills;
 	int _winner;
 	
 	int counter;

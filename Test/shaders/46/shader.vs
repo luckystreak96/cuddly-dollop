@@ -3,10 +3,14 @@
 // Vertex position
 layout(location = 0) in vec3 Position;
 layout(location = 1) in vec2 TexCoord;
+layout(location = 2) in vec3 Color;
+layout(location = 3) in float Alpha;
 // World Position
-layout(location = 5) in mat4 Model;
+layout(location = 4) in mat4 Model;
 
 out vec2 TexCoord0;
+out vec3 Color0;
+out float Alpha0;
 
 uniform mat4 gWorld = mat4(1.0);
 uniform int gType = 0;
@@ -24,4 +28,6 @@ void main()
 	}
 
     TexCoord0 = TexCoord;
+	Color0 = Color;
+	Alpha0 = Alpha;
 }

@@ -51,6 +51,7 @@ public:
 	int GetHighestIndex();
 	void SetBuffers();
 	void SetupVAO();
+	void SetColorAll(Vector3f color = Vector3f(1, 1, 1), float alpha = 1.0f);
 	void ResetVBO();
 	bool LoadExternalResources();
 	bool UnloadExternalResources();

@@ -20,11 +20,11 @@ public:
 	void ChangeLetter(unsigned int font, unsigned int index, char newChar);
 	void SetText(unsigned int font, std::string text = " ", Vector3f location = Vector3f(), bool centered = false);
 	unsigned int AddFont(bool sTatic = false, bool temporary = false, bool lightspeed = false, std::string texPath = "res/fonts/basic.png");
-	unsigned int AddFont(std::shared_ptr<Font> font);
+	unsigned int AddFont(Font_ptr font);
 	void DisableFont(unsigned int font);
 	void EnableFont(unsigned int font);
 	void RemoveFont(unsigned int font);
-	std::shared_ptr<Font> GetFont(unsigned int key);
+	Font_ptr GetFont(unsigned int key);
 	void ClearFonts();
 	bool IsEmpty();
 
@@ -33,7 +33,7 @@ public:
 private:
 	FontManager();
 	~FontManager();
-	std::map<unsigned int, std::shared_ptr<Font>> m_fonts;
+	std::map<unsigned int, Font_ptr> m_fonts;
 };
 
 #endif // !FONT_MANAGER_H__

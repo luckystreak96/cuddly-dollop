@@ -1,6 +1,7 @@
 #include "fontFloat.h"
 
-FontFloat::FontFloat(double lifetime, std::string tex) : Font(false, true, false, tex)
+FontFloat::FontFloat(double lifetime, std::string tex) : Font(false, true, false, tex),
+Alpha(1.0f)
 {
 	m_lifetime = lifetime;
 	SetScale(0.5f, 0.5f);
@@ -15,7 +16,9 @@ void FontFloat::SetText(std::string text, Vector3f location, bool centered, floa
 void FontFloat::Update(double elapsedTime)
 {
 	m_offset.y += elapsedTime * 0.8;
+	Alpha = 1.f - (float)(m_elapsedTime / m_lifetime);
 	UpdateModel();
+	m_graphics->SetColorAll(Color, Alpha);
 	Font::Update(elapsedTime);
 }
 

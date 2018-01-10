@@ -26,7 +26,7 @@ public:
 
 private:
 	std::shared_ptr<FontGraphicsComponent> m_box;
-	std::vector<std::shared_ptr<Font>> m_choices;
+	std::vector<Font_ptr> m_choices;
 	float m_maxWidth;
 	float m_maxHeight;
 	bool m_firstTime;

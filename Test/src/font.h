@@ -15,6 +15,9 @@
 #include "renderer.h"
 #include "fontGraphicsComponent.h"
 
+class Font;
+typedef std::shared_ptr<Font> Font_ptr;
+
 class Font
 {
 public:

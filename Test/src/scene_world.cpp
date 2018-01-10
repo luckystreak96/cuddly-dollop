@@ -316,13 +316,6 @@ SceneGenData SceneWorld::Update()
 	return NextScene;
 }
 
-void GLErrorCheck()
-{
-	GLenum err = glGetError();
-	if (err != GL_NO_ERROR)
-		std::cout << glewGetErrorString(err) << std::endl;
-}
-
 void SceneWorld::RenderPass()
 {
 	// Allow modifications to stencil buffer

@@ -1,6 +1,6 @@
 #include "fontManager.h"
 
-FontManager::FontManager() : m_fonts(std::map<unsigned int, std::shared_ptr<Font>>())
+FontManager::FontManager() : m_fonts(std::map<unsigned int, Font_ptr>())
 {
 }
 
@@ -21,7 +21,7 @@ void FontManager::ClearFonts()
 
 void FontManager::SetScale(unsigned int font, float xScale, float yScale)
 {
-	std::shared_ptr<Font> temp = GetFont(font);
+	Font_ptr temp = GetFont(font);
 	if (temp == NULL)
 		return;
 
@@ -30,7 +30,7 @@ void FontManager::SetScale(unsigned int font, float xScale, float yScale)
 
 void FontManager::SetText(unsigned int font, std::string text, Vector3f location, bool centered)
 {
-	std::shared_ptr<Font> temp = GetFont(font);
+	Font_ptr temp = GetFont(font);
 	if (temp == NULL)
 		return;
 
@@ -39,7 +39,7 @@ void FontManager::SetText(unsigned int font, std::string text, Vector3f location
 
 void FontManager::SetTextSpeed(unsigned int font, double speed)
 {
-	std::shared_ptr<Font> temp = GetFont(font);
+	Font_ptr temp = GetFont(font);
 	if (temp == NULL)
 		return;
 
@@ -49,7 +49,7 @@ void FontManager::SetTextSpeed(unsigned int font, double speed)
 
 void FontManager::ChangeLetter(unsigned int font, unsigned int index, char newChar)
 {
-	std::shared_ptr<Font> temp = GetFont(font);
+	Font_ptr temp = GetFont(font);
 	if (temp == NULL)
 		return;
 
@@ -81,11 +81,11 @@ void FontManager::Update(double elapsedTime)
 
 unsigned int FontManager::AddFont(bool sTatic, bool temporary, bool lightspeed, std::string texPath)
 {
-	std::shared_ptr<Font> font = std::shared_ptr<Font>(new Font(sTatic, temporary, lightspeed, texPath));
+	Font_ptr font = Font_ptr(new Font(sTatic, temporary, lightspeed, texPath));
 	return AddFont(font);
 }
 
-unsigned int FontManager::AddFont(std::shared_ptr<Font> font)
+unsigned int FontManager::AddFont(Font_ptr font)
 {
 	unsigned int key;
 	while (true)
@@ -132,7 +132,7 @@ unsigned int FontManager::GenerateKey()
 }
 
 
-std::shared_ptr<Font> FontManager::GetFont(unsigned int key)
+Font_ptr FontManager::GetFont(unsigned int key)
 {
 	if (m_fonts.count(key) > 0)
 		return m_fonts.at(key);

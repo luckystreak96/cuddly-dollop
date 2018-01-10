@@ -155,7 +155,7 @@ bool GraphicsComponent::UnloadGLResources()
 	return true;
 }
 
-void GLErrorCheck2()
+void GLErrorCheck()
 {
 	GLenum err = glGetError();
 	if (err != GL_NO_ERROR)
@@ -184,9 +184,9 @@ void GraphicsComponent::Draw(bool withTex)
 
 	m_lastMModelSize = sizeof(Mat4f) * m_mmodels.size();
 
-	for (int i = 5; i < 9; i++)
+	for (int i = 4; i < 8; i++)
 	{
-		glVertexAttribPointer(i, 4, GL_FLOAT, GL_FALSE, sizeof(Mat4f), (const GLvoid*)(sizeof(float) * (i - 5) * 4));
+		glVertexAttribPointer(i, 4, GL_FLOAT, GL_FALSE, sizeof(Mat4f), (const GLvoid*)(sizeof(float) * (i - 4) * 4));
 		glVertexAttribDivisor(i, _instancedDraw ? 1 : 0);
 	}
 
@@ -210,7 +210,7 @@ void GraphicsComponent::SetupVAO()
 	glBindVertexArray(m_VAO);
 
 	// Setup binds
-	for (int i = 0; i < 9; i++)
+	for (int i = 0; i < 8; i++)
 		glEnableVertexAttribArray(i);
 
 	// Bind IBO
@@ -222,9 +222,8 @@ void GraphicsComponent::SetupVAO()
 	glBufferData(GL_ARRAY_BUFFER, m_vertices.size() * sizeof(Vertex), &m_vertices[0], GL_STATIC_DRAW);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);//vertex position
 	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*)(sizeof(float) * 3));//texcoords
-	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*)(sizeof(float) * 5));//normal
-	glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*)(sizeof(float) * 8));//specPow
-	glVertexAttribPointer(4, 1, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*)(sizeof(float) * 9));//specIntens
+	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*)(sizeof(float) * 5));//color
+	glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*)(sizeof(float) * 8));//alpha
 
 	// Unbind VAO
 	glBindVertexArray(0);
@@ -249,6 +248,17 @@ void GraphicsComponent::ResetVBO()
 	// This doesn't work well if the number of vertices changes - to be kept in mind (glBufferSubData)
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 	glBufferSubData(GL_ARRAY_BUFFER, 0, m_vertices.size() * sizeof(Vertex), &m_vertices[0]);
+}
+
+// Sets the color of all vertices to change the color of the sprite
+void GraphicsComponent::SetColorAll(Vector3f color, float alpha)
+{
+	for (auto& v : m_vertices)
+	{
+		v.color = color;
+		v.alpha = alpha;
+	}
+	ResetVBO();
 }
 
 // Adds 4 model matrices to MModels (does not clear MModels first)
@@ -300,7 +310,7 @@ void GraphicsComponent::SetDefaults(std::string name)
 	for (auto i : indices)
 		m_indices.push_back(i);
 
-	MathUtils::CalcNormals(m_indices, m_originalVertices);
+	//MathUtils::CalcNormals(m_indices, m_originalVertices);
 
 	m_vertices = std::vector<Vertex>(m_originalVertices);
 }

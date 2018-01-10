@@ -23,6 +23,7 @@ m_battle(_actors)
 	for (auto x : GameData::Party)
 		_actors.push_back(x);
 	_actors.push_back(Actor_ptr(ActorFactory::BuildBaseEnemy()));
+	_actors.push_back(Actor_ptr(ActorFactory::BuildBaseEnemy()));
 	m_battle = BattleManager(_actors);
 	Init();
 	SoundManager::GetInstance();
