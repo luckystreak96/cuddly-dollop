@@ -9,7 +9,7 @@
 class PlayerGraphicsComponent : public GraphicsComponent, public Animation
 {
 public:
-	PlayerGraphicsComponent(std::string tex = "res/sprites/entities/entity_ghost_shiny_blue.png", std::string model = "TILE");
+	PlayerGraphicsComponent(std::string tex = "res/sprites/entities/entity_ghost_shiny_blue.png", std::string model = "CENTERED_TILE");
 	void Update();
 	void Draw(bool withTex = true);
 	void NormalDraw(bool withTex = true);

@@ -190,14 +190,7 @@ void Font::SetupMesh(float xBndry, float yBndry)
 	m_graphics->SetPhysics(m_phys.Position(), Vector3f());
 	m_graphics->SetStatic(m_static);
 
-	m_graphics->GetMModels().clear();
-	for (auto x : m_letterPositions)
-	{
-		Transformation t;
-		t.SetTranslation(x);
-		t.SetScale(Vector3f(m_xScale, m_yScale, 1));
-		m_graphics->InsertMModels(t);
-	}
+	UpdateModel();
 }
 
 void Font::AddWordToMesh(std::string word, float x, float y)
@@ -206,8 +199,6 @@ void Font::AddWordToMesh(std::string word, float x, float y)
 	{
 		char c = i >= m_messageProgress.size() ? ' ' : m_messageProgress.at(i);
 		unsigned int index = CharToCode(c);
-		Transformation trans = Transformation();
-		trans.SetTranslation(Vector3f());
 
 		//Change position, and then change texture coords
 		Vector3f pos = Vector3f();
@@ -217,7 +208,7 @@ void Font::AddWordToMesh(std::string word, float x, float y)
 
 		m_letterPositions.push_back(pos + m_phys.Position());
 
-		m_mesh.AddToMesh(m_phys.GetVertices(), m_phys.GetIndices(), m_phys.GetHighestIndex(), pos, m_texture,/* &trans,*/ index);
+		m_mesh.AddToMesh(m_phys.GetVertices(), m_phys.GetIndices(), m_phys.GetHighestIndex(), pos, m_texture, index);
 	}
 }
 
@@ -244,7 +235,7 @@ void Font::SetText(std::string text, Vector3f location, bool centered, float xBo
 	SetTextVariables();
 
 	m_totalTime = text.size() * m_timePerLetter;
-	m_lifetime = 2 + text.size() * 0.1;
+	//m_lifetime = 2 + text.size() * 0.1;
 	m_messageProgress = "";
 	for (auto x : m_message)
 		m_messageProgress += ' ';
@@ -319,15 +310,23 @@ void Font::SetRender()
 
 void Font::SetScale(float xScale, float yScale)
 {
-	m_graphics->GetMModels().clear();
-	for (auto x : m_letterPositions)
-	{
-		Transformation t;
-		t.SetTranslation(x);
-		t.SetScale(Vector3f(xScale, yScale, 1));
-		m_graphics->InsertMModels(t);
-	}
-
 	m_xScale = xScale;
 	m_yScale = yScale;
+
+	UpdateModel();
+}
+
+void Font::UpdateModel()
+{
+	if (m_graphics)
+	{
+		m_graphics->GetMModels().clear();
+		for (auto x : m_letterPositions)
+		{
+			Transformation t;
+			t.SetTranslation(x);
+			t.SetScale(Vector3f(m_xScale, m_yScale, 1));
+			m_graphics->InsertMModels(t);
+		}
+	}
 }

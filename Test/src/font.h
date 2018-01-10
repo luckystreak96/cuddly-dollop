@@ -33,6 +33,7 @@ public:
 	bool IsDead();
 	virtual void SetScale(float xScale, float yScale);
 	bool TextDisplayDone();
+	virtual void UpdateModel();
 
 public:
 	bool _enabled;

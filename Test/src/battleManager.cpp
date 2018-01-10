@@ -4,6 +4,7 @@
 #include <set>
 #include <algorithm>
 #include <iostream>
+#include "fontManager.h"
 
 BattleManager::BattleManager()
 {

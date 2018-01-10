@@ -395,6 +395,9 @@
     <ClInclude Include="src\animJumpTo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\fontFloat.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -650,6 +653,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\animJumpTo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\fontFloat.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

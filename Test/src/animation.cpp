@@ -88,8 +88,8 @@ bool Animation::SetTileModelTC(std::vector<Vertex>* verts, bool forceUpdate)
 	float x = m_horizontal ? (float)(m_sprite) / (float)m_width : (float)m_animation * x_increment;
 	float y = m_horizontal ? (float)m_animation * y_increment : (float)(m_sprite + 1) / (float)m_height;
 
-	float halfPixX = 0.15f / (32.0f * (float)m_width);
-	float halfpixY = 0.15f / (32.0f * (float)m_height);
+	float halfPixX = 0.005f / (32.0f * (float)m_width);
+	float halfpixY = 0.005f / (32.0f * (float)m_height);
 
 	for (int i = 0; i < verts->size(); i++)
 	{

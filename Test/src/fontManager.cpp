@@ -81,6 +81,12 @@ void FontManager::Update(double elapsedTime)
 
 unsigned int FontManager::AddFont(bool sTatic, bool temporary, bool lightspeed, std::string texPath)
 {
+	std::shared_ptr<Font> font = std::shared_ptr<Font>(new Font(sTatic, temporary, lightspeed, texPath));
+	return AddFont(font);
+}
+
+unsigned int FontManager::AddFont(std::shared_ptr<Font> font)
+{
 	unsigned int key;
 	while (true)
 	{
@@ -89,7 +95,7 @@ unsigned int FontManager::AddFont(bool sTatic, bool temporary, bool lightspeed, 
 		if (m_fonts.count(key) == 0)
 			break;
 	}
-	m_fonts.emplace(key, new Font(sTatic, temporary, lightspeed, texPath));
+	m_fonts.emplace(key, font);
 	return key;
 }
 

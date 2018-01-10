@@ -58,10 +58,17 @@ bool SceneBattle::Init()
 	}
 
 	for (int i = 0; i < m_party.size(); i++)
+	{
 		m_party.at(i)->SetPhysics(Vector3f(3.0f, 4.0f + i, 4.0f), Vector3f());
+		//m_party.at(i)->SetDirection(dir_Right);
+	}
 
 	for (int i = 0; i < m_enemies.size(); i++)
+	{
 		m_enemies.at(i)->SetPhysics(Vector3f(12.0f, 4.0f + i, 4.0f), Vector3f());
+		//m_enemies.at(i)->SetDirection(dir_Left);
+		m_enemies.at(i)->GetModelMat()->SetScale(-1, 1, 1);
+	}
 
 	m_eventManager.SetEntitiesMap(&m_celist);
 
@@ -105,7 +112,7 @@ void SceneBattle::ManageInput()
 	if (InputManager::GetInstance().FrameKeyStatus('G', AnyRelease))
 		m_fade.SetFade(false);
 
-	if (InputManager::GetInstance().FrameKeyStatus('P', AnyRelease))
+	if (InputManager::GetInstance().FrameKeyStatus('P', AnyRelease, 1000))
 		m_pause = !m_pause;
 
 	if (InputManager::GetInstance().FrameKeyStatus('Z', AnyRelease, 5))
@@ -194,7 +201,11 @@ SceneGenData SceneBattle::Update()
 		it.second->Update();
 
 	for (auto a : _actors)
+	{
+		//if (a->Team != 0)
+			//a->GetModelMat()->SetScale(-1, 1, 1);
 		a->Update();
+	}
 
 	m_mapHandler->Update();
 
