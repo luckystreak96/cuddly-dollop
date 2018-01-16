@@ -34,7 +34,7 @@ bool Game::init(Vector2f version)
 
 	OrthoProjInfo::GetRegularInstance().zNear = 100.f;
 	OrthoProjInfo::GetRegularInstance().zFar = -100.f;
-	OrthoProjInfo::GetRegularInstance().Size = 64.f;
+	//OrthoProjInfo::GetRegularInstance().Size = 64.f;
 	OrthoProjInfo::GetRegularInstance().changed = true;
 
 	return true;

@@ -297,7 +297,7 @@ SceneGenData SceneWorld::Update()
 	else
 		GameData::Positions.emplace("player", m_player->Physics()->Position());
 
-	m_mapHandler->Update();
+	m_mapHandler->Update(OrthoProjInfo::GetRegularInstance().changed);
 
 	SetAudioPosition();
 	SoundManager::GetInstance().Update();

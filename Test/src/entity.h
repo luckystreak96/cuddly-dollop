@@ -25,7 +25,7 @@ public:
 	void AddEventQueue(std::shared_ptr<EventQueue> eq);
 	std::vector<std::shared_ptr<EventQueue>>* GetQueues();
 	std::shared_ptr<PhysicsComponent> Physics() { return m_physicsComponent; }
-	std::shared_ptr<GraphicsComponent> Graphics() { return m_graphicsComponent; }
+	GraphComp_ptr Graphics() { return m_graphicsComponent; }
 	std::shared_ptr<InputComponent> Input() { return m_inputComponent; }
 	std::vector<std::shared_ptr<IComponent>> components;
 	void Communicate(std::vector<std::string> msg);
@@ -39,7 +39,7 @@ private:
 	bool m_fullSize;
 	std::vector<std::shared_ptr<EventQueue>> m_events;
 	std::shared_ptr<PhysicsComponent> m_physicsComponent;
-	std::shared_ptr<GraphicsComponent> m_graphicsComponent;
+	GraphComp_ptr m_graphicsComponent;
 	std::shared_ptr<InputComponent> m_inputComponent;
 };
 

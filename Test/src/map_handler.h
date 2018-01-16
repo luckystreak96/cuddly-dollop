@@ -27,11 +27,11 @@ public:
 	void FinalizeSetup();
 	void SetRender();
 	void Draw();
-	void Update();
+	void Update(bool forced = false);
 	std::vector<std::shared_ptr<MapTile>>* Tiles();
 	unsigned int Size();
 	void SetupMesh();
-	std::shared_ptr<GraphicsComponent> Graphics() { return m_graphics; }
+	GraphComp_ptr Graphics() { return m_graphics; }
 
 	// Returns the farthest reaches of the map in  x, y and z
 	Vector3f GetMapSize();
@@ -40,7 +40,7 @@ public:
 private:
 	std::vector<std::shared_ptr<MapTile>> m_tiles;
 	Mesh m_mesh;
-	std::shared_ptr<GraphicsComponent> m_graphics = NULL;
+	GraphComp_ptr m_graphics = NULL;
 	std::shared_ptr<JsonHandler> m_jsonHandler;
 	int m_MBO_instances;
 	unsigned int m_id;

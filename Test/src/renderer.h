@@ -14,7 +14,7 @@ public:
 		static Renderer instance;
 		return instance;
 	}
-	void Add(std::shared_ptr<GraphicsComponent> c);
+	void Add(GraphComp_ptr c);
 	void Clear();
 	void Draw();
 private:

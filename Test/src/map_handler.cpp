@@ -113,19 +113,21 @@ void MapHandler::SetupMesh()
 
 	m_texture = "res/tiles.png";
 	//m_mesh.Finalize(m_texture);
-	m_graphics = std::shared_ptr<GraphicsComponent>(new GraphicsComponent(m_mesh.GetMeshVertices(), m_mesh.GetMeshIndices(), m_texture));
+	m_graphics = GraphComp_ptr(new GraphicsComponent(m_mesh.GetMeshVertices(), m_mesh.GetMeshIndices(), m_texture));
 	m_graphics->SetPhysics(Vector3f(0, 0, 20.0f), Vector3f());
+	//m_graphics->_instancedDraw = true;
 }
 
-void MapHandler::Update()
+void MapHandler::Update(bool forced)
 {
 	//INEFFICIENT BECAUSE THE MATRIX NEEDS TO BE SENT 4 TIMES - 1 PER VERTEX
 	//THE PURPOSE OF THIS IS SO THAT THE VERTEX SHADER CAN KNOW THE Y COORD OF THE BITCH AND CHANGE
 	//	THE Z ACCORDINGLY. THIS IS DONE THIS WAY BECAUSE OF MESHES, THEY CALCULATE POS AHEAD OF
 	//	TIME AND CHANGE THE VERTEX POSITIONS -- BUT NOT ANY OTHER OBJECT. TO KEEP THE Z CONSISTENT,
 	//	I USE THE MATRIX INSTEAD OF MULTIPLYING THE OTHER OBJECTS VERTEX POS BY THEIR POS.
-	if (m_graphics->GetMModels().size() == 0)
+	if (m_graphics->GetMModels().size() == 0 || forced)
 	{
+		m_graphics->GetMModels().clear();
 		for (auto x : m_tiles)
 		{
 			Vector3f pos = x->Physics()->Position();

@@ -26,6 +26,7 @@ BattleManager::BattleManager(std::vector<Actor_ptr> actors)
 
 void BattleManager::Init()
 {
+	_hud.Init(_actors);
 	_showingSkills = false;
 	_state = BS_SelectAction;
 	m_animating = false;
@@ -47,12 +48,12 @@ void BattleManager::Update()
 		return;
 
 	// Cout battle state
-	counter++;
-	if (counter % 120 == 0)
-		std::cout << "State: " << _state << std::endl;
+	//counter++;
+	//if (counter % 120 == 0)
+	//	std::cout << "State: " << _state << std::endl;
 
 	_winner = FindWinner();
-	if (_winner == -1)
+	if (_winner == -1 || _selectedSkill && !_selectedSkill->_done)
 	{
 		// Battle stuffs
 		ManageInput();
@@ -67,6 +68,8 @@ void BattleManager::Update()
 				//	_state = BS_ActionProgress;
 			}
 		}
+
+		_hud.Update();
 	}
 	else
 	{
@@ -104,8 +107,8 @@ void BattleManager::UpdateLogic()
 	}
 
 	// Let the animation pass before updating
-	if (_animations.size() < 1)
-	{
+	//if (_animations.size() < 1)
+	//{
 		// End turn if the skill is done
 		if (_selectedSkill == NULL)
 		{
@@ -151,7 +154,7 @@ void BattleManager::UpdateLogic()
 				}
 			}
 		}
-	}
+	//}
 }
 
 void BattleManager::SetChooseSkillText()
@@ -263,7 +266,7 @@ void BattleManager::ManageInput()
 		if (_state == BS_SelectAction)
 		{
 			_selectedSkill = _chooseSkill->at(_selectedIndex);
-			std::cout << "Skill selected: " << _selectedSkill->_name << std::endl;
+			//std::cout << "Skill selected: " << _selectedSkill->_name << std::endl;
 			_state = BS_SelectTargets;
 			for (int i = 0; i < _actors.size(); i++)
 			{
@@ -308,8 +311,8 @@ void BattleManager::Select(int target)
 		_actors.at(target)->Selected = true;
 		_actors.at(target)->SetColorAll(Vector3f(1.f, 0.25f, 0.25f));
 		_selectedIndex = target;
-		if (_owner->Team == 0)
-			std::cout << "Selected: " << _actors.at(_selectedIndex)->Name << std::endl;
+		//if (_owner->Team == 0)
+			//std::cout << "Selected: " << _actors.at(_selectedIndex)->Name << std::endl;
 	}
 	else if (_state == BS_SelectAction)
 	{
@@ -319,31 +322,19 @@ void BattleManager::Select(int target)
 			FontManager::GetInstance().GetFont(_fonts[target])->GetGraphics()->SetColorAll(Vector3f(1, 0, 0));
 		}
 		_selectedIndex = target;
-		if (_owner->Team == 0)
-			std::cout << "Selected: " << _chooseSkill->at(_selectedIndex)->_name << std::endl;
+		//if (_owner->Team == 0)
+			//std::cout << "Selected: " << _chooseSkill->at(_selectedIndex)->_name << std::endl;
 	}
 }
 
 void BattleManager::UseSkill()
 {
-	std::cout << "Using skill: " << _selectedSkill->_name << std::endl;
+	//std::cout << "Using skill: " << _selectedSkill->_name << std::endl;
 	if (_selectedSkill != NULL)
 		_state = _selectedSkill->Start(&_targets, &_actorQueue, &_animations, _owner);
 	else
 		_state = BS_SelectAction;
 }
-
-void BattleManager::UpdateVisuals()
-{
-	switch (_state)
-	{
-	case BS_SelectAction:
-		break;
-	case BS_SelectTargets:
-		break;
-	}
-}
-
 
 void BattleManager::CycleActors()
 {
@@ -355,7 +346,8 @@ void BattleManager::CycleActors()
 	_targets.clear();
 	_owner = _actorQueue.front();
 	if (!_actorQueue.front()->Dead)
-		std::cout << "It's " << _actorQueue.front()->Name << "'s turn!" << std::endl;
+		return;
+		//std::cout << "It's " << _actorQueue.front()->Name << "'s turn!" << std::endl;
 	else
 		CycleActors();
 }
@@ -382,8 +374,7 @@ int BattleManager::FindWinner()
 	return *activeTeams.begin();
 }
 
-//void BattleManager::SetRender()
-//{
-//	for (auto x : _fonts)
-//		Renderer::GetInstance().Add(FontManager::GetInstance().GetFont(x)->GetGraphics());
-//}
+void BattleManager::SetRender()
+{
+	_hud.SetRender();
+}

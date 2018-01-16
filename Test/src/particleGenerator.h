@@ -85,7 +85,7 @@ public:
 	std::vector<std::shared_ptr<Particle>>* Particles();
 	unsigned int Size();
 	void SetupMesh();
-	std::shared_ptr<GraphicsComponent> Graphics() { return m_graphics; }
+	GraphComp_ptr Graphics() { return m_graphics; }
 
 	// Returns the farthest reaches of the map in  x, y and z
 	Vector3f GetRange();
@@ -95,7 +95,7 @@ public:
 private:
 	std::vector<std::shared_ptr<Particle>> m_particles;
 	Mesh m_mesh;
-	std::shared_ptr<GraphicsComponent> m_graphics = NULL;
+	GraphComp_ptr m_graphics = NULL;
 	int m_MBO_instances;
 	unsigned int m_id;
 	std::string m_texture;

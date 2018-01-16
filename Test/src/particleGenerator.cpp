@@ -256,7 +256,7 @@ void ParticleGenerator::SetupMesh()
 
 	m_texture = "res/tiles.png";
 	//m_mesh.Finalize(m_texture);
-	m_graphics = std::shared_ptr<GraphicsComponent>(new GraphicsComponent(m_mesh.GetMeshVertices(), m_mesh.GetMeshIndices(), m_texture));
+	m_graphics = GraphComp_ptr(new GraphicsComponent(m_mesh.GetMeshVertices(), m_mesh.GetMeshIndices(), m_texture));
 	//m_graphics->_instancedDraw = true;
 	m_graphics->SetPhysics(Vector3f(0, 0, 0.6f), Vector3f());
 }

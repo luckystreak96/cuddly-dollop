@@ -1,5 +1,6 @@
 #include "actorFactory.h"
 #include "skillSmack.h"
+#include "skillHeal.h"
 
 Actor_ptr ActorFactory::BuildBaseAlly()
 {
@@ -15,7 +16,7 @@ Actor_ptr ActorFactory::BuildBaseEnemy()
 	result->Speed = 2;
 	result->Name = "Toad";
 	result->Team = 1;
-	result->SetTexture("res/sprites/entities/entity_snowman.png");
+	result->SetTexture("res/sprites/entities/entity_ghost.png");
 
 	return result;
 }
@@ -29,6 +30,9 @@ std::vector<Actor_ptr> ActorFactory::BuildParty(rapidjson::GenericArray<false, r
 		actor->Skills.clear();
 		if (a.HasMember("health"))
 			actor->Health = a["health"].GetInt();
+
+		if (a.HasMember("max_health"))
+			actor->MaxHealth = a["max_health"].GetInt();
 
 		if (a.HasMember("name"))
 			actor->Name = a["name"].GetString();
@@ -57,6 +61,8 @@ Skill_ptr ActorFactory::BuildSkill(std::string name)
 	Skill_ptr result;
 	if (name == "Smack")
 		result = Skill_ptr(new SkillSmack());
+	else if (name == "Heal")
+		result = Skill_ptr(new SkillHeal());
 	else
 		result = Skill_ptr(new Skill());
 

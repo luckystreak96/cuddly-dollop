@@ -6,6 +6,7 @@
 #include <AL\alut.h>
 #include <iostream>
 #include <map>
+#include <vector>
 #include "vector3f.h"
 
 struct WavBuffer
@@ -56,6 +57,7 @@ public:
 	unsigned int GetBGM();
 	void SetBGM(std::string buffer);
 	void Update();
+	void PlaySoundFX(std::string sourceFile);
 private:
 	SoundManager();
 	~SoundManager();
@@ -64,6 +66,7 @@ private:
 
 private:
 	std::map<std::string, WavBuffer> m_buffers;
+	std::vector<ALuint> m_sfxSources;
 	float m_bgmMaxVolume;
 	float m_masterVolume;
 	ALuint m_bgmSource;

@@ -22,6 +22,7 @@ public:
 public:
 	std::string Name;
 	int Health;
+	int MaxHealth;
 	int Speed;
 	bool Dead;
 	int Team;

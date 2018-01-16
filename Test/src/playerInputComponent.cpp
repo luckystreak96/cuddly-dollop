@@ -1,7 +1,7 @@
 #include "playerInputComponent.h"
 #include <GLFW\glfw3.h>
 
-PlayerInputComponent::PlayerInputComponent(std::shared_ptr<PhysicsComponent> phys, std::shared_ptr<GraphicsComponent> graph)
+PlayerInputComponent::PlayerInputComponent(std::shared_ptr<PhysicsComponent> phys, GraphComp_ptr graph)
 {
 	m_phys = phys;
 	m_graph = graph;

@@ -14,6 +14,7 @@ public:
 	void Draw(bool withTex = true);
 	void NormalDraw(bool withTex = true);
 	void DrawOutline(bool withTex = true);
+	void SetTexture(std::string texture);
 private:
 	bool m_firstLoad;
 };

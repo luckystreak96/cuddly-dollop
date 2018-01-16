@@ -102,6 +102,16 @@ SoundManager::~SoundManager()
 	CheckErrors();
 }
 
+void SoundManager::PlaySoundFX(std::string sourceFile)
+{
+	if (sourceFile == "")
+		return;
+	CreateBuffer(sourceFile);
+	ALuint source = CreateSource();
+	Play(source, sourceFile);
+	m_sfxSources.push_back(source);
+}
+
 void SoundManager::SetBGM(std::string sourceFile)
 {
 	if (sourceFile == m_currentBGM)
@@ -224,6 +234,17 @@ void SoundManager::DeleteSource(unsigned int source)
 
 void SoundManager::Update()
 {
+	for (int i = 0; i < m_sfxSources.size(); i++)
+	{
+		ALuint source = m_sfxSources[i];
+		if (!IsPlaying(source))
+		{
+			DeleteSource(source);
+			m_sfxSources.erase(m_sfxSources.begin() + i);
+			i--;
+		}
+	}
+
 	if (m_bgmState == BGM_Starting)
 	{
 		if (m_bgmVolume < m_bgmMaxVolume)

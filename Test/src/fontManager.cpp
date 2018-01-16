@@ -69,10 +69,13 @@ void FontManager::Update(double elapsedTime)
 	std::vector<unsigned int> to_remove = std::vector<unsigned int>();
 	for (auto x : m_fonts)
 	{
+		if (OrthoProjInfo::GetRegularInstance().changed)
+			x.second->Reset();
 		x.second->Update(elapsedTime);
 		if (x.second->IsDead())
 			to_remove.push_back(x.first);
 	}
+
 	for (auto x : to_remove)
 	{
 		m_fonts.erase(x);

@@ -21,6 +21,8 @@ public:
 	virtual void Update();
 	virtual void Reset();
 	virtual bool IsReady();
+	virtual void SpawnDamageText(Actor_ptr target, int dmg);
+	bool AnimationsDone();
 
 public:
 	std::deque<Actor_ptr>* _actors;

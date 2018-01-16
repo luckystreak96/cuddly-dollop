@@ -14,6 +14,8 @@ public:
 
 public:
 	bool _done;
+	double _duration;
+	double _progress;
 };
 
 #endif // !BATTLE_ANIMATION_H__

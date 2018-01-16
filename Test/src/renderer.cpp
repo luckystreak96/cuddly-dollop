@@ -3,7 +3,7 @@
 Renderer::Renderer() : m_toDraw(std::vector<GraphicsComponent*>())
 {}
 
-void Renderer::Add(std::shared_ptr<GraphicsComponent> c)
+void Renderer::Add(GraphComp_ptr c)
 { 
 	m_toDraw.push_back(c.get());
 }

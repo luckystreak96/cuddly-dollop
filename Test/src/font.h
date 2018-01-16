@@ -37,6 +37,7 @@ public:
 	virtual void SetScale(float xScale, float yScale);
 	bool TextDisplayDone();
 	virtual void UpdateModel();
+	void Reset();
 
 public:
 	bool _enabled;
@@ -60,10 +61,12 @@ protected:
 	float m_yScale;
 	float m_x;
 	float m_y;
+	float m_xBndry;
 
 	bool m_static;
 	bool m_temporary;
 	bool m_lightSpeed;
+	bool m_centered;
 
 	std::shared_ptr<FontGraphicsComponent> m_graphics = NULL;
 	std::vector<Vector3f> m_letterPositions;

@@ -14,7 +14,7 @@ out float Alpha0;
 
 uniform mat4 gWorld = mat4(1.0);
 uniform int gType = 0;
-uniform float gSize = 64;
+uniform float gSize = 32;
 
 void main()
 {

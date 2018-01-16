@@ -17,7 +17,10 @@
 #include "resource_manager.h"
 #include <GL\glew.h>
 
-enum Direction { dir_Up, dir_Right, dir_Down, dir_Left};
+enum Direction { dir_Left, dir_Down, dir_Right, dir_Up };
+
+class GraphicsComponent;
+typedef std::shared_ptr<GraphicsComponent> GraphComp_ptr;
 
 class GraphicsComponent : public IComponent, public ResourceUser
 {
@@ -37,7 +40,7 @@ public:
 	std::vector<Vertex>* GetVertices();
 	std::vector<GLuint> GetIndices();
 	std::string GetTexture();
-	void SetTexture(std::string newTex);
+	virtual void SetTexture(std::string newTex);
 	std::vector<Mat4f>& GetMModels();
 	void InsertMModels(Transformation& t);
 	void UpdateMModels();
@@ -47,7 +50,7 @@ public:
 	Vector3f GetPos();
 	Direction GetDirection();
 	void SetDirection(Direction dir);
-	void SetDirection(std::shared_ptr<GraphicsComponent> graph);
+	void SetDirection(GraphComp_ptr graph);
 	int GetHighestIndex();
 	void SetBuffers();
 	void SetupVAO();

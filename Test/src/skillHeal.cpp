@@ -1,20 +1,21 @@
-#include "skillSmack.h"
+#include "skillHeal.h"
 #include "soundManager.h"
 
-SkillSmack::SkillSmack()
+SkillHeal::SkillHeal()
 {
 	Skill::DefaultSetup();
 	DefaultSetup();
 }
 
-void SkillSmack::DefaultSetup()
+void SkillHeal::DefaultSetup()
 {
-	_name = "Smack";
+	_name = "Heal";
 }
 
-void SkillSmack::ApplyEffect()
+void SkillHeal::ApplyEffect()
 {
-	int dmg = rand() % 3 + 1;
+	int dmg = 0;
+	dmg -= rand() % 7 + 2;
 	_targets->at(0)->TakeDamage(dmg);
 
 	// Damage text

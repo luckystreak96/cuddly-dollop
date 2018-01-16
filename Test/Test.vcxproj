@@ -166,8 +166,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\actorFactory.h" />
+    <ClInclude Include="src\animBasic.h" />
     <ClInclude Include="src\animJumpTo.h" />
+    <ClInclude Include="src\battleHUD.h" />
     <ClInclude Include="src\fontFloat.h" />
+    <ClInclude Include="src\skillHeal.h" />
+    <ClInclude Include="src\skillMelee.h" />
     <ClInclude Include="src\skillSmack.h" />
     <ClInclude Include="src\actor.h" />
     <ClInclude Include="src\battleAnimation.h" />
@@ -263,8 +267,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\actorFactory.cpp" />
+    <ClCompile Include="src\animBasic.cpp" />
     <ClCompile Include="src\animJumpTo.cpp" />
+    <ClCompile Include="src\battleHUD.cpp" />
     <ClCompile Include="src\fontFloat.cpp" />
+    <ClCompile Include="src\skillHeal.cpp" />
+    <ClCompile Include="src\skillMelee.cpp" />
     <ClCompile Include="src\skillSmack.cpp" />
     <ClCompile Include="src\actor.cpp" />
     <ClCompile Include="src\battleManager.cpp" />

@@ -7,7 +7,8 @@ std::map<std::string, SpriteSheetData> Animation::m_metaData = std::map<std::str
 void Animation::SetupAnimationMetaData()
 {
 	SpriteSheetData ssd;
-	m_metaData.emplace("entity_ghost.png", ssd);
+	ssd.data.emplace(AE_Attack, AnimInfo(AE_Attack, 2));
+	m_metaData.emplace("res/sprites/entities/entity_ghost.png", ssd);
 }
 
 SpriteSheetData Animation::GetMetaData(std::string spritesheet)
@@ -51,8 +52,8 @@ void Animation::SetDefaults()
 	m_delay = 160;
 	m_numFrames = 2;
 	m_horizontal = true;
-	m_animation = AE_Down;
-	m_sprite = 0;
+	_animation = AE_Down;
+	_sprite = 0;
 	m_width = 2;
 	m_height = 4;
 	_specialAnimation = false;
@@ -63,7 +64,7 @@ void Animation::SetAnimation(Anim_Enum anim, std::string spritesheet)
 {
 	if ((int)anim < m_height)
 	{
-		m_animation = (int)GetMetaData(spritesheet).data.at(anim).position;
+		_animation = (int)GetMetaData(spritesheet).data.at(anim).position;
 		m_numFrames = (int)GetMetaData(spritesheet).data.at(anim).numFrames;
 	}
 }
@@ -78,15 +79,18 @@ bool Animation::SetTileModelTC(std::vector<Vertex>* verts, bool forceUpdate)
 	};
 
 	int next = (m_progress % (m_delay * m_numFrames)) / m_delay;
-	if (m_sprite == next && !forceUpdate)
+	if (_sprite == next && !forceUpdate && !_specialAnimation)
 		return false;
 
-	m_sprite = next;
+	if (!_specialAnimation)
+		_sprite = next;
 
 	float x_increment = 1.f / (float)m_width;
 	float y_increment = 1.f / (float)m_height;
-	float x = m_horizontal ? (float)(m_sprite) / (float)m_width : (float)m_animation * x_increment;
-	float y = m_horizontal ? (float)m_animation * y_increment : (float)(m_sprite + 1) / (float)m_height;
+	float x = m_horizontal ? (float)(_sprite) / (float)m_width : (float)(m_width - (_animation + 1)) * x_increment;
+	float y = m_horizontal ? (float)(m_height - (_animation + 1)) * y_increment : (float)(_sprite + 1) / (float)m_height;
+	//x = 1 - x;
+	//y = 1 - y;
 
 	float halfPixX = 0.005f / (32.0f * (float)m_width);
 	float halfpixY = 0.005f / (32.0f * (float)m_height);

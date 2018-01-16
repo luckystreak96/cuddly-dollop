@@ -16,7 +16,6 @@ public:
 	Vector3f _destination;
 	Vector3f _initialPos;
 	Vector3f _speed;
-	float _percent;
 };
 
 #endif // !BATTLE_ANIMATION_H__

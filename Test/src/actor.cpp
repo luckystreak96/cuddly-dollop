@@ -14,6 +14,7 @@ void Actor::SetDefault()
 	SetTexture("res/sprites/entities/entity_ghost.png");
 	Name = "Player";
 	Health = 10;
+	MaxHealth = 10;
 	Dead = false;
 	Speed = 0;
 	Team = 0;

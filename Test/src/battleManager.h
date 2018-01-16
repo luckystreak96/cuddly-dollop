@@ -8,6 +8,7 @@
 #include "actor.h"
 #include "skill.h"
 #include "fontManager.h"
+#include "battleHUD.h"
 
 enum BattleState { BS_Animation, BS_Attacking, BS_SelectAction, BS_SelectTargets, BS_ActionProgress, BS_ActionDone };
 
@@ -18,18 +19,17 @@ public:
 	BattleManager(std::vector<Actor_ptr> actors);
 	void Update();
 	int FindWinner();
+	void SetRender();
 
 private:
 	void Init();
 	void ManageInput();
 	void UpdateLogic();
-	void UpdateVisuals();
 	void CycleActors();
 	void UseSkill();
 	void Select(int target);
 	void RemoveChooseSkillText();
 	void SetChooseSkillText();
-	//void SetRender();
 
 public:
 	std::deque<Actor_ptr> _actorQueue;
@@ -38,6 +38,8 @@ public:
 	std::deque<Anim_ptr> _animations;
 	std::vector<Skill_ptr>* _chooseSkill;
 	std::vector<unsigned int> _fonts;
+
+	BattleHUD _hud;
 	Skill_ptr _selectedSkill;
 	Actor_ptr _owner;
 	int _selectedIndex;

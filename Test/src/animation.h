@@ -8,7 +8,7 @@
 #include <time.h>
 
 //enum Direction { dir_Up, dir_Right, dir_Down, dir_Left };
-enum Anim_Enum { AE_Up, AE_Right, AE_Down, AE_Left, AE_Last };
+enum Anim_Enum { AE_Left, AE_Down, AE_Right, AE_Up, AE_Attack, AE_Last };
 
 struct AnimInfo
 {
@@ -46,6 +46,10 @@ public:
 public:
 	// Specifies if something other than walking is going on
 	bool _specialAnimation;
+	//Which frame we're at
+	int _sprite;
+	//which row/column to start in
+	int _animation;
 
 protected:
 	//ElapsedTime progress
@@ -58,10 +62,6 @@ protected:
 	int m_numFrames;
 	//Whether the sprites go down or right
 	bool m_horizontal;
-	//which row/column to start in
-	int m_animation;
-	//Which frame we're at
-	int m_sprite;
 	//The total image size
 	int m_width;
 	int m_height;

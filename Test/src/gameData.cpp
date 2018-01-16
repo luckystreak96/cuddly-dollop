@@ -306,6 +306,11 @@ void GameData::SaveGameData()
 		second.SetInt(actor->Health);
 		ob.AddMember(first, second, allocator);
 
+		// maxHealth
+		first.SetString(StringRef("max_health"), allocator);
+		second.SetInt(actor->MaxHealth);
+		ob.AddMember(first, second, allocator);
+
 		// speed 
 		first.SetString(StringRef("speed"), allocator);
 		second.SetInt(actor->Speed);

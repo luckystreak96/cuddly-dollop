@@ -4,7 +4,7 @@
 
 Font::Font(bool sTatic, bool temporary, bool lightSpeed, std::string path) : m_texture(path), m_phys(PhysicsComponent(Vector3f(), "TEXT")),
 m_elapsedTime(0), m_textSpeed(1.0), m_timePerLetter(0.03), m_static(sTatic), m_temporary(temporary), m_lifetime(5.0), LetterSpacing(1.0f), MaxTime(30000),
-m_lettersPerRow(16), m_lettersPerColumn(16), m_xScale(1.0f), m_yScale(1.0f), m_lightSpeed(lightSpeed), _enabled(true)
+m_lettersPerRow(16), m_lettersPerColumn(16), m_xScale(1.0f), m_yScale(1.0f), m_lightSpeed(lightSpeed), _enabled(true), m_centered(false), m_xBndry(-1)
 {
 	m_mesh = Mesh(m_lettersPerRow * m_lettersPerColumn);
 	int bitmapWidth = 16;
@@ -226,8 +226,15 @@ void Font::CreateHash() {
 		m_letters.emplace(charList.at(i), i);
 }
 
+void Font::Reset()
+{
+	SetText(m_message, m_basePosition, m_centered, m_xBndry);
+}
+
 void Font::SetText(std::string text, Vector3f location, bool centered, float xBoundry)
 {
+	m_xBndry = xBoundry;
+	m_centered = centered;
 	m_elapsedTime = 0;
 	m_message = text;
 

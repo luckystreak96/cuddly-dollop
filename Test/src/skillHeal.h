@@ -1,14 +1,14 @@
-#ifndef SKILL_SMACK_H__
-#define SKILL_SMACK_H__
+#ifndef SKILL_HEAL_H__
+#define SKILL_HEAL_H__
 
 #include "skillMelee.h"
 #include "vector3f.h"
 
-class SkillSmack : public SkillMelee
+class SkillHeal : public SkillMelee
 {
 
 public:
-	SkillSmack();
+	SkillHeal();
 	virtual void ApplyEffect();
 
 protected:

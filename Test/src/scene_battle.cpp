@@ -16,8 +16,7 @@
 
 SceneGenData SceneBattle::NextScene = SceneGenData();
 
-SceneBattle::SceneBattle() : m_acceptInput(false), m_currentMap(3), m_drawinited(false), m_zoom(false),
-m_battle(_actors)
+SceneBattle::SceneBattle() : m_acceptInput(false), m_currentMap(3), m_drawinited(false), m_zoom(false)
 {
 	//_actors.push_back(Actor_ptr(ActorFactory::BuildBaseAlly()));
 	for (auto x : GameData::Party)
@@ -208,7 +207,7 @@ SceneGenData SceneBattle::Update()
 		a->Update();
 	}
 
-	m_mapHandler->Update();
+	m_mapHandler->Update(OrthoProjInfo::GetRegularInstance().changed);
 
 	SetAudioPosition();
 	SoundManager::GetInstance().Update();
@@ -254,6 +253,8 @@ void SceneBattle::RenderPass()
 	for (auto a : m_enemies)
 		if (!a->Dead)
 			Renderer::GetInstance().Add(a);
+
+	m_battle.SetRender();
 
 	if (!m_fade.IsDone())
 		m_fade.Begin();

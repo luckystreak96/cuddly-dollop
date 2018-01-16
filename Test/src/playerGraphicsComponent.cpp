@@ -106,3 +106,9 @@ void PlayerGraphicsComponent::Update()
 
 	GraphicsComponent::Update();
 }
+
+void PlayerGraphicsComponent::SetTexture(std::string texture)
+{
+	GraphicsComponent::SetTexture(texture);
+	SetWidthHeight(texture);
+}
