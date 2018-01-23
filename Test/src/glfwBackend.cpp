@@ -15,7 +15,7 @@ void Resize(GLFWwindow* window)
 {
 	const int width = 16;
 	const int height = 9;
-	const int size = 64;
+	const int size = 32;
 	float multiplierx = 1;
 	float multipliery = 1;
 	int multiplierFinal = 1;
@@ -103,6 +103,7 @@ GLFWManager::GLFWManager()
 				std::getchar();
 				exit(1);
 			}
+			continue;
 		}
 		std::cout << "GL context opened on OpenGL version " << x.x << "." << x.y << std::endl;
 		// Set the gl version to be accessed from the effects
