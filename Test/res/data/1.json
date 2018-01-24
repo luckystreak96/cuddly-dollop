@@ -4161,24 +4161,6 @@
     },
     {
       "x": 21.0,
-      "y": 5.0,
-      "z": 5.0,
-      "sprite": "trench_v.png"
-    },
-    {
-      "x": 21.0,
-      "y": 6.0,
-      "z": 5.0,
-      "sprite": "trench_v.png"
-    },
-    {
-      "x": 21.0,
-      "y": 7.0,
-      "z": 5.0,
-      "sprite": "trench_v.png"
-    },
-    {
-      "x": 21.0,
       "y": 8.0,
       "z": 6.5,
       "sprite": "trench_v.png"

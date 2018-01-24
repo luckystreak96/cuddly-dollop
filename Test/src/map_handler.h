@@ -29,16 +29,19 @@ public:
 	void Draw();
 	void Update(bool forced = false);
 	std::vector<std::shared_ptr<MapTile>>* Tiles();
+	std::vector<std::shared_ptr<MapTile>>* OrderedTiles();
 	unsigned int Size();
 	void SetupMesh();
 	GraphComp_ptr Graphics() { return m_graphics; }
 
 	// Returns the farthest reaches of the map in  x, y and z
 	Vector3f GetMapSize();
-	static inline bool TileSort(std::shared_ptr<MapTile> i, std::shared_ptr<MapTile> j) { return (i->Physics()->Position() < j->Physics()->Position()); }
+	static bool TileSort(std::shared_ptr<MapTile> i, std::shared_ptr<MapTile> j);
+	static bool TileSortX(std::shared_ptr<MapTile> i, std::shared_ptr<MapTile> j);
 
 private:
 	std::vector<std::shared_ptr<MapTile>> m_tiles;
+	std::vector<std::shared_ptr<MapTile>> m_OrderedTiles;
 	Mesh m_mesh;
 	GraphComp_ptr m_graphics = NULL;
 	std::shared_ptr<JsonHandler> m_jsonHandler;

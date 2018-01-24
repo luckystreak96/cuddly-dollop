@@ -24,7 +24,7 @@ public:
 	void SetBoundingBox();
 	void SetBoundingBoxSize(Vector3f size, Vector3f numSquare = Vector3f(1, 1, 1));
 	std::array<float, 6> GetBoundingBox();
-	std::array<float, 6> GetMoveBoundingBox();
+	std::array<float, 6>& GetMoveBoundingBox();
 	std::array<float, 6> GetEtherealMoveBoundingBox();
 	Vector3f BBSize();
 	void RelativePosition(Vector3f movementPos);

@@ -15,7 +15,7 @@ void Resize(GLFWwindow* window)
 {
 	const int width = 16;
 	const int height = 9;
-	const int size = 64;
+	const int size = 32;
 	float multiplierx = 1;
 	float multipliery = 1;
 	int multiplierFinal = 1;
@@ -23,19 +23,26 @@ void Resize(GLFWwindow* window)
 	int screenW, screenH;
 	glfwGetWindowSize(window, &screenW, &screenH);
 
-	multiplierx = (float)screenW / 960.f;
-	multipliery = (float)screenH / 540.f;
+	multiplierx = (float)screenW / 480.f;
+	multipliery = (float)screenH / 270.f;
 	multiplierFinal = (int)(min(multiplierx, multipliery));
 
 	int viewW, viewH;
-	viewW = multiplierFinal * 960;
-	viewH = multiplierFinal * 540;
+	viewW = multiplierFinal * 480;
+	viewH = multiplierFinal * 270;
+
+	GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+	const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+	int w = mode->width;
+	int h = mode->height;
+
+	// Fullscreen mode
+	if (screenW == w && screenH == h)
+	{
+		viewH = h;
+		viewW = w;
+	}
 	glViewport((screenW - viewW) / 2, (screenH - viewH) / 2, (GLsizei)(viewW), (GLsizei)(viewH));
-	//if(w < )
-	//OrthoProjInfo::GetRegularInstance().Bottom = -(h / 2.0f);
-	//OrthoProjInfo::GetRegularInstance().Top = (h / 2.0f);
-	//OrthoProjInfo::GetRegularInstance().Left = -(w / 2.0f);
-	//OrthoProjInfo::GetRegularInstance().Right = (w / 2.0f);
 	OrthoProjInfo::GetRegularInstance().Bottom = -(viewH / 2.0f);
 	OrthoProjInfo::GetRegularInstance().Top = (viewH / 2.0f);
 	OrthoProjInfo::GetRegularInstance().Left = -(viewW / 2.0f);

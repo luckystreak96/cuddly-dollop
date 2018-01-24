@@ -112,14 +112,7 @@ bool Vector3f::operator<(const Vector3f& r)
 	{
 		if (y == r.y)
 		{
-			if (z == r.z)
-			{
-
-			}
-			else
-			{
-				return z < r.z;
-			}
+			return z > r.z;
 		}
 		else
 		{
@@ -130,8 +123,6 @@ bool Vector3f::operator<(const Vector3f& r)
 	{
 		return x < r.x;
 	}
-
-	return false;
 }
 
 bool Vector3f::operator>(const Vector3f& r)

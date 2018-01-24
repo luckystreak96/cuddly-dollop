@@ -20,7 +20,7 @@ public:
 	unsigned int GetID();
 	void AddEventQueue(std::shared_ptr<EventQueue> eq);
 	std::vector<std::shared_ptr<EventQueue>>* GetQueues();
-	std::shared_ptr<PhysicsComponent> Physics() { return m_physicsComponent; }
+	std::shared_ptr<PhysicsComponent>& Physics() { return m_physicsComponent; }
 	GraphComp_ptr Graphics() { return m_graphicsComponent; }
 	std::vector<std::shared_ptr<IComponent>> components;
 

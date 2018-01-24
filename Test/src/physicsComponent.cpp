@@ -151,7 +151,7 @@ void PhysicsComponent::SetMovedBB()
 }
 
 
-std::array<float, 6> PhysicsComponent::GetMoveBoundingBox()
+std::array<float, 6>& PhysicsComponent::GetMoveBoundingBox()
 {
 	return m_moveBoundingBox;
 }

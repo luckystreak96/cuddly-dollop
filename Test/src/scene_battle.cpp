@@ -19,7 +19,12 @@ SceneBattle::SceneBattle() : m_zoom(false)
 	m_currentMap = 3;
 	//_actors.push_back(Actor_ptr(ActorFactory::BuildBaseAlly()));
 	for (auto x : GameData::Party)
+	{
 		_actors.push_back(x);
+		_actors.push_back(Actor_ptr(ActorFactory::BuildBaseAlly()));
+	}
+	_actors.push_back(Actor_ptr(ActorFactory::BuildBaseEnemy()));
+	_actors.push_back(Actor_ptr(ActorFactory::BuildBaseEnemy()));
 	_actors.push_back(Actor_ptr(ActorFactory::BuildBaseEnemy()));
 	_actors.push_back(Actor_ptr(ActorFactory::BuildBaseEnemy()));
 	m_battle = BattleManager(_actors);
@@ -55,11 +60,11 @@ bool SceneBattle::Init()
 	}
 
 	for (int i = 0; i < m_party.size(); i++)
-		m_party.at(i)->SetPhysics(Vector3f(3.0f, 4.0f + i, 4.0f), Vector3f());
+		m_party.at(i)->SetPhysics(Vector3f(4.0f, 3.0f + i, 4.0f), Vector3f());
 
 	for (int i = 0; i < m_enemies.size(); i++)
 	{
-		m_enemies.at(i)->SetPhysics(Vector3f(12.0f, 4.0f + i, 4.0f), Vector3f());
+		m_enemies.at(i)->SetPhysics(Vector3f(13.0f, 3.0f + i, 4.0f), Vector3f());
 		m_enemies.at(i)->GetModelMat()->SetScale(-1, 1, 1);
 	}
 

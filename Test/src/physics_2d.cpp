@@ -484,8 +484,16 @@ namespace Physics_2D {
 			//Create list of touching
 			auto bb1 = x->Physics()->GetMoveBoundingBox();
 
+			float x1 = x->Physics()->Position().x;
+			float y1 = x->Physics()->Position().y;
 			for (auto ts : *mt)
 			{
+				if (ts->Physics()->Position().x < x1 - 2 ||
+					ts->Physics()->Position().y < y1 - 2 ||
+					ts->Physics()->Position().y > y1 + 2)
+					continue;
+				else if (ts->Physics()->Position().x > x1 + 2)
+					break;
 				auto bb2 = ts->Physics()->GetMoveBoundingBox();
 
 				if (Physics::Intersect2D(bb1, bb2))

@@ -61,14 +61,13 @@ MapHandler::MapHandler(unsigned int id, std::shared_ptr<JsonHandler> jh) : m_mes
 			tile->Physics()->walkOn = false;
 		m_tiles.push_back(tile);
 	}
-
+	m_OrderedTiles = std::vector<std::shared_ptr<MapTile>>(m_tiles);
 	FinalizeSetup();
 }
 
 void MapHandler::FinalizeSetup()
 {
-	std::sort(m_tiles.begin(), m_tiles.end(), TileSort);
-	std::sort(m_tiles.begin(), m_tiles.end(), TileSort);
+	std::sort(m_tiles.begin(), m_tiles.end(), &TileSort);
 
 	SetupMesh();
 
@@ -105,7 +104,7 @@ MapHandler::MapHandler(const std::string& filePath)
 void MapHandler::SetupMesh()
 {
 	m_mesh.Reset();
-	std::sort(m_tiles.begin(), m_tiles.end(), MapTile::SortFunc);
+	//std::sort(m_tiles.begin(), m_tiles.end(), MapTile::SortFunc);
 	for (auto t : m_tiles)
 		m_mesh.AddToMesh(t->Physics()->GetVertices(), t->Physics()->GetIndices(), t->Physics()->GetHighestIndex(), t->Physics()->Position(), t->GetTexture());
 
@@ -158,6 +157,11 @@ std::vector<std::shared_ptr<MapTile>>* MapHandler::Tiles()
 	return &m_tiles;
 }
 
+std::vector<std::shared_ptr<MapTile>>* MapHandler::OrderedTiles()
+{
+	return &m_OrderedTiles;
+}
+
 unsigned int MapHandler::Size()
 {
 	return (unsigned int)m_tiles.size();
@@ -166,4 +170,41 @@ unsigned int MapHandler::Size()
 Vector3f MapHandler::GetMapSize()
 {
 	return m_mapSize;
+}
+
+bool MapHandler::TileSort(std::shared_ptr<MapTile> i, std::shared_ptr<MapTile> j)
+{
+	return (i->Physics()->Position() < j->Physics()->Position());
+}
+
+bool MapHandler::TileSortX(std::shared_ptr<MapTile> i, std::shared_ptr<MapTile> j)
+{
+	Vector3f r = j->Physics()->Position();
+	float x = i->Physics()->Position().x;
+	float y = i->Physics()->Position().y;
+	float z = i->Physics()->Position().z;
+	if (x == r.x)
+	{
+		if (y == r.y)
+		{
+			if (z == r.z)
+			{
+
+			}
+			else
+			{
+				return z < r.z;
+			}
+		}
+		else
+		{
+			return y < r.y;
+		}
+	}
+	else
+	{
+		return x < r.x;
+	}
+
+	return false;
 }

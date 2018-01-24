@@ -344,6 +344,7 @@ void BattleManager::CycleActors()
 	_actorQueue.front()->ChoosingAction = true;
 	_chooseSkill = &_actorQueue.front()->Skills;
 	_targets.clear();
+	_selectedIndex = 0;
 	_owner = _actorQueue.front();
 	if (!_actorQueue.front()->Dead)
 		return;
