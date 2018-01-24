@@ -5,6 +5,9 @@
 #include "vector3f.h"
 #include "effect.h"
 #include "FBO.h"
+#include "soundManager.h"
+#include "scene_manager.h"
+#include "scene_world.h"
 
 Game::Game() : m_exit(false)
 {

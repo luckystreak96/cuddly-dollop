@@ -640,9 +640,6 @@ namespace Physics_2D {
 			}
 		}
 
-		//if (clist->at(3)->Physics()->Velocity() != 0)
-		//	clist->at(3)->Physics()->AbsolutePosition(Vector3f(-1, -1, 5.0f - STAND_HEIGHT), Vector3f(0, 0, 1));
-
 		bool redo = false;
 		for (int i = 0; i < 2; i++)
 		{
@@ -655,7 +652,7 @@ namespace Physics_2D {
 				{
 					auto x2 = xs2.second;
 					// We dont want to re-pass the same collision checks
-					if (x2 == x)
+					if (x2 == x || x2->Physics()->Velocity() == 0 && x->Physics()->Velocity() == 0)
 						continue;
 
 					//Are the objects inside each other right now? (nothing will go fast enough to skip this)

@@ -217,7 +217,7 @@ namespace dollop_editor
                     fe.ContextMenu.Items.Clear();
             }
 
-            if (cnvState == CanvasState.EntityMode && e.ClickCount == 2 && (x / 32) == clickprevx && (y / 32) == clickprevy)
+            if (cnvState == CanvasState.EntityMode && e.ClickCount == 2 && (x / editor.TileSize) == clickprevx && (y / editor.TileSize) == clickprevy)
             {
                 SetMapTile(x, y, selTile);
             }
@@ -516,6 +516,17 @@ namespace dollop_editor
             editor.Height = newMap.MapHeight;
             cnvMap.Width = editor.Width * editor.TileSize;
             cnvMap.Height = editor.Height * editor.TileSize;
+
+            List<Point3D> list = new List<Point3D>();
+            foreach (var x in editor.Tiles)
+                if (x.Key.X > editor.Width - 1)
+                    list.Add(x.Key);
+                else if (x.Key.Y > editor.Height - 1)
+                    list.Add(x.Key);
+
+            foreach(var x in list)
+                editor.Tiles.Remove(x);
+
             ReSyncOnEditor();
         }
 

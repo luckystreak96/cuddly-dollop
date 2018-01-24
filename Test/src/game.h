@@ -10,8 +10,8 @@
 #include <GL/glew.h>//duh
 
 #include "textureatlas.h"
-#include "scenes.h"
 #include "input_manager.h"
+#include "vector3f.h"
 
 class Game
 {

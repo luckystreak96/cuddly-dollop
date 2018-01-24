@@ -35,7 +35,7 @@ namespace dollop_editor
             HistoryProgress = -1;
             Width = 0;
             Height = 0;
-            TileSize = 32;
+            TileSize = 64;
             PopulateBrushes();
             ResetTiles();
         }
@@ -147,7 +147,7 @@ namespace dollop_editor
                 Height = TileSize
             };
             rectangle.SetCurrentValue(Canvas.ZIndexProperty, (int)(20 - z * 2));
-            rectangle.RenderTransform = new TranslateTransform(x * 32, y * 32);
+            rectangle.RenderTransform = new TranslateTransform(x * TileSize, y * TileSize);
 
             Rectangle r = null;
             Point3D pos = new Point3D(x, (int)InvertHeight((float)y), z);
@@ -273,7 +273,7 @@ namespace dollop_editor
                         Tag = tile.walkOn == true ? null : "noWalkOn"
                     };
                     rectangle.SetCurrentValue(Canvas.ZIndexProperty, GameToCanvasZ(tile.z));
-                    rectangle.RenderTransform = new TranslateTransform((tile.x) * 32, InvertHeight(tile.y) * 32);
+                    rectangle.RenderTransform = new TranslateTransform((tile.x) * TileSize, InvertHeight(tile.y) * TileSize);
                     if (!(tile.x >= Width || /*InvertHeight(tile.y)*/tile.y >= Height))
                     {
                         // tile.z needs to be converted this way otherwise the cast makes 4.9 become 4.90000000023 xd
@@ -326,7 +326,7 @@ namespace dollop_editor
                 Stroke = new SolidColorBrush() { Color = entity.player ? Colors.Orange : Colors.White, Opacity = 1.0 }
             };
             rectangle.SetCurrentValue(Canvas.ZIndexProperty, GameToCanvasZ(entity.z));
-            rectangle.RenderTransform = new TranslateTransform(entity.x * 32, InvertHeight(entity.y) * 32);
+            rectangle.RenderTransform = new TranslateTransform(entity.x * TileSize, InvertHeight(entity.y) * TileSize);
             if (Brushes.ContainsKey(entity.sprite))
                 rectangle.Fill = Brushes[entity.sprite].Clone();
 

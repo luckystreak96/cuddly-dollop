@@ -249,7 +249,6 @@
     <ClInclude Include="src\resource_manager.h" />
     <ClInclude Include="src\resource_user.h" />
     <ClInclude Include="src\scene.h" />
-    <ClInclude Include="src\scenes.h" />
     <ClInclude Include="src\scene_battle.h" />
     <ClInclude Include="src\scene_manager.h" />
     <ClInclude Include="src\scene_world.h" />
@@ -271,6 +270,7 @@
     <ClCompile Include="src\animJumpTo.cpp" />
     <ClCompile Include="src\battleHUD.cpp" />
     <ClCompile Include="src\fontFloat.cpp" />
+    <ClCompile Include="src\scene.cpp" />
     <ClCompile Include="src\skillHeal.cpp" />
     <ClCompile Include="src\skillMelee.cpp" />
     <ClCompile Include="src\skillSmack.cpp" />

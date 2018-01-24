@@ -14,7 +14,7 @@ void SkillSmack::DefaultSetup()
 
 void SkillSmack::ApplyEffect()
 {
-	int dmg = rand() % 3 + 1;
+	int dmg = rand() % 3 + 5;
 	_targets->at(0)->TakeDamage(dmg);
 
 	// Damage text

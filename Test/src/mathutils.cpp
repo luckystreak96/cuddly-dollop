@@ -5,6 +5,22 @@ static const float StepSize = 0.2f;
 int Camera::Target = 1;
 Vector3f Camera::Mapsize = Vector3f();
 
+void Camera::MapCenter(Transformation* t)
+{
+	float left = OrthoProjInfo::GetRegularInstance().Left;
+	float right = OrthoProjInfo::GetRegularInstance().Right;
+	float top = OrthoProjInfo::GetRegularInstance().Top;
+	float size = OrthoProjInfo::GetRegularInstance().Size;
+	// (Maplength - viewWidth) / 2
+	Vector3f result;
+	result.x = (Mapsize.x - ((abs(left) + abs(right)) / size)) / 2.f;
+	result.y = (Mapsize.y - ((top * 2.f) / size)) / 2.f;
+	result.x += right / size;
+	result.y += top / size;
+	result.z = t->GetTranslation().z;
+	t->SetTranslation(-result);
+}
+
 void Camera::Follow(Vector3f target, Transformation* t)
 {
 	Vector3f translate, scale;

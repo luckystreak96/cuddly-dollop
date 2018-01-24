@@ -9,8 +9,6 @@ enum CMsg {Update};
 
 class IComponent
 {
-public:
-	virtual void ReceiveMessage(std::vector<std::string> message) {};
 };
 
 #endif

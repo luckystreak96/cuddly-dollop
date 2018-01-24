@@ -19,7 +19,7 @@ EventUpdateResponse EventBattle::UpdateEvent(double elapsedTime, std::map<unsign
 		SceneGenData sgd;
 		sgd.id = 1;
 		sgd.sceneType = ST_Battle;
-		SceneWorld::SetNextScene(sgd);
+		Scene::NextScene = sgd;
 	}
 
 	if (SceneWorld::NextScene.id != 0)

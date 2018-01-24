@@ -2,16 +2,12 @@
 #define ENTITY_H__
 
 #include <vector>
-#include "iComponent.h"
-#include "physicsComponent.h"
-#include "playerPhysicsComponent.h"
+#include <memory>
 #include "graphicsComponent.h"
+#include "physicsComponent.h"
 #include "inputComponent.h"
-#include "playerInputComponent.h"
-#include "playerGraphicsComponent.h"
-#include "audioComponent.h"
-#include "renderer.h"
-#include "iEvent.h"
+
+class EventQueue;
 
 class Entity
 {
@@ -26,9 +22,7 @@ public:
 	std::vector<std::shared_ptr<EventQueue>>* GetQueues();
 	std::shared_ptr<PhysicsComponent> Physics() { return m_physicsComponent; }
 	GraphComp_ptr Graphics() { return m_graphicsComponent; }
-	std::shared_ptr<InputComponent> Input() { return m_inputComponent; }
 	std::vector<std::shared_ptr<IComponent>> components;
-	void Communicate(std::vector<std::string> msg);
 
 public:
 	bool _justTouched;

@@ -59,6 +59,7 @@ class Camera
 {
 public:
 	static void Follow(Vector3f pos, Transformation* t);
+	static void MapCenter(Transformation* t);
 public:
 	static int Target;
 	static Vector3f Mapsize;

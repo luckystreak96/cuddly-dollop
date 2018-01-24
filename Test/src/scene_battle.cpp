@@ -14,10 +14,9 @@
 #include "entityFactory.h"
 #include "actorFactory.h"
 
-SceneGenData SceneBattle::NextScene = SceneGenData();
-
-SceneBattle::SceneBattle() : m_acceptInput(false), m_currentMap(3), m_drawinited(false), m_zoom(false)
+SceneBattle::SceneBattle() : m_zoom(false)
 {
+	m_currentMap = 3;
 	//_actors.push_back(Actor_ptr(ActorFactory::BuildBaseAlly()));
 	for (auto x : GameData::Party)
 		_actors.push_back(x);
@@ -35,6 +34,7 @@ SceneBattle::SceneBattle() : m_acceptInput(false), m_currentMap(3), m_drawinited
 
 bool SceneBattle::Init()
 {
+	_type = ST_Battle;
 	NextScene = SceneGenData();
 	m_jsonHandler = std::shared_ptr<JsonHandler>(new JsonHandler(m_currentMap));
 
@@ -42,9 +42,6 @@ bool SceneBattle::Init()
 
 	OrthoProjInfo::GetRegularInstance().changed = true;
 	m_World = std::shared_ptr<Transformation>(new Transformation());
-
-	m_pause = false;
-	m_acceptInput = true;
 
 	m_mapHandler = std::shared_ptr<MapHandler>(new MapHandler(m_currentMap, m_jsonHandler));
 	Camera::Mapsize = m_mapHandler->GetMapSize();
@@ -58,22 +55,17 @@ bool SceneBattle::Init()
 	}
 
 	for (int i = 0; i < m_party.size(); i++)
-	{
 		m_party.at(i)->SetPhysics(Vector3f(3.0f, 4.0f + i, 4.0f), Vector3f());
-		//m_party.at(i)->SetDirection(dir_Right);
-	}
 
 	for (int i = 0; i < m_enemies.size(); i++)
 	{
 		m_enemies.at(i)->SetPhysics(Vector3f(12.0f, 4.0f + i, 4.0f), Vector3f());
-		//m_enemies.at(i)->SetDirection(dir_Left);
 		m_enemies.at(i)->GetModelMat()->SetScale(-1, 1, 1);
 	}
 
 	m_eventManager.SetEntitiesMap(&m_celist);
 
 #ifdef _DEBUG
-	//m_fontTitle = FontManager::GetInstance().AddFont(false, false);
 	m_fontFPS = FontManager::GetInstance().AddFont(true, false, true, "res/fonts/lowercase.png");
 	FontManager::GetInstance().SetScale(m_fontFPS, 0.5f, 0.5f);
 #endif
@@ -97,70 +89,18 @@ bool SceneBattle::Init()
 SceneBattle::~SceneBattle()
 {
 	FontManager::GetInstance().RemoveFont(m_fontFPS);
-	//FontManager::GetInstance().RemoveFont(m_fontTitle);
 }
 
 void SceneBattle::ManageInput()
 {
-	InputManager::GetInstance().SetupFrameKeys();
-
-	if (InputManager::GetInstance().FrameKeyStatus('B', AnyRelease))
-		m_bloomEffect = !m_bloomEffect;
-
-	if (InputManager::GetInstance().FrameKeyStatus('F', AnyRelease))
-		m_fade.SetFade(true);
-	if (InputManager::GetInstance().FrameKeyStatus('G', AnyRelease))
-		m_fade.SetFade(false);
-
-	if (InputManager::GetInstance().FrameKeyStatus('P', AnyRelease, 1000))
-		m_pause = !m_pause;
+	Scene::ManageInput();
 
 	if (InputManager::GetInstance().FrameKeyStatus('Z', AnyRelease, 5))
+	{
 		m_zoom = !m_zoom;
-}
-
-SceneGenData SceneBattle::Act()
-{
-	SceneGenData result;
-	result.id = 0;
-	result.sceneType = ST_World;
-	ManageInput();
-
-	//RENDER SETUP WITH FRAME BY FRAME
-	if (!m_pause || m_numFrames > 0)
-	{
-		//If we pause to slowly pass frames...
-		if (m_numFrames > 0)
-		{
-			m_numFrames--;
-			//...then set the elapsedtime to the desired amount (in fps)
-			ElapsedTime::GetInstance().SetBufferElapsedTime(60.f);
-		}
-		result = Update();
+		float value = m_zoom ? 2.0f : 1.0f;
+		m_World->SetScale(value, value, 1);
 	}
-
-	//DRAW
-	Draw();
-
-	if (!m_fade.IsDone() || result.id == 0)
-	{
-		result.id = 0;
-		result.scene = NULL;
-		return result;
-	}
-	if (result.scene)
-		result.scene->Resume();
-	return result;
-}
-
-void SceneBattle::Draw()
-{
-	RenderPass();
-}
-
-// Handle input?
-void SceneBattle::Interact()
-{
 }
 
 SceneGenData SceneBattle::Update()
@@ -170,7 +110,6 @@ SceneGenData SceneBattle::Update()
 	// Needs to be called here so the EventQueues can set render
 	Renderer::GetInstance().Clear();
 	Animation::AnimationCounter((float)ElapsedTime::GetInstance().GetElapsedTime());
-	//Interact();
 	m_eventManager.Update(ElapsedTime::GetInstance().GetElapsedTime());
 
 	if (m_fade.IsDone())
@@ -201,18 +140,14 @@ SceneGenData SceneBattle::Update()
 		it.second->Update();
 
 	for (auto a : _actors)
-	{
-		//if (a->Team != 0)
-			//a->GetModelMat()->SetScale(-1, 1, 1);
 		a->Update();
-	}
 
 	m_mapHandler->Update(OrthoProjInfo::GetRegularInstance().changed);
 
 	SetAudioPosition();
 	SoundManager::GetInstance().Update();
 
-	//Camera::Follow(m_battle._owner->GetPos(), m_World.get());
+	Camera::MapCenter(m_World.get());
 
 	//Display FPS
 #ifdef _DEBUG
@@ -225,20 +160,9 @@ SceneGenData SceneBattle::Update()
 	return NextScene;
 }
 
-void SceneBattle::RenderPass()
+void SceneBattle::Draw()
 {
-	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
-	glStencilMask(0xFF);
-	glClearStencil(0x00);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-	glStencilMask(0x00);
-
-	SetOrthoStuffs();
-
-	EffectManager::GetInstance().SetWorldTrans(&m_World->GetWOTrans().m[0][0], &m_World->GetWOTransNoTranslate().m[0][0]);
-	EffectManager::GetInstance().ResetWorldUpdateFlag();
-
-	EffectManager::GetInstance().Enable(E_Basic);
+	Scene::DrawBegin();
 
 	// Set the renders
 	m_mapHandler->SetRender();
@@ -256,61 +180,7 @@ void SceneBattle::RenderPass()
 
 	m_battle.SetRender();
 
-	if (!m_fade.IsDone())
-		m_fade.Begin();
-
-	// BLOOM
-	if (m_bloomEffect)
-		Bloom::GetInstance().Begin();
-
-	// DRAW
-	Renderer::GetInstance().Draw();
-
-	// BLOOM END
-	if (m_bloomEffect)
-		Bloom::GetInstance().End(false);
-
-	m_World->SetTranslation(m_backupTrans);
-}
-
-void SceneBattle::SetAudioPosition()
-{
-	SoundManager::GetInstance().SetListenerPosition();
-}
-
-void SceneBattle::SetNextScene(SceneGenData sgd)
-{
-	NextScene = sgd;
-}
-
-void SceneBattle::SetOrthoStuffs()
-{
-	if (OrthoProjInfo::GetRegularInstance().changed)
-	{
-		OrthoProjInfo* o = &OrthoProjInfo::GetRegularInstance();
-		m_World->SetOrthoProj(o);
-		m_World->SetTranslation(-o->Right / o->Size, -o->Top / o->Size, 0);
-
-		EffectManager::GetInstance().SetAllTilePositions(OrthoProjInfo::GetRegularInstance().Size);
-
-		if (m_celist.count(Camera::Target))
-			for (int i = 0; i < 30; i++)
-				Camera::Follow(m_celist.at(Camera::Target)->Physics()->Position(), m_World.get());
-
-		OrthoProjInfo::GetRegularInstance().changed = false;
-	}
-
-	float value = m_zoom ? 2.0f : 1.5f;
-	m_World->SetScale(value, value, 1);
-
-	m_backupTrans = m_World->GetTranslation();
-
-	Vector3f temp = m_backupTrans;
-	temp.x *= OrthoProjInfo::GetRegularInstance().Size;
-	temp.y *= OrthoProjInfo::GetRegularInstance().Size;
-
-	// Floor so we dont move the camera half a pixel and fuck up the graphics
-	temp.x = floorf(temp.x);
-	temp.y = floorf(temp.y);
-	m_World->SetTranslation(temp);
+	// Can enable post-processing effects here
+	Scene::DrawEnd();
+	// can disable post-processing effects here
 }

@@ -19,7 +19,7 @@ EventUpdateResponse EventMapChange::UpdateEvent(double elapsedTime, std::map<uns
 		SceneGenData sgd;
 		sgd.id = m_map;
 		sgd.sceneType = ST_World;
-		SceneWorld::SetNextScene(sgd);
+		Scene::NextScene = sgd;
 	}
 
 	return eur;

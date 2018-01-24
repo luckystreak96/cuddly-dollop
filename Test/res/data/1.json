@@ -5116,6 +5116,24 @@
       "z": 4.0,
       "sprite": "snowman.png",
       "walkOn": false
+    },
+    {
+      "x": 21.0,
+      "y": 5.0,
+      "z": 6.5,
+      "sprite": "trench_v.png"
+    },
+    {
+      "x": 21.0,
+      "y": 6.0,
+      "z": 6.5,
+      "sprite": "trench_v.png"
+    },
+    {
+      "x": 21.0,
+      "y": 7.0,
+      "z": 6.5,
+      "sprite": "trench_v.png"
     }
   ],
   "entities": [

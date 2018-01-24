@@ -14,7 +14,6 @@ class PhysicsComponent : public IComponent
 {
 public:
 	PhysicsComponent(Vector3f pos = Vector3f(), std::string modelName = "TILE", Vector3f size = Vector3f(), Vector3f numTilesSize = Vector3f(-1, -1, -1));
-	void ReceiveMessage(std::vector<std::string> message);
 	virtual void Update();
 	void SetDefaults(std::string name = "TILE");//cancer
 	std::string GetName();

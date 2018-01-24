@@ -13,10 +13,9 @@
 #include "input_manager.h"
 #include "entityFactory.h"
 
-SceneGenData SceneWorld::NextScene = SceneGenData();
-
-SceneWorld::SceneWorld(unsigned int map_id) : m_acceptInput(false), m_currentMap(map_id), m_drawinited(false), m_zoom(false)
+SceneWorld::SceneWorld(unsigned int map_id) : m_zoom(false)
 {
+	m_currentMap = map_id;
 	Init();
 	SoundManager::GetInstance();
 	m_fade.SetFade(true);
@@ -35,13 +34,14 @@ void SceneWorld::Brb()
 void SceneWorld::Resume()
 {
 	FontManager::GetInstance().EnableFont(m_fontFPS);
-	Camera::Mapsize = m_mapHandler->GetMapSize();
+	Scene::Resume();
 }
 
 bool SceneWorld::Init()
 {
 	GameData::EmplaceFlag("map", m_currentMap);
 
+	_type = ST_World;
 	NextScene = SceneGenData();
 	m_jsonHandler = std::shared_ptr<JsonHandler>(new JsonHandler(m_currentMap));
 
@@ -49,11 +49,6 @@ bool SceneWorld::Init()
 
 	OrthoProjInfo::GetRegularInstance().changed = true;
 	m_World = std::shared_ptr<Transformation>(new Transformation());
-
-	//BasicEffect::GetInstance();
-
-	m_pause = false;
-	m_acceptInput = true;
 
 	m_mapHandler = std::shared_ptr<MapHandler>(new MapHandler(m_currentMap, m_jsonHandler));
 	Camera::Mapsize = m_mapHandler->GetMapSize();
@@ -63,8 +58,6 @@ bool SceneWorld::Init()
 	m_eventManager.SetEntitiesMap(&m_celist);
 	m_collisionManager.SetEntities(&m_celist);
 
-	// THIS IS NOT GOOD - THE PLAYER NEEDS TO BE FOUND, NOT JUST BE ID 1
-	// NVM THIS IS GOOD
 	if (m_celist.count(1))
 	{
 		m_player = m_celist.at(1);
@@ -95,7 +88,6 @@ bool SceneWorld::Init()
 		}
 	}
 
-
 	return true;
 }
 
@@ -105,47 +97,12 @@ SceneWorld::~SceneWorld()
 	//FontManager::GetInstance().RemoveFont(m_fontTitle);
 }
 
-
-//Loads GL resources
-void SceneWorld::LoadAllResources()
-{
-	//for (Drawable* x : *m_objList)
-	//	x->LoadGLResources();
-
-	//m_test->LoadGLResources();
-	//m_mapHandler->Graphics()->LoadGLResources();
-
-	m_resources_loaded = true;
-}
-
-void SceneWorld::UnloadAllResources()
-{
-	//for (Drawable* x : *m_objList)
-	//	x->UnloadExternalResources();
-
-	m_resources_loaded = false;
-}
-
 void SceneWorld::ManageInput()
 {
-	InputManager::GetInstance().SetupFrameKeys();
+	Scene::ManageInput();
 
 	if (InputManager::GetInstance().FrameKeyStatus('B', AnyRelease))
 		m_bloomEffect = !m_bloomEffect;
-
-	if (InputManager::GetInstance().FrameKeyStatus('F', AnyRelease))
-		m_fade.SetFade(true);
-	if (InputManager::GetInstance().FrameKeyStatus('G', AnyRelease))
-		m_fade.SetFade(false);
-
-	if (InputManager::GetInstance().FrameKeyStatus('T', AnyRelease))
-		m_World->AddTranslation(0, 0, 1);
-
-	if (InputManager::GetInstance().FrameKeyStatus('Y', AnyRelease))
-		m_World->AddTranslation(0, 0, -1);
-
-	if (InputManager::GetInstance().FrameKeyStatus('P', AnyRelease))
-		m_pause = !m_pause;
 
 	if (InputManager::GetInstance().FrameKeyStatus('Z', AnyRelease))
 	{
@@ -156,53 +113,6 @@ void SceneWorld::ManageInput()
 			for (int i = 0; i < 30; i++)
 				Camera::Follow(m_celist.at(Camera::Target)->Physics()->Position(), m_World.get());
 	}
-
-	static float bloomint = 0.3f;
-	if (InputManager::GetInstance().FrameKeyStatus('U')) {
-		bloomint += 0.2f;
-		CombineEffect::GetInstance().SetIntensity(bloomint);
-	}
-	if (InputManager::GetInstance().FrameKeyStatus('J')) {
-		bloomint -= 0.2f;
-		CombineEffect::GetInstance().SetIntensity(bloomint);
-	}
-}
-
-SceneGenData SceneWorld::Act()
-{
-	SceneGenData result;
-	result.id = 0;
-	result.sceneType = ST_World;
-	ManageInput();
-
-	//RENDER SETUP WITH FRAME BY FRAME
-	if (!m_pause || m_numFrames > 0)
-	{
-		//If we pause to slowly pass frames...
-		if (m_numFrames > 0)
-		{
-			m_numFrames--;
-			//...then set the elapsedtime to the desired amount (in fps)
-			ElapsedTime::GetInstance().SetBufferElapsedTime(60.f);
-		}
-		result = Update();
-	}
-
-	//DRAW
-	Draw();
-
-	if (!m_fade.IsDone() || result.id == 0 && result.sceneType != ST_Battle)
-	{
-		result.id = 0;
-		return result;
-	}
-	Brb();
-	return result;
-}
-
-void SceneWorld::Draw()
-{
-	RenderPass();
 }
 
 void SceneWorld::Interact()
@@ -307,7 +217,8 @@ SceneGenData SceneWorld::Update()
 
 	//Display FPS
 #ifdef _DEBUG
-	FontManager::GetInstance().SetText(m_fontFPS, std::to_string(ElapsedTime::GetInstance().GetFPS()), Vector3f(0, OrthoProjInfo::GetRegularInstance().Top / 32.0f - 0.5f, 0));
+	FontManager::GetInstance().SetText(m_fontFPS, std::to_string(ElapsedTime::GetInstance().GetFPS()), 
+		Vector3f(0, OrthoProjInfo::GetRegularInstance().Top * 2.f / OrthoProjInfo::GetRegularInstance().Size - 0.5f, 0));
 #endif
 
 	srand(clock());
@@ -316,44 +227,20 @@ SceneGenData SceneWorld::Update()
 	return NextScene;
 }
 
-void SceneWorld::RenderPass()
+void SceneWorld::Draw()
 {
-	// Allow modifications to stencil buffer
-	glStencilMask(0xFF);
-	// Clear stencil buffer to all 0's
-	glClearStencil(0x00);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-	// Don't allow modifications to stencil buffer
-	glStencilMask(0x00);
-
-	// Setup world trans and change for effects
-	SetOrthoStuffs();
-
-	EffectManager::GetInstance().Enable(E_Basic);
+	Scene::DrawBegin();
 
 	// Set the renders
 	m_mapHandler->SetRender();
+
 	for (auto it : m_celist)
 		it.second->SetRender();
 	FontManager::GetInstance().SetRender();
 
-	// Enable fade
-	if (!m_fade.IsDone())
-		m_fade.Begin();
-
-	// Enable bloom
-	if (m_bloomEffect)
-		Bloom::GetInstance().Begin();
-
-	// Draw
-	Renderer::GetInstance().Draw();
-
-	// End bloom
-	if (m_bloomEffect)
-		Bloom::GetInstance().End(false);
-
-	// Set translation back to real value, not adjusted by tilesize (64)
-	m_World->SetTranslation(m_backupTrans);
+	// Can enable post-processing effects here
+	Scene::DrawEnd();
+	// can disable post-processing effects here
 }
 
 void SceneWorld::SetAudioPosition()
@@ -363,45 +250,3 @@ void SceneWorld::SetAudioPosition()
 	else
 		SoundManager::GetInstance().SetListenerPosition();
 }
-
-void SceneWorld::SetNextScene(SceneGenData sgd)
-{
-	NextScene = sgd;
-}
-
-void SceneWorld::SetOrthoStuffs()
-{
-	// Adjust the shaders and camera to new screen size
-	if (OrthoProjInfo::GetRegularInstance().changed)
-	{
-		OrthoProjInfo* o = &OrthoProjInfo::GetRegularInstance();
-		m_World->SetOrthoProj(o);
-		m_World->SetTranslation(-o->Right / o->Size, -o->Top  / o->Size, 0);
-
-		EffectManager::GetInstance().SetAllTilePositions(OrthoProjInfo::GetRegularInstance().Size);
-
-		if (m_celist.count(Camera::Target))
-			for (int i = 0; i < 30; i++)
-				Camera::Follow(m_celist.at(Camera::Target)->Physics()->Position(), m_World.get());
-
-		OrthoProjInfo::GetRegularInstance().changed = false;
-	}
-
-	float value = m_zoom ? 2.0f : 1.0f;
-	m_World->SetScale(value, value, 1);
-
-	m_backupTrans = m_World->GetTranslation();
-
-	Vector3f temp = m_backupTrans;
-	temp.x *= OrthoProjInfo::GetRegularInstance().Size;
-	temp.y *= OrthoProjInfo::GetRegularInstance().Size;
-
-	// Floor so we dont move the camera half a pixel and fuck up the graphics
-	temp.x = floorf(temp.x);
-	temp.y = floorf(temp.y);
-	m_World->SetTranslation(temp);
-
-	EffectManager::GetInstance().SetWorldTrans(&m_World->GetWOTrans().m[0][0], &m_World->GetWOTransNoTranslate().m[0][0]);
-	EffectManager::GetInstance().ResetWorldUpdateFlag();
-}
-

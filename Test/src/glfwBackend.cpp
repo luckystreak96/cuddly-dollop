@@ -15,7 +15,7 @@ void Resize(GLFWwindow* window)
 {
 	const int width = 16;
 	const int height = 9;
-	const int size = 32;
+	const int size = 64;
 	float multiplierx = 1;
 	float multipliery = 1;
 	int multiplierFinal = 1;
@@ -157,7 +157,7 @@ GLFWManager::GLFWManager()
 	//glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
 	//glStencilMask(0x00);
 
-	glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
+	glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

@@ -25,6 +25,7 @@ void SceneManager::Act()
 	//Scenes have changed
 	if (temp != m_currentScene)
 	{
+		m_currentScene->NextScene = SceneGenData();
 		//temp->UnloadAllResources();
 		//ResourceManager::GetInstance().UnloadAllResources();
 	}
