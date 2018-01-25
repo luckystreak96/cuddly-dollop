@@ -166,7 +166,7 @@ void BattleManager::SetChooseSkillText()
 	{
 		FontManager::GetInstance().EnableFont(_fonts[i]);
 		FontManager::GetInstance().SetScale(_fonts[i], 0.5f, 0.5f);
-		FontManager::GetInstance().SetText(_fonts[i], _chooseSkill->at(i)->_name, Vector3f(4, 6 - i * 0.5f, 0));
+		FontManager::GetInstance().SetText(_fonts[i], _chooseSkill->at(i)->_name, Vector3f(7.5f, 5.5f - i * 0.5f, 0));
 		//FontManager::GetInstance().GetFont(_fonts[i])->SetText(_chooseSkill->at(i)->_name, Vector3f(6, 7 - i, 1));
 	}
 }
@@ -185,7 +185,7 @@ void BattleManager::ManageInput()
 	if (InputManager::GetInstance().FrameKeyStatus(GLFW_KEY_SPACE, KeyStatus::Release, 5))
 		input.emplace(GLFW_KEY_SPACE);
 	for (int i = GLFW_KEY_RIGHT; i < GLFW_KEY_UP + 1; i++)
-		if (InputManager::GetInstance().FrameKeyStatus(i, Release, 5))
+		if (InputManager::GetInstance().FrameKeyStatus(i, KeyStatus::KeyPressed, 5))
 			input.emplace(i);
 
 	// If theres an animation going, SEND THE INPUT TO THE SKILL

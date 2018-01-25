@@ -41,6 +41,7 @@ public:
 
 public:
 	bool _enabled;
+	float _letterSpacing;
 
 protected:
 	void AddWordToMesh(std::string word, float x, float y);
@@ -51,7 +52,6 @@ protected:
 protected:
 	const double MaxTime;
 	const double m_timePerLetter;
-	const float LetterSpacing;
 	double m_elapsedTime;
 	double m_textSpeed;
 	double m_lifetime;

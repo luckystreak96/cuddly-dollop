@@ -3,6 +3,15 @@
 
 #include "actor.h"
 
+enum HUDComponent { HC_HealthBar, HC_Text };
+
+struct ActorInfoBundle
+{
+	HUDComponent _type;
+	GraphComp_ptr _graphics;
+	unsigned int _font;
+};
+
 class BattleHUD
 {
 public:
@@ -10,10 +19,14 @@ public:
 	void Init(std::vector<Actor_ptr> actors);
 	void Update();
 	void SetRender();
-	
+	void Destroy();
+
+private:
+	void AddActorHealthBar(Actor_ptr ap, int& party, int& enemies);
+
 public:
 	std::vector<Actor_ptr> _actors;
-	std::vector<GraphComp_ptr> _actorInfo;
+	std::vector<ActorInfoBundle> _actorInfo;
 };
 
 #endif // !BATTLE_HUD_H__

@@ -22,6 +22,8 @@ SceneBattle::SceneBattle() : m_zoom(false)
 	{
 		_actors.push_back(x);
 		_actors.push_back(Actor_ptr(ActorFactory::BuildBaseAlly()));
+		_actors.push_back(Actor_ptr(ActorFactory::BuildBaseAlly()));
+		_actors.push_back(Actor_ptr(ActorFactory::BuildBaseAlly()));
 	}
 	_actors.push_back(Actor_ptr(ActorFactory::BuildBaseEnemy()));
 	_actors.push_back(Actor_ptr(ActorFactory::BuildBaseEnemy()));
@@ -60,11 +62,11 @@ bool SceneBattle::Init()
 	}
 
 	for (int i = 0; i < m_party.size(); i++)
-		m_party.at(i)->SetPhysics(Vector3f(4.0f, 3.0f + i, 4.0f), Vector3f());
+		m_party.at(i)->SetPhysics(Vector3f(3.5f + i * 0.25f, 2.5f + i * 1.25f, 4.0f), Vector3f());
 
 	for (int i = 0; i < m_enemies.size(); i++)
 	{
-		m_enemies.at(i)->SetPhysics(Vector3f(13.0f, 3.0f + i, 4.0f), Vector3f());
+		m_enemies.at(i)->SetPhysics(Vector3f(13.5f - i * 0.25f, 2.5f + i * 1.25f, 4.0f), Vector3f());
 		m_enemies.at(i)->GetModelMat()->SetScale(-1, 1, 1);
 	}
 
@@ -94,6 +96,7 @@ bool SceneBattle::Init()
 SceneBattle::~SceneBattle()
 {
 	FontManager::GetInstance().RemoveFont(m_fontFPS);
+	m_battle._hud.Destroy();
 }
 
 void SceneBattle::ManageInput()
@@ -119,6 +122,8 @@ SceneGenData SceneBattle::Update()
 
 	if (m_fade.IsDone())
 		m_battle.Update();
+	else
+		m_battle._hud.Update();
 
 	if (m_battle._done && m_battle._winner == 0)
 	{
