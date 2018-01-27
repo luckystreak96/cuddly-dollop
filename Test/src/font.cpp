@@ -51,7 +51,7 @@ bool Font::TextDisplayDone()
 }
 
 
-void Font::ChangeLetter(unsigned int index, char newChar)
+void Font::ChangeLetter(unsigned int index, uint32_t newChar)
 {
 	//The verts per letter are by groups of 4
 	index *= 4;
@@ -84,7 +84,7 @@ void Font::SetupMesh(float xBndry, float yBndry)
 	m_mesh.Reset();
 
 	// Split the text into words for op word wrap
-	std::vector<std::string> temp = Utils::Split(m_message, ' ');
+	std::vector<std::string> temp = Utils::Split(m_text, ' ');
 	std::vector<std::string> words = std::vector<std::string>();//split(m_message, ' ');
 
 	// Iterate through the words
@@ -176,12 +176,12 @@ void Font::SetupMesh(float xBndry, float yBndry)
 
 
 	// Set message to the non-\n version
-	m_message = newmessage;
+	m_text = newmessage;
+	m_message = Utils::ConvertUTF8(newmessage);
 
 	// Reset messageprogress so we dont have \n's
-	m_messageProgress = "";
 	for (auto x : m_message)
-		m_messageProgress += ' ';
+		m_messageProgress.push_back(' ');
 
 	//delete m_graphics;
 	if (m_graphics == NULL)
@@ -197,7 +197,7 @@ void Font::AddWordToMesh(std::string word, float x, float y)
 {
 	for (unsigned int i = 0; i < (int)word.size(); i++)
 	{
-		char c = i >= m_messageProgress.size() ? ' ' : m_messageProgress.at(i);
+		uint32_t c = i >= m_messageProgress.size() ? ' ' : m_messageProgress.at(i);
 		unsigned int index = CharToCode(c);
 
 		//Change position, and then change texture coords
@@ -220,15 +220,18 @@ void Font::CreateHash() {
 		"?@ABCDEFGHIJKLMN"
 		"OPQRSTUVWXYZ[\\]^"
 		"_`abcdefghijklmn"
-		"opqrstuvwxyz{|}~";
+		"opqrstuvwxyz{|}~"
+		u8"\u001bé";
 
-	for (unsigned int i = 0; i < charList.length(); i++)
-		m_letters.emplace(charList.at(i), i);
+	std::vector<uint32_t> list = Utils::ConvertUTF8(charList);
+
+	for (unsigned int i = 0; i < list.size(); i++)
+		m_letters.emplace(list.at(i), i);
 }
 
 void Font::Reset()
 {
-	SetText(m_message, m_basePosition, m_centered, m_xBndry);
+	SetText(m_text, m_basePosition, m_centered, m_xBndry);
 }
 
 void Font::SetText(std::string text, Vector3f location, bool centered, float xBoundry)
@@ -236,16 +239,16 @@ void Font::SetText(std::string text, Vector3f location, bool centered, float xBo
 	m_xBndry = xBoundry;
 	m_centered = centered;
 	m_elapsedTime = 0;
-	m_message = text;
+	m_text = text;
 
 	// Fill in variables if necessary
 	SetTextVariables();
 
 	m_totalTime = text.size() * m_timePerLetter;
 	//m_lifetime = 2 + text.size() * 0.1;
-	m_messageProgress = "";
+	m_messageProgress.clear();
 	for (auto x : m_message)
-		m_messageProgress += ' ';
+		m_messageProgress.push_back(' ');
 
 	float value = 0;
 	if (centered)
@@ -267,7 +270,7 @@ void Font::SetTextVariables()
 	int location;
 	int beginning;
 	int end;
-	std::string temp = m_message;
+	std::string temp = m_text;
 	while ((location = temp.find("%")) != std::string::npos)
 	{
 		counter++;
@@ -279,14 +282,14 @@ void Font::SetTextVariables()
 			std::string var_name = result;//m_message.substr(beginning + 1, (end - 1) - beginning);
 			// If theres no illegal character, replace...
 			if (!(var_name.find(' ') != std::string::npos || var_name.find('\n') != std::string::npos))
-				m_message.replace(beginning, end - beginning, GameData::Get(var_name));
+				m_text.replace(beginning, end - beginning, GameData::Get(var_name));
 
-			temp = m_message;
+			temp = m_text;
 			// ...else do nothing, it was probably a regular % in the text
 		}
 		else
 		{
-			temp = temp.substr(location + 1, m_message.size() - location);
+			temp = temp.substr(location + 1, m_text.size() - location);
 			beginning = location;
 		}
 	}
@@ -304,9 +307,12 @@ void Font::SetTextSpeed(double speed)
 
 
 //Returns the index of the letter
-unsigned int Font::CharToCode(char c)
+unsigned int Font::CharToCode(uint32_t c)
 {
-	return m_letters.at(c/* - 32*/);
+	if (m_letters.count(c))
+		return m_letters.at(c);
+	else
+		return 96;
 }
 
 void Font::SetRender()

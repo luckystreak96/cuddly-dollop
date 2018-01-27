@@ -38,6 +38,9 @@
                     <Separator />
                     <MenuItem Header="_Exit" />
                 </MenuItem>
+                <MenuItem Header="_Window">
+                    <MenuItem x:Name="menuLocalization" Header="_Localization" Click="menuLocalization_Click"/>
+                </MenuItem>
             </Menu>
         </DockPanel>
         <Grid Name="grdEntityMode" HorizontalAlignment="Left" Height="32" Margin="813,24,0,0" VerticalAlignment="Top" Width="32" Background="#FFE2E2E2">

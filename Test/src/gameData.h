@@ -22,6 +22,7 @@ public:
 	static std::string Get(std::string key);
 	static void LoadFromFile();
 	static void LoadSettings();
+	static void LoadLocalization();
 	static void EnsureBaseSettings();
 	static void NewGame();
 	static void LoadGameData();
@@ -47,16 +48,24 @@ public:
 	// Game string variables
 	static std::map<std::string, std::string> Strings;
 
+	// Localization strings
+	static std::map<std::string, std::map<std::string, std::string>> Localization;
+
 	// Game position variables
 	static std::map<std::string, Vector3f> Positions;
 
 	// Options
 	static OptionMap Options;
+
+	static std::string Language;
 	
 private:
 	static rapidjson::Document m_document;
 	static std::string m_file;
 	static std::string m_path;
+	static std::string m_localizationPath;
 };
+
+std::string _(std::string key);
 
 #endif // !GAME_DATA_H__

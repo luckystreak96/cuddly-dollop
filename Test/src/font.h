@@ -26,7 +26,7 @@ public:
 
 public:
 	virtual void SetText(std::string text, Vector3f location = Vector3f(0, 0, -1), bool centered = false, float xBoundry = -1);
-	void ChangeLetter(unsigned int index, char newChar);
+	void ChangeLetter(unsigned int index, uint32_t newChar);
 	virtual void Draw();
 	virtual void Update(double elapsedTime);
 	virtual void SetRender();
@@ -47,7 +47,7 @@ protected:
 	void AddWordToMesh(std::string word, float x, float y);
 	void CreateHash();
 	void SetupMesh(float xBoundry = -1, float yBoundry = -1);
-	unsigned int CharToCode(char c);
+	unsigned int CharToCode(uint32_t c);
 
 protected:
 	const double MaxTime;
@@ -70,7 +70,7 @@ protected:
 
 	std::shared_ptr<FontGraphicsComponent> m_graphics = NULL;
 	std::vector<Vector3f> m_letterPositions;
-	std::map<char, unsigned int> m_letters;
+	std::map<uint32_t, unsigned int> m_letters;
 	Mesh m_mesh;
 	//std::vector<Vertex> m_verts;
 	const unsigned int m_lettersPerRow;
@@ -81,8 +81,9 @@ protected:
 
 	Vector3f m_basePosition;
 	std::string m_texture;
-	std::string m_message;
-	std::string m_messageProgress;
+	std::string m_text;
+	std::vector<uint32_t> m_message;
+	std::vector<uint32_t> m_messageProgress;
 };
 
 #endif // !FONT_H__

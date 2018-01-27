@@ -12,6 +12,7 @@
 Game::Game() : m_exit(false)
 {
 	GameData::LoadSettings();
+	GameData::LoadLocalization();
 }
 
 Game::~Game()

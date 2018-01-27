@@ -1,6 +1,7 @@
 #include "skillSmack.h"
 #include "soundManager.h"
 #include "particleManager.h"
+#include "gameData.h"
 
 SkillSmack::SkillSmack()
 {

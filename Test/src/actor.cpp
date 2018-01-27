@@ -31,6 +31,8 @@ int Actor::TakeDamage(int dmg)
 {
 	// Apply damage reduction here
 	Health -= dmg;
+	Health = fmin(MaxHealth, Health);
+	Health = fmax(Health, 0);
 	ApplyLethal();
 
 	return dmg;

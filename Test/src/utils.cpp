@@ -54,6 +54,43 @@ std::string Utils::RemoveWhiteSpace(std::string& str)
 	return result;
 }
 
+std::vector<uint32_t> Utils::ConvertUTF8(std::string text)
+{
+	std::vector<uint32_t> result;
+	for (int i = 0; i < text.size(); i++)
+	{
+		uint32_t let = (uint8_t)text[i];
+		uint32_t let2 = 0;
+		uint32_t let3 = 0;
+		uint32_t let4 = 0;
+		if (let >> 6 == 0b11)
+		{
+			// 2 chars
+			if (text.size() <= i + 1)
+				continue;
+			let2 = (uint8_t)text[++i];
+		}
+		if (let >> 5 == 0b111)
+		{
+			// 3 chars
+			if (text.size() <= i + 1)
+				continue;
+			let3 = (uint8_t)text[++i];
+		}
+		if (let >> 3 == 0b11110)
+		{
+			// 4 chars
+			if (text.size() <= i + 1)
+				continue;
+			let4 = (uint8_t)text[++i];
+		}
+		uint32_t letter = let4 << 24 | let3 << 16 | let2 << 8 | let;
+		result.push_back(letter);
+	}
+
+	return result;
+}
+
 void Utils::Pause()
 {
     std::string wait;

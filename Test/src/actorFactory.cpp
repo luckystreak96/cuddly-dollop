@@ -14,7 +14,7 @@ Actor_ptr ActorFactory::BuildBaseEnemy()
 {
 	Actor_ptr result = Actor_ptr(new Actor());
 	result->Speed = 2;
-	result->Name = "Toad";
+	result->Name = "Ghost";
 	result->Team = 1;
 	result->SetTexture("res/sprites/entities/entity_ghost.png");
 

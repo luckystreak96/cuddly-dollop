@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <iostream>
 #include "fontManager.h"
+#include "gameData.h"
 
 BattleManager::BattleManager()
 {
@@ -110,50 +111,51 @@ void BattleManager::UpdateLogic()
 	//if (_animations.size() < 1)
 	//{
 		// End turn if the skill is done
-		if (_selectedSkill == NULL)
+	if (_selectedSkill == NULL)
+	{
+		_owner = _actorQueue.front();
+
+		// If the actor is dead, cycle
+		if (_owner->Dead || _state == BS_ActionDone)
 		{
-			_owner = _actorQueue.front();
-
-			// If the actor is dead, cycle
-			if (_owner->Dead || _state == BS_ActionDone)
-			{
-				CycleActors();
-				Select(0);
-				return;
-			}
-
-			// Choose enemy action
-			if (_owner->Team != 0)
-			{
-				_selectedSkill = _owner->Skills.at(rand() % _owner->Skills.size());
-
-				int targ = 0;
-				while (_actors.at(targ)->Team == _owner->Team)
-					targ = rand() % _actors.size();
-
-				_targets.push_back(_actors.at(targ));
-
-				UseSkill();
-			}
+			CycleActors();
+			Select(0);
+			return;
 		}
-		else
+
+		// Choose enemy action
+		if (_owner->Team != 0)
 		{
-			// Update skill
-			if (_state != BS_SelectTargets)
+			_selectedSkill = _owner->Skills.at(rand() % _owner->Skills.size());
+
+			int targ = 0;
+			do {
+				targ = rand() % _actors.size();
+			} while (targ < 0 || targ > _actors.size() || _actors.at(targ)->Team == _owner->Team);
+
+			_targets.push_back(_actors.at(targ));
+
+			UseSkill();
+		}
+	}
+	else
+	{
+		// Update skill
+		if (_state != BS_SelectTargets)
+		{
+			if (_selectedSkill != NULL)
 			{
-				if (_selectedSkill != NULL)
+				if (_selectedSkill->_done)
 				{
-					if (_selectedSkill->_done)
-					{
-						_state = BS_ActionDone;
-					}
-					else
-					{
-						_selectedSkill->Update();
-					}
+					_state = BS_ActionDone;
+				}
+				else
+				{
+					_selectedSkill->Update();
 				}
 			}
 		}
+	}
 	//}
 }
 
@@ -166,7 +168,7 @@ void BattleManager::SetChooseSkillText()
 	{
 		FontManager::GetInstance().EnableFont(_fonts[i]);
 		FontManager::GetInstance().SetScale(_fonts[i], 0.5f, 0.5f);
-		FontManager::GetInstance().SetText(_fonts[i], _chooseSkill->at(i)->_name, Vector3f(7.5f, 5.5f - i * 0.5f, 0));
+		FontManager::GetInstance().SetText(_fonts[i], _(_chooseSkill->at(i)->_name), Vector3f(7.5f, 5.5f - i * 0.5f, 0));
 		//FontManager::GetInstance().GetFont(_fonts[i])->SetText(_chooseSkill->at(i)->_name, Vector3f(6, 7 - i, 1));
 	}
 }
@@ -348,7 +350,7 @@ void BattleManager::CycleActors()
 	_owner = _actorQueue.front();
 	if (!_actorQueue.front()->Dead)
 		return;
-		//std::cout << "It's " << _actorQueue.front()->Name << "'s turn!" << std::endl;
+	//std::cout << "It's " << _actorQueue.front()->Name << "'s turn!" << std::endl;
 	else
 		CycleActors();
 }

@@ -744,5 +744,11 @@ namespace dollop_editor
         {
             fill = !fill;
         }
+
+        private void menuLocalization_Click(object sender, RoutedEventArgs e)
+        {
+            Localization loc = new Localization();
+            loc.Show();
+        }
     }
 }

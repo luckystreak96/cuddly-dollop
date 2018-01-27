@@ -1,5 +1,6 @@
 #include "skillHeal.h"
 #include "soundManager.h"
+#include "gameData.h"
 
 SkillHeal::SkillHeal()
 {
@@ -15,7 +16,7 @@ void SkillHeal::DefaultSetup()
 void SkillHeal::ApplyEffect()
 {
 	int dmg = 0;
-	dmg -= rand() % 7 + 2;
+	dmg -= rand() % 2 + 5;
 	_targets->at(0)->TakeDamage(dmg);
 
 	// Damage text

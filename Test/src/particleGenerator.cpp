@@ -19,7 +19,7 @@ Particle::Particle()
 void Snow::Update(Vector3f& zoneSize)
 {
 	velocity.x = sin(counter * 3.0f) / 20.0f;
-	position += velocity * ElapsedTime::GetInstance().GetElapsedTime() * 60.0;
+	position += velocity;
 	if (position.y < -1 || position.x < -2 || position.x > zoneSize.x + 2)
 		ResetLocation(zoneSize);
 	counter += 0.01f;
@@ -44,7 +44,7 @@ void Snow::ResetLocation(Vector3f& zoneSize, bool firstSpawn, bool smooth)
 		firstSpawn = false;
 
 	position.x = fmod(((float)rand() / 1000.0f), zoneSize.x + 2.0f) - 2.0f;
-	position.y = fmod(rand() / 1000.0f, ((firstSpawn ? (int)zoneSize.y * 2 : (int)zoneSize.y)) + (firstSpawn ? 0 : zoneSize.y));
+	position.y = fmod(rand() / 1000.0f, ((firstSpawn ? (int)zoneSize.y * 2 : (int)zoneSize.y))) + (firstSpawn ? 0 : zoneSize.y);
 	velocity.y = -fmod(((float)rand() / 1000.0f), 0.003f) - 0.003f;
 	velocity.y *= pow(size * 10.f, 2);
 	float value = fmod(((float)rand() / 1000.0f), 0.1f);
@@ -62,7 +62,7 @@ void Snow::SetTrans(Transformation& trans)
 
 void Rain::Update(Vector3f& zoneSize)
 {
-	position += velocity * ElapsedTime::GetInstance().GetElapsedTime() * 60.0;
+	position += velocity;
 	if (/*rand() % 20 == 0 || */position.y < -1.0f || position.x < -4.0f || position.x > zoneSize.x + 1)
 		ResetLocation(zoneSize);
 	counter -= 0.01f;
@@ -107,13 +107,13 @@ void Rain::ResetLocation(Vector3f& zoneSize, bool firstSpawn, bool smooth)
 
 void Music::Update(Vector3f& spawnPos)
 {
-	position += velocity * ElapsedTime::GetInstance().GetElapsedTime() * 60.0;
+	position += velocity;
 	if (counter > 180)
 	{
 		counter = 0;
 		ResetLocation(spawnPos);
 	}
-	counter += 1;
+	counter += 1.f;
 };
 
 Music::Music(Vector3f& spawnPos, std::vector<std::string> tex, bool smooth)
@@ -151,7 +151,7 @@ void Music::ResetLocation(Vector3f& spawnPos, bool firstSpawn, bool smooth)
 
 void Explosion::Update(Vector3f& spawnpos)
 {
-	position += velocity * ElapsedTime::GetInstance().GetElapsedTime() * 60.0;
+	position += velocity;
 	velocity.x *= 0.95f;
 	velocity.y += 0.0005f;
 	if (counter >= 60)
@@ -173,7 +173,10 @@ Explosion::Explosion(Vector3f& spawnPos, std::string tex, bool smooth, float pow
 
 void Explosion::SetTrans(Transformation& trans)
 {
-	trans.SetRotation(texture == "dust.png" ? counter / 60.f : 0, 0, counter / 4.f);
+	if (texture == "dust.png")
+		trans.SetRotation(counter / 60.f, 0, counter * (velocity.x / abs(velocity.x)) / 4.f);
+	else
+		trans.SetRotation(0, 0, counter * (velocity.x / abs(velocity.x)) / 8.f);
 	float value = 0.1f * counter;
 	float scale = (36.f - value * value) / 36.f;
 	trans.SetScale(Vector3f(0.5f * scale, 0.5f * scale, 1.0f));

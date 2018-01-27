@@ -8,8 +8,10 @@ enum HUDComponent { HC_HealthBar, HC_Text };
 struct ActorInfoBundle
 {
 	HUDComponent _type;
-	GraphComp_ptr _graphics;
-	unsigned int _font;
+	GraphComp_ptr _foreground;
+	GraphComp_ptr _background;
+	unsigned int _health;
+	unsigned int _name;
 };
 
 class BattleHUD
