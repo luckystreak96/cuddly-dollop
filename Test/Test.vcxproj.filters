@@ -407,6 +407,9 @@
     <ClInclude Include="src\battleHUD.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\particleManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -681,6 +684,9 @@
     </ClCompile>
     <ClCompile Include="src\scene.cpp">
       <Filter>Source Files\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="src\particleManager.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

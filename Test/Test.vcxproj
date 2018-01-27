@@ -170,6 +170,7 @@
     <ClInclude Include="src\animJumpTo.h" />
     <ClInclude Include="src\battleHUD.h" />
     <ClInclude Include="src\fontFloat.h" />
+    <ClInclude Include="src\particleManager.h" />
     <ClInclude Include="src\skillHeal.h" />
     <ClInclude Include="src\skillMelee.h" />
     <ClInclude Include="src\skillSmack.h" />
@@ -270,6 +271,7 @@
     <ClCompile Include="src\animJumpTo.cpp" />
     <ClCompile Include="src\battleHUD.cpp" />
     <ClCompile Include="src\fontFloat.cpp" />
+    <ClCompile Include="src\particleManager.cpp" />
     <ClCompile Include="src\scene.cpp" />
     <ClCompile Include="src\skillHeal.cpp" />
     <ClCompile Include="src\skillMelee.cpp" />

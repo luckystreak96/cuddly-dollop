@@ -173,7 +173,7 @@ Explosion::Explosion(Vector3f& spawnPos, std::string tex, bool smooth, float pow
 
 void Explosion::SetTrans(Transformation& trans)
 {
-	trans.SetRotation(counter / 60.f, 0, counter / 4.f);
+	trans.SetRotation(texture == "dust.png" ? counter / 60.f : 0, 0, counter / 4.f);
 	float value = 0.1f * counter;
 	float scale = (36.f - value * value) / 36.f;
 	trans.SetScale(Vector3f(0.5f * scale, 0.5f * scale, 1.0f));
@@ -330,4 +330,9 @@ Vector3f ParticleGenerator::GetRange()
 void ParticleGenerator::SetPowerLevel(float power)
 {
 	m_power = power;
+}
+
+void ParticleGenerator::SetColor(Vector3f color, float alpha)
+{
+	m_graphics->SetColorAll(color, alpha);
 }

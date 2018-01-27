@@ -13,6 +13,7 @@
 #include "input_manager.h"
 #include "entityFactory.h"
 #include "actorFactory.h"
+#include "particleManager.h"
 
 SceneBattle::SceneBattle() : m_zoom(false)
 {
@@ -166,6 +167,7 @@ SceneGenData SceneBattle::Update()
 
 	srand(clock());
 	FontManager::GetInstance().Update(ElapsedTime::GetInstance().GetElapsedTime());
+	ParticleManager::GetInstance().Update(ElapsedTime::GetInstance().GetElapsedTime());
 
 	return NextScene;
 }
@@ -180,6 +182,7 @@ void SceneBattle::Draw()
 	for (auto it : m_celist)
 		it.second->SetRender();
 	FontManager::GetInstance().SetRender();
+	ParticleManager::GetInstance().SetRender();
 
 	for (auto a : m_party)
 		Renderer::GetInstance().Add(a);

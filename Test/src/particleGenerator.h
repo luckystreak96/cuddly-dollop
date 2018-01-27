@@ -10,6 +10,9 @@
 #include "renderer.h"
 #include <time.h>
 
+class ParticleGenerator;
+typedef std::shared_ptr<ParticleGenerator> Particle_ptr;
+
 enum ParticleType { PT_Snow, PT_Rain, PT_ObjectRain, PT_Music, PT_Explosion };
 static const std::map<std::string, ParticleType> ParticleFromString = { 
 	std::make_pair("snow", PT_Snow),
@@ -76,6 +79,7 @@ public:
 	~ParticleGenerator();
 	void Init(ParticleType c, unsigned int num_particles = 1, Vector3f zoneSize = Vector3f(32, 16, 0), bool smooth = false, std::string tex = "snowflake.png");
 	void FinalizeSetup();
+	void SetColor(Vector3f color, float alpha = 1.0f);
 	void SetRender();
 	void Draw();
 	void LogicUpdate();
