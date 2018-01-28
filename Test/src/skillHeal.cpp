@@ -11,6 +11,8 @@ SkillHeal::SkillHeal()
 void SkillHeal::DefaultSetup()
 {
 	_name = "Heal";
+	_targetMode = TM_Any;
+	_defaultTarget = DT_Self;
 }
 
 void SkillHeal::ApplyEffect()

@@ -13,6 +13,9 @@ enum BattleState;
 class Skill;
 typedef std::shared_ptr<Skill> Skill_ptr;
 
+enum TargetMode { TM_Enemy, TM_Ally, TM_Alive, TM_Dead, TM_Any };
+enum DefaultTarget { DT_Self, DT_Enemy, DT_Ally };
+
 class Skill
 {
 public:
@@ -36,7 +39,8 @@ public:
 	int _currentCooldown;
 	int _minTargets;
 	Actor_ptr _owner;
-
+	TargetMode _targetMode;
+	DefaultTarget _defaultTarget;
 
 protected:
 	void DefaultSetup();

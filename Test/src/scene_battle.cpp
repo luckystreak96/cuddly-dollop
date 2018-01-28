@@ -91,6 +91,8 @@ bool SceneBattle::Init()
 		}
 	}
 
+	Scene::DrawBegin();
+
 	return true;
 }
 
@@ -185,12 +187,8 @@ void SceneBattle::Draw()
 	FontManager::GetInstance().SetRender();
 	ParticleManager::GetInstance().SetRender();
 
-	for (auto a : m_party)
+	for (auto a : _actors)
 		Renderer::GetInstance().Add(a);
-
-	for (auto a : m_enemies)
-		if (!a->Dead)
-			Renderer::GetInstance().Add(a);
 
 	m_battle.SetRender();
 

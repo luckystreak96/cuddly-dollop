@@ -186,6 +186,8 @@ void BattleManager::ManageInput()
 	std::set<int> input;
 	if (InputManager::GetInstance().FrameKeyStatus(GLFW_KEY_SPACE, KeyStatus::Release, 5))
 		input.emplace(GLFW_KEY_SPACE);
+	if (InputManager::GetInstance().FrameKeyStatus(GLFW_KEY_C, KeyStatus::Release, 5))
+		input.emplace(GLFW_KEY_C);
 	for (int i = GLFW_KEY_RIGHT; i < GLFW_KEY_UP + 1; i++)
 		if (InputManager::GetInstance().FrameKeyStatus(i, KeyStatus::KeyPressed, 5))
 			input.emplace(i);
@@ -213,7 +215,7 @@ void BattleManager::ManageInput()
 			{
 				for (int i = _selectedIndex - 1; i >= 0; i--)
 				{
-					if (!_actors[i]->Dead)
+					if (_actors[i]->RespectsTargeting(_owner, _selectedSkill->_targetMode))
 					{
 						Select(i);
 						break;
@@ -243,7 +245,7 @@ void BattleManager::ManageInput()
 			{
 				for (int i = _selectedIndex + 1; i < _actors.size(); i++)
 				{
-					if (!_actors[i]->Dead)
+					if (_actors[i]->RespectsTargeting(_owner, _selectedSkill->_targetMode))
 					{
 						Select(i);
 						break;
@@ -270,13 +272,36 @@ void BattleManager::ManageInput()
 			_selectedSkill = _chooseSkill->at(_selectedIndex);
 			//std::cout << "Skill selected: " << _selectedSkill->_name << std::endl;
 			_state = BS_SelectTargets;
+			bool done = false;
 			for (int i = 0; i < _actors.size(); i++)
 			{
-				if (_actors[i]->Team != _owner->Team && !_actors[i]->Dead)
+				switch (_selectedSkill->_defaultTarget)
 				{
-					Select(i);
+				case DT_Self:
+					if (_actors[i] == _owner)
+					{
+						Select(i);
+						done = true;
+					}
+					break;
+				case DT_Ally:
+					if (_actors[i]->Team == _owner->Team && _actors[i]->RespectsTargeting(_owner, _selectedSkill->_targetMode))
+					{
+						Select(i);
+						done = true;
+					}
+					break;
+				case DT_Enemy:
+					if (_actors[i]->Team != _owner->Team && _actors[i]->RespectsTargeting(_owner, _selectedSkill->_targetMode))
+					{
+						Select(i);
+						done = true;
+					}
 					break;
 				}
+
+				if (done)
+					break;
 			}
 		}
 		else if (_state == BS_SelectTargets)
@@ -296,6 +321,23 @@ void BattleManager::ManageInput()
 			UseSkill();
 		}
 	}
+
+	if (input.count(GLFW_KEY_C))
+	{
+		if (_state == BS_SelectTargets)
+		{
+			_selectedIndex = 0;
+			_state = BS_SelectAction;
+			SetChooseSkillText();
+			Select(_selectedIndex);
+			_showingSkills = true;
+			for (auto x : _actors)
+			{
+				x->ApplyLethal();
+				x->Selected = false;
+			}
+		}
+	}
 }
 
 void BattleManager::Select(int target)
@@ -305,7 +347,7 @@ void BattleManager::Select(int target)
 		for (auto x : _actors)
 		{
 			if (x->Selected)
-				x->SetColorAll();
+				x->ApplyLethal();
 			x->Selected = false;
 		}
 
@@ -313,8 +355,6 @@ void BattleManager::Select(int target)
 		_actors.at(target)->Selected = true;
 		_actors.at(target)->SetColorAll(Vector3f(1.f, 0.25f, 0.25f));
 		_selectedIndex = target;
-		//if (_owner->Team == 0)
-			//std::cout << "Selected: " << _actors.at(_selectedIndex)->Name << std::endl;
 	}
 	else if (_state == BS_SelectAction)
 	{
@@ -324,8 +364,6 @@ void BattleManager::Select(int target)
 			FontManager::GetInstance().GetFont(_fonts[target])->GetGraphics()->SetColorAll(Vector3f(1, 0, 0));
 		}
 		_selectedIndex = target;
-		//if (_owner->Team == 0)
-			//std::cout << "Selected: " << _chooseSkill->at(_selectedIndex)->_name << std::endl;
 	}
 }
 

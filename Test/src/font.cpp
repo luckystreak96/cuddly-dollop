@@ -84,7 +84,7 @@ void Font::SetupMesh(float xBndry, float yBndry)
 	m_mesh.Reset();
 
 	// Split the text into words for op word wrap
-	std::vector<std::string> temp = Utils::Split(m_text, ' ');
+	std::vector<std::string> temp = Utils::Split(_text, ' ');
 	std::vector<std::string> words = std::vector<std::string>();//split(m_message, ' ');
 
 	// Iterate through the words
@@ -176,7 +176,7 @@ void Font::SetupMesh(float xBndry, float yBndry)
 
 
 	// Set message to the non-\n version
-	m_text = newmessage;
+	_text = newmessage;
 	m_message = Utils::ConvertUTF8(newmessage);
 
 	// Reset messageprogress so we dont have \n's
@@ -231,7 +231,7 @@ void Font::CreateHash() {
 
 void Font::Reset()
 {
-	SetText(m_text, m_basePosition, m_centered, m_xBndry);
+	SetText(_text, m_basePosition, m_centered, m_xBndry);
 }
 
 void Font::SetText(std::string text, Vector3f location, bool centered, float xBoundry)
@@ -239,7 +239,7 @@ void Font::SetText(std::string text, Vector3f location, bool centered, float xBo
 	m_xBndry = xBoundry;
 	m_centered = centered;
 	m_elapsedTime = 0;
-	m_text = text;
+	_text = text;
 
 	// Fill in variables if necessary
 	SetTextVariables();
@@ -252,7 +252,7 @@ void Font::SetText(std::string text, Vector3f location, bool centered, float xBo
 
 	float value = 0;
 	if (centered)
-		value = (((float)m_message.size() / 2.0f) * _letterSpacing * m_xScale);
+		value = (((float)_text.size() / 2.0f) * _letterSpacing * m_xScale);
 
 	location.x -= value;
 
@@ -270,7 +270,7 @@ void Font::SetTextVariables()
 	int location;
 	int beginning;
 	int end;
-	std::string temp = m_text;
+	std::string temp = _text;
 	while ((location = temp.find("%")) != std::string::npos)
 	{
 		counter++;
@@ -282,14 +282,14 @@ void Font::SetTextVariables()
 			std::string var_name = result;//m_message.substr(beginning + 1, (end - 1) - beginning);
 			// If theres no illegal character, replace...
 			if (!(var_name.find(' ') != std::string::npos || var_name.find('\n') != std::string::npos))
-				m_text.replace(beginning, end - beginning, GameData::Get(var_name));
+				_text.replace(beginning, end - beginning, GameData::Get(var_name));
 
-			temp = m_text;
+			temp = _text;
 			// ...else do nothing, it was probably a regular % in the text
 		}
 		else
 		{
-			temp = temp.substr(location + 1, m_text.size() - location);
+			temp = temp.substr(location + 1, _text.size() - location);
 			beginning = location;
 		}
 	}

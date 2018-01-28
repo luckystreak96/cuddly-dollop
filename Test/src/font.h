@@ -42,6 +42,7 @@ public:
 public:
 	bool _enabled;
 	float _letterSpacing;
+	std::string _text;
 
 protected:
 	void AddWordToMesh(std::string word, float x, float y);
@@ -81,7 +82,6 @@ protected:
 
 	Vector3f m_basePosition;
 	std::string m_texture;
-	std::string m_text;
 	std::vector<uint32_t> m_message;
 	std::vector<uint32_t> m_messageProgress;
 };

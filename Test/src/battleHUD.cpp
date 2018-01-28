@@ -82,6 +82,8 @@ void BattleHUD::Update()
 		Vector3f color = Vector3f(0, 0.6f, 0.8f);
 		int health = _actors.at(i)->Health;
 		int maxhealth = _actors.at(i)->MaxHealth;
+
+		// Set color
 		if (health > maxhealth / 2)
 			color = Vector3f(0.08f, 0.4f, 1.0f);
 		else if (health <= maxhealth / 10)
@@ -89,12 +91,20 @@ void BattleHUD::Update()
 		else
 			color = Vector3f(1.0f, 0.6f, 0.2f);
 
+		// Update the font
 		if (health <= 0)
 			FontManager::GetInstance().DisableFont(_actorInfo[i]._health);
 		else
 		{
+			FontManager::GetInstance().EnableFont(_actorInfo[i]._health);
 			Vector3f offset = Vector3f(-0.75f, -0.7f, -1);
-			FontManager::GetInstance().SetText(_actorInfo[i]._health, std::to_string(health) + " / " + std::to_string(maxhealth), _actorInfo[i]._foreground->GetPos() + offset, true);
+			std::string text = std::to_string(health) + " / " + std::to_string(maxhealth);
+			std::string current = FontManager::GetInstance().GetFont(_actorInfo[i]._health)->_text;
+
+			// Only update font when it changes
+			if (current.substr(0, current.length() - 1) != text)
+				FontManager::GetInstance().SetText(_actorInfo[i]._health, text, _actorInfo[i]._foreground->GetPos() + offset, true);
+
 			FontManager::GetInstance().GetFont(_actorInfo[i]._health)->Update(0);
 		}
 

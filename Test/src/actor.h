@@ -18,6 +18,8 @@ public:
 	Actor();
 	int TakeDamage(int dmg);
 	void ApplyLethal();
+	bool RespectsTargeting(Actor_ptr ap, int tm);
+	void Update();
 
 public:
 	std::string Name;

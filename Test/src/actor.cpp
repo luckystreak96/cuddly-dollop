@@ -25,6 +25,10 @@ void Actor::SetDefault()
 void Actor::ApplyLethal()
 {
 	Dead = Health <= 0;
+	if (!Dead)
+		SetColorAll();
+	else
+		SetColorAll(Vector3f(0.5f, 0.5f, 0.5f), 0.5f);
 }
 
 int Actor::TakeDamage(int dmg)
@@ -36,4 +40,29 @@ int Actor::TakeDamage(int dmg)
 	ApplyLethal();
 
 	return dmg;
+}
+
+bool Actor::RespectsTargeting(Actor_ptr ap, int tm)
+{
+	switch (tm)
+	{
+	case TM_Alive:
+		return !Dead;
+	case TM_Ally:
+		return Team == ap->Team;
+	case TM_Any:
+		return true;
+	case TM_Dead:
+		return Dead;
+	case TM_Enemy:
+		return Team != ap->Team;
+	}
+
+	return true;
+}
+
+
+void Actor::Update()
+{
+	PlayerGraphicsComponent::Update();
 }

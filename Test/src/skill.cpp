@@ -14,6 +14,8 @@ void Skill::DefaultSetup()
 	_done = false;
 	_currentCooldown = 0;
 	_minTargets = 1;
+	_targetMode = TM_Alive;
+	_defaultTarget = DT_Self;
 }
 
 // Must return the new state

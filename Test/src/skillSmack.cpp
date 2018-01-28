@@ -12,6 +12,8 @@ SkillSmack::SkillSmack()
 void SkillSmack::DefaultSetup()
 {
 	_name = "Smack";
+	_targetMode = TM_Alive;
+	_defaultTarget = DT_Enemy;
 }
 
 void SkillSmack::ApplyEffect()
