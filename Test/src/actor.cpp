@@ -25,10 +25,17 @@ void Actor::SetDefault()
 void Actor::ApplyLethal()
 {
 	Dead = Health <= 0;
-	if (!Dead)
-		SetColorAll();
-	else
+	SetColor();
+}
+
+void Actor::SetColor()
+{
+	if (ChoosingAction)
+		SetColorAll(/*Vector3f(1.f, 1.f, 0), 1.f*/);
+	else if (Dead)
 		SetColorAll(Vector3f(0.5f, 0.5f, 0.5f), 0.5f);
+	else
+		SetColorAll();
 }
 
 int Actor::TakeDamage(int dmg)

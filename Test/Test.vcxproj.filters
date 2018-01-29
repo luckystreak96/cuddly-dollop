@@ -410,6 +410,9 @@
     <ClInclude Include="src\particleManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\animMoveTo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -686,6 +689,9 @@
       <Filter>Source Files\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="src\particleManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\animMoveTo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

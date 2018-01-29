@@ -5,6 +5,12 @@
 Actor_ptr ActorFactory::BuildBaseAlly()
 {
 	Actor_ptr result = Actor_ptr(new Actor());
+	result->Skills.clear();
+	Skill_ptr smack = Skill_ptr(new SkillSmack());
+	Skill_ptr heal = Skill_ptr(new SkillHeal());
+	result->Skills.push_back(smack);
+	result->Skills.push_back(heal);
+
 	result->Speed = 1;
 
 	return result;

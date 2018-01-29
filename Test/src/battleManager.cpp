@@ -6,6 +6,7 @@
 #include <iostream>
 #include "fontManager.h"
 #include "gameData.h"
+#include "animMoveTo.h"
 
 BattleManager::BattleManager()
 {
@@ -89,13 +90,6 @@ void BattleManager::UpdateLogic()
 		_state = BS_SelectAction;
 		CycleActors();
 
-		if (_owner->Team == 0)
-		{
-			SetChooseSkillText();
-			_showingSkills = true;
-		}
-
-		Select(0);
 	}
 
 	if (_showingSkills)
@@ -105,6 +99,12 @@ void BattleManager::UpdateLogic()
 			RemoveChooseSkillText();
 			_showingSkills = false;
 		}
+	}
+	else if (_owner->Team == 0 && !_showingSkills && _animations.size() == 0 && _state == BS_SelectAction)
+	{
+		SetChooseSkillText();
+		_showingSkills = true;
+		Select(0);
 	}
 
 	// Let the animation pass before updating
@@ -124,7 +124,7 @@ void BattleManager::UpdateLogic()
 		}
 
 		// Choose enemy action
-		if (_owner->Team != 0)
+		if (_owner->Team != 0 && !_animations.size())
 		{
 			_selectedSkill = _owner->Skills.at(rand() % _owner->Skills.size());
 
@@ -333,7 +333,7 @@ void BattleManager::ManageInput()
 			_showingSkills = true;
 			for (auto x : _actors)
 			{
-				x->ApplyLethal();
+				x->SetColor();
 				x->Selected = false;
 			}
 		}
@@ -347,7 +347,7 @@ void BattleManager::Select(int target)
 		for (auto x : _actors)
 		{
 			if (x->Selected)
-				x->ApplyLethal();
+				x->SetColor();
 			x->Selected = false;
 		}
 
@@ -379,16 +379,30 @@ void BattleManager::UseSkill()
 void BattleManager::CycleActors()
 {
 	Actor_ptr front = _actorQueue.front();
+	front->ChoosingAction = false;
+	front->SetColor();
+
+	// Move Animation
+	if (!front->Dead)
+	{
+		Anim_ptr move1 = Anim_ptr(new AnimMoveTo(_owner->GetPos() + Vector3f(front->Team == 0 ? -1.f : 1, 0, 0), _owner));
+		_animations.push_back(move1);
+	}
+
 	_actorQueue.pop_front();
 	_actorQueue.push_back(front);
-	_actorQueue.front()->ChoosingAction = true;
-	_chooseSkill = &_actorQueue.front()->Skills;
+	_owner = _actorQueue.front();
+	_owner->ChoosingAction = true;
+	_owner->SetColor();
+	_chooseSkill = &_owner->Skills;
 	_targets.clear();
 	_selectedIndex = 0;
-	_owner = _actorQueue.front();
-	if (!_actorQueue.front()->Dead)
+	if (!_owner->Dead)
+	{
+		Anim_ptr move2 = Anim_ptr(new AnimMoveTo(_owner->GetPos() + Vector3f(_owner->Team == 0 ? 1.f : -1, 0, 0), _owner));
+		_animations.push_back(move2);
 		return;
-	//std::cout << "It's " << _actorQueue.front()->Name << "'s turn!" << std::endl;
+	}
 	else
 		CycleActors();
 }

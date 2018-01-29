@@ -18,6 +18,7 @@ public:
 	Actor();
 	int TakeDamage(int dmg);
 	void ApplyLethal();
+	void SetColor();
 	bool RespectsTargeting(Actor_ptr ap, int tm);
 	void Update();
 

@@ -168,6 +168,7 @@
     <ClInclude Include="src\actorFactory.h" />
     <ClInclude Include="src\animBasic.h" />
     <ClInclude Include="src\animJumpTo.h" />
+    <ClInclude Include="src\animMoveTo.h" />
     <ClInclude Include="src\battleHUD.h" />
     <ClInclude Include="src\fontFloat.h" />
     <ClInclude Include="src\particleManager.h" />
@@ -269,6 +270,7 @@
     <ClCompile Include="src\actorFactory.cpp" />
     <ClCompile Include="src\animBasic.cpp" />
     <ClCompile Include="src\animJumpTo.cpp" />
+    <ClCompile Include="src\animMoveTo.cpp" />
     <ClCompile Include="src\battleHUD.cpp" />
     <ClCompile Include="src\fontFloat.cpp" />
     <ClCompile Include="src\particleManager.cpp" />
