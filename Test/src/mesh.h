@@ -20,7 +20,7 @@ class Mesh
 public:
 	Mesh(unsigned int atlasSize = 8);
 	~Mesh();
-	void AddToMesh(std::vector<Vertex>& verts, std::vector<GLuint>& inds, int biggestIndex, Vector3f pos, std::string tex, int index = -1);
+	void AddToMesh(std::vector<Vertex>& verts, const std::vector<GLuint>& inds, int biggestIndex, Vector3f pos, std::string tex, int index = -1);
 	void Reset();
 	void Finalize(std::string name);
 	std::vector<Vertex>* GetMeshVertices();

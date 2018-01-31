@@ -1,7 +1,7 @@
 #ifndef FBO_H__
 #define FBO_H__
 
-#include <gl/glew.h>
+#include <GL/glew.h>
 #include "vector3f.h"
 
 class FBO

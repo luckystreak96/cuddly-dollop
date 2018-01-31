@@ -25,7 +25,7 @@ void Mesh::Reset()
 	m_textures.clear();
 }
 
-void Mesh::AddToMesh(std::vector<Vertex>& verts, std::vector<GLuint>& inds, int biggestIndex, Vector3f pos, std::string tex, int index)
+void Mesh::AddToMesh(std::vector<Vertex>& verts, const std::vector<GLuint>& inds, int biggestIndex, Vector3f pos, std::string tex, int index)
 {
 	if (!m_textures.count(tex)) {
 		//m_textures.erase(tex);

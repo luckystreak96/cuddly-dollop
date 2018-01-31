@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <string>
-#include <GL/glew.h>
+#include "GL/glew.h"
 #include <IL/il.h>
 #include <IL/ilu.h>
 #include <IL/ilut.h>

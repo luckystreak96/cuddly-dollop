@@ -1,5 +1,5 @@
 #include "playerInputComponent.h"
-#include <GLFW\glfw3.h>
+#include <GLFW/glfw3.h>
 
 PlayerInputComponent::PlayerInputComponent(std::shared_ptr<PhysicsComponent> phys, GraphComp_ptr graph)
 {

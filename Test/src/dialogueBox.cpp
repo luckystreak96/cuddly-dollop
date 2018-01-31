@@ -1,5 +1,5 @@
 #include "dialogueBox.h"
-#include <GLFW\glfw3.h>
+#include <GLFW/glfw3.h>
 
 DialogueBox* DialogueBox::m_owner = NULL;
 

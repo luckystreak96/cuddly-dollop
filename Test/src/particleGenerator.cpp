@@ -253,7 +253,10 @@ void ParticleGenerator::SetupMesh()
 	//m_mesh._instancedDraw = true;
 	std::sort(m_particles.begin(), m_particles.end(), ParticleSort);
 	for (auto t : m_particles)
-		m_mesh.AddToMesh(t->physics.GetVertices(), t->physics.GetIndices(), t->physics.GetHighestIndex(), t->position, t->texture);
+	{
+		std::vector<Vertex> verts = t->physics.GetVertices();
+		m_mesh.AddToMesh(verts, t->physics.GetIndices(), t->physics.GetHighestIndex(), t->position, t->texture);
+	}
 
 	m_MBO_instances = m_particles.size();
 

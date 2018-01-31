@@ -1,6 +1,6 @@
 #include "battleManager.h"
 #include "input_manager.h"
-#include <GLFW\glfw3.h>
+#include <GLFW/glfw3.h>
 #include <set>
 #include <algorithm>
 #include <iostream>

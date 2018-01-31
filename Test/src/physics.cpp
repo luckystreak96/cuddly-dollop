@@ -107,7 +107,7 @@ namespace Physics
 	}
 
 	//Two 2D square bounding boxes intersect?
-	bool Intersect2D(std::array<float, 6>& local, std::array<float, 6>& other)
+	bool Intersect2D(const std::array<float, 6>& local, const std::array<float, 6>& other)
 	{
 		//Left-Right
 		if (!(local[Left] < other[Right] && local[Right] > other[Left]))
@@ -121,7 +121,7 @@ namespace Physics
 	}
 
 	//A box and a dot intersect?
-	bool Intersect2D(std::array<float, 6>& bb, Vector3f point)
+	bool Intersect2D(const std::array<float, 6>& bb, Vector3f point)
 	{
 		//Up-Down
 		if (!(abs(bb[Close] - point.z) <= 0.5f || abs(bb[Far] - point.z) <= 0.5f))

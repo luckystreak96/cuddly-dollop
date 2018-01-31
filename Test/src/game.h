@@ -7,7 +7,7 @@
 #include <string>
 #include <vector>
 
-#include <GL/glew.h>//duh
+#include "GL/glew.h"//duh
 
 #include "textureatlas.h"
 #include "input_manager.h"

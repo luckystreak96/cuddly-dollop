@@ -96,7 +96,11 @@ void GraphicsComponent::UpdateMModels()
 void GraphicsComponent::UpdateTranslation()
 {
 	if (m_modelName == "CENTERED_TILE")
-		m_modelMat.SetTranslation(m_pos + Vector3f(0.5f, 0.5f, 0));
+	{
+		Vector3f translation = m_pos + Vector3f(0.5f, 0.5f, 0);
+
+		m_modelMat.SetTranslation(translation);
+	}
 	else
 		m_modelMat.SetTranslation(m_pos);
 }

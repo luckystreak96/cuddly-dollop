@@ -107,6 +107,8 @@ void SoundManager::PlaySoundFX(std::string sourceFile)
 	if (sourceFile == "")
 		return;
 	CreateBuffer(sourceFile);
+	if(!m_buffers.count(sourceFile))
+		return;
 	ALuint source = CreateSource();
 	Play(source, sourceFile);
 	m_sfxSources.push_back(source);
@@ -120,6 +122,8 @@ void SoundManager::SetBGM(std::string sourceFile)
 	{
 		m_nextBGM = sourceFile;
 		CreateBuffer(sourceFile);
+		if(!m_buffers.count(sourceFile))
+			return;
 	}
 
 	m_bgmState = BGM_Stopping;
@@ -181,6 +185,7 @@ bool SoundManager::IsPlaying(unsigned int source)
 
 void SoundManager::CreateBuffer(std::string path)
 {
+	return;
 	if (m_buffers.count(path))
 		return;
 
@@ -188,7 +193,7 @@ void SoundManager::CreateBuffer(std::string path)
 	WavBuffer buf;
 	alGenBuffers((ALuint)1, &buf.buffer);
 
-	alutLoadWAVFile((ALbyte*)path.c_str(), &buf.format, &buf.data, &buf.size, &buf.freq, &buf.loop);
+	//alutLoadWAVFile((ALbyte*)path.c_str(), &buf.format, &buf.data, &buf.size, &buf.freq, &buf.loop);
 
 	//set buffer data
 	alBufferData(buf.buffer, buf.format, buf.data, buf.size, buf.freq);

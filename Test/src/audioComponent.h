@@ -5,8 +5,8 @@
 #include "vector3f.h"
 #include "soundManager.h"
 #include <string>
-#include <AL\al.h>
-#include <AL\alc.h>
+#include <AL/al.h>
+#include <AL/alc.h>
 
 class AudioComponent : public IComponent
 {

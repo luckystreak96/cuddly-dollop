@@ -1,4 +1,7 @@
 #include "utils.h"
+#ifndef _WIN32
+#include <dirent.h>
+#endif
 
 template<typename Out>
 void split(const std::string &s, char delim, Out result) {
@@ -8,6 +11,50 @@ void split(const std::string &s, char delim, Out result) {
 	while (std::getline(ss, item, delim)) {
 		*(result++) = item;
 	}
+}
+
+std::vector<std::string> Utils::GetAllFiles(std::string directory, std::string extension)
+{
+	std::vector<std::string> vs;
+#ifdef _WIN32
+	std::wstring ws(directory.begin(), directory.end());
+	HANDLE hFind;
+	WIN32_FIND_DATA FindFileData;
+	hFind = FindFirstFile(ws.c_str() L"*.png", &FindFileData);
+	if (hFind != INVALID_HANDLE_VALUE)
+	{
+		do {
+			std::wstring w = FindFileData.cFileName;
+			vs.push_back("res/sprites/tiles/" + std::string(w.begin(), w.end()));
+		} while (FindNextFile(hFind, &FindFileData));
+		FindClose(hFind);
+	}
+	hFind = FindFirstFile(L"res/sprites/particles/*.png", &FindFileData);
+	if (hFind != INVALID_HANDLE_VALUE)
+	{
+		do {
+			std::wstring w = FindFileData.cFileName;
+			vs.push_back("res/sprites/particles/" + std::string(w.begin(), w.end()));
+		} while (FindNextFile(hFind, &FindFileData));
+		FindClose(hFind);
+	}
+#else
+	DIR* d;
+	struct dirent *dir;
+	d = opendir(directory.c_str());
+	if(d)
+	{
+		while((dir = readdir(d)) != NULL)
+		{
+			std::string temp(dir->d_name);
+			if(temp.find(extension) != std::string::npos)
+			//if(temp != "." && temp != "..")
+				vs.push_back(temp);
+		}
+		closedir(d);
+	}
+#endif
+	return vs;
 }
 
 std::vector<std::string> Utils::Split(const std::string &s, char delim) {
@@ -36,7 +83,7 @@ std::string Utils::ReadFile(std::string filename, bool includeNewLine)
     }
     else
     {
-        std::cout << "Unable to open file";
+        std::cout << "Unable to open file" << filename.c_str();
         exit(1);
     }
 

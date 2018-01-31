@@ -15,7 +15,7 @@
 #include "elapsedTime.h"
 #include "resource_user.h"
 #include "resource_manager.h"
-#include <GL\glew.h>
+#include <GL/glew.h>
 
 enum Direction { dir_Left, dir_Down, dir_Right, dir_Up };
 

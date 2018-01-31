@@ -3,7 +3,7 @@
 
 #include "vector3f.h"
 #include "vertex.h"
-#include <GL/glew.h>
+#include "GL/glew.h"
 #include <cassert>
 #include <vector>
 

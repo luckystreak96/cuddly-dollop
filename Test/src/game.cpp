@@ -1,13 +1,16 @@
 #include "game.h"
 #include "gameData.h"
 #include "textureatlas.h"
-#include <GLFW\glfw3.h>
+#include <GLFW/glfw3.h>
 #include "vector3f.h"
 #include "effect.h"
 #include "FBO.h"
 #include "soundManager.h"
 #include "scene_manager.h"
 #include "scene_world.h"
+#ifndef _WIN32
+#include <dirent.h>
+#endif
 
 Game::Game() : m_exit(false)
 {
@@ -47,27 +50,13 @@ bool Game::init(Vector2f version)
 // Finds all the png files to make the texture atlas for tiles/particles
 void Game::SetupTextureAtlas()
 {
-	std::vector<std::string> vs;
-	HANDLE hFind;
-	WIN32_FIND_DATA FindFileData;
-	hFind = FindFirstFile(L"res/sprites/tiles/*.png", &FindFileData);
-	if (hFind != INVALID_HANDLE_VALUE)
-	{
-		do {
-			std::wstring w = FindFileData.cFileName;
-			vs.push_back("res/sprites/tiles/" + std::string(w.begin(), w.end()));
-		} while (FindNextFile(hFind, &FindFileData));
-		FindClose(hFind);
-	}
-	hFind = FindFirstFile(L"res/sprites/particles/*.png", &FindFileData);
-	if (hFind != INVALID_HANDLE_VALUE)
-	{
-		do {
-			std::wstring w = FindFileData.cFileName;
-			vs.push_back("res/sprites/particles/" + std::string(w.begin(), w.end()));
-		} while (FindNextFile(hFind, &FindFileData));
-		FindClose(hFind);
-	}
+	std::vector<std::string> vs = Utils::GetAllFiles("res/sprites/tiles", "png");
+	for(auto& x : vs)
+		x = "res/sprites/tiles/" + x;
+
+	for(auto x : Utils::GetAllFiles("res/sprites/particles", "png"))
+		vs.push_back("res/sprites/particles/" + x);
+
 
 	for (std::string s : vs)
 		TextureAtlas::m_textureAtlas.AddTexture(s);

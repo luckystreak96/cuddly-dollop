@@ -45,7 +45,7 @@ MapHandler::MapHandler() : m_mesh(Mesh()), m_id(1)
 
 MapHandler::MapHandler(unsigned int id, std::shared_ptr<JsonHandler> jh) : m_mesh(Mesh()), m_id(id), m_jsonHandler(jh)
 {
-	auto& map = m_jsonHandler->LoadMap(id);
+	auto map = m_jsonHandler->LoadMap(id);
 	if (!map.HasMember("tiles"))
 		return;
 	for (auto& x : map["tiles"].GetArray())
@@ -106,7 +106,10 @@ void MapHandler::SetupMesh()
 	m_mesh.Reset();
 	//std::sort(m_tiles.begin(), m_tiles.end(), MapTile::SortFunc);
 	for (auto t : m_tiles)
-		m_mesh.AddToMesh(t->Physics()->GetVertices(), t->Physics()->GetIndices(), t->Physics()->GetHighestIndex(), t->Physics()->Position(), t->GetTexture());
+	{
+		std::vector<Vertex> verts = t->Physics()->GetVertices();
+		m_mesh.AddToMesh(verts, t->Physics()->GetIndices(), t->Physics()->GetHighestIndex(), t->Physics()->Position(), t->GetTexture());
+	}
 
 	m_MBO_instances = m_tiles.size();
 

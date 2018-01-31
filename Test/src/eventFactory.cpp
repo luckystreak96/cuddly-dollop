@@ -236,7 +236,7 @@ std::vector<std::shared_ptr<EventQueue>> EventFactory::LoadEvent(int map_id, uns
 
 	m_entity_id = entity_id;
 
-	auto& ques = jh->LoadQueues(map_id, entity_id).GetArray();
+	auto ques = jh->LoadQueues(map_id, entity_id).GetArray();
 	for (auto& x : ques)
 	{
 		// Get flag name
@@ -321,7 +321,7 @@ std::shared_ptr<EventQueue> EventFactory::LoadEvent(int map_id, unsigned int ent
 {
 	std::shared_ptr<EventQueue> result = std::shared_ptr<EventQueue>(new EventQueue(-1));
 
-	auto& ques = jh->LoadQueues(map_id, entity_id).GetArray();
+	auto ques = jh->LoadQueues(map_id, entity_id).GetArray();
 	for (auto& x : ques)
 	{
 		//Make sure that the event is flagged as valid

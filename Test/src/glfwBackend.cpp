@@ -1,7 +1,7 @@
 #include "glfwBackend.h" // include this first or get gl b4 glew error
-#include <IL\il.h>
-#include <IL\ilu.h>
-#include <IL\ilut.h>
+#include <IL/il.h>
+#include <IL/ilu.h>
+#include <IL/ilut.h>
 #include <vector>
 #include <algorithm>
 #include "game.h"
@@ -25,7 +25,7 @@ void Resize(GLFWwindow* window)
 
 	multiplierx = (float)screenW / 480.f;
 	multipliery = (float)screenH / 270.f;
-	multiplierFinal = (int)(min(multiplierx, multipliery));
+	multiplierFinal = (int)(fmin(multiplierx, multipliery));
 
 	int viewW, viewH;
 	viewW = multiplierFinal * 480;

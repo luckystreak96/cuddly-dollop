@@ -1,7 +1,7 @@
 #ifndef BLUR_FRAMEBUFFER_H__
 #define BLUF_FRAMEBUFFER_H_
 
-#include <gl\glew.h>
+#include <GL/glew.h>
 
 class BlurFramebuffer
 {
