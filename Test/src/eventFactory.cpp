@@ -134,7 +134,8 @@ std::shared_ptr<IEvent> EventFactory::BuildEvent(EventTypes et, std::map<std::st
 		result = std::shared_ptr<IEvent>(new EventWeather(args.count("count") ? args.at("count").get<int>() : 50,
 			ParticleFromString.count(str) ? ParticleFromString.at(str) : PT_Snow,
 			map->GetMapSize(),
-			args.count("smooth") ? args.at("smooth").get<bool>() : false));
+			args.count("smooth") ? args.at("smooth").get<bool>() : false,
+			args.count("sprite") ? args.at("sprite").get<std::string>() : "snowflake.png"));
 		break;
 	case EventTypes::ET_Particle:
 		str = args.count("type") ? args.at("type").get<std::string>() : "music";

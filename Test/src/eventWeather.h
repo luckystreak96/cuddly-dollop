@@ -8,7 +8,7 @@
 class EventWeather : public IEvent
 {
 public:
-	EventWeather(int particleCount, ParticleType type, Vector3f mapsize, bool smooth);
+	EventWeather(int particleCount, ParticleType type, Vector3f mapsize, bool smooth, std::string sprite = "snow.png");
 	~EventWeather() {}
 	EventUpdateResponse UpdateEvent(double elapsedTime, std::map<unsigned int, std::shared_ptr<Entity>>* ents);
 	std::shared_ptr<IEvent> Clone();
@@ -21,6 +21,7 @@ private:
 	ParticleGenerator m_particles;
 	Vector3f m_mapSize;
 	ParticleType m_particleType;
+	std::string m_sprite;
 	unsigned int m_count;
 	bool m_smooth;
 };

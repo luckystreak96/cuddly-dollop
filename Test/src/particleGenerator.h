@@ -40,7 +40,7 @@ struct Particle
 struct Snow : public Particle
 {
 	float size;
-	Snow(Vector3f zoneSize, bool smooth = false);
+	Snow(Vector3f zoneSize, bool smooth = false, std::string tex = "snowflake.png");
 	void Update(Vector3f& mapSize);
 	void ResetLocation(Vector3f& mapSize, bool firstSpawn = false, bool smooth = false);
 	void SetTrans(Transformation& trans);
