@@ -1,6 +1,8 @@
 #include "utils.h"
 #ifndef _WIN32
 #include <dirent.h>
+#else
+#include <Windows.h>
 #endif
 
 template<typename Out>
@@ -20,21 +22,12 @@ std::vector<std::string> Utils::GetAllFiles(std::string directory, std::string e
 	std::wstring ws(directory.begin(), directory.end());
 	HANDLE hFind;
 	WIN32_FIND_DATA FindFileData;
-	hFind = FindFirstFile(ws.c_str() L"*.png", &FindFileData);
+	hFind = FindFirstFile((ws + L"/*." + std::wstring(extension.begin(), extension.end())).c_str(), &FindFileData);
 	if (hFind != INVALID_HANDLE_VALUE)
 	{
 		do {
 			std::wstring w = FindFileData.cFileName;
-			vs.push_back("res/sprites/tiles/" + std::string(w.begin(), w.end()));
-		} while (FindNextFile(hFind, &FindFileData));
-		FindClose(hFind);
-	}
-	hFind = FindFirstFile(L"res/sprites/particles/*.png", &FindFileData);
-	if (hFind != INVALID_HANDLE_VALUE)
-	{
-		do {
-			std::wstring w = FindFileData.cFileName;
-			vs.push_back("res/sprites/particles/" + std::string(w.begin(), w.end()));
+			vs.push_back(/*"res/sprites/tiles/" + */std::string(w.begin(), w.end()));
 		} while (FindNextFile(hFind, &FindFileData));
 		FindClose(hFind);
 	}

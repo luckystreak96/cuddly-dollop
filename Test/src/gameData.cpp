@@ -196,9 +196,9 @@ void GameData::LoadSettings()
 	Options = OptionMap();
 
 #ifdef NDEBUG
-	std::ifstream my_file(m_localizationPath + "config");
+	std::ifstream my_file(m_path + "config");
 #else
-	std::ifstream my_file(m_localizationPath + "config.json");
+	std::ifstream my_file(m_path + "config.json");
 #endif
 	bool exists = my_file.good();
 	if (!exists)
