@@ -36,7 +36,8 @@ void PlayerGraphicsComponent::DrawOutline(bool withTex)
 	EffectManager::GetInstance().Enable(E_SingleColor);
 	//SingleColorEffect::GetInstance().Enable();
 	Effect::SetDrawType(DrawType::DT_ENTITY);
-	m_modelMat.SetScale(Vector3f(1.1f, 1.1f, 1));
+	Vector3f size = Vector3f(1.1f, 1.1f, 1);
+	m_modelMat.SetScale(size);
 	UpdateTranslation();
 
 	//Bloom::GetInstance().Begin();
@@ -50,7 +51,8 @@ void PlayerGraphicsComponent::DrawOutline(bool withTex)
 
 	glStencilFunc(GL_ALWAYS, 1, 0xFF);
 	glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
-	m_modelMat.SetScale(Vector3f(1, 1, 1));
+	Vector3f scale = Vector3f(1, 1, 1);
+	m_modelMat.SetScale(scale);
 
 	Effect::SetDrawType(DrawType::DT_FLAT);
 	EffectManager::GetInstance().EnablePrevious();

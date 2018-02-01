@@ -1,6 +1,8 @@
 #include "gameData.h"
 #include "actorFactory.h"
 #include "skill.h"
+#include <fstream>
+#include <ostream>
 
 #undef GetObject
 
@@ -85,13 +87,16 @@ void GameData::LoadGameData()
 {
 	Flags = std::map<std::string, int>();
 
-	struct stat buffer;
+	//struct stat buffer;
 
 #ifdef NDEBUG
-	bool exists = (stat((m_path + "save").c_str(), &buffer) == 0);
+	//bool exists = (stat((m_path + "save").c_str(), &buffer) == 0);
+	std::ifstream my_file(m_path + "save");
 #else
-	bool exists = (stat((m_path + "save.json").c_str(), &buffer) == 0);
+	//bool exists = (stat((m_path + "save.json").c_str(), &buffer) == 0);
+	std::ifstream my_file(m_path + "save.json");
 #endif
+	bool exists = my_file.good();
 	if (!exists)
 		return;
 #ifdef NDEBUG
@@ -104,7 +109,7 @@ void GameData::LoadGameData()
 	// Get the flags
 	if (m_document.HasMember("flags") && m_document["flags"].IsArray())
 	{
-		auto& flags = m_document["flags"].GetArray();
+		auto flags = m_document["flags"].GetArray();
 		for (auto& v : flags)
 			for (Value::ConstMemberIterator itr = v.MemberBegin(); itr != v.MemberEnd(); ++itr)
 				Flags.emplace(itr->name.GetString(), itr->value.GetInt());
@@ -114,7 +119,7 @@ void GameData::LoadGameData()
 	// Get the strings
 	if (m_document.HasMember("strings") && m_document["strings"].IsArray())
 	{
-		auto& strings = m_document["strings"].GetArray();
+		auto strings = m_document["strings"].GetArray();
 		for (auto& v : strings)
 			for (Value::ConstMemberIterator itr = v.MemberBegin(); itr != v.MemberEnd(); ++itr)
 				Strings.emplace(itr->name.GetString(), itr->value.GetString());
@@ -124,7 +129,7 @@ void GameData::LoadGameData()
 	// Get the positions
 	if (m_document.HasMember("positions") && m_document["positions"].IsArray())
 	{
-		auto& positions = m_document["positions"].GetArray();
+		auto positions = m_document["positions"].GetArray();
 		for (auto& v : positions)
 			for (Value::ConstMemberIterator itr = v.MemberBegin(); itr != v.MemberEnd(); ++itr)
 			{
@@ -144,7 +149,7 @@ void GameData::LoadGameData()
 	// Get the party
 	if (m_document.HasMember("party") && m_document["party"].IsArray())
 	{
-		auto& party = m_document["party"].GetArray();
+		auto party = m_document["party"].GetArray();
 		Party = ActorFactory::BuildParty(party);
 	}
 
@@ -159,13 +164,12 @@ void GameData::LoadGameData()
 // Load the localization strings
 void GameData::LoadLocalization()
 {
-	struct stat buffer;
-
 #ifdef NDEBUG
-	bool exists = (stat((m_localizationPath + "localization").c_str(), &buffer) == 0);
+	std::ifstream my_file(m_localizationPath + "localization");
 #else
-	bool exists = (stat((m_localizationPath + "localization.json").c_str(), &buffer) == 0);
+	std::ifstream my_file(m_localizationPath + "localization.json");
 #endif
+	bool exists = my_file.good();
 	if (!exists)
 		return;
 #ifdef NDEBUG
@@ -175,12 +179,12 @@ void GameData::LoadLocalization()
 #endif
 	m_document.Parse(m_file.c_str());
 
-	auto& strings = m_document.GetObject();
+	auto strings = m_document.GetObject();
 	for (auto& v : strings)
 		//for (Value::ConstMemberIterator itr = v.MemberBegin(); itr != v.MemberEnd(); ++itr)
 	{
 		std::map<std::string, std::string> trans;
-		auto& l = v.value.GetObject();
+		auto l = v.value.GetObject();
 		for (Value::ConstMemberIterator itr = l.MemberBegin(); itr != l.MemberEnd(); ++itr)
 			trans.emplace(itr->name.GetString(), itr->value.GetString());
 		Localization.emplace(v.name.GetString(), trans);
@@ -191,12 +195,12 @@ void GameData::LoadSettings()
 {
 	Options = OptionMap();
 
-	struct stat buffer;
 #ifdef NDEBUG
-	bool exists = (stat((m_path + "config").c_str(), &buffer) == 0);
+	std::ifstream my_file(m_path + "config");
 #else
-	bool exists = (stat((m_path + "config.json").c_str(), &buffer) == 0);
+	std::ifstream my_file(m_path + "config.json");
 #endif
+	bool exists = my_file.good();
 	if (!exists)
 	{
 		EnsureBaseSettings();
@@ -212,7 +216,7 @@ void GameData::LoadSettings()
 	// Get the options
 	if (m_document.HasMember("options") && m_document["options"].IsArray())
 	{
-		auto& options = m_document["options"].GetArray();
+		auto options = m_document["options"].GetArray();
 		for (auto& v : options)
 			for (Value::ConstMemberIterator itr = v.MemberBegin(); itr != v.MemberEnd(); ++itr)
 			{
@@ -247,7 +251,7 @@ void GameData::EnsureBaseSettings()
 	if (!Options.count("mute"))
 		Options.emplace("mute", false);
 	if (!Options.count("fullscreen"))
-		Options.emplace("fullscreen", true);
+		Options.emplace("fullscreen", false);
 	if (!Strings.count("name"))
 		Strings.emplace("name", "Yanik");
 }

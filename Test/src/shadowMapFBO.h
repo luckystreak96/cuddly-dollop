@@ -1,7 +1,7 @@
 #ifndef SHADOW_MAP_FBO_H__
 #define SHADOW_MAP_FBO_H__
 
-#include <GL/glew.h>
+#include "GL/glew.h"
 #include <stdio.h>
 #include "effect.h"
 

@@ -9,7 +9,8 @@
 #include "actor.h"
 #include "battleAnimation.h"
 
-enum BattleState;
+enum BattleState { BS_Animation, BS_Attacking, BS_SelectAction, BS_SelectTargets, BS_ActionProgress, BS_ActionDone };
+
 class Skill;
 typedef std::shared_ptr<Skill> Skill_ptr;
 

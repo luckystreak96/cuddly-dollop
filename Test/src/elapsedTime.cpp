@@ -1,5 +1,5 @@
 #include "elapsedTime.h"
-#include <GLFW\glfw3.h>
+#include <GLFW/glfw3.h>
 #include <math.h>
 
 //Return elapsed time in seconds

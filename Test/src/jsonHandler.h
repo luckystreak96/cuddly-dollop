@@ -6,8 +6,11 @@
 #include <vector>
 #include <memory>
 #include <iostream>
-#include <Windows.h>
-#include <rapidjson\document.h>
+
+#ifdef _WIN32
+	#include <Windows.h>
+#endif
+#include <rapidjson/document.h>
 #include "utils.h"
 
 class JsonHandler
@@ -20,7 +23,7 @@ public:
 	rapidjson::Value LoadMap(int map_id);
 	rapidjson::Value LoadMaps(int map_id);
 	void SetFile(std::string filename);
-	bool JsonHandler::DocumentNotNull();
+	bool DocumentNotNull();
 public:
 	static std::map<int, rapidjson::Document> ReferenceDocument;
 	static bool FilesLoaded;

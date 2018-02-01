@@ -1,6 +1,8 @@
 #include "mat4f.h"
 
+#ifdef _WIN32
 #define M_PI 3.14159265358979323
+#endif
 #define ToRadian(x) ((x) * M_PI / 180.0f)
 #define ToDegree(x) ((x) * 180.0f / M_PI)
 

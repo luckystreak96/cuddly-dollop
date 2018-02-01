@@ -10,7 +10,7 @@
 #include "fontManager.h"
 #include "battleHUD.h"
 
-enum BattleState { BS_Animation, BS_Attacking, BS_SelectAction, BS_SelectTargets, BS_ActionProgress, BS_ActionDone };
+//enum BattleState { BS_Animation, BS_Attacking, BS_SelectAction, BS_SelectTargets, BS_ActionProgress, BS_ActionDone };
 
 class BattleManager
 {

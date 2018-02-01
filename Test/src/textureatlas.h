@@ -3,7 +3,7 @@
 #include <string>
 #include <map>
 #include <IL/ilu.h>
-#include <GL/glew.h>
+#include "GL/glew.h"
 #include <cmath>
 #include <iostream>
 #include <sstream>

@@ -22,7 +22,8 @@ Mat4f& Transformation::GetWorldTransNoTranslate()
 	Mat4f scale, translate, rotate;
 
 	scale.InitScaleMat(m_scale);
-	translate.InitTranslateMat(Vector3f(m_orthoProj->Left, m_orthoProj->Bottom, 0));
+	Vector3f trans = Vector3f(m_orthoProj->Left, m_orthoProj->Bottom, 0);
+	translate.InitTranslateMat(trans);
 	rotate.InitRotateMat(m_rotate);
 	m_WTrans = translate * rotate * scale;
 
@@ -94,12 +95,12 @@ void Transformation::SetOrthoProj(OrthoProjInfo* o)
 }
 
 
-void Transformation::SetScale(Vector3f& vec)
+void Transformation::SetScale(const Vector3f& vec)
 {
     SetScale(vec.x, vec.y, vec.z);
 }
 
-void Transformation::SetTranslation(Vector3f& vec)
+void Transformation::SetTranslation(const Vector3f& vec)
 {
     SetTranslation(vec.x, vec.y, vec.z);
 }

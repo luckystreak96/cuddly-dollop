@@ -28,7 +28,7 @@ std::shared_ptr<Entity> EntityFactory::BuildEntity(std::map<std::string, EntityA
 	}
 	else
 		// Sketchy af
-		result = std::shared_ptr<Entity>(new Entity((unsigned int)rand() + (unsigned int)(MAXINT / 2), sprite));
+		result = std::shared_ptr<Entity>(new Entity((unsigned int)rand() + (unsigned int)(9999 / 2), sprite));
 
 	// Position
 	if (args.count("x"))
@@ -54,11 +54,11 @@ std::map<unsigned int, std::shared_ptr<Entity>> EntityFactory::GetEntities(unsig
 {
 	std::map<unsigned int, std::shared_ptr<Entity>> result = std::map<unsigned int, std::shared_ptr<Entity>>();
 
-	auto& entities = jh->LoadEntities(map_id);
+	auto entities = jh->LoadEntities(map_id);
 	if (entities.IsNull())
 		return result;
 
-	auto& ents = entities.GetArray();
+	auto ents = entities.GetArray();
 
 	// Get the args for each entity
 	for (auto& x : ents)

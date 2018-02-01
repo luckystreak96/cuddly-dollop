@@ -1,9 +1,9 @@
 #ifndef SOUND_MANAGER_H__
 #define SOUND_MANAGER_H__
 
-#include <AL\al.h>
-#include <AL\alc.h>
-#include <AL\alut.h>
+#include <AL/al.h>
+#include <AL/alc.h>
+#include <AL/alut.h>
 #include <iostream>
 #include <map>
 #include <vector>

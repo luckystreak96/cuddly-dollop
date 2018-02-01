@@ -3,7 +3,7 @@
 
 #include <map>
 #include "eventQueue.h"
-#include <rapidjson\document.h>
+#include <rapidjson/document.h>
 #include <memory>
 
 class Entity;

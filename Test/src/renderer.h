@@ -1,7 +1,7 @@
 #ifndef RENDERER_H__
 #define RENDERER_H__
 
-//#include <GL/glew.h>
+//#include "GL/glew.h"
 #include <vector>
 #include <set>
 #include "graphicsComponent.h"

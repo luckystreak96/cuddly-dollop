@@ -2,7 +2,7 @@
 #define PHYSICS_H__
 
 #include <string>
-#include <gl/glew.h>
+#include <GL/glew.h>
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include "array2d.h"
@@ -36,8 +36,8 @@ struct CollisionObject
 namespace Physics
 {
 	int intersect3D_RayTriangle(Ray R, Triangle T, Vector3f* I);
-	bool Intersect2D(std::array<float, 6>& local, std::array<float, 6>& other);
-	bool Intersect2D(std::array<float, 6>& local, Vector3f point);
+	bool Intersect2D(const std::array<float, 6>& local, const std::array<float, 6>& other);
+	bool Intersect2D(const std::array<float, 6>& local, Vector3f point);
 	bool Intersect3D(std::array<float, 6>& local, std::array<float, 6>& other);
 	void FindClosestCollision(CollisionObject co1, CollisionObject co2, bool* collisionConfirmed, float* percentMovement, 
 		Vector3f* triangleNormal, bool* first, Triangle* tri, Vector3f* traject, int* vertIndex, Vector3f* poc);

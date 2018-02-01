@@ -51,7 +51,7 @@ std::vector<Actor_ptr> ActorFactory::BuildParty(rapidjson::GenericArray<false, r
 
 		if (a.HasMember("skills") && a["skills"].IsArray())
 		{
-			auto& skills = a["skills"].GetArray();
+			auto skills = a["skills"].GetArray();
 			for (rapidjson::Value::ConstValueIterator itr = skills.Begin(); itr != skills.End(); ++itr)
 				actor->Skills.push_back(BuildSkill(itr->GetString()));
 		}

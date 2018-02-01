@@ -2,7 +2,7 @@
 #define EFFECT_H__
 
 #include <iostream>
-#include <GL/glew.h>
+#include "GL/glew.h"
 #include "utils.h"
 #include "vector3f.h"
 #include <string>

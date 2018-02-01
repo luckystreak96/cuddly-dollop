@@ -1,4 +1,5 @@
 #include "jsonHandler.h"
+#include <experimental/filesystem>
 
 std::map<int, rapidjson::Document> JsonHandler::ReferenceDocument;
 bool JsonHandler::FilesLoaded = false;
@@ -25,7 +26,9 @@ void JsonHandler::LoadJsonFromFile()
 	if (FilesLoaded)
 		return;
 
-	std::vector<std::string> vs;
+	std::vector<std::string> vs = Utils::GetAllFiles("res/data/", "json");
+	/*
+#ifdef _WIN32
 	HANDLE hFind;
 	WIN32_FIND_DATA FindFileData;
 	hFind = FindFirstFile(L"res/data/*.json", &FindFileData);
@@ -37,6 +40,13 @@ void JsonHandler::LoadJsonFromFile()
 		} while (FindNextFile(hFind, &FindFileData));
 		FindClose(hFind);
 	}
+#else
+	std::string path = "res/data/";
+	for (auto & p : std::experimental::filesystem::directory_iterator(path))
+		std::cout << p << std::endl;
+#endif
+*/
+
 	for (auto f : vs)
 	{
 		File = Utils::ReadFile("res/data/" + f);
@@ -56,7 +66,7 @@ void JsonHandler::LoadJsonFromFile()
 
 rapidjson::Value JsonHandler::LoadEntities(int map_id)
 {
-	auto& m = LoadMap(map_id);
+	auto m = LoadMap(map_id);
 	if (m.HasMember("entities") && m["entities"].IsArray())
 		return m["entities"].GetArray();
 
@@ -67,7 +77,7 @@ rapidjson::Value JsonHandler::LoadEntities(int map_id)
 
 rapidjson::Value JsonHandler::LoadQueues(int map_id, int entity_id)
 {
-	auto& a = LoadEntities(map_id).GetArray();
+	auto a = LoadEntities(map_id).GetArray();
 	// Go through the entities
 	for (auto& ent : a)
 	{
@@ -107,7 +117,7 @@ rapidjson::Value JsonHandler::LoadMap(int map_id)
 	//auto& temp = LoadMaps();
 	//if (temp.IsNull())
 	//	return;
-	auto& ms = LoadMaps(map_id);
+	auto ms = LoadMaps(map_id);
 
 	if (ms.IsArray())
 		// Go through the entities

@@ -208,7 +208,8 @@ void Font::AddWordToMesh(std::string word, float x, float y)
 
 		m_letterPositions.push_back(pos + m_phys.Position());
 
-		m_mesh.AddToMesh(m_phys.GetVertices(), m_phys.GetIndices(), m_phys.GetHighestIndex(), pos, m_texture, index);
+		std::vector<Vertex> verts = m_phys.GetVertices();
+		m_mesh.AddToMesh(verts, m_phys.GetIndices(), m_phys.GetHighestIndex(), pos, m_texture, index);
 	}
 }
 

@@ -15,6 +15,7 @@ class Utils
 		static std::string RemoveWhiteSpace(std::string& str);
 		static std::vector<uint32_t> ConvertUTF8(std::string text);
 		static std::vector<std::string> Split(const std::string &s, char delim);
+		static std::vector<std::string> GetAllFiles(std::string directory, std::string extension);
         static void Pause();
 };
 
