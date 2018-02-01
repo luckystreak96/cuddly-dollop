@@ -16,7 +16,7 @@
 #	echo All done
 
 
-INCLUDE_DIR := /usr/include 
+INCLUDE_DIR := /usr/include -I./res/include
 SRC_DIR := ./src
 OBJ_DIR := ./obj
 SRC_FILES := $(wildcard $(SRC_DIR)/*.cpp)
