@@ -119,7 +119,7 @@ GLFWManager::GLFWManager()
 	}
 
 	// Fullscreen / windowed initialization
-	if (std::get<bool>(GameData::Options.at("fullscreen")))
+	if (std::get<bool>(GameData::Options.at("fullscreen")) == true)
 	{
 		glfwSetWindowMonitor(m_window, monitor, 5, 35, m_screenWidth - 10, m_screenHeight - 80, m_refreshRate);
 	}

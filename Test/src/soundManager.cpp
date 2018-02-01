@@ -5,7 +5,8 @@
 SoundManager::SoundManager() : m_bgmSource(0), m_bgmState(BGM_Starting), m_bgmVolume(0), m_bgmMaxVolume(0.4f), m_masterVolume(1.0f)
 {
 	// Initialize Open AL
-	m_device = alcOpenDevice(nullptr); // open default device
+	const char* device_name = alcGetString(NULL, ALC_DEVICE_SPECIFIER);
+	m_device = alcOpenDevice(device_name); // open default device
 	if (m_device != 0) {
 		char* DefaultDevice = (char*)alcGetString(m_device, ALC_DEFAULT_DEVICE_SPECIFIER);
 		std::cout << DefaultDevice << std::endl;

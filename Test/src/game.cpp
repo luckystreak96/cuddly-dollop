@@ -103,7 +103,7 @@ void Game::HandleInput()
 		InputManager::GetInstance().SetLockLevel(0);
 
 	// Mute
-	if (InputManager::GetInstance().FrameKeyStatus(77, KeyStatus::AnyRelease))
+	if (InputManager::GetInstance().FrameKeyStatus(GLFW_KEY_M, KeyStatus::AnyRelease))
 		MuteButton();
 
 }

@@ -22,7 +22,7 @@ OBJ_DIR := ./obj
 SRC_FILES := $(wildcard $(SRC_DIR)/*.cpp)
 OBJ_FILES := $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SRC_FILES))
 LDFLAGS := -I$(INCLUDE_DIR) -L/usr/lib/x86_64-linux-gnu/ -L/usr/lib64 -I/usr/local/include -L/usr/local/lib -L/usr/X11R6/lib -I/usr/X11R6/include -pthread -ldl -Wl,--no-as-needed -lstdc++fs -lopenal -lm -lIL -lILU -lILUT -lglfw -lGLEW -lGL -lGLU
-CPPFLAGS := -g -L/usr/lib64 -I/usr/local/include -L/usr/local/lib -L/usr/X11R6/lib -I/usr/X11R6/include -lstdc++fs -pthread -lGLEW -lopenal -lGLU -lGL
+CPPFLAGS := -g -D_DEBUG -L/usr/lib64 -I/usr/local/include -L/usr/local/lib -L/usr/X11R6/lib -I/usr/X11R6/include -lstdc++fs -pthread -lGLEW -lopenal -lGLU -lGL
 CXXFLAGS := -I$(INCLUDE_DIR) -L/usr/lib64 -I/usr/local/include -L/usr/local/lib -L/usr/X11R6/lib -I/usr/X11R6/include -lstdc++fs -pthread  -lopenal -std=c++17 -lGLEW -lGLU -lGL
 
 cuddly_dollop : $(OBJ_FILES)
