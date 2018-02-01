@@ -1,0 +1,1788 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+AABB	define.h	/^enum AABB {Left = 0, Right = 1, Down = 2, Up = 3, Close = 4, Far = 5};$/;"	g
+ACTOR_FACTORY_H__	actorFactory.h	2;"	d
+ACTOR_H__	actor.h	2;"	d
+AE_Attack	animation.h	/^enum Anim_Enum { AE_Left, AE_Down, AE_Right, AE_Up, AE_Attack, AE_Last };$/;"	e	enum:Anim_Enum
+AE_Down	animation.h	/^enum Anim_Enum { AE_Left, AE_Down, AE_Right, AE_Up, AE_Attack, AE_Last };$/;"	e	enum:Anim_Enum
+AE_Last	animation.h	/^enum Anim_Enum { AE_Left, AE_Down, AE_Right, AE_Up, AE_Attack, AE_Last };$/;"	e	enum:Anim_Enum
+AE_Left	animation.h	/^enum Anim_Enum { AE_Left, AE_Down, AE_Right, AE_Up, AE_Attack, AE_Last };$/;"	e	enum:Anim_Enum
+AE_Right	animation.h	/^enum Anim_Enum { AE_Left, AE_Down, AE_Right, AE_Up, AE_Attack, AE_Last };$/;"	e	enum:Anim_Enum
+AE_Up	animation.h	/^enum Anim_Enum { AE_Left, AE_Down, AE_Right, AE_Up, AE_Attack, AE_Last };$/;"	e	enum:Anim_Enum
+ANIMATION_H__	animation.h	2;"	d
+ANIM_BASIC_H__	animBasic.h	2;"	d
+ANIM_JUMP_TO_H__	animJumpTo.h	2;"	d
+ANIM_MOVE_TO_H__	animMoveTo.h	2;"	d
+ARRAY2D_H__	array2d.h	2;"	d
+ARRAY3D_H__	array3d.h	2;"	d
+ASYNC	iEvent.h	/^	BLOCKING, ASYNC$/;"	e	enum:EventExecutionMode
+AT_Autorun	eventQueue.h	/^enum ActivationType { AT_Autorun, AT_Interact, AT_Touch };$/;"	e	enum:ActivationType
+AT_Interact	eventQueue.h	/^enum ActivationType { AT_Autorun, AT_Interact, AT_Touch };$/;"	e	enum:ActivationType
+AT_Touch	eventQueue.h	/^enum ActivationType { AT_Autorun, AT_Interact, AT_Touch };$/;"	e	enum:ActivationType
+AUDIO_COMPONENT_H__	audioComponent.h	2;"	d
+Abs	vector3f.cpp	/^Vector3f Vector3f::Abs()$/;"	f	class:Vector3f
+AbsolutePosition	physicsComponent.cpp	/^void PhysicsComponent::AbsolutePosition(Vector3f absolutePos, Vector3f useAxis)$/;"	f	class:PhysicsComponent
+Act	scene.cpp	/^SceneGenData Scene::Act()$/;"	f	class:Scene
+Act	scene_manager.cpp	/^void SceneManager::Act()$/;"	f	class:SceneManager
+ActionMove	physicsComponent.cpp	/^void PhysicsComponent::ActionMove(bool up, bool down, bool left, bool right)$/;"	f	class:PhysicsComponent
+ActivationType	eventQueue.h	/^enum ActivationType { AT_Autorun, AT_Interact, AT_Touch };$/;"	g
+Actor	actor.cpp	/^Actor::Actor()$/;"	f	class:Actor
+Actor	actor.h	/^class Actor : public PlayerGraphicsComponent$/;"	c
+ActorFactory	actorFactory.h	/^class ActorFactory$/;"	c
+ActorInfoBundle	battleHUD.h	/^struct ActorInfoBundle$/;"	s
+ActorSpeedSort	actor.h	/^	static inline bool ActorSpeedSort(Actor_ptr a, Actor_ptr b) { return a->Speed > b->Speed; }$/;"	f	class:Actor
+Actor_ptr	actor.h	/^typedef std::shared_ptr<Actor> Actor_ptr;$/;"	t
+Add	array2d.h	/^void Array2d<T>::Add(int x, int y, T value)$/;"	f	class:Array2d
+Add	renderer.cpp	/^void Renderer::Add(GraphComp_ptr c)$/;"	f	class:Renderer
+AddActorHealthBar	battleHUD.cpp	/^void BattleHUD::AddActorHealthBar(Actor_ptr ap, int& party, int& enemies)$/;"	f	class:BattleHUD
+AddArg	eventFactory.cpp	/^EventArgType EventFactory::AddArg(rapidjson::Value::MemberIterator iter, MapHandler* maphandler)$/;"	f	class:EventFactory
+AddEventQueue	entity.cpp	/^void Entity::AddEventQueue(std::shared_ptr<EventQueue> eq)$/;"	f	class:Entity
+AddFont	fontManager.cpp	/^unsigned int FontManager::AddFont(Font_ptr font)$/;"	f	class:FontManager
+AddFont	fontManager.cpp	/^unsigned int FontManager::AddFont(bool sTatic, bool temporary, bool lightspeed, std::string texPath)$/;"	f	class:FontManager
+AddParticles	particleManager.cpp	/^void ParticleManager::AddParticles(Particle_ptr particles)$/;"	f	class:ParticleManager
+AddShader	effect.cpp	/^bool Effect::AddShader(std::string shaderFileName, GLenum shaderType, GLuint& program)$/;"	f	class:Effect
+AddTexture	resource_manager.cpp	/^void ResourceManager::AddTexture(std::string name, Texture tex)$/;"	f	class:ResourceManager
+AddTexture	textureatlas.cpp	/^TextureAtlas::TextureIndex TextureAtlas::AddTexture(const std::string& fname)$/;"	f	class:TextureAtlas
+AddToLockVector	eventManager.cpp	/^void EventManager::AddToLockVector(std::shared_ptr<IEvent> ev)$/;"	f	class:EventManager
+AddToMesh	mesh.cpp	/^void Mesh::AddToMesh(std::vector<Vertex>& verts, const std::vector<GLuint>& inds, int biggestIndex, Vector3f pos, std::string tex, int index)$/;"	f	class:Mesh
+AddTranslation	transform.cpp	/^void Transformation::AddTranslation(float x, float y, float z)$/;"	f	class:Transformation
+AddWordToMesh	font.cpp	/^void Font::AddWordToMesh(std::string word, float x, float y)$/;"	f	class:Font
+Alpha	fontFloat.h	/^	float Alpha;$/;"	m	class:FontFloat
+AngleBetween	vector3f.cpp	/^float Vector3f::AngleBetween(Vector3f v)$/;"	f	class:Vector3f
+AnimBasic	animBasic.cpp	/^AnimBasic::AnimBasic(Anim_Enum anim, Actor_ptr target, double seconds)$/;"	f	class:AnimBasic
+AnimBasic	animBasic.h	/^class AnimBasic : public BattleAnimation$/;"	c
+AnimInfo	animation.h	/^	AnimInfo(int pos, int numFrame) { position = pos; numFrames = numFrame; }$/;"	f	struct:AnimInfo
+AnimInfo	animation.h	/^struct AnimInfo$/;"	s
+AnimJumpTo	animJumpTo.cpp	/^AnimJumpTo::AnimJumpTo(Vector3f position, Actor_ptr target)$/;"	f	class:AnimJumpTo
+AnimJumpTo	animJumpTo.h	/^class AnimJumpTo : public BattleAnimation$/;"	c
+AnimMoveTo	animMoveTo.cpp	/^AnimMoveTo::AnimMoveTo(Vector3f position, Actor_ptr target)$/;"	f	class:AnimMoveTo
+AnimMoveTo	animMoveTo.h	/^class AnimMoveTo : public BattleAnimation$/;"	c
+Anim_Enum	animation.h	/^enum Anim_Enum { AE_Left, AE_Down, AE_Right, AE_Up, AE_Attack, AE_Last };$/;"	g
+Anim_ptr	battleAnimation.h	/^typedef std::shared_ptr<BattleAnimation> Anim_ptr;$/;"	t
+Animate	skillMelee.cpp	/^void SkillMelee::Animate()$/;"	f	class:SkillMelee
+Animation	animation.cpp	/^Animation::Animation()$/;"	f	class:Animation
+Animation	animation.h	/^class Animation$/;"	c
+AnimationCounter	animation.cpp	/^void Animation::AnimationCounter(float et)$/;"	f	class:Animation
+AnimationsDone	skill.cpp	/^bool Skill::AnimationsDone()$/;"	f	class:Skill
+AnyPress	key_status.h	/^enum KeyStatus { KeyPressed, ReleaseQuick, ReleaseLong, Release, HoldDownPress, AnyPress, AnyRelease };$/;"	e	enum:KeyStatus
+AnyRelease	key_status.h	/^enum KeyStatus { KeyPressed, ReleaseQuick, ReleaseLong, Release, HoldDownPress, AnyPress, AnyRelease };$/;"	e	enum:KeyStatus
+ApplyCollision	physics_2d.cpp	/^	void ApplyCollision(std::shared_ptr<PhysicsComponent> a, std::shared_ptr<PhysicsComponent> b)$/;"	f	namespace:Physics_2D
+ApplyCollision	physics_2d.cpp	/^	void ApplyCollision(std::shared_ptr<PhysicsComponent> a, std::shared_ptr<PhysicsComponent> b, Axis precalculatedAxis)$/;"	f	namespace:Physics_2D
+ApplyEffect	skillHeal.cpp	/^void SkillHeal::ApplyEffect()$/;"	f	class:SkillHeal
+ApplyEffect	skillMelee.cpp	/^void SkillMelee::ApplyEffect()$/;"	f	class:SkillMelee
+ApplyEffect	skillSmack.cpp	/^void SkillSmack::ApplyEffect()$/;"	f	class:SkillSmack
+ApplyGravity	physicsComponent.cpp	/^void PhysicsComponent::ApplyGravity()$/;"	f	class:PhysicsComponent
+ApplyLethal	actor.cpp	/^void Actor::ApplyLethal()$/;"	f	class:Actor
+Array2d	array2d.h	/^Array2d<T>::Array2d(const Array2d& array) : m_x(array.m_x), m_y(array.m_y)$/;"	f	class:Array2d
+Array2d	array2d.h	/^Array2d<T>::Array2d(int x, int y) : m_x(x), m_y(y)$/;"	f	class:Array2d
+Array2d	array2d.h	/^class Array2d$/;"	c
+Array3d	array3d.h	/^Array3d<T>::Array3d(const Array3d& array) : m_x(array.m_x), m_y(array.m_y), m_z(array.m_z)$/;"	f	class:Array3d
+Array3d	array3d.h	/^Array3d<T>::Array3d(int x, int y, int z) : m_x(x), m_y(y), m_z(z)$/;"	f	class:Array3d
+Array3d	array3d.h	/^class Array3d$/;"	c
+AudioComponent	audioComponent.cpp	/^AudioComponent::AudioComponent()$/;"	f	class:AudioComponent
+AudioComponent	audioComponent.h	/^class AudioComponent : public IComponent$/;"	c
+Axis	physics_2d.h	/^enum Axis { X, Y, Z };$/;"	g
+BASIC_EFFECT_H__	basicEffect.h	2;"	d
+BATTLE_ANIMATION_H__	battleAnimation.h	2;"	d
+BATTLE_HUD_H__	battleHUD.h	2;"	d
+BATTLE_MANAGER_H__	battleManager.h	2;"	d
+BBSize	physicsComponent.cpp	/^Vector3f PhysicsComponent::BBSize()$/;"	f	class:PhysicsComponent
+BGM_Playing	soundManager.h	/^enum BGM_State { BGM_Stopping, BGM_Starting, BGM_Playing };$/;"	e	enum:BGM_State
+BGM_Starting	soundManager.h	/^enum BGM_State { BGM_Stopping, BGM_Starting, BGM_Playing };$/;"	e	enum:BGM_State
+BGM_State	soundManager.h	/^enum BGM_State { BGM_Stopping, BGM_Starting, BGM_Playing };$/;"	g
+BGM_Stopping	soundManager.h	/^enum BGM_State { BGM_Stopping, BGM_Starting, BGM_Playing };$/;"	e	enum:BGM_State
+BIG_EPSILON	define.h	12;"	d
+BLOCKING	iEvent.h	/^	BLOCKING, ASYNC$/;"	e	enum:EventExecutionMode
+BLOOM_EFFECT_H__	bloomEffect.h	2;"	d
+BLOOM_H_	bloom.h	2;"	d
+BLUF_FRAMEBUFFER_H_	blur_framebuffer.h	2;"	d
+BLUR_EFFECT_H__	blurEffect.h	2;"	d
+BS_ActionDone	skill.h	/^enum BattleState { BS_Animation, BS_Attacking, BS_SelectAction, BS_SelectTargets, BS_ActionProgress, BS_ActionDone };$/;"	e	enum:BattleState
+BS_ActionProgress	skill.h	/^enum BattleState { BS_Animation, BS_Attacking, BS_SelectAction, BS_SelectTargets, BS_ActionProgress, BS_ActionDone };$/;"	e	enum:BattleState
+BS_Animation	skill.h	/^enum BattleState { BS_Animation, BS_Attacking, BS_SelectAction, BS_SelectTargets, BS_ActionProgress, BS_ActionDone };$/;"	e	enum:BattleState
+BS_Attacking	skill.h	/^enum BattleState { BS_Animation, BS_Attacking, BS_SelectAction, BS_SelectTargets, BS_ActionProgress, BS_ActionDone };$/;"	e	enum:BattleState
+BS_SelectAction	skill.h	/^enum BattleState { BS_Animation, BS_Attacking, BS_SelectAction, BS_SelectTargets, BS_ActionProgress, BS_ActionDone };$/;"	e	enum:BattleState
+BS_SelectTargets	skill.h	/^enum BattleState { BS_Animation, BS_Attacking, BS_SelectAction, BS_SelectTargets, BS_ActionProgress, BS_ActionDone };$/;"	e	enum:BattleState
+BUFFER_ELAPSED_TIME	elapsedTime.h	6;"	d
+BasicEffect	basicEffect.cpp	/^BasicEffect::BasicEffect()$/;"	f	class:BasicEffect
+BasicEffect	basicEffect.h	/^class BasicEffect : public Effect$/;"	c
+BattleAnimation	battleAnimation.h	/^	BattleAnimation() {}$/;"	f	class:BattleAnimation
+BattleAnimation	battleAnimation.h	/^class BattleAnimation$/;"	c
+BattleHUD	battleHUD.cpp	/^BattleHUD::BattleHUD()$/;"	f	class:BattleHUD
+BattleHUD	battleHUD.h	/^class BattleHUD$/;"	c
+BattleManager	battleManager.cpp	/^BattleManager::BattleManager()$/;"	f	class:BattleManager
+BattleManager	battleManager.cpp	/^BattleManager::BattleManager(std::vector<Actor_ptr> actors)$/;"	f	class:BattleManager
+BattleManager	battleManager.h	/^class BattleManager$/;"	c
+BattleState	skill.h	/^enum BattleState { BS_Animation, BS_Attacking, BS_SelectAction, BS_SelectTargets, BS_ActionProgress, BS_ActionDone };$/;"	g
+Begin	bloom.cpp	/^void Bloom::Begin()$/;"	f	class:Bloom
+Begin	fade.cpp	/^void Fade::Begin()$/;"	f	class:Fade
+Bind	texture.cpp	/^void Texture::Bind(GLenum TextureUnit)$/;"	f	class:Texture
+Bind	textureatlas.cpp	/^void TextureAtlas::Bind() const$/;"	f	class:TextureAtlas
+BindForReading	shadowMapFBO.cpp	/^void ShadowMapFBO::BindForReading(GLenum TextureUnit)$/;"	f	class:ShadowMapFBO
+BindForWriting	shadowMapFBO.cpp	/^void ShadowMapFBO::BindForWriting(GLenum CubeFace)$/;"	f	class:ShadowMapFBO
+Bloom	bloom.cpp	/^Bloom::Bloom() : m_width(1), m_height(1)$/;"	f	class:Bloom
+Bloom	bloom.h	/^class Bloom {$/;"	c
+BloomEffect	bloomEffect.cpp	/^BloomEffect::BloomEffect()$/;"	f	class:BloomEffect
+BloomEffect	bloomEffect.h	/^class BloomEffect : public Effect$/;"	c
+BlurEffect	blurEffect.cpp	/^BlurEffect::BlurEffect()$/;"	f	class:BlurEffect
+BlurEffect	blurEffect.h	/^class BlurEffect : public Effect$/;"	c
+BlurFramebuffer	blur_framebuffer.cpp	/^BlurFramebuffer::BlurFramebuffer()$/;"	f	class:BlurFramebuffer
+BlurFramebuffer	blur_framebuffer.h	/^class BlurFramebuffer$/;"	c
+Bottom	mathutils.h	/^	float Bottom;$/;"	m	class:OrthoProjInfo
+Brb	scene.cpp	/^void Scene::Brb()$/;"	f	class:Scene
+Brb	scene_battle.h	/^	void Brb() {}$/;"	f	class:SceneBattle
+Brb	scene_world.cpp	/^void SceneWorld::Brb()$/;"	f	class:SceneWorld
+BuildBaseAlly	actorFactory.cpp	/^Actor_ptr ActorFactory::BuildBaseAlly()$/;"	f	class:ActorFactory
+BuildBaseEnemy	actorFactory.cpp	/^Actor_ptr ActorFactory::BuildBaseEnemy()$/;"	f	class:ActorFactory
+BuildEntity	entityFactory.cpp	/^std::shared_ptr<Entity> EntityFactory::BuildEntity(std::map<std::string, EntityArgType> args)$/;"	f	class:EntityFactory
+BuildEvent	eventFactory.cpp	/^std::shared_ptr<IEvent> EventFactory::BuildEvent(EventTypes et, std::map<std::string, EventArgType> args, MapHandler* map, unsigned int entity_id)$/;"	f	class:EventFactory
+BuildParty	actorFactory.cpp	/^std::vector<Actor_ptr> ActorFactory::BuildParty(rapidjson::GenericArray<false, rapidjson::Value>& arr)$/;"	f	class:ActorFactory
+BuildSkill	actorFactory.cpp	/^Skill_ptr ActorFactory::BuildSkill(std::string name)$/;"	f	class:ActorFactory
+CMsg	iComponent.h	/^enum CMsg {Update};$/;"	g
+COLLISION_BUFFER_SPACE	define.h	11;"	d
+COLLISION_MANAGER_H__	collisionManager.h	2;"	d
+COMBINE_EFFECT_H__	combineEffect.h	2;"	d
+COMPOSITION	map_handler.cpp	3;"	d	file:
+CalculateCollision	collisionManager.cpp	/^std::map<unsigned int, std::shared_ptr<Entity>> CollisionManager::CalculateCollision()$/;"	f	class:CollisionManager
+CalculateElapsedTime	elapsedTime.cpp	/^void ElapsedTime::CalculateElapsedTime()$/;"	f	class:ElapsedTime
+Camera	mathutils.h	/^class Camera$/;"	c
+ChangeLetter	font.cpp	/^void Font::ChangeLetter(unsigned int index, uint32_t newChar)$/;"	f	class:Font
+ChangeLetter	fontManager.cpp	/^void FontManager::ChangeLetter(unsigned int font, unsigned int index, char newChar)$/;"	f	class:FontManager
+CharToCode	font.cpp	/^unsigned int Font::CharToCode(uint32_t c)$/;"	f	class:Font
+CheckErrors	soundManager.cpp	/^void SoundManager::CheckErrors()$/;"	f	class:SoundManager
+Choice	dialogueGraph.h	/^enum DialogueType { Simple, Choice, End };$/;"	e	enum:DialogueType
+ChoiceAvailable	dialogueGraph.cpp	/^bool DialogueGraph::ChoiceAvailable()$/;"	f	class:DialogueGraph
+ChoosingAction	actor.h	/^	bool ChoosingAction;$/;"	m	class:Actor
+Clear	renderer.cpp	/^void Renderer::Clear() $/;"	f	class:Renderer
+ClearEvents	eventQueue.cpp	/^void EventQueue::ClearEvents()$/;"	f	class:EventQueue
+ClearFonts	fontManager.cpp	/^void FontManager::ClearFonts()$/;"	f	class:FontManager
+Clone	dialogueBox.cpp	/^std::shared_ptr<IEvent> DialogueBox::Clone()$/;"	f	class:DialogueBox
+Clone	dialogueGraph.cpp	/^std::shared_ptr<DialogueGraph> DialogueGraph::Clone()$/;"	f	class:DialogueGraph
+Clone	eventAddToFlag.cpp	/^std::shared_ptr<IEvent> EventAddToFlag::Clone()$/;"	f	class:EventAddToFlag
+Clone	eventBGM.cpp	/^std::shared_ptr<IEvent> EventBGM::Clone()$/;"	f	class:EventBGM
+Clone	eventBattle.cpp	/^std::shared_ptr<IEvent> EventBattle::Clone()$/;"	f	class:EventBattle
+Clone	eventCaller.cpp	/^std::shared_ptr<IEvent> EventCaller::Clone()$/;"	f	class:EventCaller
+Clone	eventMapChange.cpp	/^std::shared_ptr<IEvent> EventMapChange::Clone()$/;"	f	class:EventMapChange
+Clone	eventMove.cpp	/^std::shared_ptr<IEvent> EventMove::Clone()$/;"	f	class:EventMove
+Clone	eventParticle.cpp	/^std::shared_ptr<IEvent> EventParticle::Clone()$/;"	f	class:EventParticle
+Clone	eventQueue.cpp	/^std::shared_ptr<EventQueue> EventQueue::Clone()$/;"	f	class:EventQueue
+Clone	eventSetFlag.cpp	/^std::shared_ptr<IEvent> EventSetFlag::Clone()$/;"	f	class:EventSetFlag
+Clone	eventSound.cpp	/^std::shared_ptr<IEvent> EventSound::Clone()$/;"	f	class:EventSound
+Clone	eventSpriteChange.cpp	/^std::shared_ptr<IEvent> EventSpriteChange::Clone()$/;"	f	class:EventSpriteChange
+Clone	eventTeleport.cpp	/^std::shared_ptr<IEvent> EventTeleport::Clone()$/;"	f	class:EventTeleport
+Clone	eventToggleFlag.cpp	/^std::shared_ptr<IEvent> EventToggleFlag::Clone()$/;"	f	class:EventToggleFlag
+Clone	eventWeather.cpp	/^std::shared_ptr<IEvent> EventWeather::Clone()$/;"	f	class:EventWeather
+Clone	iEvent.cpp	/^std::shared_ptr<IEvent> IEvent::Clone()$/;"	f	class:IEvent
+Close	define.h	/^enum AABB {Left = 0, Right = 1, Down = 2, Up = 3, Close = 4, Far = 5};$/;"	e	enum:AABB
+Collision	define.h	/^enum Report_Type {Collision = 0};$/;"	e	enum:Report_Type
+Collision	physics_2d.cpp	/^	std::vector<std::shared_ptr<Entity>> Collision(std::map<unsigned int, std::shared_ptr<Entity>>* clist, std::shared_ptr<MapHandler> mh)$/;"	f	namespace:Physics_2D
+CollisionManager	collisionManager.cpp	/^CollisionManager::CollisionManager() : m_entities(NULL), m_tiles(NULL) {}$/;"	f	class:CollisionManager
+CollisionManager	collisionManager.cpp	/^CollisionManager::CollisionManager(std::map<unsigned int, std::shared_ptr<Entity>>* e, std::vector<std::shared_ptr<MapTile>>* t) :$/;"	f	class:CollisionManager
+CollisionManager	collisionManager.h	/^class CollisionManager$/;"	c
+CollisionObject	physics.h	/^	CollisionObject(std::vector<Vertex> v, std::vector<GLuint> i, Vector3f vt) : verts(v), inds(i), velocity(vt) {};$/;"	f	struct:CollisionObject
+CollisionObject	physics.h	/^struct CollisionObject$/;"	s
+CollisionRemastered	physics_2d.cpp	/^	std::map<unsigned int, std::shared_ptr<Entity>> CollisionRemastered(std::map<unsigned int, std::shared_ptr<Entity>>* clist, std::vector<std::shared_ptr<MapTile>>* mt)$/;"	f	namespace:Physics_2D
+Color	fontFloat.h	/^	Vector3f Color;$/;"	m	class:FontFloat
+CombineEffect	combineEffect.cpp	/^CombineEffect::CombineEffect()$/;"	f	class:CombineEffect
+CombineEffect	combineEffect.h	/^class CombineEffect : public Effect$/;"	c
+ComponentSort	renderer.h	/^	static inline bool ComponentSort(GraphicsComponent* i, GraphicsComponent* j) { return PositionSort(i->GetPosRef(), j->GetPosRef()); }$/;"	f	class:Renderer
+Condition	eventQueue.h	/^	FlagCondition Condition;$/;"	m	class:EventQueue
+Construct	dialogueBox.cpp	/^void DialogueBox::Construct()$/;"	f	class:DialogueBox
+Construct	graphicsComponent.cpp	/^void GraphicsComponent::Construct()$/;"	f	class:GraphicsComponent
+ConvertUTF8	utils.cpp	/^std::vector<uint32_t> Utils::ConvertUTF8(std::string text)$/;"	f	class:Utils
+Copy	array2d.h	/^void Array2d<T>::Copy(const Array2d& a)$/;"	f	class:Array2d
+Copy	mat4f.cpp	/^void Mat4f::Copy(const float(&mat)[4][4], float(&target)[4][4])$/;"	f	class:Mat4f
+Count	array2d.h	/^int Array2d<T>::Count()$/;"	f	class:Array2d
+Count	array3d.h	/^int Array3d<T>::Count()$/;"	f	class:Array3d
+Count	array3d.h	/^int Array3d<T>::Count(int x)$/;"	f	class:Array3d
+Count	eventQueue.cpp	/^unsigned int EventQueue::Count()$/;"	f	class:EventQueue
+CountX	array2d.h	/^int Array2d<T>::CountX()$/;"	f	class:Array2d
+CountY	array2d.h	/^int Array2d<T>::CountY()$/;"	f	class:Array2d
+CreateBuffer	soundManager.cpp	/^void SoundManager::CreateBuffer(std::string path)$/;"	f	class:SoundManager
+CreateHash	font.cpp	/^void Font::CreateHash() {$/;"	f	class:Font
+CreateScene	scene_manager.cpp	/^std::shared_ptr<Scene> SceneManager::CreateScene(SceneGenData sgd)$/;"	f	class:SceneManager
+CreateSource	soundManager.cpp	/^unsigned int SoundManager::CreateSource()$/;"	f	class:SoundManager
+Cross	vector3f.cpp	/^Vector3f Vector3f::Cross(const Vector3f& v)$/;"	f	class:Vector3f
+CycleActors	battleManager.cpp	/^void BattleManager::CycleActors()$/;"	f	class:BattleManager
+DEBUG	define.h	7;"	d
+DEBUG_DRAW_NORMALS	define.cpp	/^	bool DEBUG_DRAW_NORMALS = false;$/;"	m	namespace:Globals	file:
+DEBUG_DRAW_TILE_OUTLINES	define.cpp	/^	bool DEBUG_DRAW_TILE_OUTLINES = false;$/;"	m	namespace:Globals	file:
+DEFINE_GL_H__	define_gl.h	2;"	d
+DEFINE_H__	define.h	2;"	d
+DEPTH_RENDER_BUFFER	FBO.h	/^	static const int DEPTH_RENDER_BUFFER = 2;$/;"	m	class:FBO
+DEPTH_TEXTURE	FBO.h	/^	static const int DEPTH_TEXTURE = 1;$/;"	m	class:FBO
+DIALOGUE_BOX_H__	dialogueBox.h	2;"	d
+DIALOGUE_GRAPH_H__	dialogueGraph.h	2;"	d
+DT_Ally	skill.h	/^enum DefaultTarget { DT_Self, DT_Enemy, DT_Ally };$/;"	e	enum:DefaultTarget
+DT_ENTITY	effect.h	/^enum DrawType { DT_FLAT, DT_ENTITY };$/;"	e	enum:DrawType
+DT_Enemy	skill.h	/^enum DefaultTarget { DT_Self, DT_Enemy, DT_Ally };$/;"	e	enum:DefaultTarget
+DT_FLAT	effect.h	/^enum DrawType { DT_FLAT, DT_ENTITY };$/;"	e	enum:DrawType
+DT_Self	skill.h	/^enum DefaultTarget { DT_Self, DT_Enemy, DT_Ally };$/;"	e	enum:DefaultTarget
+DataDocument	jsonHandler.h	/^	rapidjson::Document DataDocument;$/;"	m	class:JsonHandler
+Dead	actor.h	/^	bool Dead;$/;"	m	class:Actor
+DefaultSetup	skill.cpp	/^void Skill::DefaultSetup()$/;"	f	class:Skill
+DefaultSetup	skillHeal.cpp	/^void SkillHeal::DefaultSetup()$/;"	f	class:SkillHeal
+DefaultSetup	skillMelee.cpp	/^void SkillMelee::DefaultSetup()$/;"	f	class:SkillMelee
+DefaultSetup	skillSmack.cpp	/^void SkillSmack::DefaultSetup()$/;"	f	class:SkillSmack
+DefaultTarget	skill.h	/^enum DefaultTarget { DT_Self, DT_Enemy, DT_Ally };$/;"	g
+DeleteSource	soundManager.cpp	/^void SoundManager::DeleteSource(unsigned int source)$/;"	f	class:SoundManager
+DesiredMove	physicsComponent.cpp	/^void PhysicsComponent::DesiredMove()$/;"	f	class:PhysicsComponent
+Destroy	battleHUD.cpp	/^void BattleHUD::Destroy()$/;"	f	class:BattleHUD
+Dialogue	dialogueGraph.h	/^struct Dialogue$/;"	s
+DialogueBox	dialogueBox.cpp	/^DialogueBox::DialogueBox(unsigned int entity_id, std::shared_ptr<DialogueGraph> dg) : m_firstTime(true)$/;"	f	class:DialogueBox
+DialogueBox	dialogueBox.cpp	/^DialogueBox::DialogueBox(unsigned int entity_id, std::vector<Dialogue> d, std::vector<DialogueChoice> dc) : m_firstTime(true)$/;"	f	class:DialogueBox
+DialogueBox	dialogueBox.h	/^class DialogueBox : public Font, public IEvent$/;"	c
+DialogueChoice	dialogueGraph.h	/^struct DialogueChoice$/;"	s
+DialogueChoices	dialogueGraph.h	/^	std::vector<DialogueChoice> DialogueChoices;$/;"	m	class:DialogueGraph
+DialogueGraph	dialogueGraph.cpp	/^DialogueGraph::DialogueGraph(std::vector<Dialogue> d, std::vector<DialogueChoice> dc)$/;"	f	class:DialogueGraph
+DialogueGraph	dialogueGraph.h	/^class DialogueGraph$/;"	c
+DialogueId	dialogueGraph.h	/^	int DialogueId;$/;"	m	struct:DialogueChoice
+DialogueResponse	dialogueGraph.h	/^struct DialogueResponse$/;"	s
+DialogueType	dialogueGraph.h	/^enum DialogueType { Simple, Choice, End };$/;"	g
+Dialogues	dialogueGraph.h	/^	std::vector<Dialogue> Dialogues;$/;"	m	class:DialogueGraph
+Direction	graphicsComponent.h	/^enum Direction { dir_Left, dir_Down, dir_Right, dir_Up };$/;"	g
+DisableFont	fontManager.cpp	/^void FontManager::DisableFont(unsigned int font)$/;"	f	class:FontManager
+Distance2D	vector3f.cpp	/^float Vector3f::Distance2D(Vector3f& other)$/;"	f	class:Vector3f
+DocumentNotNull	jsonHandler.cpp	/^bool JsonHandler::DocumentNotNull()$/;"	f	class:JsonHandler
+Dot	vector3f.cpp	/^float Vector3f::Dot(Vector3f v)$/;"	f	class:Vector3f
+Down	define.h	/^enum AABB {Left = 0, Right = 1, Down = 2, Up = 3, Close = 4, Far = 5};$/;"	e	enum:AABB
+Draw	dialogueBox.cpp	/^void DialogueBox::Draw()$/;"	f	class:DialogueBox
+Draw	entity.cpp	/^void Entity::Draw()$/;"	f	class:Entity
+Draw	font.cpp	/^void Font::Draw()$/;"	f	class:Font
+Draw	fontGraphicsComponent.cpp	/^void FontGraphicsComponent::Draw(bool withTex)$/;"	f	class:FontGraphicsComponent
+Draw	graphicsComponent.cpp	/^void GraphicsComponent::Draw(bool withTex)$/;"	f	class:GraphicsComponent
+Draw	map_handler.cpp	/^void MapHandler::Draw()$/;"	f	class:MapHandler
+Draw	particleGenerator.cpp	/^void ParticleGenerator::Draw()$/;"	f	class:ParticleGenerator
+Draw	playerGraphicsComponent.cpp	/^void PlayerGraphicsComponent::Draw(bool withTex)$/;"	f	class:PlayerGraphicsComponent
+Draw	renderer.cpp	/^void Renderer::Draw()$/;"	f	class:Renderer
+Draw	scene_battle.cpp	/^void SceneBattle::Draw()$/;"	f	class:SceneBattle
+Draw	scene_world.cpp	/^void SceneWorld::Draw()$/;"	f	class:SceneWorld
+DrawBegin	scene.cpp	/^void Scene::DrawBegin()$/;"	f	class:Scene
+DrawEnd	scene.cpp	/^void Scene::DrawEnd()$/;"	f	class:Scene
+DrawOutline	playerGraphicsComponent.cpp	/^void PlayerGraphicsComponent::DrawOutline(bool withTex)$/;"	f	class:PlayerGraphicsComponent
+DrawType	effect.h	/^enum DrawType { DT_FLAT, DT_ENTITY };$/;"	g
+EEMDict	eventFactory.cpp	/^std::map<std::string, unsigned int> EventFactory::EEMDict =$/;"	m	class:EventFactory	file:
+EEMDict	eventFactory.h	/^	static std::map<std::string, unsigned int> EEMDict;$/;"	m	class:EventFactory
+EFFECT_H__	effect.h	2;"	d
+EFFECT_MANAGER_H__	effectManager.h	2;"	d
+ELAPSED_TIME_H__	elapsedTime.h	2;"	d
+ENTITY_FACTORY_H__	entityFactory.h	2;"	d
+ENTITY_H__	entity.h	2;"	d
+EPSILON	define.h	10;"	d
+ET_AddToFlag	iEvent.h	/^	ET_CallQueue, ET_MapChange, ET_Weather, ET_Particle, ET_PlaySound, ET_PlayBGM, ET_SetFlag, ET_ToggleFlag, ET_AddToFlag,$/;"	e	enum:EventTypes
+ET_Battle	iEvent.h	/^	ET_SpriteChange, ET_Battle};$/;"	e	enum:EventTypes
+ET_CallQueue	iEvent.h	/^	ET_CallQueue, ET_MapChange, ET_Weather, ET_Particle, ET_PlaySound, ET_PlayBGM, ET_SetFlag, ET_ToggleFlag, ET_AddToFlag,$/;"	e	enum:EventTypes
+ET_DialogueBox	iEvent.h	/^enum EventTypes { ET_Teleport, ET_DialogueBox, ET_MoveRight, ET_MoveUp, ET_MoveDown, ET_MoveLeft, $/;"	e	enum:EventTypes
+ET_MapChange	iEvent.h	/^	ET_CallQueue, ET_MapChange, ET_Weather, ET_Particle, ET_PlaySound, ET_PlayBGM, ET_SetFlag, ET_ToggleFlag, ET_AddToFlag,$/;"	e	enum:EventTypes
+ET_MoveDown	iEvent.h	/^enum EventTypes { ET_Teleport, ET_DialogueBox, ET_MoveRight, ET_MoveUp, ET_MoveDown, ET_MoveLeft, $/;"	e	enum:EventTypes
+ET_MoveLeft	iEvent.h	/^enum EventTypes { ET_Teleport, ET_DialogueBox, ET_MoveRight, ET_MoveUp, ET_MoveDown, ET_MoveLeft, $/;"	e	enum:EventTypes
+ET_MoveRight	iEvent.h	/^enum EventTypes { ET_Teleport, ET_DialogueBox, ET_MoveRight, ET_MoveUp, ET_MoveDown, ET_MoveLeft, $/;"	e	enum:EventTypes
+ET_MoveUp	iEvent.h	/^enum EventTypes { ET_Teleport, ET_DialogueBox, ET_MoveRight, ET_MoveUp, ET_MoveDown, ET_MoveLeft, $/;"	e	enum:EventTypes
+ET_Particle	iEvent.h	/^	ET_CallQueue, ET_MapChange, ET_Weather, ET_Particle, ET_PlaySound, ET_PlayBGM, ET_SetFlag, ET_ToggleFlag, ET_AddToFlag,$/;"	e	enum:EventTypes
+ET_PlayBGM	iEvent.h	/^	ET_CallQueue, ET_MapChange, ET_Weather, ET_Particle, ET_PlaySound, ET_PlayBGM, ET_SetFlag, ET_ToggleFlag, ET_AddToFlag,$/;"	e	enum:EventTypes
+ET_PlaySound	iEvent.h	/^	ET_CallQueue, ET_MapChange, ET_Weather, ET_Particle, ET_PlaySound, ET_PlayBGM, ET_SetFlag, ET_ToggleFlag, ET_AddToFlag,$/;"	e	enum:EventTypes
+ET_SetFlag	iEvent.h	/^	ET_CallQueue, ET_MapChange, ET_Weather, ET_Particle, ET_PlaySound, ET_PlayBGM, ET_SetFlag, ET_ToggleFlag, ET_AddToFlag,$/;"	e	enum:EventTypes
+ET_SpriteChange	iEvent.h	/^	ET_SpriteChange, ET_Battle};$/;"	e	enum:EventTypes
+ET_Teleport	iEvent.h	/^enum EventTypes { ET_Teleport, ET_DialogueBox, ET_MoveRight, ET_MoveUp, ET_MoveDown, ET_MoveLeft, $/;"	e	enum:EventTypes
+ET_ToggleFlag	iEvent.h	/^	ET_CallQueue, ET_MapChange, ET_Weather, ET_Particle, ET_PlaySound, ET_PlayBGM, ET_SetFlag, ET_ToggleFlag, ET_AddToFlag,$/;"	e	enum:EventTypes
+ET_Weather	iEvent.h	/^	ET_CallQueue, ET_MapChange, ET_Weather, ET_Particle, ET_PlaySound, ET_PlayBGM, ET_SetFlag, ET_ToggleFlag, ET_AddToFlag,$/;"	e	enum:EventTypes
+EVENT_ADD_TO_FLAG_H__	eventAddToFlag.h	2;"	d
+EVENT_BATTLE_H__	eventBattle.h	2;"	d
+EVENT_BGM_H__	eventBGM.h	2;"	d
+EVENT_CALLER_H__	eventCaller.h	2;"	d
+EVENT_FACTORY_H__	eventFactory.h	2;"	d
+EVENT_MANAGER_H__	eventManager.h	2;"	d
+EVENT_MAP_CHANGE_H__	eventMapChange.h	2;"	d
+EVENT_MOVE_H__	eventMove.h	2;"	d
+EVENT_PARTICLE_H__	eventParticle.h	2;"	d
+EVENT_QUEUE_H__	eventQueue.h	2;"	d
+EVENT_SET_FLAG_H__	eventSetFlag.h	2;"	d
+EVENT_SOUND_H__	eventSound.h	2;"	d
+EVENT_SPRITE_CHANGE_H__	eventSpriteChange.h	2;"	d
+EVENT_TELEPORT_H__	eventTeleport.h	2;"	d
+EVENT_TOGGLE_FLAG_H__	eventToggleFlag.h	2;"	d
+EVENT_WEATHER_H__	eventWeather.h	2;"	d
+E_Basic	effectManager.h	/^enum Effects { E_Basic, E_SingleColor, E_Combine, E_Bloom, E_Blur, E_Fade, E_Last };$/;"	e	enum:Effects
+E_Bloom	effectManager.h	/^enum Effects { E_Basic, E_SingleColor, E_Combine, E_Bloom, E_Blur, E_Fade, E_Last };$/;"	e	enum:Effects
+E_Blur	effectManager.h	/^enum Effects { E_Basic, E_SingleColor, E_Combine, E_Bloom, E_Blur, E_Fade, E_Last };$/;"	e	enum:Effects
+E_Combine	effectManager.h	/^enum Effects { E_Basic, E_SingleColor, E_Combine, E_Bloom, E_Blur, E_Fade, E_Last };$/;"	e	enum:Effects
+E_Fade	effectManager.h	/^enum Effects { E_Basic, E_SingleColor, E_Combine, E_Bloom, E_Blur, E_Fade, E_Last };$/;"	e	enum:Effects
+E_Last	effectManager.h	/^enum Effects { E_Basic, E_SingleColor, E_Combine, E_Bloom, E_Blur, E_Fade, E_Last };$/;"	e	enum:Effects
+E_SingleColor	effectManager.h	/^enum Effects { E_Basic, E_SingleColor, E_Combine, E_Bloom, E_Blur, E_Fade, E_Last };$/;"	e	enum:Effects
+Effect	effect.cpp	/^Effect::Effect()$/;"	f	class:Effect
+Effect	effect.h	/^class Effect$/;"	c
+EffectManager	effectManager.cpp	/^EffectManager::EffectManager()$/;"	f	class:EffectManager
+EffectManager	effectManager.h	/^class EffectManager$/;"	c
+Effects	effectManager.h	/^enum Effects { E_Basic, E_SingleColor, E_Combine, E_Bloom, E_Blur, E_Fade, E_Last };$/;"	g
+ElapsedTime	elapsedTime.h	/^	ElapsedTime() {}$/;"	f	class:ElapsedTime
+ElapsedTime	elapsedTime.h	/^class ElapsedTime$/;"	c
+EmplaceFlag	gameData.cpp	/^void GameData::EmplaceFlag(std::string name, int value)$/;"	f	class:GameData
+Enable	effect.cpp	/^void Effect::Enable(GLuint program)$/;"	f	class:Effect
+Enable	effectManager.cpp	/^void EffectManager::Enable(Effects ef, GLuint program)$/;"	f	class:EffectManager
+EnableFont	fontManager.cpp	/^void FontManager::EnableFont(unsigned int font)$/;"	f	class:FontManager
+EnablePrevious	effectManager.cpp	/^void EffectManager::EnablePrevious()$/;"	f	class:EffectManager
+End	bloom.cpp	/^void Bloom::End(bool dark)$/;"	f	class:Bloom
+End	dialogueGraph.h	/^enum DialogueType { Simple, Choice, End };$/;"	e	enum:DialogueType
+EnsureBaseSettings	gameData.cpp	/^void GameData::EnsureBaseSettings()$/;"	f	class:GameData
+Ent_Props	define.h	/^enum Ent_Props {P_Slope_High_N, P_Slope_High_E, P_Slope_High_S, P_Slope_High_W, P_Player};$/;"	g
+Entity	entity.cpp	/^Entity::Entity(unsigned int id, std::string spritesheet, bool playerInput, bool fullSize) $/;"	f	class:Entity
+Entity	entity.h	/^class Entity$/;"	c
+EntityArgType	entityFactory.h	/^typedef std::variant<bool, float, int, unsigned int, std::string, Vector3f> EntityArgType;$/;"	t
+EntityFactory	entityFactory.h	/^class EntityFactory$/;"	c
+Erase	eventManager.cpp	/^void EventManager::Erase(unsigned int queueIndex)$/;"	f	class:EventManager
+EventAddToFlag	eventAddToFlag.cpp	/^EventAddToFlag::EventAddToFlag(std::string name, int value) : m_flag(name), m_value(value)$/;"	f	class:EventAddToFlag
+EventAddToFlag	eventAddToFlag.h	/^class EventAddToFlag : public IEvent$/;"	c
+EventArgType	eventFactory.cpp	/^EventArgType::EventArgType() : inner(true) {}$/;"	f	class:EventArgType
+EventArgType	eventFactory.cpp	/^EventArgType::EventArgType(EventArgInner eai) : inner(eai)$/;"	f	class:EventArgType
+EventArgType	eventFactory.h	/^class EventArgType$/;"	c
+EventBGM	eventBGM.cpp	/^EventBGM::EventBGM(std::string soundFile) : m_soundFile(soundFile), m_firstTime(true)$/;"	f	class:EventBGM
+EventBGM	eventBGM.h	/^class EventBGM : public IEvent$/;"	c
+EventBattle	eventBattle.cpp	/^EventBattle::EventBattle() : m_firstSetup(true)$/;"	f	class:EventBattle
+EventBattle	eventBattle.h	/^class EventBattle : public IEvent$/;"	c
+EventCaller	eventCaller.cpp	/^EventCaller::EventCaller(unsigned int entity_id, unsigned int queue_id) : m_targetQueue(queue_id)$/;"	f	class:EventCaller
+EventCaller	eventCaller.h	/^class EventCaller : public IEvent$/;"	c
+EventExecutionMode	iEvent.h	/^enum EventExecutionMode$/;"	g
+EventFactory	eventFactory.h	/^class EventFactory$/;"	c
+EventManager	eventManager.cpp	/^EventManager::EventManager() : m_queues(std::vector<std::shared_ptr<EventQueue>>())$/;"	f	class:EventManager
+EventManager	eventManager.h	/^class EventManager$/;"	c
+EventMapChange	eventMapChange.cpp	/^EventMapChange::EventMapChange(unsigned int map) : m_map(map), m_firstSetup(true)$/;"	f	class:EventMapChange
+EventMapChange	eventMapChange.h	/^class EventMapChange : public IEvent$/;"	c
+EventMove	eventMove.cpp	/^EventMove::EventMove(unsigned int entity_id, float distance, unsigned int direction) $/;"	f	class:EventMove
+EventMove	eventMove.h	/^class EventMove : public IEvent$/;"	c
+EventParticle	eventParticle.cpp	/^EventParticle::EventParticle(int particleCount, ParticleType type, unsigned int entity_id, std::string sprite_override)$/;"	f	class:EventParticle
+EventParticle	eventParticle.h	/^class EventParticle : public IEvent$/;"	c
+EventQueue	eventQueue.cpp	/^EventQueue::EventQueue(int id) : m_repeat(false), m_id(id), m_activation(AT_Interact)$/;"	f	class:EventQueue
+EventQueue	eventQueue.h	/^class EventQueue$/;"	c
+EventSetFlag	eventSetFlag.cpp	/^EventSetFlag::EventSetFlag(std::string name, int value) : m_flag(name), m_flagValue(value)$/;"	f	class:EventSetFlag
+EventSetFlag	eventSetFlag.h	/^class EventSetFlag : public IEvent$/;"	c
+EventSound	eventSound.cpp	/^EventSound::EventSound(std::string soundFile) : m_soundFile(soundFile), m_firstTime(true)$/;"	f	class:EventSound
+EventSound	eventSound.h	/^class EventSound : public IEvent$/;"	c
+EventSpriteChange	eventSpriteChange.cpp	/^EventSpriteChange::EventSpriteChange(std::string newSprite, int target) : m_newSprite(newSprite)$/;"	f	class:EventSpriteChange
+EventSpriteChange	eventSpriteChange.h	/^class EventSpriteChange : public IEvent$/;"	c
+EventTeleport	eventTeleport.cpp	/^EventTeleport::EventTeleport(unsigned int entity_id, float x, float y, float z) : m_x(x), m_y(y), m_z(z)$/;"	f	class:EventTeleport
+EventTeleport	eventTeleport.h	/^class EventTeleport : public IEvent$/;"	c
+EventToggleFlag	eventToggleFlag.cpp	/^EventToggleFlag::EventToggleFlag(std::string name) : m_flag(name)$/;"	f	class:EventToggleFlag
+EventToggleFlag	eventToggleFlag.h	/^class EventToggleFlag : public IEvent$/;"	c
+EventTypes	iEvent.h	/^enum EventTypes { ET_Teleport, ET_DialogueBox, ET_MoveRight, ET_MoveUp, ET_MoveDown, ET_MoveLeft, $/;"	g
+EventUpdateResponse	iEvent.h	/^struct EventUpdateResponse$/;"	s
+EventWeather	eventWeather.cpp	/^EventWeather::EventWeather(int particleCount, ParticleType type, Vector3f mapsize, bool smooth, std::string sprite) $/;"	f	class:EventWeather
+EventWeather	eventWeather.h	/^class EventWeather : public IEvent$/;"	c
+Explosion	particleGenerator.cpp	/^Explosion::Explosion(Vector3f& spawnPos, std::string tex, bool smooth, float pow)$/;"	f	class:Explosion
+Explosion	particleGenerator.h	/^struct Explosion : public Particle$/;"	s
+FADE_EFFECT_H__	fadeEffect.h	2;"	d
+FADE_H__	fade.h	2;"	d
+FBO	FBO.cpp	/^FBO::FBO(int width, int height, int depthBufferType) {$/;"	f	class:FBO
+FBO	FBO.h	/^class FBO$/;"	c
+FBO_H__	FBO.h	2;"	d
+FC_GreaterThan	eventQueue.h	/^enum FlagCondition { FC_Value, FC_NotValue, FC_LessThan, FC_GreaterThan};$/;"	e	enum:FlagCondition
+FC_LessThan	eventQueue.h	/^enum FlagCondition { FC_Value, FC_NotValue, FC_LessThan, FC_GreaterThan};$/;"	e	enum:FlagCondition
+FC_NotValue	eventQueue.h	/^enum FlagCondition { FC_Value, FC_NotValue, FC_LessThan, FC_GreaterThan};$/;"	e	enum:FlagCondition
+FC_Value	eventQueue.h	/^enum FlagCondition { FC_Value, FC_NotValue, FC_LessThan, FC_GreaterThan};$/;"	e	enum:FlagCondition
+FONT_FLOAT_H__	fontFloat.h	2;"	d
+FONT_GRAPHICS_COMPONENT	fontGraphicsComponent.h	2;"	d
+FONT_H__	font.h	2;"	d
+FONT_MANAGER_H__	fontManager.h	2;"	d
+FOV	mathutils.h	/^	float FOV = 30.0f;$/;"	m	class:PersProjInfo
+Fade	fade.cpp	/^Fade::Fade() : m_fadeProgress(1.0f)$/;"	f	class:Fade
+Fade	fade.h	/^class Fade$/;"	c
+FadeEffect	fadeEffect.cpp	/^FadeEffect::FadeEffect()$/;"	f	class:FadeEffect
+FadeEffect	fadeEffect.h	/^class FadeEffect : public Effect$/;"	c
+Far	define.h	/^enum AABB {Left = 0, Right = 1, Down = 2, Up = 3, Close = 4, Far = 5};$/;"	e	enum:AABB
+Fetcher	resource_loader.cpp	/^void ResourceLoader::Fetcher()$/;"	f	class:ResourceLoader
+File	jsonHandler.h	/^	std::string File;$/;"	m	class:JsonHandler
+FilesLoaded	jsonHandler.cpp	/^bool JsonHandler::FilesLoaded = false;$/;"	m	class:JsonHandler	file:
+FilesLoaded	jsonHandler.h	/^	static bool FilesLoaded;$/;"	m	class:JsonHandler
+Finalize	effect.cpp	/^bool Effect::Finalize(GLuint& program)$/;"	f	class:Effect
+Finalize	mesh.cpp	/^void Mesh::Finalize(std::string name)$/;"	f	class:Mesh
+FinalizeSetup	map_handler.cpp	/^void MapHandler::FinalizeSetup()$/;"	f	class:MapHandler
+FinalizeSetup	particleGenerator.cpp	/^void ParticleGenerator::FinalizeSetup()$/;"	f	class:ParticleGenerator
+FindClosestCollision	physics.cpp	/^	void FindClosestCollision(CollisionObject co1, CollisionObject co2, bool* collisionConfirmed,$/;"	f	namespace:Physics
+FindDupes	physics_2d.cpp	/^	std::vector<std::shared_ptr<PhysicsComponent>> FindDupes(std::vector<std::shared_ptr<PhysicsComponent>>* list, float targetHeight)$/;"	f	namespace:Physics_2D
+FindKey	input_manager.cpp	/^int InputManager::FindKey(std::list<std::pair<unsigned int, KeyStatus>>* list, unsigned int key)$/;"	f	class:InputManager
+FindMinMaxLegalZ	physics_2d.cpp	/^	void FindMinMaxLegalZ(std::vector<std::shared_ptr<PhysicsComponent>>* touching, float& min, float& max, float targetHeight)$/;"	f	namespace:Physics_2D
+FindPositionInParabola	mathutils.cpp	/^	Vector3f FindPositionInParabola(float progressPercent, Vector3f startPoint, Vector3f endPoint)$/;"	f	namespace:MathUtils
+FindWinner	battleManager.cpp	/^int BattleManager::FindWinner()$/;"	f	class:BattleManager
+Flag	eventQueue.h	/^	std::string Flag;$/;"	m	class:EventQueue
+FlagCondition	eventQueue.h	/^enum FlagCondition { FC_Value, FC_NotValue, FC_LessThan, FC_GreaterThan};$/;"	g
+FlagValue	eventQueue.h	/^	int FlagValue;$/;"	m	class:EventQueue
+Flags	gameData.cpp	/^std::map<std::string, int> GameData::Flags = std::map<std::string, int>();$/;"	m	class:GameData	file:
+Flags	gameData.h	/^	static std::map<std::string, int> Flags;$/;"	m	class:GameData
+Follow	mathutils.cpp	/^void Camera::Follow(Vector3f target, Transformation* t)$/;"	f	class:Camera
+Follow	transform.cpp	/^void Transformation::Follow(Vector3f target, Vector3f upperRightLimit)$/;"	f	class:Transformation
+Font	font.cpp	/^Font::Font(bool sTatic, bool temporary, bool lightSpeed, std::string path) : m_texture(path), m_phys(PhysicsComponent(Vector3f(), "TEXT")),$/;"	f	class:Font
+Font	font.h	/^class Font$/;"	c
+FontFloat	fontFloat.cpp	/^FontFloat::FontFloat(double lifetime, std::string tex) : Font(false, true, false, tex),$/;"	f	class:FontFloat
+FontFloat	fontFloat.h	/^class FontFloat : public Font$/;"	c
+FontGraphicsComponent	fontGraphicsComponent.cpp	/^FontGraphicsComponent::FontGraphicsComponent(std::string model, std::string path) : GraphicsComponent(model, path)$/;"	f	class:FontGraphicsComponent
+FontGraphicsComponent	fontGraphicsComponent.cpp	/^FontGraphicsComponent::FontGraphicsComponent(std::vector<Vertex>* verts, std::vector<GLuint>* inds, std::string texPath) : GraphicsComponent(verts, inds, texPath)$/;"	f	class:FontGraphicsComponent
+FontGraphicsComponent	fontGraphicsComponent.h	/^	FontGraphicsComponent() : GraphicsComponent() {}$/;"	f	class:FontGraphicsComponent
+FontGraphicsComponent	fontGraphicsComponent.h	/^class FontGraphicsComponent : public GraphicsComponent $/;"	c
+FontManager	fontManager.cpp	/^FontManager::FontManager() : m_fonts(std::map<unsigned int, Font_ptr>())$/;"	f	class:FontManager
+FontManager	fontManager.h	/^class FontManager$/;"	c
+Font_ptr	font.h	/^typedef std::shared_ptr<Font> Font_ptr;$/;"	t
+ForceFadeValue	fade.cpp	/^void Fade::ForceFadeValue(float value)$/;"	f	class:Fade
+FrameKeyStatus	input_manager.cpp	/^bool InputManager::FrameKeyStatus(unsigned int key, KeyStatus status, unsigned int accessLevel)$/;"	f	class:InputManager
+FullReset	graphicsComponent.cpp	/^void GraphicsComponent::FullReset(std::vector<Vertex>* verts, std::vector<GLuint>* inds)$/;"	f	class:GraphicsComponent
+GAME_DATA_H__	gameData.h	2;"	d
+GAME_H__	game.h	2;"	d
+GLErrorCheck	graphicsComponent.cpp	/^void GLErrorCheck()$/;"	f
+GLFWBACKEND_H__	glfwBackend.h	2;"	d
+GLFWMainLoop	glfwBackend.cpp	/^void GLFWManager::GLFWMainLoop(Game* game)$/;"	f	class:GLFWManager
+GLFWManager	glfwBackend.cpp	/^GLFWManager::GLFWManager()$/;"	f	class:GLFWManager
+GLFWManager	glfwBackend.h	/^class GLFWManager$/;"	c
+GRAPHICS_COMPONENT_H__	graphicsComponent.h	2;"	d
+Game	game.cpp	/^Game::Game() : m_exit(false)$/;"	f	class:Game
+Game	game.h	/^class Game$/;"	c
+GameData	gameData.h	/^class GameData$/;"	c
+Generate	textureatlas.cpp	/^bool TextureAtlas::Generate(int textureSize, bool mipmap, std::string filename)$/;"	f	class:TextureAtlas
+GenerateKey	fontManager.cpp	/^unsigned int FontManager::GenerateKey()$/;"	f	class:FontManager
+Get	array2d.h	/^T Array2d<T>::Get(int v) const$/;"	f	class:Array2d
+Get	array2d.h	/^T Array2d<T>::Get(int x, int y) const$/;"	f	class:Array2d
+Get	array3d.h	/^T Array3d<T>::Get(int x) const$/;"	f	class:Array3d
+Get	array3d.h	/^T Array3d<T>::Get(int x, int y, int z) const$/;"	f	class:Array3d
+Get	eventQueue.cpp	/^std::shared_ptr<IEvent> EventQueue::Get(unsigned int index)$/;"	f	class:EventQueue
+Get	gameData.cpp	/^std::string GameData::Get(std::string key)$/;"	f	class:GameData
+GetActivationType	eventQueue.cpp	/^ActivationType EventQueue::GetActivationType()$/;"	f	class:EventQueue
+GetAllFiles	utils.cpp	/^std::vector<std::string> Utils::GetAllFiles(std::string directory, std::string extension)$/;"	f	class:Utils
+GetAtlas	mesh.h	/^	TextureAtlas* GetAtlas() { return &m_texAtlas; }$/;"	f	class:Mesh
+GetBoundingBox	physicsComponent.cpp	/^std::array<float, 6> PhysicsComponent::GetBoundingBox()$/;"	f	class:PhysicsComponent
+GetCenter	physicsComponent.h	/^	Vector3f GetCenter() { return Vector3f(m_boundingBox[Left] + m_size.x \/ 2, m_boundingBox[Down] + m_size.y \/ 2, m_boundingBox[Far] + m_size.z \/ 2);\/*return m_pos + (m_size \/ 2);*\/ }$/;"	f	class:PhysicsComponent
+GetChoices	dialogueGraph.cpp	/^std::vector<std::string> DialogueGraph::GetChoices()$/;"	f	class:DialogueGraph
+GetColorBuffer1	blur_framebuffer.h	/^	GLuint GetColorBuffer1() { return colorBuffers[1]; };$/;"	f	class:BlurFramebuffer
+GetCurrentText	dialogueGraph.cpp	/^std::string DialogueGraph::GetCurrentText()$/;"	f	class:DialogueGraph
+GetDark	bloomEffect.h	/^	GLuint GetDark() { return m_darkBloomProgram; }$/;"	f	class:BloomEffect
+GetDialogueChoices	dialogueGraph.cpp	/^std::vector<DialogueChoice> DialogueGraph::GetDialogueChoices(int current_dialogue_id)$/;"	f	class:DialogueGraph
+GetDirection	graphicsComponent.cpp	/^Direction GraphicsComponent::GetDirection() { return m_direction; }$/;"	f	class:GraphicsComponent
+GetElapsedTime	elapsedTime.h	/^	double GetElapsedTime() { return m_elapsedTime; }$/;"	f	class:ElapsedTime
+GetEntities	entityFactory.cpp	/^std::map<unsigned int, std::shared_ptr<Entity>> EntityFactory::GetEntities(unsigned int map_id, std::shared_ptr<JsonHandler> jh)$/;"	f	class:EntityFactory
+GetEtherealMoveBoundingBox	physicsComponent.cpp	/^std::array<float, 6> PhysicsComponent::GetEtherealMoveBoundingBox()$/;"	f	class:PhysicsComponent
+GetEventType	iEvent.cpp	/^EventTypes IEvent::GetEventType()$/;"	f	class:IEvent
+GetExecutionMode	iEvent.cpp	/^EventExecutionMode IEvent::GetExecutionMode()$/;"	f	class:IEvent
+GetFPS	elapsedTime.h	/^	unsigned int GetFPS() { return m_FPS; }$/;"	f	class:ElapsedTime
+GetFloat	entityFactory.cpp	/^float EntityFactory::GetFloat(EntityArgType eat)$/;"	f	class:EntityFactory
+GetFont	fontManager.cpp	/^Font_ptr FontManager::GetFont(unsigned int key)$/;"	f	class:FontManager
+GetGLVersionString	effect.cpp	/^std::string Effect::GetGLVersionString()$/;"	f	class:Effect
+GetGraphics	font.h	/^	std::shared_ptr<FontGraphicsComponent> GetGraphics() { return m_graphics; }$/;"	f	class:Font
+GetHeight	FBO.h	/^	int GetHeight() { return m_height; }$/;"	f	class:FBO
+GetHeldKeys	input_manager.cpp	/^std::map<unsigned int, bool> InputManager::GetHeldKeys()$/;"	f	class:InputManager
+GetHighestIndex	graphicsComponent.cpp	/^int GraphicsComponent::GetHighestIndex()$/;"	f	class:GraphicsComponent
+GetHighestIndex	physicsComponent.cpp	/^int PhysicsComponent::GetHighestIndex()$/;"	f	class:PhysicsComponent
+GetID	entity.cpp	/^unsigned int Entity::GetID()$/;"	f	class:Entity
+GetID	eventQueue.cpp	/^int EventQueue::GetID()$/;"	f	class:EventQueue
+GetID	textureatlas.cpp	/^GLuint TextureAtlas::GetID()$/;"	f	class:TextureAtlas
+GetIdentity	mat4f.h	/^		static Mat4f GetIdentity() { static Mat4f instance; return instance; };$/;"	f	class:Mat4f
+GetIndices	graphicsComponent.cpp	/^std::vector<GLuint> GraphicsComponent::GetIndices()$/;"	f	class:GraphicsComponent
+GetIndices	physicsComponent.cpp	/^std::vector<GLuint> PhysicsComponent::GetIndices()$/;"	f	class:PhysicsComponent
+GetInstance	basicEffect.h	/^	static BasicEffect& GetInstance()$/;"	f	class:BasicEffect
+GetInstance	bloom.h	/^	static Bloom& GetInstance()$/;"	f	class:Bloom
+GetInstance	bloomEffect.h	/^	static BloomEffect& GetInstance()$/;"	f	class:BloomEffect
+GetInstance	blurEffect.h	/^	static BlurEffect& GetInstance()$/;"	f	class:BlurEffect
+GetInstance	blur_framebuffer.h	/^	static BlurFramebuffer& GetInstance()$/;"	f	class:BlurFramebuffer
+GetInstance	combineEffect.h	/^	static CombineEffect& GetInstance()$/;"	f	class:CombineEffect
+GetInstance	effectManager.h	/^	static EffectManager& GetInstance()$/;"	f	class:EffectManager
+GetInstance	elapsedTime.h	/^	static ElapsedTime& GetInstance()$/;"	f	class:ElapsedTime
+GetInstance	fadeEffect.h	/^	static FadeEffect& GetInstance()$/;"	f	class:FadeEffect
+GetInstance	fontManager.h	/^	static FontManager& GetInstance()$/;"	f	class:FontManager
+GetInstance	input_manager.h	/^	static InputManager& GetInstance()$/;"	f	class:InputManager
+GetInstance	model.h	/^		static Model& GetInstance()$/;"	f	class:Model
+GetInstance	particleManager.h	/^	static ParticleManager& GetInstance()$/;"	f	class:ParticleManager
+GetInstance	postProcessingEffect.h	/^	static PostProcessingEffect& GetInstance()$/;"	f	class:PostProcessingEffect
+GetInstance	renderer.h	/^	static Renderer& GetInstance()$/;"	f	class:Renderer
+GetInstance	resource_manager.h	/^	static ResourceManager& GetInstance()$/;"	f	class:ResourceManager
+GetInstance	scene_manager.h	/^	static SceneManager& GetInstance()$/;"	f	class:SceneManager
+GetInstance	shadowMapFBO.h	/^	static ShadowMapFBO& GetInstance()$/;"	f	class:ShadowMapFBO
+GetInstance	singleColorEffect.h	/^	static SingleColorEffect& GetInstance()$/;"	f	class:SingleColorEffect
+GetInstance	soundManager.h	/^	static SoundManager& GetInstance()$/;"	f	class:SoundManager
+GetInstance	transparencyEffect.h	/^	static TransparencyEffect& GetInstance()$/;"	f	class:TransparencyEffect
+GetKeys	input_manager.cpp	/^std::list<std::pair<unsigned int, KeyStatus>> InputManager::GetKeys()$/;"	f	class:InputManager
+GetKeysNoReset	input_manager.cpp	/^std::list<std::pair<unsigned int, KeyStatus>> InputManager::GetKeysNoReset()$/;"	f	class:InputManager
+GetLockLevel	iEvent.cpp	/^unsigned int IEvent::GetLockLevel()$/;"	f	class:IEvent
+GetMModels	graphicsComponent.cpp	/^std::vector<Mat4f>& GraphicsComponent::GetMModels()$/;"	f	class:GraphicsComponent
+GetMVBO	graphicsComponent.h	/^	GLuint GetMVBO() { return m_VBO; }$/;"	f	class:GraphicsComponent
+GetMapSize	map_handler.cpp	/^Vector3f MapHandler::GetMapSize()$/;"	f	class:MapHandler
+GetMeshIndices	mesh.cpp	/^std::vector<GLuint>* Mesh::GetMeshIndices()$/;"	f	class:Mesh
+GetMeshVertices	mesh.cpp	/^std::vector<Vertex>* Mesh::GetMeshVertices()$/;"	f	class:Mesh
+GetMetaData	animation.cpp	/^SpriteSheetData Animation::GetMetaData(std::string spritesheet)$/;"	f	class:Animation
+GetModelMat	graphicsComponent.h	/^	Transformation* GetModelMat() { return &m_modelMat; };$/;"	f	class:GraphicsComponent
+GetMoveBoundingBox	physicsComponent.cpp	/^std::array<float, 6>& PhysicsComponent::GetMoveBoundingBox()$/;"	f	class:PhysicsComponent
+GetName	graphicsComponent.cpp	/^std::string GraphicsComponent::GetName()$/;"	f	class:GraphicsComponent
+GetName	model.cpp	/^std::string Model::GetName()$/;"	f	class:Model
+GetName	physicsComponent.cpp	/^std::string PhysicsComponent::GetName()$/;"	f	class:PhysicsComponent
+GetNormal	bloomEffect.h	/^	GLuint GetNormal() { return m_shaderProg; }$/;"	f	class:BloomEffect
+GetObject	gameData.cpp	7;"	d	file:
+GetPingPongBuffers	blur_framebuffer.h	/^	GLuint* GetPingPongBuffers() { return pingpongBuffer; };$/;"	f	class:BlurFramebuffer
+GetPingPongFBOs	blur_framebuffer.h	/^	GLuint* GetPingPongFBOs() { return pingpongFBO; };$/;"	f	class:BlurFramebuffer
+GetPixels	texture.cpp	/^unsigned char* Texture::GetPixels()$/;"	f	class:Texture
+GetPos	graphicsComponent.cpp	/^Vector3f GraphicsComponent::GetPos() { return m_pos; }$/;"	f	class:GraphicsComponent
+GetPosRef	graphicsComponent.h	/^	Vector3f& GetPosRef() { return m_pos; }$/;"	f	class:GraphicsComponent
+GetPrevWorldPos	effect.cpp	/^float* Effect::GetPrevWorldPos()$/;"	f	class:Effect
+GetQueues	entity.cpp	/^std::vector<std::shared_ptr<EventQueue>>* Entity::GetQueues()$/;"	f	class:Entity
+GetRange	particleGenerator.cpp	/^Vector3f ParticleGenerator::GetRange()$/;"	f	class:ParticleGenerator
+GetRegularInstance	mathutils.h	/^	static OrthoProjInfo& GetRegularInstance()$/;"	f	class:OrthoProjInfo
+GetRegularInstance	mathutils.h	/^	static PersProjInfo& GetRegularInstance()$/;"	f	class:PersProjInfo
+GetScale	transform.h	/^		Vector3f GetScale() { return m_scale; };$/;"	f	class:Transformation
+GetShadowInstance	mathutils.h	/^	static PersProjInfo& GetShadowInstance()$/;"	f	class:PersProjInfo
+GetSize	physicsComponent.h	/^	Vector3f GetSize() { return m_size; }$/;"	f	class:PhysicsComponent
+GetTex	model.cpp	/^std::vector<float> Model::GetTex()$/;"	f	class:Model
+GetTexture	graphicsComponent.cpp	/^std::string GraphicsComponent::GetTexture()$/;"	f	class:GraphicsComponent
+GetTexture	map_tile.h	/^	std::string GetTexture() { return m_texPath; }$/;"	f	class:MapTile
+GetTexture	resource_manager.cpp	/^Texture* ResourceManager::GetTexture(std::string texture)$/;"	f	class:ResourceManager
+GetTextureList	textureatlas.cpp	/^TextureAtlas::TextureList& TextureAtlas::GetTextureList()$/;"	f	class:TextureAtlas
+GetTrans	transform.cpp	/^Mat4f& Transformation::GetTrans()$/;"	f	class:Transformation
+GetTransformation	map_tile.h	/^	Transformation* GetTransformation() { return &m_trans; }$/;"	f	class:MapTile
+GetTranslatedVertices	physicsComponent.cpp	/^std::vector<Vertex> PhysicsComponent::GetTranslatedVertices()$/;"	f	class:PhysicsComponent
+GetTranslation	transform.h	/^		Vector3f GetTranslation() { return m_translate; };$/;"	f	class:Transformation
+GetUniformLocation	effect.cpp	/^GLuint Effect::GetUniformLocation(const GLchar* name)$/;"	f	class:Effect
+GetVertices	graphicsComponent.cpp	/^std::vector<Vertex>* GraphicsComponent::GetVertices()$/;"	f	class:GraphicsComponent
+GetVertices	physicsComponent.cpp	/^std::vector<Vertex> PhysicsComponent::GetVertices()$/;"	f	class:PhysicsComponent
+GetWOTrans	transform.cpp	/^Mat4f& Transformation::GetWOTrans()$/;"	f	class:Transformation
+GetWOTransNoTranslate	transform.cpp	/^Mat4f& Transformation::GetWOTransNoTranslate()$/;"	f	class:Transformation
+GetWPTrans	transform.cpp	/^Mat4f& Transformation::GetWPTrans()$/;"	f	class:Transformation
+GetWidth	FBO.h	/^	int GetWidth() { return m_width; }$/;"	f	class:FBO
+GetWorldTrans	transform.cpp	/^Mat4f& Transformation::GetWorldTrans()$/;"	f	class:Transformation
+GetWorldTransNoTranslate	transform.cpp	/^Mat4f& Transformation::GetWorldTransNoTranslate()$/;"	f	class:Transformation
+GetXCount	array3d.h	/^int Array3d<T>::GetXCount()$/;"	f	class:Array3d
+GetYCount	array3d.h	/^int Array3d<T>::GetYCount()$/;"	f	class:Array3d
+GetZCount	array3d.h	/^int Array3d<T>::GetZCount()$/;"	f	class:Array3d
+Globals	define.cpp	/^namespace Globals$/;"	n	file:
+Globals	define.h	/^namespace Globals$/;"	n
+GraphComp_ptr	graphicsComponent.h	/^typedef std::shared_ptr<GraphicsComponent> GraphComp_ptr;$/;"	t
+Graphics	entity.h	/^	GraphComp_ptr Graphics() { return m_graphicsComponent; }$/;"	f	class:Entity
+Graphics	map_handler.h	/^	GraphComp_ptr Graphics() { return m_graphics; }$/;"	f	class:MapHandler
+Graphics	particleGenerator.h	/^	GraphComp_ptr Graphics() { return m_graphics; }$/;"	f	class:ParticleGenerator
+GraphicsComponent	graphicsComponent.cpp	/^GraphicsComponent::GraphicsComponent(std::string modelName, std::string texPath) : m_texture(texPath), m_modelName(modelName)$/;"	f	class:GraphicsComponent
+GraphicsComponent	graphicsComponent.cpp	/^GraphicsComponent::GraphicsComponent(std::vector<Vertex>* verts, std::vector<GLuint>* inds, std::string texPath) : m_texture(texPath), m_modelName("NONE")$/;"	f	class:GraphicsComponent
+GraphicsComponent	graphicsComponent.h	/^class GraphicsComponent : public IComponent, public ResourceUser$/;"	c
+HC_HealthBar	battleHUD.h	/^enum HUDComponent { HC_HealthBar, HC_Text };$/;"	e	enum:HUDComponent
+HC_Text	battleHUD.h	/^enum HUDComponent { HC_HealthBar, HC_Text };$/;"	e	enum:HUDComponent
+HD	define_gl.h	6;"	d
+HUDComponent	battleHUD.h	/^enum HUDComponent { HC_HealthBar, HC_Text };$/;"	g
+HandleInput	game.cpp	/^void Game::HandleInput()$/;"	f	class:Game
+Health	actor.h	/^	int Health;$/;"	m	class:Actor
+Height	mathutils.h	/^	float Height = 0;$/;"	m	class:PersProjInfo
+HoldDownPress	key_status.h	/^enum KeyStatus { KeyPressed, ReleaseQuick, ReleaseLong, Release, HoldDownPress, AnyPress, AnyRelease };$/;"	e	enum:KeyStatus
+ICOMPONENT_H__	iComponent.h	2;"	d
+IComponent	iComponent.h	/^class IComponent$/;"	c
+IEVENT_H__	iEvent.h	2;"	d
+IEvent	iEvent.cpp	/^IEvent::IEvent() : m_lockLevel(0), m_mode(ASYNC), m_completed(false) {}$/;"	f	class:IEvent
+IEvent	iEvent.h	/^class IEvent$/;"	c
+INPUT_COMPONENT_H__	inputComponent.h	2;"	d
+INPUT_MANAGER_H__	input_manager.h	2;"	d
+IS_FULLSCREEN	define_gl.h	4;"	d
+IT_Action	dialogueGraph.h	/^enum InputType { IT_Action, IT_Up, IT_Down };$/;"	e	enum:InputType
+IT_Down	dialogueGraph.h	/^enum InputType { IT_Action, IT_Up, IT_Down };$/;"	e	enum:InputType
+IT_Up	dialogueGraph.h	/^enum InputType { IT_Action, IT_Up, IT_Down };$/;"	e	enum:InputType
+Id	dialogueGraph.h	/^	int Id;$/;"	m	struct:Dialogue
+Init	basicEffect.cpp	/^bool BasicEffect::Init()$/;"	f	class:BasicEffect
+Init	battleHUD.cpp	/^void BattleHUD::Init(std::vector<Actor_ptr> actors)$/;"	f	class:BattleHUD
+Init	battleManager.cpp	/^void BattleManager::Init()$/;"	f	class:BattleManager
+Init	bloomEffect.cpp	/^bool BloomEffect::Init()$/;"	f	class:BloomEffect
+Init	blurEffect.cpp	/^bool BlurEffect::Init()$/;"	f	class:BlurEffect
+Init	combineEffect.cpp	/^bool CombineEffect::Init()$/;"	f	class:CombineEffect
+Init	effect.cpp	/^bool Effect::Init(GLuint& program)$/;"	f	class:Effect
+Init	fadeEffect.cpp	/^bool FadeEffect::Init()$/;"	f	class:FadeEffect
+Init	particleGenerator.cpp	/^void ParticleGenerator::Init(ParticleType c, unsigned int num_particles, Vector3f zoneSize, bool smooth, std::string tex)$/;"	f	class:ParticleGenerator
+Init	postProcessingEffect.cpp	/^bool PostProcessingEffect::Init()$/;"	f	class:PostProcessingEffect
+Init	scene_battle.cpp	/^bool SceneBattle::Init()$/;"	f	class:SceneBattle
+Init	scene_world.cpp	/^bool SceneWorld::Init()$/;"	f	class:SceneWorld
+Init	shadowMapFBO.cpp	/^bool ShadowMapFBO::Init(unsigned int WindowWidth, unsigned int WindowHeight)$/;"	f	class:ShadowMapFBO
+Init	singleColorEffect.cpp	/^bool SingleColorEffect::Init()$/;"	f	class:SingleColorEffect
+InitOrthoProj	mat4f.cpp	/^void Mat4f::InitOrthoProj(OrthoProjInfo o)$/;"	f	class:Mat4f
+InitProjPers	mat4f.cpp	/^void Mat4f::InitProjPers(PersProjInfo p)$/;"	f	class:Mat4f
+InitRotateMat	mat4f.cpp	/^void Mat4f::InitRotateMat(Vector3f &rot)$/;"	f	class:Mat4f
+InitScaleMat	mat4f.cpp	/^void Mat4f::InitScaleMat(Vector3f &scale)$/;"	f	class:Mat4f
+InitTranslateMat	mat4f.cpp	/^void Mat4f::InitTranslateMat(Vector3f &translation)$/;"	f	class:Mat4f
+Input	input_manager.cpp	/^void InputManager::Input(unsigned int key, KeyStatus status)$/;"	f	class:InputManager
+Input	input_manager.cpp	/^void InputManager::Input(unsigned int key, bool keydown)$/;"	f	class:InputManager
+InputComponent	inputComponent.cpp	/^InputComponent::InputComponent()$/;"	f	class:InputComponent
+InputComponent	inputComponent.h	/^class InputComponent : public IComponent$/;"	c
+InputManager	input_manager.cpp	/^InputManager::InputManager() : m_inputHold(std::map<unsigned int, bool>()), m_inputQueue(std::list<std::pair<unsigned int, KeyStatus>>()), m_lockLevel(0)$/;"	f	class:InputManager
+InputManager	input_manager.h	/^class InputManager$/;"	c
+InputType	dialogueGraph.h	/^enum InputType { IT_Action, IT_Up, IT_Down };$/;"	g
+InsertMModels	graphicsComponent.cpp	/^void GraphicsComponent::InsertMModels(Transformation& t)$/;"	f	class:GraphicsComponent
+Interact	scene_world.cpp	/^void SceneWorld::Interact()$/;"	f	class:SceneWorld
+Intersect2D	physics.cpp	/^	bool Intersect2D(const std::array<float, 6>& bb, Vector3f point)$/;"	f	namespace:Physics
+Intersect2D	physics.cpp	/^	bool Intersect2D(const std::array<float, 6>& local, const std::array<float, 6>& other)$/;"	f	namespace:Physics
+Intersect3D	physics.cpp	/^	bool Intersect3D(std::array<float, 6>& local, std::array<float, 6>& other)$/;"	f	namespace:Physics
+IsAllDone	eventManager.cpp	/^bool EventManager::IsAllDone(unsigned int index)$/;"	f	class:EventManager
+IsCompleted	iEvent.cpp	/^bool IEvent::IsCompleted()$/;"	f	class:IEvent
+IsDead	font.cpp	/^bool Font::IsDead()$/;"	f	class:Font
+IsDone	eventQueue.cpp	/^bool EventQueue::IsDone()$/;"	f	class:EventQueue
+IsDone	fade.cpp	/^bool Fade::IsDone()$/;"	f	class:Fade
+IsDone	iEvent.h	/^	bool IsDone;$/;"	m	struct:EventUpdateResponse
+IsEmpty	fontManager.cpp	/^bool FontManager::IsEmpty()$/;"	f	class:FontManager
+IsLegalHeight	physics_2d.cpp	/^	bool IsLegalHeight(float tilez, float entityz)$/;"	f	namespace:Physics_2D
+IsPlaying	soundManager.cpp	/^bool SoundManager::IsPlaying(unsigned int source)$/;"	f	class:SoundManager
+IsPowerOfTwo	textureatlas.h	/^	bool IsPowerOfTwo(unsigned int x)$/;"	f	class:TextureAtlas
+IsReady	skill.cpp	/^bool Skill::IsReady()$/;"	f	class:Skill
+IsReady	skillMelee.cpp	/^bool SkillMelee::IsReady()$/;"	f	class:SkillMelee
+IsRepeating	eventQueue.cpp	/^bool EventQueue::IsRepeating()$/;"	f	class:EventQueue
+IsTileCollideHeight	physics_2d.cpp	/^	bool IsTileCollideHeight(float entityHeight, float colliderHeight)$/;"	f	namespace:Physics_2D
+IsValid	texture.cpp	/^bool Texture::IsValid()$/;"	f	class:Texture
+IsValid	textureatlas.cpp	/^bool TextureAtlas::IsValid() const$/;"	f	class:TextureAtlas
+JSON_HANDLER_H__	jsonHandler.h	2;"	d
+JsonHandler	jsonHandler.cpp	/^JsonHandler::JsonHandler(int map_id) : m_mapId(map_id)$/;"	f	class:JsonHandler
+JsonHandler	jsonHandler.h	/^class JsonHandler$/;"	c
+KEY_STATUS_H__	key_status.h	2;"	d
+KeyPressed	key_status.h	/^enum KeyStatus { KeyPressed, ReleaseQuick, ReleaseLong, Release, HoldDownPress, AnyPress, AnyRelease };$/;"	e	enum:KeyStatus
+KeyStatus	key_status.h	/^enum KeyStatus { KeyPressed, ReleaseQuick, ReleaseLong, Release, HoldDownPress, AnyPress, AnyRelease };$/;"	g
+Language	gameData.cpp	/^std::string GameData::Language = "french";$/;"	m	class:GameData	file:
+Language	gameData.h	/^	static std::string Language;$/;"	m	class:GameData
+Left	define.h	/^enum AABB {Left = 0, Right = 1, Down = 2, Up = 3, Close = 4, Far = 5};$/;"	e	enum:AABB
+Left	mathutils.h	/^	float Left;$/;"	m	class:OrthoProjInfo
+Length	vector3f.cpp	/^float Vector3f::Length()$/;"	f	class:Vector3f
+Load	texture.cpp	/^bool Texture::Load()$/;"	f	class:Texture
+LoadAllExternalResources	resource_manager.cpp	/^void ResourceManager::LoadAllExternalResources(std::vector<ResourceUser*>* list)$/;"	f	class:ResourceManager
+LoadEntities	jsonHandler.cpp	/^rapidjson::Value JsonHandler::LoadEntities(int map_id)$/;"	f	class:JsonHandler
+LoadEvent	eventFactory.cpp	/^std::shared_ptr<EventQueue> EventFactory::LoadEvent(int map_id, unsigned int entity_id, unsigned int queue_id, std::shared_ptr<JsonHandler> jh, MapHandler* map)$/;"	f	class:EventFactory
+LoadEvent	eventFactory.cpp	/^std::vector<std::shared_ptr<EventQueue>> EventFactory::LoadEvent(int map_id, unsigned int entity_id, std::shared_ptr<JsonHandler> jh, MapHandler* map)$/;"	f	class:EventFactory
+LoadEvent	eventFactory.cpp	/^std::vector<std::shared_ptr<EventQueue>> EventFactory::LoadEvent(rapidjson::Value& v, MapHandler* map)$/;"	f	class:EventFactory
+LoadExternalResources	graphicsComponent.cpp	/^bool GraphicsComponent::LoadExternalResources()$/;"	f	class:GraphicsComponent
+LoadFromFile	gameData.cpp	/^void GameData::LoadFromFile()$/;"	f	class:GameData
+LoadFromFile	texture.cpp	/^bool Texture::LoadFromFile()$/;"	f	class:Texture
+LoadGL	texture.cpp	/^void Texture::LoadGL()$/;"	f	class:Texture
+LoadGLResources	graphicsComponent.cpp	/^bool GraphicsComponent::LoadGLResources()$/;"	f	class:GraphicsComponent
+LoadGLTexture	resource_manager.cpp	/^void ResourceManager::LoadGLTexture(std::string tex)$/;"	f	class:ResourceManager
+LoadGameData	gameData.cpp	/^void GameData::LoadGameData()$/;"	f	class:GameData
+LoadJsonFromFile	jsonHandler.cpp	/^void JsonHandler::LoadJsonFromFile()$/;"	f	class:JsonHandler
+LoadLocalization	gameData.cpp	/^void GameData::LoadLocalization()$/;"	f	class:GameData
+LoadMap	jsonHandler.cpp	/^rapidjson::Value JsonHandler::LoadMap(int map_id)$/;"	f	class:JsonHandler
+LoadMaps	jsonHandler.cpp	/^rapidjson::Value JsonHandler::LoadMaps(int map_id)$/;"	f	class:JsonHandler
+LoadQueues	jsonHandler.cpp	/^rapidjson::Value JsonHandler::LoadQueues(int map_id, int entity_id)$/;"	f	class:JsonHandler
+LoadSettings	gameData.cpp	/^void GameData::LoadSettings()$/;"	f	class:GameData
+LoadSound	audioComponent.cpp	/^void AudioComponent::LoadSound(std::string path)$/;"	f	class:AudioComponent
+LoadTexture	resource_manager.cpp	/^bool ResourceManager::LoadTexture(std::string tex)$/;"	f	class:ResourceManager
+Loading	gameData.h	/^	static bool Loading;$/;"	m	class:GameData
+Localization	gameData.cpp	/^std::map<std::string, std::map<std::string, std::string>> GameData::Localization = std::map<std::string, std::map<std::string, std::string>>();$/;"	m	class:GameData	file:
+Localization	gameData.h	/^	static std::map<std::string, std::map<std::string, std::string>> Localization;$/;"	m	class:GameData
+LogicUpdate	particleGenerator.cpp	/^void ParticleGenerator::LogicUpdate()$/;"	f	class:ParticleGenerator
+MAP_HANDLER_H__	map_handler.h	2;"	d
+MAP_TILE_H__	map_tile.h	2;"	d
+MAT4F_H__	mat4f.h	2;"	d
+MATHUTILS_H__	mathutils.h	2;"	d
+MATH_H__	math.h	2;"	d
+MESH_H__	mesh.h	2;"	d
+MODEL_H__	model.h	2;"	d
+M_PI	mat4f.cpp	4;"	d	file:
+ManageInput	battleManager.cpp	/^void BattleManager::ManageInput()$/;"	f	class:BattleManager
+ManageInput	scene.cpp	/^void Scene::ManageInput()$/;"	f	class:Scene
+ManageInput	scene_battle.cpp	/^void SceneBattle::ManageInput()$/;"	f	class:SceneBattle
+ManageInput	scene_world.cpp	/^void SceneWorld::ManageInput()$/;"	f	class:SceneWorld
+MapCenter	mathutils.cpp	/^void Camera::MapCenter(Transformation* t)$/;"	f	class:Camera
+MapHandler	map_handler.cpp	/^MapHandler::MapHandler() : m_mesh(Mesh()), m_id(1)$/;"	f	class:MapHandler
+MapHandler	map_handler.cpp	/^MapHandler::MapHandler(const std::string& filePath)$/;"	f	class:MapHandler
+MapHandler	map_handler.cpp	/^MapHandler::MapHandler(unsigned int id, std::shared_ptr<JsonHandler> jh) : m_mesh(Mesh()), m_id(id), m_jsonHandler(jh)$/;"	f	class:MapHandler
+MapHandler	map_handler.h	/^class MapHandler$/;"	c
+MapTile	map_tile.cpp	/^MapTile::MapTile(Vector3f pos, std::string modelName, std::string texPath, Vector3f bbsize, Vector3f center)$/;"	f	class:MapTile
+MapTile	map_tile.h	/^class MapTile$/;"	c
+Mapsize	mathutils.cpp	/^Vector3f Camera::Mapsize = Vector3f();$/;"	m	class:Camera	file:
+Mapsize	mathutils.h	/^	static Vector3f Mapsize;$/;"	m	class:Camera
+Mat4f	mat4f.cpp	/^Mat4f::Mat4f()$/;"	f	class:Mat4f
+Mat4f	mat4f.cpp	/^Mat4f::Mat4f(float a00, float a01, float a02, float a03,$/;"	f	class:Mat4f
+Mat4f	mat4f.h	/^class Mat4f$/;"	c
+MathUtils	mathutils.cpp	/^namespace MathUtils$/;"	n	file:
+MathUtils	mathutils.h	/^namespace MathUtils$/;"	n
+MaxHealth	actor.h	/^	int MaxHealth;$/;"	m	class:Actor
+MaxTime	font.h	/^	const double MaxTime;$/;"	m	class:Font
+Mesh	mesh.cpp	/^Mesh::Mesh(unsigned int atlasSize) : m_texAtlas(TextureAtlas(atlasSize)), _instancedDraw(false)$/;"	f	class:Mesh
+Mesh	mesh.h	/^class Mesh$/;"	c
+Model	model.cpp	/^Model::Model()$/;"	f	class:Model
+Model	model.h	/^class Model$/;"	c
+Move	physicsComponent.cpp	/^void PhysicsComponent::Move()$/;"	f	class:PhysicsComponent
+MoveBB	physicsComponent.cpp	/^void PhysicsComponent::MoveBB(Vector3f distance)$/;"	f	class:PhysicsComponent
+Multiply	mat4f.cpp	/^Vector3f Mat4f::Multiply(Vector3f &right, float pretendVec4) const$/;"	f	class:Mat4f
+Multiply	mat4f.cpp	/^void Mat4f::Multiply(float(&first)[4][4], const float(&second)[4][4])$/;"	f	class:Mat4f
+Music	particleGenerator.cpp	/^Music::Music(Vector3f& spawnPos, std::vector<std::string> tex, bool smooth)$/;"	f	class:Music
+Music	particleGenerator.h	/^struct Music : public Particle$/;"	s
+MuteButton	game.cpp	/^void Game::MuteButton()$/;"	f	class:Game
+NONE	FBO.h	/^	static const int NONE = 0;$/;"	m	class:FBO
+NUM_OF_LAYERS	define_gl.h	17;"	d
+Name	actor.h	/^	std::string Name;$/;"	m	class:Actor
+NewGame	gameData.cpp	/^void GameData::NewGame()$/;"	f	class:GameData
+NextScene	scene.cpp	/^SceneGenData Scene::NextScene = SceneGenData();$/;"	m	class:Scene	file:
+NextScene	scene.h	/^	static SceneGenData NextScene;$/;"	m	class:Scene
+NextTextId	dialogueGraph.h	/^	int NextTextId;$/;"	m	struct:Dialogue
+NextTextId	dialogueGraph.h	/^	int NextTextId;$/;"	m	struct:DialogueChoice
+NormalDraw	playerGraphicsComponent.cpp	/^void PlayerGraphicsComponent::NormalDraw(bool withTex)$/;"	f	class:PlayerGraphicsComponent
+Normalize	vector3f.cpp	/^Vector3f& Vector3f::Normalize()$/;"	f	class:Vector3f
+NotDone	dialogueGraph.h	/^	bool NotDone;$/;"	m	struct:DialogueResponse
+ORTHO_BOTTOM	define_gl.h	19;"	d
+ORTHO_BOTTOM_R	define_gl.h	23;"	d
+ORTHO_FAR	define_gl.h	28;"	d
+ORTHO_LEFT	define_gl.h	21;"	d
+ORTHO_LEFT_R	define_gl.h	25;"	d
+ORTHO_NEAR	define_gl.h	27;"	d
+ORTHO_RIGHT	define_gl.h	22;"	d
+ORTHO_RIGHT_R	define_gl.h	26;"	d
+ORTHO_TOP	define_gl.h	20;"	d
+ORTHO_TOP_R	define_gl.h	24;"	d
+OptionMap	gameData.h	/^typedef std::map<std::string, std::variant<bool, float, int, std::string>> OptionMap;$/;"	t
+Options	gameData.cpp	/^OptionMap GameData::Options = OptionMap();$/;"	m	class:GameData	file:
+Options	gameData.h	/^	static OptionMap Options;$/;"	m	class:GameData
+OrderedTiles	map_handler.cpp	/^std::vector<std::shared_ptr<MapTile>>* MapHandler::OrderedTiles()$/;"	f	class:MapHandler
+OrthoProjInfo	mathutils.h	/^	OrthoProjInfo() {};$/;"	f	class:OrthoProjInfo
+OrthoProjInfo	mathutils.h	/^class OrthoProjInfo$/;"	c
+P0	physics.h	/^	Vector3f P0, P1;$/;"	m	struct:Ray
+P1	physics.h	/^	Vector3f P0, P1;$/;"	m	struct:Ray
+PARTICLE_GENERATOR_H__	particleGenerator.h	2;"	d
+PARTICLE_MANAGER_H__	particleManager.h	2;"	d
+PHYSICS_2D_H__	physics_2d.h	2;"	d
+PHYSICS_COMPONENT_H__	physicsComponent.h	2;"	d
+PHYSICS_H__	physics.h	2;"	d
+PLAYERGRAPHICSCOMPONENT_H__	playerGraphicsComponent.h	2;"	d
+PLAYER_INPUT_COMPONENT	playerInputComponent.h	2;"	d
+PLAYER_PHYSICS_COMPONENT	playerPhysicsComponent.h	2;"	d
+POST_PROCESSING_EFFECT_H__	postProcessingEffect.h	2;"	d
+POST_PROCESSING_SCREEN_H__	post_processing_screen.h	2;"	d
+PT_Explosion	particleGenerator.h	/^enum ParticleType { PT_Snow, PT_Rain, PT_ObjectRain, PT_Music, PT_Explosion };$/;"	e	enum:ParticleType
+PT_Music	particleGenerator.h	/^enum ParticleType { PT_Snow, PT_Rain, PT_ObjectRain, PT_Music, PT_Explosion };$/;"	e	enum:ParticleType
+PT_ObjectRain	particleGenerator.h	/^enum ParticleType { PT_Snow, PT_Rain, PT_ObjectRain, PT_Music, PT_Explosion };$/;"	e	enum:ParticleType
+PT_Rain	particleGenerator.h	/^enum ParticleType { PT_Snow, PT_Rain, PT_ObjectRain, PT_Music, PT_Explosion };$/;"	e	enum:ParticleType
+PT_Snow	particleGenerator.h	/^enum ParticleType { PT_Snow, PT_Rain, PT_ObjectRain, PT_Music, PT_Explosion };$/;"	e	enum:ParticleType
+P_Entities	define.h	/^enum Path { P_Tiles, P_Entities, P_Particles };$/;"	e	enum:Path
+P_Particles	define.h	/^enum Path { P_Tiles, P_Entities, P_Particles };$/;"	e	enum:Path
+P_Player	define.h	/^enum Ent_Props {P_Slope_High_N, P_Slope_High_E, P_Slope_High_S, P_Slope_High_W, P_Player};$/;"	e	enum:Ent_Props
+P_Slope_High_E	define.h	/^enum Ent_Props {P_Slope_High_N, P_Slope_High_E, P_Slope_High_S, P_Slope_High_W, P_Player};$/;"	e	enum:Ent_Props
+P_Slope_High_N	define.h	/^enum Ent_Props {P_Slope_High_N, P_Slope_High_E, P_Slope_High_S, P_Slope_High_W, P_Player};$/;"	e	enum:Ent_Props
+P_Slope_High_S	define.h	/^enum Ent_Props {P_Slope_High_N, P_Slope_High_E, P_Slope_High_S, P_Slope_High_W, P_Player};$/;"	e	enum:Ent_Props
+P_Slope_High_W	define.h	/^enum Ent_Props {P_Slope_High_N, P_Slope_High_E, P_Slope_High_S, P_Slope_High_W, P_Player};$/;"	e	enum:Ent_Props
+P_Tiles	define.h	/^enum Path { P_Tiles, P_Entities, P_Particles };$/;"	e	enum:Path
+Particle	particleGenerator.cpp	/^Particle::Particle()$/;"	f	class:Particle
+Particle	particleGenerator.h	/^struct Particle$/;"	s
+ParticleFromString	particleGenerator.h	/^static const std::map<std::string, ParticleType> ParticleFromString = { $/;"	v
+ParticleGenerator	particleGenerator.cpp	/^ParticleGenerator::ParticleGenerator() : m_mesh(Mesh()), m_power(2.0f), completed(false)$/;"	f	class:ParticleGenerator
+ParticleGenerator	particleGenerator.h	/^class ParticleGenerator$/;"	c
+ParticleManager	particleManager.cpp	/^ParticleManager::ParticleManager()$/;"	f	class:ParticleManager
+ParticleManager	particleManager.h	/^class ParticleManager$/;"	c
+ParticleSort	particleGenerator.h	/^	static inline bool ParticleSort(std::shared_ptr<Particle> i, std::shared_ptr<Particle> j) { return (i->position < j->position); }$/;"	f	class:ParticleGenerator
+ParticleType	particleGenerator.h	/^enum ParticleType { PT_Snow, PT_Rain, PT_ObjectRain, PT_Music, PT_Explosion };$/;"	g
+Particle_ptr	particleGenerator.h	/^typedef std::shared_ptr<ParticleGenerator> Particle_ptr;$/;"	t
+Particles	particleGenerator.cpp	/^std::vector<std::shared_ptr<Particle>>* ParticleGenerator::Particles()$/;"	f	class:ParticleGenerator
+Party	gameData.cpp	/^std::vector<Actor_ptr> GameData::Party = std::vector<Actor_ptr>();$/;"	m	class:GameData	file:
+Party	gameData.h	/^	static std::vector<Actor_ptr> Party;$/;"	m	class:GameData
+Path	define.h	/^enum Path { P_Tiles, P_Entities, P_Particles };$/;"	g
+Paths	define.h	/^namespace Paths$/;"	n
+Pause	utils.cpp	/^void Utils::Pause()$/;"	f	class:Utils
+PercentDistance	vector3f.cpp	/^float Vector3f::PercentDistance(Vector3f& other)$/;"	f	class:Vector3f
+PersProjInfo	mathutils.h	/^	PersProjInfo() {};$/;"	f	class:PersProjInfo
+PersProjInfo	mathutils.h	/^class PersProjInfo$/;"	c
+Physics	entity.h	/^	std::shared_ptr<PhysicsComponent>& Physics() { return m_physicsComponent; }$/;"	f	class:Entity
+Physics	map_tile.h	/^	std::shared_ptr<PhysicsComponent> Physics() { return m_phys; }$/;"	f	class:MapTile
+Physics	physics.cpp	/^namespace Physics$/;"	n	file:
+Physics	physics.h	/^namespace Physics$/;"	n
+PhysicsComponent	physicsComponent.cpp	/^PhysicsComponent::PhysicsComponent(Vector3f pos, std::string modelName, Vector3f size, Vector3f numTiles) : m_size(size), $/;"	f	class:PhysicsComponent
+PhysicsComponent	physicsComponent.h	/^class PhysicsComponent : public IComponent$/;"	c
+Physics_2D	physics_2d.cpp	/^namespace Physics_2D {$/;"	n	file:
+Physics_2D	physics_2d.h	/^namespace Physics_2D$/;"	n
+Play	soundManager.cpp	/^void SoundManager::Play(unsigned int source, std::string path)$/;"	f	class:SoundManager
+PlaySound	audioComponent.cpp	/^void AudioComponent::PlaySound(std::string path)$/;"	f	class:AudioComponent
+PlaySoundFX	soundManager.cpp	/^void SoundManager::PlaySoundFX(std::string sourceFile)$/;"	f	class:SoundManager
+PlayerGraphicsComponent	playerGraphicsComponent.cpp	/^PlayerGraphicsComponent::PlayerGraphicsComponent(std::string tex, std::string model) : GraphicsComponent(model, tex), m_firstLoad(true)$/;"	f	class:PlayerGraphicsComponent
+PlayerGraphicsComponent	playerGraphicsComponent.h	/^class PlayerGraphicsComponent : public GraphicsComponent, public Animation$/;"	c
+PlayerInputComponent	playerInputComponent.cpp	/^PlayerInputComponent::PlayerInputComponent(std::shared_ptr<PhysicsComponent> phys, GraphComp_ptr graph)$/;"	f	class:PlayerInputComponent
+PlayerInputComponent	playerInputComponent.h	/^class PlayerInputComponent : public InputComponent$/;"	c
+PlayerPhysicsComponent	playerPhysicsComponent.h	/^class PlayerPhysicsComponent : public PhysicsComponent$/;"	c
+PlayerSprite	gameData.cpp	/^std::string GameData::PlayerSprite = "res\/sprites\/entities\/entity_ghost_blue.png";$/;"	m	class:GameData	file:
+PlayerSprite	gameData.h	/^	static std::string PlayerSprite;$/;"	m	class:GameData
+Position	physicsComponent.h	/^	Vector3f Position() { return m_pos; };$/;"	f	class:PhysicsComponent
+PositionSort	renderer.h	/^	static inline bool PositionSort(Vector3f a, Vector3f b) { return a.z == b.z ? a.y > b.y : a.z > b.z; }$/;"	f	class:Renderer
+Positions	gameData.cpp	/^std::map<std::string, Vector3f> GameData::Positions = std::map<std::string, Vector3f>();$/;"	m	class:GameData	file:
+Positions	gameData.h	/^	static std::map<std::string, Vector3f> Positions;$/;"	m	class:GameData
+PostProcessingEffect	postProcessingEffect.cpp	/^PostProcessingEffect::PostProcessingEffect()$/;"	f	class:PostProcessingEffect
+PostProcessingEffect	postProcessingEffect.h	/^class PostProcessingEffect : public Effect$/;"	c
+Post_Processing_Screen	post_processing_screen.cpp	/^Post_Processing_Screen::Post_Processing_Screen(std::string modelName, std::string texPath, Vector3f bbsize, Vector3f centerSize) : GraphicsComponent(modelName, texPath)$/;"	f	class:Post_Processing_Screen
+Post_Processing_Screen	post_processing_screen.h	/^class Post_Processing_Screen : public GraphicsComponent$/;"	c
+PrintLastModel	model.cpp	/^void Model::PrintLastModel()$/;"	f	class:Model
+PushBack	eventManager.cpp	/^void EventManager::PushBack(std::shared_ptr<EventQueue> ev)$/;"	f	class:EventManager
+PushBack	eventQueue.cpp	/^void EventQueue::PushBack(std::shared_ptr<IEvent> ev)$/;"	f	class:EventQueue
+Queue	dialogueGraph.h	/^	std::shared_ptr<EventQueue> Queue;$/;"	m	struct:Dialogue
+Queue	dialogueGraph.h	/^	std::shared_ptr<EventQueue> Queue;$/;"	m	struct:DialogueChoice
+Queue	dialogueGraph.h	/^	std::shared_ptr<EventQueue> Queue;$/;"	m	struct:DialogueResponse
+Queue	iEvent.h	/^	std::shared_ptr<EventQueue> Queue;$/;"	m	struct:EventUpdateResponse
+RATIO	define_gl.h	31;"	d
+RENDERER_H__	renderer.h	2;"	d
+RESOURCE_LOADER_H__	resource_loader.h	2;"	d
+RESOURCE_MANAGER_H__	resource_manager.h	2;"	d
+RESOURCE_USER_H__	resource_user.h	2;"	d
+Rain	particleGenerator.cpp	/^Rain::Rain(Vector3f& zoneSize, std::string tex, bool smooth)$/;"	f	class:Rain
+Rain	particleGenerator.h	/^struct Rain : public Particle$/;"	s
+Ray	physics.h	/^struct Ray$/;"	s
+ReadFile	utils.cpp	/^std::string Utils::ReadFile(std::string filename, bool includeNewLine)$/;"	f	class:Utils
+ReceiveMessage	audioComponent.cpp	/^void AudioComponent::ReceiveMessage(std::vector<std::string> message)$/;"	f	class:AudioComponent
+ReceiveMessage	graphicsComponent.cpp	/^void GraphicsComponent::ReceiveMessage(std::vector<std::string> msg)$/;"	f	class:GraphicsComponent
+ReferenceDocument	jsonHandler.cpp	/^std::map<int, rapidjson::Document> JsonHandler::ReferenceDocument;$/;"	m	class:JsonHandler	file:
+ReferenceDocument	jsonHandler.h	/^	static std::map<int, rapidjson::Document> ReferenceDocument;$/;"	m	class:JsonHandler
+RelativePosition	physicsComponent.cpp	/^void PhysicsComponent::RelativePosition(Vector3f movementPos)$/;"	f	class:PhysicsComponent
+Release	key_status.h	/^enum KeyStatus { KeyPressed, ReleaseQuick, ReleaseLong, Release, HoldDownPress, AnyPress, AnyRelease };$/;"	e	enum:KeyStatus
+ReleaseLong	key_status.h	/^enum KeyStatus { KeyPressed, ReleaseQuick, ReleaseLong, Release, HoldDownPress, AnyPress, AnyRelease };$/;"	e	enum:KeyStatus
+ReleaseQuick	key_status.h	/^enum KeyStatus { KeyPressed, ReleaseQuick, ReleaseLong, Release, HoldDownPress, AnyPress, AnyRelease };$/;"	e	enum:KeyStatus
+Remove	eventQueue.cpp	/^void EventQueue::Remove(unsigned int index)$/;"	f	class:EventQueue
+RemoveChooseSkillText	battleManager.cpp	/^void BattleManager::RemoveChooseSkillText()$/;"	f	class:BattleManager
+RemoveFont	fontManager.cpp	/^void FontManager::RemoveFont(unsigned int font)$/;"	f	class:FontManager
+RemoveLock	eventManager.cpp	/^void EventManager::RemoveLock(std::shared_ptr<IEvent> ev)$/;"	f	class:EventManager
+RemoveVelocity	physicsComponent.cpp	/^void PhysicsComponent::RemoveVelocity()$/;"	f	class:PhysicsComponent
+RemoveWhiteSpace	utils.cpp	/^std::string Utils::RemoveWhiteSpace(std::string& str)$/;"	f	class:Utils
+Renderer	renderer.cpp	/^Renderer::Renderer() : m_toDraw(std::vector<GraphicsComponent*>())$/;"	f	class:Renderer
+Renderer	renderer.h	/^class Renderer$/;"	c
+Report_Type	define.h	/^enum Report_Type {Collision = 0};$/;"	g
+Reset	array2d.h	/^void Array2d<T>::Reset(T valeur)$/;"	f	class:Array2d
+Reset	array3d.h	/^void Array3d<T>::Reset(T valeur)$/;"	f	class:Array3d
+Reset	font.cpp	/^void Font::Reset()$/;"	f	class:Font
+Reset	mesh.cpp	/^void Mesh::Reset()$/;"	f	class:Mesh
+Reset	skill.cpp	/^void Skill::Reset()$/;"	f	class:Skill
+ResetEvent	dialogueBox.cpp	/^void DialogueBox::ResetEvent()$/;"	f	class:DialogueBox
+ResetEvent	eventAddToFlag.cpp	/^void EventAddToFlag::ResetEvent()$/;"	f	class:EventAddToFlag
+ResetEvent	eventBGM.cpp	/^void EventBGM::ResetEvent()$/;"	f	class:EventBGM
+ResetEvent	eventBattle.cpp	/^void EventBattle::ResetEvent()$/;"	f	class:EventBattle
+ResetEvent	eventCaller.cpp	/^void EventCaller::ResetEvent()$/;"	f	class:EventCaller
+ResetEvent	eventMapChange.cpp	/^void EventMapChange::ResetEvent()$/;"	f	class:EventMapChange
+ResetEvent	eventMove.cpp	/^void EventMove::ResetEvent()$/;"	f	class:EventMove
+ResetEvent	eventParticle.cpp	/^void EventParticle::ResetEvent()$/;"	f	class:EventParticle
+ResetEvent	eventSetFlag.cpp	/^void EventSetFlag::ResetEvent()$/;"	f	class:EventSetFlag
+ResetEvent	eventSound.cpp	/^void EventSound::ResetEvent()$/;"	f	class:EventSound
+ResetEvent	eventSpriteChange.cpp	/^void EventSpriteChange::ResetEvent()$/;"	f	class:EventSpriteChange
+ResetEvent	eventTeleport.cpp	/^void EventTeleport::ResetEvent()$/;"	f	class:EventTeleport
+ResetEvent	eventToggleFlag.cpp	/^void EventToggleFlag::ResetEvent()$/;"	f	class:EventToggleFlag
+ResetEvent	eventWeather.cpp	/^void EventWeather::ResetEvent()$/;"	f	class:EventWeather
+ResetEvent	iEvent.cpp	/^void IEvent::ResetEvent()$/;"	f	class:IEvent
+ResetLocation	particleGenerator.cpp	/^void Explosion::ResetLocation(Vector3f& spawnPos, bool firstSpawn, bool smooth)$/;"	f	class:Explosion
+ResetLocation	particleGenerator.cpp	/^void Music::ResetLocation(Vector3f& spawnPos, bool firstSpawn, bool smooth)$/;"	f	class:Music
+ResetLocation	particleGenerator.cpp	/^void Rain::ResetLocation(Vector3f& zoneSize, bool firstSpawn, bool smooth)$/;"	f	class:Rain
+ResetLocation	particleGenerator.cpp	/^void Snow::ResetLocation(Vector3f& zoneSize, bool firstSpawn, bool smooth)$/;"	f	class:Snow
+ResetLocation	particleGenerator.h	/^	virtual void ResetLocation(Vector3f& mapSize, bool firstSpawn = false, bool smooth = false) {};$/;"	f	struct:Particle
+ResetTextureSizes	bloom.cpp	/^void Bloom::ResetTextureSizes()$/;"	f	class:Bloom
+ResetVBO	graphicsComponent.cpp	/^void GraphicsComponent::ResetVBO()$/;"	f	class:GraphicsComponent
+ResetWorldUpdateFlag	effectManager.cpp	/^void EffectManager::ResetWorldUpdateFlag()$/;"	f	class:EffectManager
+Resize	glfwBackend.cpp	/^void Resize(GLFWwindow* window)$/;"	f
+ResourceLoader	resource_loader.cpp	/^ResourceLoader::ResourceLoader(std::vector<ResourceUser*>* list) : m_list(list), m_stop(false) {}$/;"	f	class:ResourceLoader
+ResourceLoader	resource_loader.h	/^class ResourceLoader$/;"	c
+ResourceManager	resource_manager.h	/^	ResourceManager() : m_textures(std::map<std::string, Texture>()) {}$/;"	f	class:ResourceManager
+ResourceManager	resource_manager.h	/^class ResourceManager$/;"	c
+ResourceUser	resource_user.h	/^class ResourceUser$/;"	c
+RespectsCondition	gameData.cpp	/^bool GameData::RespectsCondition(std::shared_ptr<EventQueue> ev)$/;"	f	class:GameData
+RespectsNormal	physics.cpp	/^	bool RespectsNormal(Vector3f vel, Vector3f normal)$/;"	f	namespace:Physics
+RespectsTargeting	actor.cpp	/^bool Actor::RespectsTargeting(Actor_ptr ap, int tm)$/;"	f	class:Actor
+Resume	scene.cpp	/^void Scene::Resume()$/;"	f	class:Scene
+Resume	scene_battle.h	/^	void Resume() {}$/;"	f	class:SceneBattle
+Resume	scene_world.cpp	/^void SceneWorld::Resume()$/;"	f	class:SceneWorld
+Right	define.h	/^enum AABB {Left = 0, Right = 1, Down = 2, Up = 3, Close = 4, Far = 5};$/;"	e	enum:AABB
+Right	mathutils.h	/^	float Right;$/;"	m	class:OrthoProjInfo
+Run	resource_loader.cpp	/^void ResourceLoader::Run()$/;"	f	class:ResourceLoader
+SCENE_BATTLE_H__	scene_battle.h	2;"	d
+SCENE_H__	scene.h	2;"	d
+SCENE_MANAGER_H__	scene_manager.h	2;"	d
+SCENE_WORLD_H__	scene_world.h	2;"	d
+SHADOW_CUBE_SIZE	define_gl.h	16;"	d
+SHADOW_MAP_FBO_H__	shadowMapFBO.h	2;"	d
+SINGLE_COLOR_EFFECT_H__	singleColorEffect.h	2;"	d
+SKILL_HEAL_H__	skillHeal.h	2;"	d
+SKILL_H__	skill.h	2;"	d
+SKILL_MELEE_H__	skillMelee.h	2;"	d
+SKILL_SMACK_H__	skillSmack.h	2;"	d
+SKIP_FRAMES	define.h	9;"	d
+SMALL_NUM	physics.h	15;"	d
+SOUND_MANAGER_H__	soundManager.h	2;"	d
+SOUND_UTILS_H__	soundUtils.h	2;"	d
+STAND_HEIGHT	define.h	14;"	d
+STEP_HEIGHT	define.h	13;"	d
+ST_Battle	scene.h	/^enum SceneType { ST_World, ST_Battle };$/;"	e	enum:SceneType
+ST_World	scene.h	/^enum SceneType { ST_World, ST_Battle };$/;"	e	enum:SceneType
+SaveGameData	gameData.cpp	/^void GameData::SaveGameData()$/;"	f	class:GameData
+SaveSettings	gameData.cpp	/^void GameData::SaveSettings()$/;"	f	class:GameData
+SaveToFile	gameData.cpp	/^void GameData::SaveToFile()$/;"	f	class:GameData
+Scene	scene.h	/^class Scene$/;"	c
+SceneBattle	scene_battle.cpp	/^SceneBattle::SceneBattle() : m_zoom(false)$/;"	f	class:SceneBattle
+SceneBattle	scene_battle.h	/^class SceneBattle : public Scene$/;"	c
+SceneGenData	scene.h	/^	SceneGenData() { sceneType = ST_World; id = 0; scene = NULL; }$/;"	f	struct:SceneGenData
+SceneGenData	scene.h	/^struct SceneGenData $/;"	s
+SceneManager	scene_manager.h	/^	SceneManager() {}$/;"	f	class:SceneManager
+SceneManager	scene_manager.h	/^class SceneManager$/;"	c
+SceneType	scene.h	/^enum SceneType { ST_World, ST_Battle };$/;"	g
+SceneWorld	scene_world.cpp	/^SceneWorld::SceneWorld(unsigned int map_id) : m_zoom(false)$/;"	f	class:SceneWorld
+SceneWorld	scene_world.h	/^class SceneWorld : public Scene$/;"	c
+Select	battleManager.cpp	/^void BattleManager::Select(int target)$/;"	f	class:BattleManager
+Selected	actor.h	/^	bool Selected;$/;"	m	class:Actor
+SelectedChoice	dialogueGraph.cpp	/^int DialogueGraph::SelectedChoice()$/;"	f	class:DialogueGraph
+SendInput	dialogueGraph.cpp	/^DialogueResponse DialogueGraph::SendInput(InputType it)$/;"	f	class:DialogueGraph
+SendToBack	eventQueue.cpp	/^void EventQueue::SendToBack()$/;"	f	class:EventQueue
+Set	array2d.h	/^void Array2d<T>::Set(int x, int y, T value)$/;"	f	class:Array2d
+Set	array3d.h	/^void Array3d<T>::Set(int x, int y, int z, T value)$/;"	f	class:Array3d
+SetActivationType	eventFactory.cpp	/^void EventFactory::SetActivationType(std::shared_ptr<EventQueue> eq, std::string s)$/;"	f	class:EventFactory
+SetActivationType	eventQueue.cpp	/^void EventQueue::SetActivationType(ActivationType at)$/;"	f	class:EventQueue
+SetAllTilePositions	effectManager.cpp	/^void EffectManager::SetAllTilePositions(float size)$/;"	f	class:EffectManager
+SetAnimation	animation.cpp	/^void Animation::SetAnimation(Anim_Enum anim, std::string spritesheet)$/;"	f	class:Animation
+SetAudioPosition	scene.cpp	/^void Scene::SetAudioPosition()$/;"	f	class:Scene
+SetAudioPosition	scene_world.cpp	/^void SceneWorld::SetAudioPosition()$/;"	f	class:SceneWorld
+SetBGM	soundManager.cpp	/^void SoundManager::SetBGM(std::string sourceFile)$/;"	f	class:SoundManager
+SetBoundingBox	physicsComponent.cpp	/^void PhysicsComponent::SetBoundingBox()$/;"	f	class:PhysicsComponent
+SetBoundingBoxSize	physicsComponent.cpp	/^void PhysicsComponent::SetBoundingBoxSize(Vector3f size, Vector3f numSquares)$/;"	f	class:PhysicsComponent
+SetBufferElapsedTime	elapsedTime.h	/^	void SetBufferElapsedTime(float fps) { m_elapsedTime = 1.f \/ fps; }$/;"	f	class:ElapsedTime
+SetBuffers	graphicsComponent.cpp	/^void GraphicsComponent::SetBuffers()$/;"	f	class:GraphicsComponent
+SetChooseSkillText	battleManager.cpp	/^void BattleManager::SetChooseSkillText()$/;"	f	class:BattleManager
+SetCloneBaseAttributes	iEvent.cpp	/^void IEvent::SetCloneBaseAttributes(std::shared_ptr<IEvent> ev)$/;"	f	class:IEvent
+SetColor	actor.cpp	/^void Actor::SetColor()$/;"	f	class:Actor
+SetColor	particleGenerator.cpp	/^void ParticleGenerator::SetColor(Vector3f color, float alpha)$/;"	f	class:ParticleGenerator
+SetColorAll	graphicsComponent.cpp	/^void GraphicsComponent::SetColorAll(Vector3f color, float alpha)$/;"	f	class:GraphicsComponent
+SetConversationLock	physicsComponent.cpp	/^void PhysicsComponent::SetConversationLock(bool locked)$/;"	f	class:PhysicsComponent
+SetDefault	actor.cpp	/^void Actor::SetDefault()$/;"	f	class:Actor
+SetDefaults	animation.cpp	/^void Animation::SetDefaults()$/;"	f	class:Animation
+SetDefaults	graphicsComponent.cpp	/^void GraphicsComponent::SetDefaults(std::string name)$/;"	f	class:GraphicsComponent
+SetDefaults	physicsComponent.cpp	/^void PhysicsComponent::SetDefaults(std::string name)$/;"	f	class:PhysicsComponent
+SetDirection	graphicsComponent.cpp	/^void GraphicsComponent::SetDirection(Direction dir) { m_direction = dir; }$/;"	f	class:GraphicsComponent
+SetDirection	graphicsComponent.cpp	/^void GraphicsComponent::SetDirection(GraphComp_ptr graph)$/;"	f	class:GraphicsComponent
+SetDrawType	effect.cpp	/^void Effect::SetDrawType(DrawType dt)$/;"	f	class:Effect
+SetEntities	collisionManager.cpp	/^void CollisionManager::SetEntities(std::map<unsigned int, std::shared_ptr<Entity>>* e)$/;"	f	class:CollisionManager
+SetEntitiesMap	eventManager.cpp	/^void EventManager::SetEntitiesMap(std::map<unsigned int, std::shared_ptr<Entity>>* ents)$/;"	f	class:EventManager
+SetEthereal	physicsComponent.cpp	/^void PhysicsComponent::SetEthereal(bool ethereal)$/;"	f	class:PhysicsComponent
+SetExecutionMode	iEvent.cpp	/^void IEvent::SetExecutionMode(EventExecutionMode eem)$/;"	f	class:IEvent
+SetFade	fade.cpp	/^void Fade::SetFade(bool fadeIn)$/;"	f	class:Fade
+SetFade	fadeEffect.cpp	/^void FadeEffect::SetFade(float intensity)$/;"	f	class:FadeEffect
+SetFile	jsonHandler.cpp	/^void JsonHandler::SetFile(std::string filename)$/;"	f	class:JsonHandler
+SetFollowSpeed	transform.cpp	/^void Transformation::SetFollowSpeed(float percentSpeed)$/;"	f	class:Transformation
+SetGain	audioComponent.cpp	/^void AudioComponent::SetGain(float gain)$/;"	f	class:AudioComponent
+SetGain	soundManager.cpp	/^void SoundManager::SetGain(unsigned int source, float gain)$/;"	f	class:SoundManager
+SetHorizontalBlur	blurEffect.cpp	/^void BlurEffect::SetHorizontalBlur(GLboolean hor)$/;"	f	class:BlurEffect
+SetIntensity	combineEffect.cpp	/^void CombineEffect::SetIntensity(float value)$/;"	f	class:CombineEffect
+SetListenerOrientation	soundManager.cpp	/^void SoundManager::SetListenerOrientation(unsigned int dir)$/;"	f	class:SoundManager
+SetListenerPosition	soundManager.cpp	/^void SoundManager::SetListenerPosition(Vector3f pos, Vector3f vel)$/;"	f	class:SoundManager
+SetLockLevel	input_manager.cpp	/^void InputManager::SetLockLevel(unsigned int level)$/;"	f	class:InputManager
+SetLoop	audioComponent.cpp	/^void AudioComponent::SetLoop(bool loop)$/;"	f	class:AudioComponent
+SetLoop	soundManager.cpp	/^void SoundManager::SetLoop(unsigned int source, bool loop)$/;"	f	class:SoundManager
+SetMapSize	eventParticle.cpp	/^void EventParticle::SetMapSize(Vector3f mapsize)$/;"	f	class:EventParticle
+SetMapSize	eventWeather.cpp	/^void EventWeather::SetMapSize(Vector3f mapsize)$/;"	f	class:EventWeather
+SetMapTiles	collisionManager.cpp	/^void CollisionManager::SetMapTiles(std::vector<std::shared_ptr<MapTile>>* t)$/;"	f	class:CollisionManager
+SetMasterVolume	soundManager.cpp	/^void SoundManager::SetMasterVolume(float volume)$/;"	f	class:SoundManager
+SetModelPosition	basicEffect.cpp	/^void BasicEffect::SetModelPosition(float* mat)$/;"	f	class:BasicEffect
+SetModelPosition	bloomEffect.cpp	/^void BloomEffect::SetModelPosition(float* mat)$/;"	f	class:BloomEffect
+SetModelPosition	blurEffect.cpp	/^void BlurEffect::SetModelPosition(float* mat)$/;"	f	class:BlurEffect
+SetModelPosition	combineEffect.cpp	/^void CombineEffect::SetModelPosition(float* mat)$/;"	f	class:CombineEffect
+SetModelPosition	effect.cpp	/^void Effect::SetModelPosition(float* mat)$/;"	f	class:Effect
+SetModelPosition	fadeEffect.cpp	/^void FadeEffect::SetModelPosition(float* mat)$/;"	f	class:FadeEffect
+SetModelPosition	postProcessingEffect.cpp	/^void PostProcessingEffect::SetModelPosition(float* mat)$/;"	f	class:PostProcessingEffect
+SetModelPosition	singleColorEffect.cpp	/^void SingleColorEffect::SetModelPosition(float* mat)$/;"	f	class:SingleColorEffect
+SetMovedBB	physicsComponent.cpp	/^void PhysicsComponent::SetMovedBB()$/;"	f	class:PhysicsComponent
+SetNextDialogue	dialogueGraph.cpp	/^void DialogueGraph::SetNextDialogue(int id)$/;"	f	class:DialogueGraph
+SetNoTranslateMode	effectManager.cpp	/^void EffectManager::SetNoTranslateMode(bool tm)$/;"	f	class:EffectManager
+SetOrthoProj	transform.cpp	/^void Transformation::SetOrthoProj(OrthoProjInfo* o)$/;"	f	class:Transformation
+SetOrthoStuffs	scene.cpp	/^void Scene::SetOrthoStuffs()$/;"	f	class:Scene
+SetPersProjInfo	transform.cpp	/^void Transformation::SetPersProjInfo(PersProjInfo* p)$/;"	f	class:Transformation
+SetPhysics	graphicsComponent.h	/^	void SetPhysics(Vector3f pos, Vector3f vel) { m_pos = pos; m_vel = vel; m_modelMat.SetTranslation(pos); };$/;"	f	class:GraphicsComponent
+SetPitch	audioComponent.cpp	/^void AudioComponent::SetPitch(float pitch)$/;"	f	class:AudioComponent
+SetPitch	soundManager.cpp	/^void SoundManager::SetPitch(unsigned int source, float pitch)$/;"	f	class:SoundManager
+SetPosition	audioComponent.cpp	/^void AudioComponent::SetPosition(Vector3f pos)$/;"	f	class:AudioComponent
+SetPosition	physicsComponent.h	/^	void SetPosition(Vector3f pos) { m_pos = pos; };$/;"	f	class:PhysicsComponent
+SetPosition	soundManager.cpp	/^void SoundManager::SetPosition(unsigned int source, Vector3f pos)$/;"	f	class:SoundManager
+SetPower	eventParticle.cpp	/^void EventParticle::SetPower(float power)$/;"	f	class:EventParticle
+SetPowerLevel	particleGenerator.cpp	/^void ParticleGenerator::SetPowerLevel(float power)$/;"	f	class:ParticleGenerator
+SetRender	battleHUD.cpp	/^void BattleHUD::SetRender()$/;"	f	class:BattleHUD
+SetRender	battleManager.cpp	/^void BattleManager::SetRender()$/;"	f	class:BattleManager
+SetRender	dialogueBox.cpp	/^void DialogueBox::SetRender()$/;"	f	class:DialogueBox
+SetRender	entity.cpp	/^void Entity::SetRender()$/;"	f	class:Entity
+SetRender	font.cpp	/^void Font::SetRender()$/;"	f	class:Font
+SetRender	fontManager.cpp	/^void FontManager::SetRender()$/;"	f	class:FontManager
+SetRender	map_handler.cpp	/^void MapHandler::SetRender()$/;"	f	class:MapHandler
+SetRender	particleGenerator.cpp	/^void ParticleGenerator::SetRender()$/;"	f	class:ParticleGenerator
+SetRender	particleManager.cpp	/^void ParticleManager::SetRender()$/;"	f	class:ParticleManager
+SetRepeating	eventQueue.cpp	/^void EventQueue::SetRepeating(bool rep)$/;"	f	class:EventQueue
+SetRotation	transform.cpp	/^void Transformation::SetRotation(Vector3f& vec)$/;"	f	class:Transformation
+SetRotation	transform.cpp	/^void Transformation::SetRotation(float x, float y, float z)$/;"	f	class:Transformation
+SetScale	dialogueBox.cpp	/^void DialogueBox::SetScale(float xScale, float yScale)$/;"	f	class:DialogueBox
+SetScale	font.cpp	/^void Font::SetScale(float xScale, float yScale)$/;"	f	class:Font
+SetScale	fontGraphicsComponent.cpp	/^void FontGraphicsComponent::SetScale(Vector3f scale)$/;"	f	class:FontGraphicsComponent
+SetScale	fontManager.cpp	/^void FontManager::SetScale(unsigned int font, float xScale, float yScale)$/;"	f	class:FontManager
+SetScale	transform.cpp	/^void Transformation::SetScale(const Vector3f& vec)$/;"	f	class:Transformation
+SetScale	transform.cpp	/^void Transformation::SetScale(float x, float y, float z)$/;"	f	class:Transformation
+SetScene	scene_manager.cpp	/^void SceneManager::SetScene(std::shared_ptr<Scene> s)$/;"	f	class:SceneManager
+SetSize	basicEffect.cpp	/^void BasicEffect::SetSize(float* mat)$/;"	f	class:BasicEffect
+SetSize	bloomEffect.cpp	/^void BloomEffect::SetSize(float* mat)$/;"	f	class:BloomEffect
+SetSize	blurEffect.cpp	/^void BlurEffect::SetSize(float* mat)$/;"	f	class:BlurEffect
+SetSize	combineEffect.cpp	/^void CombineEffect::SetSize(float* mat)$/;"	f	class:CombineEffect
+SetSize	postProcessingEffect.cpp	/^void PostProcessingEffect::SetSize(float* mat)$/;"	f	class:PostProcessingEffect
+SetSize	singleColorEffect.cpp	/^void SingleColorEffect::SetSize(float* mat)$/;"	f	class:SingleColorEffect
+SetSource	soundManager.cpp	/^void SoundManager::SetSource(unsigned int source, unsigned int buffer)$/;"	f	class:SoundManager
+SetStatic	fontGraphicsComponent.cpp	/^void FontGraphicsComponent::SetStatic(bool sttatic)$/;"	f	class:FontGraphicsComponent
+SetText	dialogueBox.cpp	/^void DialogueBox::SetText(std::string text)$/;"	f	class:DialogueBox
+SetText	font.cpp	/^void Font::SetText(std::string text, Vector3f location, bool centered, float xBoundry)$/;"	f	class:Font
+SetText	fontFloat.cpp	/^void FontFloat::SetText(std::string text, Vector3f location, bool centered, float xBoundry)$/;"	f	class:FontFloat
+SetText	fontManager.cpp	/^void FontManager::SetText(unsigned int font, std::string text, Vector3f location, bool centered)$/;"	f	class:FontManager
+SetTextSpeed	font.cpp	/^void Font::SetTextSpeed(double speed)$/;"	f	class:Font
+SetTextSpeed	fontManager.cpp	/^void FontManager::SetTextSpeed(unsigned int font, double speed)$/;"	f	class:FontManager
+SetTextVariables	font.cpp	/^void Font::SetTextVariables()$/;"	f	class:Font
+SetTexture	graphicsComponent.cpp	/^void GraphicsComponent::SetTexture(std::string newTex)$/;"	f	class:GraphicsComponent
+SetTexture	playerGraphicsComponent.cpp	/^void PlayerGraphicsComponent::SetTexture(std::string texture)$/;"	f	class:PlayerGraphicsComponent
+SetTextureSize	blurEffect.cpp	/^void BlurEffect::SetTextureSize(int w, int h)$/;"	f	class:BlurEffect
+SetTileModelTC	animation.cpp	/^bool Animation::SetTileModelTC(std::vector<Vertex>* verts, bool forceUpdate)$/;"	f	class:Animation
+SetTileSize	effect.cpp	/^void Effect::SetTileSize(float size)$/;"	f	class:Effect
+SetToStart	dialogueGraph.cpp	/^void DialogueGraph::SetToStart()$/;"	f	class:DialogueGraph
+SetTrans	particleGenerator.cpp	/^void Explosion::SetTrans(Transformation& trans)$/;"	f	class:Explosion
+SetTrans	particleGenerator.cpp	/^void Music::SetTrans(Transformation& trans)$/;"	f	class:Music
+SetTrans	particleGenerator.cpp	/^void Rain::SetTrans(Transformation& trans)$/;"	f	class:Rain
+SetTrans	particleGenerator.cpp	/^void Snow::SetTrans(Transformation& trans)$/;"	f	class:Snow
+SetTrans	particleGenerator.h	/^	virtual void SetTrans(Transformation& trans) {};$/;"	f	struct:Particle
+SetTranslatedVertices	physicsComponent.cpp	/^void PhysicsComponent::SetTranslatedVertices()$/;"	f	class:PhysicsComponent
+SetTranslation	transform.cpp	/^void Transformation::SetTranslation(const Vector3f& vec)$/;"	f	class:Transformation
+SetTranslation	transform.cpp	/^void Transformation::SetTranslation(float x, float y, float z)$/;"	f	class:Transformation
+SetVelocity	audioComponent.cpp	/^void AudioComponent::SetVelocity(Vector3f vel)$/;"	f	class:AudioComponent
+SetVelocity	soundManager.cpp	/^void SoundManager::SetVelocity(unsigned int source, Vector3f vel)$/;"	f	class:SoundManager
+SetWidthHeight	animation.cpp	/^void Animation::SetWidthHeight(std::string tex)$/;"	f	class:Animation
+SetWorldPosition	basicEffect.cpp	/^void BasicEffect::SetWorldPosition(float* mat)$/;"	f	class:BasicEffect
+SetWorldPosition	bloomEffect.cpp	/^void BloomEffect::SetWorldPosition(float* mat)$/;"	f	class:BloomEffect
+SetWorldPosition	blurEffect.cpp	/^void BlurEffect::SetWorldPosition(float* mat)$/;"	f	class:BlurEffect
+SetWorldPosition	combineEffect.cpp	/^void CombineEffect::SetWorldPosition(float* mat)$/;"	f	class:CombineEffect
+SetWorldPosition	effect.cpp	/^void Effect::SetWorldPosition(float* mat)$/;"	f	class:Effect
+SetWorldPosition	fadeEffect.cpp	/^void FadeEffect::SetWorldPosition(float* mat)$/;"	f	class:FadeEffect
+SetWorldPosition	postProcessingEffect.cpp	/^void PostProcessingEffect::SetWorldPosition(float* mat)$/;"	f	class:PostProcessingEffect
+SetWorldPosition	singleColorEffect.cpp	/^void SingleColorEffect::SetWorldPosition(float* mat)$/;"	f	class:SingleColorEffect
+SetWorldTrans	effectManager.cpp	/^void EffectManager::SetWorldTrans(float* t1, float* t2)$/;"	f	class:EffectManager
+SetupAnimationMetaData	animation.cpp	/^void Animation::SetupAnimationMetaData()$/;"	f	class:Animation
+SetupFrameKeys	input_manager.cpp	/^void InputManager::SetupFrameKeys()$/;"	f	class:InputManager
+SetupMesh	font.cpp	/^void Font::SetupMesh(float xBndry, float yBndry)$/;"	f	class:Font
+SetupMesh	map_handler.cpp	/^void MapHandler::SetupMesh()$/;"	f	class:MapHandler
+SetupMesh	particleGenerator.cpp	/^void ParticleGenerator::SetupMesh()$/;"	f	class:ParticleGenerator
+SetupSource	audioComponent.cpp	/^void AudioComponent::SetupSource()$/;"	f	class:AudioComponent
+SetupTextureAtlas	game.cpp	/^void Game::SetupTextureAtlas()$/;"	f	class:Game
+SetupVAO	graphicsComponent.cpp	/^void GraphicsComponent::SetupVAO()$/;"	f	class:GraphicsComponent
+ShaderObjList	effect.h	/^	typedef std::list<GLuint> ShaderObjList;$/;"	t	class:Effect
+ShadowMapFBO	shadowMapFBO.cpp	/^ShadowMapFBO::ShadowMapFBO()$/;"	f	class:ShadowMapFBO
+ShadowMapFBO	shadowMapFBO.h	/^class ShadowMapFBO$/;"	c
+ShortenTextureList	textureatlas.cpp	/^void TextureAtlas::ShortenTextureList()$/;"	f	class:TextureAtlas
+Simple	dialogueGraph.h	/^enum DialogueType { Simple, Choice, End };$/;"	e	enum:DialogueType
+SingleColorEffect	singleColorEffect.cpp	/^SingleColorEffect::SingleColorEffect()$/;"	f	class:SingleColorEffect
+SingleColorEffect	singleColorEffect.h	/^class SingleColorEffect : public Effect$/;"	c
+Size	map_handler.cpp	/^unsigned int MapHandler::Size()$/;"	f	class:MapHandler
+Size	mathutils.h	/^	float Size;$/;"	m	class:OrthoProjInfo
+Size	particleGenerator.cpp	/^unsigned int ParticleGenerator::Size()$/;"	f	class:ParticleGenerator
+Skill	skill.cpp	/^Skill::Skill()$/;"	f	class:Skill
+Skill	skill.h	/^class Skill$/;"	c
+SkillHeal	skillHeal.cpp	/^SkillHeal::SkillHeal()$/;"	f	class:SkillHeal
+SkillHeal	skillHeal.h	/^class SkillHeal : public SkillMelee$/;"	c
+SkillMelee	skillMelee.cpp	/^SkillMelee::SkillMelee()$/;"	f	class:SkillMelee
+SkillMelee	skillMelee.h	/^class SkillMelee: public Skill$/;"	c
+SkillSmack	skillSmack.cpp	/^SkillSmack::SkillSmack()$/;"	f	class:SkillSmack
+SkillSmack	skillSmack.h	/^class SkillSmack : public SkillMelee$/;"	c
+Skill_ptr	actor.h	/^typedef std::shared_ptr<Skill> Skill_ptr;$/;"	t
+Skill_ptr	skill.h	/^typedef std::shared_ptr<Skill> Skill_ptr;$/;"	t
+Skills	actor.h	/^	std::vector<Skill_ptr> Skills;$/;"	m	class:Actor
+Snow	particleGenerator.cpp	/^Snow::Snow(Vector3f zoneSize, bool smooth, std::string tex)$/;"	f	class:Snow
+Snow	particleGenerator.h	/^struct Snow : public Particle$/;"	s
+Sort	renderer.cpp	/^void Renderer::Sort()$/;"	f	class:Renderer
+SortFunc	map_tile.h	/^	static inline bool SortFunc(std::shared_ptr<MapTile> d, std::shared_ptr<MapTile> d2) { return d->Physics()->Position().z > d2->Physics()->Position().z; }$/;"	f	class:MapTile
+SoundManager	soundManager.cpp	/^SoundManager::SoundManager() : m_bgmSource(0), m_bgmState(BGM_Starting), m_bgmVolume(0), m_bgmMaxVolume(0.4f), m_masterVolume(1.0f)$/;"	f	class:SoundManager
+SoundManager	soundManager.h	/^class SoundManager$/;"	c
+SourceInfo	soundManager.h	/^struct SourceInfo$/;"	s
+SpawnDamageText	skill.cpp	/^void Skill::SpawnDamageText(Actor_ptr target, int dmg)$/;"	f	class:Skill
+SpecialInput	input_manager.cpp	/^void InputManager::SpecialInput(unsigned int key, bool keydown)$/;"	f	class:InputManager
+SpecialKeyValue	input_manager.h	/^	static const unsigned int SpecialKeyValue = 700;$/;"	m	class:InputManager
+Speed	actor.h	/^	int Speed;$/;"	m	class:Actor
+Split	utils.cpp	/^std::vector<std::string> Utils::Split(const std::string &s, char delim) {$/;"	f	class:Utils
+SpriteSheetData	animation.h	/^	SpriteSheetData() {$/;"	f	struct:SpriteSheetData
+SpriteSheetData	animation.h	/^struct SpriteSheetData$/;"	s
+Start	skill.cpp	/^BattleState Skill::Start(std::vector<Actor_ptr>* targets, std::deque<Actor_ptr>* actors, std::deque<Anim_ptr>* anims, Actor_ptr owner)$/;"	f	class:Skill
+Start	skillMelee.cpp	/^BattleState SkillMelee::Start(std::vector<Actor_ptr>* targets, std::deque<Actor_ptr>* actors, std::deque<Anim_ptr>* anims, Actor_ptr owner)$/;"	f	class:SkillMelee
+StepSize	mathutils.cpp	/^static const float StepSize = 0.2f;$/;"	v	file:
+Stop	resource_loader.cpp	/^void ResourceLoader::Stop()$/;"	f	class:ResourceLoader
+Stop	soundManager.cpp	/^void SoundManager::Stop(unsigned int source)$/;"	f	class:SoundManager
+StringToDialogueType	dialogueGraph.cpp	/^DialogueType DialogueGraph::StringToDialogueType(std::string s)$/;"	f	class:DialogueGraph
+Strings	gameData.cpp	/^std::map<std::string, std::string> GameData::Strings = std::map<std::string, std::string>();$/;"	m	class:GameData	file:
+Strings	gameData.h	/^	static std::map<std::string, std::string> Strings;$/;"	m	class:GameData
+TEXTUREATLAS_H__	textureatlas.h	2;"	d
+TEXTURE_H__	texture.h	2;"	d
+TM_Alive	skill.h	/^enum TargetMode { TM_Enemy, TM_Ally, TM_Alive, TM_Dead, TM_Any };$/;"	e	enum:TargetMode
+TM_Ally	skill.h	/^enum TargetMode { TM_Enemy, TM_Ally, TM_Alive, TM_Dead, TM_Any };$/;"	e	enum:TargetMode
+TM_Any	skill.h	/^enum TargetMode { TM_Enemy, TM_Ally, TM_Alive, TM_Dead, TM_Any };$/;"	e	enum:TargetMode
+TM_Dead	skill.h	/^enum TargetMode { TM_Enemy, TM_Ally, TM_Alive, TM_Dead, TM_Any };$/;"	e	enum:TargetMode
+TM_Enemy	skill.h	/^enum TargetMode { TM_Enemy, TM_Ally, TM_Alive, TM_Dead, TM_Any };$/;"	e	enum:TargetMode
+TRANSFORM_H__	transform.h	2;"	d
+TRANSPARENCY_EFFECT_H__	transparencyEffect.h	2;"	d
+TakeDamage	actor.cpp	/^int Actor::TakeDamage(int dmg)$/;"	f	class:Actor
+Target	mathutils.cpp	/^int Camera::Target = 1;$/;"	m	class:Camera	file:
+Target	mathutils.h	/^	static int Target;$/;"	m	class:Camera
+TargetMode	skill.h	/^enum TargetMode { TM_Enemy, TM_Ally, TM_Alive, TM_Dead, TM_Any };$/;"	g
+Team	actor.h	/^	int Team;$/;"	m	class:Actor
+Text	dialogueGraph.h	/^	std::string Text;$/;"	m	struct:Dialogue
+Text	dialogueGraph.h	/^	std::string Text;$/;"	m	struct:DialogueChoice
+TextDisplayDone	font.cpp	/^bool Font::TextDisplayDone()$/;"	f	class:Font
+Texture	texture.cpp	/^Texture::Texture(GLenum TextureTarget, char* FileName) : m_textureTarget(TextureTarget), m_filename(FileName), m_isValid(false), m_filenameS(std::string(FileName))$/;"	f	class:Texture
+Texture	texture.cpp	/^Texture::Texture(GLenum TextureTarget, const char* FileName) : m_textureTarget(TextureTarget), m_filename(FileName), m_isValid(false), m_filenameS(std::string(FileName))$/;"	f	class:Texture
+Texture	texture.cpp	/^Texture::Texture(GLuint texID, GLenum target) : m_textureTarget(target), m_filename(""), m_isValid(true), m_texId(texID), loaded(true), m_filenameS("")$/;"	f	class:Texture
+Texture	texture.h	/^class Texture$/;"	c
+TextureAtlas	textureatlas.cpp	/^TextureAtlas::TextureAtlas(unsigned int nbTexture) : m_isValid(false), m_currentTextureIndex(0)$/;"	f	class:TextureAtlas
+TextureAtlas	textureatlas.h	/^class TextureAtlas$/;"	c
+TextureIndex	textureatlas.h	/^	typedef unsigned int TextureIndex;$/;"	t	class:TextureAtlas
+TextureIndexToCoord	textureatlas.cpp	/^void TextureAtlas::TextureIndexToCoord(TextureIndex idx, float& x, float& y) const$/;"	f	class:TextureAtlas
+TextureInfo	textureatlas.h	/^		TextureInfo(ILuint _texId, unsigned int _texIdx) : texId(_texId), texIdx(_texIdx) {}$/;"	f	struct:TextureAtlas::TextureInfo
+TextureInfo	textureatlas.h	/^	struct TextureInfo$/;"	s	class:TextureAtlas
+TextureList	textureatlas.h	/^	typedef std::map<std::string, TextureInfo> TextureList;$/;"	t	class:TextureAtlas
+TileCollision	physics_2d.cpp	/^	void TileCollision(std::shared_ptr<Entity> x, std::vector<std::shared_ptr<PhysicsComponent>> p)$/;"	f	namespace:Physics_2D
+TileSort	map_handler.cpp	/^bool MapHandler::TileSort(std::shared_ptr<MapTile> i, std::shared_ptr<MapTile> j)$/;"	f	class:MapHandler
+TileSortX	map_handler.cpp	/^bool MapHandler::TileSortX(std::shared_ptr<MapTile> i, std::shared_ptr<MapTile> j)$/;"	f	class:MapHandler
+TileTouchCount	physics_2d.cpp	/^	int TileTouchCount(std::array<float, 6> bb)$/;"	f	namespace:Physics_2D
+Tiles	map_handler.cpp	/^std::vector<std::shared_ptr<MapTile>>* MapHandler::Tiles()$/;"	f	class:MapHandler
+TimingCondition	skillMelee.cpp	/^bool SkillMelee::TimingCondition(double progress, double duration)$/;"	f	class:SkillMelee
+To2dIndex	array2d.h	/^int Array2d<T>::To2dIndex(int x, int y) const$/;"	f	class:Array2d
+To2dIndex	array3d.h	/^int Array3d<T>::To2dIndex(int x, int y, int z) const$/;"	f	class:Array3d
+ToDegree	mat4f.cpp	7;"	d	file:
+ToIdentityMatrix	mat4f.cpp	/^void Mat4f::ToIdentityMatrix(float(&matrix)[4][4])$/;"	f	class:Mat4f
+ToRadian	mat4f.cpp	6;"	d	file:
+Top	mathutils.h	/^	float Top;$/;"	m	class:OrthoProjInfo
+TouchCount	physics_2d.cpp	/^	int TouchCount(std::vector<std::shared_ptr<Entity>>* touching, float targetHeight)$/;"	f	namespace:Physics_2D
+TouchCount	physics_2d.cpp	/^	int TouchCount(std::vector<std::shared_ptr<PhysicsComponent>>* touching, float targetHeight)$/;"	f	namespace:Physics_2D
+Transformation	transform.cpp	/^Transformation::Transformation()$/;"	f	class:Transformation
+Transformation	transform.h	/^class Transformation$/;"	c
+TransparencyEffect	transparencyEffect.h	/^class TransparencyEffect : public Effect$/;"	c
+Triangle	physics.h	/^struct Triangle$/;"	s
+TriggerEvents	scene_world.cpp	/^void SceneWorld::TriggerEvents(unsigned int entity_id)$/;"	f	class:SceneWorld
+Type	dialogueGraph.h	/^	DialogueType Type;$/;"	m	struct:Dialogue
+TypeDict	eventFactory.cpp	/^std::map<std::string, unsigned int> EventFactory::TypeDict =$/;"	m	class:EventFactory	file:
+TypeDict	eventFactory.h	/^	static std::map<std::string, unsigned int> TypeDict;$/;"	m	class:EventFactory
+UTILS_H__	utils.h	2;"	d
+Unload	texture.cpp	/^bool Texture::Unload()$/;"	f	class:Texture
+UnloadAllResources	resource_manager.cpp	/^void ResourceManager::UnloadAllResources()$/;"	f	class:ResourceManager
+UnloadExternalResources	graphicsComponent.cpp	/^bool GraphicsComponent::UnloadExternalResources()$/;"	f	class:GraphicsComponent
+UnloadGLResources	graphicsComponent.cpp	/^bool GraphicsComponent::UnloadGLResources()$/;"	f	class:GraphicsComponent
+Up	define.h	/^enum AABB {Left = 0, Right = 1, Down = 2, Up = 3, Close = 4, Far = 5};$/;"	e	enum:AABB
+Update	actor.cpp	/^void Actor::Update()$/;"	f	class:Actor
+Update	animBasic.cpp	/^void AnimBasic::Update()$/;"	f	class:AnimBasic
+Update	animJumpTo.cpp	/^void AnimJumpTo::Update()$/;"	f	class:AnimJumpTo
+Update	animMoveTo.cpp	/^void AnimMoveTo::Update()$/;"	f	class:AnimMoveTo
+Update	battleAnimation.h	/^	virtual void Update() {}$/;"	f	class:BattleAnimation
+Update	battleHUD.cpp	/^void BattleHUD::Update()$/;"	f	class:BattleHUD
+Update	battleManager.cpp	/^void BattleManager::Update()$/;"	f	class:BattleManager
+Update	dialogueBox.cpp	/^void DialogueBox::Update(double elapsedTime)$/;"	f	class:DialogueBox
+Update	entity.cpp	/^void Entity::Update()$/;"	f	class:Entity
+Update	eventManager.cpp	/^void EventManager::Update(double elapsedTime)$/;"	f	class:EventManager
+Update	font.cpp	/^void Font::Update(double elapsedTime)$/;"	f	class:Font
+Update	fontFloat.cpp	/^void FontFloat::Update(double elapsedTime)$/;"	f	class:FontFloat
+Update	fontGraphicsComponent.cpp	/^void FontGraphicsComponent::Update()$/;"	f	class:FontGraphicsComponent
+Update	fontManager.cpp	/^void FontManager::Update(double elapsedTime)$/;"	f	class:FontManager
+Update	graphicsComponent.cpp	/^void GraphicsComponent::Update()$/;"	f	class:GraphicsComponent
+Update	iComponent.h	/^enum CMsg {Update};$/;"	e	enum:CMsg
+Update	inputComponent.cpp	/^void InputComponent::Update()$/;"	f	class:InputComponent
+Update	map_handler.cpp	/^void MapHandler::Update(bool forced)$/;"	f	class:MapHandler
+Update	particleGenerator.cpp	/^void Explosion::Update(Vector3f& spawnpos)$/;"	f	class:Explosion
+Update	particleGenerator.cpp	/^void Music::Update(Vector3f& spawnPos)$/;"	f	class:Music
+Update	particleGenerator.cpp	/^void ParticleGenerator::Update()$/;"	f	class:ParticleGenerator
+Update	particleGenerator.cpp	/^void ParticleGenerator::Update(Vector3f pos)$/;"	f	class:ParticleGenerator
+Update	particleGenerator.cpp	/^void Rain::Update(Vector3f& zoneSize)$/;"	f	class:Rain
+Update	particleGenerator.cpp	/^void Snow::Update(Vector3f& zoneSize)$/;"	f	class:Snow
+Update	particleGenerator.h	/^	virtual void Update(Vector3f& mapSize) {};$/;"	f	struct:Particle
+Update	particleManager.cpp	/^void ParticleManager::Update(double ElapsedTime)$/;"	f	class:ParticleManager
+Update	physicsComponent.cpp	/^void PhysicsComponent::Update()$/;"	f	class:PhysicsComponent
+Update	playerGraphicsComponent.cpp	/^void PlayerGraphicsComponent::Update()$/;"	f	class:PlayerGraphicsComponent
+Update	playerInputComponent.cpp	/^void PlayerInputComponent::Update()$/;"	f	class:PlayerInputComponent
+Update	playerPhysicsComponent.cpp	/^void PlayerPhysicsComponent::Update()$/;"	f	class:PlayerPhysicsComponent
+Update	scene_battle.cpp	/^SceneGenData SceneBattle::Update()$/;"	f	class:SceneBattle
+Update	scene_world.cpp	/^SceneGenData SceneWorld::Update()$/;"	f	class:SceneWorld
+Update	skill.cpp	/^void Skill::Update()$/;"	f	class:Skill
+Update	skillMelee.cpp	/^void SkillMelee::Update()$/;"	f	class:SkillMelee
+Update	soundManager.cpp	/^void SoundManager::Update()$/;"	f	class:SoundManager
+UpdateBox	dialogueBox.cpp	/^void DialogueBox::UpdateBox()$/;"	f	class:DialogueBox
+UpdateEvent	dialogueBox.cpp	/^EventUpdateResponse DialogueBox::UpdateEvent(double elapsedTime, std::map<unsigned int, std::shared_ptr<Entity>>* ents)$/;"	f	class:DialogueBox
+UpdateEvent	eventAddToFlag.cpp	/^EventUpdateResponse EventAddToFlag::UpdateEvent(double elapsedTime, std::map<unsigned int, std::shared_ptr<Entity>>* ents)$/;"	f	class:EventAddToFlag
+UpdateEvent	eventBGM.cpp	/^EventUpdateResponse EventBGM::UpdateEvent(double elapsedTime, std::map<unsigned int, std::shared_ptr<Entity>>* ents)$/;"	f	class:EventBGM
+UpdateEvent	eventBattle.cpp	/^EventUpdateResponse EventBattle::UpdateEvent(double elapsedTime, std::map<unsigned int, std::shared_ptr<Entity>>* ents)$/;"	f	class:EventBattle
+UpdateEvent	eventFactory.cpp	/^EventUpdateResponse EventCaller::UpdateEvent(double elapsedTime, std::map<unsigned int, std::shared_ptr<Entity>>* ents)$/;"	f	class:EventCaller
+UpdateEvent	eventMapChange.cpp	/^EventUpdateResponse EventMapChange::UpdateEvent(double elapsedTime, std::map<unsigned int, std::shared_ptr<Entity>>* ents)$/;"	f	class:EventMapChange
+UpdateEvent	eventMove.cpp	/^EventUpdateResponse EventMove::UpdateEvent(double elapsedTime, std::map<unsigned int, std::shared_ptr<Entity>>* ents)$/;"	f	class:EventMove
+UpdateEvent	eventParticle.cpp	/^EventUpdateResponse EventParticle::UpdateEvent(double elapsedTime, std::map<unsigned int, std::shared_ptr<Entity>>* ents)$/;"	f	class:EventParticle
+UpdateEvent	eventSetFlag.cpp	/^EventUpdateResponse EventSetFlag::UpdateEvent(double elapsedTime, std::map<unsigned int, std::shared_ptr<Entity>>* ents)$/;"	f	class:EventSetFlag
+UpdateEvent	eventSound.cpp	/^EventUpdateResponse EventSound::UpdateEvent(double elapsedTime, std::map<unsigned int, std::shared_ptr<Entity>>* ents)$/;"	f	class:EventSound
+UpdateEvent	eventSpriteChange.cpp	/^EventUpdateResponse EventSpriteChange::UpdateEvent(double elapsedTime, std::map<unsigned int, std::shared_ptr<Entity>>* ents)$/;"	f	class:EventSpriteChange
+UpdateEvent	eventTeleport.cpp	/^EventUpdateResponse EventTeleport::UpdateEvent(double elapsedTime, std::map<unsigned int, std::shared_ptr<Entity>>* ents)$/;"	f	class:EventTeleport
+UpdateEvent	eventToggleFlag.cpp	/^EventUpdateResponse EventToggleFlag::UpdateEvent(double elapsedTime, std::map<unsigned int, std::shared_ptr<Entity>>* ents)$/;"	f	class:EventToggleFlag
+UpdateEvent	eventWeather.cpp	/^EventUpdateResponse EventWeather::UpdateEvent(double elapsedTime, std::map<unsigned int, std::shared_ptr<Entity>>* ents)$/;"	f	class:EventWeather
+UpdateEvent	iEvent.cpp	/^EventUpdateResponse IEvent::UpdateEvent(double elapsedTime, std::map<unsigned int, std::shared_ptr<Entity>>* ents)$/;"	f	class:IEvent
+UpdateLockLevel	eventManager.cpp	/^void EventManager::UpdateLockLevel()$/;"	f	class:EventManager
+UpdateLogic	battleManager.cpp	/^void BattleManager::UpdateLogic()$/;"	f	class:BattleManager
+UpdateMModels	graphicsComponent.cpp	/^void GraphicsComponent::UpdateMModels()$/;"	f	class:GraphicsComponent
+UpdateModel	font.cpp	/^void Font::UpdateModel()$/;"	f	class:Font
+UpdateModel	fontFloat.cpp	/^void FontFloat::UpdateModel()$/;"	f	class:FontFloat
+UpdateTranslation	graphicsComponent.cpp	/^void GraphicsComponent::UpdateTranslation()$/;"	f	class:GraphicsComponent
+UpdateWorld	effectManager.cpp	/^void EffectManager::UpdateWorld()$/;"	f	class:EffectManager
+UseSkill	battleManager.cpp	/^void BattleManager::UseSkill()$/;"	f	class:BattleManager
+Utils	utils.h	/^class Utils$/;"	c
+V0	physics.h	/^	Vector3f V0, V1, V2;$/;"	m	struct:Triangle
+V1	physics.h	/^	Vector3f V0, V1, V2;$/;"	m	struct:Triangle
+V2	physics.h	/^	Vector3f V0, V1, V2;$/;"	m	struct:Triangle
+VECTOR_H__	vector3f.h	2;"	d
+VERTEX_H__	vertex.h	2;"	d
+Vector2f	vector3f.cpp	/^Vector2f::Vector2f(float x, float y) : x(x), y(y) {}$/;"	f	class:Vector2f
+Vector2f	vector3f.h	/^class Vector2f$/;"	c
+Vector3f	vector3f.cpp	/^Vector3f::Vector3f() : x(0), y(0), z(0) {}$/;"	f	class:Vector3f
+Vector3f	vector3f.cpp	/^Vector3f::Vector3f(float _x, float _y, float _z) : x(_x), y(_y), z(_z) {}$/;"	f	class:Vector3f
+Vector3f	vector3f.cpp	/^Vector3f::Vector3f(float f) : x(f), y(f), z(f) {}$/;"	f	class:Vector3f
+Vector3f	vector3f.h	/^class Vector3f$/;"	c
+VectorProjection	vector3f.cpp	/^float Vector3f::VectorProjection(Vector3f normal)$/;"	f	class:Vector3f
+Velocity	physicsComponent.h	/^	Vector3f Velocity() { return m_velocity; };$/;"	f	class:PhysicsComponent
+Vertex	vertex.cpp	/^Vertex::Vertex() : vertex(Vector3f(0, 0, 0)), tex(Vector2f(0, 0)), color(Vector3f(1, 1, 1)), alpha(1) {}$/;"	f	class:Vertex
+Vertex	vertex.cpp	/^Vertex::Vertex(Vector3f vec, Vector2f texx) : vertex(vec), tex(texx), color(Vector3f(1, 1, 1)), alpha(1)$/;"	f	class:Vertex
+Vertex	vertex.cpp	/^Vertex::Vertex(Vertex* v) : vertex(Vector3f(0, 0, 0)), tex(Vector2f(0, 0)), color(Vector3f(1, 1, 1)), alpha(1)$/;"	f	class:Vertex
+Vertex	vertex.h	/^class Vertex$/;"	c
+WINDOW_HEIGHT	define_gl.h	10;"	d
+WINDOW_HEIGHT	define_gl.h	13;"	d
+WINDOW_WIDTH	define_gl.h	12;"	d
+WINDOW_WIDTH	define_gl.h	9;"	d
+WavBuffer	soundManager.h	/^struct WavBuffer$/;"	s
+Width	mathutils.h	/^	float Width = 0;$/;"	m	class:PersProjInfo
+X	physics_2d.h	/^enum Axis { X, Y, Z };$/;"	e	enum:Axis
+XCollide	physicsComponent.cpp	/^void PhysicsComponent::XCollide()$/;"	f	class:PhysicsComponent
+Y	physics_2d.h	/^enum Axis { X, Y, Z };$/;"	e	enum:Axis
+YCollide	physicsComponent.cpp	/^void PhysicsComponent::YCollide()$/;"	f	class:PhysicsComponent
+Z	physics_2d.h	/^enum Axis { X, Y, Z };$/;"	e	enum:Axis
+_	gameData.cpp	/^std::string _(std::string key)$/;"	f
+_USE_MATH_DEFINES	physics.h	6;"	d
+_actorInfo	battleHUD.h	/^	std::vector<ActorInfoBundle> _actorInfo;$/;"	m	class:BattleHUD
+_actorQueue	battleManager.h	/^	std::deque<Actor_ptr> _actorQueue;$/;"	m	class:BattleManager
+_actors	battleHUD.h	/^	std::vector<Actor_ptr> _actors;$/;"	m	class:BattleHUD
+_actors	battleManager.h	/^	std::vector<Actor_ptr> _actors;$/;"	m	class:BattleManager
+_actors	scene_battle.h	/^	std::vector<Actor_ptr> _actors;$/;"	m	class:SceneBattle
+_actors	skill.h	/^	std::deque<Actor_ptr>* _actors;$/;"	m	class:Skill
+_anim	animBasic.h	/^	Anim_Enum _anim;$/;"	m	class:AnimBasic
+_animProg	skill.h	/^	int _animProg;$/;"	m	class:Skill
+_animation	animation.h	/^	int _animation;$/;"	m	class:Animation
+_animations	battleManager.h	/^	std::deque<Anim_ptr> _animations;$/;"	m	class:BattleManager
+_anims	skill.h	/^	std::deque<Anim_ptr>* _anims;$/;"	m	class:Skill
+_background	battleHUD.h	/^	GraphComp_ptr _background;$/;"	m	struct:ActorInfoBundle
+_basePos	skillMelee.h	/^	Vector3f _basePos;$/;"	m	class:SkillMelee
+_chooseSkill	battleManager.h	/^	std::vector<Skill_ptr>* _chooseSkill;$/;"	m	class:BattleManager
+_cooldown	skill.h	/^	int _cooldown;$/;"	m	class:Skill
+_currentCooldown	skill.h	/^	int _currentCooldown;$/;"	m	class:Skill
+_defaultTarget	skill.h	/^	DefaultTarget _defaultTarget;$/;"	m	class:Skill
+_destination	animJumpTo.h	/^	Vector3f _destination;$/;"	m	class:AnimJumpTo
+_destination	animMoveTo.h	/^	Vector3f _destination;$/;"	m	class:AnimMoveTo
+_done	battleAnimation.h	/^	bool _done;$/;"	m	class:BattleAnimation
+_done	battleManager.h	/^	bool _done;$/;"	m	class:BattleManager
+_done	skill.h	/^	bool _done;$/;"	m	class:Skill
+_duration	battleAnimation.h	/^	double _duration;$/;"	m	class:BattleAnimation
+_efctGLVersion	effect.cpp	/^Vector2f Effect::_efctGLVersion = Vector2f(2, 0);$/;"	m	class:Effect	file:
+_efctGLVersion	effect.h	/^	static Vector2f _efctGLVersion;$/;"	m	class:Effect
+_enabled	font.h	/^	bool _enabled;$/;"	m	class:Font
+_fboGLVersion	FBO.cpp	/^Vector2f FBO::_fboGLVersion = Vector2f(2, 0);$/;"	m	class:FBO	file:
+_fboGLVersion	FBO.h	/^	static Vector2f _fboGLVersion;$/;"	m	class:FBO
+_fonts	battleManager.h	/^	std::vector<unsigned int> _fonts;$/;"	m	class:BattleManager
+_foreground	battleHUD.h	/^	GraphComp_ptr _foreground;$/;"	m	struct:ActorInfoBundle
+_health	battleHUD.h	/^	unsigned int _health;$/;"	m	struct:ActorInfoBundle
+_height	texture.h	/^	int _width, _height;$/;"	m	class:Texture
+_hud	battleManager.h	/^	BattleHUD _hud;$/;"	m	class:BattleManager
+_initialPos	animJumpTo.h	/^	Vector3f _initialPos;$/;"	m	class:AnimJumpTo
+_initialPos	animMoveTo.h	/^	Vector3f _initialPos;$/;"	m	class:AnimMoveTo
+_input	skill.h	/^	std::set<int> _input;$/;"	m	class:Skill
+_instancedDraw	graphicsComponent.h	/^	bool _instancedDraw;$/;"	m	class:GraphicsComponent
+_instancedDraw	mesh.h	/^	bool _instancedDraw;$/;"	m	class:Mesh
+_justTouched	entity.h	/^	bool _justTouched;$/;"	m	class:Entity
+_length	animBasic.h	/^	int _length;$/;"	m	class:AnimBasic
+_letterSpacing	font.h	/^	float _letterSpacing;$/;"	m	class:Font
+_minTargets	skill.h	/^	int _minTargets;$/;"	m	class:Skill
+_mngrGLVersion	glfwBackend.cpp	/^Vector2f GLFWManager::_mngrGLVersion = Vector2f(2, 0);$/;"	m	class:GLFWManager	file:
+_mngrGLVersion	glfwBackend.h	/^	static Vector2f _mngrGLVersion;$/;"	m	class:GLFWManager
+_name	battleHUD.h	/^	unsigned int _name;$/;"	m	struct:ActorInfoBundle
+_name	skill.h	/^	std::string _name;$/;"	m	class:Skill
+_numFrames	scene.cpp	/^int Scene::_numFrames = 0;$/;"	m	class:Scene	file:
+_numFrames	scene.h	/^	static int _numFrames;$/;"	m	class:Scene
+_owner	battleManager.h	/^	Actor_ptr _owner;$/;"	m	class:BattleManager
+_owner	skill.h	/^	Actor_ptr _owner;$/;"	m	class:Skill
+_pause	scene.cpp	/^bool Scene::_pause = false;$/;"	m	class:Scene	file:
+_pause	scene.h	/^	static bool _pause;$/;"	m	class:Scene
+_prevScene	scene_battle.h	/^	std::shared_ptr<Scene> _prevScene;$/;"	m	class:SceneBattle
+_progress	battleAnimation.h	/^	double _progress;$/;"	m	class:BattleAnimation
+_selectedIndex	battleManager.h	/^	int _selectedIndex;$/;"	m	class:BattleManager
+_selectedSkill	battleManager.h	/^	Skill_ptr _selectedSkill;$/;"	m	class:BattleManager
+_showingSkills	battleManager.h	/^	bool _showingSkills;$/;"	m	class:BattleManager
+_specialAnimation	animation.h	/^	bool _specialAnimation;$/;"	m	class:Animation
+_speed	animJumpTo.h	/^	Vector3f _speed;$/;"	m	class:AnimJumpTo
+_speed	animMoveTo.h	/^	Vector3f _speed;$/;"	m	class:AnimMoveTo
+_sprite	animation.h	/^	int _sprite;$/;"	m	class:Animation
+_state	battleManager.h	/^	BattleState _state;$/;"	m	class:BattleManager
+_target	animBasic.h	/^	Actor_ptr _target;$/;"	m	class:AnimBasic
+_target	animJumpTo.h	/^	Actor_ptr _target;$/;"	m	class:AnimJumpTo
+_target	animMoveTo.h	/^	Actor_ptr _target;$/;"	m	class:AnimMoveTo
+_targetMode	skill.h	/^	TargetMode _targetMode;$/;"	m	class:Skill
+_targets	battleManager.h	/^	std::vector<Actor_ptr> _targets;$/;"	m	class:BattleManager
+_targets	skill.h	/^	std::vector<Actor_ptr>* _targets;$/;"	m	class:Skill
+_text	font.h	/^	std::string _text;$/;"	m	class:Font
+_type	battleHUD.h	/^	HUDComponent _type;$/;"	m	struct:ActorInfoBundle
+_type	scene.h	/^	SceneType _type;$/;"	m	class:Scene
+_width	texture.h	/^	int _width, _height;$/;"	m	class:Texture
+_winner	battleManager.h	/^	int _winner;$/;"	m	class:BattleManager
+alpha	vertex.h	/^		float alpha;$/;"	m	class:Vertex
+bindFrameBuffer	FBO.cpp	/^void FBO::bindFrameBuffer() {$/;"	f	class:FBO
+bindToRead	FBO.cpp	/^void FBO::bindToRead() {$/;"	f	class:FBO
+buffer	soundManager.h	/^	ALuint buffer = 0;$/;"	m	struct:WavBuffer
+changed	mathutils.h	/^	bool changed = true;$/;"	m	class:OrthoProjInfo
+cleanUp	FBO.cpp	/^void FBO::cleanUp() {$/;"	f	class:FBO
+color	vertex.h	/^		Vector3f color;$/;"	m	class:Vertex
+colorBuffers	blur_framebuffer.h	/^	GLuint colorBuffers[2];$/;"	m	class:BlurFramebuffer
+colourBuffer	FBO.h	/^	GLuint colourBuffer;$/;"	m	class:FBO
+colourTexture	FBO.h	/^	GLuint colourTexture;$/;"	m	class:FBO
+completed	particleGenerator.h	/^	bool completed;$/;"	m	class:ParticleGenerator
+components	entity.h	/^	std::vector<std::shared_ptr<IComponent>> components;$/;"	m	class:Entity
+counter	battleManager.h	/^	int counter;$/;"	m	class:BattleManager
+counter	particleGenerator.h	/^	float counter;$/;"	m	struct:Particle
+createDepthBufferAttachment	FBO.cpp	/^void FBO::createDepthBufferAttachment() {$/;"	f	class:FBO
+createDepthTextureAttachment	FBO.cpp	/^void FBO::createDepthTextureAttachment() {$/;"	f	class:FBO
+createFrameBuffer	FBO.cpp	/^void FBO::createFrameBuffer() {$/;"	f	class:FBO
+createTextureAttachment	FBO.cpp	/^void FBO::createTextureAttachment() {$/;"	f	class:FBO
+data	animation.h	/^	std::map<Anim_Enum, AnimInfo> data;$/;"	m	struct:SpriteSheetData
+data	soundManager.h	/^	ALvoid *data;$/;"	m	struct:WavBuffer
+depthBuffer	FBO.h	/^	GLuint depthBuffer;$/;"	m	class:FBO
+depthTexture	FBO.h	/^	GLuint depthTexture;$/;"	m	class:FBO
+dir_Down	graphicsComponent.h	/^enum Direction { dir_Left, dir_Down, dir_Right, dir_Up };$/;"	e	enum:Direction
+dir_Left	graphicsComponent.h	/^enum Direction { dir_Left, dir_Down, dir_Right, dir_Up };$/;"	e	enum:Direction
+dir_Right	graphicsComponent.h	/^enum Direction { dir_Left, dir_Down, dir_Right, dir_Up };$/;"	e	enum:Direction
+dir_Up	graphicsComponent.h	/^enum Direction { dir_Left, dir_Down, dir_Right, dir_Up };$/;"	e	enum:Direction
+done	particleGenerator.h	/^	bool done;$/;"	m	struct:Particle
+dot	physics.h	16;"	d
+format	soundManager.h	/^	ALenum format;$/;"	m	struct:WavBuffer
+frameBuffer	FBO.h	/^	GLuint frameBuffer;$/;"	m	class:FBO
+freq	soundManager.h	/^	ALsizei freq;$/;"	m	struct:WavBuffer
+gain	soundManager.h	/^	ALfloat gain = 1;$/;"	m	struct:SourceInfo
+get	eventFactory.h	/^	T get()$/;"	f	class:EventArgType
+getColourTexture	FBO.cpp	/^int FBO::getColourTexture() {$/;"	f	class:FBO
+getDepthTexture	FBO.cpp	/^int FBO::getDepthTexture() {$/;"	f	class:FBO
+getFloat	eventFactory.cpp	/^float EventArgType::getFloat()$/;"	f	class:EventArgType
+getIndices	model.cpp	/^std::vector<GLuint> Model::getIndices()$/;"	f	class:Model
+getVertices	model.cpp	/^std::vector<float> Model::getVertices()$/;"	f	class:Model
+hdrFBO	blur_framebuffer.h	/^	GLuint hdrFBO;$/;"	m	class:BlurFramebuffer
+id	scene.h	/^	unsigned int id;$/;"	m	struct:SceneGenData
+inds	physics.h	/^	std::vector<GLuint> inds;$/;"	m	struct:CollisionObject
+init	game.cpp	/^bool Game::init(Vector2f version)$/;"	f	class:Game
+init	model.cpp	/^void Model::init(std::string filename)$/;"	f	class:Model
+initialiseFrameBuffer	FBO.cpp	/^void FBO::initialiseFrameBuffer(int type) {$/;"	f	class:FBO
+inner	eventFactory.h	/^	EventArgInner inner;$/;"	m	class:EventArgType
+intersect3D_RayTriangle	physics.cpp	/^	int intersect3D_RayTriangle(Ray R, Triangle T, Vector3f* I)$/;"	f	namespace:Physics
+isBrb	scene.h	/^	bool isBrb;$/;"	m	class:Scene
+key_callback	glfwBackend.cpp	/^static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)$/;"	f	file:
+loadModel	model.cpp	/^void Model::loadModel(std::string model_name)$/;"	f	class:Model
+loaded	texture.h	/^	bool loaded = false;$/;"	m	class:Texture
+loop	soundManager.h	/^	ALboolean loop = AL_TRUE;$/;"	m	struct:SourceInfo
+loop	soundManager.h	/^	ALboolean loop = AL_TRUE;$/;"	m	struct:WavBuffer
+m	mat4f.h	/^        float m[4][4];$/;"	m	class:Mat4f
+m_BBcenter	physicsComponent.h	/^	Vector3f m_BBcenter = Vector3f(-1, -1, -1);$/;"	m	class:PhysicsComponent
+m_FPS	elapsedTime.h	/^	unsigned int m_FPS;$/;"	m	class:ElapsedTime
+m_GL_loaded	graphicsComponent.h	/^	bool m_GL_loaded = false;$/;"	m	class:GraphicsComponent
+m_IBO	graphicsComponent.h	/^	GLuint m_IBO;$/;"	m	class:GraphicsComponent
+m_IBO	mesh.h	/^	GLuint m_IBO;$/;"	m	class:Mesh
+m_MBO_instances	graphicsComponent.h	/^	int m_MBO_instances = 1;$/;"	m	class:GraphicsComponent
+m_MBO_instances	map_handler.h	/^	int m_MBO_instances;$/;"	m	class:MapHandler
+m_MBO_instances	particleGenerator.h	/^	int m_MBO_instances;$/;"	m	class:ParticleGenerator
+m_MMBO	graphicsComponent.h	/^	GLuint m_MMBO = 0;$/;"	m	class:GraphicsComponent
+m_OrderedTiles	map_handler.h	/^	std::vector<std::shared_ptr<MapTile>> m_OrderedTiles;$/;"	m	class:MapHandler
+m_Proj	transform.h	/^        Mat4f m_Proj;$/;"	m	class:Transformation
+m_VAO	graphicsComponent.h	/^	GLuint m_VAO;$/;"	m	class:GraphicsComponent
+m_VBO	graphicsComponent.h	/^	GLuint m_VBO;$/;"	m	class:GraphicsComponent
+m_VBO	mesh.h	/^	GLuint m_VBO;$/;"	m	class:Mesh
+m_WPTrans	transform.h	/^        Mat4f m_WPTrans;$/;"	m	class:Transformation
+m_WPTransNoTranslate	transform.h	/^        Mat4f m_WPTransNoTranslate;$/;"	m	class:Transformation
+m_WTrans	transform.h	/^        Mat4f m_WTrans;$/;"	m	class:Transformation
+m_World	scene.h	/^	std::shared_ptr<Transformation> m_World = NULL;$/;"	m	class:Scene
+m_activation	eventQueue.h	/^	ActivationType m_activation;$/;"	m	class:EventQueue
+m_animating	battleManager.h	/^	bool m_animating;$/;"	m	class:BattleManager
+m_backupTrans	scene.h	/^	Vector3f m_backupTrans;$/;"	m	class:Scene
+m_basePosition	font.h	/^	Vector3f m_basePosition;$/;"	m	class:Font
+m_battle	scene_battle.h	/^	BattleManager m_battle;$/;"	m	class:SceneBattle
+m_bgmMaxVolume	soundManager.h	/^	float m_bgmMaxVolume;$/;"	m	class:SoundManager
+m_bgmSource	soundManager.h	/^	ALuint m_bgmSource;$/;"	m	class:SoundManager
+m_bgmState	soundManager.h	/^	BGM_State m_bgmState;$/;"	m	class:SoundManager
+m_bgmVolume	soundManager.h	/^	float m_bgmVolume;$/;"	m	class:SoundManager
+m_bloom	bloom.h	/^	FBO m_bloom;$/;"	m	class:Bloom
+m_bloomEffect	scene_battle.h	/^	bool m_bloomEffect;$/;"	m	class:SceneBattle
+m_bloomEffect	scene_world.h	/^	bool m_bloomEffect;$/;"	m	class:SceneWorld
+m_boundingBox	physicsComponent.h	/^	std::array<float, 6> m_boundingBox = std::array<float, 6>();$/;"	m	class:PhysicsComponent
+m_box	dialogueBox.h	/^	std::shared_ptr<FontGraphicsComponent> m_box;$/;"	m	class:DialogueBox
+m_buffers	soundManager.h	/^	std::map<std::string, WavBuffer> m_buffers;$/;"	m	class:SoundManager
+m_celist	scene.h	/^	std::map<unsigned int, std::shared_ptr<Entity>> m_celist;$/;"	m	class:Scene
+m_centered	font.h	/^	bool m_centered;$/;"	m	class:Font
+m_choices	dialogueBox.h	/^	std::vector<Font_ptr> m_choices;$/;"	m	class:DialogueBox
+m_choices	dialogueGraph.h	/^	std::vector<DialogueChoice> m_choices;$/;"	m	class:DialogueGraph
+m_collisionManager	scene_world.h	/^	CollisionManager m_collisionManager;$/;"	m	class:SceneWorld
+m_completed	iEvent.h	/^	bool m_completed;$/;"	m	class:IEvent
+m_context	soundManager.h	/^	ALCcontext* m_context;$/;"	m	class:SoundManager
+m_conversationLock	physicsComponent.h	/^	bool m_conversationLock;$/;"	m	class:PhysicsComponent
+m_count	eventParticle.h	/^	unsigned int m_count;$/;"	m	class:EventParticle
+m_count	eventWeather.h	/^	unsigned int m_count;$/;"	m	class:EventWeather
+m_currentBGM	soundManager.h	/^	std::string m_currentBGM;$/;"	m	class:SoundManager
+m_currentDialogue	dialogueGraph.h	/^	int m_currentDialogue;$/;"	m	class:DialogueGraph
+m_currentEffect	effectManager.h	/^	std::pair<Effect*, Effects> m_currentEffect;$/;"	m	class:EffectManager
+m_currentMap	scene.h	/^	unsigned int m_currentMap;$/;"	m	class:Scene
+m_currentScene	scene_manager.h	/^	std::shared_ptr<Scene> m_currentScene;$/;"	m	class:SceneManager
+m_currentShaderProgram	effect.cpp	/^GLuint Effect::m_currentShaderProgram = 0;$/;"	m	class:Effect	file:
+m_currentShaderProgram	effect.h	/^	static GLuint m_currentShaderProgram;$/;"	m	class:Effect
+m_currentTextureIndex	textureatlas.h	/^	TextureIndex m_currentTextureIndex;$/;"	m	class:TextureAtlas
+m_darkBloomProgram	bloomEffect.h	/^	GLuint m_darkBloomProgram;$/;"	m	class:BloomEffect
+m_delay	animation.h	/^	int m_delay;$/;"	m	class:Animation
+m_depth	shadowMapFBO.h	/^	GLuint m_depth;$/;"	m	class:ShadowMapFBO
+m_depthBufferType	FBO.h	/^	int m_depthBufferType;$/;"	m	class:FBO
+m_device	soundManager.h	/^	ALCdevice* m_device;$/;"	m	class:SoundManager
+m_dialogueGraph	dialogueBox.h	/^	std::shared_ptr<DialogueGraph> m_dialogueGraph;$/;"	m	class:DialogueBox
+m_dialogues	dialogueGraph.h	/^	std::map<int, Dialogue> m_dialogues;$/;"	m	class:DialogueGraph
+m_direction	eventMove.h	/^	unsigned int m_direction;$/;"	m	class:EventMove
+m_direction	graphicsComponent.h	/^	Direction m_direction;$/;"	m	class:GraphicsComponent
+m_distance	eventMove.h	/^	float m_distance;$/;"	m	class:EventMove
+m_divisor	bloom.h	/^	const float m_divisor = 4.0f;$/;"	m	class:Bloom
+m_document	gameData.cpp	/^rapidjson::Document GameData::m_document;$/;"	m	class:GameData	file:
+m_document	gameData.h	/^	static rapidjson::Document m_document;$/;"	m	class:GameData
+m_effects	effectManager.h	/^	std::map<Effects, Effect*> m_effects;$/;"	m	class:EffectManager
+m_elapsedTime	elapsedTime.h	/^	double m_elapsedTime;$/;"	m	class:ElapsedTime
+m_elapsedTime	font.h	/^	double m_elapsedTime;$/;"	m	class:Font
+m_enemies	scene_battle.h	/^	std::vector<Actor_ptr> m_enemies;$/;"	m	class:SceneBattle
+m_entities	collisionManager.h	/^	std::map<unsigned int, std::shared_ptr<Entity>>* m_entities;$/;"	m	class:CollisionManager
+m_entities	eventManager.h	/^	std::map<unsigned int, std::shared_ptr<Entity>>* m_entities;$/;"	m	class:EventManager
+m_entity_id	eventFactory.cpp	/^int EventFactory::m_entity_id = 0;$/;"	m	class:EventFactory	file:
+m_entity_id	eventFactory.h	/^	static int m_entity_id;$/;"	m	class:EventFactory
+m_ethereal	physicsComponent.h	/^	bool m_ethereal;$/;"	m	class:PhysicsComponent
+m_eventManager	scene_battle.h	/^	EventManager m_eventManager;$/;"	m	class:SceneBattle
+m_eventManager	scene_world.h	/^	EventManager m_eventManager;$/;"	m	class:SceneWorld
+m_eventType	iEvent.h	/^	EventTypes m_eventType;$/;"	m	class:IEvent
+m_events	entity.h	/^	std::vector<std::shared_ptr<EventQueue>> m_events;$/;"	m	class:Entity
+m_exit	game.h	/^	bool m_exit;$/;"	m	class:Game
+m_external_loaded	graphicsComponent.h	/^	bool m_external_loaded = false;$/;"	m	class:GraphicsComponent
+m_fade	scene.h	/^	Fade m_fade;$/;"	m	class:Scene
+m_fadeIn	fade.h	/^	bool m_fadeIn;$/;"	m	class:Fade
+m_fadeProgress	fade.h	/^	float m_fadeProgress;$/;"	m	class:Fade
+m_fbo	bloom.h	/^	FBO m_fbo;$/;"	m	class:Bloom
+m_fbo	shadowMapFBO.h	/^	GLuint m_fbo;$/;"	m	class:ShadowMapFBO
+m_file	gameData.cpp	/^std::string GameData::m_file;$/;"	m	class:GameData	file:
+m_file	gameData.h	/^	static std::string m_file;$/;"	m	class:GameData
+m_filename	texture.h	/^	const char* m_filename;$/;"	m	class:Texture
+m_filenameS	texture.h	/^	std::string m_filenameS;$/;"	m	class:Texture
+m_firstLoad	playerGraphicsComponent.h	/^	bool m_firstLoad;$/;"	m	class:PlayerGraphicsComponent
+m_firstSetup	eventBattle.h	/^	bool m_firstSetup;$/;"	m	class:EventBattle
+m_firstSetup	eventMapChange.h	/^	bool m_firstSetup;$/;"	m	class:EventMapChange
+m_firstSetup	eventMove.h	/^	bool m_firstSetup;$/;"	m	class:EventMove
+m_firstSetup	eventParticle.h	/^	bool m_firstSetup;$/;"	m	class:EventParticle
+m_firstSetup	eventWeather.h	/^	bool m_firstSetup;$/;"	m	class:EventWeather
+m_firstTime	dialogueBox.h	/^	bool m_firstTime;$/;"	m	class:DialogueBox
+m_firstTime	eventBGM.h	/^	bool m_firstTime;$/;"	m	class:EventBGM
+m_firstTime	eventCaller.h	/^	bool m_firstTime;$/;"	m	class:EventCaller
+m_firstTime	eventSound.h	/^	bool m_firstTime;$/;"	m	class:EventSound
+m_firstUpdates	effectManager.h	/^	std::map<Effects, bool> m_firstUpdates;$/;"	m	class:EffectManager
+m_flag	eventAddToFlag.h	/^	std::string m_flag;$/;"	m	class:EventAddToFlag
+m_flag	eventSetFlag.h	/^	std::string m_flag;$/;"	m	class:EventSetFlag
+m_flag	eventToggleFlag.h	/^	std::string m_flag;$/;"	m	class:EventToggleFlag
+m_flagValue	eventSetFlag.h	/^	int m_flagValue;$/;"	m	class:EventSetFlag
+m_followSpeed	transform.h	/^		float m_followSpeed = 1;$/;"	m	class:Transformation
+m_fontFPS	scene_battle.h	/^	unsigned int m_fontFPS;$/;"	m	class:SceneBattle
+m_fontFPS	scene_world.h	/^	unsigned int m_fontFPS;$/;"	m	class:SceneWorld
+m_fontTitle	scene_battle.h	/^	unsigned int m_fontTitle;$/;"	m	class:SceneBattle
+m_fontTitle	scene_world.h	/^	unsigned int m_fontTitle;$/;"	m	class:SceneWorld
+m_fonts	fontManager.h	/^	std::map<unsigned int, Font_ptr> m_fonts;$/;"	m	class:FontManager
+m_fullSize	entity.h	/^	bool m_fullSize;$/;"	m	class:Entity
+m_gaussH	bloom.h	/^	FBO m_gaussH;$/;"	m	class:Bloom
+m_gaussV	bloom.h	/^	FBO m_gaussV;$/;"	m	class:Bloom
+m_graph	playerInputComponent.h	/^	GraphComp_ptr m_graph;$/;"	m	class:PlayerInputComponent
+m_graphics	font.h	/^	std::shared_ptr<FontGraphicsComponent> m_graphics = NULL;$/;"	m	class:Font
+m_graphics	map_handler.h	/^	GraphComp_ptr m_graphics = NULL;$/;"	m	class:MapHandler
+m_graphics	particleGenerator.h	/^	GraphComp_ptr m_graphics = NULL;$/;"	m	class:ParticleGenerator
+m_graphicsComponent	entity.h	/^	GraphComp_ptr m_graphicsComponent;$/;"	m	class:Entity
+m_hasEvents	entity.h	/^	bool m_hasEvents;$/;"	m	class:Entity
+m_height	FBO.h	/^	int m_height;$/;"	m	class:FBO
+m_height	animation.h	/^	int m_height;$/;"	m	class:Animation
+m_height	bloom.h	/^	int m_height;$/;"	m	class:Bloom
+m_horizontal	animation.h	/^	bool m_horizontal;$/;"	m	class:Animation
+m_id	entity.h	/^	unsigned int m_id;$/;"	m	class:Entity
+m_id	eventQueue.h	/^	int m_id;$/;"	m	class:EventQueue
+m_id	map_handler.h	/^	unsigned int m_id;$/;"	m	class:MapHandler
+m_id	particleGenerator.h	/^	unsigned int m_id;$/;"	m	class:ParticleGenerator
+m_indexProgress	mesh.h	/^	int m_indexProgress;$/;"	m	class:Mesh
+m_indices	graphicsComponent.h	/^	std::vector<GLuint> m_indices;$/;"	m	class:GraphicsComponent
+m_indices	mesh.h	/^	std::vector<GLuint> m_indices;$/;"	m	class:Mesh
+m_indices	physicsComponent.h	/^	std::vector<GLuint> m_indices;$/;"	m	class:PhysicsComponent
+m_inputComponent	entity.h	/^	std::shared_ptr<InputComponent> m_inputComponent;$/;"	m	class:Entity
+m_inputHold	input_manager.h	/^	std::map<unsigned int, bool> m_inputHold;$/;"	m	class:InputManager
+m_inputQueue	input_manager.h	/^	std::list<std::pair<unsigned int, KeyStatus>> m_inputQueue;$/;"	m	class:InputManager
+m_isValid	texture.h	/^	bool m_isValid;$/;"	m	class:Texture
+m_isValid	textureatlas.h	/^	bool    m_isValid;$/;"	m	class:TextureAtlas
+m_jsonHandler	map_handler.h	/^	std::shared_ptr<JsonHandler> m_jsonHandler;$/;"	m	class:MapHandler
+m_jsonHandler	scene_battle.h	/^	std::shared_ptr<JsonHandler> m_jsonHandler = NULL;$/;"	m	class:SceneBattle
+m_jsonHandler	scene_world.h	/^	std::shared_ptr<JsonHandler> m_jsonHandler = NULL;$/;"	m	class:SceneWorld
+m_keyMap	input_manager.h	/^	std::map<std::pair<unsigned int, KeyStatus>, bool> m_keyMap;$/;"	m	class:InputManager
+m_lastIndices	model.h	/^        std::vector<GLuint> m_lastIndices;$/;"	m	class:Model
+m_lastInteraction	graphicsComponent.h	/^	Direction m_lastInteraction;$/;"	m	class:GraphicsComponent
+m_lastMModelSize	graphicsComponent.h	/^	GLsizei m_lastMModelSize;$/;"	m	class:GraphicsComponent
+m_lastName	model.h	/^        std::string m_lastName;$/;"	m	class:Model
+m_lastTex	model.h	/^        std::vector<float> m_lastTex;$/;"	m	class:Model
+m_lastVertices	model.h	/^        std::vector<float> m_lastVertices;$/;"	m	class:Model
+m_letterPositions	font.h	/^	std::vector<Vector3f> m_letterPositions;$/;"	m	class:Font
+m_letters	font.h	/^	std::map<uint32_t, unsigned int> m_letters;$/;"	m	class:Font
+m_lettersPerColumn	font.h	/^	const unsigned int m_lettersPerColumn;$/;"	m	class:Font
+m_lettersPerRow	font.h	/^	const unsigned int m_lettersPerRow;$/;"	m	class:Font
+m_lifetime	font.h	/^	double m_lifetime;$/;"	m	class:Font
+m_lightSpeed	font.h	/^	bool m_lightSpeed;$/;"	m	class:Font
+m_list	resource_loader.h	/^	std::vector<ResourceUser*>* m_list;$/;"	m	class:ResourceLoader
+m_loader	resource_manager.h	/^	ResourceLoader m_loader;$/;"	m	class:ResourceManager
+m_localizationPath	gameData.cpp	/^std::string GameData::m_localizationPath = "res\/data\/strings\/";$/;"	m	class:GameData	file:
+m_localizationPath	gameData.h	/^	static std::string m_localizationPath;$/;"	m	class:GameData
+m_lockLevel	iEvent.h	/^	unsigned int m_lockLevel;$/;"	m	class:IEvent
+m_lockLevel	input_manager.h	/^	unsigned int m_lockLevel;$/;"	m	class:InputManager
+m_locks	eventManager.cpp	/^std::vector<std::shared_ptr<IEvent>> EventManager::m_locks = std::vector<std::shared_ptr<IEvent>>();$/;"	m	class:EventManager	file:
+m_locks	eventManager.h	/^	static std::vector<std::shared_ptr<IEvent>> m_locks;$/;"	m	class:EventManager
+m_map	eventMapChange.h	/^	unsigned int m_map;$/;"	m	class:EventMapChange
+m_mapHandler	scene.h	/^	std::shared_ptr<MapHandler> m_mapHandler = NULL;$/;"	m	class:Scene
+m_mapId	jsonHandler.h	/^	int m_mapId;$/;"	m	class:JsonHandler
+m_mapSize	eventParticle.h	/^	Vector3f m_mapSize;$/;"	m	class:EventParticle
+m_mapSize	eventWeather.h	/^	Vector3f m_mapSize;$/;"	m	class:EventWeather
+m_mapSize	map_handler.h	/^	Vector3f m_mapSize;$/;"	m	class:MapHandler
+m_masterVolume	soundManager.h	/^	float m_masterVolume;$/;"	m	class:SoundManager
+m_maxHeight	dialogueBox.h	/^	float m_maxHeight;$/;"	m	class:DialogueBox
+m_maxWidth	dialogueBox.h	/^	float m_maxWidth;$/;"	m	class:DialogueBox
+m_mesh	font.h	/^	Mesh m_mesh;$/;"	m	class:Font
+m_mesh	map_handler.h	/^	Mesh m_mesh;$/;"	m	class:MapHandler
+m_mesh	particleGenerator.h	/^	Mesh m_mesh;$/;"	m	class:ParticleGenerator
+m_message	font.h	/^	std::vector<uint32_t> m_message;$/;"	m	class:Font
+m_messageProgress	font.h	/^	std::vector<uint32_t> m_messageProgress;$/;"	m	class:Font
+m_metaData	animation.cpp	/^std::map<std::string, SpriteSheetData> Animation::m_metaData = std::map<std::string, SpriteSheetData>();$/;"	m	class:Animation	file:
+m_metaData	animation.h	/^	static std::map<std::string, SpriteSheetData> m_metaData;$/;"	m	class:Animation
+m_mlMatLoc	graphicsComponent.h	/^	GLuint m_mlMatLoc;$/;"	m	class:GraphicsComponent
+m_mmodels	graphicsComponent.h	/^	std::vector<Mat4f> m_mmodels;$/;"	m	class:GraphicsComponent
+m_mode	iEvent.h	/^	EventExecutionMode m_mode;$/;"	m	class:IEvent
+m_modelList	model.h	/^        std::string m_modelList;$/;"	m	class:Model
+m_modelMat	graphicsComponent.h	/^	Transformation m_modelMat;$/;"	m	class:GraphicsComponent
+m_modelName	graphicsComponent.h	/^	std::string m_modelName;$/;"	m	class:GraphicsComponent
+m_modelName	map_tile.h	/^	std::string m_modelName;$/;"	m	class:MapTile
+m_modelName	physicsComponent.h	/^	std::string m_modelName = "NONE"; \/\/cancer$/;"	m	class:PhysicsComponent
+m_models	physicsComponent.h	/^	std::vector<Vector3f> m_models;$/;"	m	class:PhysicsComponent
+m_moveAxis	eventMove.h	/^	int m_moveAxis;$/;"	m	class:EventMove
+m_moveBoundingBox	physicsComponent.h	/^	std::array<float, 6> m_moveBoundingBox = std::array<float, 6>();$/;"	m	class:PhysicsComponent
+m_nbTexturePerSide	textureatlas.h	/^	unsigned int m_nbTexturePerSide;$/;"	m	class:TextureAtlas
+m_newSprite	eventSpriteChange.h	/^	std::string m_newSprite;$/;"	m	class:EventSpriteChange
+m_nextBGM	soundManager.h	/^	std::string m_nextBGM;$/;"	m	class:SoundManager
+m_nextScene	scene.h	/^	std::shared_ptr<Scene> m_nextScene = NULL;$/;"	m	class:Scene
+m_noTranslateMode	effectManager.h	/^	bool m_noTranslateMode;$/;"	m	class:EffectManager
+m_normalSize	graphicsComponent.h	/^	Vector3f m_normalSize = Vector3f(-1, -1, -1);$/;"	m	class:GraphicsComponent
+m_numColorBuffers	FBO.h	/^	int m_numColorBuffers;$/;"	m	class:FBO
+m_numFrames	animation.h	/^	int m_numFrames;$/;"	m	class:Animation
+m_offset	fontFloat.h	/^	Vector3f m_offset;$/;"	m	class:FontFloat
+m_originalVertices	graphicsComponent.h	/^	std::vector<Vertex> m_originalVertices;$/;"	m	class:GraphicsComponent
+m_originalVertices	physicsComponent.h	/^	std::vector<Vertex> m_originalVertices;$/;"	m	class:PhysicsComponent
+m_orthoProj	transform.h	/^		OrthoProjInfo* m_orthoProj = NULL;$/;"	m	class:Transformation
+m_outline	graphicsComponent.h	/^	bool m_outline;$/;"	m	class:GraphicsComponent
+m_owner	dialogueBox.cpp	/^DialogueBox* DialogueBox::m_owner = NULL;$/;"	m	class:DialogueBox	file:
+m_owner	dialogueBox.h	/^	static DialogueBox* m_owner;$/;"	m	class:DialogueBox
+m_particleType	eventParticle.h	/^	ParticleType m_particleType;$/;"	m	class:EventParticle
+m_particleType	eventWeather.h	/^	ParticleType m_particleType;$/;"	m	class:EventWeather
+m_particles	eventParticle.h	/^	ParticleGenerator m_particles;$/;"	m	class:EventParticle
+m_particles	eventWeather.h	/^	ParticleGenerator m_particles;$/;"	m	class:EventWeather
+m_particles	particleGenerator.h	/^	std::vector<std::shared_ptr<Particle>> m_particles;$/;"	m	class:ParticleGenerator
+m_particles	particleManager.h	/^	std::vector<Particle_ptr> m_particles;$/;"	m	class:ParticleManager
+m_party	scene_battle.h	/^	std::vector<Actor_ptr> m_party;$/;"	m	class:SceneBattle
+m_path	audioComponent.h	/^	std::string m_path;$/;"	m	class:AudioComponent
+m_path	gameData.cpp	/^std::string GameData::m_path = "res\/data\/saves\/";$/;"	m	class:GameData	file:
+m_path	gameData.h	/^	static std::string m_path;$/;"	m	class:GameData
+m_persProjInfo	transform.h	/^        PersProjInfo* m_persProjInfo = NULL;$/;"	m	class:Transformation
+m_phys	font.h	/^	PhysicsComponent m_phys;$/;"	m	class:Font
+m_phys	map_tile.h	/^	std::shared_ptr<PhysicsComponent> m_phys;$/;"	m	class:MapTile
+m_phys	playerInputComponent.h	/^	std::shared_ptr<PhysicsComponent> m_phys;$/;"	m	class:PlayerInputComponent
+m_physicsComponent	entity.h	/^	std::shared_ptr<PhysicsComponent> m_physicsComponent;$/;"	m	class:Entity
+m_player	scene_world.h	/^	std::shared_ptr<Entity> m_player = NULL;$/;"	m	class:SceneWorld
+m_pos	graphicsComponent.h	/^	Vector3f m_pos;$/;"	m	class:GraphicsComponent
+m_pos	physicsComponent.h	/^	Vector3f m_pos;$/;"	m	class:PhysicsComponent
+m_power	eventParticle.h	/^	float m_power;$/;"	m	class:EventParticle
+m_power	particleGenerator.h	/^	float m_power;$/;"	m	class:ParticleGenerator
+m_prevEffect	effectManager.h	/^	std::pair<Effect*, Effects> m_prevEffect;$/;"	m	class:EffectManager
+m_prevShaderProgram	effect.cpp	/^GLuint Effect::m_prevShaderProgram = 0;$/;"	m	class:Effect	file:
+m_prevShaderProgram	effect.h	/^	static GLuint m_prevShaderProgram;$/;"	m	class:Effect
+m_prevWorld	effect.cpp	/^float* Effect::m_prevWorld = NULL;$/;"	m	class:Effect	file:
+m_prevWorld	effect.h	/^	static float* m_prevWorld;$/;"	m	class:Effect
+m_progess	mesh.h	/^	int m_progess;$/;"	m	class:Mesh
+m_progress	animation.cpp	/^int Animation::m_progress = 0;$/;"	m	class:Animation	file:
+m_progress	animation.h	/^	static int m_progress;$/;"	m	class:Animation
+m_queue	eventCaller.h	/^	std::shared_ptr<EventQueue> m_queue;$/;"	m	class:EventCaller
+m_queue	eventQueue.h	/^	std::deque<std::shared_ptr<IEvent>> m_queue;$/;"	m	class:EventQueue
+m_queues	eventManager.h	/^	std::vector<std::shared_ptr<EventQueue>> m_queues;$/;"	m	class:EventManager
+m_refreshRate	glfwBackend.h	/^	int m_screenWidth, m_screenHeight, m_refreshRate;$/;"	m	class:GLFWManager
+m_repeat	eventQueue.h	/^	bool m_repeat;$/;"	m	class:EventQueue
+m_rot	graphicsComponent.h	/^	Vector3f m_rot;$/;"	m	class:GraphicsComponent
+m_rot	physicsComponent.h	/^	Vector3f m_rot = Vector3f(0, 0, 0);$/;"	m	class:PhysicsComponent
+m_rotate	transform.h	/^        Vector3f m_rotate = Vector3f(0, 0, 0);$/;"	m	class:Transformation
+m_scale	transform.h	/^        Vector3f m_scale = Vector3f(1, 1, 1);$/;"	m	class:Transformation
+m_screenHeight	glfwBackend.h	/^	int m_screenWidth, m_screenHeight, m_refreshRate;$/;"	m	class:GLFWManager
+m_screenWidth	glfwBackend.h	/^	int m_screenWidth, m_screenHeight, m_refreshRate;$/;"	m	class:GLFWManager
+m_selectedChoice	dialogueGraph.h	/^	int m_selectedChoice;$/;"	m	class:DialogueGraph
+m_sfxSources	soundManager.h	/^	std::vector<ALuint> m_sfxSources;$/;"	m	class:SoundManager
+m_shaderObjList	effect.h	/^	ShaderObjList m_shaderObjList;$/;"	m	class:Effect
+m_shaderProg	effect.h	/^	GLuint m_shaderProg;$/;"	m	class:Effect
+m_shadowMap	shadowMapFBO.h	/^	GLuint m_shadowMap;$/;"	m	class:ShadowMapFBO
+m_size	graphicsComponent.h	/^	Vector3f m_size = Vector3f(-1, -1, -1);$/;"	m	class:GraphicsComponent
+m_size	physicsComponent.h	/^	Vector3f m_size = Vector3f(-1, -1, -1);$/;"	m	class:PhysicsComponent
+m_smooth	eventWeather.h	/^	bool m_smooth;$/;"	m	class:EventWeather
+m_soundFile	eventBGM.h	/^	std::string m_soundFile;$/;"	m	class:EventBGM
+m_soundFile	eventSound.h	/^	std::string m_soundFile;$/;"	m	class:EventSound
+m_source	audioComponent.h	/^	SourceInfo m_source;$/;"	m	class:AudioComponent
+m_source	eventSound.h	/^	unsigned int m_source;$/;"	m	class:EventSound
+m_sprite	eventParticle.h	/^	std::string m_sprite;$/;"	m	class:EventParticle
+m_sprite	eventWeather.h	/^	std::string m_sprite;$/;"	m	class:EventWeather
+m_startPos	eventMove.h	/^	Vector3f m_startPos;$/;"	m	class:EventMove
+m_static	font.h	/^	bool m_static;$/;"	m	class:Font
+m_static	fontGraphicsComponent.h	/^	bool m_static = false;$/;"	m	class:FontGraphicsComponent
+m_staticityTrans	fontGraphicsComponent.cpp	/^Transformation FontGraphicsComponent::m_staticityTrans = Transformation();$/;"	m	class:FontGraphicsComponent	file:
+m_staticityTrans	fontGraphicsComponent.h	/^	static Transformation m_staticityTrans;$/;"	m	class:FontGraphicsComponent
+m_stop	resource_loader.h	/^	bool m_stop;$/;"	m	class:ResourceLoader
+m_target	iEvent.h	/^	unsigned int m_target;$/;"	m	class:IEvent
+m_targetQueue	eventCaller.h	/^	unsigned int m_targetQueue;$/;"	m	class:EventCaller
+m_temporary	font.h	/^	bool m_temporary;$/;"	m	class:Font
+m_texAtlas	mesh.h	/^	TextureAtlas m_texAtlas;$/;"	m	class:Mesh
+m_texId	texture.h	/^	ILuint m_texId;$/;"	m	class:Texture
+m_texPath	map_tile.h	/^	std::string m_texPath;$/;"	m	class:MapTile
+m_textSpeed	font.h	/^	double m_textSpeed;$/;"	m	class:Font
+m_texture	font.h	/^	std::string m_texture;$/;"	m	class:Font
+m_texture	graphicsComponent.h	/^	std::string m_texture;$/;"	m	class:GraphicsComponent
+m_texture	map_handler.h	/^	std::string m_texture;$/;"	m	class:MapHandler
+m_texture	mesh.h	/^	Texture* m_texture;$/;"	m	class:Mesh
+m_texture	particleGenerator.h	/^	std::string m_texture;$/;"	m	class:ParticleGenerator
+m_texture	physicsComponent.h	/^	std::string m_texture;$/;"	m	class:PhysicsComponent
+m_textureAtlas	textureatlas.cpp	/^TextureAtlas TextureAtlas::m_textureAtlas = TextureAtlas(128);$/;"	m	class:TextureAtlas	file:
+m_textureAtlas	textureatlas.h	/^	static TextureAtlas m_textureAtlas;$/;"	m	class:TextureAtlas
+m_textureId	texture.h	/^	GLuint m_textureId;$/;"	m	class:Texture
+m_textureId	textureatlas.h	/^	GLuint  m_textureId;$/;"	m	class:TextureAtlas
+m_textureList	textureatlas.h	/^	TextureList m_textureList;$/;"	m	class:TextureAtlas
+m_textureTarget	texture.h	/^	GLenum m_textureTarget;$/;"	m	class:Texture
+m_textures	mesh.h	/^	std::map<std::string, unsigned int> m_textures;$/;"	m	class:Mesh
+m_textures	resource_manager.h	/^	std::map<std::string, Texture> m_textures;$/;"	m	class:ResourceManager
+m_tiles	collisionManager.h	/^	std::vector<std::shared_ptr<MapTile>>* m_tiles;$/;"	m	class:CollisionManager
+m_tiles	map_handler.h	/^	std::vector<std::shared_ptr<MapTile>> m_tiles;$/;"	m	class:MapHandler
+m_timePerLetter	font.h	/^	const double m_timePerLetter;$/;"	m	class:Font
+m_toDraw	renderer.h	/^	std::vector<GraphicsComponent*> m_toDraw;$/;"	m	class:Renderer
+m_totalTime	font.h	/^	double m_totalTime;$/;"	m	class:Font
+m_trans	map_tile.h	/^	Transformation m_trans;$/;"	m	class:MapTile
+m_transformation	transform.h	/^        Mat4f m_transformation;$/;"	m	class:Transformation
+m_translate	transform.h	/^        Vector3f m_translate = Vector3f(0, 0, 0);$/;"	m	class:Transformation
+m_translatedVertices	physicsComponent.h	/^	std::vector<Vertex> m_translatedVertices;$/;"	m	class:PhysicsComponent
+m_value	eventAddToFlag.h	/^	int m_value;$/;"	m	class:EventAddToFlag
+m_values	array2d.h	/^        T* m_values;$/;"	m	class:Array2d
+m_values	array3d.h	/^        T* m_values;$/;"	m	class:Array3d
+m_vel	graphicsComponent.h	/^	Vector3f m_vel;$/;"	m	class:GraphicsComponent
+m_velocity	physicsComponent.h	/^	Vector3f m_velocity;$/;"	m	class:PhysicsComponent
+m_vertexList	mesh.h	/^	std::vector<Vertex> m_vertexList;$/;"	m	class:Mesh
+m_vertices	graphicsComponent.h	/^	std::vector<Vertex> m_vertices;$/;"	m	class:GraphicsComponent
+m_vertices	physicsComponent.h	/^	std::vector<Vertex> m_vertices;$/;"	m	class:PhysicsComponent
+m_width	FBO.h	/^	int m_width;$/;"	m	class:FBO
+m_width	animation.h	/^	int m_width;$/;"	m	class:Animation
+m_width	bloom.h	/^	int m_width;$/;"	m	class:Bloom
+m_window	glfwBackend.cpp	/^GLFWwindow* GLFWManager::m_window = NULL;$/;"	m	class:GLFWManager	file:
+m_window	glfwBackend.h	/^	static GLFWwindow* m_window;$/;"	m	class:GLFWManager
+m_worldNoTrans	effectManager.h	/^	float* m_worldNoTrans;$/;"	m	class:EffectManager
+m_worldTrans	effectManager.h	/^	float* m_worldTrans;$/;"	m	class:EffectManager
+m_x	array2d.h	/^        int m_x, m_y;$/;"	m	class:Array2d
+m_x	array3d.h	/^        int m_x, m_y, m_z;$/;"	m	class:Array3d
+m_x	eventTeleport.h	/^	float m_x, m_y, m_z;$/;"	m	class:EventTeleport
+m_x	font.h	/^	float m_x;$/;"	m	class:Font
+m_xBndry	font.h	/^	float m_xBndry;$/;"	m	class:Font
+m_xScale	font.h	/^	float m_xScale;$/;"	m	class:Font
+m_y	array2d.h	/^        int m_x, m_y;$/;"	m	class:Array2d
+m_y	array3d.h	/^        int m_x, m_y, m_z;$/;"	m	class:Array3d
+m_y	eventTeleport.h	/^	float m_x, m_y, m_z;$/;"	m	class:EventTeleport
+m_y	font.h	/^	float m_y;$/;"	m	class:Font
+m_yScale	font.h	/^	float m_yScale;$/;"	m	class:Font
+m_z	array3d.h	/^        int m_x, m_y, m_z;$/;"	m	class:Array3d
+m_z	eventTeleport.h	/^	float m_x, m_y, m_z;$/;"	m	class:EventTeleport
+m_zoneSize	particleGenerator.h	/^	Vector3f m_zoneSize;$/;"	m	class:ParticleGenerator
+m_zoom	scene_battle.h	/^	bool m_zoom;$/;"	m	class:SceneBattle
+m_zoom	scene_world.h	/^	bool m_zoom;$/;"	m	class:SceneWorld
+main	main.cpp	/^int main(int argc, char** argv)$/;"	f
+mustCollide	physicsComponent.h	/^	bool mustCollide = true;$/;"	m	class:PhysicsComponent
+mustDraw	graphicsComponent.h	/^	bool mustDraw = true;$/;"	m	class:GraphicsComponent
+numFrames	animation.h	/^	int numFrames;$/;"	m	struct:AnimInfo
+operator !=	scene.h	/^	bool operator!=(const SceneGenData& sgd)$/;"	f	struct:SceneGenData
+operator !=	transform.cpp	/^bool Transformation::operator!=(const Transformation& t)$/;"	f	class:Transformation
+operator !=	vector3f.cpp	/^bool Vector3f::operator!=(const Vector3f& r)$/;"	f	class:Vector3f
+operator !=	vector3f.cpp	/^bool Vector3f::operator!=(const float& r)$/;"	f	class:Vector3f
+operator *	mat4f.cpp	/^Mat4f Mat4f::operator*(const Mat4f &right) const$/;"	f	class:Mat4f
+operator *	vector3f.cpp	/^Vector3f Vector3f::operator*(float r)$/;"	f	class:Vector3f
+operator *=	vector3f.cpp	/^Vector3f& Vector3f::operator*=(float c)$/;"	f	class:Vector3f
+operator +	vector3f.cpp	/^Vector3f Vector3f::operator+(Vector3f vec)$/;"	f	class:Vector3f
+operator +=	vector3f.cpp	/^Vector3f& Vector3f::operator+=(const Vector3f& r)$/;"	f	class:Vector3f
+operator -	vector3f.cpp	/^Vector3f Vector3f::operator-()$/;"	f	class:Vector3f
+operator -	vector3f.cpp	/^Vector3f Vector3f::operator-(Vector3f vec)$/;"	f	class:Vector3f
+operator -=	vector3f.cpp	/^Vector3f& Vector3f::operator-=(const Vector3f& r)$/;"	f	class:Vector3f
+operator /	vector3f.cpp	/^Vector3f Vector3f::operator\/(float r)$/;"	f	class:Vector3f
+operator <	vector3f.cpp	/^bool Vector3f::operator<(const Vector3f& r)$/;"	f	class:Vector3f
+operator <	vector3f.cpp	/^bool Vector3f::operator<(const float& i)$/;"	f	class:Vector3f
+operator <<	vector3f.cpp	/^std::ostream& operator<<(std::ostream& output, const Vector3f& v)$/;"	f
+operator ==	vector3f.cpp	/^bool Vector2f::operator==(const Vector2f& r)$/;"	f	class:Vector2f
+operator ==	vector3f.cpp	/^bool Vector3f::operator==(const Vector3f& r)$/;"	f	class:Vector3f
+operator ==	vector3f.cpp	/^bool Vector3f::operator==(const int& i)$/;"	f	class:Vector3f
+operator >	vector3f.cpp	/^bool Vector3f::operator>(const Vector3f& r)$/;"	f	class:Vector3f
+operator >	vector3f.cpp	/^bool Vector3f::operator>(const float& i)$/;"	f	class:Vector3f
+operator []	vector3f.cpp	/^float& Vector3f::operator[](int i)$/;"	f	class:Vector3f
+physics	particleGenerator.h	/^	PhysicsComponent physics;$/;"	m	struct:Particle
+pingpongBuffer	blur_framebuffer.h	/^	GLuint pingpongBuffer[2];$/;"	m	class:BlurFramebuffer
+pingpongFBO	blur_framebuffer.h	/^	GLuint pingpongFBO[2];$/;"	m	class:BlurFramebuffer
+pitch	soundManager.h	/^	ALfloat pitch = 1;$/;"	m	struct:SourceInfo
+pos	soundManager.h	/^	Vector3f pos;$/;"	m	struct:SourceInfo
+position	animation.h	/^	int position;$/;"	m	struct:AnimInfo
+position	particleGenerator.h	/^	Vector3f position;$/;"	m	struct:Particle
+power	particleGenerator.h	/^	float power;$/;"	m	struct:Explosion
+pps	bloom.h	/^	Post_Processing_Screen pps;$/;"	m	class:Bloom
+renderSceneCB	game.cpp	/^void Game::renderSceneCB()$/;"	f	class:Game
+resetTextures	FBO.cpp	/^void FBO::resetTextures(int width, int height)$/;"	f	class:FBO
+scene	scene.h	/^	std::shared_ptr<Scene> scene;$/;"	m	struct:SceneGenData
+sceneType	scene.h	/^	SceneType sceneType;$/;"	m	struct:SceneGenData
+size	particleGenerator.h	/^	float size;$/;"	m	struct:Snow
+size	soundManager.h	/^	ALsizei size;$/;"	m	struct:WavBuffer
+source	soundManager.h	/^	ALuint source = 0;$/;"	m	struct:SourceInfo
+split	utils.cpp	/^void split(const std::string &s, char delim, Out result) {$/;"	f
+tex	vertex.h	/^        Vector2f tex;$/;"	m	class:Vertex
+texId	textureatlas.h	/^		ILuint texId;$/;"	m	struct:TextureAtlas::TextureInfo
+texIdx	textureatlas.h	/^		TextureIndex texIdx;$/;"	m	struct:TextureAtlas::TextureInfo
+texture	particleGenerator.h	/^	std::string texture;$/;"	m	struct:Particle
+textures	particleGenerator.h	/^	std::vector<std::string> textures;$/;"	m	struct:Music
+trans	font.h	/^	Transformation trans;$/;"	m	class:Font
+unbindFrameBuffer	FBO.cpp	/^void FBO::unbindFrameBuffer() {$/;"	f	class:FBO
+vel	soundManager.h	/^	Vector3f vel;$/;"	m	struct:SourceInfo
+velocity	particleGenerator.h	/^	Vector3f velocity;$/;"	m	struct:Particle
+velocity	physics.h	/^	Vector3f velocity;$/;"	m	struct:CollisionObject
+vertex	vertex.h	/^        Vector3f vertex;$/;"	m	class:Vertex
+verts	physics.h	/^	std::vector<Vertex> verts;$/;"	m	struct:CollisionObject
+walkOn	physicsComponent.h	/^	bool walkOn;$/;"	m	class:PhysicsComponent
+window_size_callback	glfwBackend.cpp	/^static void window_size_callback(GLFWwindow* window, int width, int height)$/;"	f	file:
+x	vector3f.h	/^	float x = 0.0;$/;"	m	class:Vector3f
+x	vector3f.h	/^	float x = 0.0f;$/;"	m	class:Vector2f
+y	vector3f.h	/^	float y = 0.0;$/;"	m	class:Vector3f
+y	vector3f.h	/^	float y = 0.0f;$/;"	m	class:Vector2f
+z	vector3f.h	/^	float z = 0.0;$/;"	m	class:Vector3f
+zFar	mathutils.h	/^	float zFar = 1000.0f;$/;"	m	class:PersProjInfo
+zFar	mathutils.h	/^	float zFar;$/;"	m	class:OrthoProjInfo
+zNear	mathutils.h	/^	float zNear = 1.0f;$/;"	m	class:PersProjInfo
+zNear	mathutils.h	/^	float zNear;$/;"	m	class:OrthoProjInfo
+~Array2d	array2d.h	/^Array2d<T>::~Array2d()$/;"	f	class:Array2d
+~Array3d	array3d.h	/^Array3d<T>::~Array3d()$/;"	f	class:Array3d
+~AudioComponent	audioComponent.cpp	/^AudioComponent::~AudioComponent()$/;"	f	class:AudioComponent
+~DialogueBox	dialogueBox.cpp	/^DialogueBox::~DialogueBox()$/;"	f	class:DialogueBox
+~DialogueGraph	dialogueGraph.cpp	/^DialogueGraph::~DialogueGraph()$/;"	f	class:DialogueGraph
+~Effect	effect.cpp	/^Effect::~Effect()$/;"	f	class:Effect
+~Entity	entity.cpp	/^Entity::~Entity()$/;"	f	class:Entity
+~EventAddToFlag	eventAddToFlag.h	/^	~EventAddToFlag() {}$/;"	f	class:EventAddToFlag
+~EventBGM	eventBGM.cpp	/^EventBGM::~EventBGM()$/;"	f	class:EventBGM
+~EventBattle	eventBattle.h	/^	~EventBattle() {}$/;"	f	class:EventBattle
+~EventCaller	eventCaller.h	/^	~EventCaller() {}$/;"	f	class:EventCaller
+~EventManager	eventManager.cpp	/^EventManager::~EventManager()$/;"	f	class:EventManager
+~EventMapChange	eventMapChange.h	/^	~EventMapChange() {}$/;"	f	class:EventMapChange
+~EventMove	eventMove.h	/^	~EventMove() {}$/;"	f	class:EventMove
+~EventParticle	eventParticle.h	/^	~EventParticle() {}$/;"	f	class:EventParticle
+~EventQueue	eventQueue.cpp	/^EventQueue::~EventQueue()$/;"	f	class:EventQueue
+~EventSetFlag	eventSetFlag.h	/^	~EventSetFlag() {}$/;"	f	class:EventSetFlag
+~EventSound	eventSound.cpp	/^EventSound::~EventSound()$/;"	f	class:EventSound
+~EventSpriteChange	eventSpriteChange.h	/^	~EventSpriteChange() {}$/;"	f	class:EventSpriteChange
+~EventTeleport	eventTeleport.h	/^	~EventTeleport() {}$/;"	f	class:EventTeleport
+~EventToggleFlag	eventToggleFlag.h	/^	~EventToggleFlag() {}$/;"	f	class:EventToggleFlag
+~EventWeather	eventWeather.h	/^	~EventWeather() {}$/;"	f	class:EventWeather
+~FBO	FBO.cpp	/^FBO::~FBO()$/;"	f	class:FBO
+~Font	font.cpp	/^Font::~Font()$/;"	f	class:Font
+~FontManager	fontManager.cpp	/^FontManager::~FontManager()$/;"	f	class:FontManager
+~Game	game.cpp	/^Game::~Game()$/;"	f	class:Game
+~GraphicsComponent	graphicsComponent.cpp	/^GraphicsComponent::~GraphicsComponent()$/;"	f	class:GraphicsComponent
+~InputManager	input_manager.cpp	/^InputManager::~InputManager()$/;"	f	class:InputManager
+~MapHandler	map_handler.cpp	/^MapHandler::~MapHandler()$/;"	f	class:MapHandler
+~Mesh	mesh.cpp	/^Mesh::~Mesh()$/;"	f	class:Mesh
+~ParticleGenerator	particleGenerator.cpp	/^ParticleGenerator::~ParticleGenerator()$/;"	f	class:ParticleGenerator
+~ResourceLoader	resource_loader.cpp	/^ResourceLoader::~ResourceLoader()$/;"	f	class:ResourceLoader
+~SceneBattle	scene_battle.cpp	/^SceneBattle::~SceneBattle()$/;"	f	class:SceneBattle
+~SceneWorld	scene_world.cpp	/^SceneWorld::~SceneWorld()$/;"	f	class:SceneWorld
+~ShadowMapFBO	shadowMapFBO.cpp	/^ShadowMapFBO::~ShadowMapFBO()$/;"	f	class:ShadowMapFBO
+~SoundManager	soundManager.cpp	/^SoundManager::~SoundManager()$/;"	f	class:SoundManager
+~Texture	texture.cpp	/^Texture::~Texture()$/;"	f	class:Texture
+~TextureAtlas	textureatlas.cpp	/^TextureAtlas::~TextureAtlas()$/;"	f	class:TextureAtlas

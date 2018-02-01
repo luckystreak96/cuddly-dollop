@@ -1,0 +1,24 @@
+[
+    {
+        "arguments": [
+            "c++", 
+            "-c", 
+            "-g", 
+            "-D_DEBUG", 
+            "-I/usr/local/include", 
+            "-I/usr/X11R6/include", 
+            "-pthread", 
+            "-I/usr/include", 
+            "-I./res/include", 
+            "-I/usr/local/include", 
+            "-I/usr/X11R6/include", 
+            "-pthread", 
+            "-std=c++17", 
+            "-o", 
+            "obj/soundUtils.o", 
+            "src/soundUtils.cpp"
+        ], 
+        "directory": "/home/luckystreak/Documents/cuddly-dollop/Test", 
+        "file": "src/soundUtils.cpp"
+    }
+]
