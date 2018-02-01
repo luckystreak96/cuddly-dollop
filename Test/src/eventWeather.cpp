@@ -1,7 +1,7 @@
 #include "eventWeather.h"
 
-EventWeather::EventWeather(int particleCount, ParticleType type, Vector3f mapsize, bool smooth) 
-	: m_firstSetup(true), m_particleType(type), m_mapSize(mapsize), m_count(particleCount), m_smooth(smooth)
+EventWeather::EventWeather(int particleCount, ParticleType type, Vector3f mapsize, bool smooth, std::string sprite) 
+	: m_firstSetup(true), m_particleType(type), m_mapSize(mapsize), m_count(particleCount), m_smooth(smooth), m_sprite(sprite)
 {
 	m_target = 0;
 	m_lockLevel = 0;
@@ -18,7 +18,7 @@ EventUpdateResponse EventWeather::UpdateEvent(double elapsedTime, std::map<unsig
 	// If pos hasnt been set yet
 	if (m_firstSetup)
 	{
-		m_particles.Init(m_particleType, m_count, m_mapSize, m_smooth);
+		m_particles.Init(m_particleType, m_count, m_mapSize, m_smooth, m_sprite);
 		m_firstSetup = false;
 	}
 

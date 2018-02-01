@@ -25,9 +25,9 @@ void Snow::Update(Vector3f& zoneSize)
 	counter += 0.01f;
 };
 
-Snow::Snow(Vector3f zoneSize, bool smooth)
+Snow::Snow(Vector3f zoneSize, bool smooth, std::string tex)
 {
-	texture = "snowflake.png";
+	texture = tex;
 	size = fmod((float)rand() / 10.f, 0.1f) + 0.2f;
 	ResetLocation(zoneSize, true, smooth);
 }
@@ -205,7 +205,7 @@ void ParticleGenerator::Init(ParticleType c, unsigned int num_particles, Vector3
 	{
 	case PT_Snow:
 		for (unsigned int i = 0; i < num_particles; i++)
-			m_particles.push_back(std::shared_ptr<Particle>(new Snow(zoneSize, smooth)));
+			m_particles.push_back(std::shared_ptr<Particle>(new Snow(zoneSize, smooth, tex)));
 		break;
 	case PT_Rain:
 		for (unsigned int i = 0; i < num_particles; i++)
