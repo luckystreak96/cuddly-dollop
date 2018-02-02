@@ -25,9 +25,9 @@ void Snow::Update(Vector3f& zoneSize)
 	counter += 0.01f;
 };
 
-Snow::Snow(Vector3f zoneSize, bool smooth, std::string tex)
+Snow::Snow(Vector3f zoneSize, bool smooth)
 {
-	texture = tex;
+	texture = "snowflake.png";
 	size = fmod((float)rand() / 10.f, 0.1f) + 0.2f;
 	ResetLocation(zoneSize, true, smooth);
 }
@@ -57,6 +57,49 @@ void Snow::SetTrans(Transformation& trans)
 	trans.SetScale(Vector3f(size, size, 0.3f));
 }
 
+
+//========= LEAF ============
+
+void Leaf::Update(Vector3f& zoneSize)
+{
+	velocity.x = sin(counter * 3.0f) / 20.0f;
+	position += velocity;
+	if (position.y < -1 || position.x < -2 || position.x > zoneSize.x + 2)
+		ResetLocation(zoneSize);
+	counter += 0.01f;
+};
+
+Leaf::Leaf(Vector3f zoneSize, bool smooth)
+{
+	texture = "leaf.png";
+	size = fmod((float)rand() / 10.f, 0.1f) + 0.2f;
+	ResetLocation(zoneSize, true, smooth);
+}
+
+
+void Leaf::ResetLocation(Vector3f& zoneSize, bool firstSpawn, bool smooth)
+{
+	if (zoneSize.x == 0 || zoneSize.y == 0)
+		return;
+	if (firstSpawn || smooth)
+		counter = fmod(((float)rand() / 1000.0f), 2.0f);
+
+	if (smooth)
+		firstSpawn = false;
+
+	position.x = fmod(((float)rand() / 1000.0f), zoneSize.x + 2.0f) - 2.0f;
+	position.y = fmod(rand() / 1000.0f, ((firstSpawn ? (int)zoneSize.y * 2 : (int)zoneSize.y))) + (firstSpawn ? 0 : zoneSize.y);
+	velocity.y = -fmod(((float)rand() / 1000.0f), 0.003f) - 0.003f;
+	velocity.y *= pow(size * 10.f, 2);
+	float value = fmod(((float)rand() / 1000.0f), 0.1f);
+	velocity.x = (rand() % 2) == 0 ? value : -value;
+}
+
+void Leaf::SetTrans(Transformation& trans)
+{
+	trans.SetRotation(0, 0, counter * 10);
+	trans.SetScale(Vector3f(size, size, 0.3f));
+}
 
 //========= RAIN ============
 
@@ -205,7 +248,11 @@ void ParticleGenerator::Init(ParticleType c, unsigned int num_particles, Vector3
 	{
 	case PT_Snow:
 		for (unsigned int i = 0; i < num_particles; i++)
-			m_particles.push_back(std::shared_ptr<Particle>(new Snow(zoneSize, smooth, tex)));
+			m_particles.push_back(std::shared_ptr<Particle>(new Snow(zoneSize, smooth)));
+		break;
+	case PT_Leaf:
+		for (unsigned int i = 0; i < num_particles; i++)
+			m_particles.push_back(std::shared_ptr<Particle>(new Leaf(zoneSize, smooth)));
 		break;
 	case PT_Rain:
 		for (unsigned int i = 0; i < num_particles; i++)
