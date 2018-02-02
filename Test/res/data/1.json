@@ -5728,8 +5728,8 @@
               "type": "weather",
               "execution_type": "async",
               "args": {
-                "count": 100,
-                "type": "snow",
+                "count": 50,
+                "type": "leaf",
                 "smooth": false,
                 "sprite": "leaf.png"
               }

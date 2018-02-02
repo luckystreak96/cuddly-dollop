@@ -9,6 +9,16 @@ m_BBcenter(numTiles), m_conversationLock(false), walkOn(true)
 	SetDefaults(modelName);
 }
 
+// Sets the color of all vertices to change the color of the sprite
+void PhysicsComponent::SetColorAll(Vector3f color, float alpha)
+{
+	for (auto& v : m_vertices)
+	{
+		v.color = color;
+		v.alpha = alpha;
+	}
+}
+
 void PhysicsComponent::Update()
 {
 	if (m_velocity != 0)

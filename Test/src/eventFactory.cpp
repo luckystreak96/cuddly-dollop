@@ -67,6 +67,7 @@ std::shared_ptr<IEvent> EventFactory::BuildEvent(EventTypes et, std::map<std::st
 
 	std::string str;
 	Vector3f vec;
+	ParticleType type;
 
 	switch (et)
 	{
@@ -131,6 +132,7 @@ std::shared_ptr<IEvent> EventFactory::BuildEvent(EventTypes et, std::map<std::st
 		break;
 	case EventTypes::ET_Weather:
 		str = args.count("type") ? args.at("type").get<std::string>() : "snow";
+		type = ParticleFromString.count(str) ? ParticleFromString.at(str) : PT_Snow;
 		result = std::shared_ptr<IEvent>(new EventWeather(args.count("count") ? args.at("count").get<int>() : 50,
 			ParticleFromString.count(str) ? ParticleFromString.at(str) : PT_Snow,
 			map->GetMapSize(),

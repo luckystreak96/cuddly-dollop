@@ -194,9 +194,6 @@ void SoundManager::CreateBuffer(std::string path)
 	WavBuffer buf;
 	alGenBuffers((ALuint)1, &buf.buffer);
 
-	CWave wave;
-	wave.Load(path);
-
 	alutLoadWAVFile((ALbyte*)path.c_str(), &buf.format, &buf.data, &buf.size, &buf.freq, &buf.loop);
 
 	//set buffer data

@@ -33,6 +33,7 @@ public:
 	std::vector<Vertex> GetTranslatedVertices();
 	std::vector<GLuint> GetIndices();
 	int GetHighestIndex();
+	void SetColorAll(Vector3f color, float alpha);
 	void XCollide();
 	void YCollide();
 	virtual void DesiredMove();

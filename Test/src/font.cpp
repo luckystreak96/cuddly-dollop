@@ -4,7 +4,7 @@
 
 Font::Font(bool sTatic, bool temporary, bool lightSpeed, std::string path) : m_texture(path), m_phys(PhysicsComponent(Vector3f(), "TEXT")),
 m_elapsedTime(0), m_textSpeed(1.0), m_timePerLetter(0.03), m_static(sTatic), m_temporary(temporary), m_lifetime(5.0), _letterSpacing(1.0f), MaxTime(30000),
-m_lettersPerRow(16), m_lettersPerColumn(16), m_xScale(1.0f), m_yScale(1.0f), m_lightSpeed(lightSpeed), _enabled(true), m_centered(false), m_xBndry(-1)
+m_lettersPerRow(16), m_lettersPerColumn(16), m_xScale(1.0f), m_yScale(1.0f), m_lightSpeed(lightSpeed), _enabled(true), m_centered(false), m_xBndry(-1), m_x(0), m_y(0)
 {
 	m_mesh = Mesh(m_lettersPerRow * m_lettersPerColumn);
 	int bitmapWidth = 16;
@@ -128,9 +128,9 @@ void Font::SetupMesh(float xBndry, float yBndry)
 	if (xBndry == -1)
 		offset = 0.f;
 	else
-		offset = 0.5f;
+		offset = m_yScale;
 	m_x = offset;
-	m_y = offset;
+	m_y = -offset;
 
 	unsigned int progress = 0;
 	// This string is message but without \n's in it because
@@ -145,7 +145,7 @@ void Font::SetupMesh(float xBndry, float yBndry)
 		// If the word is a \n, just start a new line
 		if (w == "\n")
 		{
-			m_y -= 0.5f;
+			m_y -= m_yScale;
 			m_x = offset;
 		}
 		// Is the word too big to fit in the first place?
@@ -159,7 +159,7 @@ void Font::SetupMesh(float xBndry, float yBndry)
 		else if (w.size() * _letterSpacing * m_xScale + m_x > xBndry)
 		{
 			// Increment y and start on new line
-			m_y -= 0.5f;
+			m_y -= m_yScale;
 			m_x = offset;
 
 			AddWordToMesh(w + " ", m_x, m_y);

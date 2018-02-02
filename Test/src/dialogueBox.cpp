@@ -21,8 +21,12 @@ DialogueBox::DialogueBox(unsigned int entity_id, std::shared_ptr<DialogueGraph> 
 
 void DialogueBox::Construct()
 {
+	m_xScale = 0.5f;
+	m_yScale = 0.5f;
+
 	m_box = std::shared_ptr<FontGraphicsComponent>(new FontGraphicsComponent("TILE", "res/sprites/special/dialogue.png"));
 	m_box->SetPhysics(Vector3f(0.5f, 0.5f, 0.5f), Vector3f(0, 0, 0));
+	m_box->SetScale(Vector3f(1.0f, 0.5f, 1.0f));
 	m_box->Update();
 	m_box->SetStatic(true);
 
@@ -30,9 +34,6 @@ void DialogueBox::Construct()
 	m_static = true;
 	m_lockLevel = 1;
 	m_mode = BLOCKING;
-
-	m_xScale = 0.5f;
-	m_yScale = 0.5f;
 }
 
 
@@ -55,7 +56,7 @@ void DialogueBox::SetText(std::string text)
 	m_choices.clear();
 	if (m_dialogueGraph && m_dialogueGraph->ChoiceAvailable())
 	{
-		m_y -= m_yScale * 1.25f;
+		//m_y += m_yScale * 1.25f;
 		for (auto x : m_dialogueGraph->GetChoices())
 		{
 			m_y -= m_yScale * 1.25f;
@@ -177,7 +178,7 @@ EventUpdateResponse DialogueBox::UpdateEvent(double elapsedTime, std::map<unsign
 void DialogueBox::UpdateBox()
 {
 	float width = OrthoProjInfo::GetRegularInstance().Right * 2.f / OrthoProjInfo::GetRegularInstance().Size - 1.f;
-	m_box->SetScale(Vector3f(width, 5.f, 0));
+	m_box->SetScale(Vector3f(width, m_yScale * 10.0f, 0));
 	m_box->Update();
 }
 
