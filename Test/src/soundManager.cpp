@@ -186,7 +186,7 @@ bool SoundManager::IsPlaying(unsigned int source)
 
 void SoundManager::CreateBuffer(std::string path)
 {
-	return;
+	//return;
 	if (m_buffers.count(path))
 		return;
 
@@ -194,11 +194,13 @@ void SoundManager::CreateBuffer(std::string path)
 	WavBuffer buf;
 	alGenBuffers((ALuint)1, &buf.buffer);
 
-	//alutLoadWAVFile((ALbyte*)path.c_str(), &buf.format, &buf.data, &buf.size, &buf.freq, &buf.loop);
+	CWave wave;
+	wave.Load(path);
+
+	alutLoadWAVFile((ALbyte*)path.c_str(), &buf.format, &buf.data, &buf.size, &buf.freq, &buf.loop);
 
 	//set buffer data
 	alBufferData(buf.buffer, buf.format, buf.data, buf.size, buf.freq);
-	//alBufferData(buf.buffer, AL_FORMAT_STEREO16, buf.data, buf.size, buf.freq);
 
 	CheckErrors();
 
