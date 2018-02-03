@@ -21,8 +21,8 @@ DialogueBox::DialogueBox(unsigned int entity_id, std::shared_ptr<DialogueGraph> 
 
 void DialogueBox::Construct()
 {
-	m_xScale = 0.5f;
-	m_yScale = 0.5f;
+	m_xScale = 0.25f;
+	m_yScale = 0.25f;
 
 	m_box = std::shared_ptr<FontGraphicsComponent>(new FontGraphicsComponent("TILE", "res/sprites/special/dialogue.png"));
 	m_box->SetPhysics(Vector3f(0.5f, 0.5f, 0.5f), Vector3f(0, 0, 0));
@@ -52,7 +52,9 @@ void DialogueBox::Draw()
 
 void DialogueBox::SetText(std::string text)
 {
-	Font::SetText(text, Vector3f(0.5f, 4.0f, 0.0f), false, m_maxWidth);
+	float x = 1.0f;
+	m_y = 5.0f * m_box->GetScale().y - m_yScale;
+	Font::SetText(text, Vector3f(x, m_y, 0.0f), false, m_maxWidth);
 	m_choices.clear();
 	if (m_dialogueGraph && m_dialogueGraph->ChoiceAvailable())
 	{
@@ -63,7 +65,7 @@ void DialogueBox::SetText(std::string text)
 			Font_ptr temp = Font_ptr(new Font(true));
 			temp->SetScale(m_xScale, m_yScale);
 			temp->SetTextSpeed(1);
-			temp->SetText(x, Vector3f(0.75f, 4.0f + m_y, 0), false, m_maxWidth);
+			temp->SetText(x, Vector3f(0.75f, m_yScale * 9.0f + m_y, 0), false, m_maxWidth);
 			m_choices.push_back(temp);
 		}
 	}

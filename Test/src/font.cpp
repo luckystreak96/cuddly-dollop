@@ -130,7 +130,8 @@ void Font::SetupMesh(float xBndry, float yBndry)
 	else
 		offset = m_yScale;
 	m_x = offset;
-	m_y = -offset;
+	if(m_y == 0)
+		m_y = -offset;
 
 	unsigned int progress = 0;
 	// This string is message but without \n's in it because

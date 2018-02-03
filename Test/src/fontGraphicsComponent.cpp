@@ -39,6 +39,11 @@ void FontGraphicsComponent::SetScale(Vector3f scale)
 	m_modelMat.SetScale(scale);
 }
 
+Vector3f FontGraphicsComponent::GetScale()
+{
+	return m_modelMat.GetScale();
+}
+
 
 void FontGraphicsComponent::SetStatic(bool sttatic)
 {

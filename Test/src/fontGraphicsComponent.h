@@ -13,6 +13,7 @@ public:
 	void Update();
 	void SetStatic(bool sTatic);
 	void SetScale(Vector3f scale);
+	Vector3f GetScale();
 
 private:
 	bool m_static = false;
