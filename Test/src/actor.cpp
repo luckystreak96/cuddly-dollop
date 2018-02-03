@@ -33,7 +33,7 @@ void Actor::SetColor()
 	if (ChoosingAction)
 		SetColorAll(/*Vector3f(1.f, 1.f, 0), 1.f*/);
 	else if (Dead)
-		SetColorAll(Vector3f(0.5f, 0.5f, 0.5f), 0.5f);
+		SetColorAll(Vector3f(0.25f, 0.25f, 0.25f), 0.5f);
 	else
 		SetColorAll();
 }

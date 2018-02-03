@@ -130,8 +130,7 @@ void Font::SetupMesh(float xBndry, float yBndry)
 	else
 		offset = m_yScale;
 	m_x = offset;
-	if(m_y == 0)
-		m_y = -offset;
+	m_y = -offset;
 
 	unsigned int progress = 0;
 	// This string is message but without \n's in it because
@@ -174,6 +173,9 @@ void Font::SetupMesh(float xBndry, float yBndry)
 			m_x += (w.size() + 1) * _letterSpacing * m_xScale;
 		}
 	}
+
+	// To accomadate choices that might be drawn after
+	//m_y -= m_yScale;
 
 
 	// Set message to the non-\n version

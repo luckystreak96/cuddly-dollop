@@ -30,7 +30,7 @@ void BattleManager::Init()
 {
 	_hud.Init(_actors);
 	_showingSkills = false;
-	_state = BS_SelectAction;
+	_state = BS_TurnStart;
 	m_animating = false;
 	counter = 0;
 	_winner = -1;
@@ -81,17 +81,25 @@ void BattleManager::Update()
 	}
 }
 
-void BattleManager::UpdateLogic()
+// Move Animation
+void BattleManager::MoveToLight(bool moveup)
 {
-	if (_state == BS_ActionDone)
-	{
-		_selectedSkill->Reset();
-		_selectedSkill = NULL;
-		_state = BS_SelectAction;
-		CycleActors();
+	if (!_owner->Dead)
+		if (moveup)
+		{
+			Anim_ptr move1 = Anim_ptr(new AnimMoveTo(_owner->GetPos() + Vector3f(_owner->Team == 0 ? 1.f : -1, 0, 0), _owner));
+			_animations.push_back(move1);
+		}
+		else
+		{
+			Anim_ptr move2 = Anim_ptr(new AnimMoveTo(_owner->GetPos() + Vector3f(_owner->Team == 0 ? -1.f : 1, 0, 0), _owner));
+			_animations.push_back(move2);
+		}
+}
 
-	}
-
+// Display or stop displaying skills
+void BattleManager::UpdateSkillDisplay()
+{
 	if (_showingSkills)
 	{
 		if (_state != BS_SelectAction)
@@ -106,57 +114,140 @@ void BattleManager::UpdateLogic()
 		_showingSkills = true;
 		Select(0);
 	}
+}
 
-	// Let the animation pass before updating
-	//if (_animations.size() < 1)
-	//{
-		// End turn if the skill is done
-	if (_selectedSkill == NULL)
+void BattleManager::TurnStart()
+{
+	MoveToLight(true);
+	if (_owner->Dead)
+		_state = BS_TurnEnd;
+	else
+		_state = BS_SelectAction;
+}
+// BS_SelectAction and BS_SelectTarget are both purely input handled for the player
+void BattleManager::SelectAction()
+{
+	// Choose ENEMY action
+	if (_owner->Team != 0)
 	{
-		_owner = _actorQueue.front();
+		bool done = false;
+		int targ = 0;
+		std::set<int> alreadyTriedSkills;
 
-		// If the actor is dead, cycle
-		if (_owner->Dead || _state == BS_ActionDone)
+		// Ensure possible targets and skills
+		while (!done)
 		{
-			CycleActors();
-			Select(0);
-			return;
+			std::set<int> alreadyTargeted;
+			targ = 0;
+
+			int skill;
+			do {
+				// None of the skills found valid targets -> end turn
+				if (alreadyTriedSkills.size() == _owner->Skills.size())
+				{
+					done = true;
+					_state = BS_ActionDone;
+					return;
+				}
+				skill = rand() % _owner->Skills.size();
+				_selectedSkill = _owner->Skills.at(skill);
+			} while (alreadyTriedSkills.count(skill));
+			alreadyTriedSkills.emplace(skill); // havent tried this, lets go
+
+			do {
+				// if you already tried all the actors, select another skill
+				if (alreadyTargeted.size() == _actors.size())
+				{
+					targ = -1;
+					break;
+				}
+				targ = rand() % _actors.size();
+				// if the target is illegal, re-pick and dont choose that target again
+				if (!_actors.at(targ)->RespectsTargeting(_owner, _selectedSkill->_targetMode) || // doesnt respect targeting
+					_actors.at(DefaultTargetActorIndex())->Team != _actors.at(targ)->Team)
+					alreadyTargeted.emplace(targ);
+			} while (targ < 0 || targ >= _actors.size() || alreadyTargeted.count(targ)); // is targeting someone of a different team than the default target
+
+			alreadyTargeted.emplace(targ);
+
+			// target is good, can move on, otherwise choose new skill
+			if (targ != -1)
+				done = true;
 		}
 
-		// Choose enemy action
-		if (_owner->Team != 0 && !_animations.size())
+		_targets.push_back(_actors.at(targ));
+
+		UseSkill();
+	}
+}
+void BattleManager::SelectTargets()
+{
+}
+void BattleManager::ActionProgress()
+{
+	if (_selectedSkill != NULL)
+	{
+		if (_selectedSkill->_done)
 		{
-			_selectedSkill = _owner->Skills.at(rand() % _owner->Skills.size());
-
-			int targ = 0;
-			do {
-				targ = rand() % _actors.size();
-			} while (targ < 0 || targ > _actors.size() || _actors.at(targ)->Team == _owner->Team);
-
-			_targets.push_back(_actors.at(targ));
-
-			UseSkill();
+			_state = BS_ActionDone;
+		}
+		else
+		{
+			_selectedSkill->Update();
 		}
 	}
 	else
 	{
-		// Update skill
-		if (_state != BS_SelectTargets)
+		_state = BS_ActionDone;
+	}
+}
+void BattleManager::ActionDone()
+{
+	_selectedSkill->Reset();
+	_selectedSkill = NULL;
+	_state = BS_TurnEnd;
+}
+void BattleManager::TurnEnd()
+{
+	MoveToLight(false);
+	CycleActors();
+	_state = BS_TurnStart;
+}
+
+void BattleManager::UpdateLogic()
+{
+	// Display or stop displaying skills
+	UpdateSkillDisplay();
+
+	// If there are animations, let them run out
+	if (_state == BS_ActionProgress || !_animations.size())
+	{
+		switch (_state)
 		{
-			if (_selectedSkill != NULL)
-			{
-				if (_selectedSkill->_done)
-				{
-					_state = BS_ActionDone;
-				}
-				else
-				{
-					_selectedSkill->Update();
-				}
-			}
+		case BS_TurnStart:
+			TurnStart();
+			break;
+		case BS_SelectAction:
+			// BS_SelectAction and BS_SelectTarget are both purely input handled for the player
+			SelectAction();
+			break;
+		case BS_SelectTargets:
+			// Handled by input, method only for show
+			SelectTargets();
+			break;
+		case BS_ActionProgress:
+			// Update the skill
+			ActionProgress();
+			break;
+		case BS_ActionDone:
+			// Handles the action being done
+			ActionDone();
+			break;
+		case BS_TurnEnd:
+			TurnEnd();
+			break;
 		}
 	}
-	//}
 }
 
 void BattleManager::SetChooseSkillText()
@@ -182,6 +273,11 @@ void BattleManager::RemoveChooseSkillText()
 
 void BattleManager::ManageInput()
 {
+	// Dont allow any input if theres an animation running
+	// This doesnt apply if theres a skill in progress, gotta be interactive!
+	if (_animations.size() && _state != BS_ActionProgress)
+		return;
+
 	// Get input
 	std::set<int> input;
 	if (InputManager::GetInstance().FrameKeyStatus(GLFW_KEY_SPACE, KeyStatus::Release, 5))
@@ -222,7 +318,7 @@ void BattleManager::ManageInput()
 					}
 				}
 			}
-			else
+			else // _selectedIndex == 0
 			{
 				Select(_selectedIndex);
 			}
@@ -272,37 +368,8 @@ void BattleManager::ManageInput()
 			_selectedSkill = _chooseSkill->at(_selectedIndex);
 			//std::cout << "Skill selected: " << _selectedSkill->_name << std::endl;
 			_state = BS_SelectTargets;
-			bool done = false;
-			for (int i = 0; i < _actors.size(); i++)
-			{
-				switch (_selectedSkill->_defaultTarget)
-				{
-				case DT_Self:
-					if (_actors[i] == _owner)
-					{
-						Select(i);
-						done = true;
-					}
-					break;
-				case DT_Ally:
-					if (_actors[i]->Team == _owner->Team && _actors[i]->RespectsTargeting(_owner, _selectedSkill->_targetMode))
-					{
-						Select(i);
-						done = true;
-					}
-					break;
-				case DT_Enemy:
-					if (_actors[i]->Team != _owner->Team && _actors[i]->RespectsTargeting(_owner, _selectedSkill->_targetMode))
-					{
-						Select(i);
-						done = true;
-					}
-					break;
-				}
-
-				if (done)
-					break;
-			}
+			int target = DefaultTargetActorIndex();
+			Select(target);
 		}
 		else if (_state == BS_SelectTargets)
 		{
@@ -310,7 +377,7 @@ void BattleManager::ManageInput()
 				if (x->Selected)
 				{
 					_targets.push_back(x);
-					x->SetColorAll();
+					x->SetColor();
 					x->Selected = false;
 				}
 
@@ -338,6 +405,35 @@ void BattleManager::ManageInput()
 			}
 		}
 	}
+}
+
+int BattleManager::DefaultTargetActorIndex()
+{
+	int i;
+	bool done = false;
+	for (i = 0; i < _actors.size(); i++)
+	{
+		switch (_selectedSkill->_defaultTarget)
+		{
+		case DT_Self:
+			if (_actors[i] == _owner)
+				done = true;
+			break;
+		case DT_Ally:
+			if (_actors[i]->Team == _owner->Team && _actors[i]->RespectsTargeting(_owner, _selectedSkill->_targetMode))
+				done = true;
+			break;
+		case DT_Enemy:
+			if (_actors[i]->Team != _owner->Team && _actors[i]->RespectsTargeting(_owner, _selectedSkill->_targetMode))
+				done = true;
+			break;
+		}
+
+		if (done)
+			break;
+	}
+
+	return i;
 }
 
 void BattleManager::Select(int target)
@@ -382,13 +478,6 @@ void BattleManager::CycleActors()
 	front->ChoosingAction = false;
 	front->SetColor();
 
-	// Move Animation
-	if (!front->Dead)
-	{
-		Anim_ptr move1 = Anim_ptr(new AnimMoveTo(_owner->GetPos() + Vector3f(front->Team == 0 ? -1.f : 1, 0, 0), _owner));
-		_animations.push_back(move1);
-	}
-
 	_actorQueue.pop_front();
 	_actorQueue.push_back(front);
 	_owner = _actorQueue.front();
@@ -397,14 +486,6 @@ void BattleManager::CycleActors()
 	_chooseSkill = &_owner->Skills;
 	_targets.clear();
 	_selectedIndex = 0;
-	if (!_owner->Dead)
-	{
-		Anim_ptr move2 = Anim_ptr(new AnimMoveTo(_owner->GetPos() + Vector3f(_owner->Team == 0 ? 1.f : -1, 0, 0), _owner));
-		_animations.push_back(move2);
-		return;
-	}
-	else
-		CycleActors();
 }
 
 // Return winning team, -1 if battle isn't over

@@ -30,6 +30,17 @@ private:
 	void Select(int target);
 	void RemoveChooseSkillText();
 	void SetChooseSkillText();
+	void MoveToLight(bool moveUp);
+
+	void UpdateSkillDisplay();
+	void TurnStart();
+	void SelectAction();
+	void SelectTargets();
+	void ActionProgress();
+	void ActionDone();
+	void TurnEnd();
+
+	int DefaultTargetActorIndex();
 
 public:
 	std::deque<Actor_ptr> _actorQueue;

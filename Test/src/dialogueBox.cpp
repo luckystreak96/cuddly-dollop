@@ -28,6 +28,7 @@ void DialogueBox::Construct()
 	m_box->SetPhysics(Vector3f(0.5f, 0.5f, 0.5f), Vector3f(0, 0, 0));
 	m_box->SetScale(Vector3f(1.0f, 0.5f, 1.0f));
 	m_box->Update();
+	UpdateBox();
 	m_box->SetStatic(true);
 
 	m_phys.SetPosition(Vector3f());
@@ -52,9 +53,9 @@ void DialogueBox::Draw()
 
 void DialogueBox::SetText(std::string text)
 {
-	float x = 1.0f;
-	m_y = 5.0f * m_box->GetScale().y - m_yScale;
-	Font::SetText(text, Vector3f(x, m_y, 0.0f), false, m_maxWidth);
+	float x = 0.5f;
+	float y = m_box->GetScale().y + m_box->GetPosRef().y - m_yScale;
+	Font::SetText(text, Vector3f(x, y, 0.0f), false, m_maxWidth);
 	m_choices.clear();
 	if (m_dialogueGraph && m_dialogueGraph->ChoiceAvailable())
 	{
@@ -65,7 +66,7 @@ void DialogueBox::SetText(std::string text)
 			Font_ptr temp = Font_ptr(new Font(true));
 			temp->SetScale(m_xScale, m_yScale);
 			temp->SetTextSpeed(1);
-			temp->SetText(x, Vector3f(0.75f, m_yScale * 9.0f + m_y, 0), false, m_maxWidth);
+			temp->SetText(x, Vector3f(0.75f, y + m_y, 0), false, m_maxWidth);
 			m_choices.push_back(temp);
 		}
 	}
