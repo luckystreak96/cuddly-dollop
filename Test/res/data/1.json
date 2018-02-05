@@ -2279,25 +2279,25 @@
       "x": 2.0,
       "y": 4.0,
       "z": 4.0,
-      "sprite": "platform.png"
+      "sprite": "sand_path_v.png"
     },
     {
       "x": 7.0,
       "y": 4.0,
       "z": 4.0,
-      "sprite": "platform.png"
+      "sprite": "sand_path_v.png"
     },
     {
       "x": 2.0,
       "y": 5.0,
       "z": 3.5,
-      "sprite": "platform.png"
+      "sprite": "sand_path_dr.png"
     },
     {
       "x": 7.0,
       "y": 5.0,
       "z": 3.5,
-      "sprite": "platform.png"
+      "sprite": "sand_path_ld.png"
     },
     {
       "x": 3.0,
@@ -5677,6 +5677,102 @@
       "y": 19.0,
       "z": 5.5,
       "sprite": "grass_01.png"
+    },
+    {
+      "x": 1.0,
+      "y": 4.0,
+      "z": 4.0,
+      "sprite": "ledge_lu.png",
+      "walkOn": false
+    },
+    {
+      "x": 1.0,
+      "y": 5.0,
+      "z": 4.0,
+      "sprite": "ledge_l.png",
+      "walkOn": false
+    },
+    {
+      "x": 1.0,
+      "y": 6.0,
+      "z": 4.0,
+      "sprite": "ledge_dr.png",
+      "walkOn": false
+    },
+    {
+      "x": 2.0,
+      "y": 6.0,
+      "z": 4.0,
+      "sprite": "ledge_hu.png",
+      "walkOn": false
+    },
+    {
+      "x": 3.0,
+      "y": 6.0,
+      "z": 4.0,
+      "sprite": "ledge_ld.png",
+      "walkOn": false
+    },
+    {
+      "x": 3.0,
+      "y": 5.0,
+      "z": 4.0,
+      "sprite": "ledge_r.png"
+    },
+    {
+      "x": 3.0,
+      "y": 4.0,
+      "z": 4.0,
+      "sprite": "ledge_ru.png",
+      "walkOn": false
+    },
+    {
+      "x": 6.0,
+      "y": 4.0,
+      "z": 4.0,
+      "sprite": "ledge_lu.png",
+      "walkOn": false
+    },
+    {
+      "x": 6.0,
+      "y": 5.0,
+      "z": 4.0,
+      "sprite": "ledge_l.png"
+    },
+    {
+      "x": 6.0,
+      "y": 6.0,
+      "z": 4.0,
+      "sprite": "ledge_dr.png",
+      "walkOn": false
+    },
+    {
+      "x": 7.0,
+      "y": 6.0,
+      "z": 4.0,
+      "sprite": "ledge_hu.png",
+      "walkOn": false
+    },
+    {
+      "x": 8.0,
+      "y": 6.0,
+      "z": 4.0,
+      "sprite": "ledge_ld.png",
+      "walkOn": false
+    },
+    {
+      "x": 8.0,
+      "y": 5.0,
+      "z": 4.0,
+      "sprite": "ledge_r.png",
+      "walkOn": false
+    },
+    {
+      "x": 8.0,
+      "y": 4.0,
+      "z": 4.0,
+      "sprite": "ledge_ru.png",
+      "walkOn": false
     }
   ],
   "entities": [
