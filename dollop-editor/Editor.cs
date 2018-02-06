@@ -100,8 +100,9 @@ namespace dollop_editor
             TileHistory.Clear();
         }
 
-        private void PopulateBrushes()
+        public void PopulateBrushes()
         {
+            Brushes.Clear();
             // Need to automate this to find all png files in res folder (make it res/tiles?)
             string[] files = Directory.GetFiles(@"..\..\..\Test\res\sprites\tiles", "*.png", SearchOption.TopDirectoryOnly);
             List<string> ls = new List<string>(files);
@@ -146,7 +147,7 @@ namespace dollop_editor
                 Width = TileSize,
                 Height = TileSize
             };
-            rectangle.SetCurrentValue(Canvas.ZIndexProperty, (int)(20 - z * 2));
+            rectangle.SetCurrentValue(Canvas.ZIndexProperty, GameToCanvasZ((float)z));
             rectangle.RenderTransform = new TranslateTransform(x * TileSize, y * TileSize);
 
             Rectangle r = null;
@@ -166,25 +167,27 @@ namespace dollop_editor
             foreach (Rectangle x in children)
             {
                 int zind = (int)x.GetValue(Canvas.ZIndexProperty);
-                if (!opaqueView && zind != (int)((10 - depth) * 2))
+                if (!opaqueView && zind != (int)(100 - depth * 10.0))
                 {
-                    double opacity = 1 - Math.Abs((20 - depth * 2) - zind) / 10;
+                    double opacity = 1 - Math.Abs((100 - depth * 10.0) - zind) / 100;
                     opacity -= 0.5;
                     if (x.Fill != null)
                         x.Fill.Opacity = opacity;
-                    if (x.Stroke != null)
-                        x.Stroke.Opacity = opacity + 0.1;
-                    if (state == CanvasState.TileAttributeMode)
-                    {
-                        if ((string)x.Tag == "noWalkOn")
-                            x.Stroke = new SolidColorBrush(Colors.Red);
-                    }
-                    else if ((string)x.Tag == "noWalkOn")
+                    //if (x.Stroke != null)
+                    //    x.Stroke.Opacity = opacity + 0.1;
+                    //if (state == CanvasState.TileAttributeMode)
+                    //{
+                    //    if ((string)x.Tag == "noWalkOn")
+                    //        x.Stroke = new SolidColorBrush(Colors.Red);
+                    //    else if ((string)x.Tag == "deco")
+                    //        x.Stroke = new SolidColorBrush(Colors.Blue);
+                    //}
+                    //else if ((string)x.Tag != null)
                         x.Stroke = null;
                 }
                 else
                 {
-                    if ((string)x.Tag == "noWalkOn")
+                    if ((string)x.Tag != null)
                         x.Stroke = null;
                     if (x.Fill != null)
                         x.Fill.Opacity = 1.0;
@@ -197,6 +200,8 @@ namespace dollop_editor
                     {
                         if ((string)x.Tag == "noWalkOn")
                             x.Stroke = new SolidColorBrush(Colors.Red);
+                        else if ((string)x.Tag == "deco")
+                            x.Stroke = new SolidColorBrush(Colors.Blue);
                     }
                 }
             }
@@ -220,7 +225,8 @@ namespace dollop_editor
                         z = (float)x.Key.Z,
                         // Get the name of the sprite
                         sprite = ((BitmapImage)(x.Value.Fill.GetValue(ImageBrush.ImageSourceProperty))).UriSource.ToString().Split('\\').Last(),
-                        walkOn = ((string)x.Value.Tag != "noWalkOn" ? (bool?)null : false)
+                        walkOn = ((string)x.Value.Tag == "noWalkOn" ? false : (bool?)null),
+                        deco = ((string)x.Value.Tag == "deco" ? true : (bool?)null)
                     };
 
                     tiles.Add(tile);
@@ -269,9 +275,15 @@ namespace dollop_editor
                     {
                         Fill = Brushes[tile.sprite].Clone(),
                         Width = TileSize,
-                        Height = TileSize,
-                        Tag = tile.walkOn == true ? null : "noWalkOn"
+                        Height = TileSize
                     };
+                    if(tile.deco == true)
+                        rectangle.Tag = "deco";
+                    else if(tile.walkOn == false)
+                        rectangle.Tag = "noWalkOn";
+
+                    if (tile.z > 3.7 && tile.z < 4.0)
+                        Console.Write(tile.z);
                     rectangle.SetCurrentValue(Canvas.ZIndexProperty, GameToCanvasZ(tile.z));
                     rectangle.RenderTransform = new TranslateTransform((tile.x) * TileSize, InvertHeight(tile.y) * TileSize);
                     if (!(tile.x >= Width || /*InvertHeight(tile.y)*/tile.y >= Height))
@@ -335,7 +347,8 @@ namespace dollop_editor
 
         public int GameToCanvasZ(float z)
         {
-            return (int)(20 - z * 2);
+            int result = (int)(100.0f - z * 9.99f);
+            return result;
         }
 
         public float InvertHeight(float height)

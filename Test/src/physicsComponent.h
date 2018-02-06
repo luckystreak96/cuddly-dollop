@@ -5,10 +5,13 @@
 #include "iComponent.h"
 #include "vector3f.h"
 #include <cassert>
-#include "array2d.h"
+#include <memory>
 #include "model.h"
 #include "elapsedTime.h"
 #include <array>
+
+class PhysicsComponent;
+typedef std::shared_ptr<PhysicsComponent> Physics_ptr;
 
 class PhysicsComponent : public IComponent
 {
@@ -51,8 +54,8 @@ public:
 
 	bool mustCollide = true;
 	bool walkOn;
+	bool _ethereal;
 protected:
-	bool m_ethereal;
 	Vector3f m_pos;
 	Vector3f m_velocity;
 	std::vector<GLuint> m_indices;

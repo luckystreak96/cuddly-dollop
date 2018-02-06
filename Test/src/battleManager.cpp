@@ -304,6 +304,8 @@ void BattleManager::ManageInput()
 		{
 			if (_selectedIndex < _chooseSkill->size() - 1)
 				Select(_selectedIndex + 1);
+			else
+				Select(0);
 		}
 		else if (_state == BS_SelectTargets)
 		{
@@ -320,7 +322,14 @@ void BattleManager::ManageInput()
 			}
 			else // _selectedIndex == 0
 			{
-				Select(_selectedIndex);
+				for (int i = _actors.size() - 1; i >= 0; i--)
+				{
+					if (_actors[i]->RespectsTargeting(_owner, _selectedSkill->_targetMode))
+					{
+						Select(i);
+						break;
+					}
+				}
 			}
 		}
 	}
@@ -334,6 +343,8 @@ void BattleManager::ManageInput()
 			{
 				Select(_selectedIndex - 1);
 			}
+			else
+				Select(_chooseSkill->size() - 1);
 		}
 		else if (_state == BS_SelectTargets)
 		{
@@ -348,17 +359,83 @@ void BattleManager::ManageInput()
 					}
 				}
 			}
+			else
+			{
+				for (int i = 0; i < _actors.size(); i++)
+				{
+					if (_actors[i]->RespectsTargeting(_owner, _selectedSkill->_targetMode))
+					{
+						Select(i);
+						break;
+					}
+				}
+			}
 		}
 	}
 
 	if (input.count(GLFW_KEY_LEFT))
 	{
 		// Attempt to manage LEFT logic immediately here
+		if (_state == BS_SelectTargets)
+		{
+			// Only do anything if the cursor is on the enemy side
+			if (_selectedIndex >= MAX_FIGHTERS_PER_SIDE)
+			{
+				bool found = false;
+				int value = _selectedIndex;
+				int increment = 0;
+
+				while (!found)
+				{
+					if (value + increment - MAX_FIGHTERS_PER_SIDE < MAX_FIGHTERS_PER_SIDE && _actors[value - MAX_FIGHTERS_PER_SIDE + increment]->RespectsTargeting(_owner, _selectedSkill->_targetMode))
+						_selectedIndex = value - MAX_FIGHTERS_PER_SIDE + increment;
+					else if (value - increment - MAX_FIGHTERS_PER_SIDE >= 0 && _actors[value - MAX_FIGHTERS_PER_SIDE - increment]->RespectsTargeting(_owner, _selectedSkill->_targetMode))
+						_selectedIndex = value - MAX_FIGHTERS_PER_SIDE - increment;
+
+					if (value != _selectedIndex)
+						found = true;
+
+					increment++;
+					// If the counter goes too high, then there was no valid target on this side
+					if (increment >= MAX_FIGHTERS_PER_SIDE)
+						found = true;
+				}
+			}
+
+			Select(_selectedIndex);
+		}
 	}
 
 	if (input.count(GLFW_KEY_RIGHT))
 	{
 		// Attempt to manage RIGHT logic immediately here
+		if (_state == BS_SelectTargets)
+		{
+			// Only do anything if the cursor is on the enemy side
+			if (_selectedIndex < MAX_FIGHTERS_PER_SIDE)
+			{
+				bool found = false;
+				int value = _selectedIndex;
+				int increment = 0;
+
+				while (!found)
+				{
+					if (value + increment + MAX_FIGHTERS_PER_SIDE < _actors.size() && _actors[value + MAX_FIGHTERS_PER_SIDE + increment]->RespectsTargeting(_owner, _selectedSkill->_targetMode))
+						_selectedIndex = value + MAX_FIGHTERS_PER_SIDE + increment;
+					else if (value - increment + MAX_FIGHTERS_PER_SIDE >= MAX_FIGHTERS_PER_SIDE && _actors[value + MAX_FIGHTERS_PER_SIDE - increment]->RespectsTargeting(_owner, _selectedSkill->_targetMode))
+						_selectedIndex = value + MAX_FIGHTERS_PER_SIDE - increment;
+
+					if (value != _selectedIndex)
+						found = true;
+
+					increment++;
+					// If the counter goes too high, then there was no valid target on this side
+					if (increment >= MAX_FIGHTERS_PER_SIDE)
+						found = true;
+				}
+			}
+			Select(_selectedIndex);
+		}
 	}
 
 	if (input.count(GLFW_KEY_SPACE))

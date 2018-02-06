@@ -488,16 +488,20 @@ namespace Physics_2D {
 			float y1 = x->Physics()->Position().y;
 			for (auto ts : *mt)
 			{
-				if (ts->Physics()->Position().x < x1 - 2 ||
-					ts->Physics()->Position().y < y1 - 2 ||
-					ts->Physics()->Position().y > y1 + 2)
+				Physics_ptr p = ts->Physics();
+				if (p->_ethereal)
 					continue;
-				else if (ts->Physics()->Position().x > x1 + 2)
+
+				if (p->Position().x < x1 - 2 ||
+					p->Position().y < y1 - 2 ||
+					p->Position().y > y1 + 2)
+					continue;
+				else if (p->Position().x > x1 + 2)
 					break;
-				auto bb2 = ts->Physics()->GetMoveBoundingBox();
+				auto bb2 = p->GetMoveBoundingBox();
 
 				if (Physics::Intersect2D(bb1, bb2))
-					touching.at(id).push_back(ts->Physics());
+					touching.at(id).push_back(p);
 			}
 
 

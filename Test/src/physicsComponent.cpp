@@ -95,7 +95,7 @@ void PhysicsComponent::ActionMove(bool up, bool down, bool left, bool right)
 
 void PhysicsComponent::SetDefaults(std::string name)
 {
-	m_ethereal = false;
+	_ethereal = false;
 	m_modelName = name;
 
 	Model::GetInstance().loadModel(name);
@@ -168,7 +168,7 @@ std::array<float, 6>& PhysicsComponent::GetMoveBoundingBox()
 
 std::array<float, 6> PhysicsComponent::GetEtherealMoveBoundingBox()
 {
-	if (m_ethereal)
+	if (_ethereal)
 	{
 		auto result = std::array<float, 6>();
 		result.fill(-99999999.f);
@@ -349,7 +349,7 @@ void PhysicsComponent::SetConversationLock(bool locked)
 
 void PhysicsComponent::SetEthereal(bool ethereal)
 {
-	m_ethereal = ethereal;
+	_ethereal = ethereal;
 }
 
 

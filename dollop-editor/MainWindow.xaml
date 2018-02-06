@@ -20,7 +20,7 @@
         <ScrollViewer HorizontalAlignment="Left" Margin="10,32,0,84" Width="273" VerticalScrollBarVisibility="Auto">
             <Canvas x:Name="cnvTilePicker" Width="256" Background="#FFDADADA" MouseDown="CnvTilePicker_MouseDown" Height="834" VerticalAlignment="Top"/>
         </ScrollViewer>
-        <Slider x:Name="slrDepth" Margin="321,33,0,0" VerticalAlignment="Top" Minimum="0.0" SmallChange="0.1" Value="5" TickPlacement="TopLeft" TickFrequency="0.5" IsSnapToTickEnabled="True" ValueChanged="SlrDepth_ValueChanged" HorizontalAlignment="Left" Width="433"/>
+        <Slider x:Name="slrDepth" Margin="321,33,0,0" VerticalAlignment="Top" Minimum="0.0" SmallChange="0.1" Value="5" TickPlacement="TopLeft" TickFrequency="0.5" IsSnapToTickEnabled="True" ValueChanged="SlrDepth_ValueChanged" HorizontalAlignment="Left" Width="355"/>
         <TextBox x:Name="txtDepth" HorizontalAlignment="Left" Height="24" Margin="288,33,0,0" TextWrapping="NoWrap" VerticalAlignment="Top" Width="28" Text="{Binding ElementName=slrDepth,Path=Value,UpdateSourceTrigger=PropertyChanged}" PreviewKeyUp="txtDepth_PreviewKeyUp"/>
         <CheckBox x:Name="chkOpaqueView" Content="Opaque View" Margin="942,32,0,0" VerticalAlignment="Top" FontWeight="Bold" Click="ChkOpaqueView_Checked" HorizontalAlignment="Left" Width="110"/>
         <DockPanel VerticalAlignment="Top">
@@ -30,6 +30,8 @@
                     <MenuItem Name="menuOpen" Header="_Open" Click="MenuOpen_Click" />
                     <MenuItem Name="menuSave" Header="_Save" Click="MenuSave_Click" />
                     <MenuItem Name="menuSaveAs" Header="_Save As" Click="menuSaveAs_Click" />
+                    <Separator />
+                    <MenuItem Name="menuReloadSprites" Header="_Reload Sprites" Click="menuReloadSprites_Click" />
                     <Separator />
                     <MenuItem Header="_Exit" />
                 </MenuItem>
@@ -53,6 +55,7 @@
             <Image Name="imgAttributeMode" HorizontalAlignment="Left" Height="32" VerticalAlignment="Top" Width="32" Source="res/AttributeMode.png" PreviewMouseUp="imgAttributeMode_PreviewMouseUp"/>
         </Grid>
         <CheckBox Name="chkFill" Content="Fill" HorizontalAlignment="Left" Margin="896,32,0,0" VerticalAlignment="Top" FontWeight="Bold" Checked="CheckBox_Checked"/>
+        <Button Name="btnStart" Content="Start" HorizontalAlignment="Left" Margin="681,25,0,0" VerticalAlignment="Top" Width="82" Height="29" Click="btnStart_Click"/>
 
 
     </Grid>

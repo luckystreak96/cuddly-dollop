@@ -20,7 +20,6 @@
 class MapHandler
 {
 public:
-	MapHandler();
 	MapHandler(unsigned int id, std::shared_ptr<JsonHandler> jh);
 	~MapHandler();
 	MapHandler(const std::string& filePath);

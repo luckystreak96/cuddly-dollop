@@ -5773,6 +5773,46 @@
       "z": 4.0,
       "sprite": "ledge_ru.png",
       "walkOn": false
+    },
+    {
+      "x": 7.0,
+      "y": 4.0,
+      "z": 3.9,
+      "sprite": "ledge_end_r.png",
+      "deco": true
+    },
+    {
+      "x": 2.0,
+      "y": 4.0,
+      "z": 3.9,
+      "sprite": "ledge_end_r.png",
+      "deco": true
+    },
+    {
+      "x": 2.0,
+      "y": 4.0,
+      "z": 3.8,
+      "sprite": "ledge_end_l.png",
+      "deco": true
+    },
+    {
+      "x": 7.0,
+      "y": 4.0,
+      "z": 3.8,
+      "sprite": "ledge_end_l.png",
+      "deco": true
+    },
+    {
+      "x": 3.0,
+      "y": 5.0,
+      "z": 4.5,
+      "sprite": "sand_path_lud.png"
+    },
+    {
+      "x": 6.0,
+      "y": 5.0,
+      "z": 4.5,
+      "sprite": "sand_path_urd.png"
     }
   ],
   "entities": [

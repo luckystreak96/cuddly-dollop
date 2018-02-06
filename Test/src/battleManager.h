@@ -11,6 +11,7 @@
 #include "battleHUD.h"
 
 //enum BattleState { BS_Animation, BS_Attacking, BS_SelectAction, BS_SelectTargets, BS_ActionProgress, BS_ActionDone };
+const int MAX_FIGHTERS_PER_SIDE = 4;
 
 class BattleManager
 {

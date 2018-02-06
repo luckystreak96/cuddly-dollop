@@ -15,6 +15,7 @@ using System.Windows.Media.Media3D;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.IO;
+using System.Diagnostics;
 
 namespace dollop_editor
 {
@@ -64,7 +65,7 @@ namespace dollop_editor
                 Stroke = new SolidColorBrush() { Color = Colors.Black, Opacity = 1.0 },
                 StrokeThickness = 3.0
             };
-            selectedPickerTile.SetCurrentValue(Canvas.ZIndexProperty, 20);
+            selectedPickerTile.SetCurrentValue(Canvas.ZIndexProperty, 100);
             selectedPickerTile.RenderTransform = new TranslateTransform(0, 0);
             selectedMapTile = new Rectangle()
             {
@@ -73,7 +74,7 @@ namespace dollop_editor
                 Stroke = new SolidColorBrush() { Color = Colors.LawnGreen, Opacity = 1.0 },
                 StrokeThickness = 3.0
             };
-            selectedMapTile.SetCurrentValue(Canvas.ZIndexProperty, 20);
+            selectedMapTile.SetCurrentValue(Canvas.ZIndexProperty, 100);
             selectedMapTile.RenderTransform = new TranslateTransform(0, 0);
             cnvTilePicker.Children.Add(selectedPickerTile);
 
@@ -97,7 +98,7 @@ namespace dollop_editor
 
         private void UpdateSelectedMapTile()
         {
-            selectedMapTile.SetCurrentValue(Canvas.ZIndexProperty, 20);
+            selectedMapTile.SetCurrentValue(Canvas.ZIndexProperty, 100);
             selectedMapTile.RenderTransform = new TranslateTransform(clickprevx * editor.TileSize, clickprevy * editor.TileSize);
             if (!opaqueView)
                 selectedMapTile.Stroke.Opacity = 1;
@@ -107,7 +108,7 @@ namespace dollop_editor
 
         private void UpdateSelectedMapTile(int x, int y)
         {
-            selectedMapTile.SetCurrentValue(Canvas.ZIndexProperty, 20);
+            selectedMapTile.SetCurrentValue(Canvas.ZIndexProperty, 100);
             selectedMapTile.RenderTransform = new TranslateTransform((x / editor.TileSize) * editor.TileSize, (y / editor.TileSize) * editor.TileSize);
             if (!opaqueView)
                 selectedMapTile.Stroke.Opacity = 1;
@@ -246,6 +247,7 @@ namespace dollop_editor
         // Sets up the images for the sprite selecter
         private void SetupTileSelecter()
         {
+            cnvTilePicker.Children.Clear();
             int offx = editor.TileSize;
             int offy = 0;
             int width = (int)cnvTilePicker.Width;
@@ -307,10 +309,15 @@ namespace dollop_editor
                 Point3D key = new Point3D(x, editor.InvertHeight(y), slrDepth.Value);
                 if (editor.Tiles.ContainsKey(key))
                 {
-                    if (editor.Tiles[key].Tag != null)
+                    if ((string)editor.Tiles[key].Tag == "noWalkOn")
                     {
-                        editor.Tiles[key].Stroke = null;
+                        editor.Tiles[key].Tag = "deco";
+                        editor.Tiles[key].Stroke = new SolidColorBrush(Colors.Blue);
+                    }
+                    else if((string)editor.Tiles[key].Tag == "deco")
+                    {
                         editor.Tiles[key].Tag = null;
+                        editor.Tiles[key].Stroke = null;
                     }
                     else
                     {
@@ -749,6 +756,21 @@ namespace dollop_editor
         {
             Localization loc = new Localization();
             loc.Show();
+        }
+
+        private void menuReloadSprites_Click(object sender, RoutedEventArgs e)
+        {
+            editor.PopulateBrushes();
+            SetupTileSelecter();
+            cnvTilePicker.Children.Add(selectedPickerTile);
+        }
+
+        private void btnStart_Click(object sender, RoutedEventArgs e)
+        {
+            Process process = new Process();
+            process.StartInfo.WorkingDirectory = "C:/Users/yanik/Documents/cuddly-dollop/Debug/";
+            process.StartInfo.FileName = "Cuddly-dollop.exe";
+            process.Start();
         }
     }
 }
