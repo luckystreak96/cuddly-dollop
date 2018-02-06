@@ -7,7 +7,6 @@ AnimJumpTo::AnimJumpTo(Vector3f position, Actor_ptr target)
 	_initialPos = target->GetPosRef();
 	_speed = (_destination - _initialPos) / 30.0f;
 	_speed.z = 0;
-	_done = false;
 	_progress = 0;
 	_duration = 1;
 }
@@ -19,7 +18,7 @@ void AnimJumpTo::Update()
 		return;
 
 	// Set position
-	Vector3f result = MathUtils::FindPositionInParabola(_progress, _initialPos, _destination);
+	Vector3f result = MathUtils::FindPositionInParabola(_progress / _duration, _initialPos, _destination);
 	_target->SetPhysics(result, Vector3f());
 
 	// Update percent

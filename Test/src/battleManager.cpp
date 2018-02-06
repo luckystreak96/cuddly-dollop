@@ -62,12 +62,15 @@ void BattleManager::Update()
 		UpdateLogic();
 		if (_animations.size() > 0)
 		{
-			_animations.front()->Update();
-			if (_animations.front()->_done)
+			for (int i = 0; i < _animations.size(); i++)
 			{
-				_animations.pop_front();
-				//if (_animations.size() == 0)
-				//	_state = BS_ActionProgress;
+				if(_animations.at(i)->_async || i == 0)
+					_animations.at(i)->Update();
+				if (_animations.at(i)->_done)
+				{
+					_animations.erase(_animations.begin() + i);
+					i--;
+				}
 			}
 		}
 
@@ -82,9 +85,9 @@ void BattleManager::Update()
 }
 
 // Move Animation
-void BattleManager::MoveToLight(bool moveup)
+void BattleManager::MoveToLight(bool moveup, bool turnEnd)
 {
-	if (!_owner->Dead)
+	if (!_owner->Dead || turnEnd)
 		if (moveup)
 		{
 			Anim_ptr move1 = Anim_ptr(new AnimMoveTo(_owner->GetPos() + Vector3f(_owner->Team == 0 ? 1.f : -1, 0, 0), _owner));
@@ -92,7 +95,7 @@ void BattleManager::MoveToLight(bool moveup)
 		}
 		else
 		{
-			Anim_ptr move2 = Anim_ptr(new AnimMoveTo(_owner->GetPos() + Vector3f(_owner->Team == 0 ? -1.f : 1, 0, 0), _owner));
+			Anim_ptr move2 = Anim_ptr(new AnimMoveTo(_owner->BasePosition, _owner));
 			_animations.push_back(move2);
 		}
 }
@@ -122,7 +125,10 @@ void BattleManager::TurnStart()
 	if (_owner->Dead)
 		_state = BS_TurnEnd;
 	else
+	{
+		_owner->TurnStart(_actors);
 		_state = BS_SelectAction;
+	}
 }
 // BS_SelectAction and BS_SelectTarget are both purely input handled for the player
 void BattleManager::SelectAction()
@@ -209,7 +215,7 @@ void BattleManager::ActionDone()
 }
 void BattleManager::TurnEnd()
 {
-	MoveToLight(false);
+	MoveToLight(false, true);
 	CycleActors();
 	_state = BS_TurnStart;
 }

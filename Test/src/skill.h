@@ -26,6 +26,7 @@ public:
 	virtual void Reset();
 	virtual bool IsReady();
 	virtual void SpawnDamageText(Actor_ptr target, int dmg);
+	virtual void SpawnStatusText(Actor_ptr target, std::string statusName);
 	bool AnimationsDone();
 
 public:

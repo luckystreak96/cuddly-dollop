@@ -31,7 +31,7 @@ private:
 	void Select(int target);
 	void RemoveChooseSkillText();
 	void SetChooseSkillText();
-	void MoveToLight(bool moveUp);
+	void MoveToLight(bool moveUp, bool turnEnd = false);
 
 	void UpdateSkillDisplay();
 	void TurnStart();

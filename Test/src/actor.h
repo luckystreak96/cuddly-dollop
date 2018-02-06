@@ -21,6 +21,7 @@ public:
 	void SetColor();
 	bool RespectsTargeting(Actor_ptr ap, int tm);
 	void Update();
+	void TurnStart(std::vector<Actor_ptr>& actors);
 
 public:
 	std::string Name;
@@ -28,10 +29,12 @@ public:
 	int MaxHealth;
 	int Speed;
 	bool Dead;
+	Actor_ptr Protector;
 	int Team;
 	bool Selected;
 	bool ChoosingAction;
 	std::vector<Skill_ptr> Skills;
+	Vector3f BasePosition;
 	static inline bool ActorSpeedSort(Actor_ptr a, Actor_ptr b) { return a->Speed > b->Speed; }
 
 protected:

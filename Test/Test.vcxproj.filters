@@ -413,6 +413,9 @@
     <ClInclude Include="src\animMoveTo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\skillProtect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -692,6 +695,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\animMoveTo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\skillProtect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\battleAnimation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

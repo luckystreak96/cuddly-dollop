@@ -9,11 +9,12 @@ typedef std::shared_ptr<BattleAnimation> Anim_ptr;
 class BattleAnimation
 {
 public:
-	BattleAnimation() {}
+	BattleAnimation();
 	virtual void Update() {}
 
 public:
 	bool _done;
+	bool _async;
 	double _duration;
 	double _progress;
 };

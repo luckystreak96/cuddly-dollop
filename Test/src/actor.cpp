@@ -20,6 +20,16 @@ void Actor::SetDefault()
 	Team = 0;
 	Selected = false;
 	ChoosingAction = false;
+	Protector = NULL;
+}
+
+void Actor::TurnStart(std::vector<Actor_ptr>& actors)
+{
+	for (auto a : actors)
+	{
+		if (a->Protector.get() == this)
+			a->Protector = NULL;
+	}
 }
 
 void Actor::ApplyLethal()

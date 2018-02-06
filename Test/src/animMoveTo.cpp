@@ -9,7 +9,7 @@ AnimMoveTo::AnimMoveTo(Vector3f position, Actor_ptr target)
 	_speed.z = 0;
 	_done = false;
 	_progress = 0;
-	_duration = 0.3;
+	_duration = 0.4;
 }
 
 void AnimMoveTo::Update()

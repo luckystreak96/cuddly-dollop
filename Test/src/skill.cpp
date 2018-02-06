@@ -45,6 +45,25 @@ bool Skill::IsReady()
 	return _currentCooldown <= 0;
 }
 
+void Skill::SpawnStatusText(Actor_ptr target, std::string statusText)
+{
+	Vector3f pos;
+	Font_ptr font;
+
+	// Setup font
+	pos = target->GetPos() + Vector3f(0.5f, 1.f, 0);
+	pos.z = 0;
+
+	// create font
+	font = Font_ptr(new FontFloat(0.7));
+	font->SetText(statusText, pos, true);
+
+	// color
+	dynamic_cast<FontFloat*>(font.get())->Color = Vector3f(0, 0.4f, 0.9f);
+
+	FontManager::GetInstance().AddFont(font);
+}
+
 void Skill::SpawnDamageText(Actor_ptr target, int dmg)
 {
 	Vector3f pos;

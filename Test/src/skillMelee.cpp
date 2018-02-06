@@ -11,7 +11,7 @@ SkillMelee::SkillMelee()
 
 void SkillMelee::DefaultSetup()
 {
-	_name = "Virtual class";
+	_name = "Skill Melee -_-";
 }
 
 // Must return the new state
@@ -24,7 +24,19 @@ BattleState SkillMelee::Start(std::vector<Actor_ptr>* targets, std::deque<Actor_
 	_targets = targets;
 	_basePos = _owner->GetPos();
 	// INSERT JUMP FOREWARD ANIMATION HERE
-	_anims->push_back(Anim_ptr(new AnimJumpTo(_targets->at(0)->GetPos() - Vector3f(_owner->Team == 0 ? 0.7f : -0.7f, 0, 0), _owner)));
+	float distance = _owner->Team == 0 ? 0.7f : -0.7f;
+	bool protector = _targets->at(0)->Protector != NULL;
+	if (protector)
+		distance *= 2.0f;
+	_anims->push_back(Anim_ptr(new AnimJumpTo(_targets->at(0)->GetPos() - Vector3f(distance, 0, 0), _owner)));
+	if (protector)
+	{
+		_targets->push_back(_targets->at(0));
+		_targets->at(0) = _targets->at(0)->Protector;
+		_anims->push_back(Anim_ptr(new AnimJumpTo(_targets->at(1)->GetPos() - Vector3f(distance / 2.0f, 0, 0), _targets->at(0))));
+		_anims->back()->_duration = 0.2f;
+		_anims->back()->_async = true;
+	}
 
 	return BS_ActionProgress;
 }
@@ -63,6 +75,13 @@ void SkillMelee::Update()
 		if (!AnimationsDone())
 			break;
 		_anims->push_back(Anim_ptr(new AnimJumpTo(_basePos, _owner)));
+		// Someone is protecting
+		if (_targets->size() > 1)
+		{
+			_anims->push_back(Anim_ptr(new AnimJumpTo(_targets->at(0)->BasePosition, _targets->at(0))));
+			_anims->back()->_duration = 0.2f;
+			_anims->back()->_async = true;
+		}
 		_animProg++;
 		break;
 	case 3:
