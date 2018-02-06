@@ -22,6 +22,7 @@ public:
 	bool RespectsTargeting(Actor_ptr ap, int tm);
 	void Update();
 	void TurnStart(std::vector<Actor_ptr>& actors);
+	void DefenseActionCommand(int& dmg);
 
 public:
 	std::string Name;

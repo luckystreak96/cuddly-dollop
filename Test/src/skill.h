@@ -27,6 +27,7 @@ public:
 	virtual bool IsReady();
 	virtual void SpawnDamageText(Actor_ptr target, int dmg);
 	virtual void SpawnStatusText(Actor_ptr target, std::string statusName);
+	void CheckActionCommand(double percentProgress);
 	bool AnimationsDone();
 
 public:
@@ -40,6 +41,10 @@ public:
 	int _cooldown;
 	int _currentCooldown;
 	int _minTargets;
+	double _actionCommandStart;
+	double _actionCommandEnd;
+	bool _actionCommandSuccess;
+	bool _triedActionCommand;
 	Actor_ptr _owner;
 	TargetMode _targetMode;
 	DefaultTarget _defaultTarget;

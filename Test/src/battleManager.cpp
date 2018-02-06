@@ -286,12 +286,15 @@ void BattleManager::ManageInput()
 
 	// Get input
 	std::set<int> input;
-	if (InputManager::GetInstance().FrameKeyStatus(GLFW_KEY_SPACE, KeyStatus::Release, 5))
+	// Handle key release to choose skills, key press for action commands
+	KeyStatus status = (_state != BS_SelectTargets && _state != BS_SelectAction)
+		? KeyPressed : Release;
+	if (InputManager::GetInstance().FrameKeyStatus(GLFW_KEY_SPACE, status, 5))
 		input.emplace(GLFW_KEY_SPACE);
-	if (InputManager::GetInstance().FrameKeyStatus(GLFW_KEY_C, KeyStatus::Release, 5))
+	if (InputManager::GetInstance().FrameKeyStatus(GLFW_KEY_C, status, 5))
 		input.emplace(GLFW_KEY_C);
 	for (int i = GLFW_KEY_RIGHT; i < GLFW_KEY_UP + 1; i++)
-		if (InputManager::GetInstance().FrameKeyStatus(i, KeyStatus::KeyPressed, 5))
+		if (InputManager::GetInstance().FrameKeyStatus(i, status, 5))
 			input.emplace(i);
 
 	// If theres an animation going, SEND THE INPUT TO THE SKILL

@@ -1,6 +1,7 @@
 #include "skill.h"
 #include "battleManager.h"
 #include "fontFloat.h"
+#include "GLFW/glfw3.h"
 
 Skill::Skill()
 {
@@ -16,16 +17,37 @@ void Skill::DefaultSetup()
 	_minTargets = 1;
 	_targetMode = TM_Alive;
 	_defaultTarget = DT_Self;
+	_actionCommandStart = 0;
+	_actionCommandEnd = 0;
+	_actionCommandSuccess = false;
+}
+
+void Skill::CheckActionCommand(double percentProgress)
+{
+	// Did you input anything
+	if (_input.size() > 0 && _input.count(GLFW_KEY_SPACE))
+	{
+		// Are you in a situation to try an action command
+		if (_triedActionCommand || _actionCommandSuccess)
+			return;
+		else if (percentProgress <= _actionCommandEnd &&
+			percentProgress >= _actionCommandStart)
+			_actionCommandSuccess = true;
+
+		_triedActionCommand = true;
+	}
 }
 
 // Must return the new state
 BattleState Skill::Start(std::vector<Actor_ptr>* targets, std::deque<Actor_ptr>* actors, std::deque<Anim_ptr>* anims, Actor_ptr owner)
 {
+	_triedActionCommand = false;
+	_actionCommandSuccess = false;
 	_owner = owner;
 	_targets = targets;
 	_actors = actors;
 	_anims = anims;
-	//std::cout << "Did nothing to: " << targets->at(0)->Name << std::endl;
+	_animProg = 0;
 	return BS_ActionDone;
 }
 

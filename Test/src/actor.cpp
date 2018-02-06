@@ -38,6 +38,11 @@ void Actor::ApplyLethal()
 	SetColor();
 }
 
+void Actor::DefenseActionCommand(int& dmg)
+{
+	dmg -= 3;
+}
+
 void Actor::SetColor()
 {
 	if (ChoosingAction)

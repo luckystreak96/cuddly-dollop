@@ -14,11 +14,21 @@ void SkillSmack::DefaultSetup()
 	_name = "Smack";
 	_targetMode = TM_Alive;
 	_defaultTarget = DT_Enemy;
+	_actionCommandStart = 0.15;
+	_actionCommandEnd = 0.5;
 }
 
 void SkillSmack::ApplyEffect()
 {
-	int dmg = rand() % 3 + 5;
+	int dmg = rand() % 3 + 4;
+	// Your team under attack from enemy -> Defense Action Command
+	if (_owner->Team != 0 && _targets->at(0)->Team == 0)
+		_targets->at(0)->DefenseActionCommand(dmg);
+	// Your team attacking -> Offense Action Command
+	else if (_owner->Team == 0)
+		dmg += _actionCommandSuccess ? 4 : 0;
+
+	// Deal the dmg
 	_targets->at(0)->TakeDamage(dmg);
 
 	// Damage text
