@@ -14,8 +14,9 @@ void SkillSmack::DefaultSetup()
 	_name = "Smack";
 	_targetMode = TM_Alive;
 	_defaultTarget = DT_Enemy;
-	_actionCommandStart = 0.15;
-	_actionCommandEnd = 0.5;
+	_ac._start = 0.15;
+	_ac._end = 0.5;
+	_ac._animProg = 1;
 }
 
 void SkillSmack::ApplyEffect()
@@ -26,7 +27,7 @@ void SkillSmack::ApplyEffect()
 		_targets->at(0)->DefenseActionCommand(dmg);
 	// Your team attacking -> Offense Action Command
 	else if (_owner->Team == 0)
-		dmg += _actionCommandSuccess ? 4 : 0;
+		dmg += _ac._success ? 4 : 0;
 
 	// Deal the dmg
 	_targets->at(0)->TakeDamage(dmg);

@@ -9,6 +9,7 @@ void Animation::SetupAnimationMetaData()
 	SpriteSheetData ssd;
 	ssd.data.emplace(AE_Attack, AnimInfo(AE_Attack, 2));
 	m_metaData.emplace("res/sprites/entities/entity_ghost.png", ssd);
+	m_metaData.emplace("res/sprites/entities/entity_slime.png", ssd);
 }
 
 SpriteSheetData Animation::GetMetaData(std::string spritesheet)

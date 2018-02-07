@@ -17,6 +17,15 @@ typedef std::shared_ptr<Skill> Skill_ptr;
 enum TargetMode { TM_Enemy, TM_Ally, TM_Alive, TM_Dead, TM_Any };
 enum DefaultTarget { DT_Self, DT_Enemy, DT_Ally };
 
+struct ActionCommand
+{
+	double _start;
+	double _end;
+	bool _success;
+	bool _tried;
+	int _animProg;
+};
+
 class Skill
 {
 public:
@@ -28,6 +37,7 @@ public:
 	virtual void SpawnDamageText(Actor_ptr target, int dmg);
 	virtual void SpawnStatusText(Actor_ptr target, std::string statusName);
 	void CheckActionCommand(double percentProgress);
+	void HandleActionCommand(double percentProgress);
 	bool AnimationsDone();
 
 public:
@@ -41,10 +51,7 @@ public:
 	int _cooldown;
 	int _currentCooldown;
 	int _minTargets;
-	double _actionCommandStart;
-	double _actionCommandEnd;
-	bool _actionCommandSuccess;
-	bool _triedActionCommand;
+	ActionCommand _ac;
 	Actor_ptr _owner;
 	TargetMode _targetMode;
 	DefaultTarget _defaultTarget;

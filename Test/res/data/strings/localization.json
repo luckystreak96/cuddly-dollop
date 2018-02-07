@@ -1,14 +1,17 @@
 {
-  "Smack": {
-    "french": "Gifle"
-  },
-  "Heal": {
-    "french": "Guérir"
-  },
-  "Player": {
-    "french": "Joueur"
-  },
-  "Ghost": {
-    "french": "Fantôme"
-  }
+    "Smack": {
+        "french": "Gifle"
+    },
+    "Heal": {
+        "french": "Guérir"
+    },
+    "Player": {
+        "french": "Joueur"
+    },
+    "Ghost": {
+        "french": "Fantôme"
+    },
+    "Slime": {
+        "french": "Gel"
+    }
 }

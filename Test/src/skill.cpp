@@ -17,9 +17,10 @@ void Skill::DefaultSetup()
 	_minTargets = 1;
 	_targetMode = TM_Alive;
 	_defaultTarget = DT_Self;
-	_actionCommandStart = 0;
-	_actionCommandEnd = 0;
-	_actionCommandSuccess = false;
+	_ac._start = 0;
+	_ac._end = 0;
+	_ac._success = false;
+	_ac._animProg = 1;
 }
 
 void Skill::CheckActionCommand(double percentProgress)
@@ -28,27 +29,43 @@ void Skill::CheckActionCommand(double percentProgress)
 	if (_input.size() > 0 && _input.count(GLFW_KEY_SPACE))
 	{
 		// Are you in a situation to try an action command
-		if (_triedActionCommand || _actionCommandSuccess)
+		if (_ac._tried|| _ac._success)
 			return;
-		else if (percentProgress <= _actionCommandEnd &&
-			percentProgress >= _actionCommandStart)
-			_actionCommandSuccess = true;
+		else if (percentProgress <= _ac._end &&
+			percentProgress >= _ac._start)
+			_ac._success = true;
 
-		_triedActionCommand = true;
+		_ac._tried = true;
 	}
 }
 
 // Must return the new state
 BattleState Skill::Start(std::vector<Actor_ptr>* targets, std::deque<Actor_ptr>* actors, std::deque<Anim_ptr>* anims, Actor_ptr owner)
 {
-	_triedActionCommand = false;
-	_actionCommandSuccess = false;
+	_ac._tried = false;
+	_ac._success = false;
 	_owner = owner;
 	_targets = targets;
 	_actors = actors;
 	_anims = anims;
 	_animProg = 0;
 	return BS_ActionDone;
+}
+
+void Skill::HandleActionCommand(double percentProgress)
+{
+	// Handle Action command stuff
+	if (_ac._animProg == _animProg)
+	{
+		if (percentProgress <= _ac._end && percentProgress >= _ac._start)
+			_owner->SetColorAll(Vector3f(2.0f, 2.0f, 2.0f), 1.0f);
+		else
+			_owner->SetColor();
+
+		// Handle input for action command
+		// Can only happen if you press within the right animation
+		CheckActionCommand(percentProgress);
+	}
 }
 
 void Skill::Update()

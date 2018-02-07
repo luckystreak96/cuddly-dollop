@@ -47,8 +47,7 @@ void SkillMelee::Update()
 		duration = _anims->front()->_duration;
 	}
 
-	// Handle input for action command
-	CheckActionCommand(progress / duration);
+	HandleActionCommand(progress / duration);
 
 	switch (_animProg)
 	{
@@ -68,7 +67,7 @@ void SkillMelee::Update()
 		{
 			progress = _anims->front()->_progress;
 			duration = _anims->front()->_duration;
-			if(TimingCondition(progress, duration))
+			if (TimingCondition(progress, duration))
 			{
 				ApplyEffect();
 				_animProg++;
