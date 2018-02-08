@@ -4,22 +4,27 @@
 
 SkillHeal::SkillHeal()
 {
-	Skill::DefaultSetup();
+	//Skill::DefaultSetup();
 	DefaultSetup();
 }
 
 void SkillHeal::DefaultSetup()
 {
 	_name = "Heal";
+	_skillType = ST_Healing;
 	_targetMode = TM_Any;
 	_defaultTarget = DT_Self;
 }
 
+int SkillHeal::CalculateDamage()
+{
+	int result = 5 + _owner->Strength / 2;
+	return result;
+}
+
 void SkillHeal::ApplyEffect()
 {
-	int dmg = 0;
-	dmg -= rand() % 2 + 5;
-	_targets->at(0)->TakeDamage(dmg);
+	int dmg = HandleDamage();
 
 	// Damage text
 	SpawnDamageText(_targets->at(0), dmg);

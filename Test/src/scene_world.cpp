@@ -117,7 +117,7 @@ void SceneWorld::ManageInput()
 
 void SceneWorld::Interact()
 {
-	if (InputManager::GetInstance().FrameKeyStatus(' ', KeyStatus::KeyPressed) && m_player) {
+	if (InputManager::GetInstance().FrameKeyStatus('X', KeyStatus::KeyPressed) && m_player) {
 		Vector3f pos = m_player->Physics()->GetCenter();
 		Direction dir = m_player->Graphics()->GetDirection();
 

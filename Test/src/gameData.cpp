@@ -349,12 +349,32 @@ void GameData::SaveGameData()
 
 		// maxHealth
 		first.SetString(StringRef("max_health"), allocator);
-		second.SetInt(actor->MaxHealth);
+		second.SetInt(actor->GetMaxHealth());
 		ob.AddMember(first, second, allocator);
 
-		// speed 
+		// speed
 		first.SetString(StringRef("speed"), allocator);
 		second.SetInt(actor->Speed);
+		ob.AddMember(first, second, allocator);
+
+		// crit
+		first.SetString(StringRef("crit"), allocator);
+		second.SetInt(actor->Crit);
+		ob.AddMember(first, second, allocator);
+
+		// defense 
+		first.SetString(StringRef("defense"), allocator);
+		second.SetInt(actor->Defense);
+		ob.AddMember(first, second, allocator);
+
+		// strength
+		first.SetString(StringRef("strength"), allocator);
+		second.SetInt(actor->Strength);
+		ob.AddMember(first, second, allocator);
+
+		// endurance
+		first.SetString(StringRef("endurance"), allocator);
+		second.SetInt(actor->GetEndurance());
 		ob.AddMember(first, second, allocator);
 
 		// dead

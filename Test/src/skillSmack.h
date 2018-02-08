@@ -10,6 +10,7 @@ class SkillSmack : public SkillMelee
 public:
 	SkillSmack();
 	virtual void ApplyEffect();
+	int CalculateDamage();
 
 protected:
 	void DefaultSetup();

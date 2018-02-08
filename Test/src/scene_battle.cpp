@@ -114,12 +114,12 @@ void SceneBattle::ManageInput()
 {
 	Scene::ManageInput();
 
-	if (InputManager::GetInstance().FrameKeyStatus('Z', AnyRelease, 5))
-	{
-		m_zoom = !m_zoom;
-		float value = m_zoom ? 2.0f : 1.0f;
-		m_World->SetScale(value, value, 1);
-	}
+	//if (InputManager::GetInstance().FrameKeyStatus('Z', AnyRelease, 5))
+	//{
+	//	m_zoom = !m_zoom;
+	//	float value = m_zoom ? 2.0f : 1.0f;
+	//	m_World->SetScale(value, value, 1);
+	//}
 }
 
 SceneGenData SceneBattle::Update()

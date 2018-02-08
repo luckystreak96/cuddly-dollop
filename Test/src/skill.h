@@ -14,16 +14,20 @@ enum BattleState { BS_TurnStart, BS_SelectAction, BS_SelectTargets, BS_ActionPro
 class Skill;
 typedef std::shared_ptr<Skill> Skill_ptr;
 
+enum ActionCommandType { ACT_Defend, ACT_Special };
+enum SkillType { ST_Physical, ST_Magical, ST_Healing };
 enum TargetMode { TM_Enemy, TM_Ally, TM_Alive, TM_Dead, TM_Any };
 enum DefaultTarget { DT_Self, DT_Enemy, DT_Ally };
 
 struct ActionCommand
 {
 	double _start;
+	double _startHard;
 	double _end;
 	bool _success;
 	bool _tried;
 	int _animProg;
+	ActionCommandType _type;
 };
 
 class Skill
@@ -36,6 +40,8 @@ public:
 	virtual bool IsReady();
 	virtual void SpawnDamageText(Actor_ptr target, int dmg);
 	virtual void SpawnStatusText(Actor_ptr target, std::string statusName);
+	virtual int CalculateDamage() { return 0; }
+	virtual int HandleDamage();
 	void CheckActionCommand(double percentProgress);
 	void HandleActionCommand(double percentProgress);
 	bool AnimationsDone();
@@ -46,7 +52,9 @@ public:
 	std::deque<Anim_ptr>* _anims;
 	std::set<int> _input;
 	std::string _name;
+	SkillType _skillType;
 	bool _done;
+	bool _critting;
 	int _animProg;
 	int _cooldown;
 	int _currentCooldown;

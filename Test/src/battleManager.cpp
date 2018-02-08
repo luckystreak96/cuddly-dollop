@@ -289,10 +289,10 @@ void BattleManager::ManageInput()
 	// Handle key release to choose skills, key press for action commands
 	KeyStatus status = (_state != BS_SelectTargets && _state != BS_SelectAction)
 		? KeyPressed : Release;
-	if (InputManager::GetInstance().FrameKeyStatus(GLFW_KEY_SPACE, status, 5))
-		input.emplace(GLFW_KEY_SPACE);
-	if (InputManager::GetInstance().FrameKeyStatus(GLFW_KEY_C, status, 5))
-		input.emplace(GLFW_KEY_C);
+	if (InputManager::GetInstance().FrameKeyStatus(GLFW_KEY_X, status, 5))
+		input.emplace(GLFW_KEY_X);
+	if (InputManager::GetInstance().FrameKeyStatus(GLFW_KEY_Z, status, 5))
+		input.emplace(GLFW_KEY_Z);
 	for (int i = GLFW_KEY_RIGHT; i < GLFW_KEY_UP + 1; i++)
 		if (InputManager::GetInstance().FrameKeyStatus(i, status, 5))
 			input.emplace(i);
@@ -447,7 +447,7 @@ void BattleManager::ManageInput()
 		}
 	}
 
-	if (input.count(GLFW_KEY_SPACE))
+	if (input.count(GLFW_KEY_X))
 	{
 		if (_state == BS_SelectAction)
 		{
@@ -475,7 +475,7 @@ void BattleManager::ManageInput()
 		}
 	}
 
-	if (input.count(GLFW_KEY_C))
+	if (input.count(GLFW_KEY_Z))
 	{
 		if (_state == BS_SelectTargets)
 		{

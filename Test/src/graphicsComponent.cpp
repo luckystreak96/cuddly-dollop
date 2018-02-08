@@ -249,6 +249,10 @@ void GraphicsComponent::SetBuffers()
 
 void GraphicsComponent::ResetVBO()
 {
+	// Crashes if size is 0 lol
+	if (m_vertices.size() <= 0)
+		return;
+
 	// This doesn't work well if the number of vertices changes - to be kept in mind (glBufferSubData)
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 	glBufferSubData(GL_ARRAY_BUFFER, 0, m_vertices.size() * sizeof(Vertex), &m_vertices[0]);

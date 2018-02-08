@@ -13,6 +13,11 @@ Actor_ptr ActorFactory::BuildBaseAlly()
 	result->Skills.push_back(heal);
 
 	result->Speed = 1;
+	result->Strength = 2;
+	result->Crit = 3;
+	result->Defense = 1;
+	result->SetEndurance(4);
+	result->Health = result->GetMaxHealth();
 
 	return result;
 }
@@ -21,6 +26,11 @@ Actor_ptr ActorFactory::BuildBaseEnemy()
 {
 	Actor_ptr result = Actor_ptr(new Actor());
 	result->Speed = 2;
+	result->Strength = 2;
+	result->Crit = 1;
+	result->Defense = 0;
+	result->SetEndurance(2);
+	result->Health = result->GetMaxHealth();
 	result->Name = "Slime";
 	result->Team = 1;
 	result->SetTexture("res/sprites/entities/entity_slime.png");
@@ -39,13 +49,25 @@ std::vector<Actor_ptr> ActorFactory::BuildParty(rapidjson::GenericArray<false, r
 			actor->Health = a["health"].GetInt();
 
 		if (a.HasMember("max_health"))
-			actor->MaxHealth = a["max_health"].GetInt();
+			actor->SetMaxHealth(a["max_health"].GetInt());
 
 		if (a.HasMember("name"))
 			actor->Name = a["name"].GetString();
 
 		if (a.HasMember("speed"))
 			actor->Speed = a["speed"].GetInt();
+
+		if (a.HasMember("strength"))
+			actor->Strength = a["strength"].GetInt();
+
+		if (a.HasMember("endurance"))
+			actor->SetEndurance(a["endurance"].GetInt());
+
+		if (a.HasMember("defense"))
+			actor->Defense = a["defense"].GetInt();
+
+		if (a.HasMember("crit"))
+			actor->Crit = a["crit"].GetInt();
 
 		if (a.HasMember("dead"))
 			actor->Dead = a["dead"].GetBool();
