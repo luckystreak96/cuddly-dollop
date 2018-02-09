@@ -10,7 +10,7 @@ Actor::Actor()
 void Actor::SetDefault()
 {
 	Skills.push_back(Skill_ptr(new SkillSmack()));
-	Skills.push_back(Skill_ptr(new Skill()));
+	//Skills.push_back(Skill_ptr(new Skill()));
 	SetTexture("res/sprites/entities/entity_ghost.png");
 	Name = "Player";
 	Health = 10;
