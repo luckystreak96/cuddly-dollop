@@ -44,7 +44,7 @@ void PlayerGraphicsComponent::DrawOutline(bool withTex)
 
 	GraphicsComponent::UpdateMModels();
 	GraphicsComponent::Draw(withTex);
-	
+
 	//Bloom::GetInstance().End(false);
 
 	glEnable(GL_DEPTH_TEST);
@@ -99,8 +99,21 @@ void PlayerGraphicsComponent::Update()
 
 	//Change the sprite depending on direction
 	//m_animation = m_direction;
-	if (dir != m_direction && !_specialAnimation)
-		SetAnimation((Anim_Enum)((int)m_direction), m_texture);
+	if (m_texture == "res/sprites/entities/entity_girl.png")
+		int lol = 69;
+	if ((dir != m_direction || (m_vel == 0 && _animation > 3) || (m_vel != 0 && _animation < 3)) && !_specialAnimation)
+	{
+		if (m_texture == "res/sprites/entities/entity_girl.png")
+			int lol = 69;
+		Anim_Enum animation;
+		if (m_vel == 0)
+		{
+			animation = (Anim_Enum)((int)m_direction);
+		}
+		else
+			animation = GetMoveDirection((Anim_Enum)((int)m_direction));
+		SetAnimation(animation, m_texture);
+	}
 
 	bool forceUpdate = (dir != m_direction && !_specialAnimation) || (m_direction != m_lastInteraction) || m_firstLoad;
 	if (SetTileModelTC(&m_vertices, forceUpdate))

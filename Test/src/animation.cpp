@@ -7,9 +7,30 @@ std::map<std::string, SpriteSheetData> Animation::m_metaData = std::map<std::str
 void Animation::SetupAnimationMetaData()
 {
 	SpriteSheetData ssd;
-	ssd.data.emplace(AE_Attack, AnimInfo(AE_Attack, 2));
+	ssd.data.emplace(AE_Attack, AnimInfo(AE_Attack, 0, 1));
 	m_metaData.emplace("res/sprites/entities/entity_ghost.png", ssd);
 	m_metaData.emplace("res/sprites/entities/entity_slime.png", ssd);
+
+	// Girl has walk animation
+	ssd.data.at(AE_LeftMove)._start = 2;
+	ssd.data.at(AE_LeftMove)._end = 5;
+	ssd.data.at(AE_LeftMove)._delay = 140;
+	ssd.data.at(AE_RightMove)._start = 2;
+	ssd.data.at(AE_RightMove)._end = 5;
+	ssd.data.at(AE_RightMove)._delay = 140;
+	ssd.data.at(AE_UpMove)._start = 2;
+	ssd.data.at(AE_UpMove)._end = 5;
+	ssd.data.at(AE_UpMove)._delay = 140;
+	ssd.data.at(AE_DownMove)._start = 2;
+	ssd.data.at(AE_DownMove)._end = 5;
+	ssd.data.at(AE_DownMove)._delay = 140;
+	// Stand delay is slower
+	int delay = 800;
+	ssd.data.at(AE_Down)._delay = delay;
+	ssd.data.at(AE_Up)._delay = delay;
+	ssd.data.at(AE_Left)._delay = delay;
+	ssd.data.at(AE_Right)._delay = delay;
+	m_metaData.emplace("res/sprites/entities/entity_girl.png", ssd);
 }
 
 SpriteSheetData Animation::GetMetaData(std::string spritesheet)
@@ -50,11 +71,12 @@ void Animation::AnimationCounter(float et)
 
 void Animation::SetDefaults()
 {
-	m_delay = 160;
+	m_delay = 260;
 	m_numFrames = 2;
 	m_horizontal = true;
-	_animation = AE_Down;
+	_row = AE_Down;
 	_sprite = 0;
+	m_start = 0;
 	m_width = 2;
 	m_height = 4;
 	_specialAnimation = false;
@@ -63,11 +85,16 @@ void Animation::SetDefaults()
 // Choose which animation to go for
 void Animation::SetAnimation(Anim_Enum anim, std::string spritesheet)
 {
-	if ((int)anim < m_height)
-	{
-		_animation = (int)GetMetaData(spritesheet).data.at(anim).position;
-		m_numFrames = (int)GetMetaData(spritesheet).data.at(anim).numFrames;
-	}
+	//if ((int)anim < m_height)
+	//{
+		auto& data = GetMetaData(spritesheet).data;
+		_row = (int)data.at(anim)._position;
+		_animation = anim;
+		m_numFrames = abs(data.at(anim)._end - data.at(anim)._start) + 1;
+		m_start = data.at(anim)._start;
+		m_delay = data.at(anim)._delay;
+		m_tracking = m_progress;
+	//}
 }
 
 bool Animation::SetTileModelTC(std::vector<Vertex>* verts, bool forceUpdate)
@@ -79,7 +106,7 @@ bool Animation::SetTileModelTC(std::vector<Vertex>* verts, bool forceUpdate)
 	Vector2f(1, 1)
 	};
 
-	int next = (m_progress % (m_delay * m_numFrames)) / m_delay;
+	int next = ((m_progress - m_tracking) % (m_delay * m_numFrames)) / m_delay + m_start;
 	if (_sprite == next && !forceUpdate && !_specialAnimation)
 		return false;
 
@@ -88,8 +115,8 @@ bool Animation::SetTileModelTC(std::vector<Vertex>* verts, bool forceUpdate)
 
 	float x_increment = 1.f / (float)m_width;
 	float y_increment = 1.f / (float)m_height;
-	float x = m_horizontal ? (float)(_sprite) / (float)m_width : (float)(m_width - (_animation + 1)) * x_increment;
-	float y = m_horizontal ? (float)(m_height - (_animation + 1)) * y_increment : (float)(_sprite + 1) / (float)m_height;
+	float x = m_horizontal ? (float)(_sprite) / (float)m_width : (float)(m_width - (_row + 1)) * x_increment;
+	float y = m_horizontal ? (float)(m_height - (_row + 1)) * y_increment : (float)(_sprite + 1) / (float)m_height;
 	//x = 1 - x;
 	//y = 1 - y;
 
@@ -102,4 +129,19 @@ bool Animation::SetTileModelTC(std::vector<Vertex>* verts, bool forceUpdate)
 		verts->at(i).tex.y = vecs[i].y == 0 ? y + halfpixY : y + y_increment - halfpixY;
 	}
 	return true;
+}
+
+
+Anim_Enum Animation::GetMoveDirection(Anim_Enum direction)
+{
+	if (direction == AE_Left)
+		return AE_LeftMove;
+	else if (direction == AE_Right)
+		return AE_RightMove;
+	else if (direction == AE_Up)
+		return AE_UpMove;
+	else if (direction == AE_Down)
+		return AE_DownMove;
+	else
+		return AE_Down;
 }

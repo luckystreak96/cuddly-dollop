@@ -8,24 +8,33 @@
 #include <time.h>
 
 //enum Direction { dir_Up, dir_Right, dir_Down, dir_Left };
-enum Anim_Enum { AE_Left, AE_Down, AE_Right, AE_Up, AE_Attack, AE_Last };
+enum Anim_Enum { AE_Left, AE_Down, AE_Right, AE_Up, AE_Attack, AE_LeftMove, AE_DownMove, AE_RightMove, AE_UpMove, AE_Last };
 
 struct AnimInfo
 {
-	AnimInfo(int pos, int numFrame) { position = pos; numFrames = numFrame; }
+	AnimInfo(int pos, int start, int end, int delay = 160) { _position = pos; _start = start; _end = end; _delay = delay; }
 
 	// Which row the animation is in
-	int position;
-	int numFrames;
+	int _position;
+	// which sprite does it start at
+	int _start;
+	// which sprite does it end at
+	int _end;
+	// delay between frames of the animation
+	int _delay;
 };
 
 struct SpriteSheetData
 {
 	SpriteSheetData() {
-		data.emplace(AE_Down, AnimInfo(AE_Down, 2));
-		data.emplace(AE_Up, AnimInfo(AE_Up, 2));
-		data.emplace(AE_Left, AnimInfo(AE_Left, 2));
-		data.emplace(AE_Right, AnimInfo(AE_Right, 2));
+		data.emplace(AE_Down, AnimInfo(AE_Down, 0, 1, 400));
+		data.emplace(AE_Up, AnimInfo(AE_Up, 0, 1, 400));
+		data.emplace(AE_Left, AnimInfo(AE_Left, 0, 1, 400));
+		data.emplace(AE_Right, AnimInfo(AE_Right, 0, 1, 400));
+		data.emplace(AE_DownMove, AnimInfo(AE_Down, 0, 1, 260));
+		data.emplace(AE_UpMove, AnimInfo(AE_Up, 0, 1, 260));
+		data.emplace(AE_LeftMove, AnimInfo(AE_Left, 0, 1, 260));
+		data.emplace(AE_RightMove, AnimInfo(AE_Right, 0, 1, 260));
 	}
 	std::map<Anim_Enum, AnimInfo> data;
 };
@@ -39,6 +48,7 @@ public:
 	bool SetTileModelTC(std::vector<Vertex>* verts, bool forceUpdate = false);
 	void SetDefaults();
 	void SetWidthHeight(std::string texture);
+	Anim_Enum GetMoveDirection(Anim_Enum direction);
 
 	static void SetupAnimationMetaData();
 	static SpriteSheetData GetMetaData(std::string spritesheet);
@@ -49,13 +59,16 @@ public:
 	//Which frame we're at
 	int _sprite;
 	//which row/column to start in
-	int _animation;
+	int _row;
+	Anim_Enum _animation;
 
 protected:
 	//ElapsedTime progress
 	static int m_progress;
 	static std::map<std::string, SpriteSheetData> m_metaData;
 protected:
+	// m_progress to reset the animation
+	int m_tracking;
 	//Number of millis between frames
 	int m_delay;
 	//Number of desired frames
@@ -63,6 +76,7 @@ protected:
 	//Whether the sprites go down or right
 	bool m_horizontal;
 	//The total image size
+	int m_start;
 	int m_width;
 	int m_height;
 };

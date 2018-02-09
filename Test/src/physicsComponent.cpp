@@ -61,7 +61,7 @@ void PhysicsComponent::YCollide()
 
 void PhysicsComponent::Move()
 {
-	Vector3f distance = m_velocity * (float)ElapsedTime::GetInstance().GetElapsedTime();
+	Vector3f distance = m_velocity * 0.01667f;// (float)ElapsedTime::GetInstance().GetElapsedTime();
 	RelativePosition(distance);
 }
 
@@ -71,7 +71,7 @@ void PhysicsComponent::ActionMove(bool up, bool down, bool left, bool right)
 		return;
 	//ApplyGravity();
 
-	float speed = 2.0f;
+	float speed = 1.5f;
 	if (left)
 		m_velocity.x -= speed;
 	if (right)

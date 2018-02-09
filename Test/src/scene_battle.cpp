@@ -75,7 +75,7 @@ bool SceneBattle::Init()
 		m_enemies.at(i)->SetPhysics(position, Vector3f());
 		m_enemies.at(i)->BasePosition = position;
 		// Set to right cause the sprites are flipped
-		m_enemies.at(i)->_animation = AE_Right;
+		m_enemies.at(i)->_row = AE_Right;
 		m_enemies.at(i)->GetModelMat()->SetScale(-1, 1, 1);
 	}
 
