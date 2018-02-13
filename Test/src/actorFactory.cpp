@@ -72,6 +72,9 @@ std::vector<Actor_ptr> ActorFactory::BuildParty(rapidjson::GenericArray<false, r
 		if (a.HasMember("dead"))
 			actor->Dead = a["dead"].GetBool();
 
+		if (a.HasMember("sprite"))
+			actor->SetTexture(a["sprite"].GetString());
+
 		if (a.HasMember("skills") && a["skills"].IsArray())
 		{
 			auto skills = a["skills"].GetArray();

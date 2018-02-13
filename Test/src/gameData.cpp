@@ -153,7 +153,7 @@ void GameData::LoadGameData()
 		Party = ActorFactory::BuildParty(party);
 	}
 
-	PlayerSprite = "res/sprites/entities/entity_ghost_blue.png";
+	PlayerSprite = "res/sprites/entities/entity_ghost.png";
 	// Get the player sprite
 	if (m_document.HasMember("sprite") && m_document["sprite"].IsString())
 		PlayerSprite = m_document["sprite"].GetString();

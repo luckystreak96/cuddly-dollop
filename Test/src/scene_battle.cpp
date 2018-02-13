@@ -68,6 +68,7 @@ bool SceneBattle::Init()
 		m_party.at(i)->SetPhysics(position, Vector3f());
 		m_party.at(i)->BasePosition = position;
 	}
+	m_party.at(0)->_row = AE_Right; // make player face right cuz girl looks bad looking down
 
 	for (int i = 0; i < m_enemies.size(); i++)
 	{
