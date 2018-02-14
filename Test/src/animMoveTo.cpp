@@ -10,6 +10,9 @@ AnimMoveTo::AnimMoveTo(Vector3f position, Actor_ptr target)
 	_done = false;
 	_progress = 0;
 	_duration = 0.4;
+	_prevDir = _target->_animation;
+	_target->SetAnimation(_target->GetMoveDirection(_prevDir), _target->Sprite);
+	_target->_forceAnimation = true;
 }
 
 void AnimMoveTo::Update()
@@ -28,5 +31,7 @@ void AnimMoveTo::Update()
 	{
 		_done = true;
 		_target->SetPhysics(_destination, Vector3f());
+		_target->SetAnimation(_prevDir, _target->Sprite);
+		_target->_forceAnimation = false;
 	}
 }

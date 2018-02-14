@@ -54,8 +54,10 @@ public:
 	static SpriteSheetData GetMetaData(std::string spritesheet);
 
 public:
-	// Specifies if something other than walking is going on
+	// true = we're specifying sprite changes
 	bool _specialAnimation;
+	// true = we choose the animation
+	bool _forceAnimation;
 	//Which frame we're at
 	int _sprite;
 	//which row/column to start in

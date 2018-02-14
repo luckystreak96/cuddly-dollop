@@ -11,7 +11,8 @@ void Actor::SetDefault()
 {
 	Skills.push_back(Skill_ptr(new SkillSmack()));
 	//Skills.push_back(Skill_ptr(new Skill()));
-	SetTexture("res/sprites/entities/entity_ghost.png");
+	Sprite = "res/sprites/entities/entity_ghost.png";
+	SetTexture(Sprite);
 	Name = "Player";
 	Health = 10;
 	MaxHealth = 10;

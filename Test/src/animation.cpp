@@ -75,11 +75,14 @@ void Animation::SetDefaults()
 	m_numFrames = 2;
 	m_horizontal = true;
 	_row = AE_Down;
+	_animation = (Anim_Enum)_row;
+	m_tracking = 0;
 	_sprite = 0;
 	m_start = 0;
 	m_width = 2;
 	m_height = 4;
 	_specialAnimation = false;
+	_forceAnimation = false;
 }
 
 // Choose which animation to go for

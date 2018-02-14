@@ -47,6 +47,7 @@ public:
 	int Team;
 	bool Selected;
 	bool ChoosingAction;
+	std::string Sprite;
 	std::vector<Skill_ptr> Skills;
 	Vector3f BasePosition;
 	static inline bool ActorSpeedSort(Actor_ptr a, Actor_ptr b) { return a->Speed > b->Speed; }

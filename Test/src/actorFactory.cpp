@@ -18,6 +18,8 @@ Actor_ptr ActorFactory::BuildBaseAlly()
 	result->Defense = 1;
 	result->SetEndurance(4);
 	result->Health = result->GetMaxHealth();
+	result->Sprite = "res/sprites/entities/entity_girl.png";
+	result->SetTexture(result->Sprite);
 
 	return result;
 }
@@ -73,7 +75,10 @@ std::vector<Actor_ptr> ActorFactory::BuildParty(rapidjson::GenericArray<false, r
 			actor->Dead = a["dead"].GetBool();
 
 		if (a.HasMember("sprite"))
-			actor->SetTexture(a["sprite"].GetString());
+		{
+			actor->Sprite = a["sprite"].GetString();
+			actor->SetTexture(actor->Sprite);
+		}
 
 		if (a.HasMember("skills") && a["skills"].IsArray())
 		{

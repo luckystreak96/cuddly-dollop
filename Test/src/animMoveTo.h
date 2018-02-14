@@ -16,6 +16,7 @@ public:
 	Vector3f _destination;
 	Vector3f _initialPos;
 	Vector3f _speed;
+	Anim_Enum _prevDir;
 };
 
 #endif // !BATTLE_ANIMATION_H__

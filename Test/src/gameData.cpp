@@ -342,6 +342,11 @@ void GameData::SaveGameData()
 		second.SetString(StringRef(actor->Name.c_str()), allocator);
 		ob.AddMember(first, second, allocator);
 
+		// sprite
+		first.SetString(StringRef("sprite"), allocator);
+		second.SetString(StringRef(actor->Sprite.c_str()), allocator);
+		ob.AddMember(first, second, allocator);
+
 		// health
 		first.SetString(StringRef("health"), allocator);
 		second.SetInt(actor->Health);

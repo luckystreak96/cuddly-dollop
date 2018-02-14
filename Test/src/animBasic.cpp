@@ -8,6 +8,7 @@ AnimBasic::AnimBasic(Anim_Enum anim, Actor_ptr target, double seconds)
 	_progress = 0;
 	_prevState = _target->_row;
 	_target->_specialAnimation = true;
+	_target->_forceAnimation = true;
 
 	auto& data = Animation::GetMetaData(_target->GetTexture()).data;
 	_target->_row = data.at(AE_Attack)._position;
@@ -31,6 +32,7 @@ void AnimBasic::Update()
 	{
 		_done = true;
 		_target->_specialAnimation = false;
+		_target->_forceAnimation = false;
 		_target->_sprite = 0;
 		_target->_row = _prevState;
 	}
