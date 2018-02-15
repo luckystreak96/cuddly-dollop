@@ -19,6 +19,12 @@ enum SkillType { ST_Physical, ST_Magical, ST_Healing };
 enum TargetMode { TM_Enemy, TM_Ally, TM_Alive, TM_Dead, TM_Any };
 enum DefaultTarget { DT_Self, DT_Enemy, DT_Ally };
 
+struct Damage
+{
+	int _value;
+	SkillType _type;
+};
+
 struct ActionCommand
 {
 	double _start;
@@ -40,8 +46,8 @@ public:
 	virtual bool IsReady();
 	virtual void SpawnDamageText(Actor_ptr target, int dmg);
 	virtual void SpawnStatusText(Actor_ptr target, std::string statusName);
-	virtual int CalculateDamage() { return 0; }
-	virtual int HandleDamage();
+	virtual Damage CalculateDamage() { return Damage(); }
+	virtual Damage HandleDamage();
 	void CheckActionCommand(double percentProgress);
 	void HandleActionCommand(double percentProgress);
 	bool AnimationsDone();
