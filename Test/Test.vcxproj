@@ -260,6 +260,7 @@
     <ClInclude Include="src\singleColorEffect.h" />
     <ClInclude Include="src\skill.h" />
     <ClInclude Include="src\soundManager.h" />
+    <ClInclude Include="src\statUser.h" />
     <ClInclude Include="src\texture.h" />
     <ClInclude Include="src\textureatlas.h" />
     <ClInclude Include="src\transform.h" />
@@ -359,6 +360,7 @@
     <ClCompile Include="src\singleColorEffect.cpp" />
     <ClCompile Include="src\skill.cpp" />
     <ClCompile Include="src\soundManager.cpp" />
+    <ClCompile Include="src\statUser.cpp" />
     <ClCompile Include="src\texture.cpp" />
     <ClCompile Include="src\textureatlas.cpp" />
     <ClCompile Include="src\transform.cpp" />
