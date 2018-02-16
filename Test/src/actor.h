@@ -46,8 +46,9 @@ public:
 	int GetMaxHealth();
 	int DefenseDamageModification(bool critting);
 
+	// Stat points + nextlevelexp
 	void LevelUp();
-	int GetNextLevelExp();
+	int CalculateNextLevelExp();
 
 public:
 	std::string Name;

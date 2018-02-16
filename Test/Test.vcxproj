@@ -165,6 +165,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="fighter.h" />
     <ClInclude Include="src\actorFactory.h" />
     <ClInclude Include="src\animBasic.h" />
     <ClInclude Include="src\animJumpTo.h" />
@@ -268,6 +269,7 @@
     <ClInclude Include="src\vertex.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="fighter.cpp" />
     <ClCompile Include="src\actorFactory.cpp" />
     <ClCompile Include="src\animBasic.cpp" />
     <ClCompile Include="src\animJumpTo.cpp" />

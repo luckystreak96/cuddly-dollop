@@ -168,15 +168,28 @@ int Actor::GetEndurance()
 void Actor::SetLevel(int level)
 {
 	Level = level;
-	NextLevelExp = GetNextLevelExp();
+	NextLevelExp = CalculateNextLevelExp();
 }
 
 void Actor::LevelUp()
 {
 	SkillPoints += 4;
+	NextLevelExp = CalculateNextLevelExp();
+
+	MaxHealth += 2;
+	if (Level % 2 == 0)
+	{
+		Strength += 1;
+		Defense += 1;
+	}
+	else
+	{
+		Endurance += 1;
+		Speed += 1;
+	}
 }
 
-int Actor::GetNextLevelExp()
+int Actor::CalculateNextLevelExp()
 {
 	return 10 * Level + pow(Level, 2);
 }
@@ -192,6 +205,7 @@ void Actor::GiveExp(int exp)
 	while (exp > NextLevelExp)
 	{
 		// Level up
+		LevelUp();
 	}
 }
 
