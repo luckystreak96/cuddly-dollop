@@ -106,12 +106,14 @@ void SkillMelee::Animate()
 
 void SkillMelee::ApplyEffect()
 {
-	int dmg = 0;
+	Damage result;
+	result._value = 0;
+	result._type = ST_Physical;
 	//dmg = rand() % 3 + 1;
-	_targets->at(0)->TakeDamage(dmg);
+	_targets->at(0)->TakeDamage(result);
 
 	// Damage text
-	SpawnDamageText(_targets->at(0), dmg);
+	SpawnDamageText(_targets->at(0), result._value);
 }
 
 bool SkillMelee::TimingCondition(double progress, double duration)

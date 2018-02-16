@@ -27,9 +27,9 @@ void Skill::DefaultSetup()
 	_critting = false;
 }
 
-int Skill::HandleDamage()
+Damage Skill::HandleDamage()
 {
-	int dmg = CalculateDamage();
+	Damage dmg = CalculateDamage();
 
 	// Apply first damage modifications
 	if (_skillType != ST_Healing)

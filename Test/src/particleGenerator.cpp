@@ -252,6 +252,12 @@ void Explosion::ResetLocation(Vector3f& spawnPos, bool firstSpawn, bool smooth)
 
 void ParticleGenerator::Init(ParticleType c, unsigned int num_particles, Vector3f zoneSize, bool smooth, std::string tex)
 {
+	if (num_particles > 10000)
+	{
+		num_particles = 10000;
+		std::cout << "Particle cap reached, setting to 10,000." << std::endl;
+	}
+
 	m_zoneSize = zoneSize;
 
 	// Create all particles

@@ -10,7 +10,7 @@ class SkillHeal : public SkillMelee
 public:
 	SkillHeal();
 	virtual void ApplyEffect();
-	virtual int CalculateDamage();
+	virtual Damage CalculateDamage();
 
 protected:
 	void DefaultSetup();

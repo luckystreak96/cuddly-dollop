@@ -16,18 +16,19 @@ void SkillHeal::DefaultSetup()
 	_defaultTarget = DT_Self;
 }
 
-int SkillHeal::CalculateDamage()
+Damage SkillHeal::CalculateDamage()
 {
-	int result = 5 + _owner->Strength / 2;
+	Damage result;
+	result._value = 5 + _owner->Strength / 2;
 	return result;
 }
 
 void SkillHeal::ApplyEffect()
 {
-	int dmg = HandleDamage();
+	Damage dmg = HandleDamage();
 
 	// Damage text
-	SpawnDamageText(_targets->at(0), dmg);
+	SpawnDamageText(_targets->at(0), dmg._value);
 
 	SoundManager::GetInstance().PlaySoundFX("res/audio/fx/swish_2.wav");
 }

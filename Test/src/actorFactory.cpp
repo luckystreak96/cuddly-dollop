@@ -56,6 +56,15 @@ std::vector<Actor_ptr> ActorFactory::BuildParty(rapidjson::GenericArray<false, r
 		if (a.HasMember("name"))
 			actor->Name = a["name"].GetString();
 
+		if (a.HasMember("level"))
+			actor->SetLevel(a["level"].GetInt());
+
+		if (a.HasMember("exp"))
+			actor->SetExp(a["level"].GetInt());
+
+		if (a.HasMember("skillpoints"))
+			actor->SkillPoints = a["skillpoints"].GetInt();
+
 		if (a.HasMember("speed"))
 			actor->Speed = a["speed"].GetInt();
 

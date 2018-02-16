@@ -20,7 +20,7 @@ void SkillSmack::DefaultSetup()
 	_ac._animProg = 1;
 }
 
-int SkillSmack::CalculateDamage()
+Damage SkillSmack::CalculateDamage()
 {
 	// Crit chance
 	int roll = rand() % 100;
@@ -28,24 +28,28 @@ int SkillSmack::CalculateDamage()
 		_critting = true;
 
 	// Damage
-	int result = 4 + _owner->Strength * 0.8f;
+	int dmg = 4 + _owner->Strength * 0.8f;
 	if (_critting)
-		result *= 1.5;
+		dmg *= 1.5;
+
+	Damage result;
+	result._value = dmg;
+	result._type = ST_Physical;
 	
 	return result;
 }
 
 void SkillSmack::ApplyEffect()
 {
-	int dmg = HandleDamage();
+	Damage dmg = HandleDamage();
 
 	// Damage text
-	SpawnDamageText(_targets->at(0), dmg);
+	SpawnDamageText(_targets->at(0), dmg._value);
 
 	Particle_ptr particles = Particle_ptr(new ParticleGenerator());
 	Vector3f pos = _targets->at(0)->GetPos() + Vector3f(0.5f, 0.5f, 0.6f);
 	particles->SetPowerLevel(0.3f);
-	particles->Init(PT_Explosion, dmg, pos, false, "star.png");
+	particles->Init(PT_Explosion, dmg._value, pos, false, "star.png");
 	Vector3f color = _critting ? Vector3f(0.35f, 0.31f, 0.87f) : Vector3f(1.0f, 0.2f, 0.2f);
 	particles->SetColor(color);
 	ParticleManager::GetInstance().AddParticles(particles);

@@ -21,6 +21,8 @@ void Actor::SetDefault()
 	Strength = 0;
 	Defense = 0;
 	Endurance = 0;
+	NextLevelExp = 0;
+	Level = 1;
 	Crit = 0;
 	Team = 0;
 	Selected = false;
@@ -43,29 +45,29 @@ void Actor::ApplyLethal()
 	SetColor();
 }
 
-void Actor::MagicalDefenseActionCommand(int& dmg)
+void Actor::MagicalDefenseActionCommand(Damage& dmg)
 {
-	dmg -= Defense / 2;
+	dmg._value -= Defense / 2;
 }
 
-void Actor::MagicalOffenseActionCommand(int& dmg)
+void Actor::MagicalOffenseActionCommand(Damage& dmg)
 {
-	dmg += (dmg > 0) ? Strength / 2 : -Strength / 2;
+	dmg._value += (dmg._value > 0) ? Strength / 2 : -Strength / 2;
 }
 
-void Actor::PhysicalDefenseActionCommand(int& dmg)
+void Actor::PhysicalDefenseActionCommand(Damage& dmg)
 {
-	dmg -= Defense / 2;
+	dmg._value -= Defense / 2;
 }
 
-void Actor::PhysicalOffenseActionCommand(int& dmg)
+void Actor::PhysicalOffenseActionCommand(Damage& dmg)
 {
-	dmg += Strength / 2;
+	dmg._value += Strength / 2;
 }
 
-void Actor::SpecialActionCommand(int& dmg)
+void Actor::SpecialActionCommand(Damage& dmg)
 {
-	dmg = 0;
+	dmg._value = 0;
 }
 
 void Actor::SetColor()
@@ -102,18 +104,18 @@ int Actor::DefenseDamageModification(bool critting)
 	return result;
 }
 
-void Actor::DamageModifiers(int& dmg, bool critting)
+void Actor::DamageModifiers(Damage& dmg, bool critting)
 {
 	// Insert status effect damage changes here
-	dmg -= DefenseDamageModification(critting);
+	dmg._value -= DefenseDamageModification(critting);
 }
 
-int Actor::TakeDamage(int& dmg)
+Damage Actor::TakeDamage(Damage& dmg)
 {
 	// Damage modifiers called in the attack method instead
 	//DamageModifiers(dmg);
-	dmg = fmax(0, dmg);
-	Health -= dmg;
+	dmg._value = fmax(0, dmg._value);
+	Health -= dmg._value;
 	Health = fmin(MaxHealth, Health);
 	Health = fmax(Health, 0);
 	ApplyLethal();
@@ -121,11 +123,11 @@ int Actor::TakeDamage(int& dmg)
 	return dmg;
 }
 
-int Actor::ApplyHealing(int& heal)
+Damage Actor::ApplyHealing(Damage& heal)
 {
 	// Damage modifiers called in the attack method instead
 	//DamageModifiers(dmg);
-	Health += heal;
+	Health += heal._value;
 	Health = fmin(MaxHealth, Health);
 	Health = fmax(Health, 0);
 	ApplyLethal();
@@ -161,6 +163,46 @@ void Actor::Update()
 int Actor::GetEndurance()
 {
 	return Endurance;
+}
+
+void Actor::SetLevel(int level)
+{
+	Level = level;
+	NextLevelExp = GetNextLevelExp();
+}
+
+void Actor::LevelUp()
+{
+	SkillPoints += 4;
+}
+
+int Actor::GetNextLevelExp()
+{
+	return 10 * Level + pow(Level, 2);
+}
+
+int Actor::GetLevel()
+{
+	return Level;
+}
+
+void Actor::GiveExp(int exp)
+{
+	Exp += exp;
+	while (exp > NextLevelExp)
+	{
+		// Level up
+	}
+}
+
+void Actor::SetExp(int exp)
+{
+	Exp = exp;
+}
+
+int Actor::GetExp()
+{
+	return Exp;
 }
 
 int Actor::GetMaxHealth()
