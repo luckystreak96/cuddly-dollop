@@ -165,12 +165,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="fighter.h" />
     <ClInclude Include="src\actorFactory.h" />
     <ClInclude Include="src\animBasic.h" />
     <ClInclude Include="src\animJumpTo.h" />
     <ClInclude Include="src\animMoveTo.h" />
     <ClInclude Include="src\battleHUD.h" />
+    <ClInclude Include="src\fighter.h" />
     <ClInclude Include="src\fontFloat.h" />
     <ClInclude Include="src\particleManager.h" />
     <ClInclude Include="src\skillHeal.h" />
@@ -270,13 +270,13 @@
     <ClInclude Include="src\vertex.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="fighter.cpp" />
     <ClCompile Include="src\actorFactory.cpp" />
     <ClCompile Include="src\animBasic.cpp" />
     <ClCompile Include="src\animJumpTo.cpp" />
     <ClCompile Include="src\animMoveTo.cpp" />
     <ClCompile Include="src\battleAnimation.cpp" />
     <ClCompile Include="src\battleHUD.cpp" />
+    <ClCompile Include="src\fighter.cpp" />
     <ClCompile Include="src\fontFloat.cpp" />
     <ClCompile Include="src\particleManager.cpp" />
     <ClCompile Include="src\scene.cpp" />

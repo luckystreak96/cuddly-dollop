@@ -33,35 +33,35 @@ Damage Skill::HandleDamage()
 
 	// Apply first damage modifications
 	if (_skillType != ST_Healing)
-		_targets->at(0)->DamageModifiers(dmg, _critting);
+		_targets->at(0)->_Fighter->DamageModifiers(dmg, _critting);
 
 	if (_ac._success)
 	{
 		// Your team under attack from enemy -> Defense Action Command
-		if (_owner->Team != 0 && _targets->at(0)->Team == 0)
+		if (_owner->_Fighter->Team != 0 && _targets->at(0)->_Fighter->Team == 0)
 		{
 			if (_ac._type == ACT_Special)
-				_targets->at(0)->SpecialActionCommand(dmg);
+				_targets->at(0)->_Fighter->SpecialActionCommand(dmg);
 			else if (_skillType == ST_Physical)
-				_targets->at(0)->PhysicalDefenseActionCommand(dmg);
+				_targets->at(0)->_Fighter->PhysicalDefenseActionCommand(dmg);
 			else
-				_targets->at(0)->MagicalDefenseActionCommand(dmg);
+				_targets->at(0)->_Fighter->MagicalDefenseActionCommand(dmg);
 		}
 		// Your team attacking -> Offense Action Command
-		else if (_owner->Team == 0)
+		else if (_owner->_Fighter->Team == 0)
 		{
 			if (_skillType == ST_Physical)
-				_targets->at(0)->PhysicalOffenseActionCommand(dmg);
+				_targets->at(0)->_Fighter->PhysicalOffenseActionCommand(dmg);
 			else
-				_targets->at(0)->MagicalOffenseActionCommand(dmg);
+				_targets->at(0)->_Fighter->MagicalOffenseActionCommand(dmg);
 		}
 	}
 
 	// Deal the dmg
 	if (_skillType == ST_Healing)
-		_targets->at(0)->ApplyHealing(dmg);
+		_targets->at(0)->_Fighter->ApplyHealing(dmg);
 	else
-		_targets->at(0)->TakeDamage(dmg);
+		_targets->at(0)->_Fighter->TakeDamage(dmg);
 
 	return dmg;
 }
@@ -122,11 +122,11 @@ void Skill::HandleActionCommand(double percentProgress)
 	if (_ac._animProg == _animProg)
 	{
 		if (percentProgress <= _ac._end && percentProgress >= _ac._startHard)
-			_owner->SetColorAll(Vector3f(3.0f, 3.0f, 3.0f), 1.0f);
+			_owner->_Graphics->SetColorAll(Vector3f(3.0f, 3.0f, 3.0f), 1.0f);
 		else if (percentProgress <= _ac._end && percentProgress >= _ac._start)
-			_owner->SetColorAll(Vector3f(2.0f, 2.0f, 2.0f), 1.0f);
+			_owner->_Graphics->SetColorAll(Vector3f(2.0f, 2.0f, 2.0f), 1.0f);
 		else
-			_owner->SetColor();
+			_owner->UpdateColor();
 
 		// Handle input for action command
 		// Can only happen if you press within the right animation
@@ -156,7 +156,7 @@ void Skill::SpawnStatusText(Actor_ptr target, std::string statusText)
 	Font_ptr font;
 
 	// Setup font
-	pos = target->GetPos() + Vector3f(0.5f, 1.f, 0);
+	pos = target->_Graphics->GetPos() + Vector3f(0.5f, 1.f, 0);
 	pos.z = 0;
 
 	// create font
@@ -175,7 +175,7 @@ void Skill::SpawnDamageText(Actor_ptr target, int dmg)
 	Font_ptr font;
 
 	// Setup font
-	pos = target->GetPos() + Vector3f(0.5f, 1.f, 0);
+	pos = target->_Graphics->GetPos() + Vector3f(0.5f, 1.f, 0);
 	pos.z = 0;
 
 	// create font

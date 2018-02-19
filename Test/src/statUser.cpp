@@ -13,7 +13,6 @@ void StatUser::SetDefault()
 {
 	Health = 10;
 	MaxHealth = 10;
-	Dead = false;
 	Speed = 0;
 	Strength = 0;
 	Defense = 0;

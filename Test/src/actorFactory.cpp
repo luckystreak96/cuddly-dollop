@@ -6,20 +6,20 @@
 Actor_ptr ActorFactory::BuildBaseAlly()
 {
 	Actor_ptr result = Actor_ptr(new Actor());
-	result->Skills.clear();
+	result->_Fighter->Skills.clear();
 	Skill_ptr smack = Skill_ptr(new SkillSmack());
 	Skill_ptr heal = Skill_ptr(new SkillHeal());
-	result->Skills.push_back(smack);
-	result->Skills.push_back(heal);
+	result->_Fighter->Skills.push_back(smack);
+	result->_Fighter->Skills.push_back(heal);
 
-	result->Speed = 1;
-	result->Strength = 2;
-	result->Crit = 3;
-	result->Defense = 1;
-	result->SetEndurance(4);
-	result->Health = result->GetMaxHealth();
+	result->_Fighter->Speed = 1;
+	result->_Fighter->Strength = 2;
+	result->_Fighter->Crit = 3;
+	result->_Fighter->Defense = 1;
+	result->_Fighter->SetEndurance(4);
+	result->_Fighter->Health = result->_Fighter->GetMaxHealth();
 	result->Sprite = "res/sprites/entities/entity_girl.png";
-	result->SetTexture(result->Sprite);
+	result->_Graphics->SetTexture(result->Sprite);
 
 	return result;
 }
@@ -27,15 +27,15 @@ Actor_ptr ActorFactory::BuildBaseAlly()
 Actor_ptr ActorFactory::BuildBaseEnemy()
 {
 	Actor_ptr result = Actor_ptr(new Actor());
-	result->Speed = 2;
-	result->Strength = 2;
-	result->Crit = 1;
-	result->Defense = 0;
-	result->SetEndurance(2);
-	result->Health = result->GetMaxHealth();
-	result->Name = "Slime";
-	result->Team = 1;
-	result->SetTexture("res/sprites/entities/entity_slime.png");
+	result->_Fighter->Speed = 2;
+	result->_Fighter->Strength = 2;
+	result->_Fighter->Crit = 1;
+	result->_Fighter->Defense = 0;
+	result->_Fighter->SetEndurance(2);
+	result->_Fighter->Health = result->_Fighter->GetMaxHealth();
+	result->_Name = "Slime";
+	result->_Fighter->Team = 1;
+	result->_Graphics->SetTexture("res/sprites/entities/entity_slime.png");
 
 	return result;
 }
@@ -46,54 +46,54 @@ std::vector<Actor_ptr> ActorFactory::BuildParty(rapidjson::GenericArray<false, r
 	for (auto& a : arr)
 	{
 		Actor_ptr actor = Actor_ptr(new Actor());
-		actor->Skills.clear();
+		actor->_Fighter->Skills.clear();
 		if (a.HasMember("health"))
-			actor->Health = a["health"].GetInt();
+			actor->_Fighter->Health = a["health"].GetInt();
 
 		if (a.HasMember("max_health"))
-			actor->SetMaxHealth(a["max_health"].GetInt());
+			actor->_Fighter->SetMaxHealth(a["max_health"].GetInt());
 
 		if (a.HasMember("name"))
-			actor->Name = a["name"].GetString();
+			actor->_Name = a["name"].GetString();
 
 		if (a.HasMember("level"))
-			actor->SetLevel(a["level"].GetInt());
+			actor->_Fighter->SetLevel(a["level"].GetInt());
 
 		if (a.HasMember("exp"))
-			actor->SetExp(a["level"].GetInt());
+			actor->_Fighter->SetExp(a["level"].GetInt());
 
 		if (a.HasMember("skillpoints"))
-			actor->SkillPoints = a["skillpoints"].GetInt();
+			actor->_Fighter->SkillPoints = a["skillpoints"].GetInt();
 
 		if (a.HasMember("speed"))
-			actor->Speed = a["speed"].GetInt();
+			actor->_Fighter->Speed = a["speed"].GetInt();
 
 		if (a.HasMember("strength"))
-			actor->Strength = a["strength"].GetInt();
+			actor->_Fighter->Strength = a["strength"].GetInt();
 
 		if (a.HasMember("endurance"))
-			actor->SetEndurance(a["endurance"].GetInt());
+			actor->_Fighter->SetEndurance(a["endurance"].GetInt());
 
 		if (a.HasMember("defense"))
-			actor->Defense = a["defense"].GetInt();
+			actor->_Fighter->Defense = a["defense"].GetInt();
 
 		if (a.HasMember("crit"))
-			actor->Crit = a["crit"].GetInt();
+			actor->_Fighter->Crit = a["crit"].GetInt();
 
 		if (a.HasMember("dead"))
-			actor->Dead = a["dead"].GetBool();
+			actor->_Fighter->Dead = a["dead"].GetBool();
 
 		if (a.HasMember("sprite"))
 		{
 			actor->Sprite = a["sprite"].GetString();
-			actor->SetTexture(actor->Sprite);
+			actor->_Graphics->SetTexture(actor->Sprite);
 		}
 
 		if (a.HasMember("skills") && a["skills"].IsArray())
 		{
 			auto skills = a["skills"].GetArray();
 			for (rapidjson::Value::ConstValueIterator itr = skills.Begin(); itr != skills.End(); ++itr)
-				actor->Skills.push_back(BuildSkill(itr->GetString()));
+				actor->_Fighter->Skills.push_back(BuildSkill(itr->GetString()));
 		}
 
 		result.push_back(actor);

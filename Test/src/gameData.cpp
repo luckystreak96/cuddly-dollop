@@ -339,7 +339,7 @@ void GameData::SaveGameData()
 
 		// name
 		first.SetString(StringRef("name"), allocator);
-		second.SetString(StringRef(actor->Name.c_str()), allocator);
+		second.SetString(StringRef(actor->_Name.c_str()), allocator);
 		ob.AddMember(first, second, allocator);
 
 		// sprite
@@ -349,63 +349,63 @@ void GameData::SaveGameData()
 
 		// health
 		first.SetString(StringRef("health"), allocator);
-		second.SetInt(actor->Health);
+		second.SetInt(actor->_Fighter->Health);
 		ob.AddMember(first, second, allocator);
 
 		// maxHealth
 		first.SetString(StringRef("max_health"), allocator);
-		second.SetInt(actor->GetMaxHealth());
+		second.SetInt(actor->_Fighter->GetMaxHealth());
 		ob.AddMember(first, second, allocator);
 
 		// level
 		first.SetString(StringRef("level"), allocator);
-		second.SetInt(actor->GetLevel());
+		second.SetInt(actor->_Fighter->GetLevel());
 		ob.AddMember(first, second, allocator);
 
 		// exp
 		first.SetString(StringRef("exp"), allocator);
-		second.SetInt(actor->GetExp());
+		second.SetInt(actor->_Fighter->GetExp());
 		ob.AddMember(first, second, allocator);
 
 		// skillpoints
 		first.SetString(StringRef("skillpoints"), allocator);
-		second.SetInt(actor->SkillPoints);
+		second.SetInt(actor->_Fighter->SkillPoints);
 		ob.AddMember(first, second, allocator);
 
 		// speed
 		first.SetString(StringRef("speed"), allocator);
-		second.SetInt(actor->Speed);
+		second.SetInt(actor->_Fighter->Speed);
 		ob.AddMember(first, second, allocator);
 
 		// crit
 		first.SetString(StringRef("crit"), allocator);
-		second.SetInt(actor->Crit);
+		second.SetInt(actor->_Fighter->Crit);
 		ob.AddMember(first, second, allocator);
 
 		// defense 
 		first.SetString(StringRef("defense"), allocator);
-		second.SetInt(actor->Defense);
+		second.SetInt(actor->_Fighter->Defense);
 		ob.AddMember(first, second, allocator);
 
 		// strength
 		first.SetString(StringRef("strength"), allocator);
-		second.SetInt(actor->Strength);
+		second.SetInt(actor->_Fighter->Strength);
 		ob.AddMember(first, second, allocator);
 
 		// endurance
 		first.SetString(StringRef("endurance"), allocator);
-		second.SetInt(actor->GetEndurance());
+		second.SetInt(actor->_Fighter->GetEndurance());
 		ob.AddMember(first, second, allocator);
 
 		// dead
 		first.SetString(StringRef("dead"), allocator);
-		second.SetBool(actor->Dead);
+		second.SetBool(actor->_Fighter->Dead);
 		ob.AddMember(first, second, allocator);
 
 		// skills
 		first.SetString(StringRef("skills"), allocator);
 		second = Value(kArrayType);
-		for (auto skill : actor->Skills)
+		for (auto skill : actor->_Fighter->Skills)
 		{
 			Value skl(kStringType);
 			skl.SetString(StringRef(skill->_name.c_str()), allocator);

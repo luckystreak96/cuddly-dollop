@@ -56,7 +56,7 @@ bool SceneBattle::Init()
 
 	for (auto x : _actors)
 	{
-		if (x->Team == 0)
+		if (x->_Fighter->Team == 0)
 			m_party.push_back(x);
 		else
 			m_enemies.push_back(x);
@@ -65,21 +65,21 @@ bool SceneBattle::Init()
 	for (int i = 0; i < m_party.size(); i++)
 	{
 		Vector3f position = Vector3f(3.5f + i * 0.25f, 2.5f + i * 1.25f, 4.0f);
-		m_party.at(i)->SetPhysics(position, Vector3f());
+		m_party.at(i)->_Graphics->SetPhysics(position, Vector3f());
 		m_party.at(i)->BasePosition = position;
-		m_party.at(i)->_row = AE_Right; // make player face right cuz girl looks bad looking down
-		m_party.at(i)->_animation = AE_Right; // make player face right cuz girl looks bad looking down
+		m_party.at(i)->_Graphics->_row = AE_Right; // make player face right cuz girl looks bad looking down
+		m_party.at(i)->_Graphics->_animation = AE_Right; // make player face right cuz girl looks bad looking down
 	}
 
 	for (int i = 0; i < m_enemies.size(); i++)
 	{
 		Vector3f position = Vector3f(13.5f - i * 0.25f, 2.5f + i * 1.25f, 4.0f);
-		m_enemies.at(i)->SetPhysics(position, Vector3f());
+		m_enemies.at(i)->_Graphics->SetPhysics(position, Vector3f());
 		m_enemies.at(i)->BasePosition = position;
 		// Set to right cause the sprites are flipped
-		m_enemies.at(i)->_row = AE_Right;
-		m_enemies.at(i)->_animation = AE_Right;
-		m_enemies.at(i)->GetModelMat()->SetScale(-1, 1, 1);
+		m_enemies.at(i)->_Graphics->_row = AE_Right;
+		m_enemies.at(i)->_Graphics->_animation = AE_Right;
+		m_enemies.at(i)->_Graphics->GetModelMat()->SetScale(-1, 1, 1);
 	}
 
 	m_eventManager.SetEntitiesMap(&m_celist);
@@ -199,7 +199,7 @@ void SceneBattle::Draw()
 	ParticleManager::GetInstance().SetRender();
 
 	for (auto a : _actors)
-		Renderer::GetInstance().Add(a);
+		Renderer::GetInstance().Add(a->_Graphics);
 
 	m_battle.SetRender();
 

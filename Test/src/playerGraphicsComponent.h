@@ -19,4 +19,6 @@ private:
 	bool m_firstLoad;
 };
 
+typedef std::shared_ptr<PlayerGraphicsComponent> PGraphics_ptr;
+
 #endif

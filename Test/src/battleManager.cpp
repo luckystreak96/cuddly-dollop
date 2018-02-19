@@ -38,7 +38,7 @@ void BattleManager::Init()
 	_done = false;
 	if (_actorQueue.size() > 0)
 	{
-		_chooseSkill = &_actorQueue.front()->Skills;
+		_chooseSkill = &_actorQueue.front()->_Fighter->Skills;
 		_owner = _actorQueue.front();
 	}
 }
@@ -87,10 +87,10 @@ void BattleManager::Update()
 // Move Animation
 void BattleManager::MoveToLight(bool moveup, bool turnEnd)
 {
-	if (!_owner->Dead || turnEnd)
+	if (!_owner->_Fighter->Dead || turnEnd)
 		if (moveup)
 		{
-			Anim_ptr move1 = Anim_ptr(new AnimMoveTo(_owner->GetPos() + Vector3f(_owner->Team == 0 ? 1.f : -1, 0, 0), _owner));
+			Anim_ptr move1 = Anim_ptr(new AnimMoveTo(_owner->_Graphics->GetPos() + Vector3f(_owner->_Fighter->Team == 0 ? 1.f : -1, 0, 0), _owner));
 			_animations.push_back(move1);
 		}
 		else
@@ -111,7 +111,7 @@ void BattleManager::UpdateSkillDisplay()
 			_showingSkills = false;
 		}
 	}
-	else if (_owner->Team == 0 && !_showingSkills && _animations.size() == 0 && _state == BS_SelectAction)
+	else if (_owner->_Fighter->Team == 0 && !_showingSkills && _animations.size() == 0 && _state == BS_SelectAction)
 	{
 		SetChooseSkillText();
 		_showingSkills = true;
@@ -122,11 +122,11 @@ void BattleManager::UpdateSkillDisplay()
 void BattleManager::TurnStart()
 {
 	MoveToLight(true);
-	if (_owner->Dead)
+	if (_owner->_Fighter->Dead)
 		_state = BS_TurnEnd;
 	else
 	{
-		_owner->TurnStart(_actors);
+		_owner->_Fighter->TurnStart(_actors);
 		_state = BS_SelectAction;
 	}
 }
@@ -134,7 +134,7 @@ void BattleManager::TurnStart()
 void BattleManager::SelectAction()
 {
 	// Choose ENEMY action
-	if (_owner->Team != 0)
+	if (_owner->_Fighter->Team != 0)
 	{
 		bool done = false;
 		int targ = 0;
@@ -149,14 +149,14 @@ void BattleManager::SelectAction()
 			int skill;
 			do {
 				// None of the skills found valid targets -> end turn
-				if (alreadyTriedSkills.size() == _owner->Skills.size())
+				if (alreadyTriedSkills.size() == _owner->_Fighter->Skills.size())
 				{
 					done = true;
 					_state = BS_ActionDone;
 					return;
 				}
-				skill = rand() % _owner->Skills.size();
-				_selectedSkill = _owner->Skills.at(skill);
+				skill = rand() % _owner->_Fighter->Skills.size();
+				_selectedSkill = _owner->_Fighter->Skills.at(skill);
 			} while (alreadyTriedSkills.count(skill));
 			alreadyTriedSkills.emplace(skill); // havent tried this, lets go
 
@@ -169,8 +169,8 @@ void BattleManager::SelectAction()
 				}
 				targ = rand() % _actors.size();
 				// if the target is illegal, re-pick and dont choose that target again
-				if (!_actors.at(targ)->RespectsTargeting(_owner, _selectedSkill->_targetMode) || // doesnt respect targeting
-					_actors.at(DefaultTargetActorIndex())->Team != _actors.at(targ)->Team)
+				if (!_actors.at(targ)->_Fighter->RespectsTargeting(_owner, _selectedSkill->_targetMode) || // doesnt respect targeting
+					_actors.at(DefaultTargetActorIndex())->_Fighter->Team != _actors.at(targ)->_Fighter->Team)
 					alreadyTargeted.emplace(targ);
 			} while (targ < 0 || targ >= _actors.size() || alreadyTargeted.count(targ)); // is targeting someone of a different team than the default target
 
@@ -322,7 +322,7 @@ void BattleManager::ManageInput()
 			{
 				for (int i = _selectedIndex - 1; i >= 0; i--)
 				{
-					if (_actors[i]->RespectsTargeting(_owner, _selectedSkill->_targetMode))
+					if (_actors[i]->_Fighter->RespectsTargeting(_owner, _selectedSkill->_targetMode))
 					{
 						Select(i);
 						break;
@@ -333,7 +333,7 @@ void BattleManager::ManageInput()
 			{
 				for (int i = _actors.size() - 1; i >= 0; i--)
 				{
-					if (_actors[i]->RespectsTargeting(_owner, _selectedSkill->_targetMode))
+					if (_actors[i]->_Fighter->RespectsTargeting(_owner, _selectedSkill->_targetMode))
 					{
 						Select(i);
 						break;
@@ -361,7 +361,7 @@ void BattleManager::ManageInput()
 			{
 				for (int i = _selectedIndex + 1; i < _actors.size(); i++)
 				{
-					if (_actors[i]->RespectsTargeting(_owner, _selectedSkill->_targetMode))
+					if (_actors[i]->_Fighter->RespectsTargeting(_owner, _selectedSkill->_targetMode))
 					{
 						Select(i);
 						break;
@@ -372,7 +372,7 @@ void BattleManager::ManageInput()
 			{
 				for (int i = 0; i < _actors.size(); i++)
 				{
-					if (_actors[i]->RespectsTargeting(_owner, _selectedSkill->_targetMode))
+					if (_actors[i]->_Fighter->RespectsTargeting(_owner, _selectedSkill->_targetMode))
 					{
 						Select(i);
 						break;
@@ -396,9 +396,9 @@ void BattleManager::ManageInput()
 
 				while (!found)
 				{
-					if (value + increment - MAX_FIGHTERS_PER_SIDE < MAX_FIGHTERS_PER_SIDE && _actors[value - MAX_FIGHTERS_PER_SIDE + increment]->RespectsTargeting(_owner, _selectedSkill->_targetMode))
+					if (value + increment - MAX_FIGHTERS_PER_SIDE < MAX_FIGHTERS_PER_SIDE && _actors[value - MAX_FIGHTERS_PER_SIDE + increment]->_Fighter->RespectsTargeting(_owner, _selectedSkill->_targetMode))
 						_selectedIndex = value - MAX_FIGHTERS_PER_SIDE + increment;
-					else if (value - increment - MAX_FIGHTERS_PER_SIDE >= 0 && _actors[value - MAX_FIGHTERS_PER_SIDE - increment]->RespectsTargeting(_owner, _selectedSkill->_targetMode))
+					else if (value - increment - MAX_FIGHTERS_PER_SIDE >= 0 && _actors[value - MAX_FIGHTERS_PER_SIDE - increment]->_Fighter->RespectsTargeting(_owner, _selectedSkill->_targetMode))
 						_selectedIndex = value - MAX_FIGHTERS_PER_SIDE - increment;
 
 					if (value != _selectedIndex)
@@ -429,9 +429,9 @@ void BattleManager::ManageInput()
 
 				while (!found)
 				{
-					if (value + increment + MAX_FIGHTERS_PER_SIDE < _actors.size() && _actors[value + MAX_FIGHTERS_PER_SIDE + increment]->RespectsTargeting(_owner, _selectedSkill->_targetMode))
+					if (value + increment + MAX_FIGHTERS_PER_SIDE < _actors.size() && _actors[value + MAX_FIGHTERS_PER_SIDE + increment]->_Fighter->RespectsTargeting(_owner, _selectedSkill->_targetMode))
 						_selectedIndex = value + MAX_FIGHTERS_PER_SIDE + increment;
-					else if (value - increment + MAX_FIGHTERS_PER_SIDE >= MAX_FIGHTERS_PER_SIDE && _actors[value + MAX_FIGHTERS_PER_SIDE - increment]->RespectsTargeting(_owner, _selectedSkill->_targetMode))
+					else if (value - increment + MAX_FIGHTERS_PER_SIDE >= MAX_FIGHTERS_PER_SIDE && _actors[value + MAX_FIGHTERS_PER_SIDE - increment]->_Fighter->RespectsTargeting(_owner, _selectedSkill->_targetMode))
 						_selectedIndex = value + MAX_FIGHTERS_PER_SIDE - increment;
 
 					if (value != _selectedIndex)
@@ -463,7 +463,7 @@ void BattleManager::ManageInput()
 				if (x->Selected)
 				{
 					_targets.push_back(x);
-					x->SetColor();
+					x->UpdateColor();
 					x->Selected = false;
 				}
 
@@ -486,7 +486,7 @@ void BattleManager::ManageInput()
 			_showingSkills = true;
 			for (auto x : _actors)
 			{
-				x->SetColor();
+				x->UpdateColor();
 				x->Selected = false;
 			}
 		}
@@ -506,11 +506,11 @@ int BattleManager::DefaultTargetActorIndex()
 				done = true;
 			break;
 		case DT_Ally:
-			if (_actors[i]->Team == _owner->Team && _actors[i]->RespectsTargeting(_owner, _selectedSkill->_targetMode))
+			if (_actors[i]->_Fighter->Team == _owner->_Fighter->Team && _actors[i]->_Fighter->RespectsTargeting(_owner, _selectedSkill->_targetMode))
 				done = true;
 			break;
 		case DT_Enemy:
-			if (_actors[i]->Team != _owner->Team && _actors[i]->RespectsTargeting(_owner, _selectedSkill->_targetMode))
+			if (_actors[i]->_Fighter->Team != _owner->_Fighter->Team && _actors[i]->_Fighter->RespectsTargeting(_owner, _selectedSkill->_targetMode))
 				done = true;
 			break;
 		}
@@ -529,18 +529,18 @@ void BattleManager::Select(int target)
 		for (auto x : _actors)
 		{
 			if (x->Selected)
-				x->SetColor();
+				x->UpdateColor();
 			x->Selected = false;
 		}
 
 		_actors[_selectedIndex]->Selected = false;
 		_actors.at(target)->Selected = true;
-		_actors.at(target)->SetColorAll(Vector3f(1.f, 0.25f, 0.25f));
+		_actors.at(target)->_Graphics->SetColorAll(Vector3f(1.f, 0.25f, 0.25f));
 		_selectedIndex = target;
 	}
 	else if (_state == BS_SelectAction)
 	{
-		if (_owner->Team == 0)
+		if (_owner->_Fighter->Team == 0)
 		{
 			FontManager::GetInstance().GetFont(_fonts[_selectedIndex])->GetGraphics()->SetColorAll();
 			FontManager::GetInstance().GetFont(_fonts[target])->GetGraphics()->SetColorAll(Vector3f(1, 0, 0));
@@ -562,14 +562,14 @@ void BattleManager::CycleActors()
 {
 	Actor_ptr front = _actorQueue.front();
 	front->ChoosingAction = false;
-	front->SetColor();
+	front->UpdateColor();
 
 	_actorQueue.pop_front();
 	_actorQueue.push_back(front);
 	_owner = _actorQueue.front();
 	_owner->ChoosingAction = true;
-	_owner->SetColor();
-	_chooseSkill = &_owner->Skills;
+	_owner->UpdateColor();
+	_chooseSkill = &_owner->_Fighter->Skills;
 	_targets.clear();
 	_selectedIndex = 0;
 }
@@ -584,8 +584,8 @@ int BattleManager::FindWinner()
 		if (activeTeams.size() > 1)
 			break;
 		// If someone isn't dead on that team, that team is still going
-		if (!x->Dead && !activeTeams.count(x->Team))
-			activeTeams.emplace(x->Team);
+		if (!x->_Fighter->Dead && !activeTeams.count(x->_Fighter->Team))
+			activeTeams.emplace(x->_Fighter->Team);
 	}
 
 	// More than one team is alive, return -1

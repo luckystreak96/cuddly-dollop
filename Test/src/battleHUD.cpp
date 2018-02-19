@@ -36,7 +36,7 @@ void BattleHUD::AddActorHealthBar(Actor_ptr ap, int& party, int& enemies)
 	// Bar
 	GraphComp_ptr ptr = GraphComp_ptr(new GraphicsComponent("BAR", "res/sprites/special/bar.png"));
 	GraphComp_ptr ptr2 = GraphComp_ptr(new GraphicsComponent("BAR", "res/sprites/special/bar.png"));
-	if (ap->Team == 0)
+	if (ap->_Fighter->Team == 0)
 	{
 		ptr->SetPhysics(Vector3f(4.25f + 2.5f * party, 8.25f, 0), Vector3f());
 		ptr2->SetPhysics(Vector3f(4.25f + 2.5f * party, 8.25f, 0.1f), Vector3f());
@@ -62,7 +62,7 @@ void BattleHUD::AddActorHealthBar(Actor_ptr ap, int& party, int& enemies)
 	FontManager::GetInstance().SetScale(namefont, 0.3f, 0.3f);
 	FontManager::GetInstance().GetFont(namefont)->_letterSpacing = 0.75f;
 	Vector3f offset = Vector3f(-1.45f, -0.25f, -1);
-	FontManager::GetInstance().SetText(namefont, _(ap->Name), ptr->GetPos() + offset, false);
+	FontManager::GetInstance().SetText(namefont, _(ap->_Name), ptr->GetPos() + offset, false);
 	FontManager::GetInstance().GetFont(namefont)->Update(0);
 
 	// Set everything
@@ -80,8 +80,8 @@ void BattleHUD::Update()
 	for (int i = 0; i < _actorInfo.size(); i++)
 	{
 		Vector3f color = Vector3f(0, 0.6f, 0.8f);
-		int health = _actors.at(i)->Health;
-		int maxhealth = _actors.at(i)->GetMaxHealth();
+		int health = _actors.at(i)->_Fighter->Health;
+		int maxhealth = _actors.at(i)->_Fighter->GetMaxHealth();
 
 		// Set color
 		if (health > maxhealth / 2)

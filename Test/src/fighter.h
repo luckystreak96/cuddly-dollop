@@ -4,44 +4,46 @@
 #include <string>
 #include <memory>
 #include <vector>
+#include "statUser.h"
 
 class Skill;
 typedef std::shared_ptr<Skill> Skill_ptr;
 
-struct Damage;
+class Fighter;
+typedef std::shared_ptr<Fighter> Fighter_ptr;
 
 class Actor;
 typedef std::shared_ptr<Actor> Actor_ptr;
 
-class Fighter
+struct Damage;
+
+class Fighter : public StatUser
 {
 public:
 	Fighter();
-	Damage TakeDamage(Damage& dmg);
-	Damage ApplyHealing(Damage& heal);
-	void DamageModifiers(Damage& dmg, bool critting);
-	void ApplyLethal();
-	bool RespectsTargeting(Actor_ptr ap, int tm);
-	void TurnStart(std::vector<Actor_ptr>& actors);
-	void SpecialActionCommand(Damage& dmg);
-	void PhysicalOffenseActionCommand(Damage& dmg);
-	void PhysicalDefenseActionCommand(Damage& dmg);
-	void MagicalOffenseActionCommand(Damage& dmg);
-	void MagicalDefenseActionCommand(Damage& dmg);
+	virtual Damage TakeDamage(Damage& dmg);
+	virtual Damage ApplyHealing(Damage& heal);
+	virtual void DamageModifiers(Damage& dmg, bool critting);
+	virtual void ApplyLethal();
+	virtual bool RespectsTargeting(Actor_ptr ap, int tm);
+	virtual void TurnStart(std::vector<Actor_ptr>& actors);
+	virtual void SpecialActionCommand(Damage& dmg);
+	virtual void PhysicalOffenseActionCommand(Damage& dmg);
+	virtual void PhysicalDefenseActionCommand(Damage& dmg);
+	virtual void MagicalOffenseActionCommand(Damage& dmg);
+	virtual void MagicalDefenseActionCommand(Damage& dmg);
 
 public:
-	int DefenseDamageModification(bool critting);
+	virtual int DefenseDamageModification(bool critting);
 
 public:
 	bool Dead;
 	Actor_ptr Protector;
 	int Team;
-	bool Selected;
-	bool ChoosingAction;
 	std::vector<Skill_ptr> Skills;
 
 protected:
-	void SetDefault();
+	virtual void SetDefault();
 };
 
 

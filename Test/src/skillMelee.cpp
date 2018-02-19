@@ -18,18 +18,18 @@ void SkillMelee::DefaultSetup()
 BattleState SkillMelee::Start(std::vector<Actor_ptr>* targets, std::deque<Actor_ptr>* actors, std::deque<Anim_ptr>* anims, Actor_ptr owner)
 {
 	Skill::Start(targets, actors, anims, owner);
-	_basePos = _owner->GetPos();
+	_basePos = _owner->_Graphics->GetPos();
 	// INSERT JUMP FOREWARD ANIMATION HERE
-	float distance = _owner->Team == 0 ? 0.7f : -0.7f;
-	bool protector = _targets->at(0)->Protector != NULL;
+	float distance = _owner->_Fighter->Team == 0 ? 0.7f : -0.7f;
+	bool protector = _targets->at(0)->_Fighter->Protector != NULL;
 	if (protector)
 		distance *= 2.0f;
-	_anims->push_back(Anim_ptr(new AnimJumpTo(_targets->at(0)->GetPos() - Vector3f(distance, 0, 0), _owner)));
+	_anims->push_back(Anim_ptr(new AnimJumpTo(_targets->at(0)->_Graphics->GetPos() - Vector3f(distance, 0, 0), _owner)));
 	if (protector)
 	{
 		_targets->push_back(_targets->at(0));
-		_targets->at(0) = _targets->at(0)->Protector;
-		_anims->push_back(Anim_ptr(new AnimJumpTo(_targets->at(1)->GetPos() - Vector3f(distance / 2.0f, 0, 0), _targets->at(0))));
+		_targets->at(0) = _targets->at(0)->_Fighter->Protector;
+		_anims->push_back(Anim_ptr(new AnimJumpTo(_targets->at(1)->_Graphics->GetPos() - Vector3f(distance / 2.0f, 0, 0), _targets->at(0))));
 		_anims->back()->_duration = 0.2f;
 		_anims->back()->_async = true;
 	}
@@ -110,7 +110,7 @@ void SkillMelee::ApplyEffect()
 	result._value = 0;
 	result._type = ST_Physical;
 	//dmg = rand() % 3 + 1;
-	_targets->at(0)->TakeDamage(result);
+	_targets->at(0)->_Fighter->TakeDamage(result);
 
 	// Damage text
 	SpawnDamageText(_targets->at(0), result._value);

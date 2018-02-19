@@ -416,10 +416,10 @@
     <ClInclude Include="src\skillProtect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src/fighter.h">
+    <ClInclude Include="src\statUser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\statUser.h">
+    <ClInclude Include="src\fighter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -709,10 +709,10 @@
     <ClCompile Include="src\battleAnimation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src/fighter.cpp">
+    <ClCompile Include="src\statUser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\statUser.cpp">
+    <ClCompile Include="src\fighter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

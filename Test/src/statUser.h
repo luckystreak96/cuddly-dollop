@@ -33,7 +33,6 @@ public:
 	int Strength;
 	int Defense;
 	int Crit;
-	bool Dead;
 	int NextLevelExp;
 	int SkillPoints;
 
