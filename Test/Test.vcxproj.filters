@@ -422,6 +422,12 @@
     <ClInclude Include="src\fighter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\statCurve.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\battleData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -713,6 +719,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\fighter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\statCurve.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\battleData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

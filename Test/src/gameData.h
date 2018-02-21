@@ -13,6 +13,7 @@
 #include <variant>
 #include "actor.h"
 #include "vector3f.h"
+#include "battleData.h"
 
 typedef std::map<std::string, std::variant<bool, float, int, std::string>> OptionMap;
 
@@ -38,9 +39,6 @@ public:
 
 	// Sprite
 	static std::string PlayerSprite;
-
-	// Party
-	static std::vector<Actor_ptr> Party;
 
 	// Game flags
 	static std::map<std::string, int> Flags;

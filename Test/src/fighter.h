@@ -21,6 +21,7 @@ class Fighter : public StatUser
 {
 public:
 	Fighter();
+	
 	virtual Damage TakeDamage(Damage& dmg);
 	virtual Damage ApplyHealing(Damage& heal);
 	virtual void DamageModifiers(Damage& dmg, bool critting);
@@ -32,6 +33,7 @@ public:
 	virtual void PhysicalDefenseActionCommand(Damage& dmg);
 	virtual void MagicalOffenseActionCommand(Damage& dmg);
 	virtual void MagicalDefenseActionCommand(Damage& dmg);
+	void SetStatsFromCurve();
 
 public:
 	virtual int DefenseDamageModification(bool critting);

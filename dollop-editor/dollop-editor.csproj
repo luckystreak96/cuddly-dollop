@@ -57,6 +57,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Battle\StatCurve.cs" />
+    <Compile Include="Battle\WindowStatCurve.xaml.cs">
+      <DependentUpon>WindowStatCurve.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Entity\Choice.cs" />
     <Compile Include="Entity\ChoiceModify.xaml.cs">
       <DependentUpon>ChoiceModify.xaml</DependentUpon>
@@ -94,6 +98,10 @@
     </Compile>
     <Compile Include="Tile.cs" />
     <Compile Include="Tiles.cs" />
+    <Page Include="Battle\WindowStatCurve.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Entity\ChoiceModify.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

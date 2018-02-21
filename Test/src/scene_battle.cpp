@@ -19,7 +19,7 @@ SceneBattle::SceneBattle() : m_zoom(false)
 {
 	m_currentMap = 3;
 	//_actors.push_back(Actor_ptr(ActorFactory::BuildBaseAlly()));
-	for (auto x : GameData::Party)
+	for (auto x : BattleData::Party)
 	{
 		_actors.push_back(x);
 		_actors.push_back(Actor_ptr(ActorFactory::BuildBaseAlly()));

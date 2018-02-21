@@ -3,10 +3,17 @@
 #include "skill.h"
 #include "skillSmack.h"
 #include "actor.h"
+#include "statCurve.h"
 
 Fighter::Fighter()
 {
 	SetDefault();
+}
+
+void Fighter::SetStatsFromCurve()
+{
+	// fighter needs to somehow load his statcurve from file
+	StatCurve::SetCurve(0, this);
 }
 
 void Fighter::SetDefault()
