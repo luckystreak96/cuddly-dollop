@@ -27,8 +27,7 @@ BattleState SkillMelee::Start(std::vector<Actor_ptr>* targets, std::deque<Actor_
 	_anims->push_back(Anim_ptr(new AnimJumpTo(_targets->at(0)->_Graphics->GetPos() - Vector3f(distance, 0, 0), _owner)));
 	if (protector)
 	{
-		_targets->push_back(_targets->at(0));
-		_targets->at(0) = _targets->at(0)->_Fighter->Protector;
+		Skill::SetupProtector();
 		_anims->push_back(Anim_ptr(new AnimJumpTo(_targets->at(1)->_Graphics->GetPos() - Vector3f(distance / 2.0f, 0, 0), _targets->at(0))));
 		_anims->back()->_duration = 0.2f;
 		_anims->back()->_async = true;

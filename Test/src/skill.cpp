@@ -134,6 +134,14 @@ void Skill::HandleActionCommand(double percentProgress)
 	}
 }
 
+void Skill::SetupProtector()
+{
+	_targets->push_back(_targets->at(0));
+	_targets->at(0) = _targets->at(0)->_Fighter->Protector;
+
+}
+
+
 void Skill::Update()
 {
 	// Reset input

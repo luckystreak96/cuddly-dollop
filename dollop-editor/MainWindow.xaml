@@ -42,6 +42,7 @@
                 </MenuItem>
                 <MenuItem Header="_Window">
                     <MenuItem x:Name="menuLocalization" Header="_Localization" Click="menuLocalization_Click"/>
+                    <MenuItem x:Name="menuStatCurve" Header="_Stat Curves" Click="menuStatCurve_Click"/>
                 </MenuItem>
             </Menu>
         </DockPanel>

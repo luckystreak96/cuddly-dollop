@@ -772,5 +772,11 @@ namespace dollop_editor
             process.StartInfo.FileName = "Cuddly-dollop.exe";
             process.Start();
         }
+
+        private void menuStatCurve_Click(object sender, RoutedEventArgs e)
+        {
+            Battle.WindowStatCurve curveWindow = new Battle.WindowStatCurve();
+            curveWindow.Show();
+        }
     }
 }

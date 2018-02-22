@@ -52,6 +52,8 @@ public:
 	void HandleActionCommand(double percentProgress);
 	bool AnimationsDone();
 
+	virtual void SetupProtector();
+
 public:
 	std::deque<Actor_ptr>* _actors;
 	std::vector<Actor_ptr>* _targets;

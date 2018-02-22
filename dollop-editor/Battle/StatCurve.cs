@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 
 namespace dollop_editor
 {
+    public enum Stats { endurance, strength, speed, crit, defense }
+    public enum Operators { power, sqrt }
+
     public struct CurveStyle
     {
-        public string stat;
-        public char op;
+        public string op;
         public int value;
     }
 
