@@ -13,7 +13,7 @@ Fighter::Fighter()
 void Fighter::SetStatsFromCurve()
 {
 	// fighter needs to somehow load his statcurve from file
-	StatCurve::SetCurve(0, this);
+	StatCurve::SetCurve(this);
 }
 
 void Fighter::SetDefault()

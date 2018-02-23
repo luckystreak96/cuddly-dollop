@@ -20,8 +20,10 @@ public:
 	int GetExp();
 	void SetEndurance(int endurance);
 	int GetEndurance();
+	int* GetEndurancePointer();
 	void SetMaxHealth(int maxHealth);
 	int GetMaxHealth();
+	int* GetMaxHealthPointer();
 
 	// Stat points + nextlevelexp
 	void LevelUp();
@@ -35,6 +37,7 @@ public:
 	int Crit;
 	int NextLevelExp;
 	int SkillPoints;
+	std::string Curve;
 
 protected:
 	int Level;

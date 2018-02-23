@@ -50,6 +50,13 @@ namespace dollop_editor.Battle
             SetCmbStats();
         }
 
+        public void Setup()
+        {
+            SetCmbCurves();
+            if (_Strings.Count > 0)
+                cmbCurve.SelectedIndex = 0;
+        }
+
         private void SetCmbStats()
         {
             cmbStat.ItemsSource = _StatNames;
@@ -82,7 +89,7 @@ namespace dollop_editor.Battle
 
                 CurveStyle style = new CurveStyle();
                 style.op = cmbOperator.Text;
-                style.value = int.Parse(txtValue.Text);
+                style.value = float.Parse(txtValue.Text);
 
                 if (_Stats.ContainsKey(cmbStat.Text))
                     _Stats.Remove(cmbStat.Text);
@@ -91,7 +98,7 @@ namespace dollop_editor.Battle
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("Error: " + ex.StackTrace + "\n" + ex.Message);
             }
         }
 
@@ -116,16 +123,20 @@ namespace dollop_editor.Battle
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("Error: " + ex.StackTrace + "\n" + ex.Message);
             }
         }
 
-        private void SetValueAndOperator()
+        private void SetValueAndOperator(string value = "")
         {
-            if (_Stats.ContainsKey(cmbStat.Text))
+            // Allow setting the desired value
+            if (value == "")
+                value = cmbStat.Text;
+
+            if (_Stats.ContainsKey(value))
             {
-                cmbOperator.Text = _Stats[cmbStat.Text].op.ToString();
-                txtValue.Text = _Stats[cmbStat.Text].value.ToString();
+                cmbOperator.Text = _Stats[value].op.ToString();
+                txtValue.Text = _Stats[value].value.ToString();
             }
             else
             {
@@ -134,11 +145,15 @@ namespace dollop_editor.Battle
             }
         }
 
-        private void SetStatsVariable()
+        private void SetStatsVariable(string value = "6346354")
         {
-            if (_Curves.ContainsKey(cmbCurve.Text))
+            if (value == "6346354")
+                value = cmbCurve.Text;
+
+            if (_Curves.ContainsKey(value))
             {
-                foreach (var stat in _Curves[cmbCurve.Text])
+                _Stats = new Dictionary<string, CurveStyle>();
+                foreach (var stat in _Curves[value])
                     _Stats.Add(stat.Key, stat.Value);
             }
         }
@@ -147,12 +162,13 @@ namespace dollop_editor.Battle
         {
             try
             {
-                SetStatsVariable();
+                txtName.Text = e.AddedItems[0].ToString();
+                SetStatsVariable(e.AddedItems[0].ToString());
                 SetValueAndOperator();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("Error: " + ex.StackTrace + "\n" + ex.Message);
             }
         }
 
@@ -185,11 +201,11 @@ namespace dollop_editor.Battle
             try
             {
                 //SetStatsVariable();
-                SetValueAndOperator();
+                SetValueAndOperator(e.AddedItems[0].ToString());
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("Error: " + ex.StackTrace + "\n" + ex.Message);
             }
         }
 
@@ -217,7 +233,7 @@ namespace dollop_editor.Battle
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("Error: " + ex.StackTrace + "\n" + ex.Message);
             }
         }
 
@@ -232,7 +248,7 @@ namespace dollop_editor.Battle
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show("Error: " + ex.StackTrace + "\n" + ex.Message);
             }
         }
     }

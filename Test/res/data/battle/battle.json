@@ -1,0 +1,16 @@
+{
+  "curves": {
+    "Speedy": {
+      "speed": {
+        "op": "power",
+        "value": 9001
+      }
+    },
+    "Strength": {
+      "strength": {
+        "op": "power",
+        "value": 9001
+      }
+    }
+  }
+}

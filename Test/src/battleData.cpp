@@ -1,5 +1,11 @@
 #include "battleData.h"
+
+#include <iostream>
+
 #include "actorFactory.h"
+#include "statCurve.h"
+
+#undef GetObject
 
 using namespace rapidjson;
 
@@ -9,6 +15,80 @@ void BattleData::NewGame()
 {
 	if (!Party.size() > 0)
 		Party.push_back(ActorFactory::BuildBaseAlly());
+}
+
+void BattleData::LoadCurves()
+{
+	std::string file = "";
+	try {
+		file = Utils::ReadFile("res/data/battle/battle.json");
+	}
+	catch (...)// catch any exception
+	{
+		std::cout << "Error loading: res/data/battle/battle.json" << std::endl;
+		return;
+	}
+
+	rapidjson::Document doc;
+	doc.Parse(file.c_str());
+
+	// Get the flags
+	if (doc.HasMember("curves") && doc["curves"].IsObject())
+	{
+		std::map<std::string, CurveInfo> data;
+		auto curves = doc["curves"].GetObjectW();
+		// Loop through curves
+		for (Value::ConstMemberIterator itr = curves.MemberBegin(); itr != curves.MemberEnd(); ++itr)
+		{
+			std::string curveName = itr->name.GetString();
+			CurveInfo stats;
+
+			auto stat = itr->value.GetObjectW();
+			// Loop through the stats of a curve
+			for (Value::ConstMemberIterator itr2 = stat.MemberBegin(); itr2 != stat.MemberEnd(); ++itr2)
+			{
+				std::string statName = itr2->name.GetString();
+				CurveStyle style;
+				// Get the op and value
+				for (auto& statInfo : itr2->value.GetObjectW())
+				{
+					// Get the name
+					std::string statDetailIdent = statInfo.name.GetString();
+
+					// Get the value, look out for some int bullshit
+					float statValue;
+					std::string statValueString;
+					if (statInfo.value.IsInt())
+						statValue = (float)statInfo.value.GetInt();
+					else if (statInfo.value.IsFloat())
+						statValue = statInfo.value.GetFloat();
+					else
+						statValueString = statInfo.value.GetString();
+
+					if (statDetailIdent == "op")
+						style.StatOperator = statValueString;
+					else if (statDetailIdent == "value")
+						style.Value = statValue;
+				}
+
+				stats.Stats.emplace(statName, style);
+			}
+
+			// emplace curve
+			data.emplace(curveName, stats);
+		}
+
+		StatCurve::Curves = data;
+	}
+}
+
+void BattleData::LoadParty(rapidjson::Document& doc)
+{
+	if (doc.HasMember("party") && doc["party"].IsArray())
+	{
+		auto party = doc["party"].GetArray();
+		BattleData::Party = ActorFactory::BuildParty(party);
+	}
 }
 
 void BattleData::SaveParty(rapidjson::Document& saveFile, Document::AllocatorType& allocator)

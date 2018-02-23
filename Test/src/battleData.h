@@ -16,6 +16,8 @@ class BattleData
 public:
 	static void NewGame();
 	static void SaveParty(Document& doc, Document::AllocatorType& allocator);
+	static void LoadParty(Document& doc);
+	static void LoadCurves();
 
 public:
 	// Party

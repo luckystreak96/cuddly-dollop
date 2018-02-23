@@ -20,6 +20,7 @@ void StatUser::SetDefault()
 	NextLevelExp = 0;
 	Level = 1;
 	Crit = 0;
+	Curve = "";
 }
 
 void StatUser::SetEndurance(int endurance)
@@ -38,6 +39,11 @@ void StatUser::SetMaxHealth(int max)
 int StatUser::GetEndurance()
 {
 	return Endurance;
+}
+
+int* StatUser::GetEndurancePointer()
+{
+	return &Endurance;
 }
 
 void StatUser::SetLevel(int level)
@@ -97,4 +103,9 @@ int StatUser::GetExp()
 int StatUser::GetMaxHealth()
 {
 	return MaxHealth;
+}
+
+int* StatUser::GetMaxHealthPointer()
+{
+	return &MaxHealth;
 }

@@ -17,6 +17,8 @@ namespace dollop_editor
 {
     public class Editor
     {
+        public Battle.BattleData _BattleData { get; set; }
+
         public Dictionary<string, ImageBrush> Brushes { get; }
         public Dictionary<Point3D, Rectangle> Tiles { get; set; }
         public Dictionary<Point3D, Tuple<Entity, Rectangle>> Entities { get; set; }
@@ -28,6 +30,7 @@ namespace dollop_editor
 
         public Editor()
         {
+            _BattleData = new Battle.BattleData();
             Brushes = new Dictionary<string, ImageBrush>();
             Tiles = new Dictionary<Point3D, Rectangle>();
             TileHistory = new List<Dictionary<Point3D, Rectangle>>();
@@ -39,6 +42,7 @@ namespace dollop_editor
             PopulateBrushes();
             ResetTiles();
         }
+
         public void Setup(int width, int height, bool newMap)
         {
             Width = width;
@@ -211,38 +215,25 @@ namespace dollop_editor
         {
             try
             {
-                Map map = new Map();
-                map.id = Convert.ToInt32(filename.Split('\\').Last().Split('.').First());
-
-                List<Tile> tiles = new List<Tile>();
-                foreach (var x in Tiles)
-                {
-                    Tile tile = new Tile
-                    {
-                        x = (float)x.Key.X,
-                        // -1 because height - y on its own makes an off by 1 error
-                        y = (float)x.Key.Y,
-                        z = (float)x.Key.Z,
-                        // Get the name of the sprite
-                        sprite = ((BitmapImage)(x.Value.Fill.GetValue(ImageBrush.ImageSourceProperty))).UriSource.ToString().Split('\\').Last(),
-                        walkOn = ((string)x.Value.Tag == "noWalkOn" ? false : (bool?)null),
-                        deco = ((string)x.Value.Tag == "deco" ? true : (bool?)null)
-                    };
-
-                    tiles.Add(tile);
-                }
-
-                List<Entity> ents = new List<Entity>();
-                foreach (var x in Entities)
-                    ents.Add(x.Value.Item1);
-
-                map.tiles = tiles;
-                map.entities = ents;
-                File.WriteAllText(filename, JsonConvert.SerializeObject(map, Formatting.Indented, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }).Replace("\r", "").Replace("\\r", ""));
+                Map.SerializeMap(Tiles, Entities, filename);
+                Battle.BattleData.SerializeBattleData(@"..\..\..\Test\res\data\battle\battle.json", _BattleData);
             }
             catch (Exception e)
             {
                 MessageBox.Show(e.Message);
+            }
+        }
+
+        public void LoadBattleData(string path)
+        {
+            try
+            {
+                _BattleData = Battle.BattleData.LoadBattleData(path);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading BattleData : " + ex.Message);
+                _BattleData = new Battle.BattleData();
             }
         }
 

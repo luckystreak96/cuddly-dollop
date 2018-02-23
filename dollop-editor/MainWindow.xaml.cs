@@ -78,8 +78,11 @@ namespace dollop_editor
             selectedMapTile.RenderTransform = new TranslateTransform(0, 0);
             cnvTilePicker.Children.Add(selectedPickerTile);
 
-            if (File.Exists("..\\..\\..\\Test\\res\\data\\1.json"))
-                LoadMap("..\\..\\..\\Test\\res\\data\\1.json");
+            if (File.Exists(@"..\..\..\Test\res\data\1.json"))
+                LoadMap(@"..\..\..\Test\res\data\1.json");
+
+            if (File.Exists(@"..\..\..\Test\res\data\battle\data.json"))
+                editor.LoadBattleData(@"..\..\..\Test\res\data\battle\data.json");
             //ReSyncOnEditor();
         }
 
@@ -776,7 +779,11 @@ namespace dollop_editor
         private void menuStatCurve_Click(object sender, RoutedEventArgs e)
         {
             Battle.WindowStatCurve curveWindow = new Battle.WindowStatCurve();
-            curveWindow.Show();
+            curveWindow._Curves = editor._BattleData.curves;
+            curveWindow.Setup();
+            curveWindow.ShowDialog();
+            var curves = curveWindow._Curves;
+            editor._BattleData.curves = curves;
         }
     }
 }

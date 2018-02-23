@@ -57,6 +57,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Battle\BattleData.cs" />
     <Compile Include="Battle\StatCurve.cs" />
     <Compile Include="Battle\WindowStatCurve.xaml.cs">
       <DependentUpon>WindowStatCurve.xaml</DependentUpon>

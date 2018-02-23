@@ -5813,6 +5813,18 @@
       "y": 5.0,
       "z": 4.5,
       "sprite": "sand_path_urd.png"
+    },
+    {
+      "x": 3.0,
+      "y": 16.0,
+      "z": 4.0,
+      "sprite": "sapin_b.png"
+    },
+    {
+      "x": 3.0,
+      "y": 17.0,
+      "z": 3.0,
+      "sprite": "sapin_t.png"
     }
   ],
   "entities": [

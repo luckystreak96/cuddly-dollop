@@ -145,12 +145,12 @@ void GameData::LoadGameData()
 			}
 	}
 
+	// Load stat curves to be used by actors
+	BattleData::LoadCurves();
+
 	// Get the party
-	if (m_document.HasMember("party") && m_document["party"].IsArray())
-	{
-		auto party = m_document["party"].GetArray();
-		BattleData::Party = ActorFactory::BuildParty(party);
-	}
+	BattleData::LoadParty(m_document);
+
 
 	PlayerSprite = "res/sprites/entities/entity_ghost.png";
 	// Get the player sprite

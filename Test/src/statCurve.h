@@ -4,19 +4,28 @@
 #include <map>
 #include "statUser.h"
 
-struct CurveInfo
+struct CurveStyle
 {
-	std::map<std::string, char> OperatorPerStat;
+	std::string StatOperator;
+	float Value;
 };
 
-enum CurveType {CT_Basic};
+struct CurveInfo
+{
+	std::map<std::string, CurveStyle> Stats;
+};
 
-class StatCurve : public StatUser
+// StatCurves allow characters to have base stats set according to level,
+//	this would be calculated before all other skills/stat mods
+
+class StatCurve
 {
 public:
-	static void SetCurve(int curve, StatUser* user);
+	static void SetCurve(StatUser* user);
 
-	static std::map<int, CurveInfo> Curves;
+	static std::map<std::string, CurveInfo> Curves;
+	static int* GetStatPointer(std::string stat, StatUser* user);
+	static void ApplyFunction(int* stat, float value, std::string opName, StatUser* user);
 };
 
 #endif
