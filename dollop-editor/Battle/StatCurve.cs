@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace dollop_editor
 {
     public enum Stats { endurance, strength, speed, crit, defense, max_health }
-    public enum Operators { quadratic, square_root, linear }
+    public enum Operators { square, quadratic, square_root, linear }
 
     public struct CurveStyle
     {

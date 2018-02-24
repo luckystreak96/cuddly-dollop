@@ -529,13 +529,15 @@ void BattleManager::Select(int target)
 		for (auto x : _actors)
 		{
 			if (x->Selected)
+			{
+				x->Selected = false;
 				x->UpdateColor();
-			x->Selected = false;
+			}
 		}
 
 		_actors[_selectedIndex]->Selected = false;
 		_actors.at(target)->Selected = true;
-		_actors.at(target)->_Graphics->SetColorAll(Vector3f(1.f, 0.25f, 0.25f));
+		//_actors.at(target)->_Graphics->SetColorAll(Vector3f(1.f, 0.25f, 0.25f));
 		_selectedIndex = target;
 	}
 	else if (_state == BS_SelectAction)

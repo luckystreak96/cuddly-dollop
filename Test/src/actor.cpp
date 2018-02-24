@@ -6,6 +6,7 @@ Actor::Actor()
 {
 	_Fighter = NULL;
 	_Graphics = NULL;
+	_ColorState = CS_Normal;
 	SetDefault();
 }
 
@@ -31,17 +32,35 @@ void Actor::SetDefault()
 
 void Actor::UpdateColor()
 {
-	if (ChoosingAction)
-		_Graphics->SetColorAll(/*Vector3f(1.f, 1.f, 0), 1.f*/);
-	else if (_Fighter && _Fighter->Dead)
-		_Graphics->SetColorAll(Vector3f(0.25f, 0.25f, 0.25f), 0.5f);
-	else
+	bool dead = (_Fighter && _Fighter->Dead);
+
+	if(Selected)
+	{
+		if (_ColorState != CS_Red)
+		{
+			_Graphics->SetColorAll(Vector3f(1, 0.25f, 0.25f), dead ? 0.5f : 1.0f);
+			_ColorState = CS_Red;
+		}
+	}
+	else if (dead)
+	{
+		if (_ColorState != CS_Invis)
+		{
+			_Graphics->SetColorAll(Vector3f(0.25f, 0.25f, 0.25f), 0.5f);
+			_ColorState = CS_Invis;
+		}
+	}
+	else if(_ColorState != CS_Normal)
+	{
 		_Graphics->SetColorAll();
+		_ColorState = CS_Normal;
+	}
 }
 
 
 void Actor::Update()
 {
+	UpdateColor();
 	_Graphics->Update();
 }
 

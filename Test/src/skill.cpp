@@ -126,7 +126,7 @@ void Skill::HandleActionCommand(double percentProgress)
 		else if (percentProgress <= _ac._end && percentProgress >= _ac._start)
 			_owner->_Graphics->SetColorAll(Vector3f(2.0f, 2.0f, 2.0f), 1.0f);
 		else
-			_owner->UpdateColor();
+			_owner->_ColorState = CS_Update;
 
 		// Handle input for action command
 		// Can only happen if you press within the right animation

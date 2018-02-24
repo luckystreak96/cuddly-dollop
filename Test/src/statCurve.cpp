@@ -39,17 +39,23 @@ void StatCurve::SetCurve(StatUser* user)
 
 void StatCurve::ApplyFunction(int* stat, float value, std::string opName, StatUser* user)
 {
-	if (opName == "quadratic")
+	int x = user->GetLevel();
+	float a = value;
+	if (opName == "square")
 	{
-		*stat =  pow(user->GetLevel(), 2);
+		*stat = a * pow(x, 2);
+	}
+	else if (opName == "quadratic")
+	{
+		*stat = (a * pow(x, 2)) + pow(x, 2);
 	}
 	else if (opName == "square_root")
 	{
-		*stat = sqrt(value * user->GetLevel());
+		*stat = sqrt(a * x);
 	}
 	else if (opName == "linear")
 	{
-		*stat = user->GetLevel() * value;
+		*stat = x * a;
 	}
 }
 

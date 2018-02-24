@@ -111,6 +111,11 @@ void BattleData::SaveParty(rapidjson::Document& saveFile, Document::AllocatorTyp
 		second.SetString(StringRef(actor->Sprite.c_str()), allocator);
 		ob.AddMember(first, second, allocator);
 
+		// curve
+		first.SetString(StringRef("curve"), allocator);
+		second.SetString(StringRef(actor->_Fighter->Curve.c_str()), allocator);
+		ob.AddMember(first, second, allocator);
+
 		// health
 		first.SetString(StringRef("health"), allocator);
 		second.SetInt(actor->_Fighter->Health);

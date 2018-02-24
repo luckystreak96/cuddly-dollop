@@ -12,7 +12,6 @@ Fighter::Fighter()
 
 void Fighter::SetStatsFromCurve()
 {
-	// fighter needs to somehow load his statcurve from file
 	StatCurve::SetCurve(this);
 }
 
@@ -22,6 +21,7 @@ void Fighter::SetDefault()
 	Dead = false;
 	Team = 0;
 	Protector = NULL;
+	SetStatsFromCurve();
 }
 
 void Fighter::TurnStart(std::vector<Actor_ptr>& actors)

@@ -20,7 +20,7 @@ void StatUser::SetDefault()
 	NextLevelExp = 0;
 	Level = 1;
 	Crit = 0;
-	Curve = "";
+	Curve = "Basic";
 }
 
 void StatUser::SetEndurance(int endurance)

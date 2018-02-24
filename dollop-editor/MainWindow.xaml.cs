@@ -81,8 +81,8 @@ namespace dollop_editor
             if (File.Exists(@"..\..\..\Test\res\data\1.json"))
                 LoadMap(@"..\..\..\Test\res\data\1.json");
 
-            if (File.Exists(@"..\..\..\Test\res\data\battle\data.json"))
-                editor.LoadBattleData(@"..\..\..\Test\res\data\battle\data.json");
+            if (File.Exists(@"..\..\..\Test\res\data\battle\battle.json"))
+                editor.LoadBattleData(@"..\..\..\Test\res\data\battle\battle.json");
             //ReSyncOnEditor();
         }
 
@@ -784,6 +784,7 @@ namespace dollop_editor
             curveWindow.ShowDialog();
             var curves = curveWindow._Curves;
             editor._BattleData.curves = curves;
+            mustSave = true;
         }
     }
 }

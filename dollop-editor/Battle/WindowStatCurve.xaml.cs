@@ -162,6 +162,9 @@ namespace dollop_editor.Battle
         {
             try
             {
+                if (e.AddedItems.Count <= 0)
+                    return;
+
                 txtName.Text = e.AddedItems[0].ToString();
                 SetStatsVariable(e.AddedItems[0].ToString());
                 SetValueAndOperator();
@@ -250,6 +253,12 @@ namespace dollop_editor.Battle
             {
                 MessageBox.Show("Error: " + ex.StackTrace + "\n" + ex.Message);
             }
+        }
+
+        private void cmbOperator_DropDownClosed(object sender, EventArgs e)
+        {
+            if (txtValue.Text != "")
+                SaveStat();
         }
     }
 }

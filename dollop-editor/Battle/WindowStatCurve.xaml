@@ -15,7 +15,7 @@
                 <Label Content="Operation" HorizontalAlignment="Left" Height="27" Margin="10,42,0,0" VerticalAlignment="Top" Width="103"/>
                 <Label Content="Value" HorizontalAlignment="Left" Height="27" Margin="10,74,0,0" VerticalAlignment="Top" Width="110"/>
                 <ComboBox Name="cmbStat" HorizontalAlignment="Left" Margin="133,10,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="cmbStat_SelectionChanged"/>
-                <ComboBox Name="cmbOperator" HorizontalAlignment="Left" Margin="133,46,0,0" VerticalAlignment="Top" Width="120"/>
+                <ComboBox Name="cmbOperator" HorizontalAlignment="Left" Margin="133,46,0,0" VerticalAlignment="Top" Width="120" DropDownClosed="cmbOperator_DropDownClosed"/>
                 <TextBox Name="txtValue" HorizontalAlignment="Left" Height="23" Margin="133,77,0,0" TextWrapping="Wrap" Text="100" VerticalAlignment="Top" Width="120" LostFocus="txtValue_LostFocus"/>
             </Grid>
         </GroupBox>

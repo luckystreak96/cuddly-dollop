@@ -12,11 +12,13 @@ Actor_ptr ActorFactory::BuildBaseAlly()
 	result->_Fighter->Skills.push_back(smack);
 	result->_Fighter->Skills.push_back(heal);
 
-	result->_Fighter->Speed = 1;
-	result->_Fighter->Strength = 2;
-	result->_Fighter->Crit = 3;
-	result->_Fighter->Defense = 1;
-	result->_Fighter->SetEndurance(4);
+	result->_Fighter->SetLevel(4);
+	result->_Fighter->SetStatsFromCurve();
+	//result->_Fighter->Speed = 1;
+	//result->_Fighter->Strength = 2;
+	//result->_Fighter->Crit = 3;
+	//result->_Fighter->Defense = 1;
+	//result->_Fighter->SetEndurance(4);
 	result->_Fighter->Health = result->_Fighter->GetMaxHealth();
 	result->Sprite = "res/sprites/entities/entity_girl.png";
 	result->_Graphics->SetTexture(result->Sprite);
@@ -55,6 +57,9 @@ std::vector<Actor_ptr> ActorFactory::BuildParty(rapidjson::GenericArray<false, r
 
 		if (a.HasMember("name"))
 			actor->_Name = a["name"].GetString();
+
+		if (a.HasMember("curve"))
+			actor->_Fighter->Curve = a["curve"].GetString();
 
 		if (a.HasMember("level"))
 			actor->_Fighter->SetLevel(a["level"].GetInt());

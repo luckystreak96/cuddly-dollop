@@ -6,6 +6,8 @@
 #include "playerGraphicsComponent.h"
 #include "fighter.h"
 
+enum ColorState { CS_Invis, CS_Red, CS_Normal, CS_Update };
+
 class Actor
 {
 public:
@@ -18,6 +20,7 @@ public:
 	PGraphics_ptr _Graphics;
 
 public:
+	ColorState _ColorState;
 	std::string _Name;
 	bool Selected;
 	bool ChoosingAction;
