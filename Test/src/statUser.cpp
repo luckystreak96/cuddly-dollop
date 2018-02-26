@@ -25,6 +25,7 @@ void StatUser::SetDefault()
 
 void StatUser::SetEndurance(int endurance)
 {
+	Endurance = endurance;
 	SetMaxHealth(5 + endurance * 3 * (1.0f + (float)endurance / 100.0f));
 }
 
@@ -36,12 +37,12 @@ void StatUser::SetMaxHealth(int max)
 	MaxHealth = max;
 }
 
-int StatUser::GetEndurance()
+Stat StatUser::GetEndurance()
 {
 	return Endurance;
 }
 
-int* StatUser::GetEndurancePointer()
+Stat* StatUser::GetEndurancePointer()
 {
 	return &Endurance;
 }
@@ -56,18 +57,6 @@ void StatUser::LevelUp()
 {
 	SkillPoints += 4;
 	NextLevelExp = CalculateNextLevelExp();
-
-	MaxHealth += 2;
-	if (Level % 2 == 0)
-	{
-		Strength += 1;
-		Defense += 1;
-	}
-	else
-	{
-		Endurance += 1;
-		Speed += 1;
-	}
 }
 
 int StatUser::CalculateNextLevelExp()
@@ -100,12 +89,26 @@ int StatUser::GetExp()
 	return Exp;
 }
 
-int StatUser::GetMaxHealth()
+Stat StatUser::GetMaxHealth()
 {
 	return MaxHealth;
 }
 
-int* StatUser::GetMaxHealthPointer()
+Stat* StatUser::GetMaxHealthPointer()
 {
 	return &MaxHealth;
+}
+
+Stat::Stat()
+{
+	Base = 0;
+	Real = 0;
+	Modified = 0;
+}
+
+void Stat::operator=(int value)
+{
+	Base = value;
+	Real = value;
+	Modified = value;
 }

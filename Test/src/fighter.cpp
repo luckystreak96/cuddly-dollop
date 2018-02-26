@@ -41,22 +41,22 @@ void Fighter::ApplyLethal()
 
 void Fighter::MagicalDefenseActionCommand(Damage& dmg)
 {
-	dmg._value -= Defense / 2;
+	dmg._value -= Defense.Real / 2;
 }
 
 void Fighter::MagicalOffenseActionCommand(Damage& dmg)
 {
-	dmg._value += (dmg._value > 0) ? Strength / 2 : -Strength / 2;
+	dmg._value += (dmg._value > 0) ? Strength.Real / 2 : -Strength.Real / 2;
 }
 
 void Fighter::PhysicalDefenseActionCommand(Damage& dmg)
 {
-	dmg._value -= Defense / 2;
+	dmg._value -= Defense.Real / 2;
 }
 
 void Fighter::PhysicalOffenseActionCommand(Damage& dmg)
 {
-	dmg._value += Strength / 2;
+	dmg._value += Strength.Real / 2;
 }
 
 void Fighter::SpecialActionCommand(Damage& dmg)
@@ -68,7 +68,7 @@ void Fighter::SpecialActionCommand(Damage& dmg)
 int Fighter::DefenseDamageModification(bool critting)
 {
 	// When you crit, it's like the other dude has half defense
-	int def = Defense;
+	int def = Defense.Real;
 	if (critting)
 		def /= 2;
 
@@ -88,7 +88,7 @@ Damage Fighter::TakeDamage(Damage& dmg)
 	//DamageModifiers(dmg);
 	dmg._value = fmax(0, dmg._value);
 	Health -= dmg._value;
-	Health = fmin(MaxHealth, Health);
+	Health = fmin(MaxHealth.Real, Health);
 	Health = fmax(Health, 0);
 	ApplyLethal();
 
@@ -100,7 +100,7 @@ Damage Fighter::ApplyHealing(Damage& heal)
 	// Damage modifiers called in the attack method instead
 	//DamageModifiers(dmg);
 	Health += heal._value;
-	Health = fmin(MaxHealth, Health);
+	Health = fmin(MaxHealth.Real, Health);
 	Health = fmax(Health, 0);
 	ApplyLethal();
 

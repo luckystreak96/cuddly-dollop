@@ -13,7 +13,7 @@ Actor::Actor()
 bool Actor::ActorSpeedSort(Actor_ptr a, Actor_ptr b)
 {
 	if (a->_Fighter && b->_Fighter)
-		return a->_Fighter->Speed > b->_Fighter->Speed;
+		return a->_Fighter->Speed.Real > b->_Fighter->Speed.Real;
 }
 
 void Actor::SetDefault()

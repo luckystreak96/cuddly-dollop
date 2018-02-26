@@ -2,6 +2,7 @@
 
 #include "statUser.h"
 #include <iostream>
+#include <assert.h>
 
 std::map<std::string, CurveInfo> StatCurve::Curves = std::map<std::string, CurveInfo>();
 
@@ -23,7 +24,7 @@ void StatCurve::SetCurve(StatUser* user)
 		value = stat.second.Value;
 		op = stat.second.StatOperator;
 
-		int* statVar = GetStatPointer(name, user);
+		int* statVar = GetBaseStatPointer(name, user);
 
 		// Don't try to touch it if its null (invalid stat name)
 		if (!statVar)
@@ -60,7 +61,27 @@ void StatCurve::ApplyFunction(int* stat, float value, std::string opName, StatUs
 }
 
 
-int* StatCurve::GetStatPointer(std::string stat, StatUser* user)
+int* StatCurve::GetBaseStatPointer(std::string stat, StatUser* user)
+{
+	if (stat == "max_health")
+		return &user->GetMaxHealthPointer()->Base;
+	else if (stat == "strength")
+		return &user->Strength.Base;
+	else if (stat == "endurance")
+		return &user->GetEndurancePointer()->Base;
+	else if (stat == "crit")
+		return &user->Crit.Base;
+	else if (stat == "speed")
+		return &user->Speed.Base;
+	else if (stat == "defense")
+		return &user->Defense.Base;
+
+	// none was found, return 0
+	assert(false);// should never reach here
+	return 0;
+}
+
+Stat* StatCurve::GetFullStatPointer(std::string stat, StatUser* user)
 {
 	if (stat == "max_health")
 		return user->GetMaxHealthPointer();
@@ -76,5 +97,6 @@ int* StatCurve::GetStatPointer(std::string stat, StatUser* user)
 		return &user->Defense;
 
 	// none was found, return 0
+	assert(false);// should never reach here
 	return 0;
 }

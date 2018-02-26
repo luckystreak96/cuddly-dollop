@@ -123,7 +123,7 @@ void BattleData::SaveParty(rapidjson::Document& saveFile, Document::AllocatorTyp
 
 		// maxHealth
 		first.SetString(StringRef("max_health"), allocator);
-		second.SetInt(actor->_Fighter->GetMaxHealth());
+		second.SetInt(actor->_Fighter->GetMaxHealth().Base);
 		ob.AddMember(first, second, allocator);
 
 		// level
@@ -143,27 +143,27 @@ void BattleData::SaveParty(rapidjson::Document& saveFile, Document::AllocatorTyp
 
 		// speed
 		first.SetString(StringRef("speed"), allocator);
-		second.SetInt(actor->_Fighter->Speed);
+		second.SetInt(actor->_Fighter->Speed.Base);
 		ob.AddMember(first, second, allocator);
 
 		// crit
 		first.SetString(StringRef("crit"), allocator);
-		second.SetInt(actor->_Fighter->Crit);
+		second.SetInt(actor->_Fighter->Crit.Base);
 		ob.AddMember(first, second, allocator);
 
 		// defense 
 		first.SetString(StringRef("defense"), allocator);
-		second.SetInt(actor->_Fighter->Defense);
+		second.SetInt(actor->_Fighter->Defense.Base);
 		ob.AddMember(first, second, allocator);
 
 		// strength
 		first.SetString(StringRef("strength"), allocator);
-		second.SetInt(actor->_Fighter->Strength);
+		second.SetInt(actor->_Fighter->Strength.Base);
 		ob.AddMember(first, second, allocator);
 
 		// endurance
 		first.SetString(StringRef("endurance"), allocator);
-		second.SetInt(actor->_Fighter->GetEndurance());
+		second.SetInt(actor->_Fighter->GetEndurance().Base);
 		ob.AddMember(first, second, allocator);
 
 		// dead

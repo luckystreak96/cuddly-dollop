@@ -24,7 +24,8 @@ public:
 	static void SetCurve(StatUser* user);
 
 	static std::map<std::string, CurveInfo> Curves;
-	static int* GetStatPointer(std::string stat, StatUser* user);
+	static int* GetBaseStatPointer(std::string stat, StatUser* user);
+	static Stat* GetFullStatPointer(std::string stat, StatUser* user);
 	static void ApplyFunction(int* stat, float value, std::string opName, StatUser* user);
 };
 

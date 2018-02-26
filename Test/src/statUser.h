@@ -5,6 +5,23 @@
 #include <memory>
 #include <vector>
 
+class Stat
+{
+public:
+	Stat();
+
+	// Sets Base stat
+	void operator=(int value);
+
+public:
+	// The base stat of the fighter determined by his stat curve only
+	int Base;
+	// The stat after passive skill and equipment application
+	int Real;
+	// The stat in battle - subject to temporary stat modifications
+	int Modified;
+};
+
 class StatUser
 {
 public:
@@ -19,11 +36,11 @@ public:
 	void SetExp(int exp);
 	int GetExp();
 	void SetEndurance(int endurance);
-	int GetEndurance();
-	int* GetEndurancePointer();
+	Stat GetEndurance();
+	Stat* GetEndurancePointer();
 	void SetMaxHealth(int maxHealth);
-	int GetMaxHealth();
-	int* GetMaxHealthPointer();
+	Stat GetMaxHealth();
+	Stat* GetMaxHealthPointer();
 
 	// Stat points + nextlevelexp
 	void LevelUp();
@@ -31,10 +48,10 @@ public:
 
 public:
 	int Health;
-	int Speed;
-	int Strength;
-	int Defense;
-	int Crit;
+	Stat Speed;
+	Stat Strength;
+	Stat Defense;
+	Stat Crit;
 	int NextLevelExp;
 	int SkillPoints;
 	std::string Curve;
@@ -42,8 +59,8 @@ public:
 protected:
 	int Level;
 	int Exp;
-	int MaxHealth;
-	int Endurance;
+	Stat MaxHealth;
+	Stat Endurance;
 	void SetDefault();
 };
 

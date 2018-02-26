@@ -81,7 +81,7 @@ void BattleHUD::Update()
 	{
 		Vector3f color = Vector3f(0, 0.6f, 0.8f);
 		int health = _actors.at(i)->_Fighter->Health;
-		int maxhealth = _actors.at(i)->_Fighter->GetMaxHealth();
+		int maxhealth = _actors.at(i)->_Fighter->GetMaxHealth().Real;
 
 		// Set color
 		if (health > maxhealth / 2)

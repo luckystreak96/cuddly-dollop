@@ -19,7 +19,7 @@ Actor_ptr ActorFactory::BuildBaseAlly()
 	//result->_Fighter->Crit = 3;
 	//result->_Fighter->Defense = 1;
 	//result->_Fighter->SetEndurance(4);
-	result->_Fighter->Health = result->_Fighter->GetMaxHealth();
+	result->_Fighter->Health = result->_Fighter->GetMaxHealth().Real;
 	result->Sprite = "res/sprites/entities/entity_girl.png";
 	result->_Graphics->SetTexture(result->Sprite);
 
@@ -34,7 +34,7 @@ Actor_ptr ActorFactory::BuildBaseEnemy()
 	result->_Fighter->Crit = 1;
 	result->_Fighter->Defense = 0;
 	result->_Fighter->SetEndurance(2);
-	result->_Fighter->Health = result->_Fighter->GetMaxHealth();
+	result->_Fighter->Health = result->_Fighter->GetMaxHealth().Real;
 	result->_Name = "Slime";
 	result->_Fighter->Team = 1;
 	result->_Graphics->SetTexture("res/sprites/entities/entity_slime.png");

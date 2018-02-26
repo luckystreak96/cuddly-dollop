@@ -5,6 +5,7 @@
 #include <memory>
 #include <vector>
 #include "statUser.h"
+#include "passiveSkill.h"
 
 class Skill;
 typedef std::shared_ptr<Skill> Skill_ptr;
@@ -40,6 +41,7 @@ public:
 	virtual int DefenseDamageModification(bool critting);
 
 public:
+	std::vector<Passive_ptr> _Passives;
 	bool Dead;
 	Actor_ptr Protector;
 	int Team;
