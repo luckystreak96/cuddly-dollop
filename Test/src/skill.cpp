@@ -25,6 +25,8 @@ void Skill::DefaultSetup()
 	_ac._animProg = 1;
 	_ac._type = ACT_Defend;
 	_critting = false;
+	_skillUpgradeProgress = 0;
+	_skillUpgradeMax = 0;
 }
 
 Damage Skill::HandleDamage()

@@ -25,42 +25,22 @@ void PassiveFactory::ApplyAllPassives(Fighter_ptr fighter, std::vector<Passive_p
 		typeVectors[type].push_back(passive);
 	}
 
-	if(typeVectors.count(PT_Stat))
+	if (typeVectors.count(PT_Stat))
 		ApplyStatPassives(fighter, typeVectors.at(PT_Stat));
 
-	// Iterate through all passives
-	for (auto& passive : *passives)
+	if (typeVectors.count(PassiveType::PT_Skill))
 	{
-
-		switch (type)
-		{
-		case PT_Skill:
-			break;
-		case PT_Stat:
-			break;
-		case PT_Special:
-			break;
-		default:
-			break;
-		}
-
+		for (auto passive : typeVectors.at(PT_Skill))
+			if (std::find(fighter->Skills.begin(), fighter->Skills.end(), [=](Skill_ptr p) {return p->_name == passive->_Data._String; }) == fighter->Skills.end())
+				fighter->Skills.push_back(ActorFactory::BuildSkill(passive->_Data._String));
 	}
-		//switch (type)
-		//{
-		//case PT_Skill:
-		//	// if it doesnt find a skill with the same name in the skill list, it adds the skill
-		//	if (std::find(fighter->Skills.begin(), fighter->Skills.end(), [=](Skill_ptr p) {return p->_name == passive->_Data._String; }) == fighter->Skills.end())
-		//		fighter->Skills.push_back(ActorFactory::BuildSkill(passive->_Data._String));
-		//	break;
-		//case PT_Stat:
-		//	break;
-		//case PT_Special:
-		//	break;
-		//default:
-		//	break;
-		//}
+	ApplySkillPassives(fighter, typeVectors.at(PT_Skill));
+
+	if (typeVectors.count(PassiveType::PT_SkillUpgrade))
+		ApplySkillUpgradePassives(fighter, typeVectors.at(PT_SkillUpgrade));
 }
 
+// Make sure to reset the stats before calling this
 void PassiveFactory::ApplyStatPassives(Fighter_ptr fighter, std::vector<Passive_ptr> passives)
 {
 	// Sort the skills by priority
@@ -89,5 +69,20 @@ void PassiveFactory::ApplyStatPassives(Fighter_ptr fighter, std::vector<Passive_
 		Stat* stat = StatCurve::GetFullStatPointer(x.first, fighter.get());
 		stat->Real += x.second.flatTotal;
 		stat->Real *= x.second.percentTotal;
+	}
+}
+
+// Make sure to reset the skill before calling this
+void PassiveFactory::ApplySkillUpgradePassives(Fighter_ptr fighter, std::vector<Passive_ptr> passives)
+{
+	for (auto passive : passives)
+	{
+		std::vector<Skill_ptr>::iterator skill = std::find_if(fighter->Skills.begin(), fighter->Skills.end(),
+			[=](Skill_ptr p) { return p->_name == passive->_Data._String; }
+		);
+
+		if (skill != fighter->Skills.end())
+			if ((*skill)->ApplySkillUpgrade())
+				fighter->SkillPoints -= 1;
 	}
 }

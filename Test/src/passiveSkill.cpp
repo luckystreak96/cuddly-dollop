@@ -7,6 +7,7 @@ PassiveData::PassiveData()
 
 PassiveSkill::PassiveSkill()
 {
+	_Id = 0;
 	_Name = "";
 	_Type = PT_Stat;
 	_Priority = PP_AbsoluteFirst;

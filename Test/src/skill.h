@@ -48,6 +48,12 @@ public:
 	virtual void SpawnStatusText(Actor_ptr target, std::string statusName);
 	virtual Damage CalculateDamage() { return Damage(); }
 	virtual Damage HandleDamage();
+
+	// This method should change values to apply a skill upgrade.
+	// Call Skill::ApplySkillUpgrade() at the end of the redefined method
+	// returns true if an upgrade was applied
+	virtual bool ApplySkillUpgrade() { _skillUpgradeProgress += 1; return true; };
+
 	void CheckActionCommand(double percentProgress);
 	void HandleActionCommand(double percentProgress);
 	bool AnimationsDone();
@@ -67,6 +73,9 @@ public:
 	int _cooldown;
 	int _currentCooldown;
 	int _minTargets;
+	int _skillUpgradeProgress;
+	// Maximum upgrades to the skill (so you dont waste skill points)
+	int _skillUpgradeMax;
 	ActionCommand _ac;
 	Actor_ptr _owner;
 	TargetMode _targetMode;

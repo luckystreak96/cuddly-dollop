@@ -5,7 +5,7 @@
 #include <memory>
 
 enum PassivePriority { PP_AbsoluteFirst, PP_Secondary, PP_Last, PP_BeforeSkill, PP_BeforeDamage, PP_AfterDamage, PP_AfterSkill };
-enum PassiveType { PT_Skill, PT_Stat, PT_Special };
+enum PassiveType { PT_Skill, PT_SkillUpgrade, PT_Stat, PT_Special };
 enum PassiveSpecifier { PS_Flat, PS_Percent, PS_None };
 
 struct PassiveData
@@ -23,6 +23,7 @@ struct PassiveSkill
 {
 	PassiveSkill();
 
+	int _Id;
 	std::string _Name;
 	PassivePriority _Priority;
 	PassiveType _Type;
