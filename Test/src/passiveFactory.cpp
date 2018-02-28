@@ -31,10 +31,10 @@ void PassiveFactory::ApplyAllPassives(Fighter_ptr fighter, std::vector<Passive_p
 	if (typeVectors.count(PassiveType::PT_Skill))
 	{
 		for (auto passive : typeVectors.at(PT_Skill))
-			if (std::find(fighter->Skills.begin(), fighter->Skills.end(), [=](Skill_ptr p) {return p->_name == passive->_Data._String; }) == fighter->Skills.end())
+			if (std::find_if(fighter->Skills.begin(), fighter->Skills.end(), [=](Skill_ptr p) {return p->_name == passive->_Data._String; }) == fighter->Skills.end())
 				fighter->Skills.push_back(ActorFactory::BuildSkill(passive->_Data._String));
 	}
-	ApplySkillPassives(fighter, typeVectors.at(PT_Skill));
+	//ApplySkillPassives(fighter, typeVectors.at(PT_Skill));
 
 	if (typeVectors.count(PassiveType::PT_SkillUpgrade))
 		ApplySkillUpgradePassives(fighter, typeVectors.at(PT_SkillUpgrade));
@@ -56,7 +56,7 @@ void PassiveFactory::ApplyStatPassives(Fighter_ptr fighter, std::vector<Passive_
 	for (auto& x : passives)
 	{
 		if (!bonuses.count(x->_Data._String))
-			bonuses.emplace(x->_Data._String);
+			bonuses.emplace(x->_Data._String, StatBonuses());
 
 		if (x->_Specifier == PS_Percent)
 			bonuses[x->_Data._String].percentTotal += x->_Data._Float;

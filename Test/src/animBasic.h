@@ -14,6 +14,7 @@ public:
 public:
 	Actor_ptr _target;
 	Anim_Enum _anim;
+	int _start;
 	int _prevState;
 	int _length;
 };

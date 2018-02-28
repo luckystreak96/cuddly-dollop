@@ -13,6 +13,7 @@ AnimBasic::AnimBasic(Anim_Enum anim, Actor_ptr target, double seconds)
 	auto& data = Animation::GetMetaData(_target->_Graphics->GetTexture()).data;
 	_target->_Graphics->_row = data.at(AE_Attack)._position;
 	_length = abs(data.at(AE_Attack)._end - data.at(AE_Attack)._start) + 1;
+	_start = data.at(AE_Attack)._start;
 
 	_done = false;
 }
@@ -24,7 +25,7 @@ void AnimBasic::Update()
 		return;
 
 	// Set position
-	_target->_Graphics->_sprite = (int)((_progress / _duration) * (double)_length);
+	_target->_Graphics->_sprite = _start + (int)((_progress / _duration) * (double)_length);
 
 	// Update percent
 	_progress += 0.034f;

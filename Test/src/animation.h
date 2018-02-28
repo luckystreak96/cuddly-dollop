@@ -7,8 +7,8 @@
 #include "vertex.h"
 #include <time.h>
 
-//enum Direction { dir_Up, dir_Right, dir_Down, dir_Left };
-enum Anim_Enum { AE_Left, AE_Down, AE_Right, AE_Up, AE_Attack, AE_LeftMove, AE_DownMove, AE_RightMove, AE_UpMove, AE_Last };
+// To add a new one - put it before AE_MoveLeft -> Otherwise the _position will be wrong upon enum name use
+enum Anim_Enum { AE_Left, AE_Down, AE_Right, AE_Up, AE_Attack, AE_Jump, AE_LeftMove, AE_DownMove, AE_RightMove, AE_UpMove, AE_Last };
 
 struct AnimInfo
 {
@@ -31,6 +31,7 @@ struct SpriteSheetData
 		data.emplace(AE_Up, AnimInfo(AE_Up, 0, 1, 400));
 		data.emplace(AE_Left, AnimInfo(AE_Left, 0, 1, 400));
 		data.emplace(AE_Right, AnimInfo(AE_Right, 0, 1, 400));
+		data.emplace(AE_Jump, AnimInfo(AE_Right, 0, 1, 400));
 		data.emplace(AE_DownMove, AnimInfo(AE_Down, 0, 1, 260));
 		data.emplace(AE_UpMove, AnimInfo(AE_Up, 0, 1, 260));
 		data.emplace(AE_LeftMove, AnimInfo(AE_Left, 0, 1, 260));

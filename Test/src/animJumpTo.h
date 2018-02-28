@@ -16,6 +16,10 @@ public:
 	Vector3f _destination;
 	Vector3f _initialPos;
 	Vector3f _speed;
+
+	// Animation length
+	int _length;
+	int _start;
 };
 
 #endif // !BATTLE_ANIMATION_H__

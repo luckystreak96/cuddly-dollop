@@ -24,6 +24,9 @@ void Animation::SetupAnimationMetaData()
 	ssd.data.at(AE_DownMove)._start = 2;
 	ssd.data.at(AE_DownMove)._end = 5;
 	ssd.data.at(AE_DownMove)._delay = 140;
+	ssd.data.at(AE_Jump) = AnimInfo(AE_Jump, 0, 3, 260);
+	ssd.data.at(AE_Jump)._start = 0;
+	ssd.data.at(AE_Jump)._end = 3;
 	// Stand delay is slower
 	int delay = 800;
 	ssd.data.at(AE_Down)._delay = delay;
