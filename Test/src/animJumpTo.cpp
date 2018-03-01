@@ -8,7 +8,8 @@ AnimJumpTo::AnimJumpTo(Vector3f position, Actor_ptr target)
 	_initialPos = target->_Graphics->GetPosRef();
 	_speed = (_destination - _initialPos) / 30.0f;
 	_speed.z = 0;
-	_progress = 0;// -0.40;
+	// 0.01 so that calculations dont give 0 somewhere
+	_progress = 0.01;// -0.40;
 	_duration = 1;
 
 	_target->_Graphics->_specialAnimation = true;
@@ -25,27 +26,18 @@ void AnimJumpTo::Update()
 	if (_done)
 		return;
 
-	if (_progress < 0 || _progress > 1)
-	{
-		// Set sprite
-		_target->_Graphics->_sprite = _start;
-	}
+	// Set position
+	Vector3f result = MathUtils::FindPositionInParabola(_progress / _duration, _initialPos, _destination);
+	_target->_Graphics->SetPhysics(result, Vector3f());
+
+	// Set sprite
+	int sprite = 0;
+	if (_speed.x > 0)
+		sprite = _length / 4 + (int)(((_progress) / _duration) * (double)_length / 2);
 	else
-	{
-		// Set position
-		Vector3f result = MathUtils::FindPositionInParabola(_progress / _duration, _initialPos, _destination);
-		_target->_Graphics->SetPhysics(result, Vector3f());
+		sprite = _length / 2 - (int)(((_progress) / _duration) * (double)_length / 2);
 
-		// Set sprite
-		int sprite;
-		if (_speed.x > 0)
-			sprite = 1 + (int)(((_progress) / _duration) * (double)_length / 2);
-		else
-			sprite = 1 + (int)((1.0 - ((_progress) / _duration)) * (double)_length / 2);
-
-		_target->_Graphics->_sprite = sprite;
-	}
-
+	_target->_Graphics->_sprite = sprite;
 
 	// Update percent
 	_progress += 0.025;
@@ -55,6 +47,6 @@ void AnimJumpTo::Update()
 		_target->_Graphics->SetPhysics(_destination, Vector3f());
 		_target->_Graphics->_specialAnimation = false;
 		_target->_Graphics->_forceAnimation = false;
-		_target->_Graphics->_sprite = 0;
+		//_target->_Graphics->_sprite = 0;
 	}
 }

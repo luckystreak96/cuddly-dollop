@@ -9,6 +9,11 @@ void Animation::SetupAnimationMetaData()
 	SpriteSheetData ssd;
 	ssd.data.emplace(AE_Attack, AnimInfo(AE_Attack, 0, 1));
 	m_metaData.emplace("res/sprites/entities/entity_ghost.png", ssd);
+
+	// Slime has a jump animation
+	ssd.data.at(AE_Jump) = AnimInfo(AE_Jump, 0, 3, 260);
+	ssd.data.at(AE_Jump)._start = 0;
+	ssd.data.at(AE_Jump)._end = 3;
 	m_metaData.emplace("res/sprites/entities/entity_slime.png", ssd);
 
 	// Girl has walk animation

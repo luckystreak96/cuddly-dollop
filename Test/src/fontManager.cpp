@@ -109,7 +109,8 @@ void FontManager::EnableFont(unsigned int font)
 
 void FontManager::DisableFont(unsigned int font)
 {
-	m_fonts.at(font)->_enabled = false;
+	if (m_fonts.count(font))
+		m_fonts.at(font)->_enabled = false;
 }
 
 void FontManager::RemoveFont(unsigned int font)

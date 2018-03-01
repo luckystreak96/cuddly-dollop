@@ -2,6 +2,7 @@
 #include "skillSmack.h"
 #include "skillHeal.h"
 #include "skillProtect.h"
+#include "passiveFactory.h"
 
 Actor_ptr ActorFactory::BuildBaseAlly()
 {
@@ -19,6 +20,7 @@ Actor_ptr ActorFactory::BuildBaseAlly()
 	//result->_Fighter->Crit = 3;
 	//result->_Fighter->Defense = 1;
 	//result->_Fighter->SetEndurance(4);
+	PassiveFactory::ApplyAllPassives(result->_Fighter, &result->_Fighter->_Passives);
 	result->_Fighter->Health = result->_Fighter->GetMaxHealth().Real;
 	result->Sprite = "res/sprites/entities/entity_girl.png";
 	result->_Graphics->SetTexture(result->Sprite);
@@ -34,6 +36,7 @@ Actor_ptr ActorFactory::BuildBaseEnemy()
 	result->_Fighter->Crit = 1;
 	result->_Fighter->Defense = 0;
 	result->_Fighter->SetEndurance(2);
+	PassiveFactory::ApplyAllPassives(result->_Fighter, &result->_Fighter->_Passives);
 	result->_Fighter->Health = result->_Fighter->GetMaxHealth().Real;
 	result->_Name = "Slime";
 	result->_Fighter->Team = 1;
@@ -101,6 +104,7 @@ std::vector<Actor_ptr> ActorFactory::BuildParty(rapidjson::GenericArray<false, r
 				actor->_Fighter->Skills.push_back(BuildSkill(itr->GetString()));
 		}
 
+		PassiveFactory::ApplyAllPassives(actor->_Fighter, &actor->_Fighter->_Passives);
 		result.push_back(actor);
 	}
 

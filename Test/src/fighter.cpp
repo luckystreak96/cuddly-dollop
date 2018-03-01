@@ -4,10 +4,17 @@
 #include "skillSmack.h"
 #include "actor.h"
 #include "statCurve.h"
+#include "passiveFactory.h"
 
 Fighter::Fighter()
 {
 	SetDefault();
+	PassiveSkill skill;
+	skill._Type = PassiveType::PT_Stat;
+	skill._Data._Float = 5.0f;
+	skill._Data._String = "max_health";
+	skill._Specifier = PassiveSpecifier::PS_Flat;
+	_Passives.push_back(std::make_shared<PassiveSkill>(skill));
 }
 
 void Fighter::SetStatsFromCurve()

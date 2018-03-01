@@ -48,7 +48,8 @@ void PassiveFactory::ApplyStatPassives(Fighter_ptr fighter, std::vector<Passive_
 
 	struct StatBonuses
 	{
-		float flatTotal, percentTotal = 0;
+		float flatTotal = 0;
+		float percentTotal = 1;
 	};
 
 	std::map<std::string, StatBonuses> bonuses;
