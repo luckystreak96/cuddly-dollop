@@ -197,11 +197,14 @@ void Skill::SpawnDamageText(Actor_ptr target, int dmg)
 	// color
 	Vector3f color;
 	if (_critting)
-		color = Vector3f(0.35f, 0.31f, 0.87f);
+		// purpleish
+		color = _ac._success ? Vector3f(0.85f, 0.23f, 0.54f) : Vector3f(0.35f, 0.31f, 0.87f);
 	else if (dmg >= 0 && _skillType != ST_Healing)
-		color = Vector3f(1, 0, 0);
+		// redish / yellowish
+		color = _ac._success ? Vector3f(1, 0.8f, 0) : Vector3f(1, 0, 0);
 	else
-		color = Vector3f(0, 1, 0);
+		// Greenish
+		color = _ac._success ? Vector3f(0, 0.95f, 0.6f) : Vector3f(0, 1, 0);
 	dynamic_cast<FontFloat*>(font.get())->Color = color;
 
 	FontManager::GetInstance().AddFont(font);
