@@ -18,6 +18,12 @@ void BattleData::NewGame()
 		Party.push_back(ActorFactory::BuildBaseAlly());
 }
 
+void BattleData::LoadAll()
+{
+	LoadCurves();
+	LoadPassives();
+}
+
 void BattleData::LoadCurves()
 {
 	std::string file = "";
@@ -99,7 +105,7 @@ void BattleData::LoadPassives()
 	doc.Parse(file.c_str());
 
 	// Get the flags
-	if (doc.HasMember("passives") && doc["passives"].IsObject())
+	if (doc.HasMember("passives") && doc["passives"].IsArray())
 	{
 		std::map<int, Passive_ptr> data;
 		auto passives = doc["passives"].GetArray();
@@ -112,7 +118,7 @@ void BattleData::LoadPassives()
 
 			std::string passiveName = "";
 			if (passive.HasMember("name"))
-				passiveName = passive["name"].GetInt();
+				passiveName = passive["name"].GetString();
 
 			PassivePriority priority = PP_AbsoluteFirst;
 			if (passive.HasMember("priority"))

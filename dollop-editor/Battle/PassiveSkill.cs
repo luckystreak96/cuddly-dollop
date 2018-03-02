@@ -20,5 +20,10 @@ namespace dollop_editor.Battle
         public string _string { get; set; }
         public int _int { get; set; }
         public float _float { get; set; }
+
+        public override string ToString()
+        {
+            return name;
+        }
     }
 }

@@ -26,5 +26,17 @@
         "value": 0.03
       }
     }
-  }
+  },
+  "passives": [
+    {
+      "id": 0,
+      "name": "Test",
+      "priority": "PP_AbsoluteFirst",
+      "type": "PT_Stat",
+      "specifier": "PS_Flat",
+      "_string": "",
+      "_int": 0,
+      "_float": 6.0
+    }
+  ]
 }

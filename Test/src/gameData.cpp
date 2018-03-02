@@ -146,7 +146,7 @@ void GameData::LoadGameData()
 	}
 
 	// Load stat curves to be used by actors
-	BattleData::LoadCurves();
+	BattleData::LoadAll();
 
 	// Get the party
 	BattleData::LoadParty(m_document);

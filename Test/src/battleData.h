@@ -19,6 +19,7 @@ public:
 	static void NewGame();
 	static void SaveParty(Document& doc, Document::AllocatorType& allocator);
 	static void LoadParty(Document& doc);
+	static void LoadAll();
 	static void LoadCurves();
 	static void LoadPassives();
 

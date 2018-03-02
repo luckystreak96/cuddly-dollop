@@ -790,7 +790,17 @@ namespace dollop_editor
         private void menuPassiveSkills_Click(object sender, RoutedEventArgs e)
         {
             Battle.WindowPassiveSkills passiveWindow = new Battle.WindowPassiveSkills();
+            passiveWindow.passives = editor._BattleData.passives;
+            passiveWindow.Setup();
             passiveWindow.ShowDialog();
+
+            // If the results are to be saved...
+            if(passiveWindow.DialogResult == true)
+            {
+                var passives = passiveWindow.passives;
+                editor._BattleData.passives = passives;
+                mustSave = true;
+            }
         }
     }
 }

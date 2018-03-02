@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:dollop_editor.Battle"
         mc:Ignorable="d"
-        Title="Passive Skills" Height="357.438" Width="324.551">
+        Title="Passive Skills" Height="381.671" Width="360.143">
     <Grid>
-        <ComboBox Name="cmbPassives" HorizontalAlignment="Left" Margin="102,14,0,0" VerticalAlignment="Top" Width="163" IsEditable="True"/>
+        <ComboBox Name="cmbPassives" HorizontalAlignment="Left" Margin="102,14,0,0" VerticalAlignment="Top" Width="163" IsEditable="True" SelectionChanged="cmbPassives_SelectionChanged"/>
         <ComboBox Name="cmbPriority" HorizontalAlignment="Left" Margin="102,109,0,0" VerticalAlignment="Top" Width="163" IsEditable="True"/>
         <ComboBox Name="cmbType" HorizontalAlignment="Left" Margin="102,140,0,0" VerticalAlignment="Top" Width="163" IsEditable="True"/>
         <ComboBox Name="cmbSpecifier" HorizontalAlignment="Left" Margin="102,171,0,0" VerticalAlignment="Top" Width="163" IsEditable="True"/>
@@ -19,10 +19,16 @@
         <Label Content="String" HorizontalAlignment="Left" Margin="44,198,0,0" VerticalAlignment="Top"/>
         <Label Content="Int" HorizontalAlignment="Left" Margin="61,229,0,0" VerticalAlignment="Top"/>
         <Label Content="Float" HorizontalAlignment="Left" Margin="50,260,0,0" VerticalAlignment="Top"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="102,77,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="163"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="102,202,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="163"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="102,233,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="163"/>
-        <TextBox HorizontalAlignment="Left" Height="23" Margin="102,264,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="163"/>
+        <TextBox Name="txtName" HorizontalAlignment="Left" Height="23" Margin="102,77,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="163"/>
+        <TextBox Name="txtString" HorizontalAlignment="Left" Height="23" Margin="102,202,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="163"/>
+        <TextBox Name="txtInt" HorizontalAlignment="Left" Height="23" Margin="102,233,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="163"/>
+        <TextBox Name="txtFloat" HorizontalAlignment="Left" Height="23" Margin="102,264,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="163"/>
+        <Button Name="btnSaveAndExit" Content="Save &amp; Exit" HorizontalAlignment="Left" Margin="270,284,0,0" VerticalAlignment="Top" Width="72" Height="26" Click="btnSave_Click"/>
+        <Button Name="btnCancel" Content="Cancel" HorizontalAlignment="Left" Margin="270,315,0,0" VerticalAlignment="Top" Width="72" Height="26" Click="btnCancel_Click"/>
+        <Label Content="Id" HorizontalAlignment="Left" Margin="65,42,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="txtId" HorizontalAlignment="Left" Height="23" Margin="102,45,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="163"/>
+        <Button Name="btnSavePassive" Content="Save Passive" HorizontalAlignment="Left" Margin="11,315,0,0" VerticalAlignment="Top" Width="83" Height="26" Click="btnSavePassive_Click"/>
+        <Button x:Name="btnNew" Content="New" HorizontalAlignment="Left" Margin="99,315,0,0" VerticalAlignment="Top" Width="83" Height="26" Click="btnNew_Click"/>
 
     </Grid>
 </Window>
