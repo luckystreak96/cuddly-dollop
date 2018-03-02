@@ -26,8 +26,8 @@ bool Game::init(Vector2f version)
 {
 	Model::GetInstance().init("res/models/models.data");
 	Animation::SetupAnimationMetaData();
-	GameData::NewGame();
 	GameData::LoadGameData();
+	GameData::NewGame();
 
 	FBO::_fboGLVersion = version;
 	Effect::_efctGLVersion = version;

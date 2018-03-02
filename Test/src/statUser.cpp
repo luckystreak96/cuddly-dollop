@@ -23,6 +23,28 @@ void StatUser::SetDefault()
 	Curve = "Basic";
 }
 
+void StatUser::ResetRealModified()
+{
+	Speed.Real = Speed.Base;
+	Strength.Real = Strength.Base;
+	Defense.Real = Defense.Base;
+	Crit.Real = Crit.Base;
+	MaxHealth.Real = MaxHealth.Base;
+	Endurance.Real = Endurance.Base;
+
+	ResetModified();
+}
+
+void StatUser::ResetModified()
+{
+	Speed.Modified = Speed.Real;
+	Strength.Modified = Strength.Real;
+	Defense.Modified = Defense.Real;
+	Crit.Modified = Crit.Real;
+	MaxHealth.Modified = MaxHealth.Real;
+	Endurance.Modified = Endurance.Real;
+}
+
 void StatUser::SetEndurance(int endurance)
 {
 	Endurance = endurance;
@@ -31,10 +53,17 @@ void StatUser::SetEndurance(int endurance)
 
 void StatUser::SetMaxHealth(int max)
 {
-	if (Health > max)
-		Health = max;
+	// Cant use this -- set max health doesnt take into account passives
+	//if (Health > max)
+	//	Health = max;
 
 	MaxHealth = max;
+}
+
+void StatUser::CurrentHealthCheck()
+{
+	if (Health > MaxHealth.Real)
+		Health = MaxHealth.Real;
 }
 
 Stat StatUser::GetEndurance()

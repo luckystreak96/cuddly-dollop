@@ -19,7 +19,7 @@ void SkillHeal::DefaultSetup()
 Damage SkillHeal::CalculateDamage()
 {
 	Damage result;
-	result._value = 5 + _owner->_Fighter->Strength.Real / 2;
+	result._value = 5 + _owner->_Fighter->Strength.Modified / 2;
 	return result;
 }
 

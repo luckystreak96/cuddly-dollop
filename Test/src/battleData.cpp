@@ -259,6 +259,17 @@ void BattleData::SaveParty(rapidjson::Document& saveFile, Document::AllocatorTyp
 		}
 		ob.AddMember(first, second, allocator);
 
+		// passives
+		first.SetString(StringRef("passives"), allocator);
+		second = Value(kArrayType);
+		for (auto passive : actor->_Fighter->_Passives)
+		{
+			Value skl(rapidjson::Type::kNumberType);
+			skl.SetInt(passive->_Id);
+			second.PushBack(skl, allocator);
+		}
+		ob.AddMember(first, second, allocator);
+
 		party_v.PushBack(ob, allocator);
 	}
 

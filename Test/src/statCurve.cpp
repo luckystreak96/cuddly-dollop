@@ -24,7 +24,7 @@ void StatCurve::SetCurve(StatUser* user)
 		value = stat.second.Value;
 		op = stat.second.StatOperator;
 
-		int* statVar = GetBaseStatPointer(name, user);
+		Stat* statVar = GetFullStatPointer(name, user);
 
 		// Don't try to touch it if its null (invalid stat name)
 		if (!statVar)
@@ -36,28 +36,39 @@ void StatCurve::SetCurve(StatUser* user)
 		// Now that we have our stat's pointer, its time to apply the curve according to the level
 		ApplyFunction(statVar, value, op, user);
 	}
+
+	// Make sure to set real and modified to be used later
+	user->ResetRealModified();
 }
 
-void StatCurve::ApplyFunction(int* stat, float value, std::string opName, StatUser* user)
+void StatCurve::ApplyFunction(Stat* stat, float value, std::string opName, StatUser* user)
 {
 	int x = user->GetLevel();
 	float a = value;
 	if (opName == "square")
 	{
-		*stat = a * pow(x, 2);
+		stat->Base = a * pow(x, 2);
+		//stat->Real = stat->Base;
 	}
 	else if (opName == "quadratic")
 	{
-		*stat = (a * pow(x, 2)) + pow(x, 2);
+		stat->Base = (a * pow(x + 18, 3));
+		//stat->Real = stat->Base;
 	}
 	else if (opName == "square_root")
 	{
-		*stat = sqrt(a * x);
+		stat->Base = sqrt(a * x);
+		//stat->Real = stat->Base;
 	}
 	else if (opName == "linear")
 	{
-		*stat = x * a;
+		stat->Base = x * a;
+		//stat->Real = stat->Base;
 	}
+
+	// +5 max hp
+	//if (stat == user->GetMaxHealthPointer())
+	//	stat->Base += 5;
 }
 
 

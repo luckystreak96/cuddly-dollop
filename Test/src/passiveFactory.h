@@ -2,6 +2,7 @@
 #define PASSIVE_FACTORY_H__
 
 #include "fighter.h"
+#include "battleData.h"
 
 class PassiveFactory
 {

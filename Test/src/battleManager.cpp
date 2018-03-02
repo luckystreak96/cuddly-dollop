@@ -17,7 +17,11 @@ BattleManager::BattleManager(std::vector<Actor_ptr> actors)
 {
 	// Populate actors
 	for (auto a : actors)
+	{
+		// Reset modified stats
+		a->_Fighter->ResetModified();
 		_actors.push_back(a);
+	}
 
 	std::sort(actors.begin(), actors.end(), Actor::ActorSpeedSort);
 	for (auto a : actors)

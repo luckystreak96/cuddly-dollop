@@ -9,12 +9,12 @@
 Fighter::Fighter()
 {
 	SetDefault();
-	PassiveSkill skill;
-	skill._Type = PassiveType::PT_Stat;
-	skill._Data._Float = 5.0f;
-	skill._Data._String = "max_health";
-	skill._Specifier = PassiveSpecifier::PS_Flat;
-	_Passives.push_back(std::make_shared<PassiveSkill>(skill));
+	//PassiveSkill skill;
+	//skill._Type = PassiveType::PT_Stat;
+	//skill._Data._Float = 5.0f;
+	//skill._Data._String = "max_health";
+	//skill._Specifier = PassiveSpecifier::PS_Flat;
+	//_Passives.push_back(std::make_shared<PassiveSkill>(skill));
 }
 
 void Fighter::SetStatsFromCurve()
@@ -63,7 +63,7 @@ void Fighter::PhysicalDefenseActionCommand(Damage& dmg)
 
 void Fighter::PhysicalOffenseActionCommand(Damage& dmg)
 {
-	dmg._value += Strength.Real / 2;
+	dmg._value += Strength.Real / 2 + Level;
 }
 
 void Fighter::SpecialActionCommand(Damage& dmg)

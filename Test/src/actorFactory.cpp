@@ -25,17 +25,22 @@ Actor_ptr ActorFactory::BuildBaseAlly()
 	result->Sprite = "res/sprites/entities/entity_girl.png";
 	result->_Graphics->SetTexture(result->Sprite);
 
+	result->_Fighter->ResetModified();
+
 	return result;
 }
 
 Actor_ptr ActorFactory::BuildBaseEnemy()
 {
 	Actor_ptr result = Actor_ptr(new Actor());
-	result->_Fighter->Speed = 2;
-	result->_Fighter->Strength = 2;
-	result->_Fighter->Crit = 1;
-	result->_Fighter->Defense = 0;
-	result->_Fighter->SetEndurance(2);
+	result->_Fighter->SetLevel(2);
+	result->_Fighter->Curve = "Attack_Level_1";
+	result->_Fighter->SetStatsFromCurve();
+	//result->_Fighter->Speed = 2;
+	//result->_Fighter->Strength = 2;
+	//result->_Fighter->Crit = 1;
+	//result->_Fighter->Defense = 0;
+	//result->_Fighter->SetEndurance(2);
 	PassiveFactory::ApplyAllPassives(result->_Fighter, &result->_Fighter->_Passives);
 	result->_Fighter->Health = result->_Fighter->GetMaxHealth().Real;
 	result->_Name = "Slime";
@@ -104,7 +109,16 @@ std::vector<Actor_ptr> ActorFactory::BuildParty(rapidjson::GenericArray<false, r
 				actor->_Fighter->Skills.push_back(BuildSkill(itr->GetString()));
 		}
 
+		if (a.HasMember("passives") && a["passives"].IsArray())
+		{
+			auto passive = a["passives"].GetArray();
+			for (rapidjson::Value::ConstValueIterator itr = passive.Begin(); itr != passive.End(); ++itr)
+				actor->_Fighter->_Passives.push_back(BattleData::PassiveSkills.at(itr->GetInt()));
+		}
+
 		PassiveFactory::ApplyAllPassives(actor->_Fighter, &actor->_Fighter->_Passives);
+		actor->_Fighter->CurrentHealthCheck();
+
 		result.push_back(actor);
 	}
 

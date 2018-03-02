@@ -7,7 +7,7 @@
       },
       "strength": {
         "op": "linear",
-        "value": 1.0
+        "value": 0.65
       },
       "speed": {
         "op": "linear",
@@ -19,11 +19,37 @@
       },
       "defense": {
         "op": "linear",
-        "value": 1.0
+        "value": 0.4
       },
       "max_health": {
         "op": "quadratic",
-        "value": 0.03
+        "value": 0.001
+      }
+    },
+    "Attack_Level_1": {
+      "endurance": {
+        "op": "linear",
+        "value": 1.0
+      },
+      "strength": {
+        "op": "linear",
+        "value": 0.8
+      },
+      "speed": {
+        "op": "linear",
+        "value": 0.5
+      },
+      "crit": {
+        "op": "square",
+        "value": 0.002
+      },
+      "defense": {
+        "op": "linear",
+        "value": 0.42
+      },
+      "max_health": {
+        "op": "quadratic",
+        "value": 0.001
       }
     }
   },
@@ -34,7 +60,7 @@
       "priority": "PP_AbsoluteFirst",
       "type": "PT_Stat",
       "specifier": "PS_Flat",
-      "_string": "",
+      "_string": "max_health",
       "_int": 0,
       "_float": 6.0
     }

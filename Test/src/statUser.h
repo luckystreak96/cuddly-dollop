@@ -41,6 +41,10 @@ public:
 	void SetMaxHealth(int maxHealth);
 	Stat GetMaxHealth();
 	Stat* GetMaxHealthPointer();
+	// Makes sure current HP isnt greater than the max
+	void CurrentHealthCheck();
+	void ResetRealModified();
+	void ResetModified();
 
 	// Stat points + nextlevelexp
 	void LevelUp();
