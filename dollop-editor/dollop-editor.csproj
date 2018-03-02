@@ -58,7 +58,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Battle\BattleData.cs" />
+    <Compile Include="Battle\PassiveSkill.cs" />
     <Compile Include="Battle\StatCurve.cs" />
+    <Compile Include="Battle\WindowPassiveSkills.xaml.cs">
+      <DependentUpon>WindowPassiveSkills.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Battle\WindowStatCurve.xaml.cs">
       <DependentUpon>WindowStatCurve.xaml</DependentUpon>
     </Compile>
@@ -99,6 +103,10 @@
     </Compile>
     <Compile Include="Tile.cs" />
     <Compile Include="Tiles.cs" />
+    <Page Include="Battle\WindowPassiveSkills.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Battle\WindowStatCurve.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

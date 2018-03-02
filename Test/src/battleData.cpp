@@ -10,6 +10,7 @@
 using namespace rapidjson;
 
 std::vector<Actor_ptr> BattleData::Party = std::vector<Actor_ptr>();
+std::map<int, Passive_ptr> BattleData::PassiveSkills = std::map<int, Passive_ptr>();
 
 void BattleData::NewGame()
 {
@@ -79,6 +80,76 @@ void BattleData::LoadCurves()
 		}
 
 		StatCurve::Curves = data;
+	}
+}
+
+void BattleData::LoadPassives()
+{
+	std::string file = "";
+	try {
+		file = Utils::ReadFile("res/data/battle/battle.json");
+	}
+	catch (...)// catch any exception
+	{
+		std::cout << "Error loading: res/data/battle/battle.json" << std::endl;
+		return;
+	}
+
+	rapidjson::Document doc;
+	doc.Parse(file.c_str());
+
+	// Get the flags
+	if (doc.HasMember("passives") && doc["passives"].IsObject())
+	{
+		std::map<int, Passive_ptr> data;
+		auto passives = doc["passives"].GetArray();
+		// Loop through curves
+		for (auto& passive : passives)
+		{
+			int passiveID = -1;
+			if (passive.HasMember("id"))
+				passiveID = passive["id"].GetInt();
+
+			std::string passiveName = "";
+			if (passive.HasMember("name"))
+				passiveName = passive["name"].GetInt();
+
+			PassivePriority priority = PP_AbsoluteFirst;
+			if (passive.HasMember("priority"))
+				priority = (PassivePriority)PassiveSkill::EnumToInt[passive["priority"].GetString()];
+
+			PassiveType type = PT_Stat;
+			if (passive.HasMember("type"))
+				type = (PassiveType)PassiveSkill::EnumToInt[passive["type"].GetString()];
+
+			PassiveSpecifier specifier = PS_Flat;
+			if (passive.HasMember("specifier"))
+				specifier = (PassiveSpecifier)PassiveSkill::EnumToInt[passive["specifier"].GetString()];
+
+			PassiveData ifs;
+
+			if (passive.HasMember("_int"))
+				ifs._Integer = passive["_int"].GetInt();
+
+			if (passive.HasMember("_float"))
+				ifs._Float = passive["_float"].GetFloat();
+
+			if (passive.HasMember("_string"))
+				ifs._String = passive["_string"].GetString();
+
+			Passive_ptr skill = Passive_ptr(new PassiveSkill());
+			skill->_Data = ifs;
+			skill->_Id = passiveID;
+			skill->_Name = passiveName;
+			skill->_Priority = priority;
+			skill->_Specifier = specifier;
+			skill->_Type = type;
+
+			// emplace curve
+			data.emplace(passiveID, skill);
+		}
+
+		PassiveSkills = data;
 	}
 }
 

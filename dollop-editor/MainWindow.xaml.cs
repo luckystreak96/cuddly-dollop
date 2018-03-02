@@ -786,5 +786,11 @@ namespace dollop_editor
             editor._BattleData.curves = curves;
             mustSave = true;
         }
+
+        private void menuPassiveSkills_Click(object sender, RoutedEventArgs e)
+        {
+            Battle.WindowPassiveSkills passiveWindow = new Battle.WindowPassiveSkills();
+            passiveWindow.ShowDialog();
+        }
     }
 }

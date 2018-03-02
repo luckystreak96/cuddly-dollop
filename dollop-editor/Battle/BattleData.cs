@@ -11,9 +11,11 @@ namespace dollop_editor.Battle
     public class BattleData
     {
         public Dictionary<string, Dictionary<string, CurveStyle>> curves;
+        public List<PassiveSkill> passives { get; set; }
 
         public BattleData()
         {
+            passives = new List<PassiveSkill>();
             curves = new Dictionary<string, Dictionary<string, CurveStyle>>();
         }
 

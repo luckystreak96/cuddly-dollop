@@ -3,10 +3,12 @@
 
 #include <string>
 #include <memory>
+#include <map>
 
 enum PassivePriority { PP_AbsoluteFirst, PP_Secondary, PP_Last, PP_BeforeSkill, PP_BeforeDamage, PP_AfterDamage, PP_AfterSkill };
 enum PassiveType { PT_Skill, PT_SkillUpgrade, PT_Stat, PT_Special };
 enum PassiveSpecifier { PS_Flat, PS_Percent, PS_None };
+
 
 struct PassiveData
 {
@@ -19,8 +21,9 @@ struct PassiveData
 class PassiveSkill;
 typedef std::shared_ptr<PassiveSkill> Passive_ptr;
 
-struct PassiveSkill
+class PassiveSkill
 {
+public:
 	PassiveSkill();
 
 	int _Id;
@@ -29,6 +32,8 @@ struct PassiveSkill
 	PassiveType _Type;
 	PassiveSpecifier _Specifier;
 	PassiveData _Data;
+
+	static std::map<std::string, int> EnumToInt;
 };
 
 #endif
