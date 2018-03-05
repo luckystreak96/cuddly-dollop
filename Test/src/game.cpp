@@ -1,5 +1,6 @@
 #include "game.h"
 #include "gameData.h"
+#include "localizationData.h"
 #include "textureatlas.h"
 #include <GLFW/glfw3.h>
 #include "vector3f.h"
@@ -15,7 +16,7 @@
 Game::Game() : m_exit(false)
 {
 	GameData::LoadSettings();
-	GameData::LoadLocalization();
+	LocalizationData::LoadLocalization();
 }
 
 Game::~Game()
@@ -70,7 +71,7 @@ void Game::renderSceneCB()
 
 	if (m_exit)
 	{
-		GameData::SaveToFile();
+		//GameData::SaveToFile();
 		return;
 	}
 

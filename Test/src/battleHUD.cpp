@@ -1,7 +1,7 @@
 #include "battleHUD.h"
 #include "renderer.h"
 #include "fontManager.h"
-#include "gameData.h"
+#include "localizationData.h"
 
 BattleHUD::BattleHUD()
 {

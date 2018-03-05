@@ -5,17 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:dollop_editor"
         mc:Ignorable="d"
-        Title="Localization" Height="300" Width="300">
+        Title="Localization" Height="425.212" Width="533.263">
     <Grid>
-        <Button Name="btnCancel" Content="Cancel" HorizontalAlignment="Left" Margin="207,239,0,0" VerticalAlignment="Top" Width="75" Click="btnCancel_Click"/>
-        <Button Name="btnSave" Content="Save" HorizontalAlignment="Left" Margin="10,239,0,0" VerticalAlignment="Top" Width="75" Click="btnSave_Click"/>
-        <Label Content="English" HorizontalAlignment="Left" Margin="10,64,0,0" VerticalAlignment="Top"/>
-        <Label Content="French" HorizontalAlignment="Left" Margin="150,64,0,0" VerticalAlignment="Top"/>
-        <Button Name="btnUpdate" Content="Update" HorizontalAlignment="Left" Margin="207,198,0,0" VerticalAlignment="Top" Width="75" Click="btnUpdate_Click"/>
-        <Button Name="btnNew" Content="New" HorizontalAlignment="Left" Margin="10,198,0,0" VerticalAlignment="Top" Width="75" Click="btnNew_Click"/>
-        <ComboBox Name="cmbText" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="272" Height="49" IsEditable="True" SelectionChanged="cmbText_SelectionChanged"/>
-        <TextBox Name="txtEnglish" HorizontalAlignment="Left" Height="103" Margin="10,90,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="135"/>
-        <TextBox Name="txtFrench" HorizontalAlignment="Left" Height="103" Margin="150,90,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="132"/>
+        <Button Name="btnCancel" Content="Cancel" HorizontalAlignment="Left" Margin="383,334,0,0" VerticalAlignment="Top" Width="132" Click="btnCancel_Click" Height="41"/>
+        <Button Name="btnSave" Content="Write to File and Exit" HorizontalAlignment="Left" Margin="10,334,0,0" VerticalAlignment="Top" Width="129" Click="btnSave_Click" Height="41"/>
+        <Label Content="English" HorizontalAlignment="Left" Margin="10,144,0,0" VerticalAlignment="Top"/>
+        <Label Content="French" HorizontalAlignment="Left" Margin="270,144,0,0" VerticalAlignment="Top"/>
+        <Button Name="btnUpdate" Content="Update Current Key" HorizontalAlignment="Left" Margin="270,278,0,0" VerticalAlignment="Top" Width="245" Click="btnUpdate_Click" Height="51"/>
+        <Button Name="btnNew" Content="New Key Entry" HorizontalAlignment="Left" Margin="10,278,0,0" VerticalAlignment="Top" Width="255" Click="btnNew_Click" Height="51"/>
+        <ComboBox Name="cmbText" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top" Width="505" Height="49" IsEditable="True" SelectionChanged="cmbText_SelectionChanged" FontSize="20" FontWeight="Bold"/>
+        <TextBox Name="txtEnglish" HorizontalAlignment="Left" Height="103" Margin="10,170,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="255"/>
+        <TextBox Name="txtFrench" HorizontalAlignment="Left" Height="103" Margin="270,170,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="245"/>
+        <TextBox Name="txtKey" HorizontalAlignment="Left" Height="23" Margin="10,116,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="505" TextDecorations="Underline"/>
+        <Label Content="Key" HorizontalAlignment="Left" Margin="10,90,0,0" VerticalAlignment="Top"/>
+        <Label Content="Select a key :" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>

@@ -5,7 +5,7 @@
 #include <algorithm>
 #include <iostream>
 #include "fontManager.h"
-#include "gameData.h"
+#include "localizationData.h"
 #include "animMoveTo.h"
 
 BattleManager::BattleManager()

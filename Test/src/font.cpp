@@ -28,16 +28,17 @@ bool Font::IsDead()
 
 void Font::Update(double elapsedTime)
 {
+	// Lightspeed has been moved to the following for loop so elasedTime doesnt fuck up lifetime
 	//For those who hate to wait for the text to draw
-	if (m_lightSpeed)
-		elapsedTime = MaxTime;
+	//if (m_lightSpeed)
+	//	elapsedTime = MaxTime;
 
 	if (m_elapsedTime < MaxTime)
 		m_elapsedTime += elapsedTime * m_textSpeed;
 
 	for (unsigned int i = 0; i < m_message.size(); i++)
 	{
-		if (m_message.at(i) != m_messageProgress.at(i) && m_elapsedTime > m_timePerLetter * i)
+		if (m_message.at(i) != m_messageProgress.at(i) && (m_lightSpeed || m_elapsedTime > m_timePerLetter * i))
 		{
 			m_messageProgress.at(i) = m_message.at(i);
 			ChangeLetter(i, m_message.at(i));

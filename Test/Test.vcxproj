@@ -173,6 +173,7 @@
     <ClInclude Include="src\battleHUD.h" />
     <ClInclude Include="src\fighter.h" />
     <ClInclude Include="src\fontFloat.h" />
+    <ClInclude Include="src\localizationData.h" />
     <ClInclude Include="src\particleManager.h" />
     <ClInclude Include="src\passiveFactory.h" />
     <ClInclude Include="src\passiveSkill.h" />
@@ -283,6 +284,7 @@
     <ClCompile Include="src\battleHUD.cpp" />
     <ClCompile Include="src\fighter.cpp" />
     <ClCompile Include="src\fontFloat.cpp" />
+    <ClCompile Include="src\localizationData.cpp" />
     <ClCompile Include="src\particleManager.cpp" />
     <ClCompile Include="src\passiveFactory.cpp" />
     <ClCompile Include="src\passiveSkill.cpp" />

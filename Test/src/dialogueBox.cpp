@@ -1,6 +1,8 @@
 #include "dialogueBox.h"
 #include <GLFW/glfw3.h>
 
+#include "localizationData.h"
+
 DialogueBox* DialogueBox::m_owner = NULL;
 
 DialogueBox::DialogueBox(unsigned int entity_id, std::vector<Dialogue> d, std::vector<DialogueChoice> dc) : m_firstTime(true)
@@ -55,13 +57,16 @@ void DialogueBox::SetText(std::string text)
 {
 	float x = 0.5f;
 	float y = m_box->GetScale().y + m_box->GetPosRef().y - m_yScale;
-	Font::SetText(text, Vector3f(x, y, 0.0f), false, m_maxWidth);
+	// LOCALIZATION HERE
+	Font::SetText(_(text), Vector3f(x, y, 0.0f), false, m_maxWidth);
 	m_choices.clear();
 	if (m_dialogueGraph && m_dialogueGraph->ChoiceAvailable())
 	{
 		//m_y += m_yScale * 1.25f;
 		for (auto x : m_dialogueGraph->GetChoices())
 		{
+			// LOCALIZATION HERE
+			x = _(x);
 			m_y -= m_yScale * 1.25f;
 			Font_ptr temp = Font_ptr(new Font(true));
 			temp->SetScale(m_xScale, m_yScale);

@@ -434,6 +434,9 @@
     <ClInclude Include="src\passiveFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\localizationData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -737,6 +740,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\passiveFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\localizationData.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

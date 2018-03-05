@@ -1,4 +1,5 @@
 #include "fontManager.h"
+#include "fontFloat.h"
 
 FontManager::FontManager() : m_fonts(std::map<unsigned int, Font_ptr>())
 {
@@ -7,6 +8,27 @@ FontManager::FontManager() : m_fonts(std::map<unsigned int, Font_ptr>())
 FontManager::~FontManager()
 {
 	ClearFonts();
+}
+
+Font_ptr FontManager::CreateFloatingText(Vector3f target, std::string text)
+{
+	Vector3f pos;
+	Font_ptr font;
+
+	// Setup font
+	pos = target + Vector3f(0.5f, 1.f, 0);
+	pos.z = 0;
+
+	// create font
+	font = Font_ptr(new FontFloat(0.7));
+	font->SetText(text, pos, true);
+
+	// color
+	dynamic_cast<FontFloat*>(font.get())->Color = Vector3f(0, 0.4f, 0.9f);
+
+	FontManager::GetInstance().AddFont(font);
+
+	return font;
 }
 
 bool FontManager::IsEmpty()

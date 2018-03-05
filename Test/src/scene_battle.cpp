@@ -1,5 +1,7 @@
 #include "scene_battle.h"
+
 #include "gameData.h"
+#include "battleData.h"
 #include "basicEffect.h"
 #include "elapsedTime.h"
 #include "singleColorEffect.h"

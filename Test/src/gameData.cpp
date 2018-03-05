@@ -1,8 +1,11 @@
 #include "gameData.h"
+
+#include "localizationData.h"
 #include "actorFactory.h"
 #include "skill.h"
 #include <fstream>
 #include <ostream>
+#include "battleData.h"
 
 #undef GetObject
 
@@ -13,14 +16,11 @@ std::string GameData::PlayerSprite = "res/sprites/entities/entity_ghost_blue.png
 std::map<std::string, int> GameData::Flags = std::map<std::string, int>();
 std::map<std::string, std::string> GameData::Strings = std::map<std::string, std::string>();
 std::map<std::string, Vector3f> GameData::Positions = std::map<std::string, Vector3f>();
-std::map<std::string, std::map<std::string, std::string>> GameData::Localization = std::map<std::string, std::map<std::string, std::string>>();
 OptionMap GameData::Options = OptionMap();
 
 rapidjson::Document GameData::m_document;
 std::string GameData::m_file;
 std::string GameData::m_path = "res/data/saves/";
-std::string GameData::m_localizationPath = "res/data/strings/";
-std::string GameData::Language = "french";
 
 std::string GameData::Get(std::string key)
 {
@@ -77,7 +77,7 @@ void GameData::EmplaceFlag(std::string name, int value)
 
 void GameData::LoadFromFile()
 {
-	LoadLocalization();
+	LocalizationData::LoadLocalization();
 	LoadGameData();
 	LoadSettings();
 }
@@ -158,36 +158,6 @@ void GameData::LoadGameData()
 		PlayerSprite = m_document["sprite"].GetString();
 
 	Loading = true;
-}
-
-// Load the localization strings
-void GameData::LoadLocalization()
-{
-#ifdef NDEBUG
-	std::ifstream my_file(m_localizationPath + "localization");
-#else
-	std::ifstream my_file(m_localizationPath + "localization.json");
-#endif
-	bool exists = my_file.good();
-	if (!exists)
-		return;
-#ifdef NDEBUG
-	m_file = Utils::ReadFile(m_localizationPath + "localization");
-#else
-	m_file = Utils::ReadFile(m_localizationPath + "localization.json");
-#endif
-	m_document.Parse(m_file.c_str());
-
-	auto strings = m_document.GetObject();
-	for (auto& v : strings)
-		//for (Value::ConstMemberIterator itr = v.MemberBegin(); itr != v.MemberEnd(); ++itr)
-	{
-		std::map<std::string, std::string> trans;
-		auto l = v.value.GetObject();
-		for (Value::ConstMemberIterator itr = l.MemberBegin(); itr != l.MemberEnd(); ++itr)
-			trans.emplace(itr->name.GetString(), itr->value.GetString());
-		Localization.emplace(v.name.GetString(), trans);
-	}
 }
 
 void GameData::LoadSettings()
@@ -387,17 +357,4 @@ void GameData::SaveToFile()
 {
 	SaveGameData();
 	SaveSettings();
-}
-
-std::string _(std::string key)
-{
-	if (GameData::Localization.count(key) && (GameData::Language == "english" || GameData::Localization.at(key).count(GameData::Language)))
-	{
-		if (GameData::Language == "english")
-			return key;
-		else
-			return GameData::Localization.at(key).at(GameData::Language);
-	}
-
-	return key;
 }

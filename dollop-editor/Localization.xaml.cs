@@ -43,8 +43,15 @@ namespace dollop_editor
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
             // Save the stuff to the json file
-            File.WriteAllText(path, JsonConvert.SerializeObject(Strings, Formatting.Indented, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }).Replace("\r", "").Replace("\\r", ""));
-            Close();
+            try
+            {
+                File.WriteAllText(path, JsonConvert.SerializeObject(Strings, Formatting.Indented, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }).Replace("\r", "").Replace("\\r", ""));
+                Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Couldn't write to file due to error: " + ex.Message);
+            }
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
@@ -55,13 +62,20 @@ namespace dollop_editor
         private void btnUpdate_Click(object sender, RoutedEventArgs e)
         {
             // Modify the selected string
-            if (!Strings.ContainsKey(txtEnglish.Text))
+            try
             {
-                Strings.Remove((string)cmbText.SelectedItem);
-                Strings.Add(txtEnglish.Text, CreateList());
+                if (!Strings.ContainsKey(txtKey.Text))
+                {
+                    Strings.Remove((string)cmbText.SelectedItem);
+                    Strings.Add(txtKey.Text, CreateList());
+                }
+                else
+                    Strings[txtKey.Text] = CreateList();
             }
-            else
-                Strings[txtEnglish.Text] = CreateList();
+            catch (Exception ex)
+            {
+                MessageBox.Show("Couldn't update localization due to error: " + ex.Message);
+            }
 
             UpdateCmb();
         }
@@ -69,10 +83,17 @@ namespace dollop_editor
         private void btnNew_Click(object sender, RoutedEventArgs e)
         {
             // Add a new string
-            if (!Strings.ContainsKey(txtEnglish.Text))
-                Strings.Add(txtEnglish.Text, CreateList());
-            else
-                Strings[txtEnglish.Text] = CreateList();
+            try
+            {
+                if (!Strings.ContainsKey(txtKey.Text))
+                    Strings.Add(txtKey.Text, CreateList());
+                else
+                    Strings[txtKey.Text] = CreateList();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Couldn't create new localization due to error: " + ex.Message);
+            }
 
             UpdateCmb();
         }
@@ -85,16 +106,39 @@ namespace dollop_editor
 
         private Dictionary<string, string> CreateList()
         {
-            return new Dictionary<string, string>() { { "french", txtFrench.Text } };
+            return new Dictionary<string, string>() { { "french", txtFrench.Text }, { "english", txtEnglish.Text } };
         }
 
         private void cmbText_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            string key = (string)cmbText.SelectedItem;
-            if (key == null || !Strings.ContainsKey(key))
-                return;
-            txtEnglish.Text = key;
-            txtFrench.Text = Strings[key]["french"];
+            try
+            {
+                string key = (string)cmbText.SelectedItem;
+                if (key == null || !Strings.ContainsKey(key))
+                    return;
+
+                ClearAllTextBoxes();
+
+                // Write the localizations if they exist
+                if (Strings[key].ContainsKey("english"))
+                    txtEnglish.Text = Strings[key]["english"];
+
+                if (Strings[key].ContainsKey("french"))
+                    txtFrench.Text = Strings[key]["french"];
+
+                txtKey.Text = key;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Could not load localization due to error:" + ex.Message);
+            }
+        }
+
+        private void ClearAllTextBoxes()
+        {
+            txtEnglish.Text = "";
+            txtFrench.Text = "";
+            txtKey.Text = "";
         }
     }
 }

@@ -6539,6 +6539,18 @@
               "args": {
                 "dialogue 0": {
                   "id": 0,
+                  "text": "TestDialogue_001",
+                  "next": -1,
+                  "type": "end"
+                }
+              }
+            },
+            {
+              "type": "dialogue",
+              "execution_type": "blocking",
+              "args": {
+                "dialogue 0": {
+                  "id": 0,
                   "text": "Flag 01_noMove is currently set to : %01_noMove%",
                   "next": -1,
                   "type": "end"

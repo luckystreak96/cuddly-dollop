@@ -1,6 +1,6 @@
 #include "fontFloat.h"
 
-FontFloat::FontFloat(double lifetime, std::string tex) : Font(false, true, false, tex),
+FontFloat::FontFloat(double lifetime, std::string tex) : Font(false, true, true, tex),
 Alpha(1.0f)
 {
 	m_lifetime = lifetime;

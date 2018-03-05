@@ -1,17 +1,30 @@
 {
-    "Smack": {
-        "french": "Gifle"
-    },
-    "Heal": {
-        "french": "Guérir"
-    },
-    "Player": {
-        "french": "Joueur"
-    },
-    "Ghost": {
-        "french": "Fantôme"
-    },
-    "Slime": {
-        "french": "Gel"
-    }
+  "Smack": {
+    "french": "Gifle",
+    "english": "Smack"
+  },
+  "Heal": {
+    "french": "Guérir",
+    "english": "Heal"
+  },
+  "Player": {
+    "french": "Joueur",
+    "english": "Player"
+  },
+  "Ghost": {
+    "french": "Fantôme",
+    "english": "Ghost"
+  },
+  "Slime": {
+    "french": "Gel",
+    "english": "Slime"
+  },
+  "Protect": {
+    "french": "Protection",
+    "english": "Protect"
+  },
+  "TestDialogue_001": {
+    "french": "Ta facon de tester me fait sourir :)",
+    "english": "Hi there mr Tester :)"
+  }
 }

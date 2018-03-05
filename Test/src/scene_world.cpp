@@ -104,6 +104,12 @@ void SceneWorld::ManageInput()
 	if (InputManager::GetInstance().FrameKeyStatus('B', AnyRelease))
 		m_bloomEffect = !m_bloomEffect;
 
+	if (InputManager::GetInstance().FrameKeyStatus('T', AnyRelease))
+	{
+		GameData::SaveToFile();
+		FontManager::GetInstance().CreateFloatingText(m_player->Physics()->Position(), "Game Saved!")->GetGraphics()->SetColorAll(Vector3f(0.1f, 0.65f, 1));
+	}
+
 	if (InputManager::GetInstance().FrameKeyStatus('Z', AnyRelease))
 	{
 		m_zoom = !m_zoom;
