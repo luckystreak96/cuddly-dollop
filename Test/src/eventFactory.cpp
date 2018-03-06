@@ -153,62 +153,22 @@ std::shared_ptr<IEvent> EventFactory::BuildEvent(EventTypes et, std::map<std::st
 		break;
 	case EventTypes::ET_DialogueBox:
 	{
-		std::vector<DialogueChoice> choices;
-		std::vector<Dialogue> dialogues;
+		std::map<std::string, std::shared_ptr<DialogueGraph>> graphs;
 
-		// Add the choices and dialogues to the vectors
-		for (auto x : args)
-		{
-			std::vector<std::string> vs = Utils::Split(x.first, ' ');
-			for (auto s : vs)
-			{
-				if (s == "choice")
-				{
-					DialogueChoice dc;
+		std::string first = (*args.begin()).first;
 
-					// For each param in the choice
-					for (auto t : x.second.get<std::map<std::string, EventArgType>>())
-					{
-						// Dialogue id
-						if (t.first == "d")
-							dc.DialogueId = t.second.get<int>();
-						else if (t.first == "text")
-							dc.Text = t.second.get<std::string>();
-						else if (t.first == "next")
-							dc.NextTextId = t.second.get<int>();
-						else if (t.first == "queues")
-							dc.Queue = t.second.get<std::vector<std::shared_ptr<EventQueue>>>().at(0);
-					}
+		// Ensure that languages are enabled
+		std::vector<std::string> langCheck = Utils::Split(first, ' ');
 
-					choices.push_back(dc);
-				}
-				else if (s == "dialogue")
-				{
-					Dialogue d;
+		// If theres no languages, it just creates the one dialogue and returns it
+		if (langCheck[0] == "dialogue" || langCheck[0] == "choice")
+			return std::shared_ptr<IEvent>(new DialogueBox(entity_id, CreateDialogueGraph(args)));
 
-					// For each param in the dialogue
-					for (auto t : x.second.get<std::map<std::string, EventArgType>>())
-					{
-						// Dialogue id
-						if (t.first == "id")
-							d.Id = t.second.get<int>();
-						else if (t.first == "text")
-							d.Text = t.second.get<std::string>();
-						else if (t.first == "next")
-							d.NextTextId = t.second.get<int>();
-						else if (t.first == "queues")
-							d.Queue = t.second.get<std::vector<std::shared_ptr<EventQueue>>>().at(0);
-						else if (t.first == "type")
-							d.Type = DialogueGraph::StringToDialogueType(t.second.get<std::string>());
-					}
+		// Otherwise iterate through the localized dialogues
+		for (auto langDialogue : args)
+			graphs.emplace(langDialogue.first, CreateDialogueGraph(langDialogue.second.get<std::map<std::string, EventArgType>>()));
 
-					dialogues.push_back(d);
-				}
-			}
-		}
-
-		result = std::shared_ptr<IEvent>(new DialogueBox(entity_id, dialogues, choices));
-		break;
+		return std::shared_ptr<IEvent>(new DialogueBox(entity_id, graphs));
 	}
 	default:
 		break;
@@ -216,6 +176,66 @@ std::shared_ptr<IEvent> EventFactory::BuildEvent(EventTypes et, std::map<std::st
 
 	return result;
 }
+
+std::shared_ptr<DialogueGraph> EventFactory::CreateDialogueGraph(std::map<std::string, EventArgType> args)
+{
+	std::vector<DialogueChoice> choices;
+	std::vector<Dialogue> dialogues;
+
+	// Add the choices and dialogues to the vectors
+	for (auto x : args)
+	{
+		std::vector<std::string> vs = Utils::Split(x.first, ' ');
+		for (auto s : vs)
+		{
+			if (s == "choice")
+			{
+				DialogueChoice dc;
+
+				// For each param in the choice
+				for (auto t : x.second.get<std::map<std::string, EventArgType>>())
+				{
+					// Dialogue id
+					if (t.first == "d")
+						dc.DialogueId = t.second.get<int>();
+					else if (t.first == "text")
+						dc.Text = t.second.get<std::string>();
+					else if (t.first == "next")
+						dc.NextTextId = t.second.get<int>();
+					else if (t.first == "queues")
+						dc.Queue = t.second.get<std::vector<std::shared_ptr<EventQueue>>>().at(0);
+				}
+
+				choices.push_back(dc);
+			}
+			else if (s == "dialogue")
+			{
+				Dialogue d;
+
+				// For each param in the dialogue
+				for (auto t : x.second.get<std::map<std::string, EventArgType>>())
+				{
+					// Dialogue id
+					if (t.first == "id")
+						d.Id = t.second.get<int>();
+					else if (t.first == "text")
+						d.Text = t.second.get<std::string>();
+					else if (t.first == "next")
+						d.NextTextId = t.second.get<int>();
+					else if (t.first == "queues")
+						d.Queue = t.second.get<std::vector<std::shared_ptr<EventQueue>>>().at(0);
+					else if (t.first == "type")
+						d.Type = DialogueGraph::StringToDialogueType(t.second.get<std::string>());
+				}
+
+				dialogues.push_back(d);
+			}
+		}
+	}
+
+	return std::shared_ptr<DialogueGraph>(new DialogueGraph(dialogues, choices));
+}
+
 
 void EventFactory::SetActivationType(std::shared_ptr<EventQueue> eq, std::string s)
 {

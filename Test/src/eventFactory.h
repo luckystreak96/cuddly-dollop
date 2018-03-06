@@ -50,6 +50,7 @@ public:
 	static std::vector<std::shared_ptr<EventQueue>> LoadEvent(rapidjson::Value& v, MapHandler* map);
 	static EventArgType AddArg(rapidjson::Value::MemberIterator iter, MapHandler* map);
 	static void SetActivationType(std::shared_ptr<EventQueue> eq, std::string s);
+	static std::shared_ptr<DialogueGraph> CreateDialogueGraph(std::map<std::string, EventArgType> args);
 private:
 	static int m_entity_id;
 };

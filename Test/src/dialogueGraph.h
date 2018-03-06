@@ -23,6 +23,7 @@ struct DialogueChoice
 	std::string Text;
 	int NextTextId;
 	std::shared_ptr<EventQueue> Queue;
+	DialogueChoice();
 };
 
 struct Dialogue
@@ -32,11 +33,13 @@ struct Dialogue
 	std::string Text;
 	DialogueType Type;
 	std::shared_ptr<EventQueue> Queue;
+	Dialogue();
 };
 
 class DialogueGraph
 {
 public:
+	DialogueGraph(bool DONT_USE_THIS = true);
 	DialogueGraph(std::vector<Dialogue> d, std::vector<DialogueChoice> dc);
 	~DialogueGraph();
 	void SetToStart();

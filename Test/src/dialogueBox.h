@@ -12,6 +12,7 @@ class DialogueBox : public Font, public IEvent
 public:
 	DialogueBox(unsigned int entity_id, std::vector<Dialogue> d, std::vector<DialogueChoice> dc);
 	DialogueBox(unsigned int entity_id, std::shared_ptr<DialogueGraph> dg);
+	DialogueBox(unsigned int entity_id, std::map<std::string, std::shared_ptr<DialogueGraph>> dg);
 	~DialogueBox();
 	void Construct();
 	void Update(double elapsedTime);
@@ -25,12 +26,15 @@ public:
 	void SetScale(float xScale, float yScale);
 
 private:
+	std::shared_ptr<DialogueGraph> GetLocalizedGraph();
+
+private:
 	std::shared_ptr<FontGraphicsComponent> m_box;
 	std::vector<Font_ptr> m_choices;
 	float m_maxWidth;
 	float m_maxHeight;
 	bool m_firstTime;
-	std::shared_ptr<DialogueGraph> m_dialogueGraph;
+	std::map<std::string, std::shared_ptr<DialogueGraph>> m_dialogueGraphs;
 	static DialogueBox* m_owner;
 };
 

@@ -1,5 +1,24 @@
 #include "dialogueGraph.h"
 
+DialogueGraph::DialogueGraph(bool dontusethis)
+{
+	std::vector<Dialogue> d;
+	std::vector<DialogueChoice> dc;
+
+	d.push_back(Dialogue());
+	dc.push_back(DialogueChoice());
+
+	Dialogues = d;
+	DialogueChoices = dc;
+
+	m_choices = dc;
+	for (auto x : d)
+		m_dialogues.emplace(x.Id, x);
+
+	m_currentDialogue = m_dialogues.at(0).Id;
+	m_selectedChoice = m_dialogues.at(m_currentDialogue).Type == Choice ? 0 : -1;
+}
+
 DialogueGraph::DialogueGraph(std::vector<Dialogue> d, std::vector<DialogueChoice> dc)
 {
 	Dialogues = d;
@@ -172,6 +191,20 @@ void DialogueGraph::SetToStart()
 }
 
 
+Dialogue::Dialogue()
+{
+	Id = 0;
+	NextTextId = -1;
+	Text = "Error no text specified";
+	Type = DialogueType::End;
+}
+
+DialogueChoice::DialogueChoice()
+{
+	DialogueId = 0;
+	NextTextId = -1;
+	Text = "Error";
+}
 
 //std::vector<std::string> DialogueGraph::GetChoices()
 //{

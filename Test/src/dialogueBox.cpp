@@ -1,5 +1,6 @@
 #include "dialogueBox.h"
 #include <GLFW/glfw3.h>
+#include <cassert>
 
 #include "localizationData.h"
 
@@ -7,7 +8,8 @@ DialogueBox* DialogueBox::m_owner = NULL;
 
 DialogueBox::DialogueBox(unsigned int entity_id, std::vector<Dialogue> d, std::vector<DialogueChoice> dc) : m_firstTime(true)
 {
-	m_dialogueGraph = std::shared_ptr<DialogueGraph>(new DialogueGraph(d, dc));
+	auto graph = std::shared_ptr<DialogueGraph>(new DialogueGraph(d, dc));
+	m_dialogueGraphs.emplace("english", graph);
 	m_target = entity_id;
 
 	Construct();
@@ -15,7 +17,15 @@ DialogueBox::DialogueBox(unsigned int entity_id, std::vector<Dialogue> d, std::v
 
 DialogueBox::DialogueBox(unsigned int entity_id, std::shared_ptr<DialogueGraph> dg) : m_firstTime(true)
 {
-	m_dialogueGraph = dg;
+	m_dialogueGraphs.emplace("english", dg);
+	m_target = entity_id;
+
+	Construct();
+}
+
+DialogueBox::DialogueBox(unsigned int entity_id, std::map<std::string, std::shared_ptr<DialogueGraph>> dg) : m_firstTime(true)
+{
+	m_dialogueGraphs = dg;
 	m_target = entity_id;
 
 	Construct();
@@ -55,15 +65,17 @@ void DialogueBox::Draw()
 
 void DialogueBox::SetText(std::string text)
 {
+	auto graph = GetLocalizedGraph();
+
 	float x = 0.5f;
 	float y = m_box->GetScale().y + m_box->GetPosRef().y - m_yScale;
 	// LOCALIZATION HERE
 	Font::SetText(_(text), Vector3f(x, y, 0.0f), false, m_maxWidth);
 	m_choices.clear();
-	if (m_dialogueGraph && m_dialogueGraph->ChoiceAvailable())
+	if (graph && graph->ChoiceAvailable())
 	{
 		//m_y += m_yScale * 1.25f;
-		for (auto x : m_dialogueGraph->GetChoices())
+		for (auto x : graph->GetChoices())
 		{
 			// LOCALIZATION HERE
 			x = _(x);
@@ -111,9 +123,12 @@ EventUpdateResponse DialogueBox::UpdateEvent(double elapsedTime, std::map<unsign
 	Font::Update(elapsedTime);
 	UpdateBox();
 
+	// Get the right dialogue graphs
+	auto graph = GetLocalizedGraph();
+
 	for (unsigned int i = 0; i < m_choices.size(); i++)
 	{
-		if (m_dialogueGraph->SelectedChoice() == i)
+		if (graph->SelectedChoice() == i)
 			m_choices.at(i)->GetGraphics()->SetTexture("res/fonts/lowercase_selected.png");
 		else
 			m_choices.at(i)->GetGraphics()->SetTexture("res/fonts/lowercase.png");
@@ -133,7 +148,7 @@ EventUpdateResponse DialogueBox::UpdateEvent(double elapsedTime, std::map<unsign
 		if (InputManager::GetInstance().FrameKeyStatus(' ', KeyStatus::KeyPressed, 1))
 		{
 			// SendInput returns false if its done
-			if (m_dialogueGraph == NULL)
+			if (graph == NULL)
 			{
 				m_completed = true;
 				if (m_target <= ents->size())
@@ -142,12 +157,12 @@ EventUpdateResponse DialogueBox::UpdateEvent(double elapsedTime, std::map<unsign
 				return eur;
 			}
 
-			DialogueResponse dr = m_dialogueGraph->SendInput(IT_Action);
+			DialogueResponse dr = graph->SendInput(IT_Action);
 			eur.Queue = dr.Queue;
 
 			if (dr.NotDone)
 			{
-				SetText(m_dialogueGraph->GetCurrentText());
+				SetText(graph->GetCurrentText());
 			}
 			else
 			{
@@ -158,13 +173,13 @@ EventUpdateResponse DialogueBox::UpdateEvent(double elapsedTime, std::map<unsign
 				return eur;
 			}
 		}
-		else if (m_dialogueGraph != NULL && m_dialogueGraph->ChoiceAvailable() && InputManager::GetInstance().FrameKeyStatus(GLFW_KEY_DOWN, KeyStatus::KeyPressed, 1))
+		else if (graph != NULL && graph->ChoiceAvailable() && InputManager::GetInstance().FrameKeyStatus(GLFW_KEY_DOWN, KeyStatus::KeyPressed, 1))
 		{
-			m_dialogueGraph->SendInput(IT_Down);
+			graph->SendInput(IT_Down);
 		}
-		else if (m_dialogueGraph != NULL && InputManager::GetInstance().FrameKeyStatus(GLFW_KEY_UP, KeyStatus::KeyPressed, 1))
+		else if (graph != NULL && InputManager::GetInstance().FrameKeyStatus(GLFW_KEY_UP, KeyStatus::KeyPressed, 1))
 		{
-			m_dialogueGraph->SendInput(IT_Up);
+			graph->SendInput(IT_Up);
 		}
 	}
 	else if (InputManager::GetInstance().FrameKeyStatus(' ', KeyStatus::AnyPress, 1))
@@ -181,6 +196,33 @@ EventUpdateResponse DialogueBox::UpdateEvent(double elapsedTime, std::map<unsign
 	// The dialogue is not done
 	eur.IsDone = false;
 	return eur;
+}
+
+std::shared_ptr<DialogueGraph> DialogueBox::GetLocalizedGraph()
+{
+	std::shared_ptr<DialogueGraph> result;
+
+	assert(m_dialogueGraphs.size() > 0);
+
+	std::string language = LocalizationData::Language;
+
+	// Try to give the correct language
+	if (m_dialogueGraphs.count(language))
+		result = m_dialogueGraphs[language];
+
+	// if the language isnt avaiable for this text box, try to give english
+	else if (m_dialogueGraphs.count("english"))
+		result = m_dialogueGraphs["english"];
+
+	// if english isnt avaiable, just give the first one.
+	else if (m_dialogueGraphs.size() > 0)
+		result = (*m_dialogueGraphs.begin()).second;
+
+	// if there is no dialogue graph, then wtf
+	else
+		result = std::shared_ptr<DialogueGraph>(new DialogueGraph());
+
+	return result;
 }
 
 void DialogueBox::UpdateBox()
@@ -217,26 +259,35 @@ void DialogueBox::SetRender()
 
 void DialogueBox::SetScale(float xScale, float yScale)
 {
+	// Get the right dialogue graphs
+	auto graph = GetLocalizedGraph();
+
 	Font::SetScale(xScale, yScale);
 
 	m_maxWidth = (OrthoProjInfo::GetRegularInstance().Right * 2.f / OrthoProjInfo::GetRegularInstance().Size) - 1.5f/* / xScale*/;
 	m_maxHeight = 4.5f;
 
-	if (m_dialogueGraph != NULL)
-		SetText(m_dialogueGraph->GetCurrentText());
+	if (graph != NULL)
+		SetText(graph->GetCurrentText());
 }
 
 void DialogueBox::ResetEvent()
 {
+	// Get the right dialogue graphs
+	auto graph = GetLocalizedGraph();
+
 	m_firstTime = true;
 	m_completed = false;
-	m_dialogueGraph->SetToStart();
-	SetText(m_dialogueGraph->GetCurrentText());
+	graph->SetToStart();
+	SetText(graph->GetCurrentText());
 }
 
 std::shared_ptr<IEvent> DialogueBox::Clone()
 {
-	std::shared_ptr<DialogueGraph> dg = m_dialogueGraph->Clone();
+	// Get the right dialogue graphs
+	auto graph = GetLocalizedGraph();
+
+	std::shared_ptr<DialogueGraph> dg = graph->Clone();
 	std::shared_ptr<IEvent> result = std::shared_ptr<IEvent>(new DialogueBox(m_target, dg));
 	SetCloneBaseAttributes(result);
 	return result;

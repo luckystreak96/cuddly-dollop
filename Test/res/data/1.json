@@ -5991,7 +5991,8 @@
                 },
                 "dialogue 1": {
                   "id": 6,
-                  "text": "Roses are red,\n Violets are blue,\n\n This poem is amazing,\n Unlike you!",
+                  "text":
+                    "Roses are red,\n Violets are blue,\n\n This poem is amazing,\n Unlike you!",
                   "next": -1,
                   "type": "end"
                 }
@@ -6407,35 +6408,69 @@
                           "type": "dialogue",
                           "execution_type": "blocking",
                           "args": {
-                            "dialogue 0": {
-                              "id": 0,
-                              "text": "OMG",
-                              "next": -1,
-                              "type": "end",
-                              "queues": [
-                                {
-                                  "name": "queue",
-                                  "id": -1,
-                                  "flag": "",
-                                  "flag_value": 1,
-                                  "flag_condition": 0,
-                                  "activation": "interact",
-                                  "repeating": false,
-                                  "events": [
-                                    {
-                                      "type": "particle",
-                                      "execution_type": "blocking",
-                                      "args": {
-                                        "type": "explosion",
-                                        "count": 50,
-                                        "id": 10,
-                                        "power": 0.3,
-                                        "sprite": "snowflake.png"
+                            "english": {
+                              "dialogue 0": {
+                                "id": 0,
+                                "text": "OMG",
+                                "next": -1,
+                                "type": "end",
+                                "queues": [
+                                  {
+                                    "name": "queue",
+                                    "id": -1,
+                                    "flag": "",
+                                    "flag_value": 1,
+                                    "flag_condition": 0,
+                                    "activation": "interact",
+                                    "repeating": false,
+                                    "events": [
+                                      {
+                                        "type": "particle",
+                                        "execution_type": "blocking",
+                                        "args": {
+                                          "type": "explosion",
+                                          "count": 50,
+                                          "id": 10,
+                                          "power": 0.3,
+                                          "sprite": "snowflake.png"
+                                        }
                                       }
-                                    }
-                                  ]
-                                }
-                              ]
+                                    ]
+                                  }
+                                ]
+                              }
+                            },
+                            "french": {
+                              "dialogue 0": {
+                                "id": 0,
+                                "text": "OH MON DIEU",
+                                "next": -1,
+                                "type": "end",
+                                "queues": [
+                                  {
+                                    "name": "queue",
+                                    "id": -1,
+                                    "flag": "",
+                                    "flag_value": 1,
+                                    "flag_condition": 0,
+                                    "activation": "interact",
+                                    "repeating": false,
+                                    "events": [
+                                      {
+                                        "type": "particle",
+                                        "execution_type": "blocking",
+                                        "args": {
+                                          "type": "explosion",
+                                          "count": 50,
+                                          "id": 10,
+                                          "power": 0.3,
+                                          "sprite": "snowflake.png"
+                                        }
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
                             }
                           }
                         }
