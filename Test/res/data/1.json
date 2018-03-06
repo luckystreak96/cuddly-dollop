@@ -5991,8 +5991,7 @@
                 },
                 "dialogue 1": {
                   "id": 6,
-                  "text":
-                    "Roses are red,\n Violets are blue,\n\n This poem is amazing,\n Unlike you!",
+                  "text": "Roses are red,\n Violets are blue,\n\n This poem is amazing,\n Unlike you!",
                   "next": -1,
                   "type": "end"
                 }
@@ -6686,6 +6685,61 @@
                 "id": 11,
                 "power": 0.3,
                 "sprite": "dust.png"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "player": false,
+      "ethereal": false,
+      "full_size": false,
+      "sprite": "",
+      "x": 7.0,
+      "y": 10.0,
+      "z": 4.0,
+      "queues": [
+        {
+          "name": "queue",
+          "id": 1,
+          "flag": "",
+          "flag_value": 1,
+          "flag_condition": 0,
+          "activation": "interact",
+          "repeating": false,
+          "events": [
+            {
+              "type": "dialogue",
+              "execution_type": "blocking",
+              "args": {
+                "english": {
+                  "dialogue 0": {
+                    "id": 0,
+                    "text": "text",
+                    "next": -1,
+                    "type": "choice"
+                  },
+                  "choice 0": {
+                    "d": 0,
+                    "next": 0
+                  }
+                },
+                "french": {
+                  "dialogue 0": {
+                    "id": 0,
+                    "text": "text",
+                    "next": -1,
+                    "type": "simple"
+                  },
+                  "dialogue 1": {
+                    "id": 1,
+                    "text": "text",
+                    "next": -1,
+                    "type": "simple"
+                  }
+                }
               }
             }
           ]

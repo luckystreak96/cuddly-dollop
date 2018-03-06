@@ -5,18 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:dollop_editor"
         mc:Ignorable="d"
-        Title="DialogueWindow" Height="438.153" Width="632.008">
+        Title="DialogueWindow" Height="483.639" Width="632.008">
     <Grid>
-        <ListBox Name="lstDialogues" HorizontalAlignment="Left" Height="356" Margin="10,41,0,0" VerticalAlignment="Top" Width="350" PreviewMouseDown="lstDialogues_PreviewMouseDown" SelectionChanged="lstDialogues_SelectionChanged" />
-        <ListBox x:Name="lstChoices" HorizontalAlignment="Left" Height="331" Margin="365,41,0,0" VerticalAlignment="Top" Width="249" PreviewMouseDown="lstChoices_PreviewMouseDown" SelectionChanged="lstChoices_SelectionChanged"/>
-        <Button Name="btnSave" Content="Save" HorizontalAlignment="Left" Margin="365,377,0,0" VerticalAlignment="Top" Width="106" Click="btnSave_Click"/>
-        <Button Name="btnCancel" Content="Cancel" HorizontalAlignment="Left" Margin="509,377,0,0" VerticalAlignment="Top" Width="105" Click="btnCancel_Click"/>
-        <Label Content="Dialogues" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-        <Label Content="Choices" HorizontalAlignment="Left" Margin="365,10,0,0" VerticalAlignment="Top"/>
-        <Button Name="btnRemoveChoice" Content="-" HorizontalAlignment="Left" Margin="588,10,0,0" VerticalAlignment="Top" Width="26" Height="26" Click="btnRemoveChoice_Click"/>
-        <Button Name="btnAddChoice" Content="+" HorizontalAlignment="Left" Margin="557,10,0,0" VerticalAlignment="Top" Width="26" Height="26" Click="btnAddChoice_Click"/>
-        <Button Name="btnRemoveDialogue" Content="-" HorizontalAlignment="Left" Margin="334,10,0,0" VerticalAlignment="Top" Width="26" Height="26" Click="btnRemoveDialogue_Click"/>
-        <Button Name="btnAddDialogue" Content="+" HorizontalAlignment="Left" Margin="303,10,0,0" VerticalAlignment="Top" Width="26" Height="26" Click="btnAddDialogue_Click"/>
+        <ListBox Name="lstDialogues" HorizontalAlignment="Left" Height="356" Margin="10,72,0,0" VerticalAlignment="Top" Width="350" PreviewMouseDown="lstDialogues_PreviewMouseDown" SelectionChanged="lstDialogues_SelectionChanged" />
+        <ListBox x:Name="lstChoices" HorizontalAlignment="Left" Height="331" Margin="365,72,0,0" VerticalAlignment="Top" Width="249" PreviewMouseDown="lstChoices_PreviewMouseDown" SelectionChanged="lstChoices_SelectionChanged"/>
+        <Button Name="btnSave" Content="Save" HorizontalAlignment="Left" Margin="365,408,0,0" VerticalAlignment="Top" Width="106" Click="btnSave_Click"/>
+        <Button Name="btnCancel" Content="Cancel" HorizontalAlignment="Left" Margin="509,408,0,0" VerticalAlignment="Top" Width="105" Click="btnCancel_Click"/>
+        <Label Content="Dialogues" HorizontalAlignment="Left" Margin="9,41,0,0" VerticalAlignment="Top"/>
+        <Label Content="Choices" HorizontalAlignment="Left" Margin="364,41,0,0" VerticalAlignment="Top"/>
+        <Button Name="btnRemoveChoice" Content="-" HorizontalAlignment="Left" Margin="587,41,0,0" VerticalAlignment="Top" Width="26" Height="26" Click="btnRemoveChoice_Click"/>
+        <Button Name="btnAddChoice" Content="+" HorizontalAlignment="Left" Margin="556,41,0,0" VerticalAlignment="Top" Width="26" Height="26" Click="btnAddChoice_Click"/>
+        <Button Name="btnRemoveDialogue" Content="-" HorizontalAlignment="Left" Margin="333,41,0,0" VerticalAlignment="Top" Width="26" Height="26" Click="btnRemoveDialogue_Click"/>
+        <Button Name="btnAddDialogue" Content="+" HorizontalAlignment="Left" Margin="302,41,0,0" VerticalAlignment="Top" Width="26" Height="26" Click="btnAddDialogue_Click"/>
+        <ComboBox Name="cmbLanguage" HorizontalAlignment="Left" Margin="77,14,0,0" VerticalAlignment="Top" Width="165" SelectionChanged="cmbLanguage_SelectionChanged"/>
+        <Label Content="Language" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
 
     </Grid>
 </Window>

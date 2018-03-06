@@ -15,42 +15,115 @@ namespace dollop_editor
     public partial class DialogueWindow : Window
     {
         public Event Event_ { get; set; }
-        public List<Dialogue> Dialogues { get; set; }
-        public List<Choice> Choices { get; set; }
-        private HashSet<int> DialogueID = new HashSet<int>();
+        public string CurrentLang { get; set; }
+        public Dictionary<string, List<Dialogue>> Dialogues { get; set; }
+        public Dictionary<string, List<Choice>> Choices { get; set; }
+        private Dictionary<string, HashSet<int>> DialogueID = new Dictionary<string, HashSet<int>>();
+        private enum Languages { english, french }
+        private List<string> langList;
 
         public DialogueWindow()
         {
             InitializeComponent();
-            Dialogues = new List<Dialogue>();
-            Choices = new List<Choice>();
-            lstDialogues.ItemsSource = Dialogues;
+            SetupDictionaries();
+            lstDialogues.ItemsSource = Dialogues["english"];
+            cmbLanguage.SelectedValue = "english";
+        }
+
+        private void SetupDictionaries()
+        {
+            CurrentLang = "english";
+            Dialogues = new Dictionary<string, List<Dialogue>>();
+            Choices = new Dictionary<string, List<Choice>>();
+
+            langList = Enum.GetNames(typeof(Languages)).ToList();
+            cmbLanguage.ItemsSource = langList;
+
+            foreach(string s in langList)
+            {
+                DialogueID.Add(s, new HashSet<int>());
+                Dialogues.Add(s, new List<Dialogue>());
+                Choices.Add(s, new List<Choice>());
+            }
         }
 
         public DialogueWindow(Event ev)
         {
             InitializeComponent();
-            Dialogues = new List<Dialogue>();
-            Choices = new List<Choice>();
-            lstDialogues.ItemsSource = Dialogues;
+            SetupDictionaries();
+            lstDialogues.ItemsSource = Dialogues["english"];
+            cmbLanguage.SelectedValue = "english";
             Event_ = ev;
 
-            // Json stuffs goin on
+            if (Event_.args.Count == 0)
+                return;
+
+            // Json stuffs goin on - parse
             try
             {
-                foreach (var o in Event_.args)
+                bool found = false;
+                foreach (string language in cmbLanguage.Items)
                 {
-                    if (o.Key.Contains("dialogue"))
+                    if (Event_.args.First().Key == language)
                     {
-                        JObject jObject = o.Value as JObject;
-                        Dialogue d = jObject.ToObject<Dialogue>();
-                        Dialogues.Add(d);
-                        DialogueID.Add(d.id);
+                        found = true;
+
+                        // Make sure the lists exist
+                        if (!Dialogues.ContainsKey(language))
+                        {
+                            Dialogues.Add(language, new List<Dialogue>());
+                            DialogueID.Add(language, new HashSet<int>());
+                            Choices.Add(language, new List<Choice>());
+                        }
+                        break;
                     }
-                    else if (o.Key.Contains("choice"))
+                }
+                // the languages are defined
+                if (Event_.args.Count > 0)
+                {
+                    if (found)
                     {
-                        JObject jObject = o.Value as JObject;
-                        Choices.Add(jObject.ToObject<Choice>());
+                        // Load the languages
+                        foreach (var o in Event_.args)
+                        {
+                            JObject jObject = o.Value as JObject;
+                            Dictionary<string, object> dict = jObject.ToObject<Dictionary<string, object>>();
+                            // handle language load
+                            foreach (var s in dict)
+                            {
+                                if (s.Key.Contains("dialogue"))
+                                {
+                                    jObject = s.Value as JObject;
+                                    Dialogue d = jObject.ToObject<Dialogue>();
+                                    Dialogues[o.Key].Add(d);
+                                    DialogueID[o.Key].Add(d.id);
+                                }
+                                else if (s.Key.Contains("choice"))
+                                {
+                                    jObject = s.Value as JObject;
+                                    Choices[o.Key].Add(jObject.ToObject<Choice>());
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        // handle non-language load
+                        foreach (var o in Event_.args)
+                        {
+                            if (o.Key.Contains("dialogue"))
+                            {
+                                JObject jObject = o.Value as JObject;
+                                Dialogue d = jObject.ToObject<Dialogue>();
+                                Dialogues["english"].Add(d);
+                                DialogueID["english"].Add(d.id);
+                            }
+                            else if (o.Key.Contains("choice"))
+                            {
+                                JObject jObject = o.Value as JObject;
+                                Choices["english"].Add(jObject.ToObject<Choice>());
+                            }
+                        }
                     }
                 }
             }
@@ -62,36 +135,70 @@ namespace dollop_editor
             lstDialogues.Items.Refresh();
         }
 
+        // Save and exit
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            DialogResult = true;
-            Dictionary<string, object> dictionary = new Dictionary<string, object>();
-            foreach (var x in Dialogues)
+            try
             {
-                string temp = JsonConvert.SerializeObject(x, Formatting.Indented, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
-                JObject jObject = JObject.Parse(temp);
-                try
-                {
-                    dictionary.Add("dialogue " + x.id, jObject);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                    return;
-                }
-            }
+                DialogResult = true;
+                Dictionary<string, object> languages = new Dictionary<string, object>();
 
-            int counter = 0;
-            foreach (var x in Choices)
+                foreach (var langDics in Dialogues)
+                {
+                    string temp;
+                    JObject jObject;
+
+                    // Dont save an empty dialogue
+                    if (Dialogues[langDics.Key].Count == 0)
+                        continue;
+                    Dictionary<string, object> dictionary = new Dictionary<string, object>();
+                    foreach (var x in Dialogues[langDics.Key])
+                    {
+                        temp = JsonConvert.SerializeObject(x, Formatting.Indented, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+                        jObject = JObject.Parse(temp);
+                        try
+                        {
+                            dictionary.Add("dialogue " + x.id, jObject);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message);
+                            return;
+                        }
+                    }
+
+                    int counter = 0;
+                    foreach (var x in Choices[langDics.Key])
+                    {
+                        temp = JsonConvert.SerializeObject(x, Formatting.Indented, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+                        jObject = JObject.Parse(temp);
+                        dictionary.Add("choice " + counter++, jObject);
+                    }
+
+                    // Convert the big dict to json
+                    temp = JsonConvert.SerializeObject(dictionary, Formatting.Indented, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+                    jObject = JObject.Parse(temp);
+                    try
+                    {
+                        languages.Add(langDics.Key, jObject);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                        return;
+                    }
+
+                    //languages.Add(langDics.Key, dictionary);
+                }
+
+                Event_.args = languages;
+
+                Close();
+            }
+            catch (Exception ex)
             {
-                string temp = JsonConvert.SerializeObject(x, Formatting.Indented, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
-                JObject jObject = JObject.Parse(temp);
-                dictionary.Add("choice " + counter++, jObject);
+                MessageBox.Show("Error saving : " + ex.Message);
             }
-
-            Event_.args = dictionary;
-
-            Close();
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
@@ -104,7 +211,7 @@ namespace dollop_editor
         {
             if (e.ClickCount == 2 && lstDialogues.SelectedIndex >= 0 && lstDialogues.SelectedIndex < lstDialogues.Items.Count)
             {
-                Dialogue dialogue = Dialogues.ElementAt(lstDialogues.SelectedIndex);
+                Dialogue dialogue = Dialogues[cmbLanguage.Text].ElementAt(lstDialogues.SelectedIndex);
                 int temp = dialogue.id;
 
                 DialogueModify dialogueModify = new DialogueModify(dialogue);
@@ -112,8 +219,8 @@ namespace dollop_editor
 
                 if (dialogue.id != temp)
                 {
-                    DialogueID.Remove(temp);
-                    DialogueID.Add(dialogue.id);
+                    DialogueID[cmbLanguage.Text].Remove(temp);
+                    DialogueID[cmbLanguage.Text].Add(dialogue.id);
                 }
 
                 lstDialogues.Items.Refresh();
@@ -131,9 +238,9 @@ namespace dollop_editor
 
             btnAddChoice.IsEnabled = true;
 
-            Dialogue dialogue = Dialogues.ElementAt(lstDialogues.SelectedIndex);
+            Dialogue dialogue = Dialogues[cmbLanguage.Text].ElementAt(lstDialogues.SelectedIndex);
             List<Choice> list = new List<Choice>();
-            foreach (Choice c in Choices)
+            foreach (Choice c in Choices[cmbLanguage.Text])
                 if (c.d == dialogue.id)
                     list.Add(c);
 
@@ -145,7 +252,7 @@ namespace dollop_editor
         {
             if (e.ClickCount == 2 && lstChoices.SelectedIndex >= 0 && lstChoices.SelectedIndex < lstChoices.Items.Count)
             {
-                Choice choice = Choices.ElementAt(lstChoices.SelectedIndex);
+                Choice choice = Choices[cmbLanguage.Text].ElementAt(lstChoices.SelectedIndex);
 
                 ChoiceModify choiceModify = new ChoiceModify(choice);
                 choiceModify.ShowDialog();
@@ -158,22 +265,28 @@ namespace dollop_editor
         {
             Dialogue dialogue = new Dialogue();
             for (int i = 0; i < 999; i++)
-                if (!DialogueID.Contains(i))
+                if (!DialogueID[cmbLanguage.Text].Contains(i))
                 {
-                    DialogueID.Add(i);
+                    DialogueID[cmbLanguage.Text].Add(i);
                     dialogue.id = i;
                     break;
                 }
-            Dialogues.Add(dialogue);
+            Dialogues[cmbLanguage.Text].Add(dialogue);
 
             lstDialogues.Items.Refresh();
         }
 
         private void btnAddChoice_Click(object sender, RoutedEventArgs e)
         {
+            lstChoices.ItemsSource = Choices[cmbLanguage.Text];
+            lstChoices.Items.Refresh();
+
+            if (lstDialogues.SelectedItem == null)
+                return;
+
             Choice choice = new Choice();
             choice.d = ((Dialogue)lstDialogues.SelectedItem).id;
-            Choices.Add(choice);
+            Choices[cmbLanguage.Text].Add(choice);
 
             ((Dialogue)lstDialogues.SelectedItem).type = "choice";
 
@@ -184,8 +297,8 @@ namespace dollop_editor
         {
             if (lstDialogues.SelectedIndex >= 0 || lstDialogues.SelectedIndex < lstDialogues.Items.Count)
             {
-                DialogueID.Remove(((Dialogue)lstDialogues.SelectedItem).id);
-                Dialogues.RemoveAt(lstDialogues.SelectedIndex);
+                DialogueID[cmbLanguage.Text].Remove(((Dialogue)lstDialogues.SelectedItem).id);
+                Dialogues[cmbLanguage.Text].RemoveAt(lstDialogues.SelectedIndex);
                 lstDialogues.Items.Refresh();
             }
         }
@@ -202,9 +315,27 @@ namespace dollop_editor
         {
             if (lstChoices.SelectedIndex >= 0 && lstChoices.SelectedIndex < lstChoices.Items.Count)
             {
-                Choices.Remove((Choice)lstChoices.SelectedItem);
+                Choices[cmbLanguage.Text].Remove((Choice)lstChoices.SelectedItem);
                 lstChoices.Items.Refresh();
             }
+        }
+
+        private void cmbLanguage_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string lang = e.AddedItems[0].ToString();
+
+            if (!Dialogues.ContainsKey(lang))
+                Dialogues.Add(lang, new List<Dialogue>());
+            if (!DialogueID.ContainsKey(lang))
+                DialogueID.Add(lang, new HashSet<int>());
+            if (!Choices.ContainsKey(lang))
+                Choices.Add(lang, new List<Choice>());
+
+            lstDialogues.ItemsSource = Dialogues[lang];
+            lstDialogues.Items.Refresh();
+
+            lstChoices.ItemsSource = Choices[lang];
+            lstChoices.Items.Refresh();
         }
     }
 }
