@@ -171,6 +171,8 @@ namespace dollop_editor
             foreach (Rectangle x in children)
             {
                 int zind = (int)x.GetValue(Canvas.ZIndexProperty);
+
+                // If the tile isnt at the currently selected height
                 if (!opaqueView && zind != (int)(100 - depth * 10.0))
                 {
                     double opacity = 1 - Math.Abs((100 - depth * 10.0) - zind) / 100;
@@ -187,7 +189,8 @@ namespace dollop_editor
                     //        x.Stroke = new SolidColorBrush(Colors.Blue);
                     //}
                     //else if ((string)x.Tag != null)
-                        x.Stroke = null;
+                    if(x.Stroke != null)
+                        x.Stroke.Opacity = 0;
                 }
                 else
                 {
@@ -268,9 +271,9 @@ namespace dollop_editor
                         Width = TileSize,
                         Height = TileSize
                     };
-                    if(tile.deco == true)
+                    if (tile.deco == true)
                         rectangle.Tag = "deco";
-                    else if(tile.walkOn == false)
+                    else if (tile.walkOn == false)
                         rectangle.Tag = "noWalkOn";
 
                     if (tile.z > 3.7 && tile.z < 4.0)
@@ -293,7 +296,7 @@ namespace dollop_editor
                 foreach (Entity e in loadedMap.entities)
                 {
                     IdManager.EntityId.ManualAssign(e.id);
-                    foreach(EventQueue eq in e.queues)
+                    foreach (EventQueue eq in e.queues)
                     {
                         IdManager.QueueId.ManualAssign(eq.id);
                     }

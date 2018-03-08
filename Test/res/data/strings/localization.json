@@ -26,5 +26,13 @@
   "TestDialogue_001": {
     "french": "Ta facon de tester me fait sourir :)",
     "english": "Hi there mr Tester :)"
+  },
+  "OMG": {
+    "french": "Oh mon dieu!",
+    "english": "OMG"
+  },
+  "Snowman_youre_my_hero": {
+    "french": "Merveilleux :D\nTu es mon heros, %name%!",
+    "english": "You said yes :D\n%name%, you're my hero!"
   }
 }

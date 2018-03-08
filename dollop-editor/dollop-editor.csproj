@@ -97,6 +97,7 @@
     <Compile Include="Localization.xaml.cs">
       <DependentUpon>Localization.xaml</DependentUpon>
     </Compile>
+    <Compile Include="LocalizationLoader.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="NewMap.xaml.cs">
       <DependentUpon>NewMap.xaml</DependentUpon>

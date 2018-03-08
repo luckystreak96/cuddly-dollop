@@ -6365,142 +6365,158 @@
               "type": "dialogue",
               "execution_type": "blocking",
               "args": {
-                "dialogue 0": {
-                  "id": 0,
-                  "text": "So?",
-                  "next": 3,
-                  "type": "choice"
-                },
-                "dialogue 1": {
-                  "id": 1,
-                  "text": "You said yes :D \n %name%, you're my hero!",
-                  "next": -1,
-                  "type": "end"
-                },
-                "dialogue 2": {
-                  "id": 2,
-                  "text": "You said no D:",
-                  "next": -1,
-                  "type": "end"
-                },
-                "dialogue 3": {
-                  "id": 3,
-                  "text": "Wtf?",
-                  "next": -1,
-                  "type": "end"
-                },
-                "choice 0": {
-                  "d": 0,
-                  "next": 1,
-                  "text": "Yes",
-                  "queues": [
-                    {
-                      "name": "queue",
-                      "id": -1,
-                      "flag": "",
-                      "flag_value": 1,
-                      "flag_condition": 0,
-                      "activation": "interact",
-                      "repeating": false,
-                      "events": [
-                        {
-                          "type": "dialogue",
-                          "execution_type": "blocking",
-                          "args": {
-                            "english": {
-                              "dialogue 0": {
-                                "id": 0,
-                                "text": "OMG",
-                                "next": -1,
-                                "type": "end",
-                                "queues": [
-                                  {
-                                    "name": "queue",
-                                    "id": -1,
-                                    "flag": "",
-                                    "flag_value": 1,
-                                    "flag_condition": 0,
-                                    "activation": "interact",
-                                    "repeating": false,
-                                    "events": [
-                                      {
-                                        "type": "particle",
-                                        "execution_type": "blocking",
-                                        "args": {
-                                          "type": "explosion",
-                                          "count": 50,
-                                          "id": 10,
-                                          "power": 0.3,
-                                          "sprite": "snowflake.png"
+                "english": {
+                  "dialogue 0": {
+                    "id": 0,
+                    "text": "So?",
+                    "next": 3,
+                    "type": "choice"
+                  },
+                  "dialogue 1": {
+                    "id": 1,
+                    "text": "Snowman_youre_my_hero",
+                    "next": -1,
+                    "type": "end"
+                  },
+                  "dialogue 2": {
+                    "id": 2,
+                    "text": "You said no D:",
+                    "next": -1,
+                    "type": "end"
+                  },
+                  "dialogue 3": {
+                    "id": 3,
+                    "text": "Wtf?",
+                    "next": -1,
+                    "type": "end"
+                  },
+                  "choice 0": {
+                    "d": 0,
+                    "next": 1,
+                    "text": "Yes",
+                    "queues": [
+                      {
+                        "name": "queue",
+                        "id": -1,
+                        "flag": "",
+                        "flag_value": 1,
+                        "flag_condition": 0,
+                        "activation": "interact",
+                        "repeating": false,
+                        "events": [
+                          {
+                            "type": "dialogue",
+                            "execution_type": "blocking",
+                            "args": {
+                              "english": {
+                                "dialogue 0": {
+                                  "id": 0,
+                                  "text": "OMG",
+                                  "next": -1,
+                                  "type": "end",
+                                  "queues": [
+                                    {
+                                      "name": "queue",
+                                      "id": -1,
+                                      "flag": "",
+                                      "flag_value": 1,
+                                      "flag_condition": 0,
+                                      "activation": "interact",
+                                      "repeating": false,
+                                      "events": [
+                                        {
+                                          "type": "particle",
+                                          "execution_type": "blocking",
+                                          "args": {
+                                            "type": "explosion",
+                                            "count": 50,
+                                            "id": 10,
+                                            "power": 0.3,
+                                            "sprite": "snowflake.png"
+                                          }
                                         }
-                                      }
-                                    ]
-                                  }
-                                ]
-                              }
-                            },
-                            "french": {
-                              "dialogue 0": {
-                                "id": 0,
-                                "text": "OH MON DIEU",
-                                "next": -1,
-                                "type": "end",
-                                "queues": [
-                                  {
-                                    "name": "queue",
-                                    "id": -1,
-                                    "flag": "",
-                                    "flag_value": 1,
-                                    "flag_condition": 0,
-                                    "activation": "interact",
-                                    "repeating": false,
-                                    "events": [
-                                      {
-                                        "type": "particle",
-                                        "execution_type": "blocking",
-                                        "args": {
-                                          "type": "explosion",
-                                          "count": 50,
-                                          "id": 10,
-                                          "power": 0.3,
-                                          "sprite": "snowflake.png"
+                                      ]
+                                    }
+                                  ]
+                                }
+                              },
+                              "french": {
+                                "dialogue 0": {
+                                  "id": 0,
+                                  "text": "OH MON DIEU",
+                                  "next": -1,
+                                  "type": "end",
+                                  "queues": [
+                                    {
+                                      "name": "queue",
+                                      "id": -1,
+                                      "flag": "",
+                                      "flag_value": 1,
+                                      "flag_condition": 0,
+                                      "activation": "interact",
+                                      "repeating": false,
+                                      "events": [
+                                        {
+                                          "type": "particle",
+                                          "execution_type": "blocking",
+                                          "args": {
+                                            "type": "explosion",
+                                            "count": 50,
+                                            "id": 10,
+                                            "power": 0.3,
+                                            "sprite": "snowflake.png"
+                                          }
                                         }
-                                      }
-                                    ]
-                                  }
-                                ]
+                                      ]
+                                    }
+                                  ]
+                                }
                               }
                             }
                           }
-                        }
-                      ]
-                    },
-                    {
-                      "name": "sing",
-                      "id": 9,
-                      "flag": "",
-                      "flag_value": 1,
-                      "flag_condition": 0,
-                      "activation": "autorun",
-                      "repeating": false,
-                      "events": [
-                        {
-                          "type": "particle",
-                          "execution_type": "blocking",
-                          "args": {
-                            "type": "music",
-                            "count": 5,
-                            "id": 10
+                        ]
+                      },
+                      {
+                        "name": "sing",
+                        "id": 9,
+                        "flag": "",
+                        "flag_value": 1,
+                        "flag_condition": 0,
+                        "activation": "autorun",
+                        "repeating": false,
+                        "events": [
+                          {
+                            "type": "particle",
+                            "execution_type": "blocking",
+                            "args": {
+                              "type": "music",
+                              "count": 5,
+                              "id": 10
+                            }
                           }
-                        }
-                      ]
-                    }
-                  ]
+                        ]
+                      }
+                    ]
+                  },
+                  "choice 1": {
+                    "d": 0,
+                    "next": 2,
+                    "text": "No"
+                  }
                 },
-                "choice 1": {
-                  "d": 0,
-                  "next": 2,
-                  "text": "No"
+                "french": {
+                  "dialogue 0": {
+                    "id": 0,
+                    "text": "OMG",
+                    "next": 1,
+                    "type": "simple"
+                  },
+                  "dialogue 1": {
+                    "id": 1,
+                    "text": "Snowman_youre_my_hero",
+                    "next": -1,
+                    "type": "simple"
+                  }
                 }
               }
             }

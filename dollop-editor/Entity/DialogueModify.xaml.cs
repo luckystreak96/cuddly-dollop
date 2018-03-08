@@ -19,6 +19,8 @@ namespace dollop_editor
     /// </summary>
     public partial class DialogueModify : Window
     {
+        Dictionary<string, Dictionary<string, string>> Strings;
+
         public Dialogue Dialogue_ { get; set; }
         public enum DialogueTypes { simple, choice, end }
 
@@ -40,6 +42,19 @@ namespace dollop_editor
             {
                 MessageBox.Show(ex.Message);
             }
+
+            SetLocalizationCmb();
+        }
+
+        private void SetLocalizationCmb()
+        {
+            Strings = LocalizationLoader.LoadLocalization();
+            cmbLoc.ItemsSource = new List<String>(Strings.Keys);
+            cmbLoc.Items.Refresh();
+
+            cmbLanguage.ItemsSource = LocalizationLoader.Languages;
+            cmbLanguage.SelectedValue = "english";
+            cmbLanguage.Items.Refresh();
         }
 
         public DialogueModify(Dialogue dialogue)
@@ -71,6 +86,65 @@ namespace dollop_editor
             EntityWindow entityWindow = new EntityWindow(Dialogue_.queues);
             if (entityWindow.ShowDialog() == true)
                 Dialogue_.queues = entityWindow.Entity_.queues;
+        }
+
+        private void cmbLoc_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string val = e.AddedItems.Count > 0 ? (string)e.AddedItems[0] : (string)cmbLoc.SelectedValue;
+            txtText.Text = val;
+            SetPreviewText(val, cmbLanguage.Text);
+        }
+
+        // cmbLanguage
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string val = e.AddedItems.Count > 0 ? e.AddedItems[0].ToString() : "";
+            SetPreviewText(cmbLoc.Text, val);
+        }
+
+        private void SetPreviewText(string key, string language)
+        {
+            try
+            {
+                txtPreview.Text = "";
+                if (Strings.ContainsKey(key))
+                    if (Strings[key].ContainsKey(language))
+                        txtPreview.Text = Strings[key][language];
+            }
+            catch (Exception ex)
+            {
+                txtPreview.Text = ex.Message;
+            }
+        }
+
+        private void cmbLoc_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            SetPreviewText(txtText.Text, cmbLanguage.Text);
+        }
+
+        private void btnEditLocalizations_Click(object sender, RoutedEventArgs e)
+        {
+            Localization window = new Localization();
+            window.cmbText.Text = cmbLoc.Text;
+            window.ShowDialog();
+
+            string cmbLocValue = cmbLoc.Text;
+            string txtPrevValue = txtPreview.Text;
+            string cmbLang = cmbLanguage.Text;
+
+            Strings = LocalizationLoader.LoadLocalization();
+            SetLocalizationCmb();
+
+            if (Strings.ContainsKey(cmbLocValue))
+            {
+                cmbLoc.Text = cmbLocValue;
+                txtText.Text = cmbLocValue;
+
+                cmbLanguage.Text = cmbLang;
+
+                if(Strings[cmbLocValue].ContainsKey(cmbLang))
+                    txtPreview.Text = Strings[cmbLocValue][cmbLang];
+            }
         }
     }
 }

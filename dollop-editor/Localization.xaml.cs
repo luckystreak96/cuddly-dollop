@@ -22,19 +22,11 @@ namespace dollop_editor
     public partial class Localization : Window
     {
         Dictionary<string, Dictionary<string, string>> Strings;
-        string path = "../../../Test/res/data/strings/localization.json";
 
         public Localization()
         {
             InitializeComponent();
-            string data;
-            if (File.Exists(path))
-                data = File.ReadAllText(path);
-            else
-                data = "";
-            Strings = JsonConvert.DeserializeObject<Dictionary<string, Dictionary<string, string>>>(data);
-            if (Strings == null)
-                Strings = new Dictionary<string, Dictionary<string, string>>();
+            Strings = LocalizationLoader.LoadLocalization();
             // Load string from file
 
             UpdateCmb();
@@ -45,7 +37,7 @@ namespace dollop_editor
             // Save the stuff to the json file
             try
             {
-                File.WriteAllText(path, JsonConvert.SerializeObject(Strings, Formatting.Indented, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }).Replace("\r", "").Replace("\\r", ""));
+                File.WriteAllText(LocalizationLoader.path, JsonConvert.SerializeObject(Strings, Formatting.Indented, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }).Replace("\r", "").Replace("\\r", ""));
                 Close();
             }
             catch (Exception ex)

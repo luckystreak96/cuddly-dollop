@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:dollop_editor"
         mc:Ignorable="d"
-        Title="DialogueModify" Height="277.754" Width="522.458">
+        Title="DialogueModify" Height="277.754" Width="611.316">
     <Grid>
         <Button Name="btnSave" Content="Save" HorizontalAlignment="Left" Margin="10,169,0,0" VerticalAlignment="Top" Width="109" Click="btnSave_Click" Height="29"/>
         <Button Name="btnCancel" Content="Cancel" HorizontalAlignment="Left" Margin="10,203,0,0" VerticalAlignment="Top" Width="109" Click="btnCancel_Click" Height="31"/>
@@ -13,11 +13,16 @@
         <Label Content="ID" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
         <Label Content="Next" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top"/>
         <Label Content="Type" HorizontalAlignment="Left" Margin="10,72,0,0" VerticalAlignment="Top"/>
-        <Label Content="Text" HorizontalAlignment="Left" Margin="124,10,0,0" VerticalAlignment="Top"/>
         <TextBox Name="txtID" HorizontalAlignment="Left" Height="23" Margin="50,13,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="69"/>
-        <TextBox Name="txtText" HorizontalAlignment="Left" Height="193" Margin="124,41,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="380" AcceptsReturn="True"/>
+        <TextBox Name="txtText" HorizontalAlignment="Left" Height="193" Margin="124,41,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="262" AcceptsReturn="True"/>
         <ComboBox Name="cmbType" HorizontalAlignment="Left" Margin="50,76,0,0" VerticalAlignment="Top" Width="69"/>
         <Button Name="btnQueue" Content="Queues" HorizontalAlignment="Left" Margin="10,137,0,0" VerticalAlignment="Top" Width="109" Height="27" Click="btnQueue_Click"/>
+        <ComboBox Name="cmbLoc" HorizontalAlignment="Left" Margin="214,14,0,0" VerticalAlignment="Top" Width="172" IsEditable="True" SelectionChanged="cmbLoc_SelectionChanged" PreviewKeyDown="cmbLoc_PreviewKeyDown"/>
+        <Label Content="Localizations :" HorizontalAlignment="Left" Margin="124,10,0,0" VerticalAlignment="Top" Width="85"/>
+        <TextBox Name="txtPreview" HorizontalAlignment="Left" Height="193" Margin="391,41,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="195"/>
+        <ComboBox Name="cmbLanguage" HorizontalAlignment="Left" Margin="464,14,0,0" VerticalAlignment="Top" Width="122" IsEditable="True" SelectionChanged="ComboBox_SelectionChanged"/>
+        <Label Content="Language :" HorizontalAlignment="Left" Margin="391,10,0,0" VerticalAlignment="Top"/>
+        <Button Name="btnEditLocalizations" Content="." HorizontalAlignment="Left" Margin="362,4,0,0" VerticalAlignment="Top" Width="24" Height="10" Click="btnEditLocalizations_Click"/>
 
     </Grid>
 </Window>
