@@ -110,7 +110,13 @@ void Font::SetupMesh(float xBndry, float yBndry)
 
 				// If the string isn't \n, then it had a \n at the end, so add it here
 				if (b != "\n")
+				{
+					// If the size is 2, then 2 words are seperated only by a \n and the second word shouldnt get a \n after it
+					if (s.size() - 1 == numBSN && b == s.at(s.size() - 1))
+						break;
+
 					words.push_back("\n");
+				}
 			}
 
 			// If the \n count was larger than the

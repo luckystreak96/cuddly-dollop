@@ -74,6 +74,11 @@ namespace dollop_editor
 
         private void btnNew_Click(object sender, RoutedEventArgs e)
         {
+            AddNewLoc();
+        }
+
+        private void AddNewLoc()
+        {
             // Add a new string
             try
             {
@@ -131,6 +136,44 @@ namespace dollop_editor
             txtEnglish.Text = "";
             txtFrench.Text = "";
             txtKey.Text = "";
+        }
+
+        private void btnRename_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (cmbText.Text == "")
+                    return;
+
+                if (!Strings.ContainsKey(cmbText.Text))
+                    return;
+
+                Strings.Remove(cmbText.Text);
+                AddNewLoc();
+                cmbText.Text = txtKey.Text;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void btnDeleteKey_Click(object sender, RoutedEventArgs e)
+        {
+            if (cmbText.Text == "")
+                return;
+
+            if (Strings.ContainsKey(cmbText.Text))
+            {
+                if (chkConfirm.IsChecked == false || MessageBox.Show("Are you sure you want to delete \"" + cmbText.Text + "\"?", "Delete " + cmbText.Text + "?", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                    Strings.Remove(cmbText.Text);
+            }
+
+            txtEnglish.Text = "";
+            txtFrench.Text = "";
+            txtKey.Text = "";
+            cmbText.Text = "";
+            UpdateCmb();
         }
     }
 }

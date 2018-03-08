@@ -27,6 +27,7 @@ namespace dollop_editor
         private DialogueModify()
         {
             InitializeComponent();
+            UpdateQueueButton();
         }
 
         private void SetCmb()
@@ -65,6 +66,7 @@ namespace dollop_editor
             txtID.Text = dialogue.id.ToString();
             txtNext.Text = dialogue.next.ToString();
             txtText.Text = dialogue.text;
+            UpdateQueueButton();
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
@@ -86,6 +88,8 @@ namespace dollop_editor
             EntityWindow entityWindow = new EntityWindow(Dialogue_.queues);
             if (entityWindow.ShowDialog() == true)
                 Dialogue_.queues = entityWindow.Entity_.queues;
+
+            UpdateQueueButton();
         }
 
         private void cmbLoc_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -145,6 +149,12 @@ namespace dollop_editor
                 if(Strings[cmbLocValue].ContainsKey(cmbLang))
                     txtPreview.Text = Strings[cmbLocValue][cmbLang];
             }
+        }
+
+        private void UpdateQueueButton()
+        {
+            int count = Dialogue_ != null && Dialogue_.queues != null ? Dialogue_.queues.Count : 0;
+            btnQueue.Content = "Queues (" + count + ")";
         }
     }
 }

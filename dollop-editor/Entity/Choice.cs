@@ -15,7 +15,7 @@ namespace dollop_editor
 
         public override string ToString()
         {
-            return next + " " + text;
+            return next + " " + text + " (Q : " + (queues ==  null ? 0 : queues.Count) + ")";
         }
     }
 }
