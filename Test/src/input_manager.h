@@ -7,6 +7,8 @@
 #include <utility>
 #include "key_status.h"
 
+// Actions to assign the buttons to
+enum Action { A_Accept, A_Cancel, A_Mute, A_Exit, A_Pause, A_Right, A_Left, A_Down, A_Up, A_Last };
 
 // Holds all inputs in one place to be easily accessed across the whole app
 class InputManager
@@ -49,6 +51,7 @@ public:
 	// Returns the status of the key that frame, to be called after SetupFrameKeys
 	// If the accessLevel is lower than the lockLevel, the result is always nothing
 	bool FrameKeyStatus(unsigned int key, KeyStatus status = AnyPress, unsigned int accessLevel = 0);
+	bool FrameKeyStatus(Action action, KeyStatus status = AnyPress, unsigned int accessLevel = 0);
 
 public:
 	// Adds a value to the pressed characters so theres no conflicts with the other letters

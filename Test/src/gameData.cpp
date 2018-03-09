@@ -1,10 +1,11 @@
 #include "gameData.h"
 
+#include <fstream>
+#include <ostream>
+#include <GLFW/glfw3.h>
 #include "localizationData.h"
 #include "actorFactory.h"
 #include "skill.h"
-#include <fstream>
-#include <ostream>
 #include "battleData.h"
 
 #undef GetObject
@@ -17,6 +18,7 @@ std::map<std::string, int> GameData::Flags = std::map<std::string, int>();
 std::map<std::string, std::string> GameData::Strings = std::map<std::string, std::string>();
 std::map<std::string, Vector3f> GameData::Positions = std::map<std::string, Vector3f>();
 OptionMap GameData::Options = OptionMap();
+std::map<Action, unsigned int> GameData::KeyMap = std::map<Action, unsigned int>();
 
 rapidjson::Document GameData::m_document;
 std::string GameData::m_file;
@@ -222,6 +224,25 @@ void GameData::EnsureBaseSettings()
 		Options.emplace("fullscreen", false);
 	if (!Strings.count("name"))
 		Strings.emplace("name", "Yanik");
+
+	if (!KeyMap.count(A_Accept))
+		KeyMap.emplace(A_Accept, GLFW_KEY_X);
+	if (!KeyMap.count(A_Cancel))
+		KeyMap.emplace(A_Cancel, GLFW_KEY_Z);
+	if (!KeyMap.count(A_Exit))
+		KeyMap.emplace(A_Exit, GLFW_KEY_ESCAPE);
+	if (!KeyMap.count(A_Mute))
+		KeyMap.emplace(A_Mute, GLFW_KEY_M);
+	if (!KeyMap.count(A_Pause))
+		KeyMap.emplace(A_Pause, GLFW_KEY_P);
+	if (!KeyMap.count(A_Up))
+		KeyMap.emplace(A_Up, GLFW_KEY_UP);
+	if (!KeyMap.count(A_Down))
+		KeyMap.emplace(A_Down, GLFW_KEY_DOWN);
+	if (!KeyMap.count(A_Right))
+		KeyMap.emplace(A_Right, GLFW_KEY_RIGHT);
+	if (!KeyMap.count(A_Left))
+		KeyMap.emplace(A_Left, GLFW_KEY_LEFT);
 }
 
 void GameData::SaveGameData()

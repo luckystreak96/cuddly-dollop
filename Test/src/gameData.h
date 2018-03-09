@@ -13,6 +13,7 @@
 #include <variant>
 #include "actor.h"
 #include "vector3f.h"
+#include "input_manager.h"
 
 typedef std::map<std::string, std::variant<bool, float, int, std::string>> OptionMap;
 
@@ -49,6 +50,9 @@ public:
 
 	// Options
 	static OptionMap Options;
+
+	// Key mapping settings
+	static std::map<Action, unsigned int> KeyMap;
 
 	//static std::string Language;
 	

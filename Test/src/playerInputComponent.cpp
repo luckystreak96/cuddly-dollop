@@ -22,10 +22,10 @@ void PlayerInputComponent::Update()
 	//for (auto a : *keys)
 	//	keyMap.emplace(a, false);
 
-	bool up = InputManager::GetInstance().FrameKeyStatus(GLFW_KEY_UP) || InputManager::GetInstance().FrameKeyStatus('W');
-	bool down = InputManager::GetInstance().FrameKeyStatus(GLFW_KEY_DOWN) || InputManager::GetInstance().FrameKeyStatus('S');
-	bool left = InputManager::GetInstance().FrameKeyStatus(GLFW_KEY_LEFT) || InputManager::GetInstance().FrameKeyStatus('A');
-	bool right = InputManager::GetInstance().FrameKeyStatus(GLFW_KEY_RIGHT) || InputManager::GetInstance().FrameKeyStatus('D');
+	bool up = InputManager::GetInstance().FrameKeyStatus(A_Up);
+	bool down = InputManager::GetInstance().FrameKeyStatus(A_Down);
+	bool left = InputManager::GetInstance().FrameKeyStatus(A_Left);
+	bool right = InputManager::GetInstance().FrameKeyStatus(A_Right);
 
 	m_phys->ActionMove(up, down, left, right);
 }

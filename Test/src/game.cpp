@@ -71,6 +71,7 @@ void Game::renderSceneCB()
 
 	if (m_exit)
 	{
+		
 		//GameData::SaveToFile();
 		return;
 	}
@@ -88,7 +89,7 @@ void Game::renderSceneCB()
 void Game::HandleInput()
 {
 	// Exit
-	if (InputManager::GetInstance().FrameKeyStatus(GLFW_KEY_ESCAPE, KeyStatus::AnyPress))
+	if (InputManager::GetInstance().FrameKeyStatus(A_Exit, KeyStatus::AnyPress))
 		m_exit = true;
 
 	// Draw normals
@@ -104,7 +105,7 @@ void Game::HandleInput()
 		InputManager::GetInstance().SetLockLevel(0);
 
 	// Mute
-	if (InputManager::GetInstance().FrameKeyStatus(GLFW_KEY_M, KeyStatus::AnyRelease))
+	if (InputManager::GetInstance().FrameKeyStatus(A_Mute, KeyStatus::AnyRelease))
 		MuteButton();
 
 }

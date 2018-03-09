@@ -145,7 +145,7 @@ EventUpdateResponse DialogueBox::UpdateEvent(double elapsedTime, std::map<unsign
 	// When you press space, set up the textbox to be destroyed
 	if (TextDisplayDone() && choices_done)
 	{
-		if (InputManager::GetInstance().FrameKeyStatus(' ', KeyStatus::KeyPressed, 1))
+		if (InputManager::GetInstance().FrameKeyStatus(A_Accept, KeyStatus::KeyPressed, 1))
 		{
 			// SendInput returns false if its done
 			if (graph == NULL)
@@ -173,16 +173,16 @@ EventUpdateResponse DialogueBox::UpdateEvent(double elapsedTime, std::map<unsign
 				return eur;
 			}
 		}
-		else if (graph != NULL && graph->ChoiceAvailable() && InputManager::GetInstance().FrameKeyStatus(GLFW_KEY_DOWN, KeyStatus::KeyPressed, 1))
+		else if (graph != NULL && graph->ChoiceAvailable() && InputManager::GetInstance().FrameKeyStatus(A_Down, KeyStatus::KeyPressed, 1))
 		{
 			graph->SendInput(IT_Down);
 		}
-		else if (graph != NULL && InputManager::GetInstance().FrameKeyStatus(GLFW_KEY_UP, KeyStatus::KeyPressed, 1))
+		else if (graph != NULL && InputManager::GetInstance().FrameKeyStatus(A_Up, KeyStatus::KeyPressed, 1))
 		{
 			graph->SendInput(IT_Up);
 		}
 	}
-	else if (InputManager::GetInstance().FrameKeyStatus(' ', KeyStatus::AnyPress, 1))
+	else if (InputManager::GetInstance().FrameKeyStatus(A_Accept, KeyStatus::AnyPress, 1))
 	{
 		m_textSpeed = 7;
 	}
@@ -239,7 +239,7 @@ void DialogueBox::Update(double elapsedTime)
 	m_box->Update();
 
 	// When you press space, set up the textbox to be destroyed next frame
-	if (TextDisplayDone() && InputManager::GetInstance().FrameKeyStatus(' ', KeyStatus::KeyPressed, 1))
+	if (TextDisplayDone() && InputManager::GetInstance().FrameKeyStatus(A_Accept, KeyStatus::KeyPressed, 1))
 	{
 		m_temporary = true;
 		m_lifetime = 0;

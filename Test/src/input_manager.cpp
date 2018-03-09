@@ -1,4 +1,6 @@
 #include "input_manager.h"
+#include <cassert>
+#include "gameData.h"
 
 InputManager::InputManager() : m_inputHold(std::map<unsigned int, bool>()), m_inputQueue(std::list<std::pair<unsigned int, KeyStatus>>()), m_lockLevel(0)
 {
@@ -15,6 +17,13 @@ void InputManager::SetupFrameKeys()
 	m_keyMap = std::map<std::pair<unsigned int, KeyStatus>, bool>();
 	for (auto a : keys)
 		m_keyMap.emplace(a, false);
+}
+
+bool InputManager::FrameKeyStatus(Action action, KeyStatus status, unsigned int accessLevel)
+{
+	assert(GameData::KeyMap.count(action));
+	unsigned int actionNum = GameData::KeyMap.count(action) ? GameData::KeyMap.at(action) : 0;
+	return FrameKeyStatus(actionNum, status, accessLevel);
 }
 
 bool InputManager::FrameKeyStatus(unsigned int key, KeyStatus status, unsigned int accessLevel)

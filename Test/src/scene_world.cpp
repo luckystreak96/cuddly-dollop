@@ -110,20 +110,20 @@ void SceneWorld::ManageInput()
 		FontManager::GetInstance().CreateFloatingText(m_player->Physics()->Position(), "Game Saved!")->GetGraphics()->SetColorAll(Vector3f(0.1f, 0.65f, 1));
 	}
 
-	if (InputManager::GetInstance().FrameKeyStatus('Z', AnyRelease))
-	{
-		m_zoom = !m_zoom;
-		float value = m_zoom ? 2.0f : 1.0f;
-		m_World->SetScale(value, value, 1);
-		if (m_celist.count(Camera::Target))
-			for (int i = 0; i < 30; i++)
-				Camera::Follow(m_celist.at(Camera::Target)->Physics()->Position(), m_World.get());
-	}
+	//if (InputManager::GetInstance().FrameKeyStatus('Z', AnyRelease))
+	//{
+	//	m_zoom = !m_zoom;
+	//	float value = m_zoom ? 2.0f : 1.0f;
+	//	m_World->SetScale(value, value, 1);
+	//	if (m_celist.count(Camera::Target))
+	//		for (int i = 0; i < 30; i++)
+	//			Camera::Follow(m_celist.at(Camera::Target)->Physics()->Position(), m_World.get());
+	//}
 }
 
 void SceneWorld::Interact()
 {
-	if (InputManager::GetInstance().FrameKeyStatus('X', KeyStatus::KeyPressed) && m_player) {
+	if (InputManager::GetInstance().FrameKeyStatus(A_Accept, KeyStatus::KeyPressed) && m_player) {
 		Vector3f pos = m_player->Physics()->GetCenter();
 		Direction dir = m_player->Graphics()->GetDirection();
 

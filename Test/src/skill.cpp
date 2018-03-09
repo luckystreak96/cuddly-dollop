@@ -71,7 +71,7 @@ Damage Skill::HandleDamage()
 void Skill::CheckActionCommand(double percentProgress)
 {
 	// Did you input anything
-	if (_input.size() > 0 && (_input.count(GLFW_KEY_X) || _input.count(GLFW_KEY_Z)))
+	if (_input.size() > 0 && (_input.count(A_Accept) || _input.count(A_Cancel)))
 	{
 		// Are you in a situation to try an action command
 		if (_ac._tried || _ac._success)
@@ -80,7 +80,7 @@ void Skill::CheckActionCommand(double percentProgress)
 		{
 			if (percentProgress <= _ac._end)
 			{
-				if (_input.count(GLFW_KEY_Z))
+				if (_input.count(A_Cancel))
 				{
 					if (percentProgress >= _ac._startHard)
 					{
@@ -88,7 +88,7 @@ void Skill::CheckActionCommand(double percentProgress)
 						_ac._success = true;
 					}
 				}
-				else if (_input.count(GLFW_KEY_X))
+				else if (_input.count(A_Accept))
 				{
 
 					if (percentProgress >= _ac._start)

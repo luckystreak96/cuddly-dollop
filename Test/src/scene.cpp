@@ -25,7 +25,7 @@ void Scene::ManageInput()
 {
 	InputManager::GetInstance().SetupFrameKeys();
 
-	if (InputManager::GetInstance().FrameKeyStatus('P', AnyRelease, 100))
+	if (InputManager::GetInstance().FrameKeyStatus(A_Pause, AnyRelease, 100))
 		_pause = !_pause;
 
 	if (InputManager::GetInstance().FrameKeyStatus('O', AnyRelease, 100))

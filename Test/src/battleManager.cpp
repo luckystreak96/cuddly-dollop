@@ -293,12 +293,12 @@ void BattleManager::ManageInput()
 	// Handle key release to choose skills, key press for action commands
 	KeyStatus status = (_state != BS_SelectTargets && _state != BS_SelectAction)
 		? KeyPressed : Release;
-	if (InputManager::GetInstance().FrameKeyStatus(GLFW_KEY_X, status, 5))
-		input.emplace(GLFW_KEY_X);
-	if (InputManager::GetInstance().FrameKeyStatus(GLFW_KEY_Z, status, 5))
-		input.emplace(GLFW_KEY_Z);
-	for (int i = GLFW_KEY_RIGHT; i < GLFW_KEY_UP + 1; i++)
-		if (InputManager::GetInstance().FrameKeyStatus(i, status, 5))
+	if (InputManager::GetInstance().FrameKeyStatus(A_Accept, status, 5))
+		input.emplace(A_Accept);
+	if (InputManager::GetInstance().FrameKeyStatus(A_Cancel, status, 5))
+		input.emplace(A_Cancel);
+	for (int i = A_Right; i < A_Up + 1; i++)
+		if (InputManager::GetInstance().FrameKeyStatus((Action)i, status, 5))
 			input.emplace(i);
 
 	// If theres an animation going, SEND THE INPUT TO THE SKILL
@@ -310,7 +310,7 @@ void BattleManager::ManageInput()
 	}
 
 	// Handle Input
-	if (input.count(GLFW_KEY_DOWN))
+	if (input.count(A_Down))
 	{
 		// Attempt to manage DOWN logic immediately here
 		if (_state == BS_SelectAction)
@@ -347,7 +347,7 @@ void BattleManager::ManageInput()
 		}
 	}
 
-	if (input.count(GLFW_KEY_UP))
+	if (input.count(A_Up))
 	{
 		// Attempt to manage UP logic immediately here
 		if (_state == BS_SelectAction)
@@ -386,7 +386,7 @@ void BattleManager::ManageInput()
 		}
 	}
 
-	if (input.count(GLFW_KEY_LEFT))
+	if (input.count(A_Left))
 	{
 		// Attempt to manage LEFT logic immediately here
 		if (_state == BS_SelectTargets)
@@ -419,7 +419,7 @@ void BattleManager::ManageInput()
 		}
 	}
 
-	if (input.count(GLFW_KEY_RIGHT))
+	if (input.count(A_Right))
 	{
 		// Attempt to manage RIGHT logic immediately here
 		if (_state == BS_SelectTargets)
@@ -451,7 +451,7 @@ void BattleManager::ManageInput()
 		}
 	}
 
-	if (input.count(GLFW_KEY_X))
+	if (input.count(A_Accept))
 	{
 		if (_state == BS_SelectAction)
 		{
@@ -479,7 +479,7 @@ void BattleManager::ManageInput()
 		}
 	}
 
-	if (input.count(GLFW_KEY_Z))
+	if (input.count(A_Cancel))
 	{
 		if (_state == BS_SelectTargets)
 		{
