@@ -27,5 +27,5 @@ void PlayerInputComponent::Update()
 	bool left = InputManager::GetInstance().FrameKeyStatus(A_Left);
 	bool right = InputManager::GetInstance().FrameKeyStatus(A_Right);
 
-	m_phys->ActionMove(up, down, left, right);
+	m_phys->ActionMove(up, down, left, right, InputManager::GetInstance().GetKeyPercent(A_Left), InputManager::GetInstance().GetKeyPercent(A_Down));
 }

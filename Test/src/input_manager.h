@@ -5,10 +5,11 @@
 #include <map>
 #include <vector>
 #include <utility>
+//#include <iostream>
 #include "key_status.h"
 
 // Actions to assign the buttons to
-enum Action { A_Accept, A_Cancel, A_Mute, A_Exit, A_Pause, A_Right, A_Left, A_Down, A_Up, A_Last };
+enum InputAction { A_Accept, A_Cancel, A_Mute, A_Exit, A_Pause, A_Right, A_Left, A_Down, A_Up, A_Last };
 
 // Holds all inputs in one place to be easily accessed across the whole app
 class InputManager
@@ -42,16 +43,21 @@ public:
 	// Returns the list of keys, and resets it
 	std::list<std::pair<unsigned int, KeyStatus>> GetKeysNoReset();
 
-	// Gets a list of currently held keys
-	std::map<unsigned int, bool> GetHeldKeys();
-
 	// Does something, but its never used
 	static int FindKey(std::list<std::pair<unsigned int, KeyStatus>>* list, unsigned int key);
 
 	// Returns the status of the key that frame, to be called after SetupFrameKeys
 	// If the accessLevel is lower than the lockLevel, the result is always nothing
 	bool FrameKeyStatus(unsigned int key, KeyStatus status = AnyPress, unsigned int accessLevel = 0);
-	bool FrameKeyStatus(Action action, KeyStatus status = AnyPress, unsigned int accessLevel = 0);
+	bool FrameKeyStatus(InputAction action, KeyStatus status = AnyPress, unsigned int accessLevel = 0);
+
+	// percent goes from -1 to 1
+	void SetKeyPercent(InputAction action, float percent);
+
+	float GetKeyPercent(InputAction action);
+
+	static std::map<InputAction, std::string> InputActionStrings;
+	static InputAction StringToInputAction(std::string str);
 
 public:
 	// Adds a value to the pressed characters so theres no conflicts with the other letters
@@ -63,8 +69,8 @@ private:
 
 	// When locked is true, you need to access the input with a certain priority for it to work
 	unsigned int m_lockLevel;
-	std::map<unsigned int, bool> m_inputHold;
-	std::map<std::pair<unsigned int, KeyStatus>, bool> m_keyMap;
+	std::map<unsigned int, float> m_powers;
+	std::map<unsigned int, std::pair<KeyStatus, float>> m_keyMap;
 	std::list<std::pair<unsigned int, KeyStatus>> m_inputQueue;
 };
 

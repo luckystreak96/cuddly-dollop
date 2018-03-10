@@ -23,7 +23,7 @@ EventUpdateResponse EventMove::UpdateEvent(double elapsedTime, std::map<unsigned
 		m_firstSetup = false;
 	}
 
-	ents->at(m_target)->Physics()->ActionMove(m_direction == 0, m_direction == 2, m_direction == 3, m_direction == 1);
+	ents->at(m_target)->Physics()->ActionMove(m_direction == 0, m_direction == 2, m_direction == 3, m_direction == 1, 1, 1);
 
 	if (abs(ents->at(m_target)->Physics()->Position()[m_moveAxis] - m_startPos[m_moveAxis]) >= m_distance * 0.97f)//The character will slide a little after reaching destination
 	{

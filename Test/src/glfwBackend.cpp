@@ -10,6 +10,7 @@
 
 GLFWwindow* GLFWManager::m_window = NULL;
 Vector2f GLFWManager::_mngrGLVersion = Vector2f(2, 0);
+bool GLFWManager::_joyStickMode = false;
 
 void Resize(GLFWwindow* window)
 {
@@ -65,7 +66,17 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 		glfwSwapInterval(1);
 	}
 
-	InputManager::GetInstance().Input((unsigned int)key, action);
+	KeyStatus status;
+	if (action == GLFW_PRESS)
+		status = KeyPressed;
+	else if (action == GLFW_RELEASE)
+		status = Release;
+	else if (action == GLFW_REPEAT)
+		status = KeyPressed;
+
+	InputManager::GetInstance().Input((unsigned int)key, status);
+
+	GLFWManager::_joyStickMode = false;
 }
 
 static void window_size_callback(GLFWwindow* window, int width, int height)
@@ -82,6 +93,7 @@ GLFWManager::GLFWManager()
 		std::getchar();
 		exit(1);
 	}
+
 
 	// Get screen info
 	GLFWmonitor* monitor = glfwGetPrimaryMonitor();
@@ -192,6 +204,7 @@ void GLFWManager::GLFWMainLoop(Game* game)
 	while (!glfwWindowShouldClose(m_window))
 	{
 		glfwPollEvents();
+		HandleJoystickInput();
 		game->renderSceneCB();
 		glfwSwapBuffers(m_window);
 	}
@@ -199,4 +212,112 @@ void GLFWManager::GLFWMainLoop(Game* game)
 	// Destroy GLFW context
 	glfwDestroyWindow(m_window);
 	glfwTerminate();
+}
+
+void GLFWManager::HandleJoystickInput()
+{
+	int present = glfwJoystickPresent(GLFW_JOYSTICK_1);
+	if (!present)
+		return;
+
+	int count;
+	const float* axes = glfwGetJoystickAxes(GLFW_JOYSTICK_1, &count);
+	InputManager::GetInstance().SetKeyPercent(A_Left, _joyStickMode ? axes[0] : 1);
+	InputManager::GetInstance().SetKeyPercent(A_Right, _joyStickMode ? axes[0] : 1);
+	InputManager::GetInstance().SetKeyPercent(A_Up, _joyStickMode ? axes[1] : 1);
+	InputManager::GetInstance().SetKeyPercent(A_Down, _joyStickMode ? axes[1] : 1);
+
+	// All the values are between -1 and 1
+	// Axes 0-1 = X-Y for left stick
+	// 2-3 = X-Y for right stick
+	// 4-5 = L2 R2 pressure
+
+	// Dead zone
+	float deadZone = 0.15f;
+
+	static float prevX = 0;
+	static float prevY = 0;
+	static std::vector<bool> buttonStates{ false, false };
+
+	// Left stick X
+	if (abs(axes[0]) >= deadZone)
+	{
+		// Left
+		if (axes[0] < 0)
+		{
+			InputManager::GetInstance().Input(GameData::KeyMap.at(A_Left), true);
+			if (prevX > deadZone)
+				InputManager::GetInstance().Input(GameData::KeyMap.at(A_Right), false);
+		}
+		// Right
+		else
+		{
+			InputManager::GetInstance().Input(GameData::KeyMap.at(A_Right), true);
+			if (abs(prevX) > deadZone)
+				InputManager::GetInstance().Input(GameData::KeyMap.at(A_Left), false);
+		}
+		GLFWManager::_joyStickMode = true;
+	}
+	else
+	{
+		// If there was a direction last frame, now its released
+		if (abs(prevX) > deadZone)
+		{
+			if (prevX < 0)
+				InputManager::GetInstance().Input(GameData::KeyMap.at(A_Left), false);
+			else
+				InputManager::GetInstance().Input(GameData::KeyMap.at(A_Right), false);
+		}
+	}
+
+
+	// Left stick Y
+	if (abs(axes[1]) >= deadZone)
+	{
+		// Down
+		if (axes[1] < 0)
+		{
+			InputManager::GetInstance().Input(GameData::KeyMap.at(A_Down), true);
+			if (prevY >= deadZone)
+				InputManager::GetInstance().Input(GameData::KeyMap.at(A_Up), false);
+		}
+		else
+		{
+			InputManager::GetInstance().Input(GameData::KeyMap.at(A_Up), true);
+			if (abs(prevY) > deadZone && prevY < 0)
+				InputManager::GetInstance().Input(GameData::KeyMap.at(A_Down), false);
+		}
+		GLFWManager::_joyStickMode = true;
+	}
+	else
+	{
+		if (abs(prevY) > deadZone)
+		{
+			if (prevY < 0)
+				InputManager::GetInstance().Input(GameData::KeyMap.at(A_Down), false);
+			else
+				InputManager::GetInstance().Input(GameData::KeyMap.at(A_Up), false);
+		}
+	}
+
+	int buttonCount;
+	const unsigned char* buttons = glfwGetJoystickButtons(GLFW_JOYSTICK_1, &buttonCount);
+
+
+	// 'A' button is buttons[0]
+	if (buttons[0] == GLFW_PRESS)
+		InputManager::GetInstance().Input(GameData::KeyMap.at(A_Accept), true);
+	else if (buttonStates[0])
+		InputManager::GetInstance().Input(GameData::KeyMap.at(A_Accept), false);
+
+	// 'B' button is buttons[1]
+	if (buttons[1] == GLFW_PRESS)
+		InputManager::GetInstance().Input(GameData::KeyMap.at(A_Cancel), true);
+	else if (buttonStates[1])
+		InputManager::GetInstance().Input(GameData::KeyMap.at(A_Cancel), false);
+
+	prevX = axes[0];
+	prevY = axes[1];
+	buttonStates[0] = buttons[0];
+	buttonStates[1] = buttons[1];
 }

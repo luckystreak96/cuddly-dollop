@@ -52,7 +52,7 @@ public:
 	static OptionMap Options;
 
 	// Key mapping settings
-	static std::map<Action, unsigned int> KeyMap;
+	static std::map<InputAction, unsigned int> KeyMap;
 
 	//static std::string Language;
 	

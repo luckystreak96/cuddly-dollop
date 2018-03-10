@@ -68,7 +68,7 @@ void BattleManager::Update()
 		{
 			for (int i = 0; i < _animations.size(); i++)
 			{
-				if(_animations.at(i)->_async || i == 0)
+				if (_animations.at(i)->_async || i == 0)
 					_animations.at(i)->Update();
 				if (_animations.at(i)->_done)
 				{
@@ -291,14 +291,13 @@ void BattleManager::ManageInput()
 	// Get input
 	std::set<int> input;
 	// Handle key release to choose skills, key press for action commands
-	KeyStatus status = (_state != BS_SelectTargets && _state != BS_SelectAction)
-		? KeyPressed : Release;
+	KeyStatus status = KeyPressed;//(_state != BS_SelectTargets && _state != BS_SelectAction) ? KeyPressed : Release;
 	if (InputManager::GetInstance().FrameKeyStatus(A_Accept, status, 5))
 		input.emplace(A_Accept);
 	if (InputManager::GetInstance().FrameKeyStatus(A_Cancel, status, 5))
 		input.emplace(A_Cancel);
 	for (int i = A_Right; i < A_Up + 1; i++)
-		if (InputManager::GetInstance().FrameKeyStatus((Action)i, status, 5))
+		if (InputManager::GetInstance().FrameKeyStatus((InputAction)i, status, 5))
 			input.emplace(i);
 
 	// If theres an animation going, SEND THE INPUT TO THE SKILL
@@ -548,8 +547,11 @@ void BattleManager::Select(int target)
 	{
 		if (_owner->_Fighter->Team == 0)
 		{
-			FontManager::GetInstance().GetFont(_fonts[_selectedIndex])->GetGraphics()->SetColorAll();
-			FontManager::GetInstance().GetFont(_fonts[target])->GetGraphics()->SetColorAll(Vector3f(1, 0, 0));
+			if (_fonts.size() > _selectedIndex)
+			{
+				FontManager::GetInstance().GetFont(_fonts[_selectedIndex])->GetGraphics()->SetColorAll();
+				FontManager::GetInstance().GetFont(_fonts[target])->GetGraphics()->SetColorAll(Vector3f(1, 0, 0));
+			}
 		}
 		_selectedIndex = target;
 	}

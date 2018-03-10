@@ -13,9 +13,11 @@ class GLFWManager
 public:
 	GLFWManager();
 	void GLFWMainLoop(Game* game);
+	void HandleJoystickInput();
 public:
 	static GLFWwindow* m_window;
 	static Vector2f _mngrGLVersion;
+	static bool _joyStickMode;
 
 private:
 	int m_screenWidth, m_screenHeight, m_refreshRate;

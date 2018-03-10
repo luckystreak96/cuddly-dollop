@@ -89,23 +89,23 @@ void Game::renderSceneCB()
 void Game::HandleInput()
 {
 	// Exit
-	if (InputManager::GetInstance().FrameKeyStatus(A_Exit, KeyStatus::AnyPress))
+	if (InputManager::GetInstance().FrameKeyStatus(A_Exit, KeyStatus::KeyPressed))
 		m_exit = true;
 
 	// Draw normals
-	if (InputManager::GetInstance().FrameKeyStatus(GLFW_KEY_F1, KeyStatus::AnyRelease))
+	if (InputManager::GetInstance().FrameKeyStatus(GLFW_KEY_F1, KeyPressed))
 		Globals::DEBUG_DRAW_NORMALS = !Globals::DEBUG_DRAW_NORMALS;
 
 	// Draw outlines
-	if (InputManager::GetInstance().FrameKeyStatus(GLFW_KEY_F2, KeyStatus::AnyRelease))
+	if (InputManager::GetInstance().FrameKeyStatus(GLFW_KEY_F2, KeyStatus::KeyPressed))
 		Globals::DEBUG_DRAW_TILE_OUTLINES = !Globals::DEBUG_DRAW_TILE_OUTLINES;
 
 	// Reset lock level
-	if (InputManager::GetInstance().FrameKeyStatus(GLFW_KEY_F3, KeyStatus::AnyRelease))
+	if (InputManager::GetInstance().FrameKeyStatus(GLFW_KEY_F3, KeyStatus::KeyPressed))
 		InputManager::GetInstance().SetLockLevel(0);
 
 	// Mute
-	if (InputManager::GetInstance().FrameKeyStatus(A_Mute, KeyStatus::AnyRelease))
+	if (InputManager::GetInstance().FrameKeyStatus(A_Mute, KeyStatus::KeyPressed))
 		MuteButton();
 
 }

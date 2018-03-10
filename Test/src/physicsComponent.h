@@ -20,7 +20,7 @@ public:
 	virtual void Update();
 	void SetDefaults(std::string name = "TILE");//cancer
 	std::string GetName();
-	void ActionMove(bool up, bool down, bool left, bool right);
+	void ActionMove(bool up, bool down, bool left, bool right, float xperc, float yperc);
 	void SetEthereal(bool ethereal);
 	void Move();
 	void MoveBB(Vector3f distance);

@@ -28,12 +28,16 @@ SceneWorld::SceneWorld(unsigned int map_id) : m_zoom(false)
 void SceneWorld::Brb()
 {
 	NextScene = SceneGenData();
+#ifdef _DEBUG
 	FontManager::GetInstance().DisableFont(m_fontFPS);
+#endif
 }
 
 void SceneWorld::Resume()
 {
+#ifdef _DEBUG
 	FontManager::GetInstance().EnableFont(m_fontFPS);
+#endif
 	Scene::Resume();
 }
 
@@ -101,10 +105,10 @@ void SceneWorld::ManageInput()
 {
 	Scene::ManageInput();
 
-	if (InputManager::GetInstance().FrameKeyStatus('B', AnyRelease))
+	if (InputManager::GetInstance().FrameKeyStatus('B', KeyPressed))
 		m_bloomEffect = !m_bloomEffect;
 
-	if (InputManager::GetInstance().FrameKeyStatus('T', AnyRelease))
+	if (InputManager::GetInstance().FrameKeyStatus('T', KeyPressed))
 	{
 		GameData::SaveToFile();
 		FontManager::GetInstance().CreateFloatingText(m_player->Physics()->Position(), "Game Saved!")->GetGraphics()->SetColorAll(Vector3f(0.1f, 0.65f, 1));

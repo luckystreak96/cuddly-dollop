@@ -18,7 +18,7 @@ std::map<std::string, int> GameData::Flags = std::map<std::string, int>();
 std::map<std::string, std::string> GameData::Strings = std::map<std::string, std::string>();
 std::map<std::string, Vector3f> GameData::Positions = std::map<std::string, Vector3f>();
 OptionMap GameData::Options = OptionMap();
-std::map<Action, unsigned int> GameData::KeyMap = std::map<Action, unsigned int>();
+std::map<InputAction, unsigned int> GameData::KeyMap = std::map<InputAction, unsigned int>();
 
 rapidjson::Document GameData::m_document;
 std::string GameData::m_file;
@@ -208,6 +208,31 @@ void GameData::LoadSettings()
 				Options.emplace(name, sec);
 			}
 	}
+
+	// Get the keybindings
+	if (m_document.HasMember("keybindings") && m_document["keybindings"].IsArray())
+	{
+		auto bindings = m_document["keybindings"].GetArray();
+		for (auto& v : bindings)
+			for (Value::ConstMemberIterator itr = v.MemberBegin(); itr != v.MemberEnd(); ++itr)
+			{
+				// Get the key name
+				std::string name = itr->name.GetString();
+				if (InputManager::StringToInputAction(name) == A_Last)
+					continue;
+
+				// Get the key value
+				unsigned int sec = 0;
+				if (itr->value.IsUint())
+					sec = itr->value.GetUint();
+				// If the key isnt defined, just skip
+				else
+					continue;
+
+				KeyMap.emplace(InputManager::StringToInputAction(name), sec);
+			}
+	}
+
 	EnsureBaseSettings();
 }
 
@@ -343,6 +368,7 @@ void GameData::SaveSettings()
 
 	Document::AllocatorType& allocator = configFile.GetAllocator();
 
+	// Save basic options
 	Value options(kArrayType);
 	for (auto x : Options)
 	{
@@ -361,6 +387,23 @@ void GameData::SaveSettings()
 	}
 
 	configFile.AddMember("options", options, allocator);
+
+	// Save KeyBindings
+	Value keybindings(kArrayType);
+	for (auto x : KeyMap)
+	{
+		Value ob(kObjectType);
+		Value first(kStringType);
+		first.SetString(StringRef(InputManager::InputActionStrings[x.first].c_str()), allocator);
+		Value second;
+
+		second.SetUint(x.second);
+
+		ob.AddMember(first, second, allocator);
+		keybindings.PushBack(ob, allocator);
+	}
+
+	configFile.AddMember("keybindings", keybindings, allocator);
 
 #ifdef NDEBUG
 	FILE* fp = fopen((m_path + "config").c_str(), "wb"); // non-Windows use "w"

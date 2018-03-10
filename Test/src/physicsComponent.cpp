@@ -1,6 +1,6 @@
 #include "physicsComponent.h"
 
-PhysicsComponent::PhysicsComponent(Vector3f pos, std::string modelName, Vector3f size, Vector3f numTiles) : m_size(size), 
+PhysicsComponent::PhysicsComponent(Vector3f pos, std::string modelName, Vector3f size, Vector3f numTiles) : m_size(size),
 m_BBcenter(numTiles), m_conversationLock(false), walkOn(true)
 {
 	m_pos = pos;
@@ -30,6 +30,19 @@ void PhysicsComponent::Update()
 void PhysicsComponent::ApplyGravity()
 {
 	//Slow down a bit
+
+	// X
+	if (m_velocity.x < 0)
+		m_velocity.x += 0.1f;
+	else
+		m_velocity.x -= 0.1f;
+
+	// Y
+	if (m_velocity.y < 0)
+		m_velocity.y += 0.1f;
+	else
+		m_velocity.y -= 0.1f;
+
 	m_velocity.x *= 0.6f;
 	m_velocity.y *= 0.6f;
 
@@ -65,21 +78,30 @@ void PhysicsComponent::Move()
 	RelativePosition(distance);
 }
 
-void PhysicsComponent::ActionMove(bool up, bool down, bool left, bool right)
+void PhysicsComponent::ActionMove(bool up, bool down, bool left, bool right, float xperc, float yperc)
 {
 	if (m_conversationLock)
 		return;
 	//ApplyGravity();
+	xperc = abs(xperc);
+	yperc = abs(yperc);
+	float total = sqrtf(pow(xperc, 2) + pow(yperc, 2));
+	float maxTotal = 1.0f;
+	if (total > maxTotal && ((up || down) && (left || right)))
+	{
+		xperc /= total;
+		yperc /= total;
+	}
 
 	float speed = 1.5f;
 	if (left)
-		m_velocity.x -= speed;
+		m_velocity.x -= speed * xperc;
 	if (right)
-		m_velocity.x += speed;
+		m_velocity.x += speed * xperc;
 	if (up)
-		m_velocity.y += speed;
+		m_velocity.y += speed * yperc;
 	if (down)
-		m_velocity.y -= speed;
+		m_velocity.y -= speed * yperc;
 
 	if (m_velocity.x > speed * 2)
 		m_velocity.x = speed * 2;

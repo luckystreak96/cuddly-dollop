@@ -25,10 +25,10 @@ void Scene::ManageInput()
 {
 	InputManager::GetInstance().SetupFrameKeys();
 
-	if (InputManager::GetInstance().FrameKeyStatus(A_Pause, AnyRelease, 100))
+	if (InputManager::GetInstance().FrameKeyStatus(A_Pause, KeyPressed, 100))
 		_pause = !_pause;
 
-	if (InputManager::GetInstance().FrameKeyStatus('O', AnyRelease, 100))
+	if (InputManager::GetInstance().FrameKeyStatus('O', KeyPressed, 100))
 		_numFrames++;
 }
 
