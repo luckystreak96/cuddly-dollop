@@ -342,6 +342,16 @@ std::vector<GLuint> PhysicsComponent::GetIndices()
 	return m_indices;
 }
 
+std::vector<Vertex>& PhysicsComponent::GetVerticesRef()
+{
+	return m_vertices;
+}
+
+std::vector<GLuint>& PhysicsComponent::GetIndicesRef()
+{
+	return m_indices;
+}
+
 int PhysicsComponent::GetHighestIndex()
 {
 	GLuint highest = 0;

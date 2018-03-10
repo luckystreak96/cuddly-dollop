@@ -471,14 +471,14 @@ namespace Physics_2D {
 			//			b: Which is the highest legal tile (some could be very high) - move object there
 
 			// Touching is used throughout the whole method
-		std::map<unsigned int, std::vector<std::shared_ptr<PhysicsComponent>>> touching;
+		std::map<unsigned int, std::vector<Physics_ptr>> touching;
 		for (auto xs : *clist)
 		{
 			std::shared_ptr<Entity> x = xs.second;
 			if (x->Physics()->Velocity() == 0)
 				continue;
 			int id = x->GetID();
-			touching.emplace(id, std::vector<std::shared_ptr<PhysicsComponent>>());
+			touching.emplace(id, std::vector<Physics_ptr>());
 
 
 			//Create list of touching
@@ -509,7 +509,7 @@ namespace Physics_2D {
 			float oz = x->Physics()->Position().z;
 
 			//Remove Dupes (Blocks that are at the same height but one is irrelevant)
-			std::vector<std::shared_ptr<PhysicsComponent>> dupes = FindDupes(&touching.at(id), oz);
+			std::vector<Physics_ptr> dupes = FindDupes(&touching.at(id), oz);
 
 			for (auto x : dupes)
 				touching.at(id).erase(std::remove(touching.at(id).begin(), touching.at(id).end(), x));
@@ -545,8 +545,8 @@ namespace Physics_2D {
 				bby[Right] = x->Physics()->GetBoundingBox()[Right];
 				int mustTouchY = TileTouchCount(bby);
 
-				std::vector<std::shared_ptr<PhysicsComponent>> touchX = std::vector<std::shared_ptr<PhysicsComponent>>();
-				std::vector<std::shared_ptr<PhysicsComponent>> touchY = std::vector<std::shared_ptr<PhysicsComponent>>();
+				std::vector<Physics_ptr> touchX = std::vector<Physics_ptr>();
+				std::vector<Physics_ptr> touchY = std::vector<Physics_ptr>();
 
 				//Which in touching is the obj touching
 				for (auto x : touching.at(id))
@@ -619,7 +619,7 @@ namespace Physics_2D {
 			// Collide with tiles
 			TileCollision(x, touching.at(id));
 
-			auto temp = std::vector<std::shared_ptr<PhysicsComponent>>(touching.at(id));
+			auto temp = std::vector<Physics_ptr>(touching.at(id));
 			touching.at(id).clear();
 			//Create list of touching
 			//bb1 = x->Physics()->GetMoveBoundingBox();

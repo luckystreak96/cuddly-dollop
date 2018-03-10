@@ -48,7 +48,7 @@ protected:
 	void AddWordToMesh(std::string word, float x, float y);
 	void CreateHash();
 	void SetupMesh(float xBoundry = -1, float yBoundry = -1);
-	unsigned int CharToCode(uint32_t c);
+	inline unsigned int CharToCode(uint32_t c);
 
 protected:
 	const double MaxTime;

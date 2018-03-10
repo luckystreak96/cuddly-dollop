@@ -196,7 +196,8 @@ void Font::SetupMesh(float xBndry, float yBndry)
 	//delete m_graphics;
 	if (m_graphics == NULL)
 		m_graphics = std::shared_ptr<FontGraphicsComponent>(new FontGraphicsComponent(m_mesh.GetMeshVertices(), m_mesh.GetMeshIndices(), m_texture));
-	m_graphics->FullReset(m_mesh.GetMeshVertices(), m_mesh.GetMeshIndices());
+	//m_graphics->FullReset(m_mesh.GetMeshVertices(), m_mesh.GetMeshIndices());
+	m_graphics->SetNewBuffers(m_mesh.GetMeshVertices(), m_mesh.GetMeshIndices());
 	m_graphics->SetPhysics(m_phys.Position(), Vector3f());
 	m_graphics->SetStatic(m_static);
 
@@ -218,8 +219,7 @@ void Font::AddWordToMesh(std::string word, float x, float y)
 
 		m_letterPositions.push_back(pos + m_phys.Position());
 
-		std::vector<Vertex> verts = m_phys.GetVertices();
-		m_mesh.AddToMesh(verts, m_phys.GetIndices(), m_phys.GetHighestIndex(), pos, m_texture, index);
+		m_mesh.AddToMesh(m_phys.GetVerticesRef(), m_phys.GetIndicesRef(), m_phys.GetHighestIndex(), pos, m_texture, index);
 	}
 }
 
@@ -318,7 +318,7 @@ void Font::SetTextSpeed(double speed)
 
 
 //Returns the index of the letter
-unsigned int Font::CharToCode(uint32_t c)
+inline unsigned int Font::CharToCode(uint32_t c)
 {
 	if (m_letters.count(c))
 		return m_letters.at(c);

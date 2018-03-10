@@ -10,6 +10,13 @@ GraphicsComponent::~GraphicsComponent()
 	UnloadGLResources();
 }
 
+void GraphicsComponent::SetNewBuffers(std::vector<Vertex>* verts, std::vector<GLuint>* inds)
+{
+	m_vertices = std::vector<Vertex>(*verts);
+	m_indices = std::vector<GLuint>(*inds);
+	SetBuffers();
+}
+
 void GraphicsComponent::FullReset(std::vector<Vertex>* verts, std::vector<GLuint>* inds)
 {
 	UnloadGLResources();

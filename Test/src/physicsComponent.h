@@ -33,8 +33,10 @@ public:
 	void RelativePosition(Vector3f movementPos);
 	void AbsolutePosition(Vector3f absolutePos, Vector3f useAxis = Vector3f(1, 1, 1));
 	std::vector<Vertex> GetVertices();
+	std::vector<Vertex>& GetVerticesRef();
 	std::vector<Vertex> GetTranslatedVertices();
 	std::vector<GLuint> GetIndices();
+	std::vector<GLuint>& GetIndicesRef();
 	int GetHighestIndex();
 	void SetColorAll(Vector3f color, float alpha);
 	void XCollide();

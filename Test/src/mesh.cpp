@@ -47,7 +47,7 @@ void Mesh::AddToMesh(std::vector<Vertex>& verts, const std::vector<GLuint>& inds
 	};
 
 	int counter = 0;
-	for (auto &v : verts)
+	for (auto v : verts)
 	{
 		Vector2f temp = Vector2f(vecs[counter % 4].x, vecs[counter % 4].y);
 		if (index == -1)
