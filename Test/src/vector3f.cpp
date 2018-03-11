@@ -257,8 +257,19 @@ float Vector3f::Distance2D(Vector3f& other)
 }
 
 Vector2f::Vector2f(float x, float y) : x(x), y(y) {}
+Vector2f::Vector2f() : x(0), y(0) {}
 
 bool Vector2f::operator==(const Vector2f& r)
 {
 	return (this->x == r.x && this->y == r.y);
+}
+
+bool Vector2f::operator<(const Vector2f& r) const
+{
+	if (this->x < r.x)
+		return true;
+	else if (this->x == r.x && this->y < r.y)
+		return true;
+	else
+		return false;
 }

@@ -22,9 +22,9 @@ namespace Physics_2D
 	void FindMinMaxLegalZ(std::vector<std::shared_ptr<PhysicsComponent>>* touching, float& min, float& max, float targetHeight);
 	int TouchCount(std::vector<std::shared_ptr<PhysicsComponent>>* touching, float targetHeight);
 	bool IsTileCollideHeight(float entityHeight, float colliderHeight);
-	void TileCollision(std::shared_ptr<Entity> e, std::vector<std::shared_ptr<PhysicsComponent>> p);
-	void ApplyCollision(std::shared_ptr<PhysicsComponent> a, std::shared_ptr<PhysicsComponent> b);
-	void ApplyCollision(std::shared_ptr<PhysicsComponent> a, std::shared_ptr<PhysicsComponent> b, Axis precalculatedAxis);
+	void TileCollision(Entity* e, std::vector<PhysicsComponent*> p);
+	bool ApplyCollision(PhysicsComponent* a, PhysicsComponent* b);
+	void ApplyCollision(PhysicsComponent* a, PhysicsComponent* b, Axis precalculatedAxis);
 }
 
 #endif

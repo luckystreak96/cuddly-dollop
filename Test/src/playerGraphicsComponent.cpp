@@ -78,7 +78,7 @@ void PlayerGraphicsComponent::Update()
 	//Change the direction hes facing
 	if (m_vel != 0)
 	{
-		if (abs(m_vel.x) > abs(m_vel.y))
+		if (abs(m_vel.x) >= abs(m_vel.y))
 		{
 			if (m_vel.x > 0)
 				m_direction = dir_Right;
@@ -99,12 +99,8 @@ void PlayerGraphicsComponent::Update()
 
 	//Change the sprite depending on direction
 	//m_animation = m_direction;
-	if (m_texture == "res/sprites/entities/entity_girl.png")
-		int lol = 69;
-	if ((dir != m_direction || (m_vel == 0 && _animation > 3) || (m_vel != 0 && _animation < 3)) && !_specialAnimation && !_forceAnimation)
+	if ((dir != m_direction || (m_vel == 0 && _animation > 3) || (m_vel != 0 && _animation <= 3)) && !_specialAnimation && !_forceAnimation)
 	{
-		if (m_texture == "res/sprites/entities/entity_girl.png")
-			int lol = 69;
 		Anim_Enum animation;
 		if (m_vel == 0)
 		{

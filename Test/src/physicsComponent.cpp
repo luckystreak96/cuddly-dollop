@@ -74,7 +74,7 @@ void PhysicsComponent::YCollide()
 
 void PhysicsComponent::Move()
 {
-	Vector3f distance = m_velocity * 0.01667f;// (float)ElapsedTime::GetInstance().GetElapsedTime();
+	Vector3f distance = m_velocity * /*0.01667f;*/ (float)ElapsedTime::GetInstance().GetElapsedTime();
 	RelativePosition(distance);
 }
 
