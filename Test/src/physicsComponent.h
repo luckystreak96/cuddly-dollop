@@ -45,6 +45,7 @@ public:
 	void SetMovedBB();
 	void SetTranslatedVertices();
 	Vector3f Position() { return m_pos; };
+	Vector3f& PositionRef() { return m_pos; };
 	Vector3f GetCenter() { return Vector3f(m_boundingBox[Left] + m_size.x / 2, m_boundingBox[Down] + m_size.y / 2, m_boundingBox[Far] + m_size.z / 2);/*return m_pos + (m_size / 2);*/ }
 	void SetPosition(Vector3f pos) { m_pos = pos; };
 	Vector3f Velocity() { return m_velocity; };

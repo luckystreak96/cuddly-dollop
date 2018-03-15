@@ -20,7 +20,7 @@ namespace Physics_2D
 	std::vector<std::shared_ptr<PhysicsComponent>> FindDupes(std::vector<std::shared_ptr<PhysicsComponent>>* list, float targetHeight);
 	int TileTouchCount(std::array<float, 6> bb);
 	void FindMinMaxLegalZ(std::vector<std::shared_ptr<PhysicsComponent>>* touching, float& min, float& max, float targetHeight);
-	int TouchCount(std::vector<std::shared_ptr<PhysicsComponent>>* touching, float targetHeight);
+	int TouchCount(std::vector<std::shared_ptr<PhysicsComponent>>* touching, float targetHeight, bool excludeMustStand = false);
 	bool IsTileCollideHeight(float entityHeight, float colliderHeight);
 	void TileCollision(Entity* e, std::vector<PhysicsComponent*> p);
 	bool ApplyCollision(PhysicsComponent* a, PhysicsComponent* b);

@@ -15,16 +15,12 @@ namespace Physics_2D {
 		std::vector<PhysicsComponent*> dupes;
 
 		// List of spots to check up on
-		std::set<Vector2f> spots;
 		std::map<Vector2f, std::vector<PhysicsComponent*>> tiles;
-		for (auto x : *list)
+		for (auto& x : *list)
 		{
-			Vector2f pos(x->Position().x, x->Position().y);
+			Vector2f pos(x->PositionRef().x, x->PositionRef().y);
 			if (!tiles.count(pos))
 				tiles.emplace(pos, std::vector<PhysicsComponent*>());
-
-			if (!spots.count(pos))
-				spots.emplace(pos);
 
 			tiles[pos].push_back(x);
 		}
@@ -38,25 +34,37 @@ namespace Physics_2D {
 			// - Anything below a collision tile (floor under a rock)
 			Vector3f collisionBlock = Vector3f(-1);
 			for (auto& y : x.second)
-				if (y->Position().z == targetHeight)
-					collisionBlock = y->Position();
+				if (y->PositionRef().z == targetHeight)
+				{
+					collisionBlock = y->PositionRef();
+					break;
+				}
 
-			for (auto& y : x.second)
-				if (y->Position().z < collisionBlock.z)
-					dupes.push_back(y);
+			if (collisionBlock != -1)
+			{
+
+				for (auto& y : x.second)
+					if (y->PositionRef().z > collisionBlock.z)
+						dupes.push_back(y);
+			}
 
 			// - Tiles underneath tiles that are legal for the player
-			if (collisionBlock == -1)
+			else //if(collisionBlock == -1)
 			{
 				bool stand = false;
 				for (auto& y : x.second)
-					if(IsLegalHeight(y->Position().z, targetHeight))
-					//if (y->Position().z == targetHeight + 1)
+					if (IsLegalHeight(y->PositionRef().z, targetHeight))
+					{
 						stand = true;
+						break;
+					}
 
 				for (auto& y : x.second)
-					if (y->Position().z < targetHeight + 0.5f && y->Position().z > targetHeight - 0.5f)
+					if (y->PositionRef().z < targetHeight + 0.5f && y->PositionRef().z > targetHeight - 0.5f)
+					{
 						stand = false;
+						break;
+					}
 
 				if (stand)
 				{
@@ -64,17 +72,16 @@ namespace Physics_2D {
 					bool higherStep = false;
 					for (auto& y : x.second)
 					{
-
-						if (y->Position().z == targetHeight + 1)
+						if (y->PositionRef().z == targetHeight + 1)
 							playerHeight = true;
-						else if (y->Position().z < targetHeight + 1 && y->Position().z > targetHeight)
+						else if (y->PositionRef().z < targetHeight + 1 && y->PositionRef().z > targetHeight)
 							higherStep = true;
 					}
 
 					for (auto& y : x.second)
 					{
 						float val = targetHeight + 1 + (playerHeight ? 0 : (higherStep ? -0.5f : 0.5f));
-						if (y->Position().z > val)
+						if (y->PositionRef().z > val)
 							dupes.push_back(y);
 					}
 				}
@@ -82,52 +89,22 @@ namespace Physics_2D {
 				{
 					PhysicsComponent* low = nullptr;
 					for (auto& y : x.second)
-						if (y->Position().z > targetHeight + 1)
-							if (low == nullptr || low->Position().z > y->Position().z)
+						if (y->PositionRef().z > targetHeight + 1)
+							if (low == nullptr || low->PositionRef().z > y->PositionRef().z)
 								low = y;
 
 					for (auto& y : x.second)
-						if (y->Position().z > low->Position().z)
+						if (y->PositionRef().z > low->PositionRef().z)
 							dupes.push_back(y);
 				}
 			}
 
 			// - Tiles that are too high
 			for (auto& y : x.second)
-				if (y->Position().z < targetHeight - 0.5f)
+				if (y->PositionRef().z < targetHeight - 0.5f)
 					dupes.push_back(y);
 		}
 
-		//for (auto x : *list)
-		//{
-		//	for (auto y : *list)
-		//	{
-		//		if (x == y)
-		//			continue;
-
-		//		//they have to be at the same place
-		//		if (x->Position().x != y->Position().x || x->Position().y != y->Position().y)
-		//			continue;
-
-		//		float z = x->Position().z;
-
-		//		//Disregard illegal blocks
-		//		if (!IsLegalHeight(z, targetHeight))
-		//			continue;
-		//		//If the other block isnt the right height, we dont discard anything
-		//		if (!IsLegalHeight(y->Position().z, targetHeight))
-		//			continue;
-
-		//		//remove lowest
-
-				//PhysicsComponent* to_remove = x->Position().z > y->Position().z ? x : y;
-
-				//if (!(std::find(dupes.begin(), dupes.end(), to_remove) != dupes.end())) {
-				//	/* dupes does not contain to_remove */
-				//	dupes.push_back(to_remove);
-				//}
-		//	}
-		//}
 
 		return dupes;
 	}
@@ -202,16 +179,16 @@ namespace Physics_2D {
 		if (precalculatedAxis == Axis::X)
 		{
 			a->XCollide();
-			b->XCollide();
+			//b->XCollide();
 		}
 		else if (precalculatedAxis == Axis::Y)
 		{
 			a->YCollide();
-			b->YCollide();
+			//b->YCollide();
 		}
 		//Reset the move BB for future attempted collisions
 		a->SetMovedBB();
-		b->SetMovedBB();
+		//b->SetMovedBB();
 	}
 
 
@@ -236,7 +213,7 @@ namespace Physics_2D {
 	}
 
 	//returns number of tiles that are legally touching
-	int TouchCount(std::vector<PhysicsComponent*>* touching, float targetHeight)
+	int TouchCount(std::vector<PhysicsComponent*>* touching, float targetHeight, bool excludeMustStand = false)
 	{
 		std::map<Vector2f, bool> touches;
 		for (auto ents : *touching)
@@ -245,7 +222,7 @@ namespace Physics_2D {
 			Vector2f pos = Vector2f(ents->Position().x, ents->Position().y);
 
 			//Disregard illegal blocks
-			if (!IsLegalHeight(z, targetHeight))
+			if ((excludeMustStand && !ents->walkOn) || !IsLegalHeight(z, targetHeight))
 			{
 				if (!touches.count(pos))
 					touches.emplace(pos, false);
@@ -278,7 +255,7 @@ namespace Physics_2D {
 			float z = ents->Position().z;
 
 			//Disregard illegal blocks
-			if (!IsLegalHeight(z, targetHeight))
+			if (!IsLegalHeight(z, targetHeight) || !ents->walkOn)
 				continue;
 
 			//If its the lowest, set min to it
@@ -616,7 +593,7 @@ namespace Physics_2D {
 
 			if (id == 1)
 				int lol = 69;
-			int touchCounter = TouchCount(&touching.at(id), oz);
+			int touchCounter = TouchCount(&touching.at(id), oz, true);
 
 			FindMinMaxLegalZ(&touching.at(id), min, max, oz);
 
@@ -650,8 +627,8 @@ namespace Physics_2D {
 						touchY.push_back(x);
 				}
 
-				int touchingX = TouchCount(&touchX, oz);
-				int touchingY = TouchCount(&touchY, oz);
+				int touchingX = TouchCount(&touchX, oz, true);
+				int touchingY = TouchCount(&touchY, oz, true);
 
 				//Only 1 of them is true
 				if ((touchingX == mustTouchX) != (touchingY == mustTouchY))
@@ -659,16 +636,16 @@ namespace Physics_2D {
 					if (touchingX == mustTouchX)
 					{
 						for (auto tx : touchY)
-							if (!IsLegalHeight(tx->Position().z, oz))
+							if (!IsLegalHeight(tx->Position().z, oz) || !tx->walkOn)
 								ApplyCollision(x->PhysicsRaw(), tx, Axis::Y);
-						touching.at(id) = touchX;
+						touching.at(id) = touchY;
 					}
 					else if (touchingY == mustTouchY)
 					{
 						for (auto tx : touchX)
-							if (!IsLegalHeight(tx->Position().z, oz))
+							if (!IsLegalHeight(tx->Position().z, oz) || !tx->walkOn)
 								ApplyCollision(x->PhysicsRaw(), tx, Axis::X);
-						touching.at(id) = touchY;
+						touching.at(id) = touchX;
 					}
 				}
 				else
@@ -679,10 +656,10 @@ namespace Physics_2D {
 						float z = tx->Position().z;
 
 						//collide with illegal blocks
-						if (!IsLegalHeight(z, oz))
+						if (!IsLegalHeight(z, oz) || !tx->walkOn)
 						{
-							ApplyCollision(x->PhysicsRaw(), tx);
-							dupes.push_back(tx);
+							if (ApplyCollision(x->PhysicsRaw(), tx))
+								dupes.push_back(tx);
 						}
 					}
 			}
@@ -692,17 +669,44 @@ namespace Physics_2D {
 				std::vector<Vector3f> pos;
 
 				//...collide with everything not at your exact height
-				for (auto t : touching.at(id))
+
+				// ensure you're on something at your height at least, otherwise go down
+				bool onSomething = false;
+				int futurStand = -5;
+				for (int i = 0; i < touching.at(id).size(); i++)
 				{
+					auto t = touching.at(id).at(i);
+
+					if (futurStand == i)
+						continue;
+
+					// Check if ur on something
+					if (!onSomething && t->PositionRef().z == oz + STAND_HEIGHT)
+					{
+						onSomething = true;
+						futurStand = i;
+						i = -1;
+						continue;
+					}
+
 					float z = t->Position().z;
 					Vector3f v3f = t->Position();
 					v3f.z = 0;
 
-					if (z != oz + STAND_HEIGHT || std::find(pos.begin(), pos.end(), v3f) != pos.end())
+					if (z != oz + STAND_HEIGHT && onSomething || std::find(pos.begin(), pos.end(), v3f) != pos.end())
 					{
 						ApplyCollision(x->PhysicsRaw(), t);
 						dupes.push_back(t);
 						pos.push_back(v3f);
+					}
+					else
+					{
+						if (!onSomething && t->PositionRef().z >= oz + STAND_HEIGHT && Physics::Intersect2D(t->GetBoundingBox(), x->PhysicsRaw()->GetBoundingBox()))
+						{
+							futurStand = i;
+							onSomething = true;
+							i = -1;
+						}
 					}
 				}
 			}
@@ -718,7 +722,7 @@ namespace Physics_2D {
 			auto temp = std::vector<PhysicsComponent*>(touching.at(id));
 			touching.at(id).clear();
 			//Create list of touching
-			//bb1 = x->PhysicsRaw()->GetMoveBoundingBox();
+			bb1 = x->PhysicsRaw()->GetMoveBoundingBox();
 			for (auto ts : temp)
 			{
 				auto bb2 = ts->GetMoveBoundingBox();
@@ -734,7 +738,7 @@ namespace Physics_2D {
 				float z = tx->Position().z;
 
 				//Disregard illegal blocks
-				if (!IsLegalHeight(z, oz))
+				if (!IsLegalHeight(z, oz) || !tx->walkOn)
 					continue;
 
 				//If its the highest, set max to it
@@ -742,8 +746,14 @@ namespace Physics_2D {
 					min = z;
 			}
 
+			//if (min == 1000)
+			//	for (auto tx : touching.at(id))
+			//		if ((min != 1000 && min < tx->PositionRef().z) || tx->PositionRef().z >= oz + STAND_HEIGHT)
+			//			min = tx->PositionRef().z;
 			if (min != 1000)
 			{
+				if (id == 1)
+					int lol = 69;
 				x->PhysicsRaw()->AbsolutePosition(Vector3f(-1, -1, min - STAND_HEIGHT), Vector3f(0, 0, 1));
 			}
 		}
@@ -760,14 +770,14 @@ namespace Physics_2D {
 				{
 					auto x2 = xs2.second;
 					// We dont want to re-pass the same collision checks
-					if (x2 == x || x2->PhysicsRaw()->Velocity() == 0 && x->PhysicsRaw()->Velocity() == 0)
+					if (x2 == x || /*x2->PhysicsRaw()->Velocity() == 0 &&*/ x->PhysicsRaw()->Velocity() == 0)
 						continue;
 
 					//Are the objects inside each other right now? (nothing will go fast enough to skip this)
 					std::array<float, 6> lol1 = x->PhysicsRaw()->GetMoveBoundingBox();
-					std::array<float, 6> lol2 = x2->PhysicsRaw()->GetMoveBoundingBox();
+					std::array<float, 6> lol2 = i == 0 ? x2->PhysicsRaw()->GetBoundingBox() : x2->PhysicsRaw()->GetMoveBoundingBox();
 					std::array<float, 6> lol3 = x->PhysicsRaw()->GetEtherealMoveBoundingBox();
-					std::array<float, 6> lol4 = x2->PhysicsRaw()->GetEtherealMoveBoundingBox();
+					std::array<float, 6> lol4 = i == 0 ? x2->PhysicsRaw()->GetEtherealMoveBoundingBox() : x2->PhysicsRaw()->GetEtherealMoveBoundingBox();
 
 					bool absoluteCollision = Physics::Intersect2D(lol1, lol2);
 					bool etherealCollision = Physics::Intersect2D(lol3, lol4);
@@ -775,13 +785,15 @@ namespace Physics_2D {
 					// This is all assuming that the models are 2d, lets make sure that they are
 					assert(lol1.at(AABB::Close) == lol1.at(AABB::Far));
 					assert(lol2.at(AABB::Close) == lol2.at(AABB::Far));
+
+					// if no collision, just skip
 					if (!(abs(lol1.at(AABB::Close) - lol2.at(AABB::Close)) < STAND_HEIGHT && (absoluteCollision || etherealCollision)))
 						continue;
 
 					if (etherealCollision)
 					{
 						ApplyCollision(x->PhysicsRaw(), x2->PhysicsRaw());
-						redo = true;
+						//redo = true;
 					}
 
 					// Shoot out the event cause its touching the player
@@ -791,8 +803,8 @@ namespace Physics_2D {
 				}
 
 			}
-			if (!redo)
-				break;
+			//if (!redo)
+			//	break;
 		}
 
 		//}
