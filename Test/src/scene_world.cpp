@@ -191,11 +191,11 @@ SceneGenData SceneWorld::Update()
 	for (auto &pair : collided)
 	{
 		auto entity = pair.second;
-		// If he wasn't just touched...
-		if (!entity->_justTouched)
-			// ...push back the event
-			for (auto x : *entity->GetQueues())
-				if (x->GetActivationType() == AT_Touch)
+		// ...push back the event
+		for (auto x : *entity->GetQueues())
+			if (x->GetActivationType() == AT_Touch)
+				// If he wasn't just touched...
+				if (!entity->_justTouched || x->GetID() != -1)
 					m_eventManager.PushBack(x);
 
 		entity->_justTouched = true;

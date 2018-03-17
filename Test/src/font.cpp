@@ -247,6 +247,8 @@ void Font::Reset()
 
 void Font::SetText(std::string text, Vector3f location, bool centered, float xBoundry)
 {
+	if (text == _text)
+		return;
 	m_xBndry = xBoundry;
 	m_centered = centered;
 	m_elapsedTime = 0;

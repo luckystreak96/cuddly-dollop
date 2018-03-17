@@ -14,6 +14,7 @@ void GraphicsComponent::SetNewBuffers(std::vector<Vertex>* verts, std::vector<GL
 {
 	m_vertices = std::vector<Vertex>(*verts);
 	m_indices = std::vector<GLuint>(*inds);
+	m_lastMModelSize = 0;
 	SetBuffers();
 }
 

@@ -21,7 +21,7 @@ BattleState SkillMelee::Start(std::vector<Actor_ptr>* targets, std::deque<Actor_
 	_basePos = _owner->_Graphics->GetPos();
 	// INSERT JUMP FOREWARD ANIMATION HERE
 	float distance = _owner->_Fighter->Team == 0 ? 0.7f : -0.7f;
-	bool protector = _targets->at(0)->_Fighter->Protector != NULL;
+	bool protector = _targets->at(0)->_Fighter->Protector != NULL && !_targets->at(0)->_Fighter->Protector->_Fighter->Dead;
 	if (protector)
 		distance *= 2.0f;
 	_anims->push_back(Anim_ptr(new AnimJumpTo(_targets->at(0)->_Graphics->GetPos() - Vector3f(distance, 0, 0), _owner)));

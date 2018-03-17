@@ -533,7 +533,7 @@ namespace Physics_2D {
 				{
 					auto x2 = xs2.second;
 					// We dont want to re-pass the same collision checks
-					if (x2 == x || /*x2->PhysicsRaw()->Velocity() == 0 &&*/ x->PhysicsRaw()->Velocity() == 0)
+					if (x2 == x /*|| x2->PhysicsRaw()->Velocity() == 0 && x->PhysicsRaw()->Velocity() == 0*/)
 						continue;
 
 					//Are the objects inside each other right now? (nothing will go fast enough to skip this)
