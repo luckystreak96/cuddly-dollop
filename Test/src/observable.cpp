@@ -2,15 +2,18 @@
 
 void Observable::UpdateObservers()
 {
-	std::vector<Obs_ptr> to_remove;
+	std::vector<int> to_remove;
+	int i = 0;
 	for (auto& x : _observers)
 	{
 		if (x->_done)
-			to_remove.push_back(x);
+			to_remove.push_back(i);
 		else
 			x->Update();
+
+		i++;
 	}
 
-	for (auto x : to_remove)
-		_observers.erase(std::find(_observers.begin(), _observers.end(), x));
+	for (int prog = to_remove.size() - 1; prog >= 0; prog--)
+		_observers.erase(_observers.begin() + to_remove[prog]);
 }
