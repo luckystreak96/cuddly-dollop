@@ -173,7 +173,11 @@
     <ClInclude Include="src\battleHUD.h" />
     <ClInclude Include="src\fighter.h" />
     <ClInclude Include="src\fontFloat.h" />
+    <ClInclude Include="src\hudComponent.h" />
+    <ClInclude Include="src\hudHealthBar.h" />
     <ClInclude Include="src\localizationData.h" />
+    <ClInclude Include="src\observable.h" />
+    <ClInclude Include="src\observer.h" />
     <ClInclude Include="src\particleManager.h" />
     <ClInclude Include="src\passiveFactory.h" />
     <ClInclude Include="src\passiveSkill.h" />
@@ -284,7 +288,11 @@
     <ClCompile Include="src\battleHUD.cpp" />
     <ClCompile Include="src\fighter.cpp" />
     <ClCompile Include="src\fontFloat.cpp" />
+    <ClCompile Include="src\hudComponent.cpp" />
+    <ClCompile Include="src\hudHealthBar.cpp" />
     <ClCompile Include="src\localizationData.cpp" />
+    <ClCompile Include="src\observable.cpp" />
+    <ClCompile Include="src\observer.cpp" />
     <ClCompile Include="src\particleManager.cpp" />
     <ClCompile Include="src\passiveFactory.cpp" />
     <ClCompile Include="src\passiveSkill.cpp" />

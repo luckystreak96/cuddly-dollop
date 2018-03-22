@@ -5,6 +5,8 @@
 #include <memory>
 #include <vector>
 
+#include "observable.h"
+
 class Stat
 {
 public:
@@ -22,7 +24,7 @@ public:
 	int Modified;
 };
 
-class StatUser
+class StatUser : public Observable
 {
 public:
 	StatUser();
@@ -35,14 +37,21 @@ public:
 	// Doesn't handle level up logic
 	void SetExp(int exp);
 	int GetExp();
+
+	// Endurance
 	void SetEndurance(int endurance);
 	Stat GetEndurance();
 	Stat* GetEndurancePointer();
+
+	// Maxhealth
 	void SetMaxHealth(int maxHealth);
 	Stat GetMaxHealth();
 	Stat* GetMaxHealthPointer();
+
 	// Makes sure current HP isnt greater than the max
 	void CurrentHealthCheck();
+
+	// Reset the modified stats to their base form
 	void ResetRealModified();
 	void ResetModified();
 
@@ -67,6 +76,5 @@ protected:
 	Stat Endurance;
 	void SetDefault();
 };
-
 
 #endif

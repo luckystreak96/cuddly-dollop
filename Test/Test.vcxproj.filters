@@ -111,6 +111,12 @@
     <Filter Include="Source Files\Events">
       <UniqueIdentifier>{d905e1a4-2a0c-4128-9627-94768f8c9250}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Skills">
+      <UniqueIdentifier>{8c87af8a-d957-408f-b504-18ac463ec63f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Skills">
+      <UniqueIdentifier>{ca5aecce-a02b-4bed-9dd0-9a214785aeea}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\scene.h">
@@ -377,13 +383,7 @@
     <ClInclude Include="src\battleManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\skill.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\battleAnimation.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\skillSmack.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\actorFactory.h">
@@ -395,13 +395,7 @@
     <ClInclude Include="src\fontFloat.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\skillHeal.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\animBasic.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\skillMelee.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\battleHUD.h">
@@ -411,9 +405,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\animMoveTo.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\skillProtect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\statUser.h">
@@ -435,6 +426,33 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\localizationData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\skill.h">
+      <Filter>Header Files\Skills</Filter>
+    </ClInclude>
+    <ClInclude Include="src\skillHeal.h">
+      <Filter>Header Files\Skills</Filter>
+    </ClInclude>
+    <ClInclude Include="src\skillMelee.h">
+      <Filter>Header Files\Skills</Filter>
+    </ClInclude>
+    <ClInclude Include="src\skillProtect.h">
+      <Filter>Header Files\Skills</Filter>
+    </ClInclude>
+    <ClInclude Include="src\skillSmack.h">
+      <Filter>Header Files\Skills</Filter>
+    </ClInclude>
+    <ClInclude Include="src\observer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\observable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\hudComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\hudHealthBar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -682,12 +700,6 @@
     <ClCompile Include="src\battleManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\skill.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\skillSmack.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\actorFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -697,13 +709,7 @@
     <ClCompile Include="src\fontFloat.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\skillHeal.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\animBasic.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\skillMelee.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\battleHUD.cpp">
@@ -716,9 +722,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\animMoveTo.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\skillProtect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\battleAnimation.cpp">
@@ -743,6 +746,33 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\localizationData.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\skill.cpp">
+      <Filter>Source Files\Skills</Filter>
+    </ClCompile>
+    <ClCompile Include="src\skillHeal.cpp">
+      <Filter>Source Files\Skills</Filter>
+    </ClCompile>
+    <ClCompile Include="src\skillMelee.cpp">
+      <Filter>Source Files\Skills</Filter>
+    </ClCompile>
+    <ClCompile Include="src\skillProtect.cpp">
+      <Filter>Source Files\Skills</Filter>
+    </ClCompile>
+    <ClCompile Include="src\skillSmack.cpp">
+      <Filter>Source Files\Skills</Filter>
+    </ClCompile>
+    <ClCompile Include="src\observable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\observer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\hudComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\hudHealthBar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

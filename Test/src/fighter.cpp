@@ -98,6 +98,7 @@ Damage Fighter::TakeDamage(Damage& dmg)
 	Health = fmin(MaxHealth.Real, Health);
 	Health = fmax(Health, 0);
 	ApplyLethal();
+	UpdateObservers();
 
 	return dmg;
 }
@@ -110,6 +111,7 @@ Damage Fighter::ApplyHealing(Damage& heal)
 	Health = fmin(MaxHealth.Real, Health);
 	Health = fmax(Health, 0);
 	ApplyLethal();
+	UpdateObservers();
 
 	return heal;
 }
