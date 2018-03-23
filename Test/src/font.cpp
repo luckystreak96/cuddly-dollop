@@ -32,6 +32,8 @@ void Font::Update(double elapsedTime)
 	//For those who hate to wait for the text to draw
 	//if (m_lightSpeed)
 	//	elapsedTime = MaxTime;
+	if (OrthoProjInfo::GetRegularInstance().changed)
+		UpdateModel();
 
 	if (m_elapsedTime < MaxTime)
 		m_elapsedTime += elapsedTime * m_textSpeed;
@@ -242,12 +244,13 @@ void Font::CreateHash() {
 
 void Font::Reset()
 {
+	//m_graphics = NULL;
 	SetText(_text, m_basePosition, m_centered, m_xBndry);
 }
 
 void Font::SetText(std::string text, Vector3f location, bool centered, float xBoundry)
 {
-	if (text == _text)
+	if (text == _text/* && m_graphics*/)
 		return;
 	m_xBndry = xBoundry;
 	m_centered = centered;

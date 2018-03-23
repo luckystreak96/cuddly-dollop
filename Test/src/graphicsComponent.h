@@ -44,7 +44,8 @@ public:
 	std::vector<Mat4f>& GetMModels();
 	void InsertMModels(Transformation& t);
 	void UpdateMModels();
-	void UpdateTranslation();
+	// Returns true if the position changed
+	bool UpdateTranslation();
 	Vector3f& GetPosRef() { return m_pos; }
 	GLuint GetMVBO() { return m_VBO; }
 	Vector3f GetPos();

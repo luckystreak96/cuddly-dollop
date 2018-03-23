@@ -91,8 +91,8 @@ GraphicsComponent::GraphicsComponent(std::vector<Vertex>* verts, std::vector<GLu
 
 void GraphicsComponent::Update()
 {
-	UpdateTranslation();
-	UpdateMModels();
+	if (UpdateTranslation() || m_mmodels.size() == 0 || OrthoProjInfo::GetRegularInstance().changed)
+		UpdateMModels();
 }
 
 void GraphicsComponent::UpdateMModels()
@@ -101,16 +101,21 @@ void GraphicsComponent::UpdateMModels()
 	InsertMModels(m_modelMat);
 }
 
-void GraphicsComponent::UpdateTranslation()
+bool GraphicsComponent::UpdateTranslation()
 {
-	if (m_modelName == "CENTERED_TILE")
-	{
-		Vector3f translation = m_pos + Vector3f(0.5f, 0.5f, 0);
+	Vector3f translation;
 
-		m_modelMat.SetTranslation(translation);
-	}
+	if (m_modelName == "CENTERED_TILE")
+		translation = m_pos + Vector3f(0.5f, 0.5f, 0);
 	else
-		m_modelMat.SetTranslation(m_pos);
+		translation = m_pos;
+
+	if (translation == m_modelMat.GetTranslation())
+		return false;
+
+	m_modelMat.SetTranslation(translation);
+
+	return true;
 }
 
 bool GraphicsComponent::LoadExternalResources()
