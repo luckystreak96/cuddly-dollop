@@ -10,6 +10,7 @@ void BattleHUD::Destroy()
 {
 	for (auto& x : _hudComponents)
 		x->Destroy();
+	_hudComponents.clear();
 }
 
 void BattleHUD::Init(std::vector<Actor_ptr> actors)
@@ -23,7 +24,6 @@ void BattleHUD::Init(std::vector<Actor_ptr> actors)
 		// HEALTH BAR
 		AddActorHealthBar(x, party, enemies);
 	}
-	Update();
 }
 
 
