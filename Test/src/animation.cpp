@@ -16,19 +16,20 @@ void Animation::SetupAnimationMetaData()
 	ssd.data.at(AE_Jump)._end = 3;
 	m_metaData.emplace("res/sprites/entities/entity_slime.png", ssd);
 
+	int moveDelay = 420;
 	// Girl has walk animation
 	ssd.data.at(AE_LeftMove)._start = 2;
 	ssd.data.at(AE_LeftMove)._end = 5;
-	ssd.data.at(AE_LeftMove)._delay = 140;
+	ssd.data.at(AE_LeftMove)._delay = moveDelay;
 	ssd.data.at(AE_RightMove)._start = 2;
 	ssd.data.at(AE_RightMove)._end = 5;
-	ssd.data.at(AE_RightMove)._delay = 140;
+	ssd.data.at(AE_RightMove)._delay = moveDelay;
 	ssd.data.at(AE_UpMove)._start = 2;
 	ssd.data.at(AE_UpMove)._end = 5;
-	ssd.data.at(AE_UpMove)._delay = 140;
+	ssd.data.at(AE_UpMove)._delay = moveDelay;
 	ssd.data.at(AE_DownMove)._start = 2;
 	ssd.data.at(AE_DownMove)._end = 5;
-	ssd.data.at(AE_DownMove)._delay = 140;
+	ssd.data.at(AE_DownMove)._delay = moveDelay;
 	ssd.data.at(AE_Jump) = AnimInfo(AE_Jump, 0, 3, 260);
 	ssd.data.at(AE_Jump)._start = 0;
 	ssd.data.at(AE_Jump)._end = 3;

@@ -94,23 +94,25 @@ void PhysicsComponent::ActionMove(bool up, bool down, bool left, bool right, flo
 	}
 
 	float speed = 1.5f;
+	float speedXPerc = speed * xperc;
+	float speedYPerc = speed * yperc;
 	if (left)
-		m_velocity.x -= speed * xperc;
+		m_velocity.x -= speedXPerc;
 	if (right)
-		m_velocity.x += speed * xperc;
+		m_velocity.x += speedXPerc;
 	if (up)
-		m_velocity.y += speed * yperc;
+		m_velocity.y += speedYPerc;
 	if (down)
-		m_velocity.y -= speed * yperc;
+		m_velocity.y -= speedYPerc;
 
-	if (m_velocity.x > speed * 2)
-		m_velocity.x = speed * 2;
-	if (m_velocity.x < speed * -2)
-		m_velocity.x = speed * -2;
-	if (m_velocity.y > speed * 2)
-		m_velocity.y = speed * 2;
-	if (m_velocity.y < speed * -2)
-		m_velocity.y = speed * -2;
+	if (m_velocity.x > speedXPerc * 2)
+		m_velocity.x = speedXPerc * 2;
+	if (m_velocity.x < speedXPerc * -2)
+		m_velocity.x = speedXPerc * -2;
+	if (m_velocity.y > speedYPerc * 2)
+		m_velocity.y = speedYPerc * 2;
+	if (m_velocity.y < speedYPerc * -2)
+		m_velocity.y = speedYPerc * -2;
 
 	SetMovedBB();
 }

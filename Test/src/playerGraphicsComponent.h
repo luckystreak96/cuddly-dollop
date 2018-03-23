@@ -17,6 +17,7 @@ public:
 	void SetTexture(std::string texture);
 private:
 	bool m_firstLoad;
+	int m_actualDelay;
 };
 
 typedef std::shared_ptr<PlayerGraphicsComponent> PGraphics_ptr;

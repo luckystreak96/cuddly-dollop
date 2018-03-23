@@ -109,6 +109,13 @@ void PlayerGraphicsComponent::Update()
 		else
 			animation = GetMoveDirection((Anim_Enum)((int)m_direction));
 		SetAnimation(animation, m_texture);
+		m_actualDelay = m_delay;
+	}
+
+	if (_animation >= AE_LeftMove && _animation <= AE_UpMove)
+	{
+		float speed = abs(m_vel.x) + abs(m_vel.y);
+		m_delay = speed == 0 ? 1 : m_actualDelay / speed;
 	}
 
 	bool forceUpdate = (dir != m_direction && !_specialAnimation) || (m_direction != m_lastInteraction) || m_firstLoad;
