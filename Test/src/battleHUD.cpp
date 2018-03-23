@@ -48,7 +48,11 @@ void BattleHUD::AddActorHealthBar(Actor_ptr ap, int& party, int& enemies)
 
 void BattleHUD::Update()
 {
-	
+	if (OrthoProjInfo::GetRegularInstance().changed)
+	{
+		Destroy();
+		Init(_actors);
+	}
 }
 
 void BattleHUD::SetRender()
