@@ -137,6 +137,8 @@ void Scene::DrawBegin()
 	// Enable fade
 	if (!m_fade.IsDone())
 		m_fade.Begin();
+
+	Renderer::GetInstance().Setup();
 }
 
 void Scene::DrawEnd()

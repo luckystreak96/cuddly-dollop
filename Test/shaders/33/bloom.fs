@@ -8,11 +8,11 @@ uniform sampler2D gSampler;
 void main()
 {
 	vec4 color = texture(gSampler, TexCoord0.st);
-	float brightness = (color.y * 0.2126) + (color.x * 0.7152) + (color.z * 0.0722);
+	float brightness = (color.y * 0.3126) + (color.x * 0.4152) + (color.z * 0.2722);
 	//can also set up an if brightness < 0.8, FragColor = black
-	if(brightness > 0.6)
+	if(brightness > 0.3)
     {
-    	color.a = brightness;
+    	//color.a = brightness;
 		FragColor = color;
     }
 	else

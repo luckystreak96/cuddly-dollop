@@ -8,7 +8,8 @@
 #include "blurEffect.h"
 #include "post_processing_screen.h"
 
-class Bloom {
+class Bloom 
+{
 public:
 	static Bloom& GetInstance()
 	{

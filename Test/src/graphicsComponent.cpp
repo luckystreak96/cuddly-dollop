@@ -107,6 +107,8 @@ bool GraphicsComponent::UpdateTranslation()
 
 	if (m_modelName == "CENTERED_TILE")
 		translation = m_pos + Vector3f(0.5f, 0.5f, 0);
+	else if (m_modelName == "SCREEN")
+		translation = m_pos/* + Vector3f(0.5f, 0.5f, 0)*/;
 	else
 		translation = m_pos;
 
