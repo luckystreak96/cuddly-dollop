@@ -9,7 +9,7 @@
 #include "input_manager.h"
 
 // MAKE IT BE A CENTERED_TILE AND PLACE IT CORRECTLY OR ITLL BE DUMB AF
-Renderer::Renderer() : m_toDraw(std::vector<GraphicsComponent*>()), m_width(1), m_height(1), m_divisor(4.0f), apply(false)
+Renderer::Renderer() : m_toDraw(std::vector<GraphicsComponent*>()), m_width(1), m_height(1), m_divisor(2.0f), apply(false)
 {
 	pps.GetModelMat()->SetTranslation(0, 0, 0);
 	pps.Update();
@@ -23,28 +23,28 @@ void Renderer::Setup()
 	if (apply)
 	{
 
-	int w, h;
-	glfwGetWindowSize(GLFWManager::m_window, &w, &h);
-	int current_window_width = w;
-	int current_window_height = h;
+		int w, h;
+		glfwGetWindowSize(GLFWManager::m_window, &w, &h);
+		int current_window_width = w;
+		int current_window_height = h;
 
-	//If the window size changes, the fbo texture sizes need to adjust
-	if (m_width != current_window_width || m_height != current_window_height)
-	{
-		m_width = current_window_width;
-		m_height = current_window_height;
-		ResetTextureSizes();
-	}
+		//If the window size changes, the fbo texture sizes need to adjust
+		if (m_width != current_window_width || m_height != current_window_height)
+		{
+			m_width = current_window_width;
+			m_height = current_window_height;
+			ResetTextureSizes();
+		}
 
-	//Setup the tile to draw
-	float size = OrthoProjInfo::GetRegularInstance().Size;
-	float right = OrthoProjInfo::GetRegularInstance().Right;
-	float top = OrthoProjInfo::GetRegularInstance().Top;
-	pps.GetModelMat()->SetScale(Vector3f((right * 2) / size, (top * 2) / size, 1));
-	pps.Update();
+		//Setup the tile to draw
+		float size = OrthoProjInfo::GetRegularInstance().Size;
+		float right = OrthoProjInfo::GetRegularInstance().Right;
+		float top = OrthoProjInfo::GetRegularInstance().Top;
+		pps.GetModelMat()->SetScale(Vector3f((right * 2) / size, (top * 2) / size, 1));
+		pps.Update();
 
-	//FBO
-	m_fbo.bindFrameBuffer();
+		//FBO
+		m_fbo.bindFrameBuffer();
 	}
 
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -70,11 +70,11 @@ void Renderer::ResetTextureSizes()
 }
 
 void Renderer::Add(GraphComp_ptr c)
-{ 
+{
 	m_toDraw.push_back(c.get());
 }
 
-void Renderer::Clear() 
+void Renderer::Clear()
 {
 	m_toDraw.clear();
 }
@@ -102,8 +102,8 @@ void Renderer::Draw()
 	for (auto x : m_toDraw)
 		x->Draw();
 
-	if (apply)
-	{
+	if (!apply)
+		return;
 
 	m_fbo.unbindFrameBuffer();
 
@@ -122,14 +122,14 @@ void Renderer::Draw()
 	//BEGIN BLOOM STAGE
 
 	m_bloom.bindFrameBuffer();
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
-	glBindTexture(GL_TEXTURE_2D, m_fbo.getColourTexture());
 
 	GLuint program = BloomEffect::GetInstance().GetNormal();
 	EffectManager::GetInstance().Enable(E_Bloom, program);
+	glBindTexture(GL_TEXTURE_2D, m_fbo.getColourTexture());
 	pps.Draw(false);
 
 	m_bloom.unbindFrameBuffer();
@@ -142,13 +142,14 @@ void Renderer::Draw()
 	pps.SetPhysics(Vector3f(right / size / m_divisor, top / size / m_divisor, 0), Vector3f());
 	pps.Update();
 
-	m_fbo.bindFrameBuffer();
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	m_gaussH.bindFrameBuffer();
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
-	glBindTexture(GL_TEXTURE_2D, m_bloom.getColourTexture());
 	EffectManager::GetInstance().Enable(E_Blur);
+	glEnable(GL_BLEND);
+	glBindTexture(GL_TEXTURE_2D, m_bloom.getColourTexture());
 	// GLSL 1.1 requires to send texture size to the shader
 	if (Effect::_efctGLVersion.x == 1)
 	{
@@ -160,14 +161,14 @@ void Renderer::Draw()
 	}
 	pps.Draw(false);
 
-	m_fbo.unbindFrameBuffer();
+	m_gaussH.unbindFrameBuffer();
 
 	//END GAUSSIAN HORIZONTAL BLUR
 
 	//BEGIN GAUSSIAN VERTICAL BLUR
 
 	m_gaussV.bindFrameBuffer();
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
@@ -182,7 +183,7 @@ void Renderer::Draw()
 	//BEGIN SECOND GAUSSIAN BLUR (FOR MAXIMUM BLURINESS)
 
 	m_gaussH.bindFrameBuffer();
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
 	glBindTexture(GL_TEXTURE_2D, m_gaussV.getColourTexture());
@@ -191,9 +192,8 @@ void Renderer::Draw()
 
 	m_gaussH.unbindFrameBuffer();
 
-
 	m_gaussV.bindFrameBuffer();
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
 	glBindTexture(GL_TEXTURE_2D, m_gaussH.getColourTexture());
@@ -208,13 +208,13 @@ void Renderer::Draw()
 
 	//END SECOND GAUSSIAN BLUR
 
-	bool test = true;
+	bool test = false;
 
 	if (!test)
 	{
 		//Combine blur with actual frame
 		EffectManager::GetInstance().Enable(E_Combine);
-		float intensity = 0.2f;
+		float intensity = 0.4f;
 		CombineEffect::GetInstance().SetIntensity(intensity);
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, m_gaussV.getColourTexture());
@@ -224,7 +224,7 @@ void Renderer::Draw()
 	else
 	{
 		EffectManager::GetInstance().Enable(E_Basic);
-		glBindTexture(GL_TEXTURE_2D, m_fbo.getColourTexture());
+		glBindTexture(GL_TEXTURE_2D, m_gaussV.getColourTexture());
 	}
 
 	//Draw only base frame
@@ -232,5 +232,4 @@ void Renderer::Draw()
 	pps.Draw(false);
 
 	EffectManager::GetInstance().SetNoTranslateMode(false);
-	}
 }

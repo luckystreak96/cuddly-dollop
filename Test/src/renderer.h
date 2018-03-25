@@ -36,7 +36,7 @@ private:
 
 	// Post processing variables
 	//Decides how much to blur
-	const float m_divisor;
+	float m_divisor;
 
 	int m_width;
 	int m_height;

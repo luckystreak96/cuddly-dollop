@@ -9,8 +9,8 @@ uniform sampler2D gSampler;
 
 uniform bool horizontal;
 
-float weight[6] = float[] (0.092925, 0.09173, 0.090598,	0.095977, 0.09229, 0.09500003);
-//uniform float weight[6] = float[] (0.382925, 0.24173,	0.060598,	0.005977,	0.000229,	0.000003);
+//float weight[6] = float[] (0.092925, 0.09173, 0.090598,	0.095977, 0.09229, 0.09500003);
+float weight[6] = float[] (0.382925, 0.24173,	0.060598,	0.005977,	0.000229,	0.000003);
 
 void main()
 {
@@ -36,6 +36,6 @@ void main()
             result += texture(gSampler, TexCoord0 - vec2(0.0, tex_offset.y * i)).rgb * weight[i];
         }
     }
-    FragColor = vec4(result, 1.0);
-    //FragColor = texture2D(gSampler, TexCoord0.st);
+    //FragColor = vec4(result, 1.0);
+    FragColor = texture2D(gSampler, TexCoord0.st);
 }
