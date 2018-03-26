@@ -39,11 +39,7 @@ private:
 	// Post processing variables
 	int m_width;
 	int m_height;
-	std::shared_ptr<FBO> m_fbo;
-	FBO m_bloom;
-	FBO m_gaussV;
-	FBO m_gaussH;
-	float m_divisor = 2.0f;
+	FBO m_fbo;
 	Post_Processing_Screen pps;
 	bool apply;
 };

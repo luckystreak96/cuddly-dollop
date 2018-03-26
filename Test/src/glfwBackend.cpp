@@ -4,6 +4,7 @@
 #include <IL/ilut.h>
 #include <vector>
 #include <algorithm>
+#include <assert.h>
 #include "game.h"
 #include "input_manager.h"
 #include "gameData.h"
@@ -84,6 +85,39 @@ static void window_size_callback(GLFWwindow* window, int width, int height)
 	Resize(window);
 }
 
+void ETB_GL_ERROR_CALLBACK(GLenum        source,
+	GLenum        type,
+	GLuint        id,
+	GLenum        severity,
+	GLsizei       length,
+	const GLchar* message,
+	GLvoid*       userParam)
+{
+	std::cout << "OpenGL Error:" << std::endl;
+	std::cout << "=============\n" << std::endl;
+
+	std::cout << " Object ID: " << std::endl;
+	std::cout << id << std::endl;
+
+	std::cout << " Severity:  " << std::endl;
+	std::cout << severity << std::endl;
+
+	std::cout << " Type:      " << std::endl;
+	std::cout << type << std::endl;
+
+	std::cout << " Source:    " << std::endl;
+	std::cout << source << std::endl;
+
+	std::cout << " Message:   " << std::endl;
+	std::cout << message << std::endl << std::endl;
+
+	// Trigger a breakpoint in gDEBugger...
+	glFinish();
+
+	// Trigger a breakpoint in traditional debuggers...
+	//assert(false);
+}
+
 GLFWManager::GLFWManager()
 {
 	// Init glfw
@@ -110,6 +144,8 @@ GLFWManager::GLFWManager()
 		// GL Version
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, x.x);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, x.y);
+		glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, 1);
+
 
 		// Create window
 		m_window = glfwCreateWindow(m_screenWidth - 10, m_screenHeight - 80, "Cuddly-Dollop", NULL, NULL);
@@ -170,6 +206,13 @@ GLFWManager::GLFWManager()
 		exit(1);
 	}
 
+
+	if (glDebugMessageCallbackARB != NULL) {
+		// Debug Output is supported, hooray!
+		glDebugMessageControlARB(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, NULL, GL_TRUE);
+		glDebugMessageCallbackARB((GLDEBUGPROCARB)ETB_GL_ERROR_CALLBACK, NULL);
+	}
+
 	glClearStencil(0x0);
 	glEnable(GL_STENCIL_TEST);
 	glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
@@ -189,6 +232,8 @@ GLFWManager::GLFWManager()
 
 	Resize(m_window);
 }
+
+
 
 void GLFWManager::GLFWMainLoop(Game* game)
 {

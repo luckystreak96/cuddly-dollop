@@ -1,6 +1,6 @@
 #version 460
 
-out vec4 FragColor;
+layout(location = 0) out vec4 FragColor;
 in vec2 TexCoord0;
 
 uniform sampler2D gSampler;

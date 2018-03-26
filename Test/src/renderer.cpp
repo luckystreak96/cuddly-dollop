@@ -10,8 +10,7 @@
 #include "input_manager.h"
 
 // MAKE IT BE A CENTERED_TILE AND PLACE IT CORRECTLY OR ITLL BE DUMB AF
-Renderer::Renderer() : m_toDraw(std::vector<GraphicsComponent*>()), m_width(1), m_height(1), apply(false),
-m_fbo(std::make_shared<FBO>(FBO()))
+Renderer::Renderer() : m_toDraw(std::vector<GraphicsComponent*>()), m_width(1), m_height(1), apply(false)
 {
 	pps.GetModelMat()->SetTranslation(0, 0, 0);
 	pps.Update();
@@ -25,6 +24,7 @@ void Renderer::Setup()
 	if (InputManager::GetInstance().FrameKeyStatus(A_Cancel, KeyStatus::KeyPressed))
 		apply = !apply;
 
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 	if (apply)
 	{
 		int w, h;
@@ -54,7 +54,7 @@ void Renderer::Setup()
 		pps.Update();
 
 		//FBO
-		m_fbo->bindFrameBuffer();
+		m_fbo.BindFrameBuffer();
 	}
 
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -71,7 +71,7 @@ void Renderer::Setup()
 
 void Renderer::ResetTextureSizes()
 {
-	m_fbo->resetTextures(m_width, m_height);
+	m_fbo.ResetTextures(m_width, m_height);
 }
 
 void Renderer::Add(GraphComp_ptr c)
@@ -110,7 +110,7 @@ void Renderer::Draw()
 	if (!apply)
 		return;
 
-	m_fbo->unbindFrameBuffer();
+	m_fbo.UnbindFrameBuffer();
 	EffectManager::GetInstance().SetNoTranslateMode(true);
 
 	//END FBO
@@ -126,7 +126,7 @@ void Renderer::Draw()
 
 	// SEND THE IMAGE THROUGH THE PPE, AND THEY SHOULD ALL PUT THEIR RESULT IN M_FBO
 	for (auto& x : m_ppe)
-		x->Apply(&pps, m_fbo.get());
+		x->Apply(&pps, &m_fbo);
 
 	//EffectManager::GetInstance().Enable(E_Basic);
 	//glBindTexture(GL_TEXTURE_2D, m_fbo->getColourTexture());
