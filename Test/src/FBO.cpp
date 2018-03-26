@@ -9,6 +9,8 @@ FBO::FBO(int width, int height, int depthBufferType) {
 	m_width = width;
 	m_height = height;
 	m_depthBufferType = depthBufferType;
+	colourBuffer = 0;
+	m_numColorBuffers = 0;
 	initialiseFrameBuffer(depthBufferType);
 	GLenum status;
 
@@ -86,14 +88,14 @@ void FBO::bindToRead() {
 /**
 * @return The ID of the texture containing the colour buffer of the FBO.
 */
-int FBO::getColourTexture() {
+GLuint FBO::getColourTexture() {
 	return colourTexture;
 }
 
 /**
 * @return The texture containing the FBOs depth buffer.
 */
-int FBO::getDepthTexture() {
+GLuint FBO::getDepthTexture() {
 	return depthTexture;
 }
 

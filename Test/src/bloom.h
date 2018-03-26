@@ -7,31 +7,22 @@
 #include "combineEffect.h"
 #include "blurEffect.h"
 #include "post_processing_screen.h"
+#include "postProcessingEffect.h"
 
-class Bloom 
+#include <memory>
+
+class Bloom : public PostProcessingEffect
 {
 public:
-	static Bloom& GetInstance()
-	{
-		static Bloom instance;
-		return instance;
-	}
-	void Begin();
-	void End(bool dark);
+	Bloom();
+
+	void Apply(Post_Processing_Screen* pps, FBO* fbo);
 	void ResetTextureSizes();
 
 private:
-	Bloom();
-	//Decides how much to blur
-	const float m_divisor = 4.0f;
-
-	int m_width;
-	int m_height;
-	FBO m_fbo;
 	FBO m_bloom;
-	FBO m_gaussV;
 	FBO m_gaussH;
-	Post_Processing_Screen pps;
+	FBO m_gaussV;
 };
 
 #endif

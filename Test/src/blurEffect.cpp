@@ -30,9 +30,9 @@ void BlurEffect::SetWorldPosition(float* mat)
 	glUniformMatrix4fv(GetUniformLocation("gWorld"), 1, GL_TRUE, (const GLfloat*)mat);
 }
 
-void BlurEffect::SetHorizontalBlur(GLboolean hor)
+void BlurEffect::SetHorizontalBlur(bool hor)
 {
-	glUniform1i(GetUniformLocation("horizontal"), hor);
+	glUniform1i(GetUniformLocation("horizontal"), hor == false ? 0 : 1);
 }
 
 void BlurEffect::SetTextureSize(int w, int h)

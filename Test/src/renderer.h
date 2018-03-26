@@ -4,9 +4,11 @@
 //#include "GL/glew.h"
 #include <vector>
 #include <set>
+#include <memory>
 #include "graphicsComponent.h"
 #include "FBO.h"
 #include "post_processing_screen.h"
+#include "postProcessingEffect.h"
 
 class Renderer
 {
@@ -32,18 +34,16 @@ private:
 	static inline bool ComponentSort(GraphicsComponent* i, GraphicsComponent* j) { return PositionSort(i->GetPosRef(), j->GetPosRef()); }
 private:
 	std::vector<GraphicsComponent*> m_toDraw;
-
+	std::vector<std::shared_ptr<PostProcessingEffect>> m_ppe;
 
 	// Post processing variables
-	//Decides how much to blur
-	float m_divisor;
-
 	int m_width;
 	int m_height;
-	FBO m_fbo;
+	std::shared_ptr<FBO> m_fbo;
 	FBO m_bloom;
 	FBO m_gaussV;
 	FBO m_gaussH;
+	float m_divisor = 2.0f;
 	Post_Processing_Screen pps;
 	bool apply;
 };

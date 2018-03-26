@@ -79,12 +79,12 @@ public:
 	/**
 	* @return The ID of the texture containing the colour buffer of the FBO.
 	*/
-	int getColourTexture();
+	GLuint getColourTexture();
 
 	/**
 	* @return The texture containing the FBOs depth buffer.
 	*/
-	int getDepthTexture();
+	GLuint getDepthTexture();
 
 	/**
 	* Creates the FBO along with a colour buffer texture attachment, and

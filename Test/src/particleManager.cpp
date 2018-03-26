@@ -24,7 +24,7 @@ void ParticleManager::AddParticles(Particle_ptr particles)
 
 void ParticleManager::SetRender()
 {
-	for (auto x : m_particles)
+	for (auto& x : m_particles)
 	{
 		x->SetRender();
 	}

@@ -54,6 +54,7 @@ void GraphicsComponent::Construct()
 	m_direction = dir_Down;
 	_instancedDraw = false;
 	m_lastMModelSize = 0;
+	m_mlMatLoc = 0;
 
 	//When this z is small - transparency fucks up????
 	m_pos = Vector3f(0.0f, 0.0f, 0.0f);
@@ -192,11 +193,15 @@ void GraphicsComponent::Draw(bool withTex)
 
 	// Bind texture
 	if (withTex)
-		ResourceManager::GetInstance().GetTexture(m_texture)->Bind(GL_TEXTURE0);
+	{
+		Texture* tex = ResourceManager::GetInstance().GetTexture(m_texture);
+		if (tex)
+			tex->Bind(GL_TEXTURE0);
+	}
 
 	// Bind mmbo
 	glBindBuffer(GL_ARRAY_BUFFER, m_MMBO);
-	if (m_mmodels.size() > m_lastMModelSize)
+	if (m_mmodels.size() * sizeof(Mat4f) > m_lastMModelSize)
 		glBufferData(GL_ARRAY_BUFFER, sizeof(Mat4f) * m_mmodels.size(), &m_mmodels.at(0), GL_DYNAMIC_DRAW);
 	else
 		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(Mat4f) * m_mmodels.size(), &m_mmodels.at(0));

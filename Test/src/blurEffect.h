@@ -13,7 +13,7 @@ public:
 	}
 	bool Init();
 	void SetWorldPosition(float* mat);
-	void SetHorizontalBlur(GLboolean hor);
+	void SetHorizontalBlur(bool hor);
 	void SetTextureSize(int w, int h);
 	void SetModelPosition(float* mat);
 	void SetSize(float* mat);

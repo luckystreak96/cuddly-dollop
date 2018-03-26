@@ -5,14 +5,19 @@
 #include "blurEffect.h"
 #include "combineEffect.h"
 #include "bloomEffect.h"
+#include "bloom.h"
 
 #include "input_manager.h"
 
 // MAKE IT BE A CENTERED_TILE AND PLACE IT CORRECTLY OR ITLL BE DUMB AF
-Renderer::Renderer() : m_toDraw(std::vector<GraphicsComponent*>()), m_width(1), m_height(1), m_divisor(2.0f), apply(false)
+Renderer::Renderer() : m_toDraw(std::vector<GraphicsComponent*>()), m_width(1), m_height(1), apply(false),
+m_fbo(std::make_shared<FBO>(FBO()))
 {
 	pps.GetModelMat()->SetTranslation(0, 0, 0);
 	pps.Update();
+
+	// TEST ERASE ME MAYBE
+	m_ppe.push_back(std::make_shared<Bloom>(Bloom()));
 }
 
 void Renderer::Setup()
@@ -22,7 +27,6 @@ void Renderer::Setup()
 
 	if (apply)
 	{
-
 		int w, h;
 		glfwGetWindowSize(GLFWManager::m_window, &w, &h);
 		int current_window_width = w;
@@ -34,6 +38,12 @@ void Renderer::Setup()
 			m_width = current_window_width;
 			m_height = current_window_height;
 			ResetTextureSizes();
+			for (auto& x : m_ppe)
+			{
+				x->_width = m_width;
+				x->_height= m_height;
+				x->ResetTextureSizes();
+			}
 		}
 
 		//Setup the tile to draw
@@ -44,7 +54,7 @@ void Renderer::Setup()
 		pps.Update();
 
 		//FBO
-		m_fbo.bindFrameBuffer();
+		m_fbo->bindFrameBuffer();
 	}
 
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -57,16 +67,11 @@ void Renderer::Setup()
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glBlendEquationSeparate(GL_FUNC_ADD, GL_FUNC_ADD);
 	glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE);
-
-	//EffectManager::GetInstance().SetNoTranslateMode(true);
 }
 
 void Renderer::ResetTextureSizes()
 {
-	m_fbo.resetTextures(m_width, m_height);
-	m_gaussH.resetTextures(m_width / m_divisor, m_height / m_divisor);
-	m_gaussV.resetTextures(m_width / m_divisor, m_height / m_divisor);
-	m_bloom.resetTextures(m_width, m_height);
+	m_fbo->resetTextures(m_width, m_height);
 }
 
 void Renderer::Add(GraphComp_ptr c)
@@ -105,8 +110,7 @@ void Renderer::Draw()
 	if (!apply)
 		return;
 
-	m_fbo.unbindFrameBuffer();
-
+	m_fbo->unbindFrameBuffer();
 	EffectManager::GetInstance().SetNoTranslateMode(true);
 
 	//END FBO
@@ -115,121 +119,17 @@ void Renderer::Draw()
 	float right = OrthoProjInfo::GetRegularInstance().Right;
 	float top = OrthoProjInfo::GetRegularInstance().Top;
 
-	pps.SetPhysics(Vector3f(right / size, top / size, 0), Vector3f());
-	//pps.GetModelMat()->SetTranslation(0, 0, 0);
-	pps.Update();
-
-	//BEGIN BLOOM STAGE
-
-	m_bloom.bindFrameBuffer();
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-
-
-	GLuint program = BloomEffect::GetInstance().GetNormal();
-	EffectManager::GetInstance().Enable(E_Bloom, program);
-	glBindTexture(GL_TEXTURE_2D, m_fbo.getColourTexture());
-	pps.Draw(false);
-
-	m_bloom.unbindFrameBuffer();
-
-	//END BLOOM STAGE
-
-	//BEGIN GAUSSIAN HORIZONTAL BLUR
-
-	pps.GetModelMat()->SetScale(Vector3f((right * 2.f) / size / m_divisor, (top * 2.f) / size / m_divisor, 1));
-	pps.SetPhysics(Vector3f(right / size / m_divisor, top / size / m_divisor, 0), Vector3f());
-	pps.Update();
-
-	m_gaussH.bindFrameBuffer();
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-
-	EffectManager::GetInstance().Enable(E_Blur);
-	glEnable(GL_BLEND);
-	glBindTexture(GL_TEXTURE_2D, m_bloom.getColourTexture());
-	// GLSL 1.1 requires to send texture size to the shader
-	if (Effect::_efctGLVersion.x == 1)
-	{
-		int w, h;
-		int miplevel = 0;
-		glGetTexLevelParameteriv(GL_TEXTURE_2D, miplevel, GL_TEXTURE_WIDTH, &w);
-		glGetTexLevelParameteriv(GL_TEXTURE_2D, miplevel, GL_TEXTURE_HEIGHT, &h);
-		BlurEffect::GetInstance().SetTextureSize(w, h);
-	}
-	pps.Draw(false);
-
-	m_gaussH.unbindFrameBuffer();
-
-	//END GAUSSIAN HORIZONTAL BLUR
-
-	//BEGIN GAUSSIAN VERTICAL BLUR
-
-	m_gaussV.bindFrameBuffer();
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-
-	glBindTexture(GL_TEXTURE_2D, m_gaussH.getColourTexture());
-	BlurEffect::GetInstance().SetHorizontalBlur(false);
-	pps.Draw(false);
-
-	m_gaussV.unbindFrameBuffer();
-
-	//END GAUSSIAN VERTICAL BLUR
-
-	//BEGIN SECOND GAUSSIAN BLUR (FOR MAXIMUM BLURINESS)
-
-	m_gaussH.bindFrameBuffer();
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-
-	glBindTexture(GL_TEXTURE_2D, m_gaussV.getColourTexture());
-	BlurEffect::GetInstance().SetHorizontalBlur(true);
-	pps.Draw(false);
-
-	m_gaussH.unbindFrameBuffer();
-
-	m_gaussV.bindFrameBuffer();
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-
-	glBindTexture(GL_TEXTURE_2D, m_gaussH.getColourTexture());
-	BlurEffect::GetInstance().SetHorizontalBlur(false);
-	pps.Draw(false);
-
-	m_gaussV.unbindFrameBuffer();
-
-	pps.GetModelMat()->SetScale(Vector3f((right * 2) / size, (top * 2) / size, 1));
+	//pps.GetModelMat()->SetScale(Vector3f((right * 2) / size, (top * 2) / size, 1));
 	pps.SetPhysics(Vector3f(right / size, top / size, 0), Vector3f());
 	pps.Update();
 
-	//END SECOND GAUSSIAN BLUR
 
-	bool test = false;
+	// SEND THE IMAGE THROUGH THE PPE, AND THEY SHOULD ALL PUT THEIR RESULT IN M_FBO
+	for (auto& x : m_ppe)
+		x->Apply(&pps, m_fbo.get());
 
-	if (!test)
-	{
-		//Combine blur with actual frame
-		EffectManager::GetInstance().Enable(E_Combine);
-		float intensity = 0.4f;
-		CombineEffect::GetInstance().SetIntensity(intensity);
-		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, m_gaussV.getColourTexture());
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, m_fbo.getColourTexture());
-	}
-	else
-	{
-		EffectManager::GetInstance().Enable(E_Basic);
-		glBindTexture(GL_TEXTURE_2D, m_gaussV.getColourTexture());
-	}
-
-	//Draw only base frame
-
-	pps.Draw(false);
-
+	//EffectManager::GetInstance().Enable(E_Basic);
+	//glBindTexture(GL_TEXTURE_2D, m_fbo->getColourTexture());
+	//pps.Draw(false);
 	EffectManager::GetInstance().SetNoTranslateMode(false);
 }
