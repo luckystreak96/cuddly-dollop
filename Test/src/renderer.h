@@ -8,7 +8,7 @@
 #include "graphicsComponent.h"
 #include "FBO.h"
 #include "post_processing_screen.h"
-#include "postProcessingEffect.h"
+#include "postProcessing.h"
 
 class Renderer
 {
@@ -34,7 +34,7 @@ private:
 	static inline bool ComponentSort(GraphicsComponent* i, GraphicsComponent* j) { return PositionSort(i->GetPosRef(), j->GetPosRef()); }
 private:
 	std::vector<GraphicsComponent*> m_toDraw;
-	std::vector<std::shared_ptr<PostProcessingEffect>> m_ppe;
+	std::vector<std::shared_ptr<PostProcessing>> m_ppe;
 
 	// Post processing variables
 	int m_width;

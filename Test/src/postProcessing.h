@@ -4,10 +4,10 @@
 #include "post_processing_screen.h"
 #include "FBO.h"
 
-class PostProcessingEffect
+class PostProcessing
 {
 public:
-	PostProcessingEffect();
+	PostProcessing();
 	virtual void Apply(Post_Processing_Screen* screen, FBO* fbo) = 0;
 	virtual void ResetTextureSizes() = 0;
 public:

@@ -1,28 +1,23 @@
-#ifndef BLOOM_H_
-#define BLOOM_H_
+#ifndef CONTRAST_PROCESSING_H_
+#define CONTRAST_PROCESSING_H_
 
 #include "FBO.h"
 #include "basicEffect.h"
-#include "bloomEffect.h"
-#include "combineEffect.h"
-#include "blurEffect.h"
 #include "post_processing_screen.h"
 #include "postProcessing.h"
 
 #include <memory>
 
-class Bloom : public PostProcessing
+class ContrastProcessing : public PostProcessing
 {
 public:
-	Bloom();
+	ContrastProcessing();
 
 	void Apply(Post_Processing_Screen* pps, FBO* fbo);
 	void ResetTextureSizes();
 
 private:
-	FBO m_bloom;
-	FBO m_gaussH;
-	FBO m_gaussV;	
+	FBO m_contrast;
 };
 
 #endif

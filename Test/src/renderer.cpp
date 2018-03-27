@@ -6,6 +6,7 @@
 #include "combineEffect.h"
 #include "bloomEffect.h"
 #include "bloom.h"
+#include "contrastProcessing.h"
 
 #include "input_manager.h"
 
@@ -17,6 +18,7 @@ Renderer::Renderer() : m_toDraw(std::vector<GraphicsComponent*>()), m_width(1), 
 
 	// TEST ERASE ME MAYBE
 	m_ppe.push_back(std::make_shared<Bloom>(Bloom()));
+	//m_ppe.push_back(std::make_shared<ContrastProcessing>(ContrastProcessing()));
 }
 
 void Renderer::Setup()
@@ -41,7 +43,7 @@ void Renderer::Setup()
 			for (auto& x : m_ppe)
 			{
 				x->_width = m_width;
-				x->_height= m_height;
+				x->_height = m_height;
 				x->ResetTextureSizes();
 			}
 		}
@@ -50,23 +52,19 @@ void Renderer::Setup()
 		float size = OrthoProjInfo::GetRegularInstance().Size;
 		float right = OrthoProjInfo::GetRegularInstance().Right;
 		float top = OrthoProjInfo::GetRegularInstance().Top;
+
+		int screenW, screenH;
+		glfwGetWindowSize(GLFWManager::m_window, &screenW, &screenH);
+		glViewport((screenW - right * 2) / 2, (screenH - top * 2) / 2, (GLsizei)(right * 2), (GLsizei)(top * 2));
+
 		pps.GetModelMat()->SetScale(Vector3f((right * 2) / size, (top * 2) / size, 1));
 		pps.Update();
 
 		//FBO
 		m_fbo.BindFrameBuffer();
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 	}
 
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-	glEnable(GL_STENCIL_TEST);
-	glStencilMask(0xFF);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-	glStencilMask(0x00);
-	glStencilFunc(GL_ALWAYS, 1, 0xFF);
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glBlendEquationSeparate(GL_FUNC_ADD, GL_FUNC_ADD);
-	glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE);
 }
 
 void Renderer::ResetTextureSizes()
@@ -128,8 +126,8 @@ void Renderer::Draw()
 	for (auto& x : m_ppe)
 		x->Apply(&pps, &m_fbo);
 
-	//EffectManager::GetInstance().Enable(E_Basic);
-	//glBindTexture(GL_TEXTURE_2D, m_fbo->getColourTexture());
-	//pps.Draw(false);
+	EffectManager::GetInstance().Enable(E_Basic);
+	glBindTexture(GL_TEXTURE_2D, m_fbo.GetColourTexture());
+	pps.Draw(false);
 	EffectManager::GetInstance().SetNoTranslateMode(false);
 }

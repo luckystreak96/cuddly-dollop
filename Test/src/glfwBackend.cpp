@@ -15,6 +15,8 @@ bool GLFWManager::_joyStickMode = false;
 
 void Resize(GLFWwindow* window)
 {
+	const int offsetX = 480;
+	const int offsetY = 270;
 	const int width = 16;
 	const int height = 9;
 	const int size = 32;
@@ -25,8 +27,8 @@ void Resize(GLFWwindow* window)
 	int screenW, screenH;
 	glfwGetWindowSize(window, &screenW, &screenH);
 
-	multiplierx = (float)screenW / 480.f;
-	multipliery = (float)screenH / 270.f;
+	multiplierx = (float)screenW / (float)offsetX;
+	multipliery = (float)screenH / (float)offsetY;
 	multiplierFinal = (int)(fmin(multiplierx, multipliery));
 
 	int viewW, viewH;
@@ -44,7 +46,14 @@ void Resize(GLFWwindow* window)
 		viewH = h;
 		viewW = w;
 	}
-	glViewport((screenW - viewW) / 2, (screenH - viewH) / 2, (GLsizei)(viewW), (GLsizei)(viewH));
+	else 
+	{
+		viewH = multiplierFinal * offsetY;
+		viewW = multiplierFinal * offsetX;
+		glfwSetWindowSize(GLFWManager::m_window, viewW, viewH);
+	}
+	//glViewport((screenW - viewW) / 2, (screenH - viewH) / 2, (GLsizei)(viewW), (GLsizei)(viewH));
+	glViewport(0, 0, (GLsizei)(viewW), (GLsizei)(viewH));
 	OrthoProjInfo::GetRegularInstance().Bottom = -(viewH / 2.0f);
 	OrthoProjInfo::GetRegularInstance().Top = (viewH / 2.0f);
 	OrthoProjInfo::GetRegularInstance().Left = -(viewW / 2.0f);
@@ -213,6 +222,9 @@ GLFWManager::GLFWManager()
 		glDebugMessageCallbackARB((GLDEBUGPROCARB)ETB_GL_ERROR_CALLBACK, NULL);
 	}
 
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_FRONT);
+
 	glClearStencil(0x0);
 	glEnable(GL_STENCIL_TEST);
 	glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
@@ -220,11 +232,13 @@ GLFWManager::GLFWManager()
 	//glStencilMask(0x00);
 
 	glClearColor(0.05f, 0.05f, 0.05f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glBlendEquationSeparate(GL_FUNC_ADD, GL_FUNC_ADD);
 	glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
+	//glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE);
 
 	glfwSwapInterval(1);
 

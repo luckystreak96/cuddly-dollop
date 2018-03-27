@@ -1,14 +1,14 @@
-#ifndef TRANSPARENCY_EFFECT_H__
-#define TRANSPARENCY_EFFECT_H__
+#ifndef CONTRAST_EFFECT_H__
+#define CONTRAST_EFFECT_H__
 
 #include "effect.h"
 
-class TransparencyEffect : public Effect
+class ContrastEffect : public Effect
 {
 public:
-	static TransparencyEffect& GetInstance()
+	static ContrastEffect& GetInstance()
 	{
-		static TransparencyEffect instance;
+		static ContrastEffect instance;
 		return instance;
 	}
 	bool Init();
@@ -16,7 +16,7 @@ public:
 	void SetModelPosition(float* mat);
 	void SetSize(float* mat);
 private:
-	TransparencyEffect();
+	ContrastEffect();
 };
 
 #endif // !BASIC_EFFECT_H__

@@ -215,12 +215,6 @@
     <ClInclude Include="src\bloom.h">
       <Filter>Header Files\Engine\Graphics\PostProcessing</Filter>
     </ClInclude>
-    <ClInclude Include="src\transparencyEffect.h">
-      <Filter>Header Files\Effects</Filter>
-    </ClInclude>
-    <ClInclude Include="src\postProcessingEffect.h">
-      <Filter>Header Files\Effects</Filter>
-    </ClInclude>
     <ClInclude Include="src\entity.h">
       <Filter>Header Files\Entity-Component</Filter>
     </ClInclude>
@@ -455,6 +449,15 @@
     <ClInclude Include="src\hudHealthBar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\postProcessing.h">
+      <Filter>Header Files\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\contrastProcessing.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\contrastEffect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -582,9 +585,6 @@
     </ClCompile>
     <ClCompile Include="src\audioComponent.cpp">
       <Filter>Source Files\Entity-Component\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="src\postProcessingEffect.cpp">
-      <Filter>Source Files\Effects</Filter>
     </ClCompile>
     <ClCompile Include="src\renderer.cpp">
       <Filter>Source Files\Engine\Graphics</Filter>
@@ -773,6 +773,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\hudHealthBar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\postProcessing.cpp">
+      <Filter>Source Files\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\contrastProcessing.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\contrastEffect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

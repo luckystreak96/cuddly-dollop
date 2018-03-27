@@ -171,6 +171,8 @@
     <ClInclude Include="src\animMoveTo.h" />
     <ClInclude Include="src\battleData.h" />
     <ClInclude Include="src\battleHUD.h" />
+    <ClInclude Include="src\contrastEffect.h" />
+    <ClInclude Include="src\contrastProcessing.h" />
     <ClInclude Include="src\fighter.h" />
     <ClInclude Include="src\fontFloat.h" />
     <ClInclude Include="src\hudComponent.h" />
@@ -254,7 +256,7 @@
     <ClInclude Include="src\playerGraphicsComponent.h" />
     <ClInclude Include="src\playerInputComponent.h" />
     <ClInclude Include="src\playerPhysicsComponent.h" />
-    <ClInclude Include="src\postProcessingEffect.h" />
+    <ClInclude Include="src\postProcessing.h" />
     <ClInclude Include="src\post_processing_screen.h" />
     <ClInclude Include="src\renderer.h" />
     <ClInclude Include="src\resource_loader.h" />
@@ -273,7 +275,6 @@
     <ClInclude Include="src\texture.h" />
     <ClInclude Include="src\textureatlas.h" />
     <ClInclude Include="src\transform.h" />
-    <ClInclude Include="src\transparencyEffect.h" />
     <ClInclude Include="src\utils.h" />
     <ClInclude Include="src\vector3f.h" />
     <ClInclude Include="src\vertex.h" />
@@ -286,6 +287,8 @@
     <ClCompile Include="src\battleAnimation.cpp" />
     <ClCompile Include="src\battleData.cpp" />
     <ClCompile Include="src\battleHUD.cpp" />
+    <ClCompile Include="src\contrastEffect.cpp" />
+    <ClCompile Include="src\contrastProcessing.cpp" />
     <ClCompile Include="src\fighter.cpp" />
     <ClCompile Include="src\fontFloat.cpp" />
     <ClCompile Include="src\hudComponent.cpp" />
@@ -365,7 +368,7 @@
     <ClCompile Include="src\playerGraphicsComponent.cpp" />
     <ClCompile Include="src\playerInputComponent.cpp" />
     <ClCompile Include="src\playerPhysicsComponent.cpp" />
-    <ClCompile Include="src\postProcessingEffect.cpp" />
+    <ClCompile Include="src\postProcessing.cpp" />
     <ClCompile Include="src\post_processing_screen.cpp" />
     <ClCompile Include="src\renderer.cpp" />
     <ClCompile Include="src\resource_loader.cpp" />
