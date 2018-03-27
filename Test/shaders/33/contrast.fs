@@ -12,7 +12,9 @@ void main()
 	vec4 color = texture2D(gSampler, TexCoord0.st);
 
 	// Modify color here
-	color.r += 0.1;
+	//color.r += 0.1;
+	float Contrast = 1.2;
+	color.rgb = ((color.rgb - 0.5) * max(Contrast, 0)) + 0.5;
 
 	FragColor = color;
 }

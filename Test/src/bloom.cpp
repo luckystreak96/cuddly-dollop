@@ -2,24 +2,15 @@
 #include "glfwBackend.h"
 #include "effectManager.h"
 
+// The poor GPU can be saved by increasing m_divisor in postProcessing.cpp
+// However, it makes some complicated business cuz the textures become too small, as is visible when you try it.
+
 Bloom::Bloom() : PostProcessing()
 {
 }
 
 void Bloom::Apply(Post_Processing_Screen* pps, FBO* fbo)
 {
-	EffectManager::GetInstance().SetNoTranslateMode(true);
-
-	//END FBO
-
-	float size = OrthoProjInfo::GetRegularInstance().Size;
-	float right = OrthoProjInfo::GetRegularInstance().Right;
-	float top = OrthoProjInfo::GetRegularInstance().Top;
-
-	pps->SetPhysics(Vector3f(right / size, top / size, 0), Vector3f());
-	pps->GetModelMat()->SetScale(Vector3f((right * 2.f) / size, (top * 2.f) / size, 1));
-	pps->Update();
-
 	//BEGIN BLOOM STAGE
 
 	m_bloom.BindFrameBuffer();

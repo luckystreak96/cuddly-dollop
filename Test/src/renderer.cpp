@@ -18,7 +18,7 @@ Renderer::Renderer() : m_toDraw(std::vector<GraphicsComponent*>()), m_width(1), 
 
 	// TEST ERASE ME MAYBE
 	m_ppe.push_back(std::make_shared<Bloom>(Bloom()));
-	//m_ppe.push_back(std::make_shared<ContrastProcessing>(ContrastProcessing()));
+	m_ppe.push_back(std::make_shared<ContrastProcessing>(ContrastProcessing()));
 }
 
 void Renderer::Setup()
@@ -53,10 +53,7 @@ void Renderer::Setup()
 		float right = OrthoProjInfo::GetRegularInstance().Right;
 		float top = OrthoProjInfo::GetRegularInstance().Top;
 
-		int screenW, screenH;
-		glfwGetWindowSize(GLFWManager::m_window, &screenW, &screenH);
-		glViewport((screenW - right * 2) / 2, (screenH - top * 2) / 2, (GLsizei)(right * 2), (GLsizei)(top * 2));
-
+		pps.SetPhysics(Vector3f(right / size, top / size, 0), Vector3f());
 		pps.GetModelMat()->SetScale(Vector3f((right * 2) / size, (top * 2) / size, 1));
 		pps.Update();
 
@@ -109,18 +106,10 @@ void Renderer::Draw()
 		return;
 
 	m_fbo.UnbindFrameBuffer();
+
 	EffectManager::GetInstance().SetNoTranslateMode(true);
 
 	//END FBO
-
-	float size = OrthoProjInfo::GetRegularInstance().Size;
-	float right = OrthoProjInfo::GetRegularInstance().Right;
-	float top = OrthoProjInfo::GetRegularInstance().Top;
-
-	//pps.GetModelMat()->SetScale(Vector3f((right * 2) / size, (top * 2) / size, 1));
-	pps.SetPhysics(Vector3f(right / size, top / size, 0), Vector3f());
-	pps.Update();
-
 
 	// SEND THE IMAGE THROUGH THE PPE, AND THEY SHOULD ALL PUT THEIR RESULT IN M_FBO
 	for (auto& x : m_ppe)
