@@ -30,17 +30,19 @@ struct Particle
 	std::string texture;
 	PhysicsComponent physics;
 	Vector3f position;
+	Vector3f size;
 	Vector3f velocity;
+	Mat4f matrix;
 	float counter;
 	bool done;
 	virtual void Update(Vector3f& mapSize) {};
 	virtual void ResetLocation(Vector3f& mapSize, bool firstSpawn = false, bool smooth = false) {};
 	virtual void SetTrans(Transformation& trans) {};
+	virtual Mat4f& GetTrans() { return matrix; }
 };
 
 struct Snow : public Particle
 {
-	float size;
 	Snow(Vector3f zoneSize, bool smooth = false);
 	void Update(Vector3f& mapSize);
 	void ResetLocation(Vector3f& mapSize, bool firstSpawn = false, bool smooth = false);
@@ -49,7 +51,6 @@ struct Snow : public Particle
 
 struct Leaf : public Particle
 {
-	float size;
 	Leaf(Vector3f zoneSize, bool smooth = false);
 	void Update(Vector3f& mapSize);
 	void ResetLocation(Vector3f& mapSize, bool firstSpawn = false, bool smooth = false);
@@ -112,6 +113,7 @@ private:
 	GraphComp_ptr m_graphics = NULL;
 	int m_MBO_instances;
 	unsigned int m_id;
+	size_t m_prevModels;
 	std::string m_texture;
 	float m_power;
 	// The width height and depth of the map in tiles

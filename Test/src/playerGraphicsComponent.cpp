@@ -4,6 +4,7 @@
 
 PlayerGraphicsComponent::PlayerGraphicsComponent(std::string tex, std::string model) : GraphicsComponent(model, tex), m_firstLoad(true)
 {
+	_updateMModels = true;
 	m_modelName = model;
 	m_texture = tex;
 	SetWidthHeight(tex);

@@ -90,7 +90,7 @@ void MapHandler::Update(bool forced)
 	//	I USE THE MATRIX INSTEAD OF MULTIPLYING THE OTHER OBJECTS VERTEX POS BY THEIR POS.
 	if (m_graphics->GetMModels().size() == 0 || forced)
 	{
-		m_graphics->GetMModels().clear();
+		m_graphics->ClearMModels();
 		for (auto x : m_tiles)
 		{
 			Vector3f pos = x->Physics()->Position();

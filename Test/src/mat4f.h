@@ -25,6 +25,8 @@ class Mat4f
         void InitTranslateMat(Vector3f &translation);
         void InitRotateMat(Vector3f &rot);
 
+		void SetTranslation(Vector3f& trans);
+
         void InitProjPers(PersProjInfo p);
         void InitOrthoProj(OrthoProjInfo o);
 

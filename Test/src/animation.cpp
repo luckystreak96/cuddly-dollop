@@ -3,6 +3,12 @@
 
 int Animation::m_progress = 0;
 std::map<std::string, SpriteSheetData> Animation::m_metaData = std::map<std::string, SpriteSheetData>();
+std::vector<Vector2f> Animation::m_baseTexCoords = {
+	Vector2f(0, 0),
+	Vector2f(1, 0),
+	Vector2f(0, 1),
+	Vector2f(1, 1)
+};
 
 void Animation::SetupAnimationMetaData()
 {
@@ -111,13 +117,6 @@ void Animation::SetAnimation(Anim_Enum anim, std::string spritesheet)
 
 bool Animation::SetTileModelTC(std::vector<Vertex>* verts, bool forceUpdate)
 {
-	const std::vector<Vector2f> vecs = {
-	Vector2f(0, 0),
-	Vector2f(1, 0),
-	Vector2f(0, 1),
-	Vector2f(1, 1)
-	};
-
 	int next = ((m_progress - m_tracking) % (m_delay * m_numFrames)) / m_delay + m_start;
 	if (_sprite == next && !forceUpdate && !_specialAnimation)
 		return false;
@@ -137,8 +136,8 @@ bool Animation::SetTileModelTC(std::vector<Vertex>* verts, bool forceUpdate)
 
 	for (int i = 0; i < verts->size(); i++)
 	{
-		verts->at(i).tex.x = vecs[i].x == 0 ? x + halfPixX : x + x_increment - halfPixX;
-		verts->at(i).tex.y = vecs[i].y == 0 ? y + halfpixY : y + y_increment - halfpixY;
+		verts->at(i).tex.x = m_baseTexCoords[i].x == 0 ? x + halfPixX : x + x_increment - halfPixX;
+		verts->at(i).tex.y = m_baseTexCoords[i].y == 0 ? y + halfpixY : y + y_increment - halfpixY;
 	}
 	return true;
 }

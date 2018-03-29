@@ -98,8 +98,10 @@ bool InputManager::FrameKeyStatus(unsigned int key, KeyStatus status, unsigned i
 
 std::list<std::pair<unsigned int, KeyStatus>> InputManager::GetKeys()
 {
-	std::list<std::pair<unsigned int, KeyStatus>> temp = std::list<std::pair<unsigned int, KeyStatus>>(m_inputQueue);
-	m_inputQueue = std::list<std::pair<unsigned int, KeyStatus>>();
+	if (m_inputQueue.size() == 0)
+		return m_inputQueue;
+	std::list<std::pair<unsigned int, KeyStatus>> temp = std::move(m_inputQueue);
+	m_inputQueue.clear();
 	return temp;
 }
 

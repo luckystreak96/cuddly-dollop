@@ -349,7 +349,7 @@ void Font::UpdateModel()
 {
 	if (m_graphics)
 	{
-		m_graphics->GetMModels().clear();
+		m_graphics->ClearMModels();
 		for (auto x : m_letterPositions)
 		{
 			Transformation t;

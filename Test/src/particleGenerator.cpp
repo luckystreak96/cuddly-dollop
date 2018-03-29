@@ -1,6 +1,7 @@
 #include "particleGenerator.h"
 #include "define.h"
 #include <thread>
+#include "mathutils.h"
 
 ParticleGenerator::ParticleGenerator() : m_mesh(Mesh()), m_power(2.0f), completed(false)
 {
@@ -9,7 +10,7 @@ ParticleGenerator::ParticleGenerator() : m_mesh(Mesh()), m_power(2.0f), complete
 
 Particle::Particle()
 	: physics(PhysicsComponent(Vector3f(0, 0, 0.6f), "CENTERED_PARTICLE_TILE")),
-	texture("snowflake.png"), position(Vector3f(0, 0, 0.6f)), done(false)
+	texture("snowflake.png"), position(Vector3f(0, 0, 0.6f)), done(false), size(Vector3f(1, 1, 1))
 {
 }
 
@@ -28,7 +29,9 @@ void Snow::Update(Vector3f& zoneSize)
 Snow::Snow(Vector3f zoneSize, bool smooth)
 {
 	texture = "snowflake.png";
-	size = fmod((float)rand() / 10.f, 0.1f) + 0.2f;
+	float snowSize = fmod((float)rand() / 10.f, 0.1f) + 0.2f;
+	size.x = snowSize;
+	size.y = snowSize;
 	ResetLocation(zoneSize, true, smooth);
 }
 
@@ -46,7 +49,7 @@ void Snow::ResetLocation(Vector3f& zoneSize, bool firstSpawn, bool smooth)
 	position.x = fmod(((float)rand() / 1000.0f), zoneSize.x + 2.0f) - 2.0f;
 	position.y = fmod(rand() / 1000.0f, ((firstSpawn ? (int)zoneSize.y * 2 : (int)zoneSize.y))) + (firstSpawn ? 0 : zoneSize.y);
 	velocity.y = -fmod(((float)rand() / 1000.0f), 0.003f) - 0.003f;
-	velocity.y *= pow(size * 10.f, 2);
+	velocity.y *= pow(size.x * 10.f, 2);
 	float value = fmod(((float)rand() / 1000.0f), 0.1f);
 	velocity.x = (rand() % 2) == 0 ? value : -value;
 }
@@ -54,7 +57,8 @@ void Snow::ResetLocation(Vector3f& zoneSize, bool firstSpawn, bool smooth)
 void Snow::SetTrans(Transformation& trans)
 {
 	trans.SetRotation(0, 0, counter * 10);
-	trans.SetScale(Vector3f(size, size, 0.3f));
+	// Maybe the 0.3 z-scale is supposed to be useful?
+	trans.SetScale(size/*Vector3f(size, size, 0.3f)*/);
 }
 
 
@@ -90,17 +94,17 @@ void Leaf::ResetLocation(Vector3f& zoneSize, bool firstSpawn, bool smooth)
 	position.x = fmod(((float)rand() / 1000.0f), zoneSize.x + 2.0f) - 2.0f;
 	position.y = fmod(rand() / 1000.0f, ((firstSpawn ? (int)zoneSize.y * 2 : (int)zoneSize.y))) + (firstSpawn ? 0 : zoneSize.y);
 	velocity.y = -fmod(((float)rand() / 1000.0f), 0.003f) - 0.003f;
-	velocity.y *= pow(size * 10.f, 2);
+	velocity.y *= pow(size.x * 10.f, 2);
 	float value = fmod(((float)rand() / 1000.0f), 0.1f);
 	velocity.x = (rand() % 2) == 0 ? value : -value;
 	int random = rand();
-	if(random % 5 == 0)
+	if (random % 5 == 0)
 		physics.SetColorAll(Vector3f(0, 0.5f, 0.1f), 1.0f);
-	else if(random % 4 == 0)
+	else if (random % 4 == 0)
 		physics.SetColorAll(Vector3f(0, 0.9f, 0.03f), 1.0f);
-	else if(random % 3 == 0)
+	else if (random % 3 == 0)
 		physics.SetColorAll(Vector3f(0.65f, 0.82f, 0.02f), 1.0f);
-	else if(random % 2 == 0)
+	else if (random % 2 == 0)
 		physics.SetColorAll(Vector3f(1.0f, 0.85f, 0.02f), 1.0f);
 	else
 		physics.SetColorAll(Vector3f(0.8f, 0.8f, 0.1f), 1.0f);
@@ -109,7 +113,8 @@ void Leaf::ResetLocation(Vector3f& zoneSize, bool firstSpawn, bool smooth)
 void Leaf::SetTrans(Transformation& trans)
 {
 	trans.SetRotation(0, 0, counter * 10);
-	trans.SetScale(Vector3f(size, size, 0.3f));
+	// Maybe the 0.3 z-scale was useful for something?
+	trans.SetScale(size/*Vector3f(size, size, 0.3f)*/);
 }
 
 //========= RAIN ============
@@ -316,7 +321,7 @@ void ParticleGenerator::SetupMesh()
 	m_mesh.Reset();
 	//m_mesh._instancedDraw = true;
 	std::sort(m_particles.begin(), m_particles.end(), ParticleSort);
-	for (auto t : m_particles)
+	for (auto& t : m_particles)
 	{
 		std::vector<Vertex> verts = t->physics.GetVertices();
 		m_mesh.AddToMesh(verts, t->physics.GetIndices(), t->physics.GetHighestIndex(), t->position, t->texture);
@@ -349,15 +354,50 @@ void ParticleGenerator::LogicUpdate()
 	//	THE Z ACCORDINGLY. THIS IS DONE THIS WAY BECAUSE OF MESHES, THEY CALCULATE POS AHEAD OF
 	//	TIME AND CHANGE THE VERTEX POSITIONS -- BUT NOT ANY OTHER OBJECT. TO KEEP THE Z CONSISTENT,
 	//	I USE THE MATRIX INSTEAD OF MULTIPLYING THE OTHER OBJECTS VERTEX POS BY THEIR POS.
+	//int onCam = 0;
+	//int notOnCam = 0;
+	//int total = m_particles.size();
 
-	m_graphics->GetMModels().clear();
-
-	Transformation t;
-	for (auto &x : m_particles)
+	// if the number of particles is still the same, update the mmodels instead of re-inserting them
+	m_prevModels = m_graphics->GetMModels().size();
+	if (m_prevModels / 4 == m_particles.size())
 	{
-		t.SetTranslation(x->position);
-		x->SetTrans(t);
-		m_graphics->InsertMModels(t);
+		Transformation t;
+		for (int i = 0; i < m_particles.size(); i++)
+		{
+			auto& x = m_particles[i];
+			// If its on camera, update everything like normal
+			if (Camera::IsOnCamera(x->position, x->size))
+			{
+				//onCam++;
+				t.SetTranslation(x->position);
+				x->SetTrans(t);
+				m_graphics->InsertMModels(t, i);
+			}
+			// if its not on camera, hide the particle and make a cheap update
+			// needs to be hidden otherwise the modelMat doesnt change and itll stay frozen on screen until
+			//	it comes back into view (logic-wise)
+			else
+			{
+				if (x->matrix.m[2][3] == -100)
+					continue;
+				x->matrix.m[2][3] = -100;
+				m_graphics->InsertMModels(x->matrix, i);
+			}
+		}
+	}
+	// Update all the particle models
+	else
+	{
+		m_graphics->ClearMModels();
+
+		Transformation t;
+		for (auto &x : m_particles)
+		{
+			t.SetTranslation(x->position);
+			x->SetTrans(t);
+			m_graphics->InsertMModels(t);
+		}
 	}
 }
 

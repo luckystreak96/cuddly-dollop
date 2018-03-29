@@ -524,14 +524,14 @@ namespace Physics_2D {
 		bool redo = false;
 		for (int i = 0; i < 2; i++)
 		{
-			for (auto xs : *clist) {
+			for (auto& xs : *clist) {
 				auto x = xs.second;
 
 				// Only the entities will be colliding
 					// Don't collide against other entities
-				for (auto xs2 : *clist)
+				for (auto& xs2 : *clist)
 				{
-					auto x2 = xs2.second;
+					auto& x2 = xs2.second;
 					// We dont want to re-pass the same collision checks
 					if (x2 == x /*|| x2->PhysicsRaw()->Velocity() == 0 && x->PhysicsRaw()->Velocity() == 0*/)
 						continue;
@@ -554,10 +554,10 @@ namespace Physics_2D {
 						continue;
 
 					if (etherealCollision)
-					{
 						ApplyCollision(x->PhysicsRaw(), x2->PhysicsRaw());
-						//redo = true;
-					}
+
+					if(absoluteCollision)
+						redo = true;
 
 					// Shoot out the event cause its touching the player
 					if (playerId != -1)
@@ -566,8 +566,8 @@ namespace Physics_2D {
 				}
 
 			}
-			//if (!redo)
-			//	break;
+			if (!redo)
+				break;
 		}
 
 		//}

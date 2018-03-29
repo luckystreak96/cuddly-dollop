@@ -60,9 +60,13 @@ class Camera
 public:
 	static void Follow(Vector3f pos, Transformation* t);
 	static void MapCenter(Transformation* t);
+	// Method assumes a CENTERED_TILE
+	static bool IsOnCamera(Vector3f& position, Vector3f& size);
 public:
 	static int Target;
 	static Vector3f Mapsize;
+	static Vector3f _translate;
+	static Vector3f _scale;
 };
 
 namespace MathUtils

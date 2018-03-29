@@ -48,6 +48,13 @@ void Mat4f::InitTranslateMat(Vector3f &translation)
 	m[2][3] = translation.z;
 }
 
+void Mat4f::SetTranslation(Vector3f &translation)
+{
+	m[0][3] = translation.x;
+	m[1][3] = translation.y;
+	m[2][3] = translation.z;
+}
+
 void Mat4f::InitRotateMat(Vector3f &rot)
 {
 	Mat4f rotMatX, rotMatY, rotMatZ;

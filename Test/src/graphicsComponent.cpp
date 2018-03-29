@@ -1,4 +1,5 @@
 #include "graphicsComponent.h"
+#include <algorithm>
 
 void GraphicsComponent::ReceiveMessage(std::vector<std::string> msg)
 {
@@ -67,6 +68,7 @@ void GraphicsComponent::Construct()
 }
 
 GraphicsComponent::GraphicsComponent(std::string modelName, std::string texPath) : m_texture(texPath), m_modelName(modelName)
+, _updateMModels(false)
 {
 	m_IBO = 0;
 	m_VBO = 0;
@@ -75,7 +77,8 @@ GraphicsComponent::GraphicsComponent(std::string modelName, std::string texPath)
 	Construct();
 }
 
-GraphicsComponent::GraphicsComponent(std::vector<Vertex>* verts, std::vector<GLuint>* inds, std::string texPath) : m_texture(texPath), m_modelName("NONE")
+GraphicsComponent::GraphicsComponent(std::vector<Vertex>* verts, std::vector<GLuint>* inds, std::string texPath) : m_texture(texPath), m_modelName("NONE"),
+_updateMModels(false)
 {
 	m_IBO = 0;
 	m_VBO = 0;
@@ -98,8 +101,13 @@ void GraphicsComponent::Update()
 
 void GraphicsComponent::UpdateMModels()
 {
-	m_mmodels.clear();
-	InsertMModels(m_modelMat);
+	if (_updateMModels && m_mmodels.size() > 0)
+		InsertMModels(m_modelMat, 0);
+	else
+	{
+		m_mmodels.clear();
+		InsertMModels(m_modelMat);
+	}
 }
 
 bool GraphicsComponent::UpdateTranslation()
@@ -201,12 +209,16 @@ void GraphicsComponent::Draw(bool withTex)
 
 	// Bind mmbo
 	glBindBuffer(GL_ARRAY_BUFFER, m_MMBO);
-	if (m_mmodels.size() * sizeof(Mat4f) > m_lastMModelSize)
-		glBufferData(GL_ARRAY_BUFFER, sizeof(Mat4f) * m_mmodels.size(), &m_mmodels.at(0), GL_DYNAMIC_DRAW);
-	else
-		glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(Mat4f) * m_mmodels.size(), &m_mmodels.at(0));
+	if (m_mmodelsUpdated)
+	{
+		if (m_mmodels.size() * sizeof(Mat4f) > m_lastMModelSize)
+			glBufferData(GL_ARRAY_BUFFER, sizeof(Mat4f) * m_mmodels.size(), &m_mmodels.at(0), GL_DYNAMIC_DRAW);
+		else
+			glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(Mat4f) * m_mmodels.size(), &m_mmodels.at(0));
 
-	m_lastMModelSize = sizeof(Mat4f) * m_mmodels.size();
+		m_lastMModelSize = sizeof(Mat4f) * m_mmodels.size();
+		m_mmodelsUpdated = false;
+	}
 
 	for (int i = 4; i < 8; i++)
 	{
@@ -296,7 +308,40 @@ void GraphicsComponent::InsertMModels(Transformation& t)
 	temp.x *= OrthoProjInfo::GetRegularInstance().Size;
 	temp.y *= OrthoProjInfo::GetRegularInstance().Size;
 	t.SetTranslation(temp);
-	m_mmodels.insert(m_mmodels.end(), _instancedDraw ? 1 : 4, t.GetWorldTrans());
+	int num = _instancedDraw ? 1 : 4;
+	m_mmodels.insert(m_mmodels.end(), num, t.GetWorldTrans());
+	m_mmodelsUpdated = true;
+	//m_mmodels.push_back(Mat4f(t.GetWorldTrans()));
+	//m_mmodels.insert(m_mmodels.end(), 1, t.GetWorldTrans());
+}
+
+// Updates 4 model matrices to MModels instead of appending
+void GraphicsComponent::InsertMModels(Transformation& t, int position)
+{
+	Vector3f temp = t.GetTranslation();
+	temp.x *= OrthoProjInfo::GetRegularInstance().Size;
+	temp.y *= OrthoProjInfo::GetRegularInstance().Size;
+	t.SetTranslation(temp);
+	int num = _instancedDraw ? 1 : 4;
+	Mat4f& trans = t.GetWorldTrans();
+	for (int i = 0; i < num; i++)
+		m_mmodels[position * 4 + i] = trans;
+	m_mmodelsUpdated = true;
+	//m_mmodels.push_back(Mat4f(t.GetWorldTrans()));
+	//m_mmodels.insert(m_mmodels.end(), 1, t.GetWorldTrans());
+}
+
+// Updates 4 model matrices to MModels instead of appending + uses a pre-computed matrix
+void GraphicsComponent::InsertMModels(Mat4f& mat, int position)
+{
+	float size = OrthoProjInfo::GetRegularInstance().Size;
+	mat.m[0][3] *= size;
+	mat.m[1][3] *= size;
+	mat.m[2][3] *= size;
+	int num = _instancedDraw ? 1 : 4;
+	for (int i = 0; i < num; i++)
+		m_mmodels[position * 4 + i] = mat;
+	m_mmodelsUpdated = true;
 	//m_mmodels.push_back(Mat4f(t.GetWorldTrans()));
 	//m_mmodels.insert(m_mmodels.end(), 1, t.GetWorldTrans());
 }
@@ -352,6 +397,12 @@ std::string GraphicsComponent::GetName()
 std::vector<Vertex>* GraphicsComponent::GetVertices()
 {
 	return &m_vertices;
+}
+
+void GraphicsComponent::ClearMModels()
+{
+	m_mmodels.clear();
+	m_test.clear();
 }
 
 std::vector<GLuint> GraphicsComponent::GetIndices()

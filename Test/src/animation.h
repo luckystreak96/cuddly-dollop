@@ -69,6 +69,7 @@ protected:
 	//ElapsedTime progress
 	static int m_progress;
 	static std::map<std::string, SpriteSheetData> m_metaData;
+	static std::vector<Vector2f> m_baseTexCoords;
 protected:
 	// m_progress to reset the animation
 	int m_tracking;

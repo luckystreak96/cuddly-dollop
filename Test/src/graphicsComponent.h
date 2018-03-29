@@ -43,6 +43,9 @@ public:
 	virtual void SetTexture(std::string newTex);
 	std::vector<Mat4f>& GetMModels();
 	void InsertMModels(Transformation& t);
+	// Position is zero-counted
+	void InsertMModels(Transformation& t, int position);
+	void InsertMModels(Mat4f& mat, int position);
 	void UpdateMModels();
 	// Returns true if the position changed
 	bool UpdateTranslation();
@@ -53,6 +56,7 @@ public:
 	void SetDirection(Direction dir);
 	void SetDirection(GraphComp_ptr graph);
 	int GetHighestIndex();
+	void ClearMModels();
 	void SetBuffers();
 	void SetupVAO();
 	void SetColorAll(Vector3f color = Vector3f(1, 1, 1), float alpha = 1.0f);
@@ -67,6 +71,7 @@ public:
 public:
 	bool mustDraw = true;
 	bool _instancedDraw;
+	bool _updateMModels;
 
 protected:
 	GLsizei m_lastMModelSize;
@@ -82,6 +87,7 @@ protected:
 	std::vector<Vertex> m_vertices;
 	std::vector<Vertex> m_originalVertices;
 	std::vector<Mat4f> m_mmodels;
+	std::vector<Mat4f> m_test;
 	Vector3f m_size = Vector3f(-1, -1, -1);
 	Vector3f m_normalSize = Vector3f(-1, -1, -1);
 	Vector3f m_pos;
@@ -90,6 +96,7 @@ protected:
 	bool m_external_loaded = false;
 	bool m_GL_loaded = false;
 	bool m_outline;
+	bool m_mmodelsUpdated;
 	Transformation m_modelMat;
 	Vector3f m_vel;
 	Vector3f m_rot;
