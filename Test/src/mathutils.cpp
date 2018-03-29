@@ -2,12 +2,18 @@
 #include "transform.h"
 
 static const float StepSize = 0.2f;
-int Camera::Target = 1;
-Vector3f Camera::Mapsize = Vector3f();
-Vector3f Camera::_translate = Vector3f();
-Vector3f Camera::_scale = Vector3f(1, 1, 1);
+Camera* Camera::_currentCam = NULL;
+//int Camera::Target = 1;
+//Vector3f Camera::Mapsize = Vector3f();
+//Vector3f Camera::_translate = Vector3f();
+//Vector3f Camera::_scale = Vector3f(1, 1, 1);
 
-void Camera::MapCenter(Transformation* t)
+Camera::Camera() : Target(1)
+{
+	_transform = std::make_unique<Transformation>(Transformation());
+}
+
+void Camera::MapCenter()
 {
 	float left = OrthoProjInfo::GetRegularInstance().Left;
 	float right = OrthoProjInfo::GetRegularInstance().Right;
@@ -15,13 +21,14 @@ void Camera::MapCenter(Transformation* t)
 	float size = OrthoProjInfo::GetRegularInstance().Size;
 	// (Maplength - viewWidth) / 2
 	Vector3f result;
-	result.x = (Mapsize.x - ((abs(left) + abs(right)) / size)) / 2.f;
-	result.y = (Mapsize.y - ((top * 2.f) / size)) / 2.f;
+	result.x = (_mapsize.x - ((abs(left) + abs(right)) / size)) / 2.f;
+	result.y = (_mapsize.y - ((top * 2.f) / size)) / 2.f;
 	result.x += right / size;
 	result.y += top / size;
-	result.z = t->GetTranslation().z;
+	result.z = _transform->GetTranslation().z;
 	_translate = -result;
-	t->SetTranslation(-result);
+	_transform->SetTranslation(_translate * _scale);
+	_transform->SetScale(_scale);
 }
 
 bool Camera::IsOnCamera(Vector3f& position, Vector3f& size)
@@ -51,12 +58,18 @@ bool Camera::IsOnCamera(Vector3f& position, Vector3f& size)
 	return false;
 }
 
+void Camera::FollowScale(Vector3f& target, Vector3f& zoomTarget)
+{
+	// Set the scale slowly as the follow takes effect
+	_scale.x += (zoomTarget.x - _scale.x) * 0.9f;
+	Follow(target);
+}
 
-void Camera::Follow(Vector3f target, Transformation* t)
+void Camera::Follow(Vector3f target)
 {
 	//Vector3f _translate, _scale;
-	_translate = t->GetTranslation();
-	_scale = t->GetScale();
+	_translate = _transform->GetTranslation();
+	_scale = _transform->GetScale();
 
 	// Follow the center of the character
 	target.x += 0.5f;
@@ -83,24 +96,24 @@ void Camera::Follow(Vector3f target, Transformation* t)
 	// If the pan would bring you left further than the left limit OR the map is too small to fit the screen width,
 	//  just pan at the left limit
 	if (_translate.x - ((OrthoProjInfo::GetRegularInstance().Left) / size) > 0 ||
-		Mapsize.x < ((OrthoProjInfo::GetRegularInstance().Right) / size) * 2)
+		_mapsize.x < ((OrthoProjInfo::GetRegularInstance().Right) / size) * 2)
 		_translate.x = ((OrthoProjInfo::GetRegularInstance().Left) / size);
 	// If the map is big enough for the screen to pan it right and you would normally pass the limits,
 	//  set the pan to the exact right limit
-	else if (abs(_translate.x - ((OrthoProjInfo::GetRegularInstance().Right) / size)) > Mapsize.x * _scale.x)
-		_translate.x = -(Mapsize.x * _scale.x - ((OrthoProjInfo::GetRegularInstance().Right) / size));
+	else if (abs(_translate.x - ((OrthoProjInfo::GetRegularInstance().Right) / size)) > _mapsize.x * _scale.x)
+		_translate.x = -(_mapsize.x * _scale.x - ((OrthoProjInfo::GetRegularInstance().Right) / size));
 
 	// If the pan would bring you down further than the bottom OR the map isnt high enough to fill the screen,
 	//  just stay at the bottom
 	if (_translate.y - ((OrthoProjInfo::GetRegularInstance().Bottom) / size) > 0 ||
-		Mapsize.y < ((OrthoProjInfo::GetRegularInstance().Top) / size) * 2)
+		_mapsize.y < ((OrthoProjInfo::GetRegularInstance().Top) / size) * 2)
 		_translate.y = ((OrthoProjInfo::GetRegularInstance().Bottom) / size);
 	// If the map is big enough for the screen to pan it upwards and you would normally pass the limits,
 	//  set the pan to the exact top
-	else if (abs(_translate.y - ((OrthoProjInfo::GetRegularInstance().Top) / size)) > Mapsize.y * _scale.y)
-		_translate.y = -(Mapsize.y * _scale.y - ((OrthoProjInfo::GetRegularInstance().Top) / size));
+	else if (abs(_translate.y - ((OrthoProjInfo::GetRegularInstance().Top) / size)) > _mapsize.y * _scale.y)
+		_translate.y = -(_mapsize.y * _scale.y - ((OrthoProjInfo::GetRegularInstance().Top) / size));
 
-	t->SetTranslation(_translate);
+	_transform->SetTranslation(_translate);
 }
 
 

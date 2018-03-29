@@ -10,6 +10,11 @@ SceneGenData Scene::NextScene = SceneGenData();
 bool Scene::_pause = false;
 int Scene::_numFrames = 0;
 
+Scene::Scene()
+{
+	Camera::_currentCam = &m_camera;
+}
+
 void Scene::Brb()
 {
 	NextScene = SceneGenData();
@@ -17,8 +22,9 @@ void Scene::Brb()
 
 void Scene::Resume()
 {
-	Camera::Mapsize = m_mapHandler->GetMapSize();
-	OrthoProjInfo::GetRegularInstance().changed = true;
+	Camera::_currentCam = &m_camera;
+	//m_camera._mapsize = m_mapHandler->GetMapSize();
+	//OrthoProjInfo::GetRegularInstance().changed = true;
 }
 
 void Scene::ManageInput()
@@ -92,19 +98,19 @@ void Scene::SetOrthoStuffs()
 	if (OrthoProjInfo::GetRegularInstance().changed)
 	{
 		OrthoProjInfo* o = &OrthoProjInfo::GetRegularInstance();
-		m_World->SetOrthoProj(o);
-		m_World->SetTranslation(-o->Right / o->Size, -o->Top / o->Size, 0);
+		m_camera._transform->SetOrthoProj(o);
+		m_camera._transform->SetTranslation(-o->Right / o->Size, -o->Top / o->Size, 0);
 
 		EffectManager::GetInstance().SetAllTilePositions(OrthoProjInfo::GetRegularInstance().Size);
 
-		if (m_celist.count(Camera::Target))
+		if (m_celist.count(m_camera.Target))
 			for (int i = 0; i < 30; i++)
-				Camera::Follow(m_celist.at(Camera::Target)->Physics()->Position(), m_World.get());
+				m_camera.Follow(m_celist.at(m_camera.Target)->Physics()->Position());
 
 		OrthoProjInfo::GetRegularInstance().changed = false;
 	}
 
-	m_backupTrans = m_World->GetTranslation();
+	m_backupTrans = m_camera._transform->GetTranslation();
 
 	Vector3f temp = m_backupTrans;
 	temp.x *= OrthoProjInfo::GetRegularInstance().Size;
@@ -113,9 +119,9 @@ void Scene::SetOrthoStuffs()
 	// Floor so we dont move the camera half a pixel and fuck up the graphics
 	temp.x = floorf(temp.x);
 	temp.y = floorf(temp.y);
-	m_World->SetTranslation(temp);
+	m_camera._transform->SetTranslation(temp);
 
-	EffectManager::GetInstance().SetWorldTrans(&m_World->GetWOTrans().m[0][0], &m_World->GetWOTransNoTranslate().m[0][0]);
+	EffectManager::GetInstance().SetWorldTrans(&m_camera._transform->GetWOTrans().m[0][0], &m_camera._transform->GetWOTransNoTranslate().m[0][0]);
 	EffectManager::GetInstance().ResetWorldUpdateFlag();
 }
 
@@ -147,5 +153,5 @@ void Scene::DrawEnd()
 	Renderer::GetInstance().Draw();
 
 	// Set translation back to real value, not adjusted by tilesize (64)
-	m_World->SetTranslation(m_backupTrans);
+	m_camera._transform->SetTranslation(m_backupTrans);
 }

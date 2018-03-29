@@ -367,7 +367,7 @@ void ParticleGenerator::LogicUpdate()
 		{
 			auto& x = m_particles[i];
 			// If its on camera, update everything like normal
-			if (Camera::IsOnCamera(x->position, x->size))
+			if (Camera::_currentCam->IsOnCamera(x->position, x->size))
 			{
 				//onCam++;
 				t.SetTranslation(x->position);

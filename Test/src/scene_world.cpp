@@ -52,10 +52,10 @@ bool SceneWorld::Init()
 	m_bloomEffect = false;
 
 	OrthoProjInfo::GetRegularInstance().changed = true;
-	m_World = std::shared_ptr<Transformation>(new Transformation());
+	//m_camera._transform = Transformation();
 
 	m_mapHandler = std::shared_ptr<MapHandler>(new MapHandler(m_currentMap, m_jsonHandler));
-	Camera::Mapsize = m_mapHandler->GetMapSize();
+	m_camera._mapsize = m_mapHandler->GetMapSize();
 	m_collisionManager.SetMapTiles(m_mapHandler->Tiles());
 
 	m_celist = EntityFactory::GetEntities(m_currentMap, m_jsonHandler);
@@ -222,8 +222,8 @@ SceneGenData SceneWorld::Update()
 	SetAudioPosition();
 	SoundManager::GetInstance().Update();
 
-	if (m_celist.count(Camera::Target))
-		Camera::Follow(m_celist.at(Camera::Target)->Physics()->Position(), m_World.get());
+	if (m_celist.count(m_camera.Target))
+		m_camera.Follow(m_celist.at(m_camera.Target)->Physics()->Position());
 
 	//Display FPS
 #ifdef _DEBUG

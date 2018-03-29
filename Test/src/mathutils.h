@@ -6,6 +6,7 @@
 #include "GL/glew.h"
 #include <cassert>
 #include <vector>
+#include <memory>
 
 class Transformation;
 
@@ -55,18 +56,24 @@ private:
 	OrthoProjInfo() {};
 };
 
+//#include "transform.h"
+
 class Camera
 {
 public:
-	static void Follow(Vector3f pos, Transformation* t);
-	static void MapCenter(Transformation* t);
+	Camera();
+	void Follow(Vector3f pos);
+	void FollowScale(Vector3f& pos, Vector3f& zoomTarget);
+	void MapCenter();
 	// Method assumes a CENTERED_TILE
-	static bool IsOnCamera(Vector3f& position, Vector3f& size);
+	bool IsOnCamera(Vector3f& position, Vector3f& size);
 public:
-	static int Target;
-	static Vector3f Mapsize;
-	static Vector3f _translate;
-	static Vector3f _scale;
+	static Camera* _currentCam;
+	int Target;
+	Vector3f _mapsize;
+	std::unique_ptr<Transformation> _transform;
+	Vector3f _translate;
+	Vector3f _scale;
 };
 
 namespace MathUtils

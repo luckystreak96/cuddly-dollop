@@ -4,6 +4,7 @@
 #include <memory>
 #include <map>
 #include "fade.h"
+#include "mathutils.h"
 
 enum SceneType { ST_World, ST_Battle };
 
@@ -30,6 +31,7 @@ struct SceneGenData
 class Scene
 {
 public:
+	Scene();
 	virtual bool Init() = 0;
 	virtual void Brb();
 	virtual void Resume();
@@ -53,7 +55,7 @@ public:
 
 protected:
 	std::shared_ptr<MapHandler> m_mapHandler = NULL;
-	std::shared_ptr<Transformation> m_World = NULL;
+	Camera m_camera;
 	std::shared_ptr<Scene> m_nextScene = NULL;
 	Fade m_fade;
 	unsigned int m_currentMap;

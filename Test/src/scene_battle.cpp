@@ -51,10 +51,9 @@ bool SceneBattle::Init()
 	m_bloomEffect = false;
 
 	OrthoProjInfo::GetRegularInstance().changed = true;
-	m_World = std::shared_ptr<Transformation>(new Transformation());
 
 	m_mapHandler = std::shared_ptr<MapHandler>(new MapHandler(m_currentMap, m_jsonHandler));
-	Camera::Mapsize = m_mapHandler->GetMapSize();
+	m_camera._mapsize = m_mapHandler->GetMapSize();
 
 	for (auto x : _actors)
 	{
@@ -173,7 +172,10 @@ SceneGenData SceneBattle::Update()
 	SetAudioPosition();
 	SoundManager::GetInstance().Update();
 
-	Camera::MapCenter(m_World.get());
+	static int counter = 0;
+	counter++;
+	m_camera._scale = Vector3f(sinf(counter * 0.01f) / 2 + 1, sinf(counter * 0.01) / 2 + 1, 1);
+	m_camera.MapCenter();
 
 	//Display FPS
 #ifdef _DEBUG
