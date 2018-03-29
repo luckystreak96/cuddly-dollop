@@ -11,8 +11,10 @@ HudHealthBar::HudHealthBar(int* observable, int maxHealth, Vector3f position, st
 	m_maxHealth = maxHealth;
 
 	// Bar
-	GraphComp_ptr ptr = GraphComp_ptr(new GraphicsComponent("BAR", "res/sprites/special/bar.png"));
-	GraphComp_ptr ptr2 = GraphComp_ptr(new GraphicsComponent("BAR", "res/sprites/special/bar.png"));
+	GraphComp_ptr ptr = GraphComp_ptr(new FontGraphicsComponent("BAR", "res/sprites/special/bar.png"));
+	GraphComp_ptr ptr2 = GraphComp_ptr(new FontGraphicsComponent("BAR", "res/sprites/special/bar.png"));
+	dynamic_cast<FontGraphicsComponent*>(ptr.get())->SetStatic(true);
+	dynamic_cast<FontGraphicsComponent*>(ptr2.get())->SetStatic(true);
 
 	ptr->SetPhysics(position + Vector3f(0, 0, 0.1f), Vector3f());
 	ptr2->SetPhysics(position, Vector3f());
@@ -30,7 +32,8 @@ HudHealthBar::HudHealthBar(int* observable, int maxHealth, Vector3f position, st
 	unsigned int namefont = FontManager::GetInstance().AddFont(true, false, true, "res/fonts/lowercase.png");
 	FontManager::GetInstance().SetScale(namefont, 0.3f, 0.3f);
 	FontManager::GetInstance().GetFont(namefont)->_letterSpacing = 0.75f;
-	Vector3f offset = Vector3f(-1.45f, -0.25f, -1);
+	Vector3f offset = Vector3f(0.05f, 0.5f, -1);
+	//Vector3f offset = Vector3f(-1.45f, -0.25f, -1);
 	FontManager::GetInstance().SetText(namefont, _(name), ptr->GetPos() + offset, false);
 	FontManager::GetInstance().GetFont(namefont)->Update(0);
 
@@ -76,13 +79,14 @@ void HudHealthBar::Update()
 	else
 	{
 		FontManager::GetInstance().EnableFont(_healthFont);
-		Vector3f offset = Vector3f(-0.75f, -0.7f, -1);
+		Vector3f offset = Vector3f(0.25f, 0.10f, -1);
+		//Vector3f offset = Vector3f(-0.75f, -0.7f, -1);
 		std::string text = std::to_string(health) + " / " + std::to_string(m_maxHealth);
 		std::string current = FontManager::GetInstance().GetFont(_healthFont)->_text;
 
 		// Only update font when it changes
 		if (current.substr(0, current.length() - 1) != text)
-			FontManager::GetInstance().SetText(_healthFont, text, _foreground->GetPos() + offset, true);
+			FontManager::GetInstance().SetText(_healthFont, text, _foreground->GetPos() + offset, false);
 
 		FontManager::GetInstance().GetFont(_healthFont)->Update(0);
 	}

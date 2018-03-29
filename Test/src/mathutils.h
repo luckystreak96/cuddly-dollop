@@ -57,6 +57,8 @@ private:
 };
 
 //#include "transform.h"
+enum CameraSpeeds { CAMSPEED_Slow, CAMSPEED_Normal, CAMSPEED_Fast };
+enum FollowType {FT_Exponential, FT_Stable};
 
 class Camera
 {
@@ -64,11 +66,16 @@ public:
 	Camera();
 	void Follow(Vector3f pos);
 	void FollowScale(Vector3f& pos, Vector3f& zoomTarget);
+	void Scale(Vector3f& zoomTarget);
 	void MapCenter();
+	void SetCameraFollowSpeed(CameraSpeeds cs);
 	// Method assumes a CENTERED_TILE
 	bool IsOnCamera(Vector3f& position, Vector3f& size);
 public:
 	static Camera* _currentCam;
+	// default is 0.005f
+	float _followSpeed;
+	FollowType _followConfiguration;
 	int Target;
 	Vector3f _mapsize;
 	std::unique_ptr<Transformation> _transform;

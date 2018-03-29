@@ -174,8 +174,8 @@ SceneGenData SceneBattle::Update()
 
 	static int counter = 0;
 	counter++;
-	m_camera._scale = Vector3f(sinf(counter * 0.01f) / 2 + 1, sinf(counter * 0.01) / 2 + 1, 1);
-	m_camera.MapCenter();
+	//m_camera._scale = Vector3f(sinf(counter * 0.01f) / 2 + 1, sinf(counter * 0.01) / 2 + 1, 1);
+	//m_camera.MapCenter();
 
 	//Display FPS
 #ifdef _DEBUG

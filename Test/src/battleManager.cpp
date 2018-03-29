@@ -32,6 +32,8 @@ BattleManager::BattleManager(std::vector<Actor_ptr> actors)
 
 void BattleManager::Init()
 {
+	Camera::_currentCam->SetCameraFollowSpeed(CAMSPEED_Slow);
+	Camera::_currentCam->_followConfiguration = FT_Stable;
 	_hud.Init(_actors);
 	_showingSkills = false;
 	_state = BS_TurnStart;
@@ -229,6 +231,20 @@ void BattleManager::UpdateLogic()
 	// Display or stop displaying skills
 	UpdateSkillDisplay();
 
+	if (_targets.size() == 0 && _state != BS_ActionProgress)
+	{
+		// zoom back to normal
+		Camera::_currentCam->Scale(Vector3f(1));
+		Camera::_currentCam->MapCenter();
+	}
+	else
+	{
+		// zoom towards first target
+		//Camera::_currentCam->Scale(Vector3f(2));
+		//Camera::_currentCam->Follow(_targets[0]->_Graphics->GetPosRef());
+		//Camera::_currentCam->FollowScale(_targets[0]->_Graphics->GetPosRef(), Vector3f(1.5f));
+	}
+
 	// If there are animations, let them run out
 	if (_state == BS_ActionProgress || !_animations.size())
 	{
@@ -248,6 +264,8 @@ void BattleManager::UpdateLogic()
 		case BS_ActionProgress:
 			// Update the skill
 			ActionProgress();
+			Camera::_currentCam->Scale(Vector3f(1.5f));
+			Camera::_currentCam->Follow(_owner->_Graphics->GetPosRef());
 			break;
 		case BS_ActionDone:
 			// Handles the action being done

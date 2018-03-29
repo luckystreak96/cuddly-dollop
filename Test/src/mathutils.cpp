@@ -8,7 +8,7 @@ Camera* Camera::_currentCam = NULL;
 //Vector3f Camera::_translate = Vector3f();
 //Vector3f Camera::_scale = Vector3f(1, 1, 1);
 
-Camera::Camera() : Target(1)
+Camera::Camera() : Target(1), _followSpeed(0.005f), _followConfiguration(FT_Exponential), _scale(Vector3f(1))
 {
 	_transform = std::make_unique<Transformation>(Transformation());
 }
@@ -26,10 +26,28 @@ void Camera::MapCenter()
 	result.x += right / size;
 	result.y += top / size;
 	result.z = _transform->GetTranslation().z;
-	_translate = -result;
-	_transform->SetTranslation(_translate * _scale);
-	_transform->SetScale(_scale);
+	Follow(result);
+	//_translate = -result;
+	//_transform->SetTranslation(_translate * _scale);
+	//_transform->SetScale(_scale);
 }
+
+void Camera::SetCameraFollowSpeed(CameraSpeeds cs)
+{
+	switch (cs)
+	{
+	case CAMSPEED_Slow:
+		_followSpeed = 0.000005f;
+		break;
+	case CAMSPEED_Normal:
+		_followSpeed = 0.0005f;
+		break;
+	case CAMSPEED_Fast:
+		_followSpeed = 0.005f;
+		break;
+	}
+}
+
 
 bool Camera::IsOnCamera(Vector3f& position, Vector3f& size)
 {
@@ -60,9 +78,16 @@ bool Camera::IsOnCamera(Vector3f& position, Vector3f& size)
 
 void Camera::FollowScale(Vector3f& target, Vector3f& zoomTarget)
 {
-	// Set the scale slowly as the follow takes effect
-	_scale.x += (zoomTarget.x - _scale.x) * 0.9f;
+	Scale(zoomTarget);
 	Follow(target);
+}
+
+void Camera::Scale(Vector3f& zoomTarget)
+{
+	// Set the scale slowly as the follow takes effect
+	_scale.x += (zoomTarget.x - _scale.x) * 0.02f;
+	_scale.y += (zoomTarget.y - _scale.y) * 0.02f;
+	_transform->SetScale(_scale);
 }
 
 void Camera::Follow(Vector3f target)
@@ -72,8 +97,8 @@ void Camera::Follow(Vector3f target)
 	_scale = _transform->GetScale();
 
 	// Follow the center of the character
-	target.x += 0.5f;
-	target.y += 0.5f;
+	//target.x += 0.5f;
+	//target.y += 0.5f;
 
 	float size = OrthoProjInfo::GetRegularInstance().Size;
 
@@ -82,16 +107,26 @@ void Camera::Follow(Vector3f target)
 
 	//float percentagex = abs(distanceX) / 15.f / scale.x / 2.f;
 	//float percentagey = abs(distanceY) / 10.f / scale.x / 2.f;
+	float percentagex = 1;
+	float percentagey = 1;
 
-	float percentagex = (0.005f * pow(distanceX, 2)) * _scale.x + 0.02f;
-	float percentagey = (0.005f * pow(distanceY, 2)) * _scale.y + 0.02f;
+	if (_followConfiguration == FT_Exponential)
+	{
+	percentagex = (_followSpeed * pow(distanceX, 2)) * _scale.x + 0.02f;
+	percentagey = (_followSpeed * pow(distanceY, 2)) * _scale.y + 0.02f;
+	}
+	else if(_followConfiguration == FT_Stable)
+	{
+		percentagex = (_followSpeed * 500 * abs(distanceX)) * _scale.x + 0.02f;
+		percentagey = (_followSpeed * 500 * abs(distanceY)) * _scale.y + 0.02f;
+	}
 
 	percentagex = fmin(percentagex, 1.0f);
 	percentagey = fmin(percentagey, 1.0f);
 
 	// Sets how much the camera will move in this frame
-	_translate.x += distanceX * percentagex;
-	_translate.y += distanceY * percentagey;
+		_translate.x += distanceX * percentagex;
+		_translate.y += distanceY * percentagey;
 
 	// If the pan would bring you left further than the left limit OR the map is too small to fit the screen width,
 	//  just pan at the left limit
@@ -135,7 +170,7 @@ namespace MathUtils
 		float x2 = endPoint.x;
 		float h = (y2 - a * pow(x2, 2) - y1 + a * pow(x1, 2)) / (2 * a * (x1 - x2));
 		float k = y1 - a * pow(x1 - h, 2);
-		
+
 		result.y = a * pow(x - h, 2) + k;
 
 		return result;
