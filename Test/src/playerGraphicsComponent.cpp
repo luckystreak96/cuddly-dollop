@@ -110,13 +110,14 @@ void PlayerGraphicsComponent::Update()
 		else
 			animation = GetMoveDirection((Anim_Enum)((int)m_direction));
 		SetAnimation(animation, m_texture);
-		m_actualDelay = m_delay;
 	}
 
 	if (_animation >= AE_LeftMove && _animation <= AE_UpMove)
 	{
 		float speed = abs(m_vel.x) + abs(m_vel.y);
 		m_delay = speed == 0 ? 1 : m_actualDelay / speed;
+		if (_forceAnimation && m_delay == 1)
+			m_delay = m_actualDelay / 4;
 	}
 
 	bool forceUpdate = (dir != m_direction && !_specialAnimation) || (m_direction != m_lastInteraction) || m_firstLoad;
@@ -124,6 +125,12 @@ void PlayerGraphicsComponent::Update()
 		ResetVBO();
 
 	GraphicsComponent::Update();
+}
+
+void PlayerGraphicsComponent::SetAnimation(Anim_Enum anim, std::string spritesheet)
+{
+	Animation::SetAnimation(anim, spritesheet);
+	m_actualDelay = m_delay;
 }
 
 void PlayerGraphicsComponent::SetTexture(std::string texture)

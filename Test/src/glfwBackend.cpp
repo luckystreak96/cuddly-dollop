@@ -222,8 +222,8 @@ GLFWManager::GLFWManager()
 		glDebugMessageCallbackARB((GLDEBUGPROCARB)ETB_GL_ERROR_CALLBACK, NULL);
 	}
 
-	glEnable(GL_CULL_FACE);
-	glCullFace(GL_FRONT);
+	//glEnable(GL_CULL_FACE);
+	//glCullFace(GL_FRONT);
 
 	glClearStencil(0x0);
 	glEnable(GL_STENCIL_TEST);

@@ -20,6 +20,7 @@ void Camera::MapCenter(Transformation* t)
 	result.x += right / size;
 	result.y += top / size;
 	result.z = t->GetTranslation().z;
+	_translate = -result;
 	t->SetTranslation(-result);
 }
 

@@ -195,12 +195,12 @@ void SceneBattle::Draw()
 	// Set the renders
 	m_mapHandler->SetRender();
 
-	for (auto it : m_celist)
+	for (auto& it : m_celist)
 		it.second->SetRender();
 	FontManager::GetInstance().SetRender();
 	ParticleManager::GetInstance().SetRender();
 
-	for (auto a : _actors)
+	for (auto& a : _actors)
 		Renderer::GetInstance().Add(a->_Graphics);
 
 	m_battle.SetRender();

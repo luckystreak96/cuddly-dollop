@@ -45,7 +45,6 @@ class Animation
 public:
 	Animation();
 	static void AnimationCounter(float et);
-	void SetAnimation(Anim_Enum anim, std::string spritesheet);
 	bool SetTileModelTC(std::vector<Vertex>* verts, bool forceUpdate = false);
 	void SetDefaults();
 	void SetWidthHeight(std::string texture);
@@ -66,6 +65,8 @@ public:
 	Anim_Enum _animation;
 
 protected:
+	void SetAnimation(Anim_Enum anim, std::string spritesheet);
+
 	//ElapsedTime progress
 	static int m_progress;
 	static std::map<std::string, SpriteSheetData> m_metaData;
