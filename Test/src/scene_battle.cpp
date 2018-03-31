@@ -54,6 +54,7 @@ bool SceneBattle::Init()
 
 	m_mapHandler = std::shared_ptr<MapHandler>(new MapHandler(m_currentMap, m_jsonHandler));
 	m_camera._mapsize = m_mapHandler->GetMapSize();
+	m_camera._lerper.MaxVelocity = 0.1f;
 
 	for (auto x : _actors)
 	{

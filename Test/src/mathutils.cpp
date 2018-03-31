@@ -8,12 +8,13 @@ Camera* Camera::_currentCam = NULL;
 //Vector3f Camera::_translate = Vector3f();
 //Vector3f Camera::_scale = Vector3f(1, 1, 1);
 
-Camera::Camera() : Target(1), _followSpeed(0.005f), _followConfiguration(FT_Exponential), _scale(Vector3f(1))
+Camera::Camera() : Target(1), _followSpeed(0.005f), _followConfiguration(FT_Exponential), _scale(Vector3f(1)), _style(CAMSTYLE_FollowDad),
+_scaleTarget(Vector3f(1))
 {
 	_transform = std::make_unique<Transformation>(Transformation());
 }
 
-void Camera::MapCenter()
+Vector3f Camera::MapCenter()
 {
 	float left = OrthoProjInfo::GetRegularInstance().Left;
 	float right = OrthoProjInfo::GetRegularInstance().Right;
@@ -26,10 +27,8 @@ void Camera::MapCenter()
 	result.x += right / size;
 	result.y += top / size;
 	result.z = _transform->GetTranslation().z;
-	Follow(result);
-	//_translate = -result;
-	//_transform->SetTranslation(_translate * _scale);
-	//_transform->SetScale(_scale);
+
+	return result;
 }
 
 void Camera::SetCameraFollowSpeed(CameraSpeeds cs)
@@ -76,34 +75,42 @@ bool Camera::IsOnCamera(Vector3f& position, Vector3f& size)
 	return false;
 }
 
-void Camera::FollowScale(Vector3f& target, Vector3f& zoomTarget)
+void Camera::Update()
 {
-	Scale(zoomTarget);
-	Follow(target);
+	switch (_style)
+	{
+	case CAMSTYLE_FollowDad:
+		// If the translate is rlly close to target, start targeting random nearby places
+		// The lack of break will make the execute activate as well
+	case CAMSTYLE_Follow:
+		ExecuteScale();
+		ExecuteFollow();
+		break;
+	default:
+		break;
+	}
 }
 
-void Camera::Scale(Vector3f& zoomTarget)
+void Camera::ExecuteScale()
 {
 	// Set the scale slowly as the follow takes effect
-	_scale.x += (zoomTarget.x - _scale.x) * 0.02f;
-	_scale.y += (zoomTarget.y - _scale.y) * 0.02f;
+	_scale.x += (_scaleTarget.x - _scale.x) * 0.015f;
+	_scale.y += (_scaleTarget.y - _scale.y) * 0.015f;
 	_transform->SetScale(_scale);
 }
 
-void Camera::Follow(Vector3f target)
+void Camera::ExecuteFollow(bool useDadFollow)
 {
-	//Vector3f _translate, _scale;
-	_translate = _transform->GetTranslation();
-	_scale = _transform->GetScale();
+	Vector3f target = useDadFollow ? _followTargetDad : _followTarget;
 
-	// Follow the center of the character
-	//target.x += 0.5f;
-	//target.y += 0.5f;
+	_translate = _transform->GetTranslation();
+	//_scale = _transform->GetScale();
+	Vector3f scale = _scale;
 
 	float size = OrthoProjInfo::GetRegularInstance().Size;
 
-	float distanceX = -(target.x * _scale.x) - _translate.x;//find the distance between the 2, -target so that the movement of the world will be proper
-	float distanceY = -(target.y * _scale.y) - _translate.y;
+	float distanceX = -(target.x * scale.x) - _translate.x;//find the distance between the 2, -target so that the movement of the world will be proper
+	float distanceY = -(target.y * scale.y) - _translate.y;
 
 	//float percentagex = abs(distanceX) / 15.f / scale.x / 2.f;
 	//float percentagey = abs(distanceY) / 10.f / scale.x / 2.f;
@@ -112,21 +119,24 @@ void Camera::Follow(Vector3f target)
 
 	if (_followConfiguration == FT_Exponential)
 	{
-	percentagex = (_followSpeed * pow(distanceX, 2)) * _scale.x + 0.02f;
-	percentagey = (_followSpeed * pow(distanceY, 2)) * _scale.y + 0.02f;
+		percentagex = (_followSpeed * pow(distanceX, 2)) * scale.x + 0.02f;
+		percentagey = (_followSpeed * pow(distanceY, 2)) * scale.y + 0.02f;
 	}
-	else if(_followConfiguration == FT_Stable)
+	else if (_followConfiguration == FT_Stable)
 	{
-		percentagex = (_followSpeed * 500 * abs(distanceX)) * _scale.x + 0.02f;
-		percentagey = (_followSpeed * 500 * abs(distanceY)) * _scale.y + 0.02f;
+		percentagex = (_followSpeed * 300 * (abs(distanceX) / abs(distanceY))) * scale.x + 0.02f;
+		percentagey = (_followSpeed * 300 * (abs(distanceY) / abs(distanceX))) * scale.y + 0.02f;
 	}
 
 	percentagex = fmin(percentagex, 1.0f);
 	percentagey = fmin(percentagey, 1.0f);
 
 	// Sets how much the camera will move in this frame
-		_translate.x += distanceX * percentagex;
-		_translate.y += distanceY * percentagey;
+	Vector3f lerp = _lerper.Lerp(-_translate, _followTarget * scale);
+	_translate.x = -lerp.x;
+	_translate.y = -lerp.y;
+	//_translate.x += distanceX * percentagex;
+	//_translate.y += distanceY * percentagey;
 
 	// If the pan would bring you left further than the left limit OR the map is too small to fit the screen width,
 	//  just pan at the left limit
@@ -135,8 +145,8 @@ void Camera::Follow(Vector3f target)
 		_translate.x = ((OrthoProjInfo::GetRegularInstance().Left) / size);
 	// If the map is big enough for the screen to pan it right and you would normally pass the limits,
 	//  set the pan to the exact right limit
-	else if (abs(_translate.x - ((OrthoProjInfo::GetRegularInstance().Right) / size)) > _mapsize.x * _scale.x)
-		_translate.x = -(_mapsize.x * _scale.x - ((OrthoProjInfo::GetRegularInstance().Right) / size));
+	else if (abs(_translate.x - ((OrthoProjInfo::GetRegularInstance().Right) / size)) > _mapsize.x * scale.x)
+		_translate.x = -(_mapsize.x * scale.x - ((OrthoProjInfo::GetRegularInstance().Right) / size));
 
 	// If the pan would bring you down further than the bottom OR the map isnt high enough to fill the screen,
 	//  just stay at the bottom
@@ -145,12 +155,30 @@ void Camera::Follow(Vector3f target)
 		_translate.y = ((OrthoProjInfo::GetRegularInstance().Bottom) / size);
 	// If the map is big enough for the screen to pan it upwards and you would normally pass the limits,
 	//  set the pan to the exact top
-	else if (abs(_translate.y - ((OrthoProjInfo::GetRegularInstance().Top) / size)) > _mapsize.y * _scale.y)
-		_translate.y = -(_mapsize.y * _scale.y - ((OrthoProjInfo::GetRegularInstance().Top) / size));
+	else if (abs(_translate.y - ((OrthoProjInfo::GetRegularInstance().Top) / size)) > _mapsize.y * scale.y)
+		_translate.y = -(_mapsize.y * scale.y - ((OrthoProjInfo::GetRegularInstance().Top) / size));
 
 	_transform->SetTranslation(_translate);
 }
 
+void Camera::SetScale(Vector3f& scale)
+{
+	_scaleTarget = scale;
+}
+
+void Camera::SetFollow(Vector3f& target)
+{
+	if (target == _followTarget)
+		return;
+	_followTarget = target;
+}
+
+void Camera::SetFollowCenteredY(Vector3f target)
+{
+	auto center = MapCenter();
+	target.y = center.y + ((target.y - center.y) / 2);
+	_followTarget = target;
+}
 
 
 namespace MathUtils

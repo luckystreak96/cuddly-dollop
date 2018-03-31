@@ -8,7 +8,7 @@ PlayerGraphicsComponent::PlayerGraphicsComponent(std::string tex, std::string mo
 	m_modelName = model;
 	m_texture = tex;
 	SetWidthHeight(tex);
-	Construct();
+	//Construct();
 	Update();
 	m_firstLoad = false;
 	m_outline = false;

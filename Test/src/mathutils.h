@@ -1,12 +1,13 @@
 #ifndef MATHUTILS_H__
 #define MATHUTILS_H__
 
-#include "vector3f.h"
-#include "vertex.h"
-#include "GL/glew.h"
 #include <cassert>
 #include <vector>
 #include <memory>
+#include "vector3f.h"
+#include "vertex.h"
+#include "GL/glew.h"
+#include "lerper.h"
 
 class Transformation;
 
@@ -58,16 +59,20 @@ private:
 
 //#include "transform.h"
 enum CameraSpeeds { CAMSPEED_Slow, CAMSPEED_Normal, CAMSPEED_Fast };
-enum FollowType {FT_Exponential, FT_Stable};
+enum FollowType { FT_Exponential, FT_Stable };
+enum CameraStyle { CAMSTYLE_Follow, CAMSTYLE_FollowDad };
 
 class Camera
 {
 public:
 	Camera();
-	void Follow(Vector3f pos);
-	void FollowScale(Vector3f& pos, Vector3f& zoomTarget);
-	void Scale(Vector3f& zoomTarget);
-	void MapCenter();
+	void Update();
+	void SetFollow(Vector3f& pos);
+	void SetFollowCenteredY(Vector3f pos);
+	void SetScale(Vector3f& scale);
+	void ExecuteFollow(bool useDadPos = false);
+	void ExecuteScale();
+	Vector3f MapCenter();
 	void SetCameraFollowSpeed(CameraSpeeds cs);
 	// Method assumes a CENTERED_TILE
 	bool IsOnCamera(Vector3f& position, Vector3f& size);
@@ -78,10 +83,17 @@ public:
 	FollowType _followConfiguration;
 	int Target;
 	Vector3f _mapsize;
+	CameraStyle _style;
 	std::unique_ptr<Transformation> _transform;
+	Lerper _lerper;
+private:
 	Vector3f _translate;
 	Vector3f _scale;
+	Vector3f _followTarget;
+	Vector3f _followTargetDad;
+	Vector3f _scaleTarget;
 };
+
 
 namespace MathUtils
 {

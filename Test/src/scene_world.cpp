@@ -223,7 +223,7 @@ SceneGenData SceneWorld::Update()
 	SoundManager::GetInstance().Update();
 
 	if (m_celist.count(m_camera.Target))
-		m_camera.Follow(m_celist.at(m_camera.Target)->Physics()->Position() + Vector3f(0.5f, 0.5f, 0));
+		m_camera.SetFollow(m_celist.at(m_camera.Target)->Physics()->Position() + Vector3f(0.5f, 0.5f, 0));
 
 	//Display FPS
 #ifdef _DEBUG

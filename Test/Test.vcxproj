@@ -177,6 +177,7 @@
     <ClInclude Include="src\fontFloat.h" />
     <ClInclude Include="src\hudComponent.h" />
     <ClInclude Include="src\hudHealthBar.h" />
+    <ClInclude Include="src\lerper.h" />
     <ClInclude Include="src\localizationData.h" />
     <ClInclude Include="src\observable.h" />
     <ClInclude Include="src\observer.h" />
@@ -293,6 +294,7 @@
     <ClCompile Include="src\fontFloat.cpp" />
     <ClCompile Include="src\hudComponent.cpp" />
     <ClCompile Include="src\hudHealthBar.cpp" />
+    <ClCompile Include="src\lerper.cpp" />
     <ClCompile Include="src\localizationData.cpp" />
     <ClCompile Include="src\observable.cpp" />
     <ClCompile Include="src\observer.cpp" />

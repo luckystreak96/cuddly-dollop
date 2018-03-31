@@ -48,9 +48,12 @@ void SkillMelee::Update()
 
 	HandleActionCommand(progress / duration);
 
+	Camera::_currentCam->SetScale(Vector3f(1.5f));
+
 	switch (_animProg)
 	{
 	case 0:
+		Camera::_currentCam->SetFollowCenteredY(_targets->at(0)->_Graphics->GetPosRef());
 		if (!AnimationsDone())
 			break;
 		Animate();
@@ -58,6 +61,7 @@ void SkillMelee::Update()
 		break;
 	case 1:
 		// DEAL DMG
+		Camera::_currentCam->SetFollowCenteredY(_targets->at(0)->_Graphics->GetPosRef());
 		if (AnimationsDone())
 		{
 			_animProg++;
@@ -75,6 +79,8 @@ void SkillMelee::Update()
 		break;
 	case 2:
 		// JUMP BACK
+		Camera::_currentCam->SetScale(Vector3f(1.f));
+		Camera::_currentCam->SetFollowCenteredY(_owner->BasePosition);
 		if (!AnimationsDone())
 			break;
 		_anims->push_back(Anim_ptr(new AnimJumpTo(_basePos, _owner)));
@@ -89,6 +95,8 @@ void SkillMelee::Update()
 		break;
 	case 3:
 		// SET THIS SKILL TO DONE
+		Camera::_currentCam->SetScale(Vector3f(1.f));
+		Camera::_currentCam->SetFollowCenteredY(_owner->BasePosition);
 		if (!AnimationsDone())
 			break;
 		_done = true;

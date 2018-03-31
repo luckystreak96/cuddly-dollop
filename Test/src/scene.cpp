@@ -57,6 +57,7 @@ SceneGenData Scene::Act()
 			ElapsedTime::GetInstance().SetBufferElapsedTime(60.f);
 		}
 		result = Update();
+		m_camera.Update();
 	}
 
 	//DRAW
@@ -104,8 +105,11 @@ void Scene::SetOrthoStuffs()
 		EffectManager::GetInstance().SetAllTilePositions(OrthoProjInfo::GetRegularInstance().Size);
 
 		if (m_celist.count(m_camera.Target))
+		{
+			m_camera.SetFollow(m_celist.at(m_camera.Target)->Physics()->Position());
 			for (int i = 0; i < 30; i++)
-				m_camera.Follow(m_celist.at(m_camera.Target)->Physics()->Position());
+				m_camera.ExecuteFollow();
+		}
 
 		OrthoProjInfo::GetRegularInstance().changed = false;
 	}
