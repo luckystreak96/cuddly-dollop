@@ -33,28 +33,30 @@ Vector3f Lerper::Lerp(Vector3f& position, Vector3f& target)
 	// note that multiplying two numbers together to check whether they are both
 	// positive or negative is prone to overflow errors but as this class will 
 	// realistically never be used for such massive numbers we should be OK! 
-	if (v.x * previous_velocity.x < 0 || abs(v.x) > abs(previous_velocity.x))
-	{
-		if (v.x - previous_velocity.x > Acceleration)
-		{
+
+		// X-acceleration clamp
+	if (v.x * previous_velocity.x < 0)
+		if (v.x > 0)
 			v.x = previous_velocity.x + Acceleration;
-		}
-		else if (previous_velocity.x - v.x > Acceleration)
-		{
+		else
 			v.x = previous_velocity.x - Acceleration;
-		}
-	}
-	if (v.y * previous_velocity.y < 0 || abs(v.y) > abs(previous_velocity.y))
-	{
-		if ( /*v>0 && previous_velocity>=0 &&*/ v.y - previous_velocity.y > Acceleration)
-		{
+	if (abs(v.x - previous_velocity.x) > Acceleration)
+		if (v.x - previous_velocity.x < 0)
+			v.x = previous_velocity.x - Acceleration;
+		else
+			v.x = previous_velocity.x + Acceleration;
+
+	// Y-acceleration clamp
+	if (v.y * previous_velocity.y < 0)
+		if (v.y > 0)
 			v.y = previous_velocity.y + Acceleration;
-		}
-		else if ( /*v < 0 && previous_velocity <= 0 &&*/ previous_velocity.y - v.y > Acceleration)
-		{
+		else
 			v.y = previous_velocity.y - Acceleration;
-		}
-	}
+	if (abs(v.y - previous_velocity.y) > Acceleration)
+		if (v.y - previous_velocity.y < 0)
+			v.y = previous_velocity.y - Acceleration;
+		else
+			v.y = previous_velocity.y + Acceleration;
 
 	// If this is less than the minimum velocity then
 	// clamp at minimum velocity
@@ -87,12 +89,13 @@ Vector3f Lerper::Lerp(Vector3f& position, Vector3f& target)
 
 	// Adjust the position based on the new velocity
 	position += v;
-	// Now account for potential overshoot and clamp to target if necessary
-	if ((vo.x < 0 && position.x <= target.x) || (vo > 0 && position.x >= target.x) )
-		position.x = target.x;
 
-	if ((vo.y < 0 && position.y <= target.y) || (vo.y > 0 && position.y >= target.y))
-		position.y = target.y;
+	// Now account for potential overshoot and clamp to target if necessary
+	//if ((vo.x < 0 && position.x <= target.x) || (vo.x > 0 && position.x >= target.x))
+	//	position.x = target.x;
+
+	//if ((vo.y < 0 && position.y <= target.y) || (vo.y > 0 && position.y >= target.y))
+	//	position.y = target.y;
 
 	if (position.x == target.x && position.y == target.y)
 	{

@@ -14,6 +14,14 @@ Vector3f Vector3f::Abs()
 	return result;
 }
 
+bool Vector3f::NearXY(Vector3f& other, float distance) const
+{
+	// Pythagoris to find the distance to the other point
+	float distanceX = abs(other.x - this->x);
+	float distanceY = abs(other.y - this->y);
+	return sqrtf(powf(distanceX, 2.f) + powf(distanceY, 2.f)) <= distance;
+}
+
 float Vector3f::AngleBetween(Vector3f v)
 {
 	float dot = Dot(v);

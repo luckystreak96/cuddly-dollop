@@ -8,56 +8,11 @@
 #include "vertex.h"
 #include "GL/glew.h"
 #include "lerper.h"
+#include "mat4f.h"
+#include "projection.h"
 
 class Transformation;
 
-class PersProjInfo
-{
-public:
-	static PersProjInfo& GetRegularInstance()
-	{
-		static PersProjInfo regularInstance;
-		return regularInstance;
-	}
-
-	static PersProjInfo& GetShadowInstance()
-	{
-		static PersProjInfo shadowInstance;
-		return shadowInstance;
-	}
-	float FOV = 30.0f;
-	float Height = 0;
-	float Width = 0;
-	float zNear = 1.0f;
-	float zFar = 1000.0f;
-private:
-	PersProjInfo() {};
-};
-
-class OrthoProjInfo
-{
-public:
-	static OrthoProjInfo& GetRegularInstance()
-	{
-		static OrthoProjInfo regularInstance;
-		return regularInstance;
-	}
-
-	float Top;
-	float Bottom;
-	float Left;
-	float Right;
-	float zNear;
-	float zFar;
-
-	float Size;
-
-	bool changed = true;
-private:
-	OrthoProjInfo() {};
-};
-
-//#include "transform.h"
 enum CameraSpeeds { CAMSPEED_Slow, CAMSPEED_Normal, CAMSPEED_Fast };
 enum FollowType { FT_Exponential, FT_Stable };
 enum CameraStyle { CAMSTYLE_Follow, CAMSTYLE_FollowDad };
@@ -69,13 +24,18 @@ public:
 	void Update();
 	void SetFollow(Vector3f& pos);
 	void SetFollowCenteredY(Vector3f pos);
+	void SetFollowCenteredXY(Vector3f pos);
 	void SetScale(Vector3f& scale);
-	void ExecuteFollow(bool useDadPos = false);
+	void ExecuteFollow();
 	void ExecuteScale();
 	Vector3f MapCenter();
 	void SetCameraFollowSpeed(CameraSpeeds cs);
 	// Method assumes a CENTERED_TILE
 	bool IsOnCamera(Vector3f& position, Vector3f& size);
+
+private:
+	float RandomDad();
+
 public:
 	static Camera* _currentCam;
 	// default is 0.005f
@@ -83,10 +43,12 @@ public:
 	FollowType _followConfiguration;
 	int Target;
 	Vector3f _mapsize;
+	// Camera follow style - ex: DadFollow
 	CameraStyle _style;
-	std::unique_ptr<Transformation> _transform;
 	Lerper _lerper;
+	std::unique_ptr<Transformation> _transform;
 private:
+	bool _followingDad;
 	Vector3f _translate;
 	Vector3f _scale;
 	Vector3f _followTarget;

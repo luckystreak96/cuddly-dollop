@@ -100,7 +100,7 @@ void Scene::SetOrthoStuffs()
 	{
 		OrthoProjInfo* o = &OrthoProjInfo::GetRegularInstance();
 		m_camera._transform->SetOrthoProj(o);
-		m_camera._transform->SetTranslation(-o->Right / o->Size, -o->Top / o->Size, 0);
+		//m_camera._transform->SetTranslation(-o->Right / o->Size, -o->Top / o->Size, 0);
 
 		EffectManager::GetInstance().SetAllTilePositions(OrthoProjInfo::GetRegularInstance().Size);
 

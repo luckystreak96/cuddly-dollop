@@ -56,6 +56,7 @@ bool SceneWorld::Init()
 
 	m_mapHandler = std::shared_ptr<MapHandler>(new MapHandler(m_currentMap, m_jsonHandler));
 	m_camera._mapsize = m_mapHandler->GetMapSize();
+	m_camera._style = CAMSTYLE_FollowDad;
 	m_collisionManager.SetMapTiles(m_mapHandler->Tiles());
 
 	m_celist = EntityFactory::GetEntities(m_currentMap, m_jsonHandler);
