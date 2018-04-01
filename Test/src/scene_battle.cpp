@@ -54,6 +54,10 @@ bool SceneBattle::Init()
 
 	m_mapHandler = std::shared_ptr<MapHandler>(new MapHandler(m_currentMap, m_jsonHandler));
 	m_camera._mapsize = m_mapHandler->GetMapSize();
+	m_camera.ForcePosition(m_camera.MapCenter() - Vector3f(2.0f, 2.0f, 0));
+	m_camera.SetFollow(m_camera.MapCenter());
+	m_camera.ForceScale(Vector3f(1.75f));
+	m_camera.SetScale(Vector3f(1.0f));
 	m_camera._lerperTrans.MaxVelocity = 0.1f;
 	m_camera._style = CAMSTYLE_FollowDad;
 

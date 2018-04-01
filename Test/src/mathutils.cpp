@@ -77,6 +77,16 @@ bool Camera::IsOnCamera(Vector3f& position, Vector3f& size)
 	return false;
 }
 
+void Camera::ForcePosition(Vector3f& pos)
+{
+	_translate = -pos;
+}
+
+void Camera::ForceScale(Vector3f& scale)
+{
+	_scale = scale;
+}
+
 void Camera::Update()
 {
 	switch (_style)

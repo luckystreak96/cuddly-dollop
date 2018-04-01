@@ -30,6 +30,8 @@ public:
 	void ExecuteScale();
 	Vector3f MapCenter();
 	void SetCameraFollowSpeed(CameraSpeeds cs);
+	void ForcePosition(Vector3f& pos);
+	void ForceScale(Vector3f& scale);
 	// Method assumes a CENTERED_TILE
 	bool IsOnCamera(Vector3f& position, Vector3f& size);
 
