@@ -179,6 +179,8 @@
     <ClInclude Include="src\hudHealthBar.h" />
     <ClInclude Include="src\lerper.h" />
     <ClInclude Include="src\localizationData.h" />
+    <ClInclude Include="src\nighttimeEffect.h" />
+    <ClInclude Include="src\nighttimeProcessing.h" />
     <ClInclude Include="src\observable.h" />
     <ClInclude Include="src\observer.h" />
     <ClInclude Include="src\particleManager.h" />
@@ -297,6 +299,8 @@
     <ClCompile Include="src\hudHealthBar.cpp" />
     <ClCompile Include="src\lerper.cpp" />
     <ClCompile Include="src\localizationData.cpp" />
+    <ClCompile Include="src\nighttimeEffect.cpp" />
+    <ClCompile Include="src\nighttimeProcessing.cpp" />
     <ClCompile Include="src\observable.cpp" />
     <ClCompile Include="src\observer.cpp" />
     <ClCompile Include="src\particleManager.cpp" />

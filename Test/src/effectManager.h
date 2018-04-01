@@ -5,7 +5,7 @@
 #include "transform.h"
 #include <map>
 
-enum Effects { E_Basic, E_SingleColor, E_Combine, E_Bloom, E_Blur, E_Fade, E_Contrast, E_Last };
+enum Effects { E_Basic, E_SingleColor, E_Combine, E_Bloom, E_Blur, E_Fade, E_Contrast, E_NightTime, E_Last };
 
 class EffectManager
 {

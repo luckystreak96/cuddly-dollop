@@ -6,6 +6,7 @@
 #include "combineEffect.h"
 #include "bloomEffect.h"
 #include "bloom.h"
+#include "nighttimeProcessing.h"
 #include "contrastProcessing.h"
 
 #include "input_manager.h"
@@ -17,8 +18,9 @@ Renderer::Renderer() : m_toDraw(std::vector<GraphicsComponent*>()), m_width(1), 
 	pps.Update();
 
 	// TEST ERASE ME MAYBE
-	m_ppe.push_back(std::make_shared<Bloom>(Bloom()));
-	m_ppe.push_back(std::make_shared<ContrastProcessing>(ContrastProcessing()));
+	m_ppe.push_back(std::make_shared<NightTimeProcessing>(NightTimeProcessing()));
+	//m_ppe.push_back(std::make_shared<Bloom>(Bloom()));
+	//m_ppe.push_back(std::make_shared<ContrastProcessing>(ContrastProcessing()));
 }
 
 void Renderer::Setup()

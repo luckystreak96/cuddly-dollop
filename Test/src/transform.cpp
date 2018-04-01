@@ -39,7 +39,7 @@ Mat4f& Transformation::GetWorldTransNoTranslate()
 	Vector3f trans = Vector3f(m_orthoProj->Left, m_orthoProj->Bottom, 0);
 	translate.InitTranslateMat(trans);
 	rotate.InitRotateMat(m_rotate);
-	m_WTrans = translate * rotate * scale;
+	m_WTrans = translate * rotate/* * scale*/;
 
 	return m_WTrans;
 }

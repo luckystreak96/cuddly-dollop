@@ -6,6 +6,7 @@
 #include "blurEffect.h"
 #include "fadeEffect.h"
 #include "contrastEffect.h"
+#include "nighttimeEffect.h"
 
 EffectManager::EffectManager()
 	: m_prevEffect(std::pair<Effect*, Effects>(NULL, E_Basic)), m_currentEffect(std::pair<Effect*, Effects>(NULL, E_Basic)),
@@ -21,6 +22,7 @@ EffectManager::EffectManager()
 	m_effects.emplace(E_Blur, &BlurEffect::GetInstance());
 	m_effects.emplace(E_Fade, &FadeEffect::GetInstance());
 	m_effects.emplace(E_Contrast, &ContrastEffect::GetInstance());
+	m_effects.emplace(E_NightTime, &NightTimeEffect::GetInstance());
 }
 
 void EffectManager::ResetWorldUpdateFlag()

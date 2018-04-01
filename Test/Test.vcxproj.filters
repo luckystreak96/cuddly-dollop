@@ -464,6 +464,12 @@
     <ClInclude Include="src\projection.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\nighttimeEffect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\nighttimeProcessing.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -794,6 +800,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\projection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\nighttimeEffect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\nighttimeProcessing.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
