@@ -62,10 +62,10 @@ bool Camera::IsOnCamera(Vector3f& position, Vector3f& size)
 	float targetBottomLimit = position.y - 0.5f * size.y;
 
 	// 3 times - once because this translation is done once in the negative to center the screen, then twice more for the whole width
-	float cameraRightLimit = -_translate.x + (right / orthoSize);
-	float cameraLeftLimit = -_translate.x - (right / orthoSize);
-	float cameraTopLimit = -_translate.y + (top / orthoSize);
-	float cameraBottomLimit = -_translate.y - (top / orthoSize);
+	float cameraRightLimit = -_translate.x + (right / orthoSize) / _scale.x;
+	float cameraLeftLimit = -_translate.x - (right / orthoSize) / _scale.x;
+	float cameraTopLimit = -_translate.y + (top / orthoSize) / _scale.y;
+	float cameraBottomLimit = -_translate.y - (top / orthoSize) / _scale.y;
 
 	// Needs to be in left-right limits AND top-down limits
 	if (((targetRightLimit > cameraLeftLimit && targetRightLimit < cameraRightLimit) ||
@@ -176,25 +176,27 @@ void Camera::ExecuteFollow()
 	//_translate.x += distanceX * percentagex;
 	//_translate.y += distanceY * percentagey;
 
+	scale = _scale;
+
 	// If the pan would bring you left further than the left limit OR the map is too small to fit the screen width,
 	//  just pan at the left limit
-	if (_translate.x - ((OrthoProjInfo::GetRegularInstance().Left) / size) > 0 ||
+	if (_translate.x - ((OrthoProjInfo::GetRegularInstance().Left) / size) / scale.x > 0 ||
 		_mapsize.x < ((OrthoProjInfo::GetRegularInstance().Right) / size) * 2)
-		_translate.x = ((OrthoProjInfo::GetRegularInstance().Left) / size);
+		_translate.x = ((OrthoProjInfo::GetRegularInstance().Left) / size) / scale.x;
 	// If the map is big enough for the screen to pan it right and you would normally pass the limits,
 	//  set the pan to the exact right limit
-	else if (abs(_translate.x - ((OrthoProjInfo::GetRegularInstance().Right) / size)) > _mapsize.x * scale.x)
-		_translate.x = -(_mapsize.x * scale.x - ((OrthoProjInfo::GetRegularInstance().Right) / size));
+	else if (abs(_translate.x - ((OrthoProjInfo::GetRegularInstance().Right) / size) / scale.x) > _mapsize.x)
+		_translate.x = -(_mapsize.x - ((OrthoProjInfo::GetRegularInstance().Right) / size) / scale.x);
 
 	// If the pan would bring you down further than the bottom OR the map isnt high enough to fill the screen,
 	//  just stay at the bottom
-	if (_translate.y - ((OrthoProjInfo::GetRegularInstance().Bottom) / size) > 0 ||
+	if (_translate.y - ((OrthoProjInfo::GetRegularInstance().Bottom) / size) / scale.y > 0 ||
 		_mapsize.y < ((OrthoProjInfo::GetRegularInstance().Top) / size) * 2)
-		_translate.y = ((OrthoProjInfo::GetRegularInstance().Bottom) / size);
+		_translate.y = ((OrthoProjInfo::GetRegularInstance().Bottom) / size) / scale.y;
 	// If the map is big enough for the screen to pan it upwards and you would normally pass the limits,
 	//  set the pan to the exact top
-	else if (abs(_translate.y - ((OrthoProjInfo::GetRegularInstance().Top) / size)) > _mapsize.y * scale.y)
-		_translate.y = -(_mapsize.y * scale.y - ((OrthoProjInfo::GetRegularInstance().Top) / size));
+	else if (abs(_translate.y - ((OrthoProjInfo::GetRegularInstance().Top) / size) / scale.y) > _mapsize.y)
+		_translate.y = -(_mapsize.y - ((OrthoProjInfo::GetRegularInstance().Top) / size) / scale.y);
 
 	_transform->SetTranslation(_translate);
 }
