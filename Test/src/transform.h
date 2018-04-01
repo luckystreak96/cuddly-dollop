@@ -25,8 +25,10 @@ class Transformation
 		bool operator!=(const Transformation& t);
 
 		Mat4f& GetWorldTrans();
+		Mat4f& GetWorldTransCentered();
 		Mat4f& GetWorldTransNoTranslate();
 		Mat4f& GetWOTrans();
+		Mat4f& GetWOTransCentered();
 		Mat4f& GetWOTransNoTranslate();
         Mat4f& GetWPTrans();
         Mat4f& GetTrans();

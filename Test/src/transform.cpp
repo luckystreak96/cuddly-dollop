@@ -19,6 +19,18 @@ Mat4f& Transformation::GetWorldTrans()
     return m_WTrans;
 }
 
+Mat4f& Transformation::GetWorldTransCentered()
+{
+    Mat4f scale, translate, rotate;
+
+    scale.InitScaleMat(m_scale);
+    rotate.InitRotateMat(m_rotate);
+    translate.InitTranslateMat(m_translate);
+    m_WTrans = rotate * scale * translate;
+
+    return m_WTrans;
+}
+
 Mat4f& Transformation::GetWorldTransNoTranslate()
 {
 	Mat4f scale, translate, rotate;
@@ -35,6 +47,15 @@ Mat4f& Transformation::GetWorldTransNoTranslate()
 Mat4f& Transformation::GetWOTrans()
 {
 	m_WTrans = GetWorldTrans();
+	m_Proj.InitOrthoProj(*m_orthoProj);
+	m_WPTrans = m_Proj * m_WTrans;
+
+	return m_WPTrans;
+}
+
+Mat4f& Transformation::GetWOTransCentered()
+{
+	m_WTrans = GetWorldTransCentered();
 	m_Proj.InitOrthoProj(*m_orthoProj);
 	m_WPTrans = m_Proj * m_WTrans;
 

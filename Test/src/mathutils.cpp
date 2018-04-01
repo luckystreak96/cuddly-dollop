@@ -8,7 +8,7 @@ Camera* Camera::_currentCam = NULL;
 //Vector3f Camera::_translate = Vector3f();
 //Vector3f Camera::_scale = Vector3f(1, 1, 1);
 
-Camera::Camera() : Target(1), _followSpeed(0.005f), _followConfiguration(FT_Exponential), _scale(Vector3f(1)), _style(CAMSTYLE_FollowDad),
+Camera::Camera() : Target(1), _followSpeed(0.005f), _followConfiguration(FT_Exponential), _scale(Vector3f(1)), _style(CAMSTYLE_Follow),
 _scaleTarget(Vector3f(1))
 {
 	_transform = std::make_unique<Transformation>(Transformation());
@@ -22,7 +22,9 @@ Vector3f Camera::MapCenter()
 	float size = OrthoProjInfo::GetRegularInstance().Size;
 	// (Maplength - viewWidth) / 2
 	Vector3f result;
-	result.x = (_mapsize.x - ((abs(left) + abs(right)) / size)) / 2.f;
+	// +1 otherwise it's not well centered
+	result.x = ((_mapsize.x + 1) - ((abs(left) + abs(right)) / size)) / 2.f;
+	// didn't do a +1 cause the map looks good without it (xd)
 	result.y = (_mapsize.y - ((top * 2.f) / size)) / 2.f;
 	result.x += right / size;
 	result.y += top / size;
@@ -80,16 +82,18 @@ void Camera::Update()
 	switch (_style)
 	{
 	case CAMSTYLE_FollowDad:
+		_dadCountdown++;
+
 		// If the translate is rlly close to target, start targeting random nearby places
 		// The lack of break will make the execute activate as well
 
 		// Gotta make the followTarget negative cause otherwise it doesnt register in the method
-		if ((!_followingDad && _translate.NearXY(-_followTarget, 0.075f)) ||
-			_followingDad && _translate.NearXY(-_followTargetDad, 0.075f))
+		if (_dadCountdown > 60 * 5 && ((!_followingDad && _translate.NearXY(-_followTarget, 0.075f)) ||
+			_followingDad && _translate.NearXY(-_followTargetDad, 0.075f)))
 		{
 			_followingDad = true;
-			_lerper.Amount = 0.010f;
-			_lerper.Acceleration = 0.0002f;
+			_lerperTrans.Amount = 0.010f;
+			_lerperTrans.Acceleration = 0.0002f;
 			_followTargetDad = _followTarget + Vector3f(RandomDad(), RandomDad(), 0); // set the random distance here
 		}
 	case CAMSTYLE_Follow:
@@ -103,7 +107,7 @@ void Camera::Update()
 
 float Camera::RandomDad()
 {
-	float result = fmod(rand(), 2.4f) - 1.2f;
+	float result = fmod(rand(), 1.4f) - 0.7f;
 	return result;
 }
 
@@ -117,17 +121,20 @@ void Camera::ExecuteScale()
 	float scaleChangeY = _scale.y;
 
 	// Set the scale slowly as the follow takes effect
-	_scale.x += (_scaleTarget.x - _scale.x) * 0.015f;
-	_scale.y += (_scaleTarget.y - _scale.y) * 0.015f;
+	Vector3f lerp = _lerperScale.Lerp(_scale, _scaleTarget);
+	//_scale.x += (_scaleTarget.x - _scale.x) * 0.015f;
+	//_scale.y += (_scaleTarget.y - _scale.y) * 0.015f;
+	_scale.x = lerp.x;
+	_scale.y = lerp.y;
 	_transform->SetScale(_scale);
 
 	scaleChangeX -= _scale.x;
 	scaleChangeY -= _scale.y;
 
 	// Experimental
-	_translate.x += scaleChangeX * (right * 2) / orthoSize;
-	_translate.y += scaleChangeY * (top * 2) / orthoSize;
-	_transform->SetTranslation(_translate);
+	//_translate.x += scaleChangeX * (right * 1.5f) / orthoSize;
+	//_translate.y += scaleChangeY * (top * 1.5f) / orthoSize;
+	//_transform->SetTranslation(_translate);
 }
 
 void Camera::ExecuteFollow()
@@ -136,7 +143,7 @@ void Camera::ExecuteFollow()
 
 	//_translate = _transform->GetTranslation();
 	//_scale = _transform->GetScale();
-	Vector3f scale = _scale;
+	Vector3f scale = Vector3f(1);// _scale;
 
 	float size = OrthoProjInfo::GetRegularInstance().Size;
 
@@ -163,7 +170,7 @@ void Camera::ExecuteFollow()
 	percentagey = fmin(percentagey, 1.0f);
 
 	// Sets how much the camera will move in this frame
-	Vector3f lerp = _lerper.Lerp(-_translate, target * scale);
+	Vector3f lerp = _lerperTrans.Lerp(-_translate, target * scale);
 	_translate.x = -lerp.x;
 	_translate.y = -lerp.y;
 	//_translate.x += distanceX * percentagex;
@@ -205,8 +212,9 @@ void Camera::SetFollow(Vector3f& target)
 
 	// Reset the dad-following check
 	_followingDad = false;
-	_lerper.Amount = 0.025f;
-	_lerper.Acceleration = 0.02f;
+	_dadCountdown = 0;
+	_lerperTrans.Amount = 0.025f;
+	_lerperTrans.Acceleration = 0.02f;
 }
 
 void Camera::SetFollowCenteredY(Vector3f target)

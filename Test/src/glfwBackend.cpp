@@ -41,16 +41,18 @@ void Resize(GLFWwindow* window)
 	int h = mode->height;
 
 	// Fullscreen mode
-	if (screenW == w && screenH == h)
+	if (std::get<bool>(GameData::Options.at("fullscreen")))
 	{
 		viewH = h;
 		viewW = w;
+		std::cout << "Switched to fullscreen mode : Width - " << viewW << " Height - " << viewH << std::endl;
 	}
-	else 
+	else
 	{
 		viewH = multiplierFinal * offsetY;
 		viewW = multiplierFinal * offsetX;
 		glfwSetWindowSize(GLFWManager::m_window, viewW, viewH);
+		std::cout << "Switched to windowed mode" << std::endl;
 	}
 	//glViewport((screenW - viewW) / 2, (screenH - viewH) / 2, (GLsizei)(viewW), (GLsizei)(viewH));
 	glViewport(0, 0, (GLsizei)(viewW), (GLsizei)(viewH));
@@ -71,7 +73,10 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 	{
 		GLFWmonitor* monitor = glfwGetPrimaryMonitor();
 		const GLFWvidmode* mode = glfwGetVideoMode(monitor);
-		glfwSetWindowMonitor(window, std::get<bool>(GameData::Options.at("fullscreen")) ? NULL : monitor, 5, 35, mode->width - 10, mode->height - 80, mode->refreshRate);
+		if (std::get<bool>(GameData::Options.at("fullscreen")))
+			glfwSetWindowMonitor(window, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
+		else
+			glfwSetWindowMonitor(window, NULL, 5, 35, mode->width - 10, mode->height - 80, mode->refreshRate);
 		GameData::Options.at("fullscreen") = !std::get<bool>(GameData::Options.at("fullscreen"));
 		glfwSwapInterval(1);
 	}

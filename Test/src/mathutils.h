@@ -45,9 +45,11 @@ public:
 	Vector3f _mapsize;
 	// Camera follow style - ex: DadFollow
 	CameraStyle _style;
-	Lerper _lerper;
+	Lerper _lerperTrans;
+	Lerper _lerperScale;
 	std::unique_ptr<Transformation> _transform;
 private:
+	int _dadCountdown;
 	bool _followingDad;
 	Vector3f _translate;
 	Vector3f _scale;

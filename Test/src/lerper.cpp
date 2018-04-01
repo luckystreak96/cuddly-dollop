@@ -3,7 +3,7 @@
 Lerper::Lerper()
 {
 	Amount = 0.025f;
-	Acceleration = 0.2f;
+	Acceleration = 0.002f;
 	MinVelocity = 0;
 	MaxVelocity = 1.0f;
 }

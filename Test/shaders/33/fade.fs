@@ -1,6 +1,5 @@
 #version 330 core
 
-//in vec4 Color;
 in vec2 TexCoord0;
 in vec3 Color0;
 in float Alpha0;
@@ -14,7 +13,7 @@ void main()
 	vec4 color = texture(gSampler, TexCoord0.st);
 	color *= vec4(Color0, 1.0);
 	color.a *= Alpha0;
-	if(color.a < 0.1)
+	if(color.a < 0.05)
 		discard;
 
 	float temp = clamp(gFade, 0.0, 1.0);

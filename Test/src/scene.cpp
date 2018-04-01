@@ -125,7 +125,7 @@ void Scene::SetOrthoStuffs()
 	temp.y = floorf(temp.y);
 	m_camera._transform->SetTranslation(temp);
 
-	EffectManager::GetInstance().SetWorldTrans(&m_camera._transform->GetWOTrans().m[0][0], &m_camera._transform->GetWOTransNoTranslate().m[0][0]);
+	EffectManager::GetInstance().SetWorldTrans(&m_camera._transform->GetWOTransCentered().m[0][0], &m_camera._transform->GetWOTransNoTranslate().m[0][0]);
 	EffectManager::GetInstance().ResetWorldUpdateFlag();
 }
 

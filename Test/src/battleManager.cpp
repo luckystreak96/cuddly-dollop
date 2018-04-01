@@ -303,7 +303,7 @@ void BattleManager::ManageInput()
 {
 	// Dont allow any input if theres an animation running
 	// This doesnt apply if theres a skill in progress, gotta be interactive!
-	if (_animations.size() && _state != BS_ActionProgress)
+	if ((_animations.size() || _owner->_Fighter->Team != 0) && _state != BS_ActionProgress)
 		return;
 
 	// Get input
