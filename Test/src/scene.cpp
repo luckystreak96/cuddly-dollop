@@ -104,13 +104,6 @@ void Scene::SetOrthoStuffs()
 
 		EffectManager::GetInstance().SetAllTilePositions(OrthoProjInfo::GetRegularInstance().Size);
 
-		if (m_celist.count(m_camera.Target))
-		{
-			m_camera.SetFollow(m_celist.at(m_camera.Target)->Physics()->Position());
-			for (int i = 0; i < 30; i++)
-				m_camera.ExecuteFollow();
-		}
-
 		OrthoProjInfo::GetRegularInstance().changed = false;
 	}
 

@@ -1,14 +1,9 @@
 #include "mathutils.h"
 #include "transform.h"
 
-static const float StepSize = 0.2f;
 Camera* Camera::_currentCam = NULL;
-//int Camera::Target = 1;
-//Vector3f Camera::Mapsize = Vector3f();
-//Vector3f Camera::_translate = Vector3f();
-//Vector3f Camera::_scale = Vector3f(1, 1, 1);
 
-Camera::Camera() : Target(1), _followSpeed(0.005f), _followConfiguration(FT_Exponential), _scale(Vector3f(1)), _style(CAMSTYLE_Follow),
+Camera::Camera() : Target(1), _followSpeed(0.005f), _scale(Vector3f(1)), _style(CAMSTYLE_Follow),
 _scaleTarget(Vector3f(1))
 {
 	_transform = std::make_unique<Transformation>(Transformation());
@@ -38,30 +33,28 @@ void Camera::SetCameraFollowSpeed(CameraSpeeds cs)
 	switch (cs)
 	{
 	case CAMSPEED_Slow:
-		_followSpeed = 0.000005f;
+		_lerperTrans.Acceleration = 0.000005f;
 		break;
 	case CAMSPEED_Normal:
-		_followSpeed = 0.0005f;
+		_lerperTrans.Acceleration = 0.0005f;
 		break;
 	case CAMSPEED_Fast:
-		_followSpeed = 0.005f;
+		_lerperTrans.Acceleration = 0.005f;
 		break;
 	}
 }
 
-
 bool Camera::IsOnCamera(Vector3f& position, Vector3f& size)
 {
-	float right = OrthoProjInfo::GetRegularInstance().Right;
-	float top = OrthoProjInfo::GetRegularInstance().Top;
-	float orthoSize = OrthoProjInfo::GetRegularInstance().Size;
-
 	float targetRightLimit = position.x + 0.5f * size.x;
 	float targetLeftLimit = position.x - 0.5f * size.x;
 	float targetTopLimit = position.y + 0.5f * size.y;
 	float targetBottomLimit = position.y - 0.5f * size.y;
 
-	// 3 times - once because this translation is done once in the negative to center the screen, then twice more for the whole width
+	float right = OrthoProjInfo::GetRegularInstance().Right;
+	float top = OrthoProjInfo::GetRegularInstance().Top;
+	float orthoSize = OrthoProjInfo::GetRegularInstance().Size;
+
 	float cameraRightLimit = -_translate.x + (right / orthoSize) / _scale.x;
 	float cameraLeftLimit = -_translate.x - (right / orthoSize) / _scale.x;
 	float cameraTopLimit = -_translate.y + (top / orthoSize) / _scale.y;
@@ -123,90 +116,50 @@ float Camera::RandomDad()
 
 void Camera::ExecuteScale()
 {
-	float right = OrthoProjInfo::GetRegularInstance().Right;
-	float top = OrthoProjInfo::GetRegularInstance().Top;
-	float orthoSize = OrthoProjInfo::GetRegularInstance().Size;
-
-	float scaleChangeX = _scale.x;
-	float scaleChangeY = _scale.y;
-
 	// Set the scale slowly as the follow takes effect
 	Vector3f lerp = _lerperScale.Lerp(_scale, _scaleTarget);
-	//_scale.x += (_scaleTarget.x - _scale.x) * 0.015f;
-	//_scale.y += (_scaleTarget.y - _scale.y) * 0.015f;
+
 	_scale.x = lerp.x;
 	_scale.y = lerp.y;
+
 	_transform->SetScale(_scale);
-
-	scaleChangeX -= _scale.x;
-	scaleChangeY -= _scale.y;
-
-	// Experimental
-	//_translate.x += scaleChangeX * (right * 1.5f) / orthoSize;
-	//_translate.y += scaleChangeY * (top * 1.5f) / orthoSize;
-	//_transform->SetTranslation(_translate);
 }
 
 void Camera::ExecuteFollow()
 {
 	Vector3f target = _followingDad ? _followTargetDad : _followTarget;
 
-	//_translate = _transform->GetTranslation();
-	//_scale = _transform->GetScale();
-	Vector3f scale = Vector3f(1);// _scale;
-
-	float size = OrthoProjInfo::GetRegularInstance().Size;
-
-	float distanceX = -(target.x * scale.x) - _translate.x;//find the distance between the 2, -target so that the movement of the world will be proper
-	float distanceY = -(target.y * scale.y) - _translate.y;
-
-	//float percentagex = abs(distanceX) / 15.f / scale.x / 2.f;
-	//float percentagey = abs(distanceY) / 10.f / scale.x / 2.f;
-	float percentagex = 1;
-	float percentagey = 1;
-
-	if (_followConfiguration == FT_Exponential)
-	{
-		percentagex = (_followSpeed * pow(distanceX, 2)) * scale.x + 0.02f;
-		percentagey = (_followSpeed * pow(distanceY, 2)) * scale.y + 0.02f;
-	}
-	else if (_followConfiguration == FT_Stable)
-	{
-		percentagex = (_followSpeed * 300 * (abs(distanceX) / abs(distanceY))) * scale.x + 0.02f;
-		percentagey = (_followSpeed * 300 * (abs(distanceY) / abs(distanceX))) * scale.y + 0.02f;
-	}
-
-	percentagex = fmin(percentagex, 1.0f);
-	percentagey = fmin(percentagey, 1.0f);
-
 	// Sets how much the camera will move in this frame
-	Vector3f lerp = _lerperTrans.Lerp(-_translate, target * scale);
+	Vector3f lerp = _lerperTrans.Lerp(-_translate, target);
+
 	_translate.x = -lerp.x;
 	_translate.y = -lerp.y;
-	//_translate.x += distanceX * percentagex;
-	//_translate.y += distanceY * percentagey;
 
-	scale = _scale;
+	float size = OrthoProjInfo::GetRegularInstance().Size;
+	float left = OrthoProjInfo::GetRegularInstance().Left;
+	float right = OrthoProjInfo::GetRegularInstance().Right;
+	float bottom= OrthoProjInfo::GetRegularInstance().Bottom;
+	float top= OrthoProjInfo::GetRegularInstance().Top;
 
 	// If the pan would bring you left further than the left limit OR the map is too small to fit the screen width,
 	//  just pan at the left limit
-	if (_translate.x - ((OrthoProjInfo::GetRegularInstance().Left) / size) / scale.x > 0 ||
-		_mapsize.x < ((OrthoProjInfo::GetRegularInstance().Right) / size) * 2)
-		_translate.x = ((OrthoProjInfo::GetRegularInstance().Left) / size) / scale.x;
+	if (_translate.x - ((left) / size) / _scale.x > 0 ||
+		_mapsize.x < ((right) / size) * 2)
+		_translate.x = ((left) / size) / _scale.x;
 	// If the map is big enough for the screen to pan it right and you would normally pass the limits,
 	//  set the pan to the exact right limit
-	else if (abs(_translate.x - ((OrthoProjInfo::GetRegularInstance().Right) / size) / scale.x) > _mapsize.x)
-		_translate.x = -(_mapsize.x - ((OrthoProjInfo::GetRegularInstance().Right) / size) / scale.x);
+	else if (abs(_translate.x - ((right) / size) / _scale.x) > _mapsize.x)
+		_translate.x = -(_mapsize.x - ((right) / size) / _scale.x);
 
 	// If the pan would bring you down further than the bottom OR the map isnt high enough to fill the screen,
 	//  just stay at the bottom
-	if (_translate.y - ((OrthoProjInfo::GetRegularInstance().Bottom) / size) / scale.y > 0 ||
-		_mapsize.y < ((OrthoProjInfo::GetRegularInstance().Top) / size) * 2)
-		_translate.y = ((OrthoProjInfo::GetRegularInstance().Bottom) / size) / scale.y;
+	if (_translate.y - ((bottom) / size) / _scale.y > 0 ||
+		_mapsize.y < ((top) / size) * 2)
+		_translate.y = ((bottom) / size) / _scale.y;
 	// If the map is big enough for the screen to pan it upwards and you would normally pass the limits,
 	//  set the pan to the exact top
-	else if (abs(_translate.y - ((OrthoProjInfo::GetRegularInstance().Top) / size) / scale.y) > _mapsize.y)
-		_translate.y = -(_mapsize.y - ((OrthoProjInfo::GetRegularInstance().Top) / size) / scale.y);
+	else if (abs(_translate.y - ((top) / size) / _scale.y) > _mapsize.y)
+		_translate.y = -(_mapsize.y - ((top) / size) / _scale.y);
 
 	_transform->SetTranslation(_translate);
 }

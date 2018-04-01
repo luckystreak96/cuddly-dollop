@@ -34,7 +34,7 @@ Vector3f Lerper::Lerp(Vector3f& position, Vector3f& target)
 	// positive or negative is prone to overflow errors but as this class will 
 	// realistically never be used for such massive numbers we should be OK! 
 
-		// X-acceleration clamp
+	// X-acceleration clamp
 	if (v.x * previous_velocity.x < 0)
 		if (v.x > 0)
 			v.x = previous_velocity.x + Acceleration;
@@ -89,6 +89,8 @@ Vector3f Lerper::Lerp(Vector3f& position, Vector3f& target)
 
 	// Adjust the position based on the new velocity
 	position += v;
+
+	// Overshoot logic doesn't work when you suddenly change direction
 
 	// Now account for potential overshoot and clamp to target if necessary
 	//if ((vo.x < 0 && position.x <= target.x) || (vo.x > 0 && position.x >= target.x))
