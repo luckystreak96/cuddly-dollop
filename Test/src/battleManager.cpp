@@ -75,6 +75,7 @@ void BattleManager::Update()
 	// End the battle, gain exp and show stuff
 	if(_animations.size() == 0 && _state == BS_TurnStart && !_done)
 	{
+		Camera::_currentCam->SetFollow(Camera::_currentCam->MapCenter());
 		_winner = FindWinner();
 		if (_winner != -1)
 		{

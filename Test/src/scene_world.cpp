@@ -35,6 +35,7 @@ void SceneWorld::Brb()
 
 void SceneWorld::Resume()
 {
+	m_fade.SetFade(true);
 #ifdef _DEBUG
 	FontManager::GetInstance().EnableFont(m_fontFPS);
 #endif
