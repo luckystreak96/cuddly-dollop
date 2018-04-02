@@ -11,6 +11,7 @@ StatUser::StatUser()
 
 void StatUser::SetDefault()
 {
+	DeathExp = 2;
 	Health = 10;
 	MaxHealth = 10;
 	Speed = 0;
@@ -84,6 +85,7 @@ void StatUser::SetLevel(int level)
 
 void StatUser::LevelUp()
 {
+	Level++;
 	SkillPoints += 4;
 	NextLevelExp = CalculateNextLevelExp();
 }

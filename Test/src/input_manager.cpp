@@ -77,6 +77,11 @@ void InputManager::SetupFrameKeys()
 	}
 }
 
+unsigned int InputManager::GetKeyCount()
+{
+	return m_keyMap.size();
+}
+
 bool InputManager::FrameKeyStatus(InputAction action, KeyStatus status, unsigned int accessLevel)
 {
 	assert(GameData::KeyMap.count(action));

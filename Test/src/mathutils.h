@@ -14,7 +14,7 @@
 class Transformation;
 
 enum CameraSpeeds { CAMSPEED_Slow, CAMSPEED_Normal, CAMSPEED_Fast };
-enum CameraStyle { CAMSTYLE_Follow, CAMSTYLE_FollowDad };
+enum CameraStyle { CAMSTYLE_Follow, CAMSTYLE_FollowDad, CAMSTYLE_FollowDadNoScale };
 
 class Camera
 {
@@ -43,6 +43,8 @@ public:
 	void ForceScale(Vector3f& scale);
 	// Method assumes a CENTERED_TILE - returns if the object is on the screen
 	bool IsOnCamera(Vector3f& position, Vector3f& size);
+	// Resets dad cam as if we set a new target
+	void EnableNormalCam();
 
 private:
 	// Returns the random values for DadCam
@@ -78,6 +80,8 @@ private:
 	Vector3f _followTarget;
 	// the temporary target for dadCam
 	Vector3f _followTargetDad;
+	// the temporary target for dadCam
+	Vector3f _scaleTargetDad;
 	// the scale to scale towards
 	Vector3f _scaleTarget;
 };

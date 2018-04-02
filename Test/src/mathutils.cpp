@@ -3,7 +3,7 @@
 
 Camera* Camera::_currentCam = NULL;
 
-Camera::Camera() : Target(1), _followSpeed(0.005f), _scale(Vector3f(1)), _style(CAMSTYLE_Follow),
+Camera::Camera() : Target(1), _followSpeed(0.005f), _scale(Vector3f(1)), _scaleTargetDad(Vector3f(1)), _style(CAMSTYLE_Follow),
 _scaleTarget(Vector3f(1))
 {
 	_transform = std::make_unique<Transformation>(Transformation());
@@ -84,6 +84,7 @@ void Camera::Update()
 {
 	switch (_style)
 	{
+	case CAMSTYLE_FollowDadNoScale:
 	case CAMSTYLE_FollowDad:
 		_dadCountdown++;
 
@@ -91,13 +92,20 @@ void Camera::Update()
 		// The lack of break will make the execute activate as well
 
 		// Gotta make the followTarget negative cause otherwise it doesnt register in the method
-		if (_dadCountdown > 60 * 5 && ((!_followingDad && _translate.NearXY(-_followTarget, 0.075f)) ||
-			_followingDad && _translate.NearXY(-_followTargetDad, 0.075f)))
+		if (_dadCountdown > 60 * 10 &&
+			((!_followingDad && _translate.NearXY(-_followTarget, 0.075f)) || _followingDad && _translate.NearXY(-_followTargetDad, 0.075f)) &&
+			((!_followingDad && _scale.NearXY(_scaleTarget, 0.01f)) || _followingDad && _scale.NearXY(_scaleTargetDad, 0.01f)))
 		{
 			_followingDad = true;
 			_lerperTrans.Amount = 0.010f;
 			_lerperTrans.Acceleration = 0.0002f;
+
 			_followTargetDad = _followTarget + Vector3f(RandomDad(), RandomDad(), 0); // set the random distance here
+			if (_style != CAMSTYLE_FollowDadNoScale)
+			{
+				Vector3f scale = RandomDad() / 6.f;
+				_scaleTargetDad = _scaleTarget + scale; // set the random distance here
+			}
 		}
 	case CAMSTYLE_Follow:
 		ExecuteScale();
@@ -116,8 +124,10 @@ float Camera::RandomDad()
 
 void Camera::ExecuteScale()
 {
+	Vector3f target = _followingDad ? _scaleTargetDad : _scaleTarget;
+
 	// Set the scale slowly as the follow takes effect
-	Vector3f lerp = _lerperScale.Lerp(_scale, _scaleTarget);
+	Vector3f lerp = _lerperScale.Lerp(_scale, target);
 
 	_scale.x = lerp.x;
 	_scale.y = lerp.y;
@@ -138,8 +148,8 @@ void Camera::ExecuteFollow()
 	float size = OrthoProjInfo::GetRegularInstance().Size;
 	float left = OrthoProjInfo::GetRegularInstance().Left;
 	float right = OrthoProjInfo::GetRegularInstance().Right;
-	float bottom= OrthoProjInfo::GetRegularInstance().Bottom;
-	float top= OrthoProjInfo::GetRegularInstance().Top;
+	float bottom = OrthoProjInfo::GetRegularInstance().Bottom;
+	float top = OrthoProjInfo::GetRegularInstance().Top;
 
 	// If the pan would bring you left further than the left limit OR the map is too small to fit the screen width,
 	//  just pan at the left limit
@@ -175,6 +185,11 @@ void Camera::SetFollow(Vector3f& target)
 		return;
 	_followTarget = target;
 
+	EnableNormalCam();
+}
+
+void Camera::EnableNormalCam()
+{
 	// Reset the dad-following check
 	_followingDad = false;
 	_dadCountdown = 0;

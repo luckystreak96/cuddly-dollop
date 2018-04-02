@@ -56,6 +56,8 @@ public:
 
 	float GetKeyPercent(InputAction action);
 
+	unsigned int GetKeyCount();
+
 	static std::map<InputAction, std::string> InputActionStrings;
 	static InputAction StringToInputAction(std::string str);
 

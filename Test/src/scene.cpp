@@ -31,6 +31,9 @@ void Scene::ManageInput()
 {
 	InputManager::GetInstance().SetupFrameKeys();
 
+	if (InputManager::GetInstance().GetKeyCount() > 0)
+		Camera::_currentCam->EnableNormalCam();
+
 	if (InputManager::GetInstance().FrameKeyStatus(A_Pause, KeyPressed, 100))
 		_pause = !_pause;
 

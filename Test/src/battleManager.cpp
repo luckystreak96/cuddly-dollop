@@ -33,7 +33,6 @@ BattleManager::BattleManager(std::vector<Actor_ptr> actors)
 void BattleManager::Init()
 {
 	Camera::_currentCam->SetCameraFollowSpeed(CAMSPEED_Slow);
-	Camera::_currentCam->_followConfiguration = FT_Stable;
 	_hud.Init(_actors);
 	_showingSkills = false;
 	_state = BS_TurnStart;
@@ -51,43 +50,53 @@ void BattleManager::Init()
 
 void BattleManager::Update()
 {
-	// Return when the battle is over
-	if (_done)
-		return;
-
-	// Cout battle state
-	//counter++;
-	//if (counter % 120 == 0)
-	//	std::cout << "State: " << _state << std::endl;
-
-	_winner = FindWinner();
-	if (_winner == -1 || _selectedSkill && !_selectedSkill->_done)
+	// Return if the battle logic is over
+	if (!_done || _selectedSkill && !_selectedSkill->_done)
 	{
 		// Battle stuffs
 		ManageInput();
 		UpdateLogic();
-		if (_animations.size() > 0)
+	}
+
+	if (_animations.size() > 0)
+	{
+		for (int i = 0; i < _animations.size(); i++)
 		{
-			for (int i = 0; i < _animations.size(); i++)
+			if (_animations.at(i)->_async || i == 0)
+				_animations.at(i)->Update();
+			if (_animations.at(i)->_done)
 			{
-				if (_animations.at(i)->_async || i == 0)
-					_animations.at(i)->Update();
-				if (_animations.at(i)->_done)
-				{
-					_animations.erase(_animations.begin() + i);
-					i--;
-				}
+				_animations.erase(_animations.begin() + i);
+				i--;
 			}
 		}
+	}
 
-		_hud.Update();
-	}
-	else
+	// End the battle, gain exp and show stuff
+	if(_animations.size() == 0 && _state == BS_TurnStart && !_done)
 	{
-		// Battle is over, theres a winner etc
-		std::cout << "The winner is: team " << _winner << std::endl;
-		_done = true;
+		_winner = FindWinner();
+		if (_winner != -1)
+		{
+			int xp = 0;
+			for (auto& actor : _actors)
+				if (actor->_Fighter->Team != 0)
+					xp += actor->_Fighter->DeathExp;
+
+			for (auto& actor : _actors)
+			{
+				if (actor->_Fighter->Team == 0 && !actor->_Fighter->Dead)
+				{
+					actor->_Fighter->GiveExp(xp);
+					FontManager::GetInstance().CreateFloatingText(actor->_Graphics->GetPosRef(), "+" + std::to_string(xp) + " XP");
+				}
+			}
+
+			_done = true;
+		}
 	}
+
+	_hud.Update();
 }
 
 // Move Animation
@@ -310,12 +319,12 @@ void BattleManager::ManageInput()
 	std::set<int> input;
 	// Handle key release to choose skills, key press for action commands
 	KeyStatus status = KeyPressed;//(_state != BS_SelectTargets && _state != BS_SelectAction) ? KeyPressed : Release;
-	if (InputManager::GetInstance().FrameKeyStatus(A_Accept, status, 5))
+	if (InputManager::GetInstance().FrameKeyStatus(A_Accept, status))
 		input.emplace(A_Accept);
-	if (InputManager::GetInstance().FrameKeyStatus(A_Cancel, status, 5))
+	if (InputManager::GetInstance().FrameKeyStatus(A_Cancel, status))
 		input.emplace(A_Cancel);
 	for (int i = A_Right; i < A_Up + 1; i++)
-		if (InputManager::GetInstance().FrameKeyStatus((InputAction)i, status, 5))
+		if (InputManager::GetInstance().FrameKeyStatus((InputAction)i, status))
 			input.emplace(i);
 
 	// If theres an animation going, SEND THE INPUT TO THE SKILL

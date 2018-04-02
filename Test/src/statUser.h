@@ -67,6 +67,7 @@ public:
 	Stat Crit;
 	int NextLevelExp;
 	int SkillPoints;
+	int DeathExp;
 	std::string Curve;
 
 protected:

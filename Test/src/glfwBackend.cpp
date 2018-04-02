@@ -73,11 +73,14 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 	{
 		GLFWmonitor* monitor = glfwGetPrimaryMonitor();
 		const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+
+		GameData::Options.at("fullscreen") = !std::get<bool>(GameData::Options.at("fullscreen"));
+
 		if (std::get<bool>(GameData::Options.at("fullscreen")))
 			glfwSetWindowMonitor(window, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
 		else
 			glfwSetWindowMonitor(window, NULL, 5, 35, mode->width - 10, mode->height - 80, mode->refreshRate);
-		GameData::Options.at("fullscreen") = !std::get<bool>(GameData::Options.at("fullscreen"));
+
 		glfwSwapInterval(1);
 	}
 

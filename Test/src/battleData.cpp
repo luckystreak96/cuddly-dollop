@@ -172,7 +172,7 @@ void BattleData::SaveParty(rapidjson::Document& saveFile, Document::AllocatorTyp
 {
 	// Save party data
 	Value party_v(kArrayType);
-	for (auto actor : Party)
+	for (auto& actor : Party)
 	{
 		Value ob(kObjectType);
 		Value first(kStringType);

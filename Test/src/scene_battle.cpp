@@ -22,15 +22,8 @@ SceneBattle::SceneBattle() : m_zoom(false)
 	m_currentMap = 3;
 	//_actors.push_back(Actor_ptr(ActorFactory::BuildBaseAlly()));
 	for (auto x : BattleData::Party)
-	{
 		_actors.push_back(x);
-		_actors.push_back(Actor_ptr(ActorFactory::BuildBaseAlly()));
-		_actors.push_back(Actor_ptr(ActorFactory::BuildBaseAlly()));
-		_actors.push_back(Actor_ptr(ActorFactory::BuildBaseAlly()));
-	}
-	_actors.push_back(Actor_ptr(ActorFactory::BuildBaseEnemy()));
-	_actors.push_back(Actor_ptr(ActorFactory::BuildBaseEnemy()));
-	_actors.push_back(Actor_ptr(ActorFactory::BuildBaseEnemy()));
+
 	_actors.push_back(Actor_ptr(ActorFactory::BuildBaseEnemy()));
 	m_battle = BattleManager(_actors);
 	Init();
@@ -49,6 +42,7 @@ bool SceneBattle::Init()
 	m_jsonHandler = std::shared_ptr<JsonHandler>(new JsonHandler(m_currentMap));
 
 	m_bloomEffect = false;
+	InputManager::GetInstance().SetLockLevel(0);
 
 	OrthoProjInfo::GetRegularInstance().changed = true;
 
@@ -124,6 +118,26 @@ void SceneBattle::ManageInput()
 {
 	Scene::ManageInput();
 
+	if (InputManager::GetInstance().FrameKeyStatus(A_Accept))
+	{
+		if(m_fade.IsDone())
+		if (m_battle._done && m_battle._winner == 0)
+		{
+		m_fade.SetFade(false);
+			NextScene.scene = _prevScene;
+			NextScene.sceneType = ST_World;
+			NextScene.id = 1;
+		}
+		else if (m_battle._done && m_battle._winner != 0 && !GameData::Loading)
+		{
+		m_fade.SetFade(false);
+			GameData::LoadGameData();
+			NextScene.scene = NULL;
+			NextScene.sceneType = ST_World;
+			NextScene.id = GameData::Flags.at("map");
+		}
+	}
+
 	//if (InputManager::GetInstance().FrameKeyStatus('Z', AnyRelease, 5))
 	//{
 	//	m_zoom = !m_zoom;
@@ -145,23 +159,6 @@ SceneGenData SceneBattle::Update()
 		m_battle.Update();
 	else
 		m_battle._hud.Update();
-
-	if (m_battle._done && m_battle._winner == 0)
-	{
-		NextScene.scene = _prevScene;
-		NextScene.sceneType = ST_World;
-		NextScene.id = 1;
-	}
-	else if (m_battle._done && m_battle._winner != 0 && !GameData::Loading)
-	{
-		GameData::LoadGameData();
-		NextScene.scene = NULL;
-		NextScene.sceneType = ST_World;
-		NextScene.id = GameData::Flags.at("map");
-	}
-
-	if (next != NextScene)
-		m_fade.SetFade(false);
 
 	for (auto it : m_celist)
 		it.second->Physics()->DesiredMove();
@@ -185,7 +182,7 @@ SceneGenData SceneBattle::Update()
 
 	//Display FPS
 #ifdef _DEBUG
-	FontManager::GetInstance().SetText(m_fontFPS, std::to_string(ElapsedTime::GetInstance().GetFPS()), 
+	FontManager::GetInstance().SetText(m_fontFPS, std::to_string(ElapsedTime::GetInstance().GetFPS()),
 		Vector3f(0, OrthoProjInfo::GetRegularInstance().Top * 2.f / OrthoProjInfo::GetRegularInstance().Size - 0.5f, 0));
 #endif
 
