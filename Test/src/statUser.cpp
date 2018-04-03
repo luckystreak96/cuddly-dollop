@@ -11,7 +11,7 @@ StatUser::StatUser()
 
 void StatUser::SetDefault()
 {
-	DeathExp = 2;
+	DeathExp = 8;
 	Health = 10;
 	MaxHealth = 10;
 	Speed = 0;
@@ -86,6 +86,7 @@ void StatUser::SetLevel(int level)
 void StatUser::LevelUp()
 {
 	Level++;
+	Strength = Strength.Base + 1;
 	SkillPoints += 4;
 	NextLevelExp = CalculateNextLevelExp();
 }
@@ -103,7 +104,7 @@ int StatUser::GetLevel()
 void StatUser::GiveExp(int exp)
 {
 	Exp += exp;
-	while (exp > NextLevelExp)
+	while (Exp > NextLevelExp)
 	{
 		// Level up
 		LevelUp();

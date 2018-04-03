@@ -12,6 +12,7 @@ void NightTimeProcessing::Apply(Post_Processing_Screen* pps, FBO* fbo)
 
 	m_contrast.BindFrameBuffer();
 
+	glBindTexture(GL_TEXTURE_2D, m_contrast.GetColourTexture());
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 	EffectManager::GetInstance().Enable(E_NightTime);
 	glBindTexture(GL_TEXTURE_2D, fbo->GetColourTexture());
@@ -24,7 +25,7 @@ void NightTimeProcessing::Apply(Post_Processing_Screen* pps, FBO* fbo)
 	// SET IT TO THE FRAMEBUFFER
 	fbo->BindFrameBuffer();
 
-	//glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glBindTexture(GL_TEXTURE_2D, fbo->GetColourTexture());
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
 	EffectManager::GetInstance().Enable(E_Basic);

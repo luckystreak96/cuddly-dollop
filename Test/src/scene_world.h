@@ -18,6 +18,7 @@ public:
 	void Brb();
 	void Resume();
 	void Draw();
+	void ShowStats();
 	SceneGenData Update();
 	void Interact();
 	void TriggerEvents(unsigned int entity_id);

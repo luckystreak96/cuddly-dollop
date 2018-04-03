@@ -12,6 +12,7 @@
 #include "bloom.h"
 #include "input_manager.h"
 #include "entityFactory.h"
+#include "battleData.h"
 
 SceneWorld::SceneWorld(unsigned int map_id) : m_zoom(false)
 {
@@ -98,6 +99,12 @@ bool SceneWorld::Init()
 	return true;
 }
 
+void SceneWorld::ShowStats()
+{
+	for (auto& x : BattleData::Party)
+		FontManager::GetInstance().CreateFloatingText(m_celist.at(1)->PhysicsRaw()->PositionRef(), std::to_string(x->_Fighter->Strength.Real));
+}
+
 SceneWorld::~SceneWorld()
 {
 	FontManager::GetInstance().RemoveFont(m_fontFPS);
@@ -116,6 +123,9 @@ void SceneWorld::ManageInput()
 		GameData::SaveToFile();
 		FontManager::GetInstance().CreateFloatingText(m_player->Physics()->Position(), "Game Saved!")->GetGraphics()->SetColorAll(Vector3f(0.1f, 0.65f, 1));
 	}
+
+	if (InputManager::GetInstance().FrameKeyStatus('Y', KeyPressed))
+		ShowStats();
 
 	//if (InputManager::GetInstance().FrameKeyStatus('Z', AnyRelease))
 	//{
@@ -230,7 +240,7 @@ SceneGenData SceneWorld::Update()
 
 	//Display FPS
 #ifdef _DEBUG
-	FontManager::GetInstance().SetText(m_fontFPS, /*std::to_string(m_celist.at(1)->PhysicsRaw()->PositionRef().z),*/std::to_string(ElapsedTime::GetInstance().GetFPS()), 
+	FontManager::GetInstance().SetText(m_fontFPS, /*std::to_string(m_celist.at(1)->PhysicsRaw()->PositionRef().z),*/std::to_string(ElapsedTime::GetInstance().GetFPS()),
 		Vector3f(0, OrthoProjInfo::GetRegularInstance().Top * 2.f / OrthoProjInfo::GetRegularInstance().Size - 0.5f, 0));
 #endif
 

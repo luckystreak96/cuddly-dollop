@@ -24,7 +24,7 @@ void ContrastProcessing::Apply(Post_Processing_Screen* pps, FBO* fbo)
 	// SET IT TO THE FRAMEBUFFER
 	fbo->BindFrameBuffer();
 
-	//glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	// Bind tex here or dont unbind it in fbo.unbind
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
 	EffectManager::GetInstance().Enable(E_Basic);

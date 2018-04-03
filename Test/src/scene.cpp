@@ -128,12 +128,14 @@ void Scene::SetOrthoStuffs()
 void Scene::DrawBegin()
 {
 	// Allow modifications to stencil buffer
-	glStencilMask(0xFF);
+	//glStencilMask(0xFF);
+
 	// Clear stencil buffer to all 0's
-	glClearStencil(0x00);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+	//glClearStencil(0x00);
+	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+
 	// Don't allow modifications to stencil buffer
-	glStencilMask(0x00);
+	//glStencilMask(0x00);
 
 	// Setup world trans and change for effects
 	SetOrthoStuffs();

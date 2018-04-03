@@ -20,7 +20,7 @@ Vector3f Camera::MapCenter()
 	// +1 otherwise it's not well centered
 	result.x = ((_mapsize.x + 1) - ((abs(left) + abs(right)) / size)) / 2.f;
 	// didn't do a +1 cause the map looks good without it (xd)
-	result.y = (_mapsize.y - ((top * 2.f) / size)) / 2.f;
+	result.y = ((_mapsize.y + 1) - ((top * 2.f) / size)) / 2.f;
 	result.x += right / size;
 	result.y += top / size;
 	result.z = _transform->GetTranslation().z;
