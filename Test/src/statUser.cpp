@@ -86,7 +86,6 @@ void StatUser::SetLevel(int level)
 void StatUser::LevelUp()
 {
 	Level++;
-	Strength = Strength.Base + 1;
 	SkillPoints += 4;
 	NextLevelExp = CalculateNextLevelExp();
 }

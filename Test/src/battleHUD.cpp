@@ -34,8 +34,8 @@ void BattleHUD::Init(std::vector<Actor_ptr> actors)
 	// Setup hudBackgrounds
 	GraphComp_ptr topBG = GraphComp_ptr(new FontGraphicsComponent("TILE", "res/sprites/special/dialogue.png"));
 	dynamic_cast<FontGraphicsComponent*>(topBG.get())->SetStatic(true);
-	topBG->SetPhysics(Vector3f(right * 0.45f / size, top * 2 / size - 0.8f, 0.5f));
-	topBG->GetModelMat()->SetScale(right * 2 / size, 2.f, 1);
+	topBG->SetPhysics(Vector3f(right * 0.68f / size, top * 2 / size - 0.75f, 0.5f));
+	topBG->GetModelMat()->SetScale(right * 2 / size, 0.75f, 1);
 	topBG->SetColorAll(Vector3f(1, 1, 0.5f), 1.1f);
 	topBG->Update();
 
@@ -61,7 +61,7 @@ void BattleHUD::AddActorHealthBar(Actor_ptr ap, int& party, int& enemies)
 	}
 	else
 	{
-		pos = Vector3f(11.8f - 2.5f * enemies, 7.75f, 0);
+		pos = Vector3f(12.8f - 2.5f * enemies, 7.8f, 0);
 		enemies++;
 	}
 

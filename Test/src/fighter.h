@@ -34,6 +34,7 @@ public:
 	virtual void PhysicalDefenseActionCommand(Damage& dmg);
 	virtual void MagicalOffenseActionCommand(Damage& dmg);
 	virtual void MagicalDefenseActionCommand(Damage& dmg);
+	virtual void LevelUp();
 
 	void SetStatsFromCurve();
 

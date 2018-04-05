@@ -2,15 +2,20 @@
 
 AnimJumpTo::AnimJumpTo(Vector3f position, Actor_ptr target)
 {
-	_destination = position;
+	// + 0.5f so that they appear above things when they jump
+	_destination = position - Vector3f(0, 0, 0.5f);
 	_destination.y -= 0.075f;
 	_target = target;
-	_initialPos = target->_Graphics->GetPosRef();
+	// + 0.5f so that they appear above things when they jump
+	_initialPos = target->_Graphics->GetPosRef() - Vector3f(0, 0, 0.5f);
 	_speed = (_destination - _initialPos) / 30.0f;
 	_speed.z = 0;
 	// 0.01 so that calculations dont give 0 somewhere
 	_progress = 0.01;// -0.40;
-	_duration = 1;
+
+	// Square root and all to make shorter jumps not be too long or too short
+	// Divide by 8 so long jumps can be short-ish
+	_duration = sqrtf(_destination.Distance2D(_initialPos) / 8.0f);
 
 	_target->_Graphics->_specialAnimation = true;
 	_target->_Graphics->_forceAnimation = true;

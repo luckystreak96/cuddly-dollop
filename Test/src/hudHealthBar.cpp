@@ -16,11 +16,12 @@ HudHealthBar::HudHealthBar(int* observable, int maxHealth, Vector3f position, st
 	dynamic_cast<FontGraphicsComponent*>(ptr.get())->SetStatic(true);
 	dynamic_cast<FontGraphicsComponent*>(ptr2.get())->SetStatic(true);
 
-	ptr->SetPhysics(position + Vector3f(0, 0, 0.1f), Vector3f());
-	ptr2->SetPhysics(position, Vector3f());
+	ptr2->SetPhysics(position + Vector3f(0, 0, 0.1f), Vector3f());
+	ptr->SetPhysics(position, Vector3f());
 
 	ptr->Update();
-	ptr2->SetColorAll(Vector3f(0.5f, 0.5f, 0.5f), 0.2f);
+	ptr2->SetColorAll(Vector3f(3), 0.05f);
+	//ptr2->SetColorAll(Vector3f(0.5f, 0.5f, 0.5f), 0.2f);
 	ptr2->Update();
 
 	// health 
@@ -86,7 +87,10 @@ void HudHealthBar::Update()
 
 		// Only update font when it changes
 		if (current.substr(0, current.length() - 1) != text)
+		{
 			FontManager::GetInstance().SetText(_healthFont, text, _foreground->GetPos() + offset, false);
+			FontManager::GetInstance().GetFont(_healthFont)->GetGraphics()->SetColorAll(color + Vector3f(0.6f), 1.0f);
+		}
 
 		FontManager::GetInstance().GetFont(_healthFont)->Update(0);
 	}

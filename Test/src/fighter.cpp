@@ -17,6 +17,12 @@ Fighter::Fighter()
 	//_Passives.push_back(std::make_shared<PassiveSkill>(skill));
 }
 
+void Fighter::LevelUp()
+{
+	StatUser::LevelUp();
+	SetStatsFromCurve();
+}
+
 void Fighter::SetStatsFromCurve()
 {
 	StatCurve::SetCurve(this);
