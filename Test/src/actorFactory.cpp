@@ -13,14 +13,14 @@ Actor_ptr ActorFactory::BuildBaseAlly()
 	result->_Fighter->Skills.push_back(smack);
 	result->_Fighter->Skills.push_back(heal);
 
-	result->_Fighter->SetLevel(4);
+	result->_Fighter->SetLevel(1);
 	result->_Fighter->SetStatsFromCurve();
 	//result->_Fighter->Speed = 1;
 	//result->_Fighter->Strength = 2;
 	//result->_Fighter->Crit = 3;
 	//result->_Fighter->Defense = 1;
 	//result->_Fighter->SetEndurance(4);
-	PassiveFactory::ApplyAllPassives(result->_Fighter, &result->_Fighter->_Passives);
+	PassiveFactory::ApplyAllPassives(result->_Fighter.get(), &result->_Fighter->_Passives);
 	result->_Fighter->Health = result->_Fighter->GetMaxHealth().Real;
 	result->Sprite = "res/sprites/entities/entity_girl.png";
 	result->_Graphics->SetTexture(result->Sprite);
@@ -41,7 +41,7 @@ Actor_ptr ActorFactory::BuildBaseEnemy()
 	//result->_Fighter->Crit = 1;
 	//result->_Fighter->Defense = 0;
 	//result->_Fighter->SetEndurance(2);
-	PassiveFactory::ApplyAllPassives(result->_Fighter, &result->_Fighter->_Passives);
+	PassiveFactory::ApplyAllPassives(result->_Fighter.get(), &result->_Fighter->_Passives);
 	result->_Fighter->Health = result->_Fighter->GetMaxHealth().Real;
 	result->_Name = "Slime";
 	result->_Fighter->Team = 1;
@@ -60,8 +60,8 @@ std::vector<Actor_ptr> ActorFactory::BuildParty(rapidjson::GenericArray<false, r
 		if (a.HasMember("health"))
 			actor->_Fighter->Health = a["health"].GetInt();
 
-		if (a.HasMember("max_health"))
-			actor->_Fighter->SetMaxHealth(a["max_health"].GetInt());
+		//if (a.HasMember("max_health"))
+		//	actor->_Fighter->SetMaxHealth(a["max_health"].GetInt());
 
 		if (a.HasMember("name"))
 			actor->_Name = a["name"].GetString();
@@ -78,20 +78,20 @@ std::vector<Actor_ptr> ActorFactory::BuildParty(rapidjson::GenericArray<false, r
 		if (a.HasMember("skillpoints"))
 			actor->_Fighter->SkillPoints = a["skillpoints"].GetInt();
 
-		if (a.HasMember("speed"))
-			actor->_Fighter->Speed = a["speed"].GetInt();
+		//if (a.HasMember("speed"))
+		//	actor->_Fighter->Speed = a["speed"].GetInt();
 
-		if (a.HasMember("strength"))
-			actor->_Fighter->Strength = a["strength"].GetInt();
+		//if (a.HasMember("strength"))
+		//	actor->_Fighter->Strength = a["strength"].GetInt();
 
-		if (a.HasMember("endurance"))
-			actor->_Fighter->SetEndurance(a["endurance"].GetInt());
+		//if (a.HasMember("endurance"))
+		//	actor->_Fighter->SetEndurance(a["endurance"].GetInt());
 
-		if (a.HasMember("defense"))
-			actor->_Fighter->Defense = a["defense"].GetInt();
+		//if (a.HasMember("defense"))
+		//	actor->_Fighter->Defense = a["defense"].GetInt();
 
-		if (a.HasMember("crit"))
-			actor->_Fighter->Crit = a["crit"].GetInt();
+		//if (a.HasMember("crit"))
+		//	actor->_Fighter->Crit = a["crit"].GetInt();
 
 		if (a.HasMember("dead"))
 			actor->_Fighter->Dead = a["dead"].GetBool();
@@ -116,7 +116,9 @@ std::vector<Actor_ptr> ActorFactory::BuildParty(rapidjson::GenericArray<false, r
 				actor->_Fighter->_Passives.push_back(BattleData::PassiveSkills.at(itr->GetInt()));
 		}
 
-		PassiveFactory::ApplyAllPassives(actor->_Fighter, &actor->_Fighter->_Passives);
+		// Stats are decided first by the curve, then the passives, then the equipment etc
+		actor->_Fighter->SetStatsFromCurve();
+		PassiveFactory::ApplyAllPassives(actor->_Fighter.get(), &actor->_Fighter->_Passives);
 		actor->_Fighter->CurrentHealthCheck();
 
 		result.push_back(actor);

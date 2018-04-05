@@ -97,10 +97,18 @@ void BattleManager::Update()
 
 			for (auto& actor : _actors)
 			{
+				/* Inside here:
+					Create an xp bar lerp that continues over many level ups
+					XP bar needs to observe one of it's own variables that well update to control what it looks like
+				*/
 				if (actor->_Fighter->Team == 0 && !actor->_Fighter->Dead)
 				{
+					int level = actor->_Fighter->GetLevel();
 					actor->_Fighter->GiveExp(xp);
-					FontManager::GetInstance().CreateFloatingText(actor->_Graphics->GetPosRef(), "+" + std::to_string(xp) + " XP");
+					if (level != actor->_Fighter->GetLevel())
+						FontManager::GetInstance().CreateFloatingText(actor->_Graphics->GetPosRef(), "Level up!");
+					else
+						FontManager::GetInstance().CreateFloatingText(actor->_Graphics->GetPosRef(), "+" + std::to_string(xp) + " XP");
 				}
 			}
 

@@ -3,15 +3,15 @@
   "strings": [{ "name": "Yanik" }],
   "sprite": "res/sprites/entities/entity_girl.png",
   "positions": [
-    { "player": { "x": 13.088526725769043, "y": 8.58594799041748, "z": 4.0 } }
+    { "player": { "x": 14.308290481567383, "y": 8.58594799041748, "z": 4.0 } }
   ],
   "party": [
     {
       "name": "Player",
       "sprite": "res/sprites/entities/entity_girl.png",
       "curve": "Basic",
-      "health": 2,
-      "max_health": 2,
+      "health": 10,
+      "max_health": 5,
       "level": 1,
       "exp": 3,
       "skillpoints": -842150451,

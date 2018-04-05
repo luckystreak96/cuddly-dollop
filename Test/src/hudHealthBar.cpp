@@ -3,12 +3,18 @@
 #include "fontManager.h"
 #include "localizationData.h"
 #include "renderer.h"
+#include "actor.h"
 
-HudHealthBar::HudHealthBar(int* observable, int maxHealth, Vector3f position, std::string name)
+HudHealthBar::HudHealthBar(Actor* ap, Vector3f position)
 {
-	m_observed = observable;
+	//&ap->_Fighter->Health, ap->_Fighter->GetMaxHealth().Real, pos, ap->_Name
+	m_observed = &ap->_Fighter->Health;
+	m_maxHealth = ap->_Fighter->GetMaxHealth().Modified;
+	std::string name = ap->_Name;
+
+	//m_observed = observable;
 	m_prevValue = -43893893;// set this to a fucked up number so itll do it's first update
-	m_maxHealth = maxHealth;
+	//m_maxHealth = maxHealth;
 
 	// Bar
 	GraphComp_ptr ptr = GraphComp_ptr(new FontGraphicsComponent("BAR", "res/sprites/special/bar.png"));

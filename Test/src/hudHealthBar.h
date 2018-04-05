@@ -5,12 +5,13 @@
 #include "graphicsComponent.h"
 
 //enum HUDComponent { HC_HealthBar, HC_Text };
+class Actor;
 
 class HudHealthBar : public HudComponent
 {
 public:
 	// Don't forget to tell the Observable that you're an observer
-	HudHealthBar(int* toObserve, int maxHealth, Vector3f position, std::string name);
+	HudHealthBar(Actor* ap, Vector3f position);
 	void Update();
 	void AdjustPosition();
 	void Destroy();

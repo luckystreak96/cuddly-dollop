@@ -65,7 +65,7 @@ void BattleHUD::AddActorHealthBar(Actor_ptr ap, int& party, int& enemies)
 		enemies++;
 	}
 
-	HudComp_ptr healthBar = std::make_shared<HudHealthBar>(HudHealthBar(&ap->_Fighter->Health, ap->_Fighter->GetMaxHealth().Real, pos, ap->_Name));
+	HudComp_ptr healthBar = std::make_shared<HudHealthBar>(HudHealthBar(ap.get(), pos));
 	ap->_Fighter->_observers.push_back(healthBar);
 	_hudComponents.push_back(healthBar);
 }

@@ -21,6 +21,7 @@ void Fighter::LevelUp()
 {
 	StatUser::LevelUp();
 	SetStatsFromCurve();
+	PassiveFactory::ApplyAllPassives(this, &_Passives);
 }
 
 void Fighter::SetStatsFromCurve()

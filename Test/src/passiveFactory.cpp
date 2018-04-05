@@ -5,7 +5,7 @@
 #include "actorFactory.h"
 #include "statCurve.h"
 
-void PassiveFactory::ApplyAllPassives(Fighter_ptr fighter, std::vector<Passive_ptr>* passives)
+void PassiveFactory::ApplyAllPassives(Fighter* fighter, std::vector<Passive_ptr>* passives)
 {
 	// Sort the skills by type
 	std::sort(passives->begin(), passives->end(), [](Passive_ptr p1, Passive_ptr p2) { return p1->_Type < p2->_Type; });
@@ -41,7 +41,7 @@ void PassiveFactory::ApplyAllPassives(Fighter_ptr fighter, std::vector<Passive_p
 }
 
 // Make sure to reset the stats before calling this
-void PassiveFactory::ApplyStatPassives(Fighter_ptr fighter, std::vector<Passive_ptr> passives)
+void PassiveFactory::ApplyStatPassives(Fighter* fighter, std::vector<Passive_ptr> passives)
 {
 	// Sort the skills by priority
 	//std::sort(passives.begin(), passives.end(), [](Passive_ptr p1, Passive_ptr p2) { return p1->_Priority < p2->_Priority; });
@@ -67,14 +67,15 @@ void PassiveFactory::ApplyStatPassives(Fighter_ptr fighter, std::vector<Passive_
 
 	for (auto& x : bonuses)
 	{
-		Stat* stat = StatCurve::GetFullStatPointer(x.first, fighter.get());
+		Stat* stat = StatCurve::GetFullStatPointer(x.first, fighter);
 		stat->Real += x.second.flatTotal;
 		stat->Real *= x.second.percentTotal;
+		stat->Modified = stat->Real;
 	}
 }
 
 // Make sure to reset the skill before calling this
-void PassiveFactory::ApplySkillUpgradePassives(Fighter_ptr fighter, std::vector<Passive_ptr> passives)
+void PassiveFactory::ApplySkillUpgradePassives(Fighter* fighter, std::vector<Passive_ptr> passives)
 {
 	for (auto passive : passives)
 	{

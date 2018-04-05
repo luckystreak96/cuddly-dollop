@@ -30,8 +30,9 @@ void StatUser::ResetRealModified()
 	Strength.Real = Strength.Base;
 	Defense.Real = Defense.Base;
 	Crit.Real = Crit.Base;
-	MaxHealth.Real = MaxHealth.Base;
-	Endurance.Real = Endurance.Base;
+
+	// SetEndurance takes care of the MaxHealth and itself, real and modified
+	SetEndurance(Endurance.Base);
 
 	ResetModified();
 }
@@ -42,8 +43,6 @@ void StatUser::ResetModified()
 	Strength.Modified = Strength.Real;
 	Defense.Modified = Defense.Real;
 	Crit.Modified = Crit.Real;
-	MaxHealth.Modified = MaxHealth.Real;
-	Endurance.Modified = Endurance.Real;
 }
 
 void StatUser::SetEndurance(int endurance)
