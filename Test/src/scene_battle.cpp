@@ -30,7 +30,7 @@ SceneBattle::SceneBattle() : m_zoom(false)
 	//_actors.push_back(Actor_ptr(ActorFactory::BuildBaseEnemy()));
 	//_actors.push_back(Actor_ptr(ActorFactory::BuildBaseEnemy()));
 	//_actors.push_back(Actor_ptr(ActorFactory::BuildBaseEnemy()));
-	_actors.push_back(Actor_ptr(ActorFactory::BuildBaseEnemy()));
+	//_actors.push_back(Actor_ptr(ActorFactory::BuildBaseEnemy()));
 	m_battle = BattleManager(_actors);
 	Init();
 	SoundManager::GetInstance();

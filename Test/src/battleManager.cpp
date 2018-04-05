@@ -40,7 +40,18 @@ void BattleManager::Init()
 	counter = 0;
 	_winner = -1;
 	_selectedIndex = 0;
-	_done = false;
+
+	// Make sure that there are 2 teams to fight against one another
+	{
+		std::set<int> teams;
+		for (auto& x : _actors)
+			if (!teams.count(x->_Fighter->Team))
+				teams.emplace(x->_Fighter->Team);
+
+		// If there aren't 2 teams, end the battle
+		_done = teams.size() < 2;
+	}
+
 	if (_actorQueue.size() > 0)
 	{
 		_chooseSkill = &_actorQueue.front()->_Fighter->Skills;
@@ -73,7 +84,7 @@ void BattleManager::Update()
 	}
 
 	// End the battle, gain exp and show stuff
-	if(_animations.size() == 0 && _state == BS_TurnStart && !_done)
+	if (_animations.size() == 0 && _state == BS_TurnStart && !_done)
 	{
 		Camera::_currentCam->SetFollow(Camera::_currentCam->MapCenter());
 		_winner = FindWinner();
