@@ -30,9 +30,9 @@ HudHealthBar::HudHealthBar(int* observable, int maxHealth, Vector3f position, st
 
 	// name
 	unsigned int namefont = FontManager::GetInstance().AddFont(true, false, true, "res/fonts/lowercase.png");
-	FontManager::GetInstance().SetScale(namefont, 0.3f, 0.3f);
+	FontManager::GetInstance().SetScale(namefont, 0.25f, 0.25f);
 	FontManager::GetInstance().GetFont(namefont)->_letterSpacing = 0.75f;
-	Vector3f offset = Vector3f(0.05f, 0.5f, -1);
+	Vector3f offset = Vector3f(0.05f, 0.275f, -1);
 	//Vector3f offset = Vector3f(-1.45f, -0.25f, -1);
 	FontManager::GetInstance().SetText(namefont, _(name), ptr->GetPos() + offset, false);
 	FontManager::GetInstance().GetFont(namefont)->Update(0);
@@ -79,7 +79,7 @@ void HudHealthBar::Update()
 	else
 	{
 		FontManager::GetInstance().EnableFont(_healthFont);
-		Vector3f offset = Vector3f(0.25f, 0.10f, -1);
+		Vector3f offset = Vector3f(0.075f, 0.0f, -1);
 		//Vector3f offset = Vector3f(-0.75f, -0.7f, -1);
 		std::string text = std::to_string(health) + " / " + std::to_string(m_maxHealth);
 		std::string current = FontManager::GetInstance().GetFont(_healthFont)->_text;

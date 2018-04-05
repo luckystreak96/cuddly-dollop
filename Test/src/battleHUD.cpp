@@ -11,6 +11,8 @@ void BattleHUD::Destroy()
 	for (auto& x : _hudComponents)
 		x->Destroy();
 	_hudComponents.clear();
+
+	_hudBG.clear();
 }
 
 void BattleHUD::Init(std::vector<Actor_ptr> actors)
@@ -24,6 +26,28 @@ void BattleHUD::Init(std::vector<Actor_ptr> actors)
 		// HEALTH BAR
 		AddActorHealthBar(x, party, enemies);
 	}
+
+	float top = OrthoProjInfo::GetRegularInstance().Top;
+	float right = OrthoProjInfo::GetRegularInstance().Right;
+	float size = OrthoProjInfo::GetRegularInstance().Size;
+
+	// Setup hudBackgrounds
+	GraphComp_ptr topBG = GraphComp_ptr(new FontGraphicsComponent("TILE", "res/sprites/special/dialogue.png"));
+	dynamic_cast<FontGraphicsComponent*>(topBG.get())->SetStatic(true);
+	topBG->SetPhysics(Vector3f(right * 0.45f / size, top * 2 / size - 0.8f, 0.5f));
+	topBG->GetModelMat()->SetScale(right * 2 / size, 2.f, 1);
+	topBG->SetColorAll(Vector3f(1, 1, 0.5f), 1.1f);
+	topBG->Update();
+
+	GraphComp_ptr bottomBG = GraphComp_ptr(new FontGraphicsComponent("TILE", "res/sprites/special/dialogue.png"));
+	dynamic_cast<FontGraphicsComponent*>(bottomBG.get())->SetStatic(true);
+	bottomBG->SetPhysics(Vector3f(0, 0.0f, 0.5f));
+	bottomBG->GetModelMat()->SetScale(right * 1.35f / size, 0.75f, 1);
+	bottomBG->SetColorAll(Vector3f(1, 1, 0.5f), 1.1f);
+	bottomBG->Update();
+
+	_hudBG.push_back(topBG);
+	_hudBG.push_back(bottomBG);
 }
 
 
@@ -32,12 +56,12 @@ void BattleHUD::AddActorHealthBar(Actor_ptr ap, int& party, int& enemies)
 	Vector3f pos;
 	if (ap->_Fighter->Team == 0)
 	{
-		pos = Vector3f(2.3f + 2.5f * party, 0.5f, 0);
+		pos = Vector3f(0.25f + 2.5f * party, 0.10f, 0);
 		party++;
 	}
 	else
 	{
-		pos = Vector3f(2.3f + 2.5f * enemies, 7.30f, 0);
+		pos = Vector3f(11.8f - 2.5f * enemies, 7.75f, 0);
 		enemies++;
 	}
 
@@ -59,4 +83,7 @@ void BattleHUD::SetRender()
 {
 	for (auto& x : _hudComponents)
 		x->SetRender();
+
+	for (auto& x : _hudBG)
+		Renderer::GetInstance().Add(x);
 }

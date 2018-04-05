@@ -3,7 +3,7 @@
 AnimJumpTo::AnimJumpTo(Vector3f position, Actor_ptr target)
 {
 	_destination = position;
-	_destination.y -= 0.1f;
+	_destination.y -= 0.075f;
 	_target = target;
 	_initialPos = target->_Graphics->GetPosRef();
 	_speed = (_destination - _initialPos) / 30.0f;

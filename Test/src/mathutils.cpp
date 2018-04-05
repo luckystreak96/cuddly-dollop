@@ -231,6 +231,8 @@ namespace MathUtils
 		float k = y1 - a * pow(x1 - h, 2);
 
 		result.y = a * pow(x - h, 2) + k;
+		// Set the z here or it becomes 0 and the characters jump over the GUI
+		result.z = startPoint.z;
 
 		return result;
 	}

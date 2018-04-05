@@ -302,13 +302,13 @@ void BattleManager::UpdateLogic()
 void BattleManager::SetChooseSkillText()
 {
 	while (_fonts.size() < _chooseSkill->size())
-		_fonts.push_back(FontManager::GetInstance().AddFont(false, false, true, "res/fonts/lowercase.png"));
+		_fonts.push_back(FontManager::GetInstance().AddFont(true, false, true, "res/fonts/lowercase.png"));
 
 	for (int i = 0; i < _chooseSkill->size(); i++)
 	{
 		FontManager::GetInstance().EnableFont(_fonts[i]);
 		FontManager::GetInstance().SetScale(_fonts[i], 0.5f, 0.5f);
-		FontManager::GetInstance().SetText(_fonts[i], _(_chooseSkill->at(i)->_name), Vector3f(7.5f, 5.5f - i * 0.5f, 0));
+		FontManager::GetInstance().SetText(_fonts[i], _(_chooseSkill->at(i)->_name), Vector3f(5.0f, 4.75f - i * 0.5f, 0));
 		//FontManager::GetInstance().GetFont(_fonts[i])->SetText(_chooseSkill->at(i)->_name, Vector3f(6, 7 - i, 1));
 	}
 }

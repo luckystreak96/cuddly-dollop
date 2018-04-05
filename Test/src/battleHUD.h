@@ -19,6 +19,7 @@ private:
 public:
 	std::vector<Actor_ptr> _actors;
 	std::vector<HudComp_ptr> _hudComponents;
+	std::vector<GraphComp_ptr> _hudBG;
 };
 
 #endif // !BATTLE_HUD_H__

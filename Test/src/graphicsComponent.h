@@ -65,7 +65,7 @@ public:
 	bool UnloadExternalResources();
 	bool LoadGLResources();
 	bool UnloadGLResources();
-	void SetPhysics(Vector3f pos, Vector3f vel) { m_pos = pos; m_vel = vel;/* m_modelMat.SetTranslation(pos);*/ };
+	void SetPhysics(Vector3f pos, Vector3f vel = Vector3f()) { m_pos = pos; m_vel = vel;/* m_modelMat.SetTranslation(pos);*/ };
 	void SetNewBuffers(std::vector<Vertex>* verts, std::vector<GLuint>* inds);
 
 public:
