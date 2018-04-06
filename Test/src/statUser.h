@@ -57,6 +57,7 @@ public:
 
 	// Stat points + nextlevelexp
 	virtual void LevelUp();
+	int CalculateLevelExp(int level);
 	int CalculateNextLevelExp();
 
 public:

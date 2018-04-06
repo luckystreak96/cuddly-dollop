@@ -175,6 +175,7 @@
     <ClInclude Include="src\contrastProcessing.h" />
     <ClInclude Include="src\fighter.h" />
     <ClInclude Include="src\fontFloat.h" />
+    <ClInclude Include="src\hudBar.h" />
     <ClInclude Include="src\hudComponent.h" />
     <ClInclude Include="src\hudHealthBar.h" />
     <ClInclude Include="src\lerper.h" />
@@ -295,6 +296,7 @@
     <ClCompile Include="src\contrastProcessing.cpp" />
     <ClCompile Include="src\fighter.cpp" />
     <ClCompile Include="src\fontFloat.cpp" />
+    <ClCompile Include="src\hudBar.cpp" />
     <ClCompile Include="src\hudComponent.cpp" />
     <ClCompile Include="src\hudHealthBar.cpp" />
     <ClCompile Include="src\lerper.cpp" />

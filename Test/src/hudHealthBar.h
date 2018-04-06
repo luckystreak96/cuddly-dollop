@@ -1,13 +1,11 @@
 #ifndef HUD_HEALTH_BAR_H__
 #define HUD_HEALTH_BAR_H__
 
-#include "hudComponent.h"
-#include "graphicsComponent.h"
+#include "hudBar.h"
 
-//enum HUDComponent { HC_HealthBar, HC_Text };
 class Actor;
 
-class HudHealthBar : public HudComponent
+class HudHealthBar : public HudBar
 {
 public:
 	// Don't forget to tell the Observable that you're an observer
@@ -18,15 +16,14 @@ public:
 	void SetRender();
 
 private:
-	int* m_observed;
-	int m_prevValue;
-	int m_maxHealth;
-
-	//HUDComponent _type;
+	// xp variables
+	int m_observedXP;
+	int m_xpMax;
+	int m_prevXP;
 
 	// Health bar images
-	GraphComp_ptr _foreground;
 	GraphComp_ptr _background;
+	GraphComp_ptr _xpBar;
 
 	// Font ID's
 	unsigned int _healthFont;

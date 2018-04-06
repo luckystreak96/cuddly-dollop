@@ -19,6 +19,7 @@ void StatUser::SetDefault()
 	Defense = 0;
 	Endurance = 0;
 	NextLevelExp = 0;
+	Exp = 0;
 	Level = 1;
 	Crit = 0;
 	Curve = "Basic";
@@ -91,7 +92,12 @@ void StatUser::LevelUp()
 
 int StatUser::CalculateNextLevelExp()
 {
-	return 10 * Level + pow(Level, 2);
+	return CalculateLevelExp(Level);
+}
+
+int StatUser::CalculateLevelExp(int level)
+{
+	return 10 * level + pow(level, 2);
 }
 
 int StatUser::GetLevel()
