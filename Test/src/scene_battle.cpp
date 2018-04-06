@@ -132,14 +132,14 @@ void SceneBattle::ManageInput()
 	if (InputManager::GetInstance().FrameKeyStatus(A_Accept))
 	{
 		if (m_fade.IsDone())
-			if (m_battle._battleDone && m_battle._winner == 0)
+			if (m_battle._postBattleDone && m_battle._winner == 0)
 			{
 				m_fade.SetFade(false);
 				NextScene.scene = _prevScene;
 				NextScene.sceneType = ST_World;
 				NextScene.id = 1;
 			}
-			else if (m_battle._battleDone && m_battle._winner != 0 && !GameData::Loading)
+			else if (m_battle._postBattleDone && m_battle._winner != 0 && !GameData::Loading)
 			{
 				m_fade.SetFade(false);
 				GameData::LoadGameData();

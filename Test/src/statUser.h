@@ -33,9 +33,9 @@ public:
 	void SetLevel(int level);
 	int GetLevel();
 	// Handles level up logic
-	void GiveExp(int exp);
+	virtual void GiveExp(int exp);
 	// Doesn't handle level up logic
-	void SetExp(int exp);
+	virtual void SetExp(int exp);
 	int GetExp();
 
 	// Endurance

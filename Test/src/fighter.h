@@ -34,7 +34,10 @@ public:
 	virtual void PhysicalDefenseActionCommand(Damage& dmg);
 	virtual void MagicalOffenseActionCommand(Damage& dmg);
 	virtual void MagicalDefenseActionCommand(Damage& dmg);
+
 	virtual void LevelUp();
+	virtual void GiveExp(int xp);
+	virtual void SetExp(int xp);
 
 	void SetStatsFromCurve();
 

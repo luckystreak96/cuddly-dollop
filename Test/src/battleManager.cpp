@@ -106,10 +106,10 @@ void BattleManager::Update()
 				if (actor->_Fighter->Team == 0 && !actor->_Fighter->Dead)
 				{
 					int level = actor->_Fighter->GetLevel();
-					actor->_Fighter->GiveExp(xp);
-					_animations.push_back(_hud.GetHudHealthBar(actor.get())->SetupExpAnimation(actor->_Fighter->GetExp()));
-						//FontManager::GetInstance().CreateFloatingText(actor->_Graphics->GetPosRef(), "Level up!");
-						FontManager::GetInstance().CreateFloatingText(actor->_Graphics->GetPosRef(), "+" + std::to_string(xp) + " XP");
+					//actor->_Fighter->GiveExp(xp);
+					_animations.push_back(_hud.GetHudHealthBar(actor.get())->SetupExpAnimation(actor->_Fighter->GetExp() + xp));
+					//FontManager::GetInstance().CreateFloatingText(actor->_Graphics->GetPosRef(), "Level up!");
+					FontManager::GetInstance().CreateFloatingText(actor->_Graphics->GetPosRef(), "+" + std::to_string(xp) + " XP");
 				}
 			}
 
@@ -117,8 +117,8 @@ void BattleManager::Update()
 		}
 
 	}
-		if (_animations.size() == 0 && _battleDone)
-			_postBattleDone = true;
+	if (_animations.size() == 0 && _battleDone)
+		_postBattleDone = true;
 
 	_hud.Update();
 }

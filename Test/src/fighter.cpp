@@ -17,11 +17,30 @@ Fighter::Fighter()
 	//_Passives.push_back(std::make_shared<PassiveSkill>(skill));
 }
 
+void Fighter::GiveExp(int xp)
+{
+	Exp += xp;
+	while (Exp >= NextLevelExp)
+		LevelUp();
+	UpdateObservers();
+}
+
+void Fighter::SetExp(int xp)
+{
+	Exp = xp;
+	while (Exp >= NextLevelExp)
+		LevelUp();
+	UpdateObservers();
+}
+
 void Fighter::LevelUp()
 {
 	StatUser::LevelUp();
+	int hp = MaxHealth.Base;
 	SetStatsFromCurve();
 	PassiveFactory::ApplyAllPassives(this, &_Passives);
+	int dif = MaxHealth.Base - hp;
+	Health += dif;
 }
 
 void Fighter::SetStatsFromCurve()

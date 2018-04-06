@@ -23,6 +23,10 @@ public:
 	Actor* _actor;
 
 private:
+	// maxhp variables
+	int* m_observedMaxHP;
+	int m_prevMaxHP;
+
 	// xp variables
 	int m_observedXP;
 	int m_xpMax;
@@ -41,6 +45,7 @@ private:
 	// Font ID's
 	unsigned int _healthFont;
 	unsigned int _nameFont;
+	unsigned int _levelFont;
 };
 
 #endif // !HUD_HEALTH_BAR_H__
