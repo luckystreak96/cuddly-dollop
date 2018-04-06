@@ -4,13 +4,19 @@
 #include "localizationData.h"
 #include "renderer.h"
 #include "actor.h"
+#include "lerper.h"
+#include "animXpBar.h"
 
 HudHealthBar::HudHealthBar(Actor* ap, Vector3f position)
 {
+	_actor = ap;
 	//&ap->_Fighter->Health, ap->_Fighter->GetMaxHealth().Real, pos, ap->_Name
 	m_observed = &ap->_Fighter->Health;
 	m_max = ap->_Fighter->GetMaxHealth().Modified;
 	std::string name = ap->_Name;
+
+	m_startXP = ap->_Fighter->GetExp();
+	m_currentLevel = ap->_Fighter->GetLevel();
 
 	m_observedXP = fmax(ap->_Fighter->GetExp() - ap->_Fighter->CalculateLevelExp(ap->_Fighter->GetLevel() - 1), 0);
 	m_xpMax = ap->_Fighter->CalculateNextLevelExp() - ap->_Fighter->CalculateLevelExp(ap->_Fighter->GetLevel() - 1);
@@ -77,7 +83,7 @@ void HudHealthBar::Destroy()
 void HudHealthBar::Update()
 {
 	// Ensure that the value we're following actually changed to do something
-	if (m_prevValue == *m_observed)
+	if (m_prevValue == *m_observed && m_prevXP == m_observedXP)
 		return;
 
 	// Handle updating text and health bar here
@@ -117,6 +123,42 @@ void HudHealthBar::Update()
 	_foreground->GetModelMat()->SetScale(fmax((float)health / (float)m_max, 0), 1, 1);
 	_foreground->Update();
 	_background->Update();
+}
+
+
+Anim_ptr HudHealthBar::SetupExpAnimation(int targetXP)
+{
+	m_targetXP = targetXP;
+	m_targetLevel = _actor->_Fighter->GetLevel();
+	Anim_ptr result = std::make_shared<AnimXpBar>(AnimXpBar(this, m_observedXP, m_targetXP));
+	return result;
+}
+
+bool HudHealthBar::UpdateExpAnimation(float newxp)
+{
+	float actualXP = newxp;
+	if (actualXP > m_targetXP)
+		actualXP = m_targetXP;
+
+	newxp -= _actor->_Fighter->CalculateLevelExp(m_currentLevel - 1);
+	float max = _actor->_Fighter->CalculateLevelExp(m_currentLevel) - _actor->_Fighter->CalculateLevelExp(m_currentLevel - 1);
+
+	if (newxp >= max)
+	{
+		m_currentLevel++;
+		FontManager::GetInstance().CreateFloatingText(_actor->_Graphics->GetPosRef(), "Level up!");
+		return UpdateExpAnimation(actualXP);
+	}
+
+	_xpBar->GetModelMat()->SetScale(Vector3f(newxp / (float)max, 0.1f, 1));
+	_xpBar->Update();
+
+	// done
+	if (actualXP >= m_targetXP)
+		return true;
+
+	// not done
+	return false;
 }
 
 void HudHealthBar::AdjustPosition()

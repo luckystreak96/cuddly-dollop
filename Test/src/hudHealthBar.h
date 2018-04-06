@@ -2,6 +2,7 @@
 #define HUD_HEALTH_BAR_H__
 
 #include "hudBar.h"
+#include "battleAnimation.h"
 
 class Actor;
 
@@ -14,12 +15,24 @@ public:
 	void AdjustPosition();
 	void Destroy();
 	void SetRender();
+	Anim_ptr SetupExpAnimation(int targetXP);
+	bool UpdateExpAnimation(float newxp);
+
+
+	// Remember who you're showing
+	Actor* _actor;
 
 private:
 	// xp variables
 	int m_observedXP;
 	int m_xpMax;
 	int m_prevXP;
+
+	// xp animation variables
+	int m_startXP;
+	int m_targetXP;
+	int m_currentLevel;
+	int m_targetLevel;
 
 	// Health bar images
 	GraphComp_ptr _background;

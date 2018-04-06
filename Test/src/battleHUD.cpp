@@ -68,6 +68,14 @@ void BattleHUD::AddActorHealthBar(Actor_ptr ap, int& party, int& enemies)
 	HudComp_ptr healthBar = std::make_shared<HudHealthBar>(HudHealthBar(ap.get(), pos));
 	ap->_Fighter->_observers.push_back(healthBar);
 	_hudComponents.push_back(healthBar);
+	_hudHealthBars.push_back(dynamic_cast<HudHealthBar*>(healthBar.get()));
+}
+
+HudHealthBar* BattleHUD::GetHudHealthBar(Actor* actor)
+{
+	for (auto& x : _hudHealthBars)
+		if (x->_actor == actor)
+			return x;
 }
 
 void BattleHUD::Update()

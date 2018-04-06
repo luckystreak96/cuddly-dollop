@@ -20,17 +20,17 @@
 SceneBattle::SceneBattle() : m_zoom(false)
 {
 	m_currentMap = 3;
-	_actors.push_back(Actor_ptr(ActorFactory::BuildBaseAlly()));
-	_actors.push_back(Actor_ptr(ActorFactory::BuildBaseAlly()));
-	_actors.push_back(Actor_ptr(ActorFactory::BuildBaseAlly()));
+	//_actors.push_back(Actor_ptr(ActorFactory::BuildBaseAlly()));
+	//_actors.push_back(Actor_ptr(ActorFactory::BuildBaseAlly()));
+	//_actors.push_back(Actor_ptr(ActorFactory::BuildBaseAlly()));
 	//_actors.push_back(Actor_ptr(ActorFactory::BuildBaseAlly()));
 	for (auto x : BattleData::Party)
 		_actors.push_back(x);
 
 	_actors.push_back(Actor_ptr(ActorFactory::BuildBaseEnemy()));
-	_actors.push_back(Actor_ptr(ActorFactory::BuildBaseEnemy()));
-	_actors.push_back(Actor_ptr(ActorFactory::BuildBaseEnemy()));
-	_actors.push_back(Actor_ptr(ActorFactory::BuildBaseEnemy()));
+	//_actors.push_back(Actor_ptr(ActorFactory::BuildBaseEnemy()));
+	//_actors.push_back(Actor_ptr(ActorFactory::BuildBaseEnemy()));
+	//_actors.push_back(Actor_ptr(ActorFactory::BuildBaseEnemy()));
 	m_battle = BattleManager(_actors);
 	Init();
 	SoundManager::GetInstance();
@@ -131,22 +131,22 @@ void SceneBattle::ManageInput()
 
 	if (InputManager::GetInstance().FrameKeyStatus(A_Accept))
 	{
-		if(m_fade.IsDone())
-		if (m_battle._done && m_battle._winner == 0)
-		{
-		m_fade.SetFade(false);
-			NextScene.scene = _prevScene;
-			NextScene.sceneType = ST_World;
-			NextScene.id = 1;
-		}
-		else if (m_battle._done && m_battle._winner != 0 && !GameData::Loading)
-		{
-		m_fade.SetFade(false);
-			GameData::LoadGameData();
-			NextScene.scene = NULL;
-			NextScene.sceneType = ST_World;
-			NextScene.id = GameData::Flags.at("map");
-		}
+		if (m_fade.IsDone())
+			if (m_battle._battleDone && m_battle._winner == 0)
+			{
+				m_fade.SetFade(false);
+				NextScene.scene = _prevScene;
+				NextScene.sceneType = ST_World;
+				NextScene.id = 1;
+			}
+			else if (m_battle._battleDone && m_battle._winner != 0 && !GameData::Loading)
+			{
+				m_fade.SetFade(false);
+				GameData::LoadGameData();
+				NextScene.scene = NULL;
+				NextScene.sceneType = ST_World;
+				NextScene.id = GameData::Flags.at("map");
+			}
 	}
 
 	//if (InputManager::GetInstance().FrameKeyStatus('Z', AnyRelease, 5))
@@ -166,10 +166,10 @@ SceneGenData SceneBattle::Update()
 	Animation::AnimationCounter((float)ElapsedTime::GetInstance().GetElapsedTime());
 	m_eventManager.Update(ElapsedTime::GetInstance().GetElapsedTime());
 
-	if (m_fade.IsDone())
+	//if (m_fade.IsDone())
 		m_battle.Update();
-	else
-		m_battle._hud.Update();
+	//else
+		//m_battle._hud.Update();
 
 	for (auto it : m_celist)
 		it.second->Physics()->DesiredMove();

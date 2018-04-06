@@ -473,6 +473,9 @@
     <ClInclude Include="src\hudBar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\animXpBar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -812,6 +815,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\hudBar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\animXpBar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

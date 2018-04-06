@@ -108,7 +108,7 @@ int StatUser::GetLevel()
 void StatUser::GiveExp(int exp)
 {
 	Exp += exp;
-	while (Exp > NextLevelExp)
+	while (Exp >= NextLevelExp)
 	{
 		// Level up
 		LevelUp();

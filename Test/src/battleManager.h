@@ -57,7 +57,8 @@ public:
 	int _selectedIndex;
 	BattleState _state;
 	bool m_animating;
-	bool _done;
+	bool _battleDone;
+	bool _postBattleDone;
 	bool _showingSkills;
 	int _winner;
 	

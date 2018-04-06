@@ -34,6 +34,8 @@ void BattleManager::Init()
 {
 	Camera::_currentCam->SetCameraFollowSpeed(CAMSPEED_Slow);
 	_hud.Init(_actors);
+	_battleDone = false;
+	_postBattleDone = false;
 	_showingSkills = false;
 	_state = BS_TurnStart;
 	m_animating = false;
@@ -49,7 +51,7 @@ void BattleManager::Init()
 				teams.emplace(x->_Fighter->Team);
 
 		// If there aren't 2 teams, end the battle
-		_done = teams.size() < 2;
+		_battleDone = teams.size() < 2;
 	}
 
 	if (_actorQueue.size() > 0)
@@ -62,7 +64,7 @@ void BattleManager::Init()
 void BattleManager::Update()
 {
 	// Return if the battle logic is over
-	if (!_done || _selectedSkill && !_selectedSkill->_done)
+	if (!_battleDone || _selectedSkill && !_selectedSkill->_done)
 	{
 		// Battle stuffs
 		ManageInput();
@@ -84,12 +86,12 @@ void BattleManager::Update()
 	}
 
 	// End the battle, gain exp and show stuff
-	if (_animations.size() == 0 && _state == BS_TurnStart && !_done)
+	if (_animations.size() == 0 && _state == BS_TurnStart && !_battleDone)
 	{
-		Camera::_currentCam->SetFollow(Camera::_currentCam->MapCenter());
 		_winner = FindWinner();
 		if (_winner != -1)
 		{
+			Camera::_currentCam->SetFollow(Camera::_currentCam->MapCenter());
 			int xp = 0;
 			for (auto& actor : _actors)
 				if (actor->_Fighter->Team != 0)
@@ -105,16 +107,18 @@ void BattleManager::Update()
 				{
 					int level = actor->_Fighter->GetLevel();
 					actor->_Fighter->GiveExp(xp);
-					if (level != actor->_Fighter->GetLevel())
-						FontManager::GetInstance().CreateFloatingText(actor->_Graphics->GetPosRef(), "Level up!");
-					else
+					_animations.push_back(_hud.GetHudHealthBar(actor.get())->SetupExpAnimation(actor->_Fighter->GetExp()));
+						//FontManager::GetInstance().CreateFloatingText(actor->_Graphics->GetPosRef(), "Level up!");
 						FontManager::GetInstance().CreateFloatingText(actor->_Graphics->GetPosRef(), "+" + std::to_string(xp) + " XP");
 				}
 			}
 
-			_done = true;
+			_battleDone = true;
 		}
+
 	}
+		if (_animations.size() == 0 && _battleDone)
+			_postBattleDone = true;
 
 	_hud.Update();
 }
