@@ -84,7 +84,7 @@ void Fighter::MagicalOffenseActionCommand(Damage& dmg)
 
 void Fighter::PhysicalDefenseActionCommand(Damage& dmg)
 {
-	dmg._value -= Defense.Real / 2;
+	dmg._value -= Defense.Real / 2 + fmax(Level / 2, 1);
 }
 
 void Fighter::PhysicalOffenseActionCommand(Damage& dmg)
@@ -113,6 +113,7 @@ void Fighter::DamageModifiers(Damage& dmg, bool critting)
 {
 	// Insert status effect damage changes here
 	dmg._value -= DefenseDamageModification(critting);
+	dmg._value = fmax(1, dmg._value);
 }
 
 Damage Fighter::TakeDamage(Damage& dmg)

@@ -19,7 +19,7 @@ void SkillHeal::DefaultSetup()
 Damage SkillHeal::CalculateDamage()
 {
 	Damage result;
-	result._value = 5 + _owner->_Fighter->Strength.Modified / 2;
+	result._value = 3 + _owner->_Fighter->Strength.Modified / 2 + rand() % ((_owner->_Fighter->GetLevel() + 2) / 2 + 1);
 	return result;
 }
 

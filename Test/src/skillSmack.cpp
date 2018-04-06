@@ -28,7 +28,7 @@ Damage SkillSmack::CalculateDamage()
 		_critting = true;
 
 	// Damage
-	int dmg = 4 + _owner->_Fighter->GetLevel() + _owner->_Fighter->Strength.Modified * 0.8f;
+	int dmg = 2 + _owner->_Fighter->Strength.Modified * 0.8f + rand() % (_owner->_Fighter->GetLevel() + 2);
 	if (_critting)
 		dmg *= 1.5;
 

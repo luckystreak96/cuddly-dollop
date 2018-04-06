@@ -161,7 +161,6 @@ bool HudHealthBar::UpdateExpAnimation(float newxp)
 	// Level up
 	if (newxp >= max)
 	{
-		_actor->_Fighter->SetExp((int)actualXP);
 		// Update the level font
 		m_currentLevel++;
 		Vector3f offset = Vector3f(1.45f, 0.275f, -1);
@@ -173,6 +172,8 @@ bool HudHealthBar::UpdateExpAnimation(float newxp)
 
 	_xpBar->GetModelMat()->SetScale(Vector3f(fmax(newxp / (float)max, 0.005f), 0.1f, 1));
 	_xpBar->Update();
+
+	_actor->_Fighter->SetExp((int)actualXP);
 
 	// done
 	if (actualXP >= m_targetXP)
