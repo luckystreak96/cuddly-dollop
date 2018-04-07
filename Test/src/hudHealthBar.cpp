@@ -166,7 +166,7 @@ bool HudHealthBar::UpdateExpAnimation(float newxp)
 		Vector3f offset = Vector3f(1.45f, 0.275f, -1);
 		FontManager::GetInstance().SetText(_levelFont, "Lv " + std::to_string(m_currentLevel), _foreground->GetPos() + offset, false);
 
-		FontManager::GetInstance().CreateFloatingText(_actor->_Graphics->GetPosRef(), "Level up!");
+		FontManager::GetInstance().CreateFloatingText(_actor->_Graphics->GetPosRef(), "Level up!", Vector3f(0.95f, 0.8f, 0.05f));
 		return UpdateExpAnimation(actualXP);
 	}
 

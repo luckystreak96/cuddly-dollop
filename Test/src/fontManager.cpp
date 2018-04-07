@@ -10,7 +10,8 @@ FontManager::~FontManager()
 	ClearFonts();
 }
 
-Font_ptr FontManager::CreateFloatingText(Vector3f target, std::string text)
+
+Font_ptr FontManager::CreateFloatingText(Vector3f target, std::string text, Vector3f color)
 {
 	Vector3f pos;
 	Font_ptr font;
@@ -20,15 +21,20 @@ Font_ptr FontManager::CreateFloatingText(Vector3f target, std::string text)
 	pos.z = 0;
 
 	// create font
-	font = Font_ptr(new FontFloat(0.7));
+	font = Font_ptr(new FontFloat(0.75));
 	font->SetText(text, pos, true);
 
 	// color
-	dynamic_cast<FontFloat*>(font.get())->Color = Vector3f(0, 0.4f, 0.9f);
+	dynamic_cast<FontFloat*>(font.get())->Color = color;
 
 	FontManager::GetInstance().AddFont(font);
 
 	return font;
+}
+
+Font_ptr FontManager::CreateFloatingText(Vector3f target, std::string text)
+{
+	return CreateFloatingText(target, text, Vector3f(0, 0.4f, 0.9f));
 }
 
 bool FontManager::IsEmpty()

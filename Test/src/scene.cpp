@@ -24,7 +24,7 @@ void Scene::Resume()
 {
 	Camera::_currentCam = &m_camera;
 	//m_camera._mapsize = m_mapHandler->GetMapSize();
-	//OrthoProjInfo::GetRegularInstance().changed = true;
+	OrthoProjInfo::GetRegularInstance().changed = true;
 }
 
 void Scene::ManageInput()

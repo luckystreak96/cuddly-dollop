@@ -25,6 +25,7 @@ public:
 	void EnableFont(unsigned int font);
 	void RemoveFont(unsigned int font);
 	Font_ptr CreateFloatingText(Vector3f target, std::string text);
+	Font_ptr CreateFloatingText(Vector3f target, std::string text, Vector3f color);
 	Font_ptr GetFont(unsigned int key);
 	void ClearFonts();
 	bool IsEmpty();

@@ -21,16 +21,16 @@ SceneBattle::SceneBattle() : m_zoom(false)
 {
 	m_currentMap = 3;
 	//_actors.push_back(Actor_ptr(ActorFactory::BuildBaseAlly()));
-	//_actors.push_back(Actor_ptr(ActorFactory::BuildBaseAlly()));
-	//_actors.push_back(Actor_ptr(ActorFactory::BuildBaseAlly()));
-	//_actors.push_back(Actor_ptr(ActorFactory::BuildBaseAlly()));
+	_actors.push_back(Actor_ptr(ActorFactory::BuildBaseAlly()));
+	_actors.push_back(Actor_ptr(ActorFactory::BuildBaseAlly()));
+	_actors.push_back(Actor_ptr(ActorFactory::BuildBaseAlly()));
 	for (auto x : BattleData::Party)
 		_actors.push_back(x);
 
 	_actors.push_back(Actor_ptr(ActorFactory::BuildBaseEnemy()));
-	//_actors.push_back(Actor_ptr(ActorFactory::BuildBaseEnemy()));
-	//_actors.push_back(Actor_ptr(ActorFactory::BuildBaseEnemy()));
-	//_actors.push_back(Actor_ptr(ActorFactory::BuildBaseEnemy()));
+	_actors.push_back(Actor_ptr(ActorFactory::BuildBaseEnemy()));
+	_actors.push_back(Actor_ptr(ActorFactory::BuildBaseEnemy()));
+	_actors.push_back(Actor_ptr(ActorFactory::BuildBaseEnemy()));
 	m_battle = BattleManager(_actors);
 	Init();
 	SoundManager::GetInstance();
@@ -74,7 +74,7 @@ bool SceneBattle::Init()
 
 	for (int i = 0; i < m_party.size(); i++)
 	{
-		Vector3f position = Vector3f(3.75f + i * 0.25f, startY + i * 1.25f, 4.0f);
+		Vector3f position = Vector3f(4.0f + i * 0.25f, startY + i * 1.25f, 4.0f);
 		m_party.at(i)->_Graphics->SetPhysics(position, Vector3f());
 		m_party.at(i)->BasePosition = position;
 		m_party.at(i)->_Graphics->_row = AE_Right; // make player face right cuz girl looks bad looking down
@@ -85,7 +85,7 @@ bool SceneBattle::Init()
 
 	for (int i = 0; i < m_enemies.size(); i++)
 	{
-		Vector3f position = Vector3f(13.75f - i * 0.25f, startY + i * 1.25f, 4.0f);
+		Vector3f position = Vector3f(13.5f - i * 0.25f, startY + i * 1.25f, 4.0f);
 		m_enemies.at(i)->_Graphics->SetPhysics(position, Vector3f());
 		m_enemies.at(i)->BasePosition = position;
 		// Set to right cause the sprites are flipped
