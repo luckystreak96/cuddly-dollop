@@ -21,14 +21,14 @@ BattleState SkillMelee::Start(std::vector<Actor_ptr>* targets, std::deque<Actor_
 	_basePos = _owner->_Graphics->GetPos();
 	// INSERT JUMP FOREWARD ANIMATION HERE
 	float distance = _owner->_Fighter->Team == 0 ? 0.7f : -0.7f;
-	bool protector = _targets->at(0)->_Fighter->Protector != NULL && !_targets->at(0)->_Fighter->Protector->_Fighter->Dead;
+	bool protector = _targets.at(0)->_Fighter->Protector != NULL && !_targets.at(0)->_Fighter->Protector->_Fighter->Dead;
 	if (protector)
 		distance *= 2.0f;
-	_anims->push_back(Anim_ptr(new AnimJumpTo(_targets->at(0)->_Graphics->GetPos() - Vector3f(distance, 0, 0), _owner)));
+	_anims->push_back(Anim_ptr(new AnimJumpTo(_targets.at(0)->_Graphics->GetPos() - Vector3f(distance, 0, 0), _owner)));
 	if (protector)
 	{
 		Skill::SetupProtector();
-		_anims->push_back(Anim_ptr(new AnimJumpTo(_targets->at(1)->_Graphics->GetPos() - Vector3f(distance / 2.0f, 0, 0), _targets->at(0))));
+		_anims->push_back(Anim_ptr(new AnimJumpTo(_targets.at(1)->_Graphics->GetPos() - Vector3f(distance / 2.0f, 0, 0), _targets.at(0))));
 		_anims->back()->_duration = 0.2f;
 		_anims->back()->_async = true;
 	}
@@ -53,7 +53,7 @@ void SkillMelee::Update()
 	switch (_animProg)
 	{
 	case 0:
-		Camera::_currentCam->SetFollowCenteredXY(_targets->at(0)->_Graphics->GetPosRef());
+		Camera::_currentCam->SetFollowCenteredXY(_targets.at(0)->_Graphics->GetPosRef());
 		if (!AnimationsDone())
 			break;
 		Animate();
@@ -61,7 +61,7 @@ void SkillMelee::Update()
 		break;
 	case 1:
 		// DEAL DMG
-		Camera::_currentCam->SetFollowCenteredXY(_targets->at(0)->_Graphics->GetPosRef());
+		Camera::_currentCam->SetFollowCenteredXY(_targets.at(0)->_Graphics->GetPosRef());
 		if (AnimationsDone())
 		{
 			_animProg++;
@@ -86,9 +86,9 @@ void SkillMelee::Update()
 			break;
 		_anims->push_back(Anim_ptr(new AnimJumpTo(_basePos, _owner)));
 		// Someone is protecting
-		if (_targets->size() > 1)
+		if (_targets.size() > 1)
 		{
-			_anims->push_back(Anim_ptr(new AnimJumpTo(_targets->at(0)->BasePosition, _targets->at(0))));
+			_anims->push_back(Anim_ptr(new AnimJumpTo(_targets.at(0)->BasePosition, _targets.at(0))));
 			_anims->back()->_duration = 0.2f;
 			_anims->back()->_async = true;
 		}
@@ -118,10 +118,10 @@ void SkillMelee::ApplyEffect()
 	result._value = 0;
 	result._type = ST_Physical;
 	//dmg = rand() % 3 + 1;
-	_targets->at(0)->_Fighter->TakeDamage(result);
+	_targets.at(0)->_Fighter->TakeDamage(result);
 
 	// Damage text
-	SpawnDamageText(_targets->at(0), result._value);
+	SpawnDamageText(_targets.at(0), result._value);
 }
 
 bool SkillMelee::TimingCondition(double progress, double duration)

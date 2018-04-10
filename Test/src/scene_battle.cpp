@@ -31,8 +31,8 @@ SceneBattle::SceneBattle() : m_zoom(false)
 	_actors.push_back(Actor_ptr(ActorFactory::BuildBaseEnemy()));
 	_actors.push_back(Actor_ptr(ActorFactory::BuildBaseEnemy()));
 	_actors.push_back(Actor_ptr(ActorFactory::BuildBaseEnemy()));
-	m_battle = BattleManager(_actors);
 	Init();
+	m_battle = BattleManager(_actors);
 	SoundManager::GetInstance();
 	m_fade.SetFade(true);
 	static bool firstEverLoad = true;

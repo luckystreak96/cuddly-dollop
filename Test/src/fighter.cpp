@@ -5,6 +5,7 @@
 #include "actor.h"
 #include "statCurve.h"
 #include "passiveFactory.h"
+#include "battleManager.h"
 
 Fighter::Fighter()
 {
@@ -16,6 +17,65 @@ Fighter::Fighter()
 	//skill._Specifier = PassiveSpecifier::PS_Flat;
 	//_Passives.push_back(std::make_shared<PassiveSkill>(skill));
 }
+
+bool Fighter::PredictNextSkill(Actor_ptr owner, std::vector<Actor_ptr>* actors)
+{
+	bool done = false;
+	int targ = 0;
+	std::set<int> alreadyTriedSkills;
+	Skill_ptr selectedSkill;
+
+	// Ensure possible targets and skills
+	while (!done)
+	{
+		std::set<int> alreadyTargeted;
+		targ = 0;
+
+		int skill;
+		do {
+			// None of the skills found valid targets -> end turn
+			if (alreadyTriedSkills.size() == owner->_Fighter->Skills.size())
+			{
+				done = true;
+				//_state = BS_ActionDone;
+				return false;
+			}
+			skill = rand() % owner->_Fighter->Skills.size();
+			selectedSkill = owner->_Fighter->Skills.at(skill);
+		} while (alreadyTriedSkills.count(skill));
+		alreadyTriedSkills.emplace(skill); // havent tried this, lets go
+
+		do {
+			// if you already tried all the actors, select another skill
+			if (alreadyTargeted.size() == actors->size())
+			{
+				targ = -1;
+				break;
+			}
+			targ = rand() % actors->size();
+			// if the target is illegal, re-pick and dont choose that target again
+			if (!actors->at(targ)->_Fighter->RespectsTargeting(owner.get(), selectedSkill->_targetMode) || // doesnt respect targeting
+				actors->at(BattleManager::DefaultTargetActorIndex(actors, owner, selectedSkill))->_Fighter->Team != actors->at(targ)->_Fighter->Team)
+				alreadyTargeted.emplace(targ);
+		} while (targ < 0 || targ >= actors->size() || alreadyTargeted.count(targ)); // is targeting someone of a different team than the default target
+
+		alreadyTargeted.emplace(targ);
+
+		// target is good, can move on, otherwise choose new skill
+		if (targ != -1)
+			done = true;
+
+		selectedSkill->_owner = owner;
+		selectedSkill->_preCalculatedDamage = selectedSkill->CalculateDamage();
+	}
+
+	selectedSkill->_targets.push_back(actors->at(targ));
+	PredictedSkill = selectedSkill;
+	PredictedSkill->_isPreCalculated = true;
+
+	return true;
+}
+
 
 void Fighter::GiveExp(int xp)
 {
@@ -143,7 +203,7 @@ Damage Fighter::ApplyHealing(Damage& heal)
 	return heal;
 }
 
-bool Fighter::RespectsTargeting(Actor_ptr ap, int tm)
+bool Fighter::RespectsTargeting(Actor* ap, int tm)
 {
 	switch (tm)
 	{

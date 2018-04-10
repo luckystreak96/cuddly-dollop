@@ -28,7 +28,7 @@ void SkillHeal::ApplyEffect()
 	Damage dmg = HandleDamage();
 
 	// Damage text
-	SpawnDamageText(_targets->at(0), dmg._value);
+	SpawnDamageText(_targets.at(0), dmg._value);
 
 	SoundManager::GetInstance().PlaySoundFX("res/audio/fx/swish_2.wav");
 }

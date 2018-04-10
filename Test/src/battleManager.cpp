@@ -32,7 +32,7 @@ BattleManager::BattleManager(std::vector<Actor_ptr> actors)
 
 void BattleManager::Init()
 {
-	Camera::_currentCam->SetCameraFollowSpeed(CAMSPEED_Slow);
+	//Camera::_currentCam->SetCameraFollowSpeed(CAMSPEED_Slow);
 	_hud.Init(_actors);
 	_battleDone = false;
 	_postBattleDone = false;
@@ -58,6 +58,19 @@ void BattleManager::Init()
 	{
 		_chooseSkill = &_actorQueue.front()->_Fighter->Skills;
 		_owner = _actorQueue.front();
+	}
+
+	for (auto& x : _actors)
+	{
+		if (x->_Fighter->Team != 0)
+		{
+			// Setup next skill
+			if (x->_Fighter->Team != 0)
+			{
+				x->_Fighter->PredictNextSkill(x, &_actors);
+				std::cout << "Gel at y=" << x->BasePosition.y << " will attack girl at y=" << x->_Fighter->PredictedSkill->_targets.at(0)->BasePosition.y << " for " << x->_Fighter->PredictedSkill->_preCalculatedDamage._value << " damage" << std::endl;
+			}
+		}
 	}
 }
 
@@ -175,6 +188,19 @@ void BattleManager::SelectAction()
 	// Choose ENEMY action
 	if (_owner->_Fighter->Team != 0)
 	{
+		// Try to choose a skill, if it doesnt work then skip your turn
+
+		if (_owner->_Fighter->PredictedSkill == NULL)
+		{
+			_state = BS_ActionDone;
+			return;
+		}
+		_selectedSkill = _owner->_Fighter->PredictedSkill;
+		_targets = _owner->_Fighter->PredictedSkill->_targets;
+		//_selectedSkill
+		UseSkill();
+		return;
+
 		bool done = false;
 		int targ = 0;
 		std::set<int> alreadyTriedSkills;
@@ -208,8 +234,8 @@ void BattleManager::SelectAction()
 				}
 				targ = rand() % _actors.size();
 				// if the target is illegal, re-pick and dont choose that target again
-				if (!_actors.at(targ)->_Fighter->RespectsTargeting(_owner, _selectedSkill->_targetMode) || // doesnt respect targeting
-					_actors.at(DefaultTargetActorIndex())->_Fighter->Team != _actors.at(targ)->_Fighter->Team)
+				if (!_actors.at(targ)->_Fighter->RespectsTargeting(_owner.get(), _selectedSkill->_targetMode) || // doesnt respect targeting
+					_actors.at(DefaultTargetActorIndex(&_actors, _owner, _selectedSkill))->_Fighter->Team != _actors.at(targ)->_Fighter->Team)
 					alreadyTargeted.emplace(targ);
 			} while (targ < 0 || targ >= _actors.size() || alreadyTargeted.count(targ)); // is targeting someone of a different team than the default target
 
@@ -254,8 +280,13 @@ void BattleManager::ActionDone()
 }
 void BattleManager::TurnEnd()
 {
+	// Setup next skill
+	if (_owner->_Fighter->Team != 0)
+		_owner->_Fighter->PredictNextSkill(_owner, &_actors);
+
 	MoveToLight(false, true);
 	CycleActors();
+
 	_state = BS_TurnStart;
 }
 
@@ -376,7 +407,7 @@ void BattleManager::ManageInput()
 			{
 				for (int i = _selectedIndex - 1; i >= 0; i--)
 				{
-					if (_actors[i]->_Fighter->RespectsTargeting(_owner, _selectedSkill->_targetMode))
+					if (_actors[i]->_Fighter->RespectsTargeting(_owner.get(), _selectedSkill->_targetMode))
 					{
 						Select(i);
 						break;
@@ -387,7 +418,7 @@ void BattleManager::ManageInput()
 			{
 				for (int i = _actors.size() - 1; i >= 0; i--)
 				{
-					if (_actors[i]->_Fighter->RespectsTargeting(_owner, _selectedSkill->_targetMode))
+					if (_actors[i]->_Fighter->RespectsTargeting(_owner.get(), _selectedSkill->_targetMode))
 					{
 						Select(i);
 						break;
@@ -415,7 +446,7 @@ void BattleManager::ManageInput()
 			{
 				for (int i = _selectedIndex + 1; i < _actors.size(); i++)
 				{
-					if (_actors[i]->_Fighter->RespectsTargeting(_owner, _selectedSkill->_targetMode))
+					if (_actors[i]->_Fighter->RespectsTargeting(_owner.get(), _selectedSkill->_targetMode))
 					{
 						Select(i);
 						break;
@@ -426,7 +457,7 @@ void BattleManager::ManageInput()
 			{
 				for (int i = 0; i < _actors.size(); i++)
 				{
-					if (_actors[i]->_Fighter->RespectsTargeting(_owner, _selectedSkill->_targetMode))
+					if (_actors[i]->_Fighter->RespectsTargeting(_owner.get(), _selectedSkill->_targetMode))
 					{
 						Select(i);
 						break;
@@ -450,9 +481,9 @@ void BattleManager::ManageInput()
 
 				while (!found)
 				{
-					if (value + increment - MAX_FIGHTERS_PER_SIDE < MAX_FIGHTERS_PER_SIDE && _actors[value - MAX_FIGHTERS_PER_SIDE + increment]->_Fighter->RespectsTargeting(_owner, _selectedSkill->_targetMode))
+					if (value + increment - MAX_FIGHTERS_PER_SIDE < MAX_FIGHTERS_PER_SIDE && _actors[value - MAX_FIGHTERS_PER_SIDE + increment]->_Fighter->RespectsTargeting(_owner.get(), _selectedSkill->_targetMode))
 						_selectedIndex = value - MAX_FIGHTERS_PER_SIDE + increment;
-					else if (value - increment - MAX_FIGHTERS_PER_SIDE >= 0 && _actors[value - MAX_FIGHTERS_PER_SIDE - increment]->_Fighter->RespectsTargeting(_owner, _selectedSkill->_targetMode))
+					else if (value - increment - MAX_FIGHTERS_PER_SIDE >= 0 && _actors[value - MAX_FIGHTERS_PER_SIDE - increment]->_Fighter->RespectsTargeting(_owner.get(), _selectedSkill->_targetMode))
 						_selectedIndex = value - MAX_FIGHTERS_PER_SIDE - increment;
 
 					if (value != _selectedIndex)
@@ -483,9 +514,9 @@ void BattleManager::ManageInput()
 
 				while (!found)
 				{
-					if (value + increment + MAX_FIGHTERS_PER_SIDE < _actors.size() && _actors[value + MAX_FIGHTERS_PER_SIDE + increment]->_Fighter->RespectsTargeting(_owner, _selectedSkill->_targetMode))
+					if (value + increment + MAX_FIGHTERS_PER_SIDE < _actors.size() && _actors[value + MAX_FIGHTERS_PER_SIDE + increment]->_Fighter->RespectsTargeting(_owner.get(), _selectedSkill->_targetMode))
 						_selectedIndex = value + MAX_FIGHTERS_PER_SIDE + increment;
-					else if (value - increment + MAX_FIGHTERS_PER_SIDE >= MAX_FIGHTERS_PER_SIDE && _actors[value + MAX_FIGHTERS_PER_SIDE - increment]->_Fighter->RespectsTargeting(_owner, _selectedSkill->_targetMode))
+					else if (value - increment + MAX_FIGHTERS_PER_SIDE >= MAX_FIGHTERS_PER_SIDE && _actors[value + MAX_FIGHTERS_PER_SIDE - increment]->_Fighter->RespectsTargeting(_owner.get(), _selectedSkill->_targetMode))
 						_selectedIndex = value + MAX_FIGHTERS_PER_SIDE - increment;
 
 					if (value != _selectedIndex)
@@ -508,7 +539,7 @@ void BattleManager::ManageInput()
 			_selectedSkill = _chooseSkill->at(_selectedIndex);
 			//std::cout << "Skill selected: " << _selectedSkill->_name << std::endl;
 			_state = BS_SelectTargets;
-			int target = DefaultTargetActorIndex();
+			int target = DefaultTargetActorIndex(&_actors, _owner, _selectedSkill);
 			Select(target);
 		}
 		else if (_state == BS_SelectTargets)
@@ -547,24 +578,24 @@ void BattleManager::ManageInput()
 	}
 }
 
-int BattleManager::DefaultTargetActorIndex()
+int BattleManager::DefaultTargetActorIndex(std::vector<Actor_ptr>* actors, Actor_ptr owner, Skill_ptr selectedSkill)
 {
 	int i;
 	bool done = false;
-	for (i = 0; i < _actors.size(); i++)
+	for (i = 0; i < actors->size(); i++)
 	{
-		switch (_selectedSkill->_defaultTarget)
+		switch (selectedSkill->_defaultTarget)
 		{
 		case DT_Self:
-			if (_actors[i] == _owner)
+			if (actors->at(i) == owner)
 				done = true;
 			break;
 		case DT_Ally:
-			if (_actors[i]->_Fighter->Team == _owner->_Fighter->Team && _actors[i]->_Fighter->RespectsTargeting(_owner, _selectedSkill->_targetMode))
+			if (actors->at(i)->_Fighter->Team == owner->_Fighter->Team && actors->at(i)->_Fighter->RespectsTargeting(owner.get(), selectedSkill->_targetMode))
 				done = true;
 			break;
 		case DT_Enemy:
-			if (_actors[i]->_Fighter->Team != _owner->_Fighter->Team && _actors[i]->_Fighter->RespectsTargeting(_owner, _selectedSkill->_targetMode))
+			if (actors->at(i)->_Fighter->Team != owner->_Fighter->Team && actors->at(i)->_Fighter->RespectsTargeting(owner.get(), selectedSkill->_targetMode))
 				done = true;
 			break;
 		}
@@ -572,6 +603,9 @@ int BattleManager::DefaultTargetActorIndex()
 		if (done)
 			break;
 	}
+
+	if (i >= actors->size())
+		i = 0;
 
 	return i;
 }

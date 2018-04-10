@@ -27,43 +27,46 @@ void Skill::DefaultSetup()
 	_critting = false;
 	_skillUpgradeProgress = 0;
 	_skillUpgradeMax = 0;
+	_isPreCalculated = false;
 }
 
 Damage Skill::HandleDamage()
 {
-	Damage dmg = CalculateDamage();
+	Damage dmg = _preCalculatedDamage;
+	if(!_isPreCalculated)
+		dmg = CalculateDamage();
 
 	// Apply first damage modifications
 	if (_skillType != ST_Healing)
-		_targets->at(0)->_Fighter->DamageModifiers(dmg, _critting);
+		_targets.at(0)->_Fighter->DamageModifiers(dmg, _critting);
 
 	if (_ac._success)
 	{
 		// Your team under attack from enemy -> Defense Action Command
-		if (_owner->_Fighter->Team != 0 && _targets->at(0)->_Fighter->Team == 0)
+		if (_owner->_Fighter->Team != 0 && _targets.at(0)->_Fighter->Team == 0)
 		{
 			if (_ac._type == ACT_Special)
-				_targets->at(0)->_Fighter->SpecialActionCommand(dmg);
+				_targets.at(0)->_Fighter->SpecialActionCommand(dmg);
 			else if (_skillType == ST_Physical)
-				_targets->at(0)->_Fighter->PhysicalDefenseActionCommand(dmg);
+				_targets.at(0)->_Fighter->PhysicalDefenseActionCommand(dmg);
 			else
-				_targets->at(0)->_Fighter->MagicalDefenseActionCommand(dmg);
+				_targets.at(0)->_Fighter->MagicalDefenseActionCommand(dmg);
 		}
 		// Your team attacking -> Offense Action Command
 		else if (_owner->_Fighter->Team == 0)
 		{
 			if (_skillType == ST_Physical)
-				_targets->at(0)->_Fighter->PhysicalOffenseActionCommand(dmg);
+				_targets.at(0)->_Fighter->PhysicalOffenseActionCommand(dmg);
 			else
-				_targets->at(0)->_Fighter->MagicalOffenseActionCommand(dmg);
+				_targets.at(0)->_Fighter->MagicalOffenseActionCommand(dmg);
 		}
 	}
 
 	// Deal the dmg
 	if (_skillType == ST_Healing)
-		_targets->at(0)->_Fighter->ApplyHealing(dmg);
+		_targets.at(0)->_Fighter->ApplyHealing(dmg);
 	else
-		_targets->at(0)->_Fighter->TakeDamage(dmg);
+		_targets.at(0)->_Fighter->TakeDamage(dmg);
 
 	return dmg;
 }
@@ -111,7 +114,7 @@ BattleState Skill::Start(std::vector<Actor_ptr>* targets, std::deque<Actor_ptr>*
 	_ac._success = false;
 	_critting = false;
 	_owner = owner;
-	_targets = targets;
+	_targets = std::vector<Actor_ptr>(*targets);
 	_actors = actors;
 	_anims = anims;
 	_animProg = 0;
@@ -138,8 +141,8 @@ void Skill::HandleActionCommand(double percentProgress)
 
 void Skill::SetupProtector()
 {
-	_targets->push_back(_targets->at(0));
-	_targets->at(0) = _targets->at(0)->_Fighter->Protector;
+	_targets.push_back(_targets.at(0));
+	_targets.at(0) = _targets.at(0)->_Fighter->Protector;
 
 }
 

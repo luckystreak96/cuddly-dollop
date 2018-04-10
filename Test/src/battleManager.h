@@ -22,6 +22,8 @@ public:
 	int FindWinner();
 	void SetRender();
 
+	static int DefaultTargetActorIndex(std::vector<Actor_ptr>* actors, Actor_ptr _owner, Skill_ptr selectedSkill);
+
 private:
 	void Init();
 	void ManageInput();
@@ -40,8 +42,6 @@ private:
 	void ActionProgress();
 	void ActionDone();
 	void TurnEnd();
-
-	int DefaultTargetActorIndex();
 
 public:
 	std::deque<Actor_ptr> _actorQueue;

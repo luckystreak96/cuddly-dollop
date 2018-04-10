@@ -23,22 +23,31 @@ class Fighter : public StatUser
 public:
 	Fighter();
 	
+	// Damage related
 	virtual Damage TakeDamage(Damage& dmg);
 	virtual Damage ApplyHealing(Damage& heal);
 	virtual void DamageModifiers(Damage& dmg, bool critting);
 	virtual void ApplyLethal();
-	virtual bool RespectsTargeting(Actor_ptr ap, int tm);
+
+	// Turn and targets
+	virtual bool RespectsTargeting(Actor* ap, int tm);
 	virtual void TurnStart(std::vector<Actor_ptr>& actors);
+	// Returns whether a skill could be chosen or not
+	virtual bool PredictNextSkill(Actor_ptr owner, std::vector<Actor_ptr>* actors);
+
+	// Action Commands
 	virtual void SpecialActionCommand(Damage& dmg);
 	virtual void PhysicalOffenseActionCommand(Damage& dmg);
 	virtual void PhysicalDefenseActionCommand(Damage& dmg);
 	virtual void MagicalOffenseActionCommand(Damage& dmg);
 	virtual void MagicalDefenseActionCommand(Damage& dmg);
 
+	// Levels
 	virtual void LevelUp();
 	virtual void GiveExp(int xp);
 	virtual void SetExp(int xp);
 
+	// Stats
 	void SetStatsFromCurve();
 
 public:
@@ -50,6 +59,7 @@ public:
 	Actor_ptr Protector;
 	int Team;
 	std::vector<Skill_ptr> Skills;
+	Skill_ptr PredictedSkill;
 
 protected:
 	virtual void SetDefault();

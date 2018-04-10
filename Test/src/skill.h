@@ -62,13 +62,14 @@ public:
 
 public:
 	std::deque<Actor_ptr>* _actors;
-	std::vector<Actor_ptr>* _targets;
 	std::deque<Anim_ptr>* _anims;
+	std::vector<Actor_ptr> _targets;
 	std::set<int> _input;
 	std::string _name;
 	SkillType _skillType;
 	bool _done;
 	bool _critting;
+	bool _isPreCalculated;
 	int _animProg;
 	int _cooldown;
 	int _currentCooldown;
@@ -80,6 +81,7 @@ public:
 	Actor_ptr _owner;
 	TargetMode _targetMode;
 	DefaultTarget _defaultTarget;
+	Damage _preCalculatedDamage;
 
 protected:
 	void DefaultSetup();
