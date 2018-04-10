@@ -32,7 +32,6 @@ BattleManager::BattleManager(std::vector<Actor_ptr> actors)
 
 void BattleManager::Init()
 {
-	//Camera::_currentCam->SetCameraFollowSpeed(CAMSPEED_Slow);
 	_hud.Init(_actors);
 	_battleDone = false;
 	_postBattleDone = false;
@@ -68,7 +67,7 @@ void BattleManager::Init()
 			if (x->_Fighter->Team != 0)
 			{
 				x->_Fighter->PredictNextSkill(x, &_actors);
-				std::cout << "Gel at y=" << x->BasePosition.y << " will attack girl at y=" << x->_Fighter->PredictedSkill->_targets.at(0)->BasePosition.y << " for " << x->_Fighter->PredictedSkill->_preCalculatedDamage._value << " damage" << std::endl;
+				std::cout << "Gel at y=" << (x->BasePosition.y - 4.25f) / 1.25f << " will attack girl at y=" << (x->_Fighter->PredictedSkill->_targets.at(0)->BasePosition.y - 4.25f) / 1.25f << " for " << x->_Fighter->PredictedSkill->_preCalculatedDamage._value << " damage" << std::endl;
 			}
 		}
 	}
@@ -84,6 +83,7 @@ void BattleManager::Update()
 		UpdateLogic();
 	}
 
+	// Update animations
 	if (_animations.size() > 0)
 	{
 		for (int i = 0; i < _animations.size(); i++)
