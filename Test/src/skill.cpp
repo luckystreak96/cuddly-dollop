@@ -71,6 +71,22 @@ Damage Skill::HandleDamage()
 	return dmg;
 }
 
+
+bool Skill::ValidateTargets()
+{
+	bool valid = false;
+
+	// Check if all targets are alive
+	for (auto& x : _targets)
+		if (x->_Fighter->RespectsTargeting(_owner.get(), _targetMode))
+		{
+			valid = true;
+			break;
+		}
+
+	return valid;
+}
+
 void Skill::CheckActionCommand(double percentProgress)
 {
 	// Did you input anything

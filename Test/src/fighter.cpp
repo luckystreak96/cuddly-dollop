@@ -10,12 +10,6 @@
 Fighter::Fighter()
 {
 	SetDefault();
-	//PassiveSkill skill;
-	//skill._Type = PassiveType::PT_Stat;
-	//skill._Data._Float = 5.0f;
-	//skill._Data._String = "max_health";
-	//skill._Specifier = PassiveSpecifier::PS_Flat;
-	//_Passives.push_back(std::make_shared<PassiveSkill>(skill));
 }
 
 bool Fighter::PredictNextSkill(Actor_ptr owner, std::vector<Actor_ptr>* actors)
@@ -38,6 +32,7 @@ bool Fighter::PredictNextSkill(Actor_ptr owner, std::vector<Actor_ptr>* actors)
 			{
 				done = true;
 				//_state = BS_ActionDone;
+				PredictedSkill = NULL;
 				return false;
 			}
 			skill = rand() % owner->_Fighter->Skills.size();
@@ -69,6 +64,7 @@ bool Fighter::PredictNextSkill(Actor_ptr owner, std::vector<Actor_ptr>* actors)
 		selectedSkill->_preCalculatedDamage = selectedSkill->CalculateDamage();
 	}
 
+	selectedSkill->_targets.clear();
 	selectedSkill->_targets.push_back(actors->at(targ));
 	PredictedSkill = selectedSkill;
 	PredictedSkill->_isPreCalculated = true;
@@ -112,6 +108,7 @@ void Fighter::SetDefault()
 {
 	Skills.push_back(Skill_ptr(new SkillSmack()));
 	Dead = false;
+	Targetable = true;
 	Team = 0;
 	Protector = NULL;
 	SetStatsFromCurve();
@@ -165,7 +162,7 @@ int Fighter::DefenseDamageModification(bool critting)
 	if (critting)
 		def /= 2;
 
-	int result = def * (1.0f + ((0.0006f * pow((float)def, 3.0f)) / 100.0f));
+	int result = def;// *(1.0f + ((0.0006f * pow((float)def, 3.0f)) / 100.0f));
 	return result;
 }
 
@@ -203,20 +200,20 @@ Damage Fighter::ApplyHealing(Damage& heal)
 	return heal;
 }
 
-bool Fighter::RespectsTargeting(Actor* ap, int tm)
+bool Fighter::RespectsTargeting(Actor* owner, int tm)
 {
 	switch (tm)
 	{
 	case TM_Alive:
 		return !Dead;
 	case TM_Ally:
-		return Team == ap->_Fighter->Team;
+		return Team == owner->_Fighter->Team;
 	case TM_Any:
 		return true;
 	case TM_Dead:
 		return Dead;
 	case TM_Enemy:
-		return Team != ap->_Fighter->Team;
+		return Team != owner->_Fighter->Team;
 	}
 
 	return true;

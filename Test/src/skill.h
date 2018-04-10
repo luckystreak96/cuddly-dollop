@@ -49,6 +49,9 @@ public:
 	virtual Damage CalculateDamage() { return Damage(); }
 	virtual Damage HandleDamage();
 
+	// Make sure all targets are still valid
+	virtual bool ValidateTargets();
+
 	// This method should change values to apply a skill upgrade.
 	// Call Skill::ApplySkillUpgrade() at the end of the redefined method
 	// returns true if an upgrade was applied

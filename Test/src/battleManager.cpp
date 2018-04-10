@@ -53,6 +53,11 @@ void BattleManager::Init()
 		_battleDone = teams.size() < 2;
 	}
 
+	// Make sure the first person to choose is a player
+	if (!_battleDone)
+		while (_actorQueue.front()->_Fighter->Team != 0)
+			CycleActors();
+
 	if (_actorQueue.size() > 0)
 	{
 		_chooseSkill = &_actorQueue.front()->_Fighter->Skills;
@@ -61,14 +66,11 @@ void BattleManager::Init()
 
 	for (auto& x : _actors)
 	{
+		// Setup next skill
 		if (x->_Fighter->Team != 0)
 		{
-			// Setup next skill
-			if (x->_Fighter->Team != 0)
-			{
-				x->_Fighter->PredictNextSkill(x, &_actors);
-				std::cout << "Gel at y=" << (x->BasePosition.y - 4.25f) / 1.25f << " will attack girl at y=" << (x->_Fighter->PredictedSkill->_targets.at(0)->BasePosition.y - 4.25f) / 1.25f << " for " << x->_Fighter->PredictedSkill->_preCalculatedDamage._value << " damage" << std::endl;
-			}
+			x->_Fighter->PredictNextSkill(x, &_actors);
+			PrintAttackPrediction(x.get());
 		}
 	}
 }
@@ -173,6 +175,17 @@ void BattleManager::UpdateSkillDisplay()
 
 void BattleManager::TurnStart()
 {
+	// Make sure enemy targets are still valid
+	for (auto& x : _actors)
+	{
+		// Setup next skill
+		if (x->_Fighter->Team != 0 && x->_Fighter->PredictedSkill != NULL && x->_Fighter->PredictedSkill->ValidateTargets() == false)
+		{
+			x->_Fighter->PredictNextSkill(x, &_actors);
+			PrintAttackPrediction(x.get());
+		}
+	}
+
 	MoveToLight(true);
 	if (_owner->_Fighter->Dead)
 		_state = BS_TurnEnd;
@@ -182,6 +195,12 @@ void BattleManager::TurnStart()
 		_state = BS_SelectAction;
 	}
 }
+
+void BattleManager::PrintAttackPrediction(Actor* x)
+{
+	std::cout << "Gel at y=" << (x->BasePosition.y - 4.25f) / 1.25f << " will attack girl at y=" << (x->_Fighter->PredictedSkill->_targets.at(0)->BasePosition.y - 4.25f) / 1.25f << " for " << x->_Fighter->PredictedSkill->_preCalculatedDamage._value << " damage" << std::endl;
+}
+
 // BS_SelectAction and BS_SelectTarget are both purely input handled for the player
 void BattleManager::SelectAction()
 {
@@ -189,71 +208,23 @@ void BattleManager::SelectAction()
 	if (_owner->_Fighter->Team != 0)
 	{
 		// Try to choose a skill, if it doesnt work then skip your turn
-
 		if (_owner->_Fighter->PredictedSkill == NULL)
 		{
 			_state = BS_ActionDone;
 			return;
 		}
+
 		_selectedSkill = _owner->_Fighter->PredictedSkill;
 		_targets = _owner->_Fighter->PredictedSkill->_targets;
-		//_selectedSkill
-		UseSkill();
-		return;
-
-		bool done = false;
-		int targ = 0;
-		std::set<int> alreadyTriedSkills;
-
-		// Ensure possible targets and skills
-		while (!done)
-		{
-			std::set<int> alreadyTargeted;
-			targ = 0;
-
-			int skill;
-			do {
-				// None of the skills found valid targets -> end turn
-				if (alreadyTriedSkills.size() == _owner->_Fighter->Skills.size())
-				{
-					done = true;
-					_state = BS_ActionDone;
-					return;
-				}
-				skill = rand() % _owner->_Fighter->Skills.size();
-				_selectedSkill = _owner->_Fighter->Skills.at(skill);
-			} while (alreadyTriedSkills.count(skill));
-			alreadyTriedSkills.emplace(skill); // havent tried this, lets go
-
-			do {
-				// if you already tried all the actors, select another skill
-				if (alreadyTargeted.size() == _actors.size())
-				{
-					targ = -1;
-					break;
-				}
-				targ = rand() % _actors.size();
-				// if the target is illegal, re-pick and dont choose that target again
-				if (!_actors.at(targ)->_Fighter->RespectsTargeting(_owner.get(), _selectedSkill->_targetMode) || // doesnt respect targeting
-					_actors.at(DefaultTargetActorIndex(&_actors, _owner, _selectedSkill))->_Fighter->Team != _actors.at(targ)->_Fighter->Team)
-					alreadyTargeted.emplace(targ);
-			} while (targ < 0 || targ >= _actors.size() || alreadyTargeted.count(targ)); // is targeting someone of a different team than the default target
-
-			alreadyTargeted.emplace(targ);
-
-			// target is good, can move on, otherwise choose new skill
-			if (targ != -1)
-				done = true;
-		}
-
-		_targets.push_back(_actors.at(targ));
 
 		UseSkill();
 	}
 }
+
 void BattleManager::SelectTargets()
 {
 }
+
 void BattleManager::ActionProgress()
 {
 	if (_selectedSkill != NULL)
@@ -272,17 +243,22 @@ void BattleManager::ActionProgress()
 		_state = BS_ActionDone;
 	}
 }
+
 void BattleManager::ActionDone()
 {
 	_selectedSkill->Reset();
 	_selectedSkill = NULL;
 	_state = BS_TurnEnd;
 }
+
 void BattleManager::TurnEnd()
 {
 	// Setup next skill
 	if (_owner->_Fighter->Team != 0)
+	{
 		_owner->_Fighter->PredictNextSkill(_owner, &_actors);
+		PrintAttackPrediction(_owner.get());
+	}
 
 	MoveToLight(false, true);
 	CycleActors();

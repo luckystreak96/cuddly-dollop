@@ -30,7 +30,7 @@ public:
 	virtual void ApplyLethal();
 
 	// Turn and targets
-	virtual bool RespectsTargeting(Actor* ap, int tm);
+	virtual bool RespectsTargeting(Actor* owner, int targetMode);
 	virtual void TurnStart(std::vector<Actor_ptr>& actors);
 	// Returns whether a skill could be chosen or not
 	virtual bool PredictNextSkill(Actor_ptr owner, std::vector<Actor_ptr>* actors);
@@ -56,6 +56,8 @@ public:
 public:
 	std::vector<Passive_ptr> _Passives;
 	bool Dead;
+	// Flag for possible invisibility or untargetability
+	bool Targetable;
 	Actor_ptr Protector;
 	int Team;
 	std::vector<Skill_ptr> Skills;

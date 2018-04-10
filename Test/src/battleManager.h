@@ -43,6 +43,8 @@ private:
 	void ActionDone();
 	void TurnEnd();
 
+	void PrintAttackPrediction(Actor* actor);
+
 public:
 	std::deque<Actor_ptr> _actorQueue;
 	std::vector<Actor_ptr> _actors;
