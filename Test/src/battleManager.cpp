@@ -405,10 +405,12 @@ void BattleManager::ManageInput()
 			}
 			else if (_selectedSkill->_targetAmount == TA_One)
 			{
-				if (_selectedIndex > 0)
+				if ((_selectedIndex > 0 && _selectedIndex < _numAllies) || _selectedIndex > _numAllies)
 				{
 					for (int i = _selectedIndex - 1; i >= 0; i--)
 					{
+						if ((_selectedIndex < _numAllies && i >= _numAllies) || (_selectedIndex >= _numAllies && i < _numAllies))
+							break;
 						if (_actors[i]->_Fighter->RespectsTargeting(_owner.get(), _selectedSkill->_targetMode))
 						{
 							Select(std::vector<int>{i});
@@ -418,14 +420,14 @@ void BattleManager::ManageInput()
 				}
 				else // _selectedIndex == 0
 				{
-					for (int i = _actors.size() - 1; i >= 0; i--)
-					{
-						if (_actors[i]->_Fighter->RespectsTargeting(_owner.get(), _selectedSkill->_targetMode))
-						{
-							Select(std::vector<int>{i});
-							break;
-						}
-					}
+					//for (int i = _actors.size() - 1; i >= 0; i--)
+					//{
+					//	if (_actors[i]->_Fighter->RespectsTargeting(_owner.get(), _selectedSkill->_targetMode))
+					//	{
+					//		Select(std::vector<int>{i});
+					//		break;
+					//	}
+					//}
 				}
 			}
 		}
@@ -451,10 +453,12 @@ void BattleManager::ManageInput()
 			}
 			else if (_selectedSkill->_targetAmount == TA_One)
 			{
-				if (_selectedIndex < _actors.size() - 1)
+				if (_selectedIndex < _numAllies - 1 || (_selectedIndex >= _numAllies && _selectedIndex < _actors.size() - 1))
 				{
 					for (int i = _selectedIndex + 1; i < _actors.size(); i++)
 					{
+						if ((_selectedIndex < _numAllies && i >= _numAllies) || (_selectedIndex >= _numAllies && i < _numAllies))
+							break;
 						if (_actors[i]->_Fighter->RespectsTargeting(_owner.get(), _selectedSkill->_targetMode))
 						{
 							Select(std::vector<int>{i});
@@ -464,14 +468,14 @@ void BattleManager::ManageInput()
 				}
 				else
 				{
-					for (int i = 0; i < _actors.size(); i++)
-					{
-						if (_actors[i]->_Fighter->RespectsTargeting(_owner.get(), _selectedSkill->_targetMode))
-						{
-							Select(std::vector<int>{i});
-							break;
-						}
-					}
+					//for (int i = 0; i < _actors.size(); i++)
+					//{
+					//	if (_actors[i]->_Fighter->RespectsTargeting(_owner.get(), _selectedSkill->_targetMode))
+					//	{
+					//		Select(std::vector<int>{i});
+					//		break;
+					//	}
+					//}
 				}
 			}
 		}
