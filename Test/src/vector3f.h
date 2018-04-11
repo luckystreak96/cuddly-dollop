@@ -15,6 +15,7 @@ public:
 	Vector3f& Normalize();
 	Vector3f operator-();
 	Vector3f& operator+=(const Vector3f& r);
+	Vector3f OnlyXY();
 	bool NearXY(Vector3f& other, float distance) const;
 	friend std::ostream& operator<<(std::ostream& output, const Vector3f& D);
 	bool operator<(const Vector3f& r);

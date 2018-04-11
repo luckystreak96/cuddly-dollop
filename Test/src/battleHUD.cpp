@@ -23,8 +23,12 @@ void BattleHUD::Init(std::vector<Actor_ptr> actors)
 	int party = 0;
 	for (auto& x : _actors)
 	{
-		// HEALTH BAR
+		// Health bar
 		AddActorHealthBar(x, party, enemies);
+
+		// Attack prediction
+		if (x->_Fighter->Team != 0)
+			AddActorAttackPrediction(x);
 	}
 
 	float top = OrthoProjInfo::GetRegularInstance().Top;
@@ -68,14 +72,35 @@ void BattleHUD::AddActorHealthBar(Actor_ptr ap, int& party, int& enemies)
 	HudComp_ptr healthBar = std::make_shared<HudHealthBar>(HudHealthBar(ap.get(), pos));
 	ap->_Fighter->_observers.push_back(healthBar);
 	_hudComponents.push_back(healthBar);
-	_hudHealthBars.push_back(dynamic_cast<HudHealthBar*>(healthBar.get()));
 }
 
-HudHealthBar* BattleHUD::GetHudHealthBar(Actor* actor)
+void BattleHUD::AddActorAttackPrediction(Actor_ptr ap)
 {
-	for (auto& x : _hudHealthBars)
-		if (x->_actor == actor)
-			return x;
+	HudComp_ptr damagePrediction = std::make_shared<HudAttackPrediction>(HudAttackPrediction(ap.get()));
+	ap->_Fighter->_observers.push_back(damagePrediction);
+	_hudComponents.push_back(damagePrediction);
+}
+
+void BattleHUD::ToggleDamagePredictionDisplay(bool display)
+{
+	HudAttackPrediction* pred;
+	for (auto& x : _hudComponents)
+	{
+		pred = dynamic_cast<HudAttackPrediction*>(x.get());
+		if (pred != NULL)
+			pred->ToggleDisplay(display);
+	}
+}
+
+HudHealthBar* BattleHUD::GetActorHealthBar(Actor* actor)
+{
+	HudHealthBar* bar;
+	for (auto& x : _hudComponents)
+	{
+		bar = dynamic_cast<HudHealthBar*>(x.get());
+		if (bar != NULL && bar->_actor == actor)
+			return bar;
+	}
 }
 
 void BattleHUD::Update()

@@ -122,7 +122,7 @@ void BattleManager::Update()
 				{
 					int level = actor->_Fighter->GetLevel();
 					//actor->_Fighter->GiveExp(xp);
-					_animations.push_back(_hud.GetHudHealthBar(actor.get())->SetupExpAnimation(actor->_Fighter->GetExp() + xp));
+					_animations.push_back(_hud.GetActorHealthBar(actor.get())->SetupExpAnimation(actor->_Fighter->GetExp() + xp));
 					//FontManager::GetInstance().CreateFloatingText(actor->_Graphics->GetPosRef(), "Level up!");
 					FontManager::GetInstance().CreateFloatingText(actor->_Graphics->GetPosRef(), "+" + std::to_string(xp) + " XP");
 				}
@@ -185,6 +185,23 @@ void BattleManager::TurnStart()
 			PrintAttackPrediction(x.get());
 		}
 	}
+
+	// Check to see if predictions should be dispayed
+	{
+		bool shouldDisplay = true;
+		for (auto& x : _actors)
+		{
+			if (x->_Fighter->NoPredictCountDown > 0)
+			{
+				if(x == _owner)
+					x->_Fighter->NoPredictCountDown--;
+				shouldDisplay = false;
+			}
+		}
+
+		_hud.ToggleDamagePredictionDisplay(shouldDisplay);
+	}
+
 
 	MoveToLight(true);
 	if (_owner->_Fighter->Dead)

@@ -56,6 +56,7 @@ public:
 public:
 	std::vector<Passive_ptr> _Passives;
 	bool Dead;
+	int NoPredictCountDown;
 	// Flag for possible invisibility or untargetability
 	bool Targetable;
 	Actor_ptr Protector;

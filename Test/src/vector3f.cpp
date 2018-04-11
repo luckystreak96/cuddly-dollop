@@ -14,6 +14,12 @@ Vector3f Vector3f::Abs()
 	return result;
 }
 
+
+Vector3f Vector3f::OnlyXY()
+{
+	return Vector3f(this->x, this->y, 0);
+}
+
 bool Vector3f::NearXY(Vector3f& other, float distance) const
 {
 	// Pythagoris to find the distance to the other point

@@ -3,6 +3,7 @@
 
 #include "actor.h"
 #include "hudHealthBar.h"
+#include "hudAttackPrediction.h"
 
 class BattleHUD
 {
@@ -12,17 +13,18 @@ public:
 	void Update();
 	void SetRender();
 	void Destroy();
-	HudHealthBar* GetHudHealthBar(Actor* actor);
+	void ToggleDamagePredictionDisplay(bool display);
+
+	// Returns the HudHealthBar attached to the specified actor
+	HudHealthBar* GetActorHealthBar(Actor* actor);
 
 private:
 	void AddActorHealthBar(Actor_ptr ap, int& party, int& enemies);
+	void AddActorAttackPrediction(Actor_ptr ap);
 
 public:
 	std::vector<Actor_ptr> _actors;
 	std::vector<HudComp_ptr> _hudComponents;
-
-	// Used to access the health bars from xp animation
-	std::vector<HudHealthBar*> _hudHealthBars;
 
 	std::vector<GraphComp_ptr> _hudBG;
 };

@@ -69,6 +69,9 @@ bool Fighter::PredictNextSkill(Actor_ptr owner, std::vector<Actor_ptr>* actors)
 	PredictedSkill = selectedSkill;
 	PredictedSkill->_isPreCalculated = true;
 
+	// Tell the UI to update damage prediction
+	UpdateObservers();
+
 	return true;
 }
 
@@ -110,6 +113,7 @@ void Fighter::SetDefault()
 	Dead = false;
 	Targetable = true;
 	Team = 0;
+	NoPredictCountDown = 1;
 	Protector = NULL;
 	SetStatsFromCurve();
 }
