@@ -18,6 +18,7 @@ enum ActionCommandType { ACT_Defend, ACT_Special };
 enum SkillType { ST_Physical, ST_Magical, ST_Healing };
 enum TargetMode { TM_Enemy, TM_Ally, TM_Alive, TM_Dead, TM_Any };
 enum DefaultTarget { DT_Self, DT_Enemy, DT_Ally };
+enum TargetAmount { TA_One, TA_Party };
 
 struct Damage
 {
@@ -47,7 +48,7 @@ public:
 	virtual void SpawnDamageText(Actor_ptr target, int dmg);
 	virtual void SpawnStatusText(Actor_ptr target, std::string statusName);
 	virtual Damage CalculateDamage() { return Damage(); }
-	virtual Damage HandleDamage();
+	virtual Damage HandleDamage(int target = 0);
 
 	// Make sure all targets are still valid
 	virtual bool ValidateTargets();
@@ -83,6 +84,7 @@ public:
 	ActionCommand _ac;
 	Actor_ptr _owner;
 	TargetMode _targetMode;
+	TargetAmount _targetAmount;
 	DefaultTarget _defaultTarget;
 	Damage _preCalculatedDamage;
 

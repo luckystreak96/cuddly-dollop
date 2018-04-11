@@ -21,7 +21,7 @@
       "strength": 2,
       "endurance": 0,
       "dead": false,
-      "skills": ["Smack", "Heal", "Protect"],
+      "skills": ["Smack", "Heal", "Protect", "Bloody Mess"],
       "passives": [0]
     }
   ]

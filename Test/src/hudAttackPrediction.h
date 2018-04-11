@@ -32,6 +32,7 @@ private:
 	// Font ID's
 	unsigned int _damageFont;
 
+	bool m_mustDisplayNextUpdate;
 	bool m_mustDisplay;
 };
 

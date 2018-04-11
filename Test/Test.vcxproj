@@ -190,9 +190,11 @@
     <ClInclude Include="src\passiveFactory.h" />
     <ClInclude Include="src\passiveSkill.h" />
     <ClInclude Include="src\projection.h" />
+    <ClInclude Include="src\skillBloodyMess.h" />
     <ClInclude Include="src\skillHeal.h" />
     <ClInclude Include="src\skillMelee.h" />
     <ClInclude Include="src\skillProtect.h" />
+    <ClInclude Include="src\skillRanged.h" />
     <ClInclude Include="src\skillSmack.h" />
     <ClInclude Include="src\actor.h" />
     <ClInclude Include="src\battleAnimation.h" />
@@ -314,9 +316,11 @@
     <ClCompile Include="src\passiveSkill.cpp" />
     <ClCompile Include="src\projection.cpp" />
     <ClCompile Include="src\scene.cpp" />
+    <ClCompile Include="src\skillBloodyMess.cpp" />
     <ClCompile Include="src\skillHeal.cpp" />
     <ClCompile Include="src\skillMelee.cpp" />
     <ClCompile Include="src\skillProtect.cpp" />
+    <ClCompile Include="src\skillRanged.cpp" />
     <ClCompile Include="src\skillSmack.cpp" />
     <ClCompile Include="src\actor.cpp" />
     <ClCompile Include="src\battleManager.cpp" />

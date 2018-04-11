@@ -41,6 +41,7 @@ void BattleManager::Init()
 	counter = 0;
 	_winner = -1;
 	_selectedIndex = 0;
+	_numAllies = 0;
 
 	// Make sure that there are 2 teams to fight against one another
 	{
@@ -72,6 +73,8 @@ void BattleManager::Init()
 			x->_Fighter->PredictNextSkill(x, &_actors);
 			PrintAttackPrediction(x.get());
 		}
+		else
+			_numAllies++;
 	}
 }
 
@@ -193,7 +196,7 @@ void BattleManager::TurnStart()
 		{
 			if (x->_Fighter->NoPredictCountDown > 0)
 			{
-				if(x == _owner)
+				if (x == _owner)
 					x->_Fighter->NoPredictCountDown--;
 				shouldDisplay = false;
 			}
@@ -273,8 +276,8 @@ void BattleManager::TurnEnd()
 	// Setup next skill
 	if (_owner->_Fighter->Team != 0)
 	{
-		_owner->_Fighter->PredictNextSkill(_owner, &_actors);
-		PrintAttackPrediction(_owner.get());
+		if (_owner->_Fighter->PredictNextSkill(_owner, &_actors))
+			PrintAttackPrediction(_owner.get());
 	}
 
 	MoveToLight(false, true);
@@ -396,25 +399,32 @@ void BattleManager::ManageInput()
 		}
 		else if (_state == BS_SelectTargets)
 		{
-			if (_selectedIndex > 0)
+			if (_selectedSkill->_targetAmount == TA_Party)
 			{
-				for (int i = _selectedIndex - 1; i >= 0; i--)
+
+			}
+			else if (_selectedSkill->_targetAmount == TA_One)
+			{
+				if (_selectedIndex > 0)
 				{
-					if (_actors[i]->_Fighter->RespectsTargeting(_owner.get(), _selectedSkill->_targetMode))
+					for (int i = _selectedIndex - 1; i >= 0; i--)
 					{
-						Select(i);
-						break;
+						if (_actors[i]->_Fighter->RespectsTargeting(_owner.get(), _selectedSkill->_targetMode))
+						{
+							Select(std::vector<int>{i});
+							break;
+						}
 					}
 				}
-			}
-			else // _selectedIndex == 0
-			{
-				for (int i = _actors.size() - 1; i >= 0; i--)
+				else // _selectedIndex == 0
 				{
-					if (_actors[i]->_Fighter->RespectsTargeting(_owner.get(), _selectedSkill->_targetMode))
+					for (int i = _actors.size() - 1; i >= 0; i--)
 					{
-						Select(i);
-						break;
+						if (_actors[i]->_Fighter->RespectsTargeting(_owner.get(), _selectedSkill->_targetMode))
+						{
+							Select(std::vector<int>{i});
+							break;
+						}
 					}
 				}
 			}
@@ -435,25 +445,32 @@ void BattleManager::ManageInput()
 		}
 		else if (_state == BS_SelectTargets)
 		{
-			if (_selectedIndex < _actors.size() - 1)
+			if (_selectedSkill->_targetAmount == TA_Party)
 			{
-				for (int i = _selectedIndex + 1; i < _actors.size(); i++)
+
+			}
+			else if (_selectedSkill->_targetAmount == TA_One)
+			{
+				if (_selectedIndex < _actors.size() - 1)
 				{
-					if (_actors[i]->_Fighter->RespectsTargeting(_owner.get(), _selectedSkill->_targetMode))
+					for (int i = _selectedIndex + 1; i < _actors.size(); i++)
 					{
-						Select(i);
-						break;
+						if (_actors[i]->_Fighter->RespectsTargeting(_owner.get(), _selectedSkill->_targetMode))
+						{
+							Select(std::vector<int>{i});
+							break;
+						}
 					}
 				}
-			}
-			else
-			{
-				for (int i = 0; i < _actors.size(); i++)
+				else
 				{
-					if (_actors[i]->_Fighter->RespectsTargeting(_owner.get(), _selectedSkill->_targetMode))
+					for (int i = 0; i < _actors.size(); i++)
 					{
-						Select(i);
-						break;
+						if (_actors[i]->_Fighter->RespectsTargeting(_owner.get(), _selectedSkill->_targetMode))
+						{
+							Select(std::vector<int>{i});
+							break;
+						}
 					}
 				}
 			}
@@ -466,30 +483,43 @@ void BattleManager::ManageInput()
 		if (_state == BS_SelectTargets)
 		{
 			// Only do anything if the cursor is on the enemy side
-			if (_selectedIndex >= MAX_FIGHTERS_PER_SIDE)
+			if (_selectedIndex >= _numAllies)
 			{
-				bool found = false;
-				int value = _selectedIndex;
-				int increment = 0;
-
-				while (!found)
+				std::vector<int> result;
+				if (_selectedSkill->_targetAmount == TA_Party)
 				{
-					if (value + increment - MAX_FIGHTERS_PER_SIDE < MAX_FIGHTERS_PER_SIDE && _actors[value - MAX_FIGHTERS_PER_SIDE + increment]->_Fighter->RespectsTargeting(_owner.get(), _selectedSkill->_targetMode))
-						_selectedIndex = value - MAX_FIGHTERS_PER_SIDE + increment;
-					else if (value - increment - MAX_FIGHTERS_PER_SIDE >= 0 && _actors[value - MAX_FIGHTERS_PER_SIDE - increment]->_Fighter->RespectsTargeting(_owner.get(), _selectedSkill->_targetMode))
-						_selectedIndex = value - MAX_FIGHTERS_PER_SIDE - increment;
-
-					if (value != _selectedIndex)
-						found = true;
-
-					increment++;
-					// If the counter goes too high, then there was no valid target on this side
-					if (increment >= MAX_FIGHTERS_PER_SIDE)
-						found = true;
+					for (int i = 0; i < _actors.size(); i++)
+						if (_actors.at(i)->_Fighter->Team == 0 && _actors.at(i)->_Fighter->RespectsTargeting(_owner.get(), _selectedSkill->_targetMode))
+							result.push_back(i);
 				}
+				else if (_selectedSkill->_targetAmount == TA_One)
+				{
+					bool found = false;
+					int value = _selectedIndex;
+					int increment = 0;
+
+					while (!found)
+					{
+						if (value + increment - _numAllies < _numAllies && _actors[value - _numAllies + increment]->_Fighter->RespectsTargeting(_owner.get(), _selectedSkill->_targetMode))
+							_selectedIndex = value - _numAllies + increment;
+						else if (value - increment - _numAllies >= 0 && _actors[value - _numAllies - increment]->_Fighter->RespectsTargeting(_owner.get(), _selectedSkill->_targetMode))
+							_selectedIndex = value - _numAllies - increment;
+
+						if (value != _selectedIndex)
+							found = true;
+
+						increment++;
+						// If the counter goes too high, then there was no valid target on this side
+						if (increment >= _numAllies)
+							found = true;
+
+						result.push_back(_selectedIndex);
+					}
+				}
+				if (result.size() != 0)
+					Select(result);
 			}
 
-			Select(_selectedIndex);
 		}
 	}
 
@@ -498,30 +528,42 @@ void BattleManager::ManageInput()
 		// Attempt to manage RIGHT logic immediately here
 		if (_state == BS_SelectTargets)
 		{
-			// Only do anything if the cursor is on the enemy side
-			if (_selectedIndex < MAX_FIGHTERS_PER_SIDE)
+			// Only do anything if the cursor is on the ally side
+			if (_selectedIndex < _numAllies)
 			{
-				bool found = false;
-				int value = _selectedIndex;
-				int increment = 0;
-
-				while (!found)
+				std::vector<int> result;
+				if (_selectedSkill->_targetAmount == TA_Party)
 				{
-					if (value + increment + MAX_FIGHTERS_PER_SIDE < _actors.size() && _actors[value + MAX_FIGHTERS_PER_SIDE + increment]->_Fighter->RespectsTargeting(_owner.get(), _selectedSkill->_targetMode))
-						_selectedIndex = value + MAX_FIGHTERS_PER_SIDE + increment;
-					else if (value - increment + MAX_FIGHTERS_PER_SIDE >= MAX_FIGHTERS_PER_SIDE && _actors[value + MAX_FIGHTERS_PER_SIDE - increment]->_Fighter->RespectsTargeting(_owner.get(), _selectedSkill->_targetMode))
-						_selectedIndex = value + MAX_FIGHTERS_PER_SIDE - increment;
-
-					if (value != _selectedIndex)
-						found = true;
-
-					increment++;
-					// If the counter goes too high, then there was no valid target on this side
-					if (increment >= MAX_FIGHTERS_PER_SIDE)
-						found = true;
+					for (int i = 0; i < _actors.size(); i++)
+						if (_actors.at(i)->_Fighter->Team != 0 && _actors.at(i)->_Fighter->RespectsTargeting(_owner.get(), _selectedSkill->_targetMode))
+							result.push_back(i);
 				}
+				else if (_selectedSkill->_targetAmount == TA_One)
+				{
+					bool found = false;
+					int value = _selectedIndex;
+					int increment = 0;
+
+					while (!found)
+					{
+						if (value + increment + _numAllies < _actors.size() && _actors[value + _numAllies + increment]->_Fighter->RespectsTargeting(_owner.get(), _selectedSkill->_targetMode))
+							_selectedIndex = value + _numAllies + increment;
+						else if (value - increment + _numAllies >= _numAllies && _actors[value + _numAllies - increment]->_Fighter->RespectsTargeting(_owner.get(), _selectedSkill->_targetMode))
+							_selectedIndex = value + _numAllies - increment;
+
+						if (value != _selectedIndex)
+							found = true;
+
+						increment++;
+						// If the counter goes too high, then there was no valid target on this side
+						if (increment >= _numAllies)
+							found = true;
+					}
+					result.push_back(_selectedIndex);
+				}
+				if (result.size() != 0)
+					Select(result);
 			}
-			Select(_selectedIndex);
 		}
 	}
 
@@ -532,12 +574,12 @@ void BattleManager::ManageInput()
 			_selectedSkill = _chooseSkill->at(_selectedIndex);
 			//std::cout << "Skill selected: " << _selectedSkill->_name << std::endl;
 			_state = BS_SelectTargets;
-			int target = DefaultTargetActorIndex(&_actors, _owner, _selectedSkill);
-			Select(target);
+			std::vector<int> targets = DefaultTargetActorIndex(&_actors, _owner, _selectedSkill);
+			Select(targets);
 		}
 		else if (_state == BS_SelectTargets)
 		{
-			for (auto x : _actorQueue)
+			for (auto& x : _actorQueue)
 				if (x->Selected)
 				{
 					_targets.push_back(x);
@@ -546,7 +588,14 @@ void BattleManager::ManageInput()
 				}
 
 			if (_targets.size() < _selectedSkill->_minTargets)
+			{
+				for (auto& x : _targets)
+				{
+					x->Selected = true;
+					x->UpdateColor();
+				}
 				return;
+			}
 
 			_selectedSkill->Reset();
 			UseSkill();
@@ -571,8 +620,10 @@ void BattleManager::ManageInput()
 	}
 }
 
-int BattleManager::DefaultTargetActorIndex(std::vector<Actor_ptr>* actors, Actor_ptr owner, Skill_ptr selectedSkill)
+std::vector<int> BattleManager::DefaultTargetActorIndex(std::vector<Actor_ptr>* actors, Actor_ptr owner, Skill_ptr selectedSkill)
 {
+	std::vector<int> result;
+	bool type = selectedSkill->_targetAmount;
 	int i;
 	bool done = false;
 	for (i = 0; i < actors->size(); i++)
@@ -580,16 +631,28 @@ int BattleManager::DefaultTargetActorIndex(std::vector<Actor_ptr>* actors, Actor
 		switch (selectedSkill->_defaultTarget)
 		{
 		case DT_Self:
-			if (actors->at(i) == owner)
-				done = true;
+			if ((actors->at(i) == owner && type == TA_One) || (actors->at(i)->_Fighter->Team == owner->_Fighter->Team && type == TA_Party))
+			{
+				result.push_back(i);
+				if (type == TA_One)
+					done = true;
+			}
 			break;
 		case DT_Ally:
 			if (actors->at(i)->_Fighter->Team == owner->_Fighter->Team && actors->at(i)->_Fighter->RespectsTargeting(owner.get(), selectedSkill->_targetMode))
-				done = true;
+			{
+				result.push_back(i);
+				if (type == TA_One)
+					done = true;
+			}
 			break;
 		case DT_Enemy:
 			if (actors->at(i)->_Fighter->Team != owner->_Fighter->Team && actors->at(i)->_Fighter->RespectsTargeting(owner.get(), selectedSkill->_targetMode))
-				done = true;
+			{
+				result.push_back(i);
+				if (type == TA_One)
+					done = true;
+			}
 			break;
 		}
 
@@ -597,29 +660,35 @@ int BattleManager::DefaultTargetActorIndex(std::vector<Actor_ptr>* actors, Actor
 			break;
 	}
 
-	if (i >= actors->size())
-		i = 0;
+	if (i >= actors->size() && result.size() == 0)
+		result.push_back(0);
 
-	return i;
+	return result;
 }
 
 void BattleManager::Select(int target)
 {
+	Select(std::vector<int>{target});
+}
+
+void BattleManager::Select(std::vector<int> targets)
+{
 	if (_state == BS_SelectTargets)
 	{
-		for (auto x : _actors)
+		for (auto& x : _actors)
 		{
 			if (x->Selected)
 			{
 				x->Selected = false;
-				x->UpdateColor();
+				//x->UpdateColor();
 			}
 		}
 
-		_actors[_selectedIndex]->Selected = false;
-		_actors.at(target)->Selected = true;
+		//_actors[_selectedIndex]->Selected = false;
+		for (auto x : targets)
+			_actors.at(x)->Selected = true;
 		//_actors.at(target)->_Graphics->SetColorAll(Vector3f(1.f, 0.25f, 0.25f));
-		_selectedIndex = target;
+		_selectedIndex = targets[0];
 	}
 	else if (_state == BS_SelectAction)
 	{
@@ -628,10 +697,10 @@ void BattleManager::Select(int target)
 			if (_fonts.size() > _selectedIndex)
 			{
 				FontManager::GetInstance().GetFont(_fonts[_selectedIndex])->GetGraphics()->SetColorAll();
-				FontManager::GetInstance().GetFont(_fonts[target])->GetGraphics()->SetColorAll(Vector3f(1, 0, 0));
+				FontManager::GetInstance().GetFont(_fonts[targets[0]])->GetGraphics()->SetColorAll(Vector3f(1, 0, 0));
 			}
 		}
-		_selectedIndex = target;
+		_selectedIndex = targets[0];
 	}
 }
 

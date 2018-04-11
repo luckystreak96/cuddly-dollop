@@ -58,6 +58,13 @@ void HudAttackPrediction::Update()
 	if (m_prevDamage._value == m_observedDamage._value && m_prevDamage._type == m_observedDamage._type)
 		return;
 
+	// Handle text display
+	m_mustDisplay = m_mustDisplayNextUpdate;
+	if (m_mustDisplay)
+		FontManager::GetInstance().EnableFont(_damageFont);
+	else
+		FontManager::GetInstance().DisableFont(_damageFont);
+
 	m_prevDamage = m_observedDamage;
 
 	// Show damage type
@@ -87,12 +94,7 @@ void HudAttackPrediction::Update()
 
 void HudAttackPrediction::ToggleDisplay(bool display)
 {
-	m_mustDisplay = display;
-
-	if (display)
-		FontManager::GetInstance().EnableFont(_damageFont);
-	else
-		FontManager::GetInstance().DisableFont(_damageFont);
+	m_mustDisplayNextUpdate = display;
 }
 
 void HudAttackPrediction::AdjustPosition()

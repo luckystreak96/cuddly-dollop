@@ -22,7 +22,7 @@ public:
 	int FindWinner();
 	void SetRender();
 
-	static int DefaultTargetActorIndex(std::vector<Actor_ptr>* actors, Actor_ptr _owner, Skill_ptr selectedSkill);
+	static std::vector<int> DefaultTargetActorIndex(std::vector<Actor_ptr>* actors, Actor_ptr _owner, Skill_ptr selectedSkill);
 
 private:
 	void Init();
@@ -31,6 +31,7 @@ private:
 	void CycleActors();
 	void UseSkill();
 	void Select(int target);
+	void Select(std::vector<int> targets);
 	void RemoveChooseSkillText();
 	void SetChooseSkillText();
 	void MoveToLight(bool moveUp, bool turnEnd = false);
@@ -63,6 +64,8 @@ public:
 	bool _postBattleDone;
 	bool _showingSkills;
 	int _winner;
+
+	int _numAllies;
 	
 	int counter;
 };

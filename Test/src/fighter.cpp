@@ -50,7 +50,8 @@ bool Fighter::PredictNextSkill(Actor_ptr owner, std::vector<Actor_ptr>* actors)
 			targ = rand() % actors->size();
 			// if the target is illegal, re-pick and dont choose that target again
 			if (!actors->at(targ)->_Fighter->RespectsTargeting(owner.get(), selectedSkill->_targetMode) || // doesnt respect targeting
-				actors->at(BattleManager::DefaultTargetActorIndex(actors, owner, selectedSkill))->_Fighter->Team != actors->at(targ)->_Fighter->Team)
+				((actors->at(targ)->_Fighter->Team != owner->_Fighter->Team && selectedSkill->_defaultTarget == DT_Ally) ||
+				(actors->at(targ)->_Fighter->Team == owner->_Fighter->Team && selectedSkill->_defaultTarget == DT_Enemy)))
 				alreadyTargeted.emplace(targ);
 		} while (targ < 0 || targ >= actors->size() || alreadyTargeted.count(targ)); // is targeting someone of a different team than the default target
 
@@ -113,7 +114,7 @@ void Fighter::SetDefault()
 	Dead = false;
 	Targetable = true;
 	Team = 0;
-	NoPredictCountDown = 1;
+	NoPredictCountDown = 0;
 	Protector = NULL;
 	SetStatsFromCurve();
 }

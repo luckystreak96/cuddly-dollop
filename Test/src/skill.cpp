@@ -17,6 +17,7 @@ void Skill::DefaultSetup()
 	_currentCooldown = 0;
 	_minTargets = 1;
 	_targetMode = TM_Alive;
+	_targetAmount = TA_One;
 	_defaultTarget = DT_Self;
 	_ac._start = 0;
 	_ac._startHard = 1000;
@@ -30,7 +31,7 @@ void Skill::DefaultSetup()
 	_isPreCalculated = false;
 }
 
-Damage Skill::HandleDamage()
+Damage Skill::HandleDamage(int target)
 {
 	Damage dmg = _preCalculatedDamage;
 	if(!_isPreCalculated)
@@ -38,35 +39,35 @@ Damage Skill::HandleDamage()
 
 	// Apply first damage modifications
 	if (_skillType != ST_Healing)
-		_targets.at(0)->_Fighter->DamageModifiers(dmg, _critting);
+		_targets.at(target)->_Fighter->DamageModifiers(dmg, _critting);
 
 	if (_ac._success)
 	{
 		// Your team under attack from enemy -> Defense Action Command
-		if (_owner->_Fighter->Team != 0 && _targets.at(0)->_Fighter->Team == 0)
+		if (_owner->_Fighter->Team != 0 && _targets.at(target)->_Fighter->Team == 0)
 		{
 			if (_ac._type == ACT_Special)
-				_targets.at(0)->_Fighter->SpecialActionCommand(dmg);
+				_targets.at(target)->_Fighter->SpecialActionCommand(dmg);
 			else if (_skillType == ST_Physical)
-				_targets.at(0)->_Fighter->PhysicalDefenseActionCommand(dmg);
+				_targets.at(target)->_Fighter->PhysicalDefenseActionCommand(dmg);
 			else
-				_targets.at(0)->_Fighter->MagicalDefenseActionCommand(dmg);
+				_targets.at(target)->_Fighter->MagicalDefenseActionCommand(dmg);
 		}
 		// Your team attacking -> Offense Action Command
 		else if (_owner->_Fighter->Team == 0)
 		{
 			if (_skillType == ST_Physical)
-				_targets.at(0)->_Fighter->PhysicalOffenseActionCommand(dmg);
+				_targets.at(target)->_Fighter->PhysicalOffenseActionCommand(dmg);
 			else
-				_targets.at(0)->_Fighter->MagicalOffenseActionCommand(dmg);
+				_targets.at(target)->_Fighter->MagicalOffenseActionCommand(dmg);
 		}
 	}
 
 	// Deal the dmg
 	if (_skillType == ST_Healing)
-		_targets.at(0)->_Fighter->ApplyHealing(dmg);
+		_targets.at(target)->_Fighter->ApplyHealing(dmg);
 	else
-		_targets.at(0)->_Fighter->TakeDamage(dmg);
+		_targets.at(target)->_Fighter->TakeDamage(dmg);
 
 	return dmg;
 }

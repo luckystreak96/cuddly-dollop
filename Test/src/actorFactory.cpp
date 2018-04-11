@@ -2,6 +2,7 @@
 #include "skillSmack.h"
 #include "skillHeal.h"
 #include "skillProtect.h"
+#include "skillBloodyMess.h"
 #include "passiveFactory.h"
 
 Actor_ptr ActorFactory::BuildBaseAlly()
@@ -136,6 +137,8 @@ Skill_ptr ActorFactory::BuildSkill(std::string name)
 		result = Skill_ptr(new SkillHeal());
 	else if (name == "Protect")
 		result = Skill_ptr(new SkillProtect());
+	else if (name == "Bloody Mess")
+		result = Skill_ptr(new SkillBloodyMess());
 
 	return result;
 }
