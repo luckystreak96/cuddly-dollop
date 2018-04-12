@@ -91,9 +91,10 @@ void BattleManager::Update()
 	// Update animations
 	if (_animations.size() > 0)
 	{
+		bool nonAsyncHit = false;
 		for (int i = 0; i < _animations.size(); i++)
 		{
-			if (_animations.at(i)->_async || i == 0)
+			if (_animations.at(i)->_async || i == 0 || !nonAsyncHit)
 				_animations.at(i)->Update();
 			if (_animations.at(i)->_done)
 			{

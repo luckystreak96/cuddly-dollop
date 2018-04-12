@@ -97,7 +97,7 @@ int StatUser::CalculateNextLevelExp()
 
 int StatUser::CalculateLevelExp(int level)
 {
-	return 10 * level + pow(level, 2);
+	return 10 * level + pow(level, 3);
 }
 
 int StatUser::GetLevel()

@@ -29,6 +29,7 @@ public:
 	Vector3f& operator-=(const Vector3f& r);
 	float& operator[](int i);
 	Vector3f& operator*=(float c);
+	Vector3f& operator/=(float c);
 	Vector3f operator*(float r);
 	Vector3f operator*(Vector3f& v);
 	Vector3f operator/(float r);

@@ -13,6 +13,7 @@ SkillRanged::SkillRanged()
 void SkillRanged::DefaultSetup()
 {
 	_name = "Skill Ranged -_-";
+	_targetProgress = 0;
 }
 
 // Must return the new state
@@ -22,6 +23,18 @@ BattleState SkillRanged::Start(std::vector<Actor_ptr>* targets, std::deque<Actor
 	_basePos = _owner->_Graphics->GetPos();
 
 	_anims->push_back(Anim_ptr(new AnimMoveTo(_owner->_Graphics->GetPosRef() + Vector3f(_owner->_Fighter->Team ? -1 : 1, 0, 0), _owner)));
+
+	// Reset for re-use
+	_cameraTarget = Vector3f();
+
+	// Get average of all targets and attacker
+	for (auto& x : _targets)
+		_cameraTarget += x->_Graphics->GetPosRef();
+
+	_cameraTarget.x += _owner->_Graphics->GetPosRef().x;
+	_cameraTarget /= (float)_targets.size();
+
+	_targetProgress = 0;
 
 	return BS_ActionProgress;
 }
@@ -36,14 +49,15 @@ void SkillRanged::Update()
 		duration = _anims->front()->_duration;
 	}
 
-	HandleActionCommand(progress / duration);
+	if(_anims->size() && dynamic_cast<AnimBasic*>(_anims->front().get()) != NULL)
+		HandleActionCommand(progress / duration);
 
-	Camera::_currentCam->SetScale(Vector3f(1.5f));
+	Camera::_currentCam->SetScale(Vector3f(1.10f));
 
 	switch (_animProg)
 	{
 	case 0:
-		Camera::_currentCam->SetFollowCenteredXY((_targets.at(0)->_Graphics->GetPosRef() + _owner->BasePosition) / 2.f);
+		Camera::_currentCam->SetFollowCenteredXY(_cameraTarget);
 		if (!AnimationsDone())
 			break;
 		Animate();
@@ -51,19 +65,28 @@ void SkillRanged::Update()
 		break;
 	case 1:
 		// DEAL DMG
-		Camera::_currentCam->SetFollowCenteredXY(_targets.at(0)->_Graphics->GetPosRef());
 		if (AnimationsDone())
 		{
-			_animProg++;
+			if (_targetProgress == _targets.size())
+			{
+				// walk back at a decent speed
+				_anims->push_back(Anim_ptr(new AnimMoveTo(_owner->BasePosition, _owner, 1)));
+				_animProg++;
+			}
+			else
+				ApplyEffect();
 		}
-		else
+		else if(_targetProgress == 0)
 		{
 			progress = _anims->front()->_progress;
 			duration = _anims->front()->_duration;
 			if (TimingCondition(progress, duration))
 			{
+				// Allow the rest of the animations to go on without a hitch
+				if(_anims->size())
+					_anims->front()->_async = true;
+				Camera::_currentCam->SetFollowCenteredXY(_cameraTarget);
 				ApplyEffect();
-				_animProg++;
 			}
 		}
 		break;
@@ -82,7 +105,7 @@ void SkillRanged::Update()
 
 void SkillRanged::Animate()
 {
-	_anims->push_back(Anim_ptr(new AnimBasic(AE_Attack, _owner, 1)));
+	_anims->push_back(Anim_ptr(new AnimBasic(AE_Attack, _owner, 1.0)));
 }
 
 void SkillRanged::ApplyEffect()

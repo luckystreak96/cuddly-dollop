@@ -169,6 +169,7 @@
     <ClInclude Include="src\animBasic.h" />
     <ClInclude Include="src\animJumpTo.h" />
     <ClInclude Include="src\animMoveTo.h" />
+    <ClInclude Include="src\animWait.h" />
     <ClInclude Include="src\animXpBar.h" />
     <ClInclude Include="src\battleData.h" />
     <ClInclude Include="src\battleHUD.h" />
@@ -293,6 +294,7 @@
     <ClCompile Include="src\animBasic.cpp" />
     <ClCompile Include="src\animJumpTo.cpp" />
     <ClCompile Include="src\animMoveTo.cpp" />
+    <ClCompile Include="src\animWait.cpp" />
     <ClCompile Include="src\animXpBar.cpp" />
     <ClCompile Include="src\battleAnimation.cpp" />
     <ClCompile Include="src\battleData.cpp" />

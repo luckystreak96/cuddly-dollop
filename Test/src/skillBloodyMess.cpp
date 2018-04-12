@@ -2,6 +2,7 @@
 #include "soundManager.h"
 #include "particleManager.h"
 #include "gameData.h"
+#include "animWait.h"
 
 SkillBloodyMess::SkillBloodyMess()
 {
@@ -43,23 +44,26 @@ Damage SkillBloodyMess::CalculateDamage()
 
 void SkillBloodyMess::ApplyEffect()
 {
-	for (int i = 0; i < _targets.size(); i++)
-	{
-		Damage dmg = HandleDamage(i);
+	Damage dmg = HandleDamage(_targetProgress);
 
-		// Damage text
-		SpawnDamageText(_targets.at(i), dmg._value);
+	// Set wait animation to space out the attacks to better follow whats going on
+	Anim_ptr wait = Anim_ptr(new AnimWait(0.3));
+	_anims->push_back(wait);
 
-		Particle_ptr particles = Particle_ptr(new ParticleGenerator());
-		Vector3f pos = _targets.at(i)->_Graphics->GetPos() + Vector3f(0.5f, 0.5f, 0.6f);
-		particles->SetPowerLevel(0.3f);
-		particles->Init(PT_Explosion, dmg._value, pos, false, "star.png");
-		Vector3f color = _critting ? Vector3f(0.35f, 0.31f, 0.87f) : Vector3f(1.0f, 0.2f, 0.2f);
-		particles->SetColor(color);
-		ParticleManager::GetInstance().AddParticles(particles);
+	// Damage text
+	SpawnDamageText(_targets.at(_targetProgress), dmg._value);
 
-		SoundManager::GetInstance().PlaySoundFX("res/audio/fx/swish_2.wav");
-	}
+	Particle_ptr particles = Particle_ptr(new ParticleGenerator());
+	Vector3f pos = _targets.at(_targetProgress)->_Graphics->GetPos() + Vector3f(0.5f, 0.5f, 0.6f);
+	particles->SetPowerLevel(0.3f);
+	particles->Init(PT_Explosion, dmg._value, pos, false, "star.png");
+	Vector3f color = _critting ? Vector3f(0.35f, 0.31f, 0.87f) : Vector3f(1.0f, 0.2f, 0.2f);
+	particles->SetColor(color);
+	ParticleManager::GetInstance().AddParticles(particles);
+
+	SoundManager::GetInstance().PlaySoundFX("res/audio/fx/swish_2.wav");
+
+	_targetProgress++;
 
 	// Removes vision for next turn
 	_owner->_Fighter->NoPredictCountDown++;

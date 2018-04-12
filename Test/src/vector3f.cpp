@@ -210,6 +210,15 @@ Vector3f& Vector3f::operator*=(float c)
 	return *this;
 }
 
+Vector3f& Vector3f::operator/=(float c)
+{
+	this->x /= c;
+	this->y /= c;
+	this->z /= c;
+
+	return *this;
+}
+
 Vector3f Vector3f::operator*(float r)
 {
 	Vector3f temp(this->x * r,

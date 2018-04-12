@@ -129,7 +129,6 @@ BattleState Skill::Start(std::vector<Actor_ptr>* targets, std::deque<Actor_ptr>*
 {
 	_ac._tried = false;
 	_ac._success = false;
-	_critting = false;
 	_owner = owner;
 	_targets = std::vector<Actor_ptr>(*targets);
 	_actors = actors;
@@ -232,6 +231,11 @@ void Skill::SpawnDamageText(Actor_ptr target, int dmg)
 
 bool Skill::AnimationsDone()
 {
-	return !_anims->size();
+	bool done = true;
+	for (auto& x : *_anims)
+		if (!x->_async)
+			done = false;
+
+	return done;
 }
 

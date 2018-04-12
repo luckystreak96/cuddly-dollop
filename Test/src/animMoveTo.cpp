@@ -1,5 +1,10 @@
 #include "animMoveTo.h"
 
+AnimMoveTo::AnimMoveTo(Vector3f position, Actor_ptr target, double duration) : AnimMoveTo(position, target)
+{
+	_duration = duration;
+}
+
 AnimMoveTo::AnimMoveTo(Vector3f position, Actor_ptr target)
 {
 	_destination = position;
@@ -27,7 +32,7 @@ void AnimMoveTo::Update()
 
 	// Update percent
 	_progress += 0.025;
-	if (_progress >= _duration)
+	if (_progress >= _duration || _target->_Graphics->GetPosRef() == _destination)
 	{
 		_done = true;
 		_target->_Graphics->SetPhysics(_destination, Vector3f());

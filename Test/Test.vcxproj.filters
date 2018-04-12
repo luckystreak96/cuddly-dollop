@@ -485,6 +485,9 @@
     <ClInclude Include="src\skillBloodyMess.h">
       <Filter>Header Files\Skills</Filter>
     </ClInclude>
+    <ClInclude Include="src\animWait.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -837,6 +840,9 @@
     </ClCompile>
     <ClCompile Include="src\skillBloodyMess.cpp">
       <Filter>Source Files\Skills</Filter>
+    </ClCompile>
+    <ClCompile Include="src\animWait.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

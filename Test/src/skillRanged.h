@@ -19,6 +19,8 @@ public:
 protected:
 	void DefaultSetup();
 	Vector3f _basePos;
+	Vector3f _cameraTarget;
+	int _targetProgress;
 };
 
 #endif

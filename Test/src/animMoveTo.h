@@ -9,6 +9,7 @@ class AnimMoveTo : public BattleAnimation
 {
 public:
 	AnimMoveTo(Vector3f destination, Actor_ptr target);
+	AnimMoveTo(Vector3f destination, Actor_ptr target, double duration);
 	virtual void Update();
 
 public:

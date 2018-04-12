@@ -24,8 +24,10 @@ Damage SkillSmack::CalculateDamage()
 {
 	// Crit chance
 	int roll = rand() % 100;
-	if (roll <= _owner->_Fighter->Crit.Modified)
+	//if (roll <= _owner->_Fighter->Crit.Modified)
 		_critting = true;
+	//else
+		//_critting = false;
 
 	// Damage
 	int dmg = 2 + _owner->_Fighter->Strength.Modified * 0.8f + rand() % (_owner->_Fighter->GetLevel() + 2);
