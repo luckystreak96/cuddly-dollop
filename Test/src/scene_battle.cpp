@@ -129,17 +129,21 @@ void SceneBattle::ManageInput()
 {
 	Scene::ManageInput();
 
-	if (InputManager::GetInstance().FrameKeyStatus(A_Accept))
+	if (InputManager::GetInstance().FrameKeyStatus(A_Accept, KeyStatus::KeyPressed))
 	{
-		if (m_fade.IsDone())
-			if (m_battle._postBattleDone && m_battle._winner == 0)
+		if (!m_battle._animations.size() && m_battle._postBattleState != PBS_FightingInProgress && m_battle._postBattleState != PBS_PostBattleComplete)
+			m_battle._postBattleState = (PostBattleState)((int)m_battle._postBattleState + 1);
+
+		if (m_fade.IsDone() && m_battle._postBattleState == PBS_PostBattleComplete)
+		{
+			if (m_battle._winner == 0)
 			{
 				m_fade.SetFade(false);
 				NextScene.scene = _prevScene;
 				NextScene.sceneType = ST_World;
 				NextScene.id = 1;
 			}
-			else if (m_battle._postBattleDone && m_battle._winner != 0 && !GameData::Loading)
+			else if (m_battle._winner != 0 && !GameData::Loading)
 			{
 				m_fade.SetFade(false);
 				GameData::LoadGameData();
@@ -147,6 +151,7 @@ void SceneBattle::ManageInput()
 				NextScene.sceneType = ST_World;
 				NextScene.id = GameData::Flags.at("map");
 			}
+		}
 	}
 
 	//if (InputManager::GetInstance().FrameKeyStatus('Z', AnyRelease, 5))
@@ -167,7 +172,7 @@ SceneGenData SceneBattle::Update()
 	m_eventManager.Update(ElapsedTime::GetInstance().GetElapsedTime());
 
 	//if (m_fade.IsDone())
-		m_battle.Update();
+	m_battle.Update();
 	//else
 		//m_battle._hud.Update();
 

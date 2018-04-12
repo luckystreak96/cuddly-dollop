@@ -10,8 +10,7 @@
 #include "fontManager.h"
 #include "battleHUD.h"
 
-//enum BattleState { BS_Animation, BS_Attacking, BS_SelectAction, BS_SelectTargets, BS_ActionProgress, BS_ActionDone };
-const int MAX_FIGHTERS_PER_SIDE = 4;
+enum PostBattleState { PBS_FightingInProgress, PBS_FightingDone, PBS_ExpAnimation, PBS_ConfirmCompletion, PBS_PostBattleComplete };
 
 class BattleManager
 {
@@ -26,7 +25,6 @@ public:
 
 private:
 	void Init();
-	void ManageInput();
 	void UpdateLogic();
 	void CycleActors();
 	void UseSkill();
@@ -44,6 +42,12 @@ private:
 	void ActionDone();
 	void TurnEnd();
 
+	void ManageInput();
+	void HandleUpDownInput(std::set<int> input);
+	void HandleLeftRightInput(std::set<int> input);
+	void HandleAcceptInput();
+	void HandleCancelInput();
+
 	void PrintAttackPrediction(Actor* actor);
 
 public:
@@ -59,14 +63,13 @@ public:
 	Actor_ptr _owner;
 	int _selectedIndex;
 	BattleState _state;
+	PostBattleState _postBattleState;
 	bool m_animating;
-	bool _battleDone;
-	bool _postBattleDone;
 	bool _showingSkills;
 	int _winner;
 
 	int _numAllies;
-	
+
 	int counter;
 };
 
