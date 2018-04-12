@@ -55,12 +55,12 @@ void HudAttackPrediction::Update()
 		m_observedDamage._value = 0;
 
 	// Ensure that the value we're following actually changed to do something
-	if (m_prevDamage._value == m_observedDamage._value && m_prevDamage._type == m_observedDamage._type)
+	if (m_prevDamage._value == m_observedDamage._value && m_prevDamage._type == m_observedDamage._type && m_mustDisplayNextUpdate == m_mustDisplay)
 		return;
 
 	// Handle text display
 	m_mustDisplay = m_mustDisplayNextUpdate;
-	if (m_mustDisplay)
+	if (m_mustDisplay && !_actor->_Fighter->Dead)
 		FontManager::GetInstance().EnableFont(_damageFont);
 	else
 		FontManager::GetInstance().DisableFont(_damageFont);
@@ -104,9 +104,21 @@ void HudAttackPrediction::AdjustPosition()
 
 void HudAttackPrediction::SetRender()
 {
-	if (!m_mustDisplay)
+	if (!m_mustDisplay || _actor->_Fighter->Dead)
+	{
+		if (_actor->_Fighter->Dead)
+			FontManager::GetInstance().DisableFont(_damageFont);
 		return;
+	}
+
+	if (m_mustDisplay && !_actor->_Fighter->Dead)
+		FontManager::GetInstance().EnableFont(_damageFont);
 
 	// FontManager handles setting the render for the label
 	Renderer::GetInstance().Add(_background);
+}
+
+bool HudAttackPrediction::GetDisplay()
+{
+	return m_mustDisplay;
 }

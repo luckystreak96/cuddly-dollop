@@ -17,9 +17,11 @@ public:
 	void Destroy();
 	void SetRender();
 	void ToggleDisplay(bool display);
+	bool GetDisplay();
 
 	// Remember who you're showing
 	Actor* _actor;
+	unsigned int _damageFont;
 
 private:
 	// maxhp variables
@@ -30,7 +32,6 @@ private:
 	GraphComp_ptr _background;
 
 	// Font ID's
-	unsigned int _damageFont;
 
 	bool m_mustDisplayNextUpdate;
 	bool m_mustDisplay;

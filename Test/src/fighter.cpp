@@ -131,6 +131,7 @@ void Fighter::TurnStart(std::vector<Actor_ptr>& actors)
 void Fighter::ApplyLethal()
 {
 	Dead = Health <= 0;
+	UpdateObservers();
 	//UpdateColor();
 }
 

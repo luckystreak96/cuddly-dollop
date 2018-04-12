@@ -28,10 +28,12 @@ Damage SkillBloodyMess::CalculateDamage()
 	int roll = rand() % 100;
 	if (roll <= _owner->_Fighter->Crit.Modified)
 		_critting = true;
+	else
+		_critting = false;
 
 	// Damage
 	int dmg = 4 + _owner->_Fighter->Strength.Modified * 1.6f + _owner->_Fighter->GetLevel();
-	dmg += rand() % max((dmg / 20), 1);
+	dmg += rand() % max((dmg / 20), 2 + _owner->_Fighter->GetLevel());
 	if (_critting)
 		dmg *= 2;
 
@@ -66,5 +68,6 @@ void SkillBloodyMess::ApplyEffect()
 	_targetProgress++;
 
 	// Removes vision for next turn
-	_owner->_Fighter->NoPredictCountDown++;
+	if (_targetProgress == 1)// we only want to increment this once, not 4 times
+		_owner->_Fighter->NoPredictCountDown++;
 }

@@ -115,7 +115,22 @@ void BattleHUD::Update()
 void BattleHUD::SetRender()
 {
 	for (auto& x : _hudComponents)
-		x->SetRender();
+	{
+		//HudAttackPrediction* pred = dynamic_cast<HudAttackPrediction*>(x.get());
+		//if (pred != NULL)
+		//{
+		//	if (pred->_actor->_Fighter->Dead)
+		//		FontManager::GetInstance().DisableFont(pred->_damageFont);
+		//	else
+		//	{
+		//		if(pred->GetDisplay())
+		//			FontManager::GetInstance().EnableFont(pred->_damageFont);
+		//		x->SetRender();
+		//	}
+		//}
+		//else
+			x->SetRender();
+	}
 
 	for (auto& x : _hudBG)
 		Renderer::GetInstance().Add(x);
