@@ -12,7 +12,7 @@ void main()
 	vec4 color = texture2D(gSampler, TexCoord0.st);
 	color *= vec4(Color0, 1.0);
 	color.a *= Alpha0;
-	if(color.a < 0.05)
+	if(color.a < 0.1)
 		discard;
 
 	FragColor = color;
