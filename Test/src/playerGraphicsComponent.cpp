@@ -75,6 +75,11 @@ void PlayerGraphicsComponent::Draw(bool withTex)
 
 void PlayerGraphicsComponent::Update()
 {
+	// When you need to update a component according to position
+	if (m_prevPosition != m_pos && _observers.size())
+		UpdateObservers();
+	m_prevPosition = m_pos;
+
 	int dir = m_direction;
 	//Change the direction hes facing
 	if (m_vel != 0)

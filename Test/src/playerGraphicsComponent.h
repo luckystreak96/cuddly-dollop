@@ -4,9 +4,10 @@
 #include "iComponent.h"
 #include "graphicsComponent.h"
 #include "animation.h"
+#include "observable.h"
 #include <string>
 
-class PlayerGraphicsComponent : public GraphicsComponent, public Animation
+class PlayerGraphicsComponent : public GraphicsComponent, public Animation, public Observable
 {
 public:
 	PlayerGraphicsComponent(std::string tex = "res/sprites/entities/entity_ghost_shiny_blue.png", std::string model = "CENTERED_TILE");
@@ -19,6 +20,7 @@ public:
 private:
 	bool m_firstLoad;
 	int m_actualDelay;
+	Vector3f m_prevPosition;
 };
 
 typedef std::shared_ptr<PlayerGraphicsComponent> PGraphics_ptr;

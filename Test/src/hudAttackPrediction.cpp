@@ -11,6 +11,8 @@ HudAttackPrediction::HudAttackPrediction(Actor* owner)
 {
 	_actor = owner;
 
+	m_prevActorPos = _actor->_Graphics->GetPosRef();
+
 	if (_actor->_Fighter->PredictedSkill != NULL)
 		m_observedDamage = _actor->_Fighter->PredictedSkill->_preCalculatedDamage;
 	else
@@ -19,13 +21,13 @@ HudAttackPrediction::HudAttackPrediction(Actor* owner)
 	m_prevDamage._value = -43893893;// set this to a fucked up number so itll do it's first update
 
 	// Box
-	GraphComp_ptr ptr = GraphComp_ptr(new GraphicsComponent("CENTERED_TILE", "res/sprites/special/blank.png"));
+	_background = GraphComp_ptr(new GraphicsComponent("CENTERED_TILE", "res/sprites/special/blank.png"));
 	//dynamic_cast<FontGraphicsComponent*>(ptr.get())->SetStatic(true);
 
-	ptr->SetPhysics(_actor->_Graphics->GetPosRef().OnlyXY() - Vector3f(0.5f, -0.25f, -0.1f), Vector3f());
-	ptr->GetModelMat()->SetScale(Vector3f(0.25f, 0.25f, 1));
+	SetBoxPosition();
+	_background->GetModelMat()->SetScale(Vector3f(0.25f, 0.25f, 1));
 
-	ptr->Update();
+	_background->Update();
 
 	// damage
 	unsigned int font = FontManager::GetInstance().AddFont(false, false, true, "res/fonts/lowercase.png");
@@ -33,10 +35,19 @@ HudAttackPrediction::HudAttackPrediction(Actor* owner)
 	FontManager::GetInstance().GetFont(font)->_letterSpacing = 0.55f;
 
 	// Set everything
-	_background = ptr;
 	_damageFont = font;
 
 	Update();
+}
+
+void HudAttackPrediction::SetBoxPosition()
+{
+	_background->SetPhysics(m_prevActorPos.OnlyXY() - Vector3f(0.5f, -0.25f, -0.1f), Vector3f());
+}
+
+Vector3f HudAttackPrediction::CalculateTextPosition()
+{
+	return _background->GetPosRef().OnlyXY() + Vector3f(0.5f, 0.375f, 0);
 }
 
 void HudAttackPrediction::Destroy()
@@ -49,6 +60,21 @@ void HudAttackPrediction::Destroy()
 
 void HudAttackPrediction::Update()
 {
+	Vector3f pos = _actor->_Graphics->GetPosRef();
+	if (m_prevActorPos != pos)
+	{
+		m_prevActorPos = pos;
+
+		// box
+		SetBoxPosition();
+		_background->Update();
+
+		// font
+		FontManager::GetInstance().GetFont(_damageFont)->UpdateModel(CalculateTextPosition());
+		// Necessary for window size changes
+		FontManager::GetInstance().GetFont(_damageFont)->SetOffset(CalculateTextPosition());
+	}
+
 	if (_actor->_Fighter->PredictedSkill != NULL)
 		m_observedDamage = _actor->_Fighter->PredictedSkill->_preCalculatedDamage;
 	else
@@ -79,15 +105,20 @@ void HudAttackPrediction::Update()
 	_background->SetColorAll(color, 0.7f);
 
 	// Update the font
-	Vector3f pos = _background->GetPosRef().OnlyXY() + Vector3f(0.5f, 0.375f, 0);
+	//pos = CalculateTextPosition();
 	std::string text = std::to_string(m_observedDamage._value);
 	std::string current = FontManager::GetInstance().GetFont(_damageFont)->_text;
 
 	// Only update font when it changes
 	if (text != current)
-		FontManager::GetInstance().SetText(_damageFont, text, pos, true);
+	{
+		FontManager::GetInstance().SetText(_damageFont, text, Vector3f(), true);
+		FontManager::GetInstance().GetFont(_damageFont)->UpdateModel(CalculateTextPosition());
+		FontManager::GetInstance().GetFont(_damageFont)->SetOffset(CalculateTextPosition());
+	}
 
-	FontManager::GetInstance().GetFont(_damageFont)->Update(0);
+	//FontManager::GetInstance().GetFont(_damageFont)->Update(0);
+	//FontManager::GetInstance().GetFont(_damageFont)->UpdateModel(CalculateTextPosition());
 
 	_background->Update();
 }

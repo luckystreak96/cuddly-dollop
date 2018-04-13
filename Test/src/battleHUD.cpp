@@ -71,6 +71,7 @@ void BattleHUD::AddActorHealthBar(Actor_ptr ap, int& party, int& enemies)
 
 	HudComp_ptr healthBar = std::make_shared<HudHealthBar>(HudHealthBar(ap.get(), pos));
 	ap->_Fighter->_observers.push_back(healthBar);
+	ap->_Graphics->_observers.push_back(healthBar);
 	_hudComponents.push_back(healthBar);
 }
 
@@ -78,6 +79,7 @@ void BattleHUD::AddActorAttackPrediction(Actor_ptr ap)
 {
 	HudComp_ptr damagePrediction = std::make_shared<HudAttackPrediction>(HudAttackPrediction(ap.get()));
 	ap->_Fighter->_observers.push_back(damagePrediction);
+	ap->_Graphics->_observers.push_back(damagePrediction);
 	_hudComponents.push_back(damagePrediction);
 }
 
@@ -115,22 +117,7 @@ void BattleHUD::Update()
 void BattleHUD::SetRender()
 {
 	for (auto& x : _hudComponents)
-	{
-		//HudAttackPrediction* pred = dynamic_cast<HudAttackPrediction*>(x.get());
-		//if (pred != NULL)
-		//{
-		//	if (pred->_actor->_Fighter->Dead)
-		//		FontManager::GetInstance().DisableFont(pred->_damageFont);
-		//	else
-		//	{
-		//		if(pred->GetDisplay())
-		//			FontManager::GetInstance().EnableFont(pred->_damageFont);
-		//		x->SetRender();
-		//	}
-		//}
-		//else
-			x->SetRender();
-	}
+		x->SetRender();
 
 	for (auto& x : _hudBG)
 		Renderer::GetInstance().Add(x);

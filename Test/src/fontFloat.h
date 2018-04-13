@@ -15,9 +15,6 @@ public:
 public:
 	Vector3f Color;
 	float Alpha;
-
-private:
-	Vector3f m_offset;
 };
 
 #endif

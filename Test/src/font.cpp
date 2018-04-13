@@ -33,7 +33,7 @@ void Font::Update(double elapsedTime)
 	//if (m_lightSpeed)
 	//	elapsedTime = MaxTime;
 	if (OrthoProjInfo::GetRegularInstance().changed)
-		UpdateModel();
+		UpdateModel(m_offset);
 
 	if (m_elapsedTime < MaxTime)
 		m_elapsedTime += elapsedTime * m_textSpeed;
@@ -46,6 +46,11 @@ void Font::Update(double elapsedTime)
 			ChangeLetter(i, m_message.at(i));
 		}
 	}
+}
+
+void Font::SetOffset(Vector3f offset)
+{
+	m_offset = offset;
 }
 
 bool Font::TextDisplayDone()
@@ -350,10 +355,25 @@ void Font::UpdateModel()
 	if (m_graphics)
 	{
 		m_graphics->ClearMModels();
-		for (auto x : m_letterPositions)
+		for (auto& x : m_letterPositions)
 		{
 			Transformation t;
 			t.SetTranslation(x);
+			t.SetScale(Vector3f(m_xScale, m_yScale, 1));
+			m_graphics->InsertMModels(t);
+		}
+	}
+}
+
+void Font::UpdateModel(Vector3f offset)
+{
+	if (m_graphics)
+	{
+		m_graphics->ClearMModels();
+		for (auto& x : m_letterPositions)
+		{
+			Transformation t;
+			t.SetTranslation(x + offset);
 			t.SetScale(Vector3f(m_xScale, m_yScale, 1));
 			m_graphics->InsertMModels(t);
 		}

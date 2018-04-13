@@ -27,7 +27,7 @@ void FontFloat::UpdateModel()
 	if (m_graphics)
 	{
 		m_graphics->ClearMModels();
-		for (auto x : m_letterPositions)
+		for (auto& x : m_letterPositions)
 		{
 			Transformation t;
 			t.SetTranslation(x + m_offset);

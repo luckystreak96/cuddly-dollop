@@ -15,9 +15,13 @@ public:
 	void AdjustPosition();
 	void Destroy();
 	void SetRender();
+
+	// xp animation stuffs
 	Anim_ptr SetupExpAnimation(int targetXP);
 	bool UpdateExpAnimation(float newxp);
 
+	// small hp bar stuffs
+	void UpdateSmallHPPosition();
 
 	// Remember who you're showing
 	Actor* _actor;
@@ -41,6 +45,11 @@ private:
 	// Health bar images
 	GraphComp_ptr _background;
 	GraphComp_ptr _xpBar;
+
+	// Smaller health bar
+	Vector3f m_actorPrevPos;
+	GraphComp_ptr _smallForeground;
+	GraphComp_ptr _smallBackground;
 
 	// Font ID's
 	unsigned int _healthFont;

@@ -29,6 +29,16 @@ HudHealthBar::HudHealthBar(Actor* ap, Vector3f position)
 	m_prevMaxHP = -43893893;
 	//m_maxHealth = maxHealth;
 
+	// Smaller bars
+	_smallForeground = GraphComp_ptr(new FontGraphicsComponent("BAR", "res/sprites/special/bar_foreground.png"));
+	_smallBackground = GraphComp_ptr(new FontGraphicsComponent("BAR", "res/sprites/special/bar_background.png"));
+
+	m_actorPrevPos = _actor->_Graphics->GetPosRef();
+	_smallForeground->GetModelMat()->SetScale(0.33f, 0.3f, 1);
+	_smallBackground->GetModelMat()->SetScale(0.33f, 0.3f, 1);
+	_smallBackground->SetColorAll(Vector3f(0.08f, 0.4f, 1.0f));
+	UpdateSmallHPPosition();
+
 	// Bar
 	GraphComp_ptr ptr = GraphComp_ptr(new FontGraphicsComponent("BAR", "res/sprites/special/bar.png"));
 	GraphComp_ptr ptr2 = GraphComp_ptr(new FontGraphicsComponent("BAR", "res/sprites/special/bar.png"));
@@ -48,6 +58,8 @@ HudHealthBar::HudHealthBar(Actor* ap, Vector3f position)
 	ptr->Update();
 	ptr2->Update();
 	ptrExp->Update();
+	//_smallForeground->Update();
+	//_smallBackground->Update();
 	//ptr2->SetColorAll(Vector3f(0.5f, 0.5f, 0.5f), 0.2f);
 
 	// health 
@@ -91,8 +103,20 @@ void HudHealthBar::Destroy()
 	HudComponent::Destroy();
 }
 
+void HudHealthBar::UpdateSmallHPPosition()
+{
+	m_actorPrevPos = _actor->_Graphics->GetPosRef();
+	_smallForeground->SetPhysics(m_actorPrevPos + Vector3f(0.18f, -0.1f, -0.1f), Vector3f());
+	_smallBackground->SetPhysics(m_actorPrevPos + Vector3f(0.18f, -0.1f, 0.1f), Vector3f());
+	_smallForeground->Update();
+	_smallBackground->Update();
+}
+
 void HudHealthBar::Update()
 {
+	if (_actor->_Graphics->GetPosRef() != m_actorPrevPos)
+		UpdateSmallHPPosition();
+
 	// Ensure that the value we're following actually changed to do something
 	if (m_prevValue == *m_observed && m_prevXP == m_observedXP && *m_observedMaxHP == m_prevMaxHP)
 		return;
@@ -133,6 +157,10 @@ void HudHealthBar::Update()
 
 		FontManager::GetInstance().GetFont(_healthFont)->Update(0);
 	}
+
+	_smallBackground->SetColorAll(color * Vector3f(1.5f), 0.9f);
+	_smallBackground->GetModelMat()->SetScale(fmax((float)health / (float)m_max, 0) / 3.0f, 0.3f, 1);
+	_smallBackground->Update();
 
 	_foreground->SetColorAll(color, 0.9f);
 	_foreground->GetModelMat()->SetScale(fmax((float)health / (float)m_max, 0), 1, 1);
@@ -192,6 +220,8 @@ void HudHealthBar::SetRender()
 {
 	// FontManager handles setting the render for the label
 
+	Renderer::GetInstance().Add(_smallForeground);
+	Renderer::GetInstance().Add(_smallBackground);
 	Renderer::GetInstance().Add(_foreground);
 	Renderer::GetInstance().Add(_background);
 	Renderer::GetInstance().Add(_xpBar);

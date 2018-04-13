@@ -118,6 +118,8 @@ void BattleManager::Update()
 			}
 			break;
 		case PBS_FightingDone:
+			for (auto& x : _actors)
+				x->_Fighter->NoPredictCountDown = 0;
 			break;
 		case PBS_ExpAnimation:
 		{

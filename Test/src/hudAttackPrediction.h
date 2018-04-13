@@ -18,6 +18,8 @@ public:
 	void SetRender();
 	void ToggleDisplay(bool display);
 	bool GetDisplay();
+	void SetBoxPosition();
+	Vector3f CalculateTextPosition();
 
 	// Remember who you're showing
 	Actor* _actor;
@@ -27,6 +29,7 @@ private:
 	// maxhp variables
 	Damage m_observedDamage;
 	Damage m_prevDamage;
+	Vector3f m_prevActorPos;
 
 	// AttackType image
 	GraphComp_ptr _background;

@@ -37,7 +37,9 @@ public:
 	virtual void SetScale(float xScale, float yScale);
 	bool TextDisplayDone();
 	virtual void UpdateModel();
+	void UpdateModel(Vector3f offset);
 	void Reset();
+	void SetOffset(Vector3f offset);
 
 public:
 	bool _enabled;
@@ -81,6 +83,7 @@ protected:
 	Transformation trans;
 
 	Vector3f m_basePosition;
+	Vector3f m_offset;
 	std::string m_texture;
 	std::vector<uint32_t> m_message;
 	std::vector<uint32_t> m_messageProgress;
