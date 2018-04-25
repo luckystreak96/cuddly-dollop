@@ -30,6 +30,10 @@ void Resize(GLFWwindow* window)
 	multiplierx = (float)screenW / (float)offsetX;
 	multipliery = (float)screenH / (float)offsetY;
 	multiplierFinal = (int)(fmin(multiplierx, multipliery));
+	
+	// This allows getting the resolution from file and keeping that resolution in fullscreen in case of slow GPU
+	// Delete this line to go back to resolution based on window size
+	multiplierFinal = std::get<int>(GameData::Options.at("resolution"));
 
 	int viewW, viewH;
 	viewW = multiplierFinal * 480;
@@ -46,6 +50,7 @@ void Resize(GLFWwindow* window)
 		viewH = h;
 		viewW = w;
 		std::cout << "Switched to fullscreen mode : Width - " << viewW << " Height - " << viewH << std::endl;
+		//glfwSetWindowSize(window, viewW, viewH);
 	}
 	else
 	{
@@ -54,6 +59,7 @@ void Resize(GLFWwindow* window)
 		glfwSetWindowSize(GLFWManager::m_window, viewW, viewH);
 		std::cout << "Switched to windowed mode" << std::endl;
 	}
+	// The next comment centers the viewport if the window is too big for the resolution
 	//glViewport((screenW - viewW) / 2, (screenH - viewH) / 2, (GLsizei)(viewW), (GLsizei)(viewH));
 	glViewport(0, 0, (GLsizei)(viewW), (GLsizei)(viewH));
 	OrthoProjInfo::GetRegularInstance().Bottom = -(viewH / 2.0f);
@@ -77,7 +83,14 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 		GameData::Options.at("fullscreen") = !std::get<bool>(GameData::Options.at("fullscreen"));
 
 		if (std::get<bool>(GameData::Options.at("fullscreen")))
-			glfwSetWindowMonitor(window, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
+		{
+			int multiplierFinal = std::get<int>(GameData::Options.at("resolution"));
+
+			int viewW, viewH;
+			viewW = multiplierFinal * 480;
+			viewH = multiplierFinal * 270;
+			glfwSetWindowMonitor(window, monitor, 0, 0, viewW, viewH, mode->refreshRate);
+		}
 		else
 			glfwSetWindowMonitor(window, NULL, 5, 35, mode->width - 10, mode->height - 80, mode->refreshRate);
 

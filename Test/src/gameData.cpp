@@ -200,6 +200,11 @@ void GameData::LoadSettings()
 					else if (name == "fullscreen")
 						sec = itr->value.GetBool();
 				}
+				else if (itr->value.IsInt())
+				{
+					if (name == "resolution")
+						sec = itr->value.GetInt();
+				}
 
 				// If the key isnt defined, just skip
 				else
@@ -247,6 +252,8 @@ void GameData::EnsureBaseSettings()
 		Options.emplace("mute", false);
 	if (!Options.count("fullscreen"))
 		Options.emplace("fullscreen", false);
+	if (!Options.count("resolution"))
+		Options.emplace("resolution", 1);
 	if (!Strings.count("name"))
 		Strings.emplace("name", "Yanik");
 
