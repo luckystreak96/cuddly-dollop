@@ -253,7 +253,7 @@ void GameData::EnsureBaseSettings()
 	if (!Options.count("fullscreen"))
 		Options.emplace("fullscreen", false);
 	if (!Options.count("resolution"))
-		Options.emplace("resolution", 1);
+		Options.emplace("resolution", 3);
 	if (!Strings.count("name"))
 		Strings.emplace("name", "Yanik");
 
