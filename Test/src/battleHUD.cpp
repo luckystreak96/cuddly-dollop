@@ -58,14 +58,26 @@ void BattleHUD::Init(std::vector<Actor_ptr> actors)
 void BattleHUD::AddActorHealthBar(Actor_ptr ap, int& party, int& enemies)
 {
 	Vector3f pos;
+	int right = OrthoProjInfo::GetRegularInstance().Right * 2;
+	int up = OrthoProjInfo::GetRegularInstance().Top * 2;
+	int size = OrthoProjInfo::GetRegularInstance().Size;
+	float orthoWidth = (float)right / (float)size;
+	float orthoHeight = (float)up / (float)size;
+	std::cout << orthoWidth << std::endl;
 	if (ap->_Fighter->Team == 0)
 	{
-		pos = Vector3f(0.25f + 2.5f * party, 0.135f, 0);
+		float xpos1 = (0.25f / 15.f) * orthoWidth;
+		float xpos2 = (2.5f / 15.f) * orthoWidth;
+		float ypos = (0.135f / 8.4375f) * orthoHeight;
+		pos = Vector3f(xpos1 + xpos2 * party, ypos, 0);
 		party++;
 	}
 	else
 	{
-		pos = Vector3f(12.8f - 2.5f * enemies, 7.825f, 0);
+		float xpos1 = (12.8f / 15.f) * orthoWidth;
+		float xpos2 = (2.5f / 15.f) * orthoWidth;
+		float ypos = 7.825f / 8.4375f;
+		pos = Vector3f(xpos1 - xpos2 * enemies, ypos * orthoHeight, 0);
 		enemies++;
 	}
 

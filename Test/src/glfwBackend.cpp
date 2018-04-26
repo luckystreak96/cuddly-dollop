@@ -47,6 +47,8 @@ void Resize(GLFWwindow* window)
 	// Fullscreen mode
 	if (std::get<bool>(GameData::Options.at("fullscreen")))
 	{
+		//viewH = multiplierFinal * offsetY;
+		//viewW = multiplierFinal * offsetX;
 		viewH = h;
 		viewW = w;
 		std::cout << "Switched to fullscreen mode : Width - " << viewW << " Height - " << viewH << std::endl;
@@ -54,18 +56,20 @@ void Resize(GLFWwindow* window)
 	}
 	else
 	{
-		viewH = multiplierFinal * offsetY;
-		viewW = multiplierFinal * offsetX;
+		//viewH = multiplierFinal * offsetY;
+		//viewW = multiplierFinal * offsetX;
 		glfwSetWindowSize(GLFWManager::m_window, viewW, viewH);
-		std::cout << "Switched to windowed mode" << std::endl;
+		w = viewW;
+		h = viewH;
+		std::cout << "Switched to windowed mode : Width - " << viewW << " Height - " << viewH << std::endl;
 	}
 	// The next comment centers the viewport if the window is too big for the resolution
 	//glViewport((screenW - viewW) / 2, (screenH - viewH) / 2, (GLsizei)(viewW), (GLsizei)(viewH));
 	glViewport(0, 0, (GLsizei)(viewW), (GLsizei)(viewH));
-	OrthoProjInfo::GetRegularInstance().Bottom = -(viewH / 2.0f);
-	OrthoProjInfo::GetRegularInstance().Top = (viewH / 2.0f);
-	OrthoProjInfo::GetRegularInstance().Left = -(viewW / 2.0f);
-	OrthoProjInfo::GetRegularInstance().Right = (viewW / 2.0f);
+	OrthoProjInfo::GetRegularInstance().Bottom = -(h / 2.0f);
+	OrthoProjInfo::GetRegularInstance().Top = (h / 2.0f);
+	OrthoProjInfo::GetRegularInstance().Left = -(w / 2.0f);
+	OrthoProjInfo::GetRegularInstance().Right = (w / 2.0f);
 	OrthoProjInfo::GetRegularInstance().Size = size * multiplierFinal;
 	OrthoProjInfo::GetRegularInstance().changed = true;
 }
