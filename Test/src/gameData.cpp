@@ -388,6 +388,8 @@ void GameData::SaveSettings()
 			second.SetBool(std::get<bool>(x.second));
 		else if (x.first == "fullscreen")
 			second.SetBool(std::get<bool>(x.second));
+		else if (x.first == "resolution")
+			second.SetInt(std::get<int>(x.second));
 
 		ob.AddMember(first, second, allocator);
 		options.PushBack(ob, allocator);

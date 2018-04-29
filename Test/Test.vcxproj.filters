@@ -488,6 +488,12 @@
     <ClInclude Include="src\animWait.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\menu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\menuComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -842,6 +848,12 @@
       <Filter>Source Files\Skills</Filter>
     </ClCompile>
     <ClCompile Include="src\animWait.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\menu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\menuComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
