@@ -48,7 +48,7 @@ bool SceneBattle::Init()
 	m_jsonHandler = std::shared_ptr<JsonHandler>(new JsonHandler(m_currentMap));
 
 	m_bloomEffect = false;
-	InputManager::GetInstance().SetLockLevel(0);
+	InputManager::GetInstance().PopLockLevel();
 
 	OrthoProjInfo::GetRegularInstance().changed = true;
 

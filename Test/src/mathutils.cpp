@@ -4,7 +4,7 @@
 Camera* Camera::_currentCam = NULL;
 
 Camera::Camera() : Target(1), _followSpeed(0.005f), _scale(Vector3f(1)), _scaleTargetDad(Vector3f(1)), _style(CAMSTYLE_Follow),
-_scaleTarget(Vector3f(1))
+_scaleTarget(Vector3f(1)), _paused(false)
 {
 	_transform = std::make_unique<Transformation>(Transformation());
 }
@@ -82,6 +82,8 @@ void Camera::ForceScale(Vector3f& scale)
 
 void Camera::Update()
 {
+	if (_paused)
+		return;
 	switch (_style)
 	{
 	case CAMSTYLE_FollowDadNoScale:

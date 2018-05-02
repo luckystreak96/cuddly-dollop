@@ -63,8 +63,11 @@ SceneGenData Scene::Act()
 		m_camera.Update();
 	}
 
-	//DRAW
-	Draw();
+	if (_pause)
+		int lol = 60;
+
+	// Draw the scene, when paused the sort func removes dupes so they dont stack and we gud :)
+		Draw();
 
 	switch(_type)
 	{

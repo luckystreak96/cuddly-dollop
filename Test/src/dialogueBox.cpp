@@ -243,7 +243,7 @@ void DialogueBox::Update(double elapsedTime)
 	{
 		m_temporary = true;
 		m_lifetime = 0;
-		InputManager::GetInstance().SetLockLevel(0);
+		InputManager::GetInstance().PopLockLevel();
 	}
 }
 

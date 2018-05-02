@@ -193,6 +193,7 @@ void EventManager::UpdateLockLevel()
 	for (auto x : m_locks)
 		i = x->GetLockLevel() > i ? x->GetLockLevel() : i;
 
+	InputManager::GetInstance().PopLockLevel();
 	InputManager::GetInstance().SetLockLevel(i);
 }
 

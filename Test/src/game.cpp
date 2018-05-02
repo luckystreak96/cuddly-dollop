@@ -102,7 +102,14 @@ void Game::HandleInput()
 
 	// Reset lock level
 	if (InputManager::GetInstance().FrameKeyStatus(GLFW_KEY_F3, KeyStatus::KeyPressed))
+	{
+		InputManager::GetInstance().PopLockLevel();
+		InputManager::GetInstance().PopLockLevel();
+		InputManager::GetInstance().PopLockLevel();
+		InputManager::GetInstance().PopLockLevel();
+		InputManager::GetInstance().PopLockLevel();
 		InputManager::GetInstance().SetLockLevel(0);
+	}
 
 	// Mute
 	if (InputManager::GetInstance().FrameKeyStatus(A_Mute, KeyStatus::KeyPressed))

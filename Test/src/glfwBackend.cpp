@@ -30,7 +30,7 @@ void Resize(GLFWwindow* window)
 	multiplierx = (float)screenW / (float)offsetX;
 	multipliery = (float)screenH / (float)offsetY;
 	multiplierFinal = (int)(fmin(multiplierx, multipliery));
-	
+
 	// This allows getting the resolution from file and keeping that resolution in fullscreen in case of slow GPU
 	// Delete this line to go back to resolution based on window size
 	multiplierFinal = std::get<int>(GameData::Options.at("resolution"));
@@ -345,7 +345,7 @@ void GLFWManager::HandleJoystickInput()
 
 	static float prevX = 0;
 	static float prevY = 0;
-	static std::vector<bool> buttonStates{ false, false };
+	static std::vector<bool> buttonStates(20);
 
 	// Left stick X
 	if (abs(axes[0]) >= deadZone)
@@ -424,8 +424,22 @@ void GLFWManager::HandleJoystickInput()
 	else if (buttonStates[1])
 		InputManager::GetInstance().Input(GameData::KeyMap.at(A_Cancel), false);
 
+	// 'Start' button is buttons[7]
+	if (buttons[7] == GLFW_PRESS)
+		InputManager::GetInstance().Input(GameData::KeyMap.at(A_Menu), true);
+	else if (buttonStates[7])
+		InputManager::GetInstance().Input(GameData::KeyMap.at(A_Menu), false);
+
+	// For a visual on which buttons are which index
+
+	//for(int i = 0; i < buttonCount; i++)
+	//	std::cout << i << " -> " << buttons[i];
+	//std::cout << std::endl;
+
 	prevX = axes[0];
 	prevY = axes[1];
-	buttonStates[0] = buttons[0];
-	buttonStates[1] = buttons[1];
+	for (int i = 0; i < buttonCount; i++)
+		buttonStates[i] = buttons[i];
+	//buttonStates[0] = buttons[0];
+	//buttonStates[1] = buttons[1];
 }

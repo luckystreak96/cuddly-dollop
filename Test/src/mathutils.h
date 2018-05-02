@@ -51,6 +51,8 @@ private:
 	float RandomDad();
 
 public:
+	bool _paused;
+
 	// The camera currently in use
 	static Camera* _currentCam;
 	// default is 0.005f

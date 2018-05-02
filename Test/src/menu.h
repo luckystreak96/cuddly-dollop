@@ -2,6 +2,7 @@
 #define MENU_H__
 
 #include "menuComponent.h"
+#include "graphicsComponent.h"
 #include <deque>
 #include <vector>
 
@@ -13,6 +14,11 @@ public:
 
 	// Update menu components, only active handles input
 	virtual void Update();
+
+	virtual void SetRender();
+
+	// Load default page and open menu
+	virtual void Open();
 
 	// Destroy components and close menu
 	virtual void Close();
@@ -30,6 +36,8 @@ public:
 protected:
 	std::vector<MenuComp_ptr> m_components;
 	std::deque<MenuComp_ptr> m_activeStack;
+
+	std::vector<GraphComp_ptr> _hudBG;
 };
 
 #endif // !MENU_H__

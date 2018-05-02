@@ -8,6 +8,7 @@
 #include "map_handler.h"
 #include "collisionManager.h"
 #include "eventManager.h"
+#include "menu.h"
 
 class SceneWorld : public Scene
 {
@@ -20,6 +21,7 @@ public:
 	void Draw();
 	void ShowStats();
 	SceneGenData Update();
+	void UpdateHUD();
 	void Interact();
 	void TriggerEvents(unsigned int entity_id);
 	void ManageInput();
@@ -27,6 +29,7 @@ public:
 	
 private:
 	std::shared_ptr<Entity> m_player = NULL;
+	std::shared_ptr<Menu> m_menu = NULL;
 	EventManager m_eventManager;
 	CollisionManager m_collisionManager;
 	bool m_zoom;

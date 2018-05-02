@@ -120,12 +120,32 @@ void SceneWorld::ManageInput()
 
 	if (InputManager::GetInstance().FrameKeyStatus('T', KeyPressed))
 	{
+		// Make sure GameData knows the player position
+		if (GameData::Positions.count("player"))
+			GameData::Positions.at("player") = m_player->PhysicsRaw()->PositionRef();
+		else
+			GameData::Positions.emplace("player", m_player->PhysicsRaw()->PositionRef());
+
 		GameData::SaveToFile();
 		FontManager::GetInstance().CreateFloatingText(m_player->Physics()->Position(), "Game Saved!")->GetGraphics()->SetColorAll(Vector3f(0.1f, 0.65f, 1));
 	}
 
 	if (InputManager::GetInstance().FrameKeyStatus('Y', KeyPressed))
 		ShowStats();
+
+	if (InputManager::GetInstance().FrameKeyStatus(A_Menu, KeyPressed, 2U))
+	{
+		if (!m_menu)
+			m_menu = std::make_shared<Menu>(Menu());
+
+		if (m_menu->_done)
+		{
+			m_menu->Open();
+			m_camera._paused = true;
+		}
+		else
+			m_menu->Close();
+	}
 
 	//if (InputManager::GetInstance().FrameKeyStatus('Z', AnyRelease))
 	//{
@@ -187,57 +207,66 @@ SceneGenData SceneWorld::Update()
 {
 	SceneGenData next = NextScene;
 
-	// Needs to be called here so the EventQueues can set render
-	Renderer::GetInstance().Clear();
-	Animation::AnimationCounter((float)ElapsedTime::GetInstance().GetElapsedTime());
-	Interact();
-	m_eventManager.Update(ElapsedTime::GetInstance().GetElapsedTime());
-
-	if (next != NextScene)
-		m_fade.SetFade(false);
-
-	for (auto it : m_celist)
-		it.second->Physics()->DesiredMove();
-
-	//Collision
-	std::map<unsigned int, std::shared_ptr<Entity>> collided = m_collisionManager.CalculateCollision();
-	for (auto &pair : collided)
+	if (!m_menu || m_menu->_done)
 	{
-		auto entity = pair.second;
-		// ...push back the event
-		for (auto x : *entity->GetQueues())
-			if (x->GetActivationType() == AT_Touch)
-				// If he wasn't just touched...
-				if (!entity->_justTouched || x->GetID() != -1)
-					m_eventManager.PushBack(x);
+		// Needs to be called here so the EventQueues can set render
+		Renderer::GetInstance().Clear();
+		Animation::AnimationCounter((float)ElapsedTime::GetInstance().GetElapsedTime());
+		Interact();
+		m_eventManager.Update(ElapsedTime::GetInstance().GetElapsedTime());
 
-		entity->_justTouched = true;
+		if (next != NextScene)
+			m_fade.SetFade(false);
+
+		for (auto it : m_celist)
+			it.second->Physics()->DesiredMove();
+
+		//Collision
+		std::map<unsigned int, std::shared_ptr<Entity>> collided = m_collisionManager.CalculateCollision();
+		for (auto &pair : collided)
+		{
+			auto entity = pair.second;
+			// ...push back the event
+			for (auto x : *entity->GetQueues())
+				if (x->GetActivationType() == AT_Touch)
+					// If he wasn't just touched...
+					if (!entity->_justTouched || x->GetID() != -1)
+						m_eventManager.PushBack(x);
+
+			entity->_justTouched = true;
+		}
+
+		// Handle just-touched
+		for (auto &pair : m_celist)
+		{
+			if (!collided.count(pair.first))
+				pair.second->_justTouched = false;
+		}
+
+		//Update
+		for (auto it : m_celist)
+			it.second->Update();
+
+		m_mapHandler->Update(OrthoProjInfo::GetRegularInstance().changed);
+
+		if (m_celist.count(m_camera.Target))
+			m_camera.SetFollow(m_celist.at(m_camera.Target)->Physics()->Position() + Vector3f(0.5f, 0.5f, 0));
+
+		SetAudioPosition();
+		SoundManager::GetInstance().Update();
+
+		UpdateHUD();
 	}
-
-	// Handle just-touched
-	for (auto &pair : m_celist)
-	{
-		if (!collided.count(pair.first))
-			pair.second->_justTouched = false;
-	}
-
-	//Update
-	for (auto it : m_celist)
-		it.second->Update();
-
-	if (GameData::Positions.count("player"))
-		GameData::Positions.at("player") = m_player->Physics()->Position();
 	else
-		GameData::Positions.emplace("player", m_player->Physics()->Position());
+	{
+		m_menu->Update();
+	}
 
-	m_mapHandler->Update(OrthoProjInfo::GetRegularInstance().changed);
+	return NextScene;
+}
 
-	SetAudioPosition();
-	SoundManager::GetInstance().Update();
-
-	if (m_celist.count(m_camera.Target))
-		m_camera.SetFollow(m_celist.at(m_camera.Target)->Physics()->Position() + Vector3f(0.5f, 0.5f, 0));
-
+void SceneWorld::UpdateHUD()
+{
 	//Display FPS
 #ifdef _DEBUG
 	FontManager::GetInstance().SetText(m_fontFPS, /*std::to_string(m_celist.at(1)->PhysicsRaw()->PositionRef().z),*/std::to_string(ElapsedTime::GetInstance().GetFPS()),
@@ -245,9 +274,8 @@ SceneGenData SceneWorld::Update()
 #endif
 
 	srand(clock());
-	FontManager::GetInstance().Update(ElapsedTime::GetInstance().GetElapsedTime());
 
-	return NextScene;
+	FontManager::GetInstance().Update(ElapsedTime::GetInstance().GetElapsedTime());
 }
 
 void SceneWorld::Draw()

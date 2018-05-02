@@ -3,6 +3,7 @@
 #include <set>
 #include "gameData.h"
 
+// Make sure to add a default value in GameData
 std::map<InputAction, std::string> InputManager::InputActionStrings = {
 	std::make_pair(A_Accept, "Accept"),
 	std::make_pair(A_Cancel, "Cancel"),
@@ -12,11 +13,13 @@ std::map<InputAction, std::string> InputManager::InputActionStrings = {
 	std::make_pair(A_Right, "Right"),
 	std::make_pair(A_Left, "Left"),
 	std::make_pair(A_Down, "Down"),
-	std::make_pair(A_Up, "Up")
+	std::make_pair(A_Up, "Up"),
+	std::make_pair(A_Menu, "Menu")
 };
 
 InputManager::InputManager() : m_inputQueue(std::list<std::pair<unsigned int, KeyStatus>>()), m_lockLevel(0)
 {
+	m_lockLevel.push_front(0);
 }
 
 InputManager::~InputManager()
@@ -92,7 +95,7 @@ bool InputManager::FrameKeyStatus(InputAction action, KeyStatus status, unsigned
 bool InputManager::FrameKeyStatus(unsigned int key, KeyStatus status, unsigned int accessLevel)
 {
 	//The key is never considered pressed to a method that doesnt currently have access
-	if (accessLevel < m_lockLevel)
+	if (accessLevel < m_lockLevel.front())
 		return false;
 
 	if (status == AnyPress)
@@ -169,7 +172,16 @@ int InputManager::FindKey(std::list<std::pair<unsigned int, KeyStatus>>* list, u
 
 void InputManager::SetLockLevel(unsigned int level)
 {
-	m_lockLevel = level;
+	m_lockLevel.push_front(level);
+}
+
+void InputManager::PopLockLevel()
+{
+	if (m_lockLevel.size() > 0)
+		m_lockLevel.pop_front();
+
+	if (m_lockLevel.size() == 0)
+		m_lockLevel.push_back(0);
 }
 
 

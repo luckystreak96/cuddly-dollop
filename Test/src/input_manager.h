@@ -4,12 +4,13 @@
 #include <list>
 #include <map>
 #include <vector>
+#include <deque>
 #include <utility>
 //#include <iostream>
 #include "key_status.h"
 
 // Actions to assign the buttons to
-enum InputAction { A_Accept, A_Cancel, A_Mute, A_Exit, A_Pause, A_Right, A_Left, A_Down, A_Up, A_Last };
+enum InputAction { A_Accept, A_Cancel, A_Mute, A_Exit, A_Pause, A_Right, A_Left, A_Down, A_Up, A_Menu, A_Last };
 
 // Holds all inputs in one place to be easily accessed across the whole app
 class InputManager
@@ -24,6 +25,9 @@ public:
 
 	// Set lock level
 	void SetLockLevel(unsigned int level);
+
+	// Pop lock level
+	void PopLockLevel();
 
 	// Clears list of keys
 	void SetupFrameKeys();
@@ -70,7 +74,7 @@ private:
 	~InputManager();
 
 	// When locked is true, you need to access the input with a certain priority for it to work
-	unsigned int m_lockLevel;
+	std::deque<unsigned int> m_lockLevel;
 	std::map<unsigned int, float> m_powers;
 	std::map<unsigned int, std::pair<KeyStatus, float>> m_keyMap;
 	std::list<std::pair<unsigned int, KeyStatus>> m_inputQueue;

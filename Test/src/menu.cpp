@@ -14,6 +14,15 @@ void Menu::Update()
 
 	for (int i = 0; i < m_components.size(); i++)
 		PushActive(m_components.at(i)->Update(i == m_components.size() - 1));
+
+	if (InputManager::GetInstance().FrameKeyStatus(InputAction::A_Cancel, AnyPress, 2))
+		PopActive();
+}
+
+void Menu::SetRender()
+{
+	for (int i = 0; i < m_components.size(); i++)
+		m_components.at(i)->SetRender();
 }
 
 void Menu::Close()
@@ -22,6 +31,16 @@ void Menu::Close()
 		x->Destroy();
 
 	_done = true;
+	InputManager::GetInstance().PopLockLevel();
+
+	if (Camera::_currentCam)
+		Camera::_currentCam->_paused = false;
+}
+
+void Menu::Open()
+{
+	InputManager::GetInstance().SetLockLevel(2);
+	_done = false;
 }
 
 void Menu::PushActive(MenuComp_ptr menuComp)
@@ -33,7 +52,7 @@ void Menu::PushActive(MenuComp_ptr menuComp)
 
 void Menu::PopActive()
 {
-	if (m_activeStack.size() == 1)
+	if (m_activeStack.size() <= 1)
 		Close();
 	else
 		m_activeStack.pop_back();

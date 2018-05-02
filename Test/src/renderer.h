@@ -27,6 +27,7 @@ public:
 	void Draw();
 	void Add(GraphComp_ptr c);
 	void Clear();
+	inline unsigned int Count() { return m_toDraw.size(); }
 private:
 	Renderer();
 	void Sort();
