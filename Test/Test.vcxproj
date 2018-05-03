@@ -185,6 +185,7 @@
     <ClInclude Include="src\localizationData.h" />
     <ClInclude Include="src\menu.h" />
     <ClInclude Include="src\menuComponent.h" />
+    <ClInclude Include="src\menuParty.h" />
     <ClInclude Include="src\nighttimeEffect.h" />
     <ClInclude Include="src\nighttimeProcessing.h" />
     <ClInclude Include="src\observable.h" />
@@ -313,6 +314,7 @@
     <ClCompile Include="src\localizationData.cpp" />
     <ClCompile Include="src\menu.cpp" />
     <ClCompile Include="src\menuComponent.cpp" />
+    <ClCompile Include="src\menuParty.cpp" />
     <ClCompile Include="src\nighttimeEffect.cpp" />
     <ClCompile Include="src\nighttimeProcessing.cpp" />
     <ClCompile Include="src\observable.cpp" />

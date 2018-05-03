@@ -494,6 +494,9 @@
     <ClInclude Include="src\menuComponent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\menuParty.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -854,6 +857,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\menuComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\menuParty.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

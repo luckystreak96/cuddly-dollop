@@ -6505,17 +6505,63 @@
                   }
                 },
                 "french": {
-                  "dialogue 0": {
-                    "id": 0,
-                    "text": "OMG",
-                    "next": 1,
-                    "type": "simple"
-                  },
                   "dialogue 1": {
                     "id": 1,
                     "text": "Snowman_youre_my_hero",
                     "next": -1,
                     "type": "simple"
+                  },
+                  "dialogue 0": {
+                    "id": 0,
+                    "text": "So?",
+                    "next": 1,
+                    "type": "choice"
+                  },
+                  "dialogue 2": {
+                    "id": 2,
+                    "text": "Oh non! D:",
+                    "next": -1,
+                    "type": "end"
+                  },
+                  "dialogue 3": {
+                    "id": 3,
+                    "text": "OMG",
+                    "next": 1,
+                    "type": "simple",
+                    "queues": [
+                      {
+                        "name": "queue",
+                        "id": -1,
+                        "flag": "",
+                        "flag_value": 1,
+                        "flag_condition": 0,
+                        "activation": "interact",
+                        "repeating": false,
+                        "events": [
+                          {
+                            "type": "particle",
+                            "execution_type": "async",
+                            "args": {
+                              "id": 10,
+                              "type": "explosion",
+                              "count": 50,
+                              "power": 0.3,
+                              "sprite": "snowflake.png"
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "choice 0": {
+                    "d": 0,
+                    "next": 3,
+                    "text": "Yes"
+                  },
+                  "choice 1": {
+                    "d": 0,
+                    "next": 2,
+                    "text": "No"
                   }
                 }
               }

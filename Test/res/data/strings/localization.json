@@ -38,5 +38,13 @@
   "Yes": {
     "french": "Oui",
     "english": "Yes"
+  },
+  "So?": {
+    "french": "Et puis?",
+    "english": "So?"
+  },
+  "No": {
+    "french": "Non",
+    "english": "No"
   }
 }

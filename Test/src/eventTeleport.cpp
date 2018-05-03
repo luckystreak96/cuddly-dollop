@@ -1,5 +1,7 @@
 #include "eventTeleport.h"
 
+#include "mathutils.h"
+
 EventTeleport::EventTeleport(unsigned int entity_id, float x, float y, float z) : m_x(x), m_y(y), m_z(z)
 {
 	m_target = entity_id;

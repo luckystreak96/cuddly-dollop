@@ -63,6 +63,7 @@ bool SceneWorld::Init()
 	m_collisionManager.SetMapTiles(m_mapHandler->Tiles());
 
 	m_celist = EntityFactory::GetEntities(m_currentMap, m_jsonHandler);
+	m_camera.ForcePosition(m_celist.at(1)->PhysicsRaw()->PositionRef());
 	m_eventManager.SetEntitiesMap(&m_celist);
 	m_collisionManager.SetEntities(&m_celist);
 
@@ -284,6 +285,9 @@ void SceneWorld::Draw()
 
 	// Set the renders
 	m_mapHandler->SetRender();
+
+	if (m_menu && !m_menu->_done)
+		m_menu->SetRender();
 
 	for (auto it : m_celist)
 		it.second->SetRender();

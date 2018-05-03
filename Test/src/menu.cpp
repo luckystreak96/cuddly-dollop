@@ -1,10 +1,13 @@
 #include "menu.h"
 
+#include "menuParty.h"
 #include "input_manager.h"
 
 Menu::Menu()
 {
 	_done = true;
+	std::shared_ptr<MenuParty> menuHUD = std::make_shared<MenuParty>(MenuParty());
+	m_components.push_back(menuHUD);
 }
 
 void Menu::Update()
