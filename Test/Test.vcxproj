@@ -184,6 +184,7 @@
     <ClInclude Include="src\lerper.h" />
     <ClInclude Include="src\localizationData.h" />
     <ClInclude Include="src\menu.h" />
+    <ClInclude Include="src\menuBackgroundBox.h" />
     <ClInclude Include="src\menuComponent.h" />
     <ClInclude Include="src\menuParty.h" />
     <ClInclude Include="src\nighttimeEffect.h" />
@@ -313,6 +314,7 @@
     <ClCompile Include="src\lerper.cpp" />
     <ClCompile Include="src\localizationData.cpp" />
     <ClCompile Include="src\menu.cpp" />
+    <ClCompile Include="src\menuBackgroundBox.cpp" />
     <ClCompile Include="src\menuComponent.cpp" />
     <ClCompile Include="src\menuParty.cpp" />
     <ClCompile Include="src\nighttimeEffect.cpp" />

@@ -167,6 +167,15 @@ bool GraphicsComponent::LoadGLResources()
 	return true;
 }
 
+void GraphicsComponent::ApplyModelToVertices()
+{
+	for (auto& x : m_vertices)
+	{
+		x.vertex *= m_modelMat.GetScale();
+		x.vertex += m_pos;
+	}
+}
+
 bool GraphicsComponent::UnloadGLResources()
 {
 	if (m_IBO != 0)

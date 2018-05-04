@@ -58,11 +58,26 @@ void Game::SetupTextureAtlas()
 	for(auto x : Utils::GetAllFiles("res/sprites/particles", "png"))
 		vs.push_back("res/sprites/particles/" + x);
 
+	for(auto x : Utils::GetAllFiles("res/sprites/special", "png"))
+		vs.push_back("res/sprites/special/" + x);
+
 
 	for (std::string s : vs)
 		TextureAtlas::m_textureAtlas.AddTexture(s);
 	TextureAtlas::m_textureAtlas.Generate(32, false, "res/tiles.png");
 	TextureAtlas::m_textureAtlas.ShortenTextureList();
+
+
+	//// SPECIAL FILE
+	//TextureAtlas::m_textureAtlas = TextureAtlas(16);
+	//vs = Utils::GetAllFiles("res/sprites/special", "png");
+	//for(auto& x : vs)
+	//	x = "res/sprites/special/" + x;
+
+	//for (std::string s : vs)
+	//	TextureAtlas::m_textureAtlas.AddTexture(s);
+	//TextureAtlas::m_textureAtlas.Generate(16, false, "res/tiles.png");
+	//TextureAtlas::m_textureAtlas.ShortenTextureList();
 }
 
 void Game::renderSceneCB()
