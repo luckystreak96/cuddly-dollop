@@ -34,6 +34,7 @@ class Transformation
         Mat4f& GetTrans();
 		Vector3f GetTranslation() { return m_translate; };
 		Vector3f GetScale() { return m_scale; };
+		Vector3f GetRotation() { return m_rotate; };
 
     private:
 		float m_followSpeed = 1;
