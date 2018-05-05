@@ -12,7 +12,6 @@ public:
 	// Don't forget to tell the Observable that you're an observer
 	HudHealthBar(Actor* ap, Vector3f position);
 	void Update();
-	void AdjustPosition();
 	void Destroy();
 	void SetRender();
 

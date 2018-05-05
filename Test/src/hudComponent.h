@@ -9,7 +9,6 @@ class HudComponent : public Observer
 {
 public:
 	virtual void Update();
-	virtual void AdjustPosition();
 	virtual void Destroy();
 	virtual void SetRender();
 };

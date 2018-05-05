@@ -44,11 +44,6 @@ void HudBar::Update()
 	_foreground->Update();
 }
 
-void HudBar::AdjustPosition()
-{
-	// Handle moving all components if the screen is resized
-}
-
 void HudBar::SetRender()
 {
 	// FontManager handles setting the render for the label

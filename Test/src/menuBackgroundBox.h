@@ -7,7 +7,9 @@
 class MenuBackgroundBox : public FontGraphicsComponent
 {
 public:
-	MenuBackgroundBox(Vector3f position = Vector3f(), Vector3f size = Vector3f(10, 10, 1));
+	// Width and Height in tile sizes
+	// If position is -1 for x y and z, itll center the menu
+	MenuBackgroundBox(Vector3f position = Vector3f(0.2f, 0.1f, 0.0f), int width = 11, int height = 7);
 	void Update();
 protected:
 	Mesh m_mesh;

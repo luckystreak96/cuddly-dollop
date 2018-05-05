@@ -9,8 +9,8 @@
 
 HudHealthBar::HudHealthBar(Actor* ap, Vector3f position)
 {
+	// Set initial values
 	_actor = ap;
-	//&ap->_Fighter->Health, ap->_Fighter->GetMaxHealth().Real, pos, ap->_Name
 	m_observed = &ap->_Fighter->Health;
 	m_max = ap->_Fighter->GetMaxHealth().Modified;
 	std::string name = ap->_Name;
@@ -23,21 +23,21 @@ HudHealthBar::HudHealthBar(Actor* ap, Vector3f position)
 	m_observedXP = ap->_Fighter->GetExp();
 	m_xpMax = ap->_Fighter->CalculateNextLevelExp() - ap->_Fighter->CalculateLevelExp(ap->_Fighter->GetLevel() - 1);
 
-	//m_observed = observable;
-	m_prevValue = -43893893;// set this to a fucked up number so itll do it's first update
-	m_prevXP = -43893893;// set this to a fucked up number so itll do it's first update
-	m_prevMaxHP = -43893893;
-	//m_maxHealth = maxHealth;
+	m_prevValue = m_prevXP = m_prevMaxHP = -43893893;// set this to a fucked up number so itll do it's first update
 
 	// Smaller bars
-	_smallForeground = GraphComp_ptr(new FontGraphicsComponent("BAR", "res/sprites/special/bar_foreground.png"));
-	_smallBackground = GraphComp_ptr(new FontGraphicsComponent("BAR", "res/sprites/special/bar_background.png"));
+	{
+		Vector3f scale(0.33, 0.3, 1);
 
-	m_actorPrevPos = _actor->_Graphics->GetPosRef();
-	_smallForeground->GetModelMat()->SetScale(0.33f, 0.3f, 1);
-	_smallBackground->GetModelMat()->SetScale(0.33f, 0.3f, 1);
-	_smallBackground->SetColorAll(Vector3f(0.08f, 0.4f, 1.0f));
-	UpdateSmallHPPosition();
+		_smallForeground = GraphComp_ptr(new FontGraphicsComponent("BAR", "res/sprites/special/bar_foreground.png"));
+		_smallBackground = GraphComp_ptr(new FontGraphicsComponent("BAR", "res/sprites/special/bar_background.png"));
+
+		m_actorPrevPos = _actor->_Graphics->GetPosRef();
+		_smallForeground->GetModelMat()->SetScale(scale);
+		_smallBackground->GetModelMat()->SetScale(scale);
+		_smallBackground->SetColorAll(Vector3f(0.08f, 0.4f, 1.0f));
+		UpdateSmallHPPosition();
+	}
 
 	// Bar
 	GraphComp_ptr ptr = GraphComp_ptr(new FontGraphicsComponent("BAR", "res/sprites/special/bar.png"));
@@ -58,9 +58,6 @@ HudHealthBar::HudHealthBar(Actor* ap, Vector3f position)
 	ptr->Update();
 	ptr2->Update();
 	ptrExp->Update();
-	//_smallForeground->Update();
-	//_smallBackground->Update();
-	//ptr2->SetColorAll(Vector3f(0.5f, 0.5f, 0.5f), 0.2f);
 
 	// health 
 	unsigned int font = FontManager::GetInstance().AddFont(true, false, true, "res/fonts/lowercase.png");
@@ -209,11 +206,6 @@ bool HudHealthBar::UpdateExpAnimation(float newxp)
 
 	// not done
 	return false;
-}
-
-void HudHealthBar::AdjustPosition()
-{
-	// Handle moving all components if the screen is resized
 }
 
 void HudHealthBar::SetRender()

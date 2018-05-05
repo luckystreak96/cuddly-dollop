@@ -10,7 +10,6 @@ public:
 	// Don't forget to tell the Observable that you're an observer
 	HudBar(int* ap, int max, Vector3f position);
 	virtual void Update();
-	virtual void AdjustPosition();
 	virtual void Destroy();
 	virtual void SetRender();
 
