@@ -1,2 +1,4 @@
 Texture Atlas - Arthur Ouellet
+
 Sprites - Olivier Rouillard
+Castle Tiles - Zabin, Hyptosis, and Danial Cook. https://opengameart.org/content/castle-tiles-for-rpgs
