@@ -22,6 +22,22 @@ namespace dollop_editor
             type = "simple";
         }
 
+        public Dialogue(Dialogue d)
+        {
+            id = d.id;
+            text = d.text;
+            next = d.next;
+            type = d.type;
+
+            if(d.queues != null)
+            {
+                queues = new List<EventQueue>();
+                foreach (var x in d.queues)
+                    queues.Add(new EventQueue(x));
+            }
+        }
+
+
         public override string ToString()
         {
             return "       " + id.ToString() + "\t" + next.ToString() + "\n" + text + " (Q : " + (queues == null ? 0 : queues.Count) + ")";

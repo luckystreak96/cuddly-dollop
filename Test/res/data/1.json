@@ -5983,17 +5983,33 @@
               "type": "dialogue",
               "execution_type": "blocking",
               "args": {
-                "dialogue 0": {
-                  "id": 0,
-                  "text": "Hey man, what's up? I wrote a poem today.",
-                  "next": 6,
-                  "type": "simple"
+                "english": {
+                  "dialogue 0": {
+                    "id": 0,
+                    "text": "Hey man, what's up? I wrote a poem today.",
+                    "next": 6,
+                    "type": "simple"
+                  },
+                  "dialogue 6": {
+                    "id": 6,
+                    "text": "Roses are red,\n Violets are blue,\n\n This poem is amazing,\n Unlike you!",
+                    "next": -1,
+                    "type": "end"
+                  }
                 },
-                "dialogue 1": {
-                  "id": 6,
-                  "text": "Roses are red,\n Violets are blue,\n\n This poem is amazing,\n Unlike you!",
-                  "next": -1,
-                  "type": "end"
+                "french": {
+                  "dialogue 0": {
+                    "id": 0,
+                    "text": "J'ai récemment écrit un un super beau poème!",
+                    "next": 6,
+                    "type": "simple"
+                  },
+                  "dialogue 6": {
+                    "id": 6,
+                    "text": "Roses are red,\nViolets are blue,\n\nVoila un excellent poème,\nAu contraire de vous!",
+                    "next": -1,
+                    "type": "end"
+                  }
                 }
               }
             }

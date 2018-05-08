@@ -38,6 +38,7 @@ namespace dollop_editor
 
             langList = Enum.GetNames(typeof(Languages)).ToList();
             cmbLanguage.ItemsSource = langList;
+            cmbLanguageCopy.ItemsSource = langList;
 
             foreach(string s in langList)
             {
@@ -335,6 +336,22 @@ namespace dollop_editor
             lstDialogues.Items.Refresh();
 
             lstChoices.ItemsSource = Choices[lang];
+            lstChoices.Items.Refresh();
+        }
+
+        private void cmbLanguageCopy_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string lang = e.AddedItems[0].ToString();
+
+            if (MessageBox.Show("Copying from " + lang + " to " + cmbLanguage.Text + " will erase your current data. Continue?", "Are you sure?", MessageBoxButton.OKCancel) == MessageBoxResult.Cancel)
+                return;
+
+            foreach (var x in Dialogues[lang])
+                Dialogues[cmbLanguage.Text].Add(new Dialogue(x));
+            //Dialogues[cmbLanguage.Text] = new List<Dialogue>(Dialogues[lang]);
+            lstDialogues.ItemsSource = Dialogues[cmbLanguage.Text];
+            lstDialogues.Items.Refresh();
+            lstChoices.ItemsSource = Choices[cmbLanguage.Text];
             lstChoices.Items.Refresh();
         }
     }
