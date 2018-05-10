@@ -11,6 +11,7 @@ using namespace rapidjson;
 
 std::vector<Actor_ptr> BattleData::Party = std::vector<Actor_ptr>();
 std::map<int, Passive_ptr> BattleData::PassiveSkills = std::map<int, Passive_ptr>();
+std::map<int, Actor_ptr> BattleData::Actors = std::map<int, Actor_ptr>();
 
 void BattleData::NewGame()
 {
@@ -22,6 +23,7 @@ void BattleData::LoadAll()
 {
 	LoadCurves();
 	LoadPassives();
+	LoadActors();
 }
 
 void BattleData::LoadCurves()
@@ -159,6 +161,41 @@ void BattleData::LoadPassives()
 	}
 }
 
+void BattleData::LoadActors()
+{
+	std::string file = "";
+	try {
+		file = Utils::ReadFile("res/data/battle/battle.json");
+	}
+	catch (...)// catch any exception
+	{
+		std::cout << "Error loading: res/data/battle/battle.json" << std::endl;
+		return;
+	}
+
+	rapidjson::Document doc;
+	doc.Parse(file.c_str());
+
+	// Get the flags
+	if (doc.HasMember("actors") && doc["actors"].IsArray())
+	{
+		std::map<int, Actor_ptr> data;
+		auto actors = doc["actors"].GetArray();
+		// Loop through actors
+		for (auto& actor : actors)
+		{
+			int actorID = -1;
+			if (actor.HasMember("id"))
+				actorID = actor["id"].GetInt();
+
+			// emplace actor
+			data.emplace(actorID, ActorFactory::BuildActor(actor));
+		}
+
+		Actors = data;
+	}
+}
+
 void BattleData::LoadParty(rapidjson::Document& doc)
 {
 	if (doc.HasMember("party") && doc["party"].IsArray())
@@ -260,7 +297,7 @@ void BattleData::SaveParty(rapidjson::Document& saveFile, Document::AllocatorTyp
 		ob.AddMember(first, second, allocator);
 
 		// passives
-		first.SetString(StringRef("passives"), allocator);
+		first.SetString(StringRef("actors"), allocator);
 		second = Value(kArrayType);
 		for (auto passive : actor->_Fighter->_Passives)
 		{

@@ -10,6 +10,18 @@ Actor::Actor()
 	SetDefault();
 }
 
+Actor::Actor(Actor& a)
+{
+	_Fighter = Fighter_ptr(new Fighter(*a._Fighter.get()));
+	_Graphics = NULL;
+	_ColorState = CS_Normal;
+	SetDefault();
+
+	_Name = a._Name;
+	Sprite = a.Sprite;
+	_Graphics->SetTexture(Sprite);
+}
+
 bool Actor::ActorSpeedSort(Actor_ptr a, Actor_ptr b)
 {
 	if (a->_Fighter && b->_Fighter)

@@ -22,6 +22,7 @@ class Fighter : public StatUser
 {
 public:
 	Fighter();
+	Fighter(Fighter& f);
 	
 	// Damage related
 	virtual Damage TakeDamage(Damage& dmg);

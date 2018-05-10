@@ -27,10 +27,13 @@ SceneBattle::SceneBattle() : m_zoom(false)
 	for (auto x : BattleData::Party)
 		_actors.push_back(x);
 
-	_actors.push_back(Actor_ptr(ActorFactory::BuildBaseEnemy()));
-	_actors.push_back(Actor_ptr(ActorFactory::BuildBaseEnemy()));
-	_actors.push_back(Actor_ptr(ActorFactory::BuildBaseEnemy()));
-	_actors.push_back(Actor_ptr(ActorFactory::BuildBaseEnemy()));
+	_actors.push_back(Actor_ptr(ActorFactory::BuildActor(1)));
+	_actors.push_back(Actor_ptr(ActorFactory::BuildActor(1)));
+	_actors.push_back(Actor_ptr(ActorFactory::BuildActor(1)));
+	_actors.push_back(Actor_ptr(ActorFactory::BuildActor(1)));
+	//_actors.push_back(Actor_ptr(ActorFactory::BuildBaseEnemy()));
+	//_actors.push_back(Actor_ptr(ActorFactory::BuildBaseEnemy()));
+	//_actors.push_back(Actor_ptr(ActorFactory::BuildBaseEnemy()));
 	Init();
 	m_battle = BattleManager(_actors);
 	SoundManager::GetInstance();

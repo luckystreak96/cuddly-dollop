@@ -64,5 +64,22 @@
       "_int": 0,
       "_float": 6.0
     }
+  ],
+  "actors": [
+    {
+      "id": 1,
+      "name": "Jerry",
+      "sprite": "res/sprites/entities/entity_slime.png",
+      "curve": "Attack_Level_1",
+      "health": 99999,
+      "level": 1,
+      "exp": 0,
+      "skillpoints": 4,
+      "dead": false,
+      "skills": [
+        "Heal"
+      ],
+      "passives": []
+    }
   ]
 }

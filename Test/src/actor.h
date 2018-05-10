@@ -12,6 +12,7 @@ class Actor
 {
 public:
 	Actor();
+	Actor(Actor& a);
 	void Update();
 	void UpdateColor();
 

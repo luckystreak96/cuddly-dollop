@@ -6,10 +6,36 @@
 #include "statCurve.h"
 #include "passiveFactory.h"
 #include "battleManager.h"
+#include "actorFactory.h"
 
 Fighter::Fighter()
 {
 	SetDefault();
+}
+
+Fighter::Fighter(Fighter& f)
+{
+	SetDefault();
+
+	Skills.clear();
+	Health = f.Health;
+	Curve = f.Curve;
+	SetLevel(f.Level);
+	SetExp(f.Exp);
+	SkillPoints = f.SkillPoints;
+
+	Dead = f.Dead;
+
+	for (auto& x : f.Skills)
+		Skills.push_back(ActorFactory::BuildSkill(x->_name));
+
+	for (auto& x : f._Passives)
+		_Passives.push_back(BattleData::PassiveSkills.at(x->_Id));
+
+	// Stats are decided first by the curve, then the passives, then the equipment etc
+	SetStatsFromCurve();
+	PassiveFactory::ApplyAllPassives(this, &_Passives);
+	CurrentHealthCheck();
 }
 
 bool Fighter::PredictNextSkill(Actor_ptr owner, std::vector<Actor_ptr>* actors)

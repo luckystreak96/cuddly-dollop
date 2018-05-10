@@ -42,6 +42,5 @@ namespace dollop_editor
         {
             return "       " + id.ToString() + "\t" + next.ToString() + "\n" + text + " (Q : " + (queues == null ? 0 : queues.Count) + ")";
         }
-
     }
 }

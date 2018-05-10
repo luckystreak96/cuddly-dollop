@@ -13,5 +13,12 @@ namespace dollop_editor
     {
         public string op;
         public float value;
+
+        public CurveStyle(CurveStyle style)
+        {
+            op = style.op;
+            value = style.value;
+        }
     }
+
 }

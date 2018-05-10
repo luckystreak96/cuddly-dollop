@@ -802,5 +802,21 @@ namespace dollop_editor
                 mustSave = true;
             }
         }
+
+        private void menuActors_Click(object sender, RoutedEventArgs e)
+        {
+
+            Battle.WindowActors actorWindow = new Battle.WindowActors();
+            actorWindow.battleData = new Battle.BattleData(editor._BattleData);
+            actorWindow.Setup();
+            actorWindow.ShowDialog();
+
+            // If the results are to be saved...
+            if(actorWindow.DialogResult == true)
+            {
+                editor._BattleData = actorWindow.battleData;
+                mustSave = true;
+            }
+        }
     }
 }

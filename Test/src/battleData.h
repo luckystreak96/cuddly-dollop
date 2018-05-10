@@ -22,12 +22,14 @@ public:
 	static void LoadAll();
 	static void LoadCurves();
 	static void LoadPassives();
+	static void LoadActors();
 
 public:
 	// Party
 	static std::vector<Actor_ptr> Party;
 	static std::map<int, int> StatCurves;
 	static std::map<int, Passive_ptr> PassiveSkills;
+	static std::map<int, Actor_ptr> Actors;
 
 };
 
