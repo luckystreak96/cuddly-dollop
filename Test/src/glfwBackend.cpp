@@ -341,12 +341,21 @@ void GLFWManager::HandleJoystickInput()
 	// 4-5 = L2 R2 pressure
 
 	// Dead zone
-	float deadZone = 0.15f;
+	float deadZone = -0.8f;
+
+	static float prevR2 = 0;
+	if (axes[5] > deadZone)
+		InputManager::GetInstance().Input(GameData::KeyMap.at(A_AltR), true);
+	else if (prevR2 >= deadZone && axes[5] < deadZone)
+		InputManager::GetInstance().Input(GameData::KeyMap.at(A_AltR), false);
+
+	//std::cout << axes[5] << std::endl;
+
+	deadZone = 0.15f;
 
 	static float prevX = 0;
 	static float prevY = 0;
 	static std::vector<bool> buttonStates(20);
-
 	// Left stick X
 	if (abs(axes[0]) >= deadZone)
 	{
@@ -430,6 +439,12 @@ void GLFWManager::HandleJoystickInput()
 	else if (buttonStates[7])
 		InputManager::GetInstance().Input(GameData::KeyMap.at(A_Menu), false);
 
+	// 'R1' button is buttons[5]
+	//if (buttons[5] == GLFW_PRESS)
+	//	InputManager::GetInstance().Input(GameData::KeyMap.at(A_AltR), true);
+	//else if (buttonStates[5])
+	//	InputManager::GetInstance().Input(GameData::KeyMap.at(A_AltR), false);
+
 	// For a visual on which buttons are which index
 
 	//for(int i = 0; i < buttonCount; i++)
@@ -438,6 +453,7 @@ void GLFWManager::HandleJoystickInput()
 
 	prevX = axes[0];
 	prevY = axes[1];
+	prevR2 = axes[5];
 	for (int i = 0; i < buttonCount; i++)
 		buttonStates[i] = buttons[i];
 	//buttonStates[0] = buttons[0];

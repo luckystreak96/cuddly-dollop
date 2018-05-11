@@ -177,6 +177,7 @@
     <ClInclude Include="src\contrastProcessing.h" />
     <ClInclude Include="src\fighter.h" />
     <ClInclude Include="src\fontFloat.h" />
+    <ClInclude Include="src\hudArrow.h" />
     <ClInclude Include="src\hudAttackPrediction.h" />
     <ClInclude Include="src\hudBar.h" />
     <ClInclude Include="src\hudComponent.h" />
@@ -307,6 +308,7 @@
     <ClCompile Include="src\contrastProcessing.cpp" />
     <ClCompile Include="src\fighter.cpp" />
     <ClCompile Include="src\fontFloat.cpp" />
+    <ClCompile Include="src\hudArrow.cpp" />
     <ClCompile Include="src\hudAttackPrediction.cpp" />
     <ClCompile Include="src\hudBar.cpp" />
     <ClCompile Include="src\hudComponent.cpp" />

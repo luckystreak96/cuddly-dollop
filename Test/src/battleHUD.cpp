@@ -1,6 +1,7 @@
 #include "battleHUD.h"
 #include "renderer.h"
 #include "fontManager.h"
+#include "hudArrow.h"
 
 BattleHUD::BattleHUD()
 {
@@ -26,9 +27,14 @@ void BattleHUD::Init(std::vector<Actor_ptr> actors)
 		// Health bar
 		AddActorHealthBar(x, party, enemies);
 
-		// Attack prediction
 		if (x->_Fighter->Team != 0)
+		{
+			// Attack prediction
 			AddActorAttackPrediction(x);
+
+			// Attack prediction arrow
+			AddActorAttackPredictionArrow(x);
+		}
 	}
 
 	float top = OrthoProjInfo::GetRegularInstance().Top;
@@ -95,6 +101,13 @@ void BattleHUD::AddActorAttackPrediction(Actor_ptr ap)
 	_hudComponents.push_back(damagePrediction);
 }
 
+void BattleHUD::AddActorAttackPredictionArrow(Actor_ptr ap)
+{
+	HudComp_ptr damagePrediction = HudComp_ptr(new HudArrow(ap));
+	ap->_Fighter->_observers.push_back(damagePrediction);
+	_hudComponents.push_back(damagePrediction);
+}
+
 void BattleHUD::ToggleDamagePredictionDisplay(bool display)
 {
 	HudAttackPrediction* pred;
@@ -103,6 +116,17 @@ void BattleHUD::ToggleDamagePredictionDisplay(bool display)
 		pred = dynamic_cast<HudAttackPrediction*>(x.get());
 		if (pred != NULL)
 			pred->ToggleDisplay(display);
+	}
+}
+
+void BattleHUD::ToggleDamagePredictionArrowDisplay(bool display)
+{
+	HudArrow* pred;
+	for (auto& x : _hudComponents)
+	{
+		pred = dynamic_cast<HudArrow*>(x.get());
+		if (pred != NULL)
+			pred->ToggleHidden(display);
 	}
 }
 
@@ -124,6 +148,15 @@ void BattleHUD::Update()
 		Destroy();
 		Init(_actors);
 	}
+
+	// Update target arrows
+	//for (auto& x : _actors)
+	//{
+	//	if (!x->_Fighter->Dead && x->_Fighter->PredictedSkill != NULL)
+	//	{
+
+	//	}
+	//}
 }
 
 void BattleHUD::SetRender()

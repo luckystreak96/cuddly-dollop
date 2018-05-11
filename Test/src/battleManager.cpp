@@ -362,6 +362,10 @@ void BattleManager::RemoveChooseSkillText()
 
 void BattleManager::ManageInput()
 {
+	// When you hold R2 or D, show arrows
+	if(InputManager::GetInstance().FrameKeyStatus(A_AltR, KeyStatus::Release) || InputManager::GetInstance().FrameKeyStatus(A_AltR, KeyStatus::KeyPressed))
+		_hud.ToggleDamagePredictionArrowDisplay(!InputManager::GetInstance().FrameKeyStatus(A_AltR, KeyStatus::KeyPressed));
+
 	// Dont allow any input if theres an animation running
 	// This doesnt apply if theres a skill in progress, gotta be interactive!
 	if ((_animations.size() || _owner->_Fighter->Team != 0) && _state != BS_ActionProgress)

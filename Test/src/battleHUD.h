@@ -14,6 +14,7 @@ public:
 	void SetRender();
 	void Destroy();
 	void ToggleDamagePredictionDisplay(bool display);
+	void ToggleDamagePredictionArrowDisplay(bool display);
 
 	// Returns the HudHealthBar attached to the specified actor
 	HudHealthBar* GetActorHealthBar(Actor* actor);
@@ -21,6 +22,7 @@ public:
 private:
 	void AddActorHealthBar(Actor_ptr ap, int& party, int& enemies);
 	void AddActorAttackPrediction(Actor_ptr ap);
+	void AddActorAttackPredictionArrow(Actor_ptr ap);
 
 public:
 	std::vector<Actor_ptr> _actors;

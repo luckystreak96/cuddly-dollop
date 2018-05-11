@@ -500,6 +500,9 @@
     <ClInclude Include="src\menuBackgroundBox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\hudArrow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -866,6 +869,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\menuBackgroundBox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\hudArrow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -14,7 +14,8 @@ std::map<InputAction, std::string> InputManager::InputActionStrings = {
 	std::make_pair(A_Left, "Left"),
 	std::make_pair(A_Down, "Down"),
 	std::make_pair(A_Up, "Up"),
-	std::make_pair(A_Menu, "Menu")
+	std::make_pair(A_Menu, "Menu"),
+	std::make_pair(A_AltR, "AltR")
 };
 
 InputManager::InputManager() : m_inputQueue(std::list<std::pair<unsigned int, KeyStatus>>()), m_lockLevel(0)

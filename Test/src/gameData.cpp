@@ -277,6 +277,8 @@ void GameData::EnsureBaseSettings()
 		KeyMap.emplace(A_Left, GLFW_KEY_LEFT);
 	if (!KeyMap.count(A_Menu))
 		KeyMap.emplace(A_Menu, GLFW_KEY_ENTER);
+	if (!KeyMap.count(A_AltR))
+		KeyMap.emplace(A_AltR, GLFW_KEY_D);
 }
 
 void GameData::SaveGameData()
