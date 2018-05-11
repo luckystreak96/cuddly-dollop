@@ -362,9 +362,11 @@ void BattleManager::RemoveChooseSkillText()
 
 void BattleManager::ManageInput()
 {
-	// When you hold R2 or D, show arrows
-	if(InputManager::GetInstance().FrameKeyStatus(A_AltR, KeyStatus::Release) || InputManager::GetInstance().FrameKeyStatus(A_AltR, KeyStatus::KeyPressed))
-		_hud.ToggleDamagePredictionArrowDisplay(!InputManager::GetInstance().FrameKeyStatus(A_AltR, KeyStatus::KeyPressed));
+	// When you hold R2 or D, show arrows, udpate once on action done in case an actor loses vision of enemy predictions
+	if(InputManager::GetInstance().FrameKeyStatus(A_AltR, KeyStatus::Release) || 
+		InputManager::GetInstance().FrameKeyStatus(A_AltR, KeyStatus::KeyPressed) || 
+		_state == BS_ActionDone)
+		_hud.ToggleDamagePredictionArrowDisplay(!InputManager::GetInstance().FrameKeyStatus(A_AltR, KeyStatus::AnyPress));
 
 	// Dont allow any input if theres an animation running
 	// This doesnt apply if theres a skill in progress, gotta be interactive!

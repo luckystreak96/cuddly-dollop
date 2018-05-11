@@ -119,14 +119,18 @@ void BattleHUD::ToggleDamagePredictionDisplay(bool display)
 	}
 }
 
-void BattleHUD::ToggleDamagePredictionArrowDisplay(bool display)
+void BattleHUD::ToggleDamagePredictionArrowDisplay(bool hidden)
 {
+	for (auto& x : _actors)
+		if (x->_Fighter->Team == 0 && x->_Fighter->NoPredictCountDown > 0)
+			hidden = true;
+
 	HudArrow* pred;
 	for (auto& x : _hudComponents)
 	{
 		pred = dynamic_cast<HudArrow*>(x.get());
 		if (pred != NULL)
-			pred->ToggleHidden(display);
+			pred->ToggleHidden(hidden);
 	}
 }
 
