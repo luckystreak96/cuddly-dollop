@@ -28,16 +28,20 @@ vec3 hsv2rgb(vec3 c)
 void main()
 {
 	vec4 color = texture2D(gSampler, TexCoord0.st);
-	vec3 tempColor;// = color.rgb;
+	vec3 tempColor;
 
 	// Modify color here
 	tempColor = rgb2hsv(color.rgb);
 	tempColor.g *= 0.95;
 	tempColor.b *= 0.3;
+
+	//tempColor.g *= 1.1;
+
 	color.rgb = hsv2rgb(tempColor);
 
-	//color.b *= 0.7;
-	//color.rg /= 4.5;
+	//color.r *= 1.075;
+	//color.b *= 0.9;
+	//color.g *= 1.15;
 
 	// Contrast
 	//float Contrast = 1.15;
