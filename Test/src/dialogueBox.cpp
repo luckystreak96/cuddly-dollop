@@ -5,6 +5,7 @@
 #include "localizationData.h"
 
 DialogueBox* DialogueBox::m_owner = NULL;
+std::shared_ptr<MenuBackgroundBox> DialogueBox::m_box = NULL;
 
 DialogueBox::DialogueBox(unsigned int entity_id, std::vector<Dialogue> d, std::vector<DialogueChoice> dc) : m_firstTime(true)
 {
@@ -36,12 +37,16 @@ void DialogueBox::Construct()
 	m_xScale = 0.25f;
 	m_yScale = 0.25f;
 
-	m_box = std::shared_ptr<FontGraphicsComponent>(new FontGraphicsComponent("TILE", "res/sprites/special/dialogue.png"));
-	m_box->SetPhysics(Vector3f(0.5f, 0.5f, 0.5f), Vector3f(0, 0, 0));
-	m_box->SetScale(Vector3f(1.0f, 0.5f, 1.0f));
-	m_box->Update();
-	UpdateBox();
-	m_box->SetStatic(true);
+	// Only need to create the box once
+	if (!m_box)
+	{
+		m_box = std::shared_ptr<MenuBackgroundBox>(new MenuBackgroundBox(Vector3f(-1, 0.25f, -10), 14, 3));
+		m_box->Update();
+	}
+	//m_box->SetPhysics(Vector3f(0.5f, 0.5f, 0.5f), Vector3f(0, 0, 0));
+	//m_box->SetScale(Vector3f(1.0f, 0.5f, 1.0f));
+	//UpdateBox();
+	//m_box->SetStatic(true);
 
 	m_phys.SetPosition(Vector3f());
 	m_static = true;
@@ -67,10 +72,10 @@ void DialogueBox::SetText(std::string text)
 {
 	auto graph = GetLocalizedGraph();
 
-	float x = 0.5f;
-	float y = m_box->GetScale().y + m_box->GetPosRef().y - m_yScale;
+	float x = 0.65f;
+	float y = m_box->_topLeft.y + 0.125f;
 	// LOCALIZATION HERE
-	Font::SetText(_(text), Vector3f(x, y, 0.0f), false, m_maxWidth);
+	Font::SetText(_(text), Vector3f(x, y, -15.0f), false, m_maxWidth);
 	m_choices.clear();
 	if (graph && graph->ChoiceAvailable())
 	{
@@ -83,7 +88,7 @@ void DialogueBox::SetText(std::string text)
 			Font_ptr temp = Font_ptr(new Font(true));
 			temp->SetScale(m_xScale, m_yScale);
 			temp->SetTextSpeed(1);
-			temp->SetText(x, Vector3f(0.75f, y + m_y, 0), false, m_maxWidth);
+			temp->SetText(x, Vector3f(0.75f, y + m_y, -15), false, m_maxWidth);
 			m_choices.push_back(temp);
 		}
 	}
@@ -227,8 +232,8 @@ std::shared_ptr<DialogueGraph> DialogueBox::GetLocalizedGraph()
 
 void DialogueBox::UpdateBox()
 {
-	float width = OrthoProjInfo::GetRegularInstance().Right * 2.f / OrthoProjInfo::GetRegularInstance().Size - 1.f;
-	m_box->SetScale(Vector3f(width, m_yScale * 10.0f, 0));
+	//float width = OrthoProjInfo::GetRegularInstance().Right * 2.f / OrthoProjInfo::GetRegularInstance().Size - 1.f;
+	//m_box->SetScale(Vector3f(width, m_yScale * 10.0f, 0));
 	m_box->Update();
 }
 

@@ -10,17 +10,22 @@ MenuBackgroundBox::MenuBackgroundBox(Vector3f position, int width, int height) :
 	float top = OrthoProjInfo::GetRegularInstance().Top;
 	float size = OrthoProjInfo::GetRegularInstance().Size;
 
-	float leftPos = (right * position.x + size / 2) / size;
-	float bottomPos = (top * 0.1f + size / 2) / size;
+	//float leftPos = (right * position.x + size / 2) / size;
+	//float bottomPos = (top * 0.1f + size / 2) / size;
+	float leftPos = position.x;
+	float bottomPos = position.y;
 
 	// Center the menu
-	if (position == -1)
 	{
-		leftPos = right / size - ((float)width + 1.0f) / 2.0f;
-		bottomPos = top / size - ((float)height + 1.0f) / 2.0f;
-		leftPos += 0.5f;
-		bottomPos += 0.5f;
+		if (position.x == -1)
+			leftPos = right / size - ((float)width + 1.0f) / 2.0f;
+
+		if (position.y == -1)
+			bottomPos = top / size - ((float)height + 1.0f) / 2.0f;
 	}
+
+	leftPos += 0.5f;
+	bottomPos += 0.5f;
 
 	// Top + bottom rows
 	for (int i = 1; i < width; i++)
@@ -75,6 +80,7 @@ MenuBackgroundBox::MenuBackgroundBox(Vector3f position, int width, int height) :
 	topleft->SetPhysics(Vector3f(leftPos, bottomPos + height, -10.f));
 	topleft->SetColorAll(color, alpha);
 	m_boxParts.push_back(topleft);
+	_topLeft = Vector3f(leftPos, bottomPos + height, -10);
 
 	GraphComp_ptr topright = GraphComp_ptr(new GraphicsComponent("CENTERED_TILE", "menu_corner.png"));
 	topright->SetPhysics(Vector3f(leftPos + width, bottomPos + height, -10.f));
@@ -93,6 +99,7 @@ MenuBackgroundBox::MenuBackgroundBox(Vector3f position, int width, int height) :
 	bottomright->GetModelMat()->SetRotation(0, 0, 3.141592f);// 1.57 is somehow 90 degrees
 	bottomright->SetColorAll(color, alpha);
 	m_boxParts.push_back(bottomright);
+	_bottomRight = Vector3f(leftPos + width + 1, bottomPos + 1, -10.f);
 
 	m_MBO_instances = 1;
 
@@ -106,15 +113,16 @@ MenuBackgroundBox::MenuBackgroundBox(Vector3f position, int width, int height) :
 	m_indices = std::vector<GLuint>(*m_mesh.GetMeshIndices());
 	ClearMModels();
 	Update();
+	SetNewBuffers(&m_vertices, &m_indices);
 	LoadGLResources();
 }
 
 void MenuBackgroundBox::Update()
 {
-	if (GetMModels().size() == 0)
+	if (GetMModels().size() == 0 || OrthoProjInfo::GetRegularInstance().changed)
 	{
 		ClearMModels();
-		for (auto x : m_boxParts)
+		for (auto& x : m_boxParts)
 		{
 			Vector3f pos = x->GetPosRef();
 			Transformation t;
@@ -125,5 +133,5 @@ void MenuBackgroundBox::Update()
 		}
 	}
 
-	FontGraphicsComponent::Update();
+	//FontGraphicsComponent::Update();
 }

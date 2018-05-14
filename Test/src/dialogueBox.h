@@ -6,6 +6,7 @@
 #include "iEvent.h"
 #include "dialogueGraph.h"
 #include "eventQueue.h"
+#include "menuBackgroundBox.h"
 
 class DialogueBox : public Font, public IEvent
 {
@@ -29,7 +30,7 @@ private:
 	std::shared_ptr<DialogueGraph> GetLocalizedGraph();
 
 private:
-	std::shared_ptr<FontGraphicsComponent> m_box;
+	static std::shared_ptr<MenuBackgroundBox> m_box;
 	std::vector<Font_ptr> m_choices;
 	float m_maxWidth;
 	float m_maxHeight;

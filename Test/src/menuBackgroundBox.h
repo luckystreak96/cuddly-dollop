@@ -11,6 +11,11 @@ public:
 	// If position is -1 for x y and z, itll center the menu
 	MenuBackgroundBox(Vector3f position = Vector3f(0.2f, 0.1f, 0.0f), int width = 11, int height = 7);
 	void Update();
+
+public:
+	Vector3f _topLeft;
+	Vector3f _bottomRight;
+
 protected:
 	Mesh m_mesh;
 	std::vector<GraphComp_ptr> m_boxParts;
