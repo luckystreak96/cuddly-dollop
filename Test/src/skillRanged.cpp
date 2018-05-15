@@ -17,9 +17,15 @@ void SkillRanged::DefaultSetup()
 }
 
 // Must return the new state
-BattleState SkillRanged::Start(std::vector<Actor_ptr>* targets, std::deque<Actor_ptr>* actors, std::deque<Anim_ptr>* anims, Actor_ptr owner)
+BattleState SkillRanged::Setup(std::vector<Actor_ptr>* targets, std::deque<Actor_ptr>* actors, std::deque<Anim_ptr>* anims, Actor_ptr owner)
 {
-	Skill::Start(targets, actors, anims, owner);
+	Skill::Setup(targets, actors, anims, owner);
+
+	return BS_ActionProgress;
+}
+
+void SkillRanged::Start()
+{
 	_basePos = _owner->_Graphics->GetPos();
 
 	_anims->push_back(Anim_ptr(new AnimMoveTo(_owner->_Graphics->GetPosRef() + Vector3f(_owner->_Fighter->Team ? -1 : 1, 0, 0), _owner)));
@@ -35,8 +41,6 @@ BattleState SkillRanged::Start(std::vector<Actor_ptr>* targets, std::deque<Actor
 	_cameraTarget /= (float)_targets.size();
 
 	_targetProgress = 0;
-
-	return BS_ActionProgress;
 }
 
 void SkillRanged::Update()

@@ -125,16 +125,22 @@ void Skill::CheckActionCommand(double percentProgress)
 }
 
 // Must return the new state
-BattleState Skill::Start(std::vector<Actor_ptr>* targets, std::deque<Actor_ptr>* actors, std::deque<Anim_ptr>* anims, Actor_ptr owner)
+BattleState Skill::Setup(std::vector<Actor_ptr>* targets, std::deque<Actor_ptr>* actors, std::deque<Anim_ptr>* anims, Actor_ptr owner)
 {
 	_ac._tried = false;
 	_ac._success = false;
 	_owner = owner;
-	_targets = std::vector<Actor_ptr>(*targets);
+	if(owner->_Fighter->Team == 0)
+		_targets = std::vector<Actor_ptr>(*targets);
 	_actors = actors;
 	_anims = anims;
 	_animProg = 0;
 	return BS_ActionDone;
+}
+
+void Skill::Start()
+{
+	return;
 }
 
 void Skill::HandleActionCommand(double percentProgress)

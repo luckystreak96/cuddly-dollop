@@ -9,7 +9,8 @@ class SkillMelee: public Skill
 
 public:
 	SkillMelee();
-	virtual BattleState Start(std::vector<Actor_ptr>* targets, std::deque<Actor_ptr>* actors, std::deque<Anim_ptr>* anims, Actor_ptr owner);
+	virtual void Start();
+	virtual BattleState Setup(std::vector<Actor_ptr>* targets, std::deque<Actor_ptr>* actors, std::deque<Anim_ptr>* anims, Actor_ptr owner);
 	virtual void Update();
 	virtual bool IsReady();
 	virtual void Animate();

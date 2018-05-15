@@ -32,10 +32,12 @@ BattleManager::BattleManager(std::vector<Actor_ptr> actors)
 
 void BattleManager::Init()
 {
+	m_attackSequenceProgress = 0;
+	m_isPlayerTurn = true;
 	_hud.Init(_actors);
 	_postBattleState = PBS_FightingInProgress;
 	_showingSkills = false;
-	_state = BS_TurnStart;
+	_state = BS_ChooseActor;
 	m_animating = false;
 	counter = 0;
 	_winner = -1;
@@ -55,9 +57,9 @@ void BattleManager::Init()
 	}
 
 	// Make sure the first person to choose is a player
-	if (_postBattleState == PBS_FightingInProgress)
-		while (_actorQueue.front()->_Fighter->Team != 0)
-			CycleActors();
+	//if (_postBattleState == PBS_FightingInProgress)
+	//	while (_actorQueue.front()->_Fighter->Team != 0)
+	//		CycleActors();
 
 	if (_actorQueue.size() > 0)
 	{
@@ -76,6 +78,9 @@ void BattleManager::Init()
 		else
 			_numAllies++;
 	}
+
+	if (_actors.size())
+		Select(0);
 }
 
 void BattleManager::Update()
@@ -96,6 +101,8 @@ void BattleManager::Update()
 		{
 			if (_animations.at(i)->_async || i == 0 || !nonAsyncHit)
 				_animations.at(i)->Update();
+			if (!_animations.at(i)->_async)
+				nonAsyncHit = true;
 			if (_animations.at(i)->_done)
 			{
 				_animations.erase(_animations.begin() + i);
@@ -158,6 +165,7 @@ void BattleManager::MoveToLight(bool moveup, bool turnEnd)
 		if (moveup)
 		{
 			Anim_ptr move1 = Anim_ptr(new AnimMoveTo(_owner->_Graphics->GetPos() + Vector3f(_owner->_Fighter->Team == 0 ? 1.f : -1, 0, 0), _owner));
+			move1->_async = false;
 			_animations.push_back(move1);
 		}
 		else
@@ -191,7 +199,7 @@ void BattleManager::TurnStart()
 	// Make sure enemy targets are still valid
 	for (auto& x : _actors)
 	{
-		// Setup next skill
+		// Setup next skill if the current skill targets are invalidated
 		if (x->_Fighter->Team != 0 && x->_Fighter->PredictedSkill != NULL && x->_Fighter->PredictedSkill->ValidateTargets() == false)
 		{
 			x->_Fighter->PredictNextSkill(x, &_actors);
@@ -222,7 +230,7 @@ void BattleManager::TurnStart()
 	else
 	{
 		_owner->_Fighter->TurnStart(_actors);
-		_state = BS_SelectAction;
+		_state = BS_ActionProgress;
 	}
 }
 
@@ -254,12 +262,46 @@ void BattleManager::SelectAction()
 	}
 }
 
+void BattleManager::SelectActor()
+{
+
+}
+
+void BattleManager::InitiateChooseActor()
+{
+	_selectedIndex = 0;
+	_state = BS_ChooseActor;
+	RemoveChooseSkillText();
+	_showingSkills = false;
+	for (auto x : _actors)
+	{
+		x->Selected = false;
+		x->UpdateColor();
+	}
+	Select(_selectedIndex);
+	Camera::_currentCam->SetScale(Vector3f(1));
+	Camera::_currentCam->SetFollow(Camera::_currentCam->MapCenter());
+}
+
 void BattleManager::SelectTargets()
 {
 }
 
 void BattleManager::ActionProgress()
 {
+	if (_animations.size() > 0 && _selectedSkill == NULL)
+		return;
+
+	if (_selectedSkill == NULL && _owner->_Fighter->PredictedSkill != NULL)
+	{
+		_selectedSkill = _owner->_Fighter->PredictedSkill;
+		_targets = _owner->_Fighter->PredictedSkill->_targets;
+		if (_owner->_Fighter->Team != 0)
+			_selectedSkill->Setup(&_targets, &_actorQueue, &_animations, _owner);
+		_owner->_Fighter->PredictedSkill->Start();
+		return;
+	}
+
 	if (_selectedSkill != NULL)
 	{
 		if (_selectedSkill->_done)
@@ -279,7 +321,7 @@ void BattleManager::ActionProgress()
 
 void BattleManager::ActionDone()
 {
-	if(_selectedSkill)
+	if (_selectedSkill)
 		_selectedSkill->Reset();
 	_selectedSkill = NULL;
 	_state = BS_TurnEnd;
@@ -297,7 +339,20 @@ void BattleManager::TurnEnd()
 	MoveToLight(false, true);
 	CycleActors();
 
-	_state = BS_TurnStart;
+	if (!m_isPlayerTurn)
+		_state = BS_TurnStart;
+	else
+	{
+		InitiateChooseActor();
+		ResetPartyPredictedSkills();
+	}
+}
+
+void BattleManager::ResetPartyPredictedSkills()
+{
+	for (auto& x : _actors)
+		if (x->_Fighter->Team == 0)
+			x->_Fighter->PredictedSkill = NULL;
 }
 
 void BattleManager::UpdateLogic()
@@ -310,11 +365,19 @@ void BattleManager::UpdateLogic()
 	{
 		switch (_state)
 		{
+		case BS_ChooseActor:
+			if (m_isPlayerTurn)
+				// Method just for show, selection is handled in input
+				SelectActor();
+			break;
 		case BS_TurnStart:
 			// zoom back to normal
-			Camera::_currentCam->SetScale(Vector3f(1));
-			Camera::_currentCam->SetFollow(Camera::_currentCam->MapCenter());
-			TurnStart();
+			if (!m_isPlayerTurn)
+			{
+				Camera::_currentCam->SetScale(Vector3f(1));
+				Camera::_currentCam->SetFollow(Camera::_currentCam->MapCenter());
+				TurnStart();
+			}
 			break;
 		case BS_SelectAction:
 			// BS_SelectAction and BS_SelectTarget are both purely input handled for the player
@@ -322,7 +385,8 @@ void BattleManager::UpdateLogic()
 			break;
 		case BS_SelectTargets:
 			// Handled by input, method only for show
-			SelectTargets();
+			if (m_isPlayerTurn)
+				SelectTargets();
 			break;
 		case BS_ActionProgress:
 			// Update the skill
@@ -363,8 +427,8 @@ void BattleManager::RemoveChooseSkillText()
 void BattleManager::ManageInput()
 {
 	// When you hold R2 or D, show arrows, udpate once on action done in case an actor loses vision of enemy predictions
-	if(InputManager::GetInstance().FrameKeyStatus(A_AltR, KeyStatus::Release) || 
-		InputManager::GetInstance().FrameKeyStatus(A_AltR, KeyStatus::KeyPressed) || 
+	if (InputManager::GetInstance().FrameKeyStatus(A_AltR, KeyStatus::Release) ||
+		InputManager::GetInstance().FrameKeyStatus(A_AltR, KeyStatus::KeyPressed) ||
 		_state == BS_ActionDone)
 		_hud.ToggleDamagePredictionArrowDisplay(!InputManager::GetInstance().FrameKeyStatus(A_AltR, KeyStatus::AnyPress));
 
@@ -381,6 +445,10 @@ void BattleManager::ManageInput()
 	if (InputManager::GetInstance().FrameKeyStatus(A_Accept, status))
 		input.emplace(A_Accept);
 
+	// Menu
+	if (InputManager::GetInstance().FrameKeyStatus(A_Menu, status))
+		input.emplace(A_Menu);
+
 	// Cancel
 	if (InputManager::GetInstance().FrameKeyStatus(A_Cancel, status))
 		input.emplace(A_Cancel);
@@ -391,7 +459,7 @@ void BattleManager::ManageInput()
 			input.emplace(i);
 
 	// If theres an animation going, SEND THE INPUT TO THE SKILL
-	if (_state != BS_SelectTargets && _state != BS_SelectAction)
+	if (_state != BS_SelectTargets && _state != BS_SelectAction && _state != BS_ChooseActor)
 	{
 		if (_selectedSkill != NULL)
 			_selectedSkill->_input = input;
@@ -413,6 +481,18 @@ void BattleManager::ManageInput()
 	// Cancel input
 	if (input.count(A_Cancel))
 		HandleCancelInput();
+
+	if (_state == BS_ChooseActor && input.count(A_Menu))
+		BeginAnimations();
+}
+
+void BattleManager::BeginAnimations()
+{
+	Select(std::vector<int>());
+	m_isPlayerTurn = false;
+	_owner = _actorQueue.front();
+	_selectedSkill = NULL;
+	_state = BS_TurnStart;
 }
 
 void BattleManager::HandleUpDownInput(std::set<int> input)
@@ -441,12 +521,12 @@ void BattleManager::HandleUpDownInput(std::set<int> input)
 	}
 
 	// Choose your targets
-	else if (_state == BS_SelectTargets)
+	else if (_state == BS_SelectTargets || _state == BS_ChooseActor)
 	{
-		if (_selectedSkill->_targetAmount == TA_Party)
+		if (_state != BS_ChooseActor && _selectedSkill && _selectedSkill->_targetAmount == TA_Party)
 		{
 		}
-		else if (_selectedSkill->_targetAmount == TA_One)
+		else if (_state == BS_ChooseActor || _selectedSkill && _selectedSkill->_targetAmount == TA_One)
 		{
 			if ((down && ((_selectedIndex > 0 && _selectedIndex < _numAllies) || _selectedIndex > _numAllies)) ||
 				(!down && (_selectedIndex < _numAllies - 1 || (_selectedIndex >= _numAllies && _selectedIndex < _actors.size() - 1))))
@@ -458,7 +538,7 @@ void BattleManager::HandleUpDownInput(std::set<int> input)
 					// If up or down would bring you to the other team
 					if ((_selectedIndex < _numAllies && i >= _numAllies) || (_selectedIndex >= _numAllies && i < _numAllies))
 						break;
-					if (_actors[i]->_Fighter->RespectsTargeting(_owner.get(), _selectedSkill->_targetMode))
+					if (_state == BS_ChooseActor && !_actors[i]->_Fighter->Dead || _actors[i]->_Fighter->RespectsTargeting(_owner.get(), _selectedSkill->_targetMode))
 					{
 						Select(i);
 						break;
@@ -562,6 +642,34 @@ void BattleManager::HandleAcceptInput()
 
 		_selectedSkill->Reset();
 		UseSkill();
+		_targets = std::vector<Actor_ptr>();
+	}
+	else if (_state == BS_ChooseActor)
+	{
+		for (auto& x : _actorQueue)
+			if (x->Selected)
+			{
+				_owner = x;
+				x->UpdateColor();
+				x->Selected = false;
+			}
+
+		_state = BS_SelectAction;
+		_chooseSkill = &_owner->_Fighter->Skills;
+		_selectedIndex = 0;
+
+		//if (_targets.size() < _selectedSkill->_minTargets)
+		//{
+		//	for (auto& x : _targets)
+		//	{
+		//		x->Selected = true;
+		//		x->UpdateColor();
+		//	}
+		//	return;
+		//}
+
+		//_selectedSkill->Reset();
+		//UseSkill();
 	}
 }
 void BattleManager::HandleCancelInput()
@@ -579,6 +687,11 @@ void BattleManager::HandleCancelInput()
 			x->Selected = false;
 		}
 	}
+	else if (_state == BS_SelectAction)
+	{
+		InitiateChooseActor();
+	}
+
 }
 
 std::vector<int> BattleManager::DefaultTargetActorIndex(std::vector<Actor_ptr>* actors, Actor_ptr owner, Skill_ptr selectedSkill)
@@ -634,7 +747,7 @@ void BattleManager::Select(int target)
 
 void BattleManager::Select(std::vector<int> targets)
 {
-	if (_state == BS_SelectTargets)
+	if (_state == BS_SelectTargets || _state == BS_ChooseActor)
 	{
 		for (auto& x : _actors)
 		{
@@ -649,7 +762,10 @@ void BattleManager::Select(std::vector<int> targets)
 		for (auto x : targets)
 			_actors.at(x)->Selected = true;
 		//_actors.at(target)->_Graphics->SetColorAll(Vector3f(1.f, 0.25f, 0.25f));
-		_selectedIndex = targets[0];
+		if (targets.size())
+			_selectedIndex = targets[0];
+		else
+			_selectedIndex = 0;
 	}
 	else if (_state == BS_SelectAction)
 	{
@@ -669,9 +785,17 @@ void BattleManager::UseSkill()
 {
 	//std::cout << "Using skill: " << _selectedSkill->_name << std::endl;
 	if (_selectedSkill != NULL)
-		_state = _selectedSkill->Start(&_targets, &_actorQueue, &_animations, _owner);
+	{
+		_state = _selectedSkill->Setup(&_targets, &_actorQueue, &_animations, _owner);
+		_owner->_Fighter->PredictedSkill = _selectedSkill;
+	}
 	else
 		_state = BS_SelectAction;
+
+	if (m_isPlayerTurn)
+	{
+		InitiateChooseActor();
+	}
 }
 
 void BattleManager::CycleActors()
@@ -688,6 +812,13 @@ void BattleManager::CycleActors()
 	_chooseSkill = &_owner->_Fighter->Skills;
 	_targets.clear();
 	_selectedIndex = 0;
+
+	m_attackSequenceProgress++;
+	if (m_attackSequenceProgress == _actorQueue.size())
+	{
+		m_attackSequenceProgress = 0;
+		m_isPlayerTurn = true;
+	}
 }
 
 // Return winning team, -1 if battle isn't over

@@ -36,11 +36,15 @@ private:
 
 	void UpdateSkillDisplay();
 	void TurnStart();
+	void SelectActor();
+	void InitiateChooseActor();
+	void ResetPartyPredictedSkills();
 	void SelectAction();
 	void SelectTargets();
 	void ActionProgress();
 	void ActionDone();
 	void TurnEnd();
+	void BeginAnimations();
 
 	void ManageInput();
 	void HandleUpDownInput(std::set<int> input);
@@ -64,9 +68,12 @@ public:
 	int _selectedIndex;
 	BattleState _state;
 	PostBattleState _postBattleState;
+	bool m_isPlayerTurn;
 	bool m_animating;
 	bool _showingSkills;
 	int _winner;
+
+	int m_attackSequenceProgress;
 
 	int _numAllies;
 

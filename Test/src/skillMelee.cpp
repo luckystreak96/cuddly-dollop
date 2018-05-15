@@ -15,9 +15,15 @@ void SkillMelee::DefaultSetup()
 }
 
 // Must return the new state
-BattleState SkillMelee::Start(std::vector<Actor_ptr>* targets, std::deque<Actor_ptr>* actors, std::deque<Anim_ptr>* anims, Actor_ptr owner)
+BattleState SkillMelee::Setup(std::vector<Actor_ptr>* targets, std::deque<Actor_ptr>* actors, std::deque<Anim_ptr>* anims, Actor_ptr owner)
 {
-	Skill::Start(targets, actors, anims, owner);
+	Skill::Setup(targets, actors, anims, owner);
+
+	return BS_ActionProgress;
+}
+
+void SkillMelee::Start()
+{
 	_basePos = _owner->_Graphics->GetPos();
 	// INSERT JUMP FOREWARD ANIMATION HERE
 	float distance = _owner->_Fighter->Team == 0 ? 0.7f : -0.7f;
@@ -32,8 +38,6 @@ BattleState SkillMelee::Start(std::vector<Actor_ptr>* targets, std::deque<Actor_
 		_anims->back()->_duration = 0.2f;
 		_anims->back()->_async = true;
 	}
-
-	return BS_ActionProgress;
 }
 
 void SkillMelee::Update()

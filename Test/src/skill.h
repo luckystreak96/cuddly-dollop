@@ -9,7 +9,7 @@
 #include "actor.h"
 #include "battleAnimation.h"
 
-enum BattleState { BS_TurnStart, BS_SelectAction, BS_SelectTargets, BS_ActionProgress, BS_ActionDone, BS_TurnEnd };
+enum BattleState { BS_ChooseActor, BS_TurnStart, BS_SelectAction, BS_SelectTargets, BS_ActionProgress, BS_ActionDone, BS_TurnEnd };
 
 class Skill;
 typedef std::shared_ptr<Skill> Skill_ptr;
@@ -41,7 +41,8 @@ class Skill
 {
 public:
 	Skill();
-	virtual BattleState Start(std::vector<Actor_ptr>* targets, std::deque<Actor_ptr>* actors, std::deque<Anim_ptr>* anims, Actor_ptr owner);
+	virtual BattleState Setup(std::vector<Actor_ptr>* targets, std::deque<Actor_ptr>* actors, std::deque<Anim_ptr>* anims, Actor_ptr owner);
+	virtual void Start();
 	virtual void Update();
 	virtual void Reset();
 	virtual bool IsReady();
