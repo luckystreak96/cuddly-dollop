@@ -80,7 +80,12 @@ void BattleManager::Init()
 	}
 
 	if (_actors.size())
-		Select(0);
+	{
+		InitiateChooseActor();
+		for (auto& x : _actors)
+			if (x->_Fighter->Team == 0)
+				x->ChoosingAction = true;
+	}
 }
 
 void BattleManager::Update()
@@ -269,7 +274,6 @@ void BattleManager::SelectActor()
 
 void BattleManager::InitiateChooseActor()
 {
-	_selectedIndex = 0;
 	_state = BS_ChooseActor;
 	RemoveChooseSkillText();
 	_showingSkills = false;
@@ -278,6 +282,19 @@ void BattleManager::InitiateChooseActor()
 		x->Selected = false;
 		x->UpdateColor();
 	}
+
+	_selectedIndex = 0;
+
+	// Choose who to select by default
+	for (int i = 0; i < _actors.size(); i++)
+	{
+		if (_actors[i]->_Fighter->Team == 0 && _actors[i]->_Fighter->PredictedSkill == NULL)
+		{
+			_selectedIndex = i;
+			break;
+		}
+	}
+
 	Select(_selectedIndex);
 	Camera::_currentCam->SetScale(Vector3f(1));
 	Camera::_currentCam->SetFollow(Camera::_currentCam->MapCenter());
@@ -488,6 +505,12 @@ void BattleManager::ManageInput()
 
 void BattleManager::BeginAnimations()
 {
+	for (auto& x : _actors)
+		if (x->_Fighter->Team == 0)
+		{
+			x->ChoosingAction = true;
+			x->UpdateColor();
+		}
 	Select(std::vector<int>());
 	m_isPlayerTurn = false;
 	_owner = _actorQueue.front();
@@ -794,6 +817,7 @@ void BattleManager::UseSkill()
 
 	if (m_isPlayerTurn)
 	{
+		_owner->ChoosingAction = false;
 		InitiateChooseActor();
 	}
 }
@@ -801,13 +825,13 @@ void BattleManager::UseSkill()
 void BattleManager::CycleActors()
 {
 	Actor_ptr front = _actorQueue.front();
-	front->ChoosingAction = false;
+	//front->ChoosingAction = false;
 	front->UpdateColor();
 
 	_actorQueue.pop_front();
 	_actorQueue.push_back(front);
 	_owner = _actorQueue.front();
-	_owner->ChoosingAction = true;
+	//_owner->ChoosingAction = true;
 	_owner->UpdateColor();
 	_chooseSkill = &_owner->_Fighter->Skills;
 	_targets.clear();

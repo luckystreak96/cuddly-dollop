@@ -48,10 +48,11 @@ void Actor::UpdateColor()
 
 	if(Selected)
 	{
-		if (_ColorState != CS_Red)
+		if (_ColorState != CS_Selected)
 		{
-			_Graphics->SetColorAll(Vector3f(1, 0.25f, 0.25f), dead ? 0.5f : 1.0f);
-			_ColorState = CS_Red;
+			//_Graphics->SetColorAll(Vector3f(1, 0.25f, 0.25f), dead ? 0.5f : 1.0f);
+			_Graphics->SetColorAll(Vector3f(1.6f, 1.6f, 1.6f), dead ? 0.5f : 1.0f);
+			_ColorState = CS_Selected;
 		}
 	}
 	else if (dead)
@@ -61,6 +62,11 @@ void Actor::UpdateColor()
 			_Graphics->SetColorAll(Vector3f(0.25f, 0.25f, 0.25f), 0.5f);
 			_ColorState = CS_Invis;
 		}
+	}
+	else if(_Fighter->PredictedSkill != NULL && _Fighter->Team == 0 && !ChoosingAction)
+	{
+		_Graphics->SetColorAll(Vector3f(0.6f, 0.6f, 0.6f), 1.f);
+		_ColorState = CS_Darker;
 	}
 	else if(_ColorState != CS_Normal)
 	{

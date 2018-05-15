@@ -6,7 +6,7 @@
 #include "playerGraphicsComponent.h"
 #include "fighter.h"
 
-enum ColorState { CS_Invis, CS_Red, CS_Normal, CS_Update };
+enum ColorState { CS_Invis, CS_Selected, CS_Normal, CS_Update, CS_Darker };
 
 class Actor
 {
