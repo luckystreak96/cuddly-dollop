@@ -1,4 +1,4 @@
-#include "hudAttackPrediction.h"
+#include "hudTurnOrder.h"
 
 #include "fontManager.h"
 #include "localizationData.h"
@@ -7,18 +7,15 @@
 #include "lerper.h"
 #include "skill.h"
 
-HudAttackPrediction::HudAttackPrediction(Actor* owner)
+HudTurnOrder::HudTurnOrder(Actor* owner)
 {
 	_actor = owner;
 
 	m_prevActorPos = _actor->_Graphics->GetPosRef();
 
-	if (_actor->_Fighter->PredictedSkill != NULL)
-		m_observedDamage = _actor->_Fighter->PredictedSkill->_preCalculatedDamage;
-	else
-		m_observedDamage = Damage();
+	m_observedOrder = _actor->_Fighter->_OrderPosition;
 
-	m_prevDamage._value = -43893893;// set this to a fucked up number so itll do it's first update
+	m_prevOrder = -43893893;// set this to a fucked up number so itll do it's first update
 
 	// Box
 	_background = GraphComp_ptr(new GraphicsComponent("CENTERED_TILE", "res/sprites/special/blank.png"));
@@ -40,17 +37,17 @@ HudAttackPrediction::HudAttackPrediction(Actor* owner)
 	Update();
 }
 
-void HudAttackPrediction::SetBoxPosition()
+void HudTurnOrder::SetBoxPosition()
 {
 	_background->SetPhysics(m_prevActorPos.OnlyXY() - Vector3f(0.5f, -0.25f, -0.1f), Vector3f());
 }
 
-Vector3f HudAttackPrediction::CalculateTextPosition()
+Vector3f HudTurnOrder::CalculateTextPosition()
 {
 	return _background->GetPosRef().OnlyXY() + Vector3f(0.5f, 0.375f, 0);
 }
 
-void HudAttackPrediction::Destroy()
+void HudTurnOrder::Destroy()
 {
 	// Make sure to destroy the fonts
 	FontManager::GetInstance().RemoveFont(_damageFont);
@@ -58,7 +55,7 @@ void HudAttackPrediction::Destroy()
 	HudComponent::Destroy();
 }
 
-void HudAttackPrediction::Update()
+void HudTurnOrder::Update()
 {
 	Vector3f pos = _actor->_Graphics->GetPosRef();
 	if (m_prevActorPos != pos)
@@ -75,13 +72,10 @@ void HudAttackPrediction::Update()
 		FontManager::GetInstance().GetFont(_damageFont)->SetOffset(CalculateTextPosition());
 	}
 
-	if (_actor->_Fighter->PredictedSkill != NULL)
-		m_observedDamage = _actor->_Fighter->PredictedSkill->_preCalculatedDamage;
-	else
-		m_observedDamage._value = 0;
+	m_observedOrder = _actor->_Fighter->_OrderPosition;
 
 	// Ensure that the value we're following actually changed to do something
-	if (m_prevDamage._value == m_observedDamage._value && m_prevDamage._type == m_observedDamage._type && m_mustDisplayNextUpdate == m_mustDisplay)
+	if (m_prevOrder == m_observedOrder && m_mustDisplayNextUpdate == m_mustDisplay)
 		return;
 
 	// Handle text display
@@ -91,22 +85,22 @@ void HudAttackPrediction::Update()
 	else
 		FontManager::GetInstance().DisableFont(_damageFont);
 
-	m_prevDamage = m_observedDamage;
+	m_prevOrder = m_observedOrder;
 
 	// Show damage type
-	Vector3f color;
-	if (m_observedDamage._type == SkillType::ST_Physical)
-		color = Vector3f(0.5f, 0.10f, 0.025f);
-	else if (m_observedDamage._type == SkillType::ST_Magical)
-		color = Vector3f(0.3f, 0.05f, 0.5f);
-	else if (m_observedDamage._type == SkillType::ST_Healing)
-		color = Vector3f(0.05f, 0.5f, 0.1f);
+	Vector3f color = Vector3f(0.5f, 0.10f, 0.025f);
+	//if (m_observedOrder._type == SkillType::ST_Physical)
+	//	color = Vector3f(0.5f, 0.10f, 0.025f);
+	//else if (m_observedOrder._type == SkillType::ST_Magical)
+	//	color = Vector3f(0.3f, 0.05f, 0.5f);
+	//else if (m_observedOrder._type == SkillType::ST_Healing)
+	//	color = Vector3f(0.05f, 0.5f, 0.1f);
 
 	_background->SetColorAll(color, 0.7f);
 
 	// Update the font
 	//pos = CalculateTextPosition();
-	std::string text = std::to_string(m_observedDamage._value);
+	std::string text = std::to_string(m_observedOrder);
 	std::string current = FontManager::GetInstance().GetFont(_damageFont)->_text;
 
 	// Only update font when it changes
@@ -123,17 +117,17 @@ void HudAttackPrediction::Update()
 	_background->Update();
 }
 
-void HudAttackPrediction::ToggleDisplay(bool display)
+void HudTurnOrder::ToggleDisplay(bool display)
 {
 	m_mustDisplayNextUpdate = display;
 }
 
-void HudAttackPrediction::AdjustPosition()
+void HudTurnOrder::AdjustPosition()
 {
 	// Handle moving all components if the screen is resized
 }
 
-void HudAttackPrediction::SetRender()
+void HudTurnOrder::SetRender()
 {
 	if (!m_mustDisplay || _actor->_Fighter->Dead)
 	{
@@ -149,7 +143,7 @@ void HudAttackPrediction::SetRender()
 	Renderer::GetInstance().Add(_background);
 }
 
-bool HudAttackPrediction::GetDisplay()
+bool HudTurnOrder::GetDisplay()
 {
 	return m_mustDisplay;
 }

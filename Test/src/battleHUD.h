@@ -3,7 +3,7 @@
 
 #include "actor.h"
 #include "hudHealthBar.h"
-#include "hudAttackPrediction.h"
+#include "hudTurnOrder.h"
 
 class BattleHUD
 {

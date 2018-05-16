@@ -476,9 +476,6 @@
     <ClInclude Include="src\animXpBar.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\hudAttackPrediction.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\skillRanged.h">
       <Filter>Header Files\Skills</Filter>
     </ClInclude>
@@ -501,6 +498,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\hudArrow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\hudTurnOrder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -847,9 +847,6 @@
     <ClCompile Include="src\animXpBar.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\hudAttackPrediction.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\skillRanged.cpp">
       <Filter>Source Files\Skills</Filter>
     </ClCompile>
@@ -872,6 +869,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\hudArrow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\hudTurnOrder.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -136,6 +136,7 @@ void Fighter::SetStatsFromCurve()
 
 void Fighter::SetDefault()
 {
+	_OrderPosition = 0;
 	Skills.push_back(Skill_ptr(new SkillSmack()));
 	Dead = false;
 	Targetable = true;
@@ -249,4 +250,10 @@ bool Fighter::RespectsTargeting(Actor* owner, int tm)
 	}
 
 	return true;
+}
+
+void Fighter::SetOrderPosition(int pos)
+{
+	_OrderPosition = pos;
+	UpdateObservers();
 }

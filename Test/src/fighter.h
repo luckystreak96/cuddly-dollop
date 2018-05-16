@@ -29,6 +29,7 @@ public:
 	virtual Damage ApplyHealing(Damage& heal);
 	virtual void DamageModifiers(Damage& dmg, bool critting);
 	virtual void ApplyLethal();
+	void SetOrderPosition(int pos);
 
 	// Turn and targets
 	virtual bool RespectsTargeting(Actor* owner, int targetMode);
@@ -60,6 +61,7 @@ public:
 	int NoPredictCountDown;
 	// Flag for possible invisibility or untargetability
 	bool Targetable;
+	int _OrderPosition;
 	Actor_ptr Protector;
 	int Team;
 	std::vector<Skill_ptr> Skills;

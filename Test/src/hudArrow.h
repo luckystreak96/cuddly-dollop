@@ -17,9 +17,9 @@ public:
 	void ToggleHidden(bool hidden);
 
 public:
+	Actor_ptr _targeter;
 
 protected:
-	Actor_ptr _targeter;
 	Vector3f _start;
 	Vector3f _end;
 	bool _hidden;

@@ -86,6 +86,9 @@ void BattleManager::Init()
 			if (x->_Fighter->Team == 0)
 				x->ChoosingAction = true;
 	}
+
+	for (int i = 0; i < _actorQueue.size(); i++)
+		_actorQueue[i]->_Fighter->_OrderPosition = i + 1;
 }
 
 void BattleManager::Update()
@@ -346,6 +349,9 @@ void BattleManager::ActionDone()
 
 void BattleManager::TurnEnd()
 {
+	_owner->_Fighter->PredictedSkill = NULL;
+	_owner->_Fighter->UpdateObservers();
+
 	// Setup next skill
 	if (_owner->_Fighter->Team != 0)
 	{
@@ -362,6 +368,8 @@ void BattleManager::TurnEnd()
 	{
 		InitiateChooseActor();
 		ResetPartyPredictedSkills();
+		for (int i = 0; i < _actorQueue.size(); i++)
+			_actorQueue[i]->_Fighter->_OrderPosition = i + 1;
 	}
 }
 
@@ -819,6 +827,7 @@ void BattleManager::UseSkill()
 	{
 		_owner->ChoosingAction = false;
 		InitiateChooseActor();
+		_owner->_Fighter->UpdateObservers();
 	}
 }
 

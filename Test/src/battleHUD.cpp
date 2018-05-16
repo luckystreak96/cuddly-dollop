@@ -27,7 +27,7 @@ void BattleHUD::Init(std::vector<Actor_ptr> actors)
 		// Health bar
 		AddActorHealthBar(x, party, enemies);
 
-		if (x->_Fighter->Team != 0)
+		//if (x->_Fighter->Team != 0)
 		{
 			// Attack prediction
 			AddActorAttackPrediction(x);
@@ -95,7 +95,7 @@ void BattleHUD::AddActorHealthBar(Actor_ptr ap, int& party, int& enemies)
 
 void BattleHUD::AddActorAttackPrediction(Actor_ptr ap)
 {
-	HudComp_ptr damagePrediction = std::make_shared<HudAttackPrediction>(HudAttackPrediction(ap.get()));
+	HudComp_ptr damagePrediction = std::make_shared<HudTurnOrder>(HudTurnOrder(ap.get()));
 	ap->_Fighter->_observers.push_back(damagePrediction);
 	ap->_Graphics->_observers.push_back(damagePrediction);
 	_hudComponents.push_back(damagePrediction);
@@ -110,12 +110,14 @@ void BattleHUD::AddActorAttackPredictionArrow(Actor_ptr ap)
 
 void BattleHUD::ToggleDamagePredictionDisplay(bool display)
 {
-	HudAttackPrediction* pred;
+	HudTurnOrder* pred;
 	for (auto& x : _hudComponents)
 	{
-		pred = dynamic_cast<HudAttackPrediction*>(x.get());
+		pred = dynamic_cast<HudTurnOrder*>(x.get());
 		if (pred != NULL)
+		{
 			pred->ToggleDisplay(display);
+		}
 	}
 }
 
@@ -130,7 +132,11 @@ void BattleHUD::ToggleDamagePredictionArrowDisplay(bool hidden)
 	{
 		pred = dynamic_cast<HudArrow*>(x.get());
 		if (pred != NULL)
+		{
+			if (pred->_targeter->_Fighter->Team == 0 && hidden)
+				continue;
 			pred->ToggleHidden(hidden);
+		}
 	}
 }
 

@@ -101,6 +101,6 @@ void HudArrow::SetRender()
 {
 	// FontManager handles setting the render for the label
 
-	if (!_hidden)
+	if (!_hidden && _targeter->_Fighter->PredictedSkill)
 		Renderer::GetInstance().Add(_graphic);
 }

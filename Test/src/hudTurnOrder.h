@@ -7,11 +7,11 @@
 
 class Actor;
 
-class HudAttackPrediction : public HudComponent
+class HudTurnOrder : public HudComponent
 {
 public:
 	// Don't forget to tell the Observable that you're an observer
-	HudAttackPrediction(Actor* owner);
+	HudTurnOrder(Actor* owner);
 	void Update();
 	void AdjustPosition();
 	void Destroy();
@@ -27,8 +27,8 @@ public:
 
 private:
 	// maxhp variables
-	Damage m_observedDamage;
-	Damage m_prevDamage;
+	int m_observedOrder;
+	int m_prevOrder;
 	Vector3f m_prevActorPos;
 
 	// AttackType image
