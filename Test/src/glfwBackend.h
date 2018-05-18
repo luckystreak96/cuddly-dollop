@@ -14,6 +14,7 @@ public:
 	GLFWManager();
 	void GLFWMainLoop(Game* game);
 	void HandleJoystickInput();
+	static void Exit();
 public:
 	static GLFWwindow* m_window;
 	static Vector2f _mngrGLVersion;

@@ -503,6 +503,15 @@
     <ClInclude Include="src\hudTurnOrder.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\menuSettings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\menuOptions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\menuFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -872,6 +881,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\hudTurnOrder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\menuSettings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\menuOptions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\menuFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

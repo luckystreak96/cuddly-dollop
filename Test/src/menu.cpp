@@ -1,13 +1,19 @@
 #include "menu.h"
 
 #include "menuParty.h"
+#include "menuSettings.h"
 #include "input_manager.h"
 
 Menu::Menu()
 {
 	_done = true;
-	std::shared_ptr<MenuParty> menuHUD = std::make_shared<MenuParty>(MenuParty());
-	m_components.push_back(menuHUD);
+}
+
+void Menu::AddComponent(MenuComp_ptr menuComp)
+{
+	m_components.push_back(menuComp);
+	if (m_activeStack.size() == 0)
+		PushActive(menuComp);
 }
 
 void Menu::Update()
@@ -18,7 +24,7 @@ void Menu::Update()
 	for (int i = 0; i < m_components.size(); i++)
 		PushActive(m_components.at(i)->Update(i == m_components.size() - 1));
 
-	if (InputManager::GetInstance().FrameKeyStatus(InputAction::A_Cancel, AnyPress, 2))
+	if (InputManager::GetInstance().FrameKeyStatus(InputAction::A_Cancel, AnyPress, 2) || m_activeStack.back()->_done)
 		PopActive();
 }
 
@@ -30,8 +36,13 @@ void Menu::SetRender()
 
 void Menu::Close()
 {
+	// We dont want to unload everything, we just want to put it away
+
 	for (auto& x : m_components)
 		x->Destroy();
+
+	m_components.clear();
+	m_activeStack.clear();
 
 	_done = true;
 	InputManager::GetInstance().PopLockLevel();
@@ -42,6 +53,13 @@ void Menu::Close()
 
 void Menu::Open()
 {
+	InputManager::GetInstance().SetLockLevel(2);
+	_done = false;
+}
+
+void Menu::Open(MenuComp_ptr page)
+{
+	AddComponent(page);
 	InputManager::GetInstance().SetLockLevel(2);
 	_done = false;
 }

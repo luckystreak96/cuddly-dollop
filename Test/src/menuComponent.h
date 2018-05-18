@@ -7,7 +7,7 @@ class MenuComponent : public HudComponent
 {
 public:
 	// active determines wether to handle input etc
-	std::shared_ptr<MenuComponent> Update(bool active);
+	virtual std::shared_ptr<MenuComponent> Update(bool active);
 
 protected:
 	// should input be handled?

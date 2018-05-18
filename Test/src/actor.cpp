@@ -51,7 +51,7 @@ void Actor::UpdateColor()
 		if (_ColorState != CS_Selected)
 		{
 			//_Graphics->SetColorAll(Vector3f(1, 0.25f, 0.25f), dead ? 0.5f : 1.0f);
-			_Graphics->SetColorAll(Vector3f(1.6f, 1.6f, 1.6f), dead ? 0.5f : 1.0f);
+			_Graphics->SetColorAll(Vector3f(1.9f, 1.9f, 1.9f), dead ? 0.5f : 1.0f);
 			_ColorState = CS_Selected;
 		}
 	}

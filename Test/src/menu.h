@@ -20,6 +20,9 @@ public:
 	// Load default page and open menu
 	virtual void Open();
 
+	// Load page and open menu
+	virtual void Open(MenuComp_ptr page);
+
 	// Destroy components and close menu
 	virtual void Close();
 
@@ -28,6 +31,9 @@ public:
 
 	// Return to previous active component
 	virtual void PopActive();
+
+	// Add a new component to know how to kickstart the menu
+	virtual void AddComponent(MenuComp_ptr menuComp);
 
 public:
 	// Menu is done, gotta close

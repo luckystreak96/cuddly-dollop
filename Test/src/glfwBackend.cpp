@@ -77,7 +77,7 @@ void Resize(GLFWwindow* window)
 static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
 	if (key == GameData::KeyMap.at(A_Exit) && action == GLFW_PRESS)
-		glfwSetWindowShouldClose(window, GLFW_TRUE);
+		GLFWManager::Exit();
 
 	if (key == GLFW_KEY_F11 && action == GLFW_RELEASE)
 	{
@@ -172,6 +172,11 @@ void ETB_GL_ERROR_CALLBACK(GLenum        source,
 
 	// Trigger a breakpoint in traditional debuggers...
 	//assert(false);
+}
+
+void GLFWManager::Exit()
+{
+	glfwSetWindowShouldClose(m_window, GLFW_TRUE);
 }
 
 GLFWManager::GLFWManager()

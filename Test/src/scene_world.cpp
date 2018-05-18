@@ -13,6 +13,7 @@
 #include "input_manager.h"
 #include "entityFactory.h"
 #include "battleData.h"
+#include "menuSettings.h"
 
 SceneWorld::SceneWorld(unsigned int map_id) : m_zoom(false)
 {
@@ -141,7 +142,7 @@ void SceneWorld::ManageInput()
 
 		if (m_menu->_done)
 		{
-			m_menu->Open();
+			m_menu->Open(std::make_shared<MenuSettings>(MenuSettings()));
 			m_camera._paused = true;
 		}
 		else
@@ -208,6 +209,9 @@ SceneGenData SceneWorld::Update()
 {
 	SceneGenData next = NextScene;
 
+	if (m_menu && !m_menu->_done)
+		m_menu->Update();
+
 	if (!m_menu || m_menu->_done)
 	{
 		// Needs to be called here so the EventQueues can set render
@@ -257,10 +261,6 @@ SceneGenData SceneWorld::Update()
 		SoundManager::GetInstance().Update();
 
 		UpdateHUD();
-	}
-	else
-	{
-		m_menu->Update();
 	}
 
 	return NextScene;

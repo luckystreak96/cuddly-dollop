@@ -54,6 +54,8 @@ public:
 	// If the accessLevel is lower than the lockLevel, the result is always nothing
 	bool FrameKeyStatus(unsigned int key, KeyStatus status = AnyPress, unsigned int accessLevel = 0);
 	bool FrameKeyStatus(InputAction action, KeyStatus status = AnyPress, unsigned int accessLevel = 0);
+	// This version checks if any of the keys are down
+	bool FrameKeyStatus(std::vector<InputAction> action, KeyStatus status = AnyPress, unsigned int accessLevel = 0);
 
 	// percent goes from -1 to 1
 	void SetKeyPercent(InputAction action, float percent);

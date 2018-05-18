@@ -1,5 +1,7 @@
 #include "resource_manager.h"
 
+#include "textureatlas.h"
+
 Texture* ResourceManager::GetTexture(std::string texture)
 {
 	if (m_textures.count(texture) > 0)
@@ -15,7 +17,7 @@ bool ResourceManager::LoadTexture(std::string tex)
 
 	static std::mutex mutex;
 	mutex.lock();
-	if (m_textures.count(tex) > 0)
+	if (m_textures.count(tex) > 0 || TextureAtlas::m_textureAtlas.GetTextureList().count(tex))
 	{
 		mutex.unlock();
 		return true;

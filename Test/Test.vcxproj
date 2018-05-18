@@ -187,7 +187,10 @@
     <ClInclude Include="src\menu.h" />
     <ClInclude Include="src\menuBackgroundBox.h" />
     <ClInclude Include="src\menuComponent.h" />
+    <ClInclude Include="src\menuFactory.h" />
+    <ClInclude Include="src\menuOptions.h" />
     <ClInclude Include="src\menuParty.h" />
+    <ClInclude Include="src\menuSettings.h" />
     <ClInclude Include="src\nighttimeEffect.h" />
     <ClInclude Include="src\nighttimeProcessing.h" />
     <ClInclude Include="src\observable.h" />
@@ -318,7 +321,10 @@
     <ClCompile Include="src\menu.cpp" />
     <ClCompile Include="src\menuBackgroundBox.cpp" />
     <ClCompile Include="src\menuComponent.cpp" />
+    <ClCompile Include="src\menuFactory.cpp" />
+    <ClCompile Include="src\menuOptions.cpp" />
     <ClCompile Include="src\menuParty.cpp" />
+    <ClCompile Include="src\menuSettings.cpp" />
     <ClCompile Include="src\nighttimeEffect.cpp" />
     <ClCompile Include="src\nighttimeProcessing.cpp" />
     <ClCompile Include="src\observable.cpp" />

@@ -93,6 +93,22 @@ bool InputManager::FrameKeyStatus(InputAction action, KeyStatus status, unsigned
 	return FrameKeyStatus(actionNum, status, accessLevel);
 }
 
+bool InputManager::FrameKeyStatus(std::vector<InputAction> action, KeyStatus status, unsigned int accessLevel)
+{
+	bool result = false;
+	for (auto& x : action)
+	{
+		assert(GameData::KeyMap.count(x));
+		unsigned int actionNum = GameData::KeyMap.count(x) ? GameData::KeyMap.at(x) : 0;
+		result = FrameKeyStatus(actionNum, status, accessLevel);
+
+		if (result)
+			break;
+	}
+
+	return result;
+}
+
 bool InputManager::FrameKeyStatus(unsigned int key, KeyStatus status, unsigned int accessLevel)
 {
 	//The key is never considered pressed to a method that doesnt currently have access

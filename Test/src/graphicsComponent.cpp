@@ -302,6 +302,9 @@ void GraphicsComponent::ResetVBO()
 // Sets the color of all vertices to change the color of the sprite
 void GraphicsComponent::SetColorAll(Vector3f color, float alpha)
 {
+	if (m_vertices[0].color == color && m_vertices[0].alpha == alpha)
+		return;
+
 	for (auto& v : m_vertices)
 	{
 		v.color = color;
