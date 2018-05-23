@@ -9,6 +9,8 @@ FBO::FBO(int width, int height) {
 	m_width = width;
 	m_height = height;
 	depthrenderbuffer = 0;
+	colourTexture = 0;
+	frameBuffer = 0;
 	InitialiseFrameBuffer();
 	GLenum status;
 	BindFrameBuffer();
@@ -34,10 +36,13 @@ FBO::~FBO()
 void FBO::CleanUp() {
 	// If ever there's some kind of memory leak problem, it might be because of this.
 	// However, I removed these 2 lines to solve a problem related to delete textures deleting the texture of the slime.
-	// To reproduce: dont active ppe until you enter battle, then trigger it and the slime texture becomes the framebuffer texture.
+	// To reproduce: dont active ppe until you enter battle, then trigger it and the slime texture becomes the last deleted framebuffer texture.
 	glDeleteTextures(1, &colourTexture);
 	glDeleteRenderbuffers(1, &depthrenderbuffer);
 	glDeleteFramebuffers(1, &frameBuffer);
+	colourTexture = 0;
+	depthrenderbuffer = 0;
+	frameBuffer = 0;
 }
 
 /**
@@ -80,7 +85,7 @@ void FBO::InitialiseFrameBuffer() {
 	glGenFramebuffers(1, &frameBuffer);
 	glBindFramebuffer(GL_FRAMEBUFFER, frameBuffer);
 
-	// The texture we're going to render to
+	// The texture we're going to render to -- only create a new one if there isnt already one
 	glGenTextures(1, &colourTexture);
 
 	// "Bind" the newly created texture : all future texture functions will modify this texture
@@ -120,6 +125,11 @@ void FBO::ResetTextures(int width, int height)
 	m_height = height;
 
 	CleanUp();
+	//BindFrameBuffer();
+	//glBindRenderbuffer(GL_RENDERBUFFER, 0);
+	//if(depthrenderbuffer)
+	//	glDeleteRenderbuffers(1, &depthrenderbuffer);
+	//depthrenderbuffer = 0;
 
 	InitialiseFrameBuffer();
 }

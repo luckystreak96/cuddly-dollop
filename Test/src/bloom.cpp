@@ -9,6 +9,10 @@ Bloom::Bloom() : PostProcessing()
 {
 }
 
+Bloom::~Bloom()
+{
+}
+
 void Bloom::Apply(Post_Processing_Screen* pps, FBO* fbo)
 {
 	//BEGIN BLOOM STAGE
@@ -34,7 +38,7 @@ void Bloom::Apply(Post_Processing_Screen* pps, FBO* fbo)
 
 	m_gaussV.BindFrameBuffer();
 	
-	glViewport(0, 0, _width / 2, _height / 2);
+	glViewport(0, 0, _width / m_divisor, _height / m_divisor);
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -60,7 +64,6 @@ void Bloom::Apply(Post_Processing_Screen* pps, FBO* fbo)
 
 	m_gaussH.BindFrameBuffer();
 
-	glViewport(0, 0, _width, _height);
 	EffectManager::GetInstance().Enable(E_Blur);
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -69,6 +72,7 @@ void Bloom::Apply(Post_Processing_Screen* pps, FBO* fbo)
 	glBindTexture(GL_TEXTURE_2D, m_gaussV.GetColourTexture());
 	pps->Draw(false);
 
+	glViewport(0, 0, _width, _height);
 
 	//m_gaussH.UnbindFrameBuffer();
 
@@ -133,7 +137,7 @@ void Bloom::Apply(Post_Processing_Screen* pps, FBO* fbo)
 	else
 	{
 		EffectManager::GetInstance().Enable(E_Basic);
-		glBindTexture(GL_TEXTURE_2D, m_bloom.GetColourTexture());
+		glBindTexture(GL_TEXTURE_2D, m_gaussV.GetColourTexture());
 	}
 
 	//Draw only base frame

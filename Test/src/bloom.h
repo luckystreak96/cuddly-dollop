@@ -15,6 +15,7 @@ class Bloom : public PostProcessing
 {
 public:
 	Bloom();
+	~Bloom();
 
 	void Apply(Post_Processing_Screen* pps, FBO* fbo);
 	void ResetTextureSizes();

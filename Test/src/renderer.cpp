@@ -12,20 +12,20 @@
 #include "input_manager.h"
 
 // MAKE IT BE A CENTERED_TILE AND PLACE IT CORRECTLY OR ITLL BE DUMB AF
-Renderer::Renderer() : m_toDraw(std::vector<GraphicsComponent*>()), m_width(1), m_height(1), apply(false)
+Renderer::Renderer() : m_toDraw(std::vector<GraphicsComponent*>()), m_width(1), m_height(1), apply(true)
 {
 	pps.GetModelMat()->SetTranslation(0, 0, 0);
 	pps.Update();
 
 	// TEST ERASE ME MAYBE
 	//m_ppe.push_back(std::make_shared<NightTimeProcessing>(NightTimeProcessing()));
-	m_ppe.push_back(std::make_shared<Bloom>(Bloom()));
+	m_ppe.push_back(std::shared_ptr<Bloom>(new Bloom()));
 	//m_ppe.push_back(std::make_shared<ContrastProcessing>(ContrastProcessing()));
 }
 
 void Renderer::Setup()
 {
-	if (InputManager::GetInstance().FrameKeyStatus(A_Cancel, KeyStatus::KeyPressed))
+	if (false && InputManager::GetInstance().FrameKeyStatus(A_Cancel, KeyStatus::KeyPressed))
 		apply = !apply;
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
