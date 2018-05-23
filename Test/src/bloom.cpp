@@ -33,6 +33,8 @@ void Bloom::Apply(Post_Processing_Screen* pps, FBO* fbo)
 	//pps->Update();
 
 	m_gaussV.BindFrameBuffer();
+	
+	glViewport(0, 0, _width / 2, _height / 2);
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -58,6 +60,7 @@ void Bloom::Apply(Post_Processing_Screen* pps, FBO* fbo)
 
 	m_gaussH.BindFrameBuffer();
 
+	glViewport(0, 0, _width, _height);
 	EffectManager::GetInstance().Enable(E_Blur);
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -65,6 +68,7 @@ void Bloom::Apply(Post_Processing_Screen* pps, FBO* fbo)
 	BlurEffect::GetInstance().SetHorizontalBlur(false);
 	glBindTexture(GL_TEXTURE_2D, m_gaussV.GetColourTexture());
 	pps->Draw(false);
+
 
 	//m_gaussH.UnbindFrameBuffer();
 
@@ -119,7 +123,7 @@ void Bloom::Apply(Post_Processing_Screen* pps, FBO* fbo)
 	{
 		//Combine blur with actual frame
 		EffectManager::GetInstance().Enable(E_Combine);
-		float intensity = 0.4f;
+		float intensity = 0.2f;
 		CombineEffect::GetInstance().SetIntensity(intensity);
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, m_gaussH.GetColourTexture());

@@ -35,8 +35,8 @@ void FBO::CleanUp() {
 	// If ever there's some kind of memory leak problem, it might be because of this.
 	// However, I removed these 2 lines to solve a problem related to delete textures deleting the texture of the slime.
 	// To reproduce: dont active ppe until you enter battle, then trigger it and the slime texture becomes the framebuffer texture.
-	//glDeleteTextures(1, &colourTexture);
-	//glDeleteRenderbuffers(1, &depthrenderbuffer);
+	glDeleteTextures(1, &colourTexture);
+	glDeleteRenderbuffers(1, &depthrenderbuffer);
 	glDeleteFramebuffers(1, &frameBuffer);
 }
 
