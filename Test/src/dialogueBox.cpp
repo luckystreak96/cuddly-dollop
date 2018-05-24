@@ -73,7 +73,7 @@ void DialogueBox::SetText(std::string text)
 	auto graph = GetLocalizedGraph();
 
 	float x = 0.65f;
-	float y = m_box->_topLeft.y + 0.125f;
+	float y = m_box->_topLeft.y - 0.5f;
 	// LOCALIZATION HERE
 	Font::SetText(_(text), Vector3f(x, y, -15.0f), false, m_maxWidth);
 	m_choices.clear();

@@ -80,7 +80,7 @@ MenuBackgroundBox::MenuBackgroundBox(Vector3f position, int width, int height) :
 	topleft->SetPhysics(Vector3f(leftPos, bottomPos + height, -10.f));
 	topleft->SetColorAll(color, alpha);
 	m_boxParts.push_back(topleft);
-	_topLeft = Vector3f(leftPos - 0.5f, bottomPos + height - 0.5f, -10);
+	_topLeft = Vector3f(leftPos - 0.5f, bottomPos + height + 0.5f, -10);
 
 	GraphComp_ptr topright = GraphComp_ptr(new GraphicsComponent("CENTERED_TILE", "menu_corner.png"));
 	topright->SetPhysics(Vector3f(leftPos + width, bottomPos + height, -10.f));
