@@ -23,7 +23,7 @@ public:
 
 	// Remember who you're showing
 	Actor* _actor;
-	unsigned int _damageFont;
+	unsigned int _turnFont;
 
 private:
 	// maxhp variables

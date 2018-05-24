@@ -16,16 +16,16 @@ BattleManager::BattleManager()
 BattleManager::BattleManager(std::vector<Actor_ptr> actors)
 {
 	// Populate actors
-	for (auto a : actors)
+	for (auto& a : actors)
 	{
 		// Reset modified stats
 		a->_Fighter->ResetModified();
 		_actors.push_back(a);
 	}
 
-	std::sort(actors.begin(), actors.end(), Actor::ActorSpeedSort);
-	for (auto a : actors)
+	for (auto a : _actors)
 		_actorQueue.push_back(a);
+	std::sort(_actorQueue.begin(), _actorQueue.end(), Actor::ActorSpeedSort);
 
 	Init();
 }
@@ -216,20 +216,20 @@ void BattleManager::TurnStart()
 	}
 
 	// Check to see if predictions should be dispayed
-	{
-		bool shouldDisplay = true;
-		for (auto& x : _actors)
-		{
-			if (x->_Fighter->NoPredictCountDown > 0)
-			{
-				if (x == _owner)
-					x->_Fighter->NoPredictCountDown--;
-				shouldDisplay = false;
-			}
-		}
+	//{
+	//	bool shouldDisplay = true;
+	//	for (auto& x : _actors)
+	//	{
+	//		if (x->_Fighter->NoPredictCountDown > 0)
+	//		{
+	//			if (x == _owner)
+	//				x->_Fighter->NoPredictCountDown--;
+	//			shouldDisplay = false;
+	//		}
+	//	}
 
-		_hud.ToggleDamagePredictionDisplay(shouldDisplay);
-	}
+	//	_hud.ToggleTurnOrderDisplay(shouldDisplay);
+	//}
 
 
 	MoveToLight(true);
@@ -455,7 +455,11 @@ void BattleManager::ManageInput()
 	if (InputManager::GetInstance().FrameKeyStatus(A_AltR, KeyStatus::Release) ||
 		InputManager::GetInstance().FrameKeyStatus(A_AltR, KeyStatus::KeyPressed) ||
 		_state == BS_ActionDone)
-		_hud.ToggleDamagePredictionArrowDisplay(!InputManager::GetInstance().FrameKeyStatus(A_AltR, KeyStatus::AnyPress));
+	{
+		bool status = !InputManager::GetInstance().FrameKeyStatus(A_AltR, KeyStatus::AnyPress);
+		_hud.ToggleTurnOrderDisplay(status);
+		_hud.ToggleDamagePredictionArrowDisplay(status);
+	}
 
 	// Dont allow any input if theres an animation running
 	// This doesnt apply if theres a skill in progress, gotta be interactive!

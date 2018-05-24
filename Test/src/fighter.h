@@ -23,7 +23,7 @@ class Fighter : public StatUser
 public:
 	Fighter();
 	Fighter(Fighter& f);
-	
+
 	// Damage related
 	virtual Damage TakeDamage(Damage& dmg);
 	virtual Damage ApplyHealing(Damage& heal);
@@ -46,10 +46,12 @@ public:
 
 	// Levels
 	virtual void LevelUp();
+	virtual void SetLevel(int level);
 	virtual void GiveExp(int xp);
 	virtual void SetExp(int xp);
 
 	// Stats
+	void ReCalculateStats();
 	void SetStatsFromCurve();
 
 public:
@@ -62,6 +64,7 @@ public:
 	// Flag for possible invisibility or untargetability
 	bool Targetable;
 	int _OrderPosition;
+	int _BattleFieldPosition;
 	Actor_ptr Protector;
 	int Team;
 	std::vector<Skill_ptr> Skills;

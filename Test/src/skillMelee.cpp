@@ -24,6 +24,7 @@ BattleState SkillMelee::Setup(std::vector<Actor_ptr>* targets, std::deque<Actor_
 
 void SkillMelee::Start()
 {
+	Skill::Start();
 	_basePos = _owner->_Graphics->GetPos();
 	// INSERT JUMP FOREWARD ANIMATION HERE
 	float distance = _owner->_Fighter->Team == 0 ? 0.7f : -0.7f;

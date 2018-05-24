@@ -18,7 +18,7 @@ public:
 	static Actor_ptr BuildBaseEnemy();
 	static std::vector<Actor_ptr> BuildParty(rapidjson::GenericArray<false, rapidjson::Value>& arr);
 	static Actor_ptr BuildActor(rapidjson::Value& a);
-	static Actor_ptr BuildActor(int id, int team = 1);
+	static Actor_ptr BuildActor(int id, int team = 1, int level = 1, int fluctuation = 3);
 	static Skill_ptr BuildSkill(std::string name);
 };
 

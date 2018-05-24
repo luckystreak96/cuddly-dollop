@@ -9,6 +9,7 @@
 
 HudTurnOrder::HudTurnOrder(Actor* owner)
 {
+	m_mustDisplay = false;
 	_actor = owner;
 
 	m_prevActorPos = _actor->_Graphics->GetPosRef();
@@ -32,7 +33,7 @@ HudTurnOrder::HudTurnOrder(Actor* owner)
 	FontManager::GetInstance().GetFont(font)->_letterSpacing = 0.55f;
 
 	// Set everything
-	_damageFont = font;
+	_turnFont = font;
 
 	Update();
 }
@@ -50,7 +51,7 @@ Vector3f HudTurnOrder::CalculateTextPosition()
 void HudTurnOrder::Destroy()
 {
 	// Make sure to destroy the fonts
-	FontManager::GetInstance().RemoveFont(_damageFont);
+	FontManager::GetInstance().RemoveFont(_turnFont);
 
 	HudComponent::Destroy();
 }
@@ -67,9 +68,9 @@ void HudTurnOrder::Update()
 		_background->Update();
 
 		// font
-		FontManager::GetInstance().GetFont(_damageFont)->UpdateModel(CalculateTextPosition());
+		FontManager::GetInstance().GetFont(_turnFont)->UpdateModel(CalculateTextPosition());
 		// Necessary for window size changes
-		FontManager::GetInstance().GetFont(_damageFont)->SetOffset(CalculateTextPosition());
+		FontManager::GetInstance().GetFont(_turnFont)->SetOffset(CalculateTextPosition());
 	}
 
 	m_observedOrder = _actor->_Fighter->_OrderPosition;
@@ -79,11 +80,11 @@ void HudTurnOrder::Update()
 		return;
 
 	// Handle text display
-	m_mustDisplay = m_mustDisplayNextUpdate;
-	if (m_mustDisplay && !_actor->_Fighter->Dead)
-		FontManager::GetInstance().EnableFont(_damageFont);
-	else
-		FontManager::GetInstance().DisableFont(_damageFont);
+	//m_mustDisplay = m_mustDisplayNextUpdate;
+	//if (m_mustDisplay && !_actor->_Fighter->Dead)
+	//	FontManager::GetInstance().EnableFont(_turnFont);
+	//else
+	//	FontManager::GetInstance().DisableFont(_turnFont);
 
 	m_prevOrder = m_observedOrder;
 
@@ -101,25 +102,26 @@ void HudTurnOrder::Update()
 	// Update the font
 	//pos = CalculateTextPosition();
 	std::string text = std::to_string(m_observedOrder);
-	std::string current = FontManager::GetInstance().GetFont(_damageFont)->_text;
+	std::string current = FontManager::GetInstance().GetFont(_turnFont)->_text;
 
 	// Only update font when it changes
 	if (text != current)
 	{
-		FontManager::GetInstance().SetText(_damageFont, text, Vector3f(), true);
-		FontManager::GetInstance().GetFont(_damageFont)->UpdateModel(CalculateTextPosition());
-		FontManager::GetInstance().GetFont(_damageFont)->SetOffset(CalculateTextPosition());
+		FontManager::GetInstance().SetText(_turnFont, text, Vector3f(), true);
+		FontManager::GetInstance().GetFont(_turnFont)->UpdateModel(CalculateTextPosition());
+		FontManager::GetInstance().GetFont(_turnFont)->SetOffset(CalculateTextPosition());
 	}
 
-	//FontManager::GetInstance().GetFont(_damageFont)->Update(0);
-	//FontManager::GetInstance().GetFont(_damageFont)->UpdateModel(CalculateTextPosition());
+	//FontManager::GetInstance().GetFont(_turnFont)->Update(0);
+	//FontManager::GetInstance().GetFont(_turnFont)->UpdateModel(CalculateTextPosition());
 
 	_background->Update();
 }
 
 void HudTurnOrder::ToggleDisplay(bool display)
 {
-	m_mustDisplayNextUpdate = display;
+	//m_mustDisplayNextUpdate = display;
+	m_mustDisplay = !display;
 }
 
 void HudTurnOrder::AdjustPosition()
@@ -131,13 +133,13 @@ void HudTurnOrder::SetRender()
 {
 	if (!m_mustDisplay || _actor->_Fighter->Dead)
 	{
-		if (_actor->_Fighter->Dead)
-			FontManager::GetInstance().DisableFont(_damageFont);
-		return;
+		//if (_actor->_Fighter->Dead)
+			FontManager::GetInstance().DisableFont(_turnFont);
+		return;// returning here allows us to not render the bg
 	}
 
 	if (m_mustDisplay && !_actor->_Fighter->Dead)
-		FontManager::GetInstance().EnableFont(_damageFont);
+		FontManager::GetInstance().EnableFont(_turnFont);
 
 	// FontManager handles setting the render for the label
 	Renderer::GetInstance().Add(_background);

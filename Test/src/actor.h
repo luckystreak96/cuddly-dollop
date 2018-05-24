@@ -28,6 +28,7 @@ public:
 	std::string Sprite;
 	Vector3f BasePosition;
 	static bool ActorSpeedSort(Actor_ptr a, Actor_ptr b);
+	static bool ActorBattleOrderSort(Actor_ptr a, Actor_ptr b);
 
 protected:
 	void SetDefault();

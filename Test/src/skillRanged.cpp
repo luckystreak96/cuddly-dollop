@@ -26,6 +26,7 @@ BattleState SkillRanged::Setup(std::vector<Actor_ptr>* targets, std::deque<Actor
 
 void SkillRanged::Start()
 {
+	Skill::Start();
 	_basePos = _owner->_Graphics->GetPos();
 
 	_anims->push_back(Anim_ptr(new AnimMoveTo(_owner->_Graphics->GetPosRef() + Vector3f(_owner->_Fighter->Team ? -1 : 1, 0, 0), _owner)));

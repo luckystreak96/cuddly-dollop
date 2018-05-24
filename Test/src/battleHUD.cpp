@@ -108,7 +108,7 @@ void BattleHUD::AddActorAttackPredictionArrow(Actor_ptr ap)
 	_hudComponents.push_back(damagePrediction);
 }
 
-void BattleHUD::ToggleDamagePredictionDisplay(bool display)
+void BattleHUD::ToggleTurnOrderDisplay(bool hidden)
 {
 	HudTurnOrder* pred;
 	for (auto& x : _hudComponents)
@@ -116,7 +116,7 @@ void BattleHUD::ToggleDamagePredictionDisplay(bool display)
 		pred = dynamic_cast<HudTurnOrder*>(x.get());
 		if (pred != NULL)
 		{
-			pred->ToggleDisplay(display);
+			pred->ToggleDisplay(hidden);
 		}
 	}
 }
@@ -133,8 +133,8 @@ void BattleHUD::ToggleDamagePredictionArrowDisplay(bool hidden)
 		pred = dynamic_cast<HudArrow*>(x.get());
 		if (pred != NULL)
 		{
-			if (pred->_targeter->_Fighter->Team == 0 && hidden)
-				continue;
+			//if (pred->_targeter->_Fighter->Team == 0 && hidden)
+			//	continue;
 			pred->ToggleHidden(hidden);
 		}
 	}

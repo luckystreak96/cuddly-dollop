@@ -34,7 +34,7 @@ Actor_ptr ActorFactory::BuildBaseAlly()
 Actor_ptr ActorFactory::BuildBaseEnemy()
 {
 	Actor_ptr result = Actor_ptr(new Actor());
-	result->_Fighter->SetLevel(2);
+	result->_Fighter->SetLevel(rand() % 3 + 1);
 	result->_Fighter->Curve = "Attack_Level_1";
 	result->_Fighter->SetStatsFromCurve();
 	//result->_Fighter->Speed = 2;
@@ -51,10 +51,12 @@ Actor_ptr ActorFactory::BuildBaseEnemy()
 	return result;
 }
 
-Actor_ptr ActorFactory::BuildActor(int id, int team)
+Actor_ptr ActorFactory::BuildActor(int id, int team, int level, int fluctuation)
 {
 	Actor_ptr actor = Actor_ptr(new Actor(*BattleData::Actors.at(id)));
 	actor->_Fighter->Team = team;
+	actor->_Fighter->SetLevel(level + rand() % fluctuation);
+	actor->_Fighter->Health = actor->_Fighter->GetMaxHealth().Real;
 	return actor;
 }
 Actor_ptr ActorFactory::BuildActor(rapidjson::Value& a)

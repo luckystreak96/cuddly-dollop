@@ -195,15 +195,18 @@ void GameData::LoadSettings()
 				std::string name = itr->name.GetString();
 				if (itr->value.IsBool())
 				{
-					if (name == "mute")
-						sec = itr->value.GetBool();
-					else if (name == "fullscreen")
-						sec = itr->value.GetBool();
+					//if (name == "mute")
+					//	sec = itr->value.GetBool();
+					//else if (name == "fullscreen")
+					//	sec = itr->value.GetBool();
+					sec = itr->value.GetBool();
 				}
 				else if (itr->value.IsInt())
 				{
-					if (name == "resolution")
-						sec = itr->value.GetInt();
+					//if (name == "resolution")
+					//	sec = itr->value.GetInt();
+					//else
+					sec = itr->value.GetInt();
 				}
 
 				// If the key isnt defined, just skip
@@ -254,6 +257,8 @@ void GameData::EnsureBaseSettings()
 		Options.emplace("fullscreen", false);
 	if (!Options.count("resolution"))
 		Options.emplace("resolution", 3);
+	if (!Options.count("effect_quality"))
+		Options.emplace("effect_quality", 0);
 	if (!Strings.count("name"))
 		Strings.emplace("name", "Yanik");
 
@@ -388,12 +393,18 @@ void GameData::SaveSettings()
 		first.SetString(StringRef(x.first.c_str()), allocator);
 		Value second;
 
-		if (x.first == "mute")
+		// Checks if the type of the object in the variant is the right one - returns null if it isn't
+		if(auto val = std::get_if<bool>(&x.second))
 			second.SetBool(std::get<bool>(x.second));
-		else if (x.first == "fullscreen")
-			second.SetBool(std::get<bool>(x.second));
-		else if (x.first == "resolution")
+		else if(auto val = std::get_if<int>(&x.second))
 			second.SetInt(std::get<int>(x.second));
+
+		//if (x.first == "mute")
+		//	second.SetBool(std::get<bool>(x.second));
+		//else if (x.first == "fullscreen")
+		//	second.SetBool(std::get<bool>(x.second));
+		//else if (x.first == "resolution")
+		//	second.SetInt(std::get<int>(x.second));
 
 		ob.AddMember(first, second, allocator);
 		options.PushBack(ob, allocator);

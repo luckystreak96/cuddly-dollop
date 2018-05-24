@@ -11,7 +11,7 @@ void main()
 	if(color.a < 0.1)
 		discard;
     else
-        color = vec4(1, 0.2, 0.2, 1.0);
+        color = vec4(1.0, 1.0, 1.0, 0.5);
 
 	FragColor = color;
 }

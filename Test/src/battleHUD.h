@@ -13,8 +13,8 @@ public:
 	void Update();
 	void SetRender();
 	void Destroy();
-	void ToggleDamagePredictionDisplay(bool display);
-	void ToggleDamagePredictionArrowDisplay(bool display);
+	void ToggleTurnOrderDisplay(bool hidden);
+	void ToggleDamagePredictionArrowDisplay(bool hidden);
 
 	// Returns the HudHealthBar attached to the specified actor
 	HudHealthBar* GetActorHealthBar(Actor* actor);

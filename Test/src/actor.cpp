@@ -25,7 +25,15 @@ Actor::Actor(Actor& a)
 bool Actor::ActorSpeedSort(Actor_ptr a, Actor_ptr b)
 {
 	if (a->_Fighter && b->_Fighter)
-		return a->_Fighter->Speed.Real > b->_Fighter->Speed.Real;
+		return a->_Fighter->Speed.Modified > b->_Fighter->Speed.Modified;
+	return true;
+}
+
+bool Actor::ActorBattleOrderSort(Actor_ptr a, Actor_ptr b)
+{
+	if (a->_Fighter && b->_Fighter)
+		return a->_Fighter->_BattleFieldPosition < b->_Fighter->_BattleFieldPosition;
+	return true;
 }
 
 void Actor::SetDefault()
@@ -46,13 +54,16 @@ void Actor::UpdateColor()
 {
 	bool dead = (_Fighter && _Fighter->Dead);
 
+	_Graphics->_outline = Selected;// Always default to no outline unless selected
+
 	if(Selected)
 	{
 		if (_ColorState != CS_Selected)
 		{
 			//_Graphics->SetColorAll(Vector3f(1, 0.25f, 0.25f), dead ? 0.5f : 1.0f);
-			_Graphics->SetColorAll(Vector3f(1.9f, 1.9f, 1.9f), dead ? 0.5f : 1.0f);
+			_Graphics->SetColorAll(Vector3f(1.6f, 1.6f, 1.6f), dead ? 0.5f : 1.0f);
 			_ColorState = CS_Selected;
+			_Graphics->_outline = true;
 		}
 	}
 	else if (dead)

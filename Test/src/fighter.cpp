@@ -32,10 +32,21 @@ Fighter::Fighter(Fighter& f)
 	for (auto& x : f._Passives)
 		_Passives.push_back(BattleData::PassiveSkills.at(x->_Id));
 
+	ReCalculateStats();
+}
+
+void Fighter::ReCalculateStats()
+{
 	// Stats are decided first by the curve, then the passives, then the equipment etc
 	SetStatsFromCurve();
 	PassiveFactory::ApplyAllPassives(this, &_Passives);
 	CurrentHealthCheck();
+}
+
+void Fighter::SetLevel(int level)
+{
+	StatUser::SetLevel(level);
+	ReCalculateStats();
 }
 
 bool Fighter::PredictNextSkill(Actor_ptr owner, std::vector<Actor_ptr>* actors)
@@ -123,8 +134,7 @@ void Fighter::LevelUp()
 {
 	StatUser::LevelUp();
 	int hp = MaxHealth.Base;
-	SetStatsFromCurve();
-	PassiveFactory::ApplyAllPassives(this, &_Passives);
+	ReCalculateStats();
 	int dif = MaxHealth.Base - hp;
 	Health += dif;
 }
@@ -137,6 +147,7 @@ void Fighter::SetStatsFromCurve()
 void Fighter::SetDefault()
 {
 	_OrderPosition = 0;
+	_BattleFieldPosition = 0;
 	Skills.push_back(Skill_ptr(new SkillSmack()));
 	Dead = false;
 	Targetable = true;

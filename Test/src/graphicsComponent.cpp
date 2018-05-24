@@ -51,7 +51,7 @@ void GraphicsComponent::FullReset(std::vector<Vertex>* verts, std::vector<GLuint
 
 void GraphicsComponent::Construct()
 {
-	m_outline = false;
+	_outline = false;
 	m_direction = dir_Down;
 	_instancedDraw = false;
 	m_lastMModelSize = 0;

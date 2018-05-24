@@ -140,6 +140,7 @@ BattleState Skill::Setup(std::vector<Actor_ptr>* targets, std::deque<Actor_ptr>*
 
 void Skill::Start()
 {
+	std::sort(_targets.begin(), _targets.end(), Actor::ActorBattleOrderSort);
 	return;
 }
 

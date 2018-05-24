@@ -77,6 +77,9 @@ bool SceneBattle::Init()
 
 	for (int i = 0; i < m_party.size(); i++)
 	{
+		// Set battlefield position for proper iteration
+		m_party.at(i)->_Fighter->_BattleFieldPosition = i;
+
 		Vector3f position = Vector3f(4.0f + i * 0.25f, startY + i * 1.25f, 4.0f);
 		m_party.at(i)->_Graphics->SetPhysics(position, Vector3f());
 		m_party.at(i)->BasePosition = position;
@@ -88,6 +91,9 @@ bool SceneBattle::Init()
 
 	for (int i = 0; i < m_enemies.size(); i++)
 	{
+		// Set battlefield position for proper iteration
+		m_enemies.at(i)->_Fighter->_BattleFieldPosition = i + m_party.size();
+
 		Vector3f position = Vector3f(13.5f - i * 0.25f, startY + i * 1.25f, 4.0f);
 		m_enemies.at(i)->_Graphics->SetPhysics(position, Vector3f());
 		m_enemies.at(i)->BasePosition = position;

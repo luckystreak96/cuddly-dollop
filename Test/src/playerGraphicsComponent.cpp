@@ -11,7 +11,7 @@ PlayerGraphicsComponent::PlayerGraphicsComponent(std::string tex, std::string mo
 	//Construct();
 	Update();
 	m_firstLoad = false;
-	m_outline = false;
+	_outline = false;
 }
 
 void PlayerGraphicsComponent::NormalDraw(bool withTex)
@@ -23,10 +23,12 @@ void PlayerGraphicsComponent::NormalDraw(bool withTex)
 
 void PlayerGraphicsComponent::DrawOutline(bool withTex)
 {
+	// Update the stencil buffer every time
 	glStencilFunc(GL_ALWAYS, 1, 0xFF);
-	glStencilMask(0xFF);
+	glStencilMask(0xFF);// enable writing
 	glStencilOp(GL_REPLACE, GL_REPLACE, GL_REPLACE);
 
+	// Draw to stencil buffer and draw to screen at same time
 	Effect::SetDrawType(DrawType::DT_ENTITY);
 	GraphicsComponent::Draw(withTex);
 
@@ -37,23 +39,25 @@ void PlayerGraphicsComponent::DrawOutline(bool withTex)
 	EffectManager::GetInstance().Enable(E_SingleColor);
 	//SingleColorEffect::GetInstance().Enable();
 	Effect::SetDrawType(DrawType::DT_ENTITY);
-	Vector3f size = Vector3f(1.1f, 1.1f, 1);
+	float xsize = m_modelMat.GetScale().x;
+	Vector3f size = Vector3f(xsize * 1.1f, 1.075f, 1);
 	m_modelMat.SetScale(size);
+	//_updateMModels = true;
+
+	//InsertMModels(m_modelMat, 0);
 	UpdateTranslation();
-
-	//Bloom::GetInstance().Begin();
-
 	GraphicsComponent::UpdateMModels();
+	//GraphicsComponent::ResetVBO();
 	GraphicsComponent::Draw(withTex);
-
-	//Bloom::GetInstance().End(false);
+	//InsertMModels(m_modelMat, 0);
 
 	glEnable(GL_DEPTH_TEST);
 
 	glStencilFunc(GL_ALWAYS, 1, 0xFF);
 	glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
-	Vector3f scale = Vector3f(1, 1, 1);
+	Vector3f scale = Vector3f(xsize, 1, 1);
 	m_modelMat.SetScale(scale);
+	InsertMModels(m_modelMat, 0);
 
 	Effect::SetDrawType(DrawType::DT_FLAT);
 	EffectManager::GetInstance().EnablePrevious();
@@ -62,9 +66,10 @@ void PlayerGraphicsComponent::DrawOutline(bool withTex)
 
 void PlayerGraphicsComponent::Draw(bool withTex)
 {
-	if (m_outline)
+	if (_outline)
 	{
 		DrawOutline(withTex);
+		//NormalDraw(withTex);
 	}
 	else
 	{

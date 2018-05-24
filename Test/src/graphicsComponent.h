@@ -73,6 +73,7 @@ public:
 	bool mustDraw = true;
 	bool _instancedDraw;
 	bool _updateMModels;
+	bool _outline;
 
 protected:
 	GLsizei m_lastMModelSize;
@@ -96,7 +97,6 @@ protected:
 	std::string m_modelName;
 	bool m_external_loaded = false;
 	bool m_GL_loaded = false;
-	bool m_outline;
 	bool m_mmodelsUpdated;
 	Transformation m_modelMat;
 	Vector3f m_vel;

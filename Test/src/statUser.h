@@ -30,7 +30,7 @@ public:
 	StatUser();
 
 public:
-	void SetLevel(int level);
+	virtual void SetLevel(int level);
 	int GetLevel();
 	// Handles level up logic
 	virtual void GiveExp(int exp);

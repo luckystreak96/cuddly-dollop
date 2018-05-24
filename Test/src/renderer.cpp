@@ -28,7 +28,9 @@ void Renderer::Setup()
 	if (false && InputManager::GetInstance().FrameKeyStatus(A_Cancel, KeyStatus::KeyPressed))
 		apply = !apply;
 
+	glStencilMask(0xFF);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+	glStencilMask(0x00);
 	if (apply)
 	{
 		int w, h;
@@ -61,7 +63,9 @@ void Renderer::Setup()
 
 		//FBO
 		m_fbo.BindFrameBuffer();
+		glStencilMask(0xFF);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+		glStencilMask(0x00);
 	}
 
 }

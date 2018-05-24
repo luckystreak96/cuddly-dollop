@@ -2,6 +2,8 @@
 #include "glfwBackend.h"
 #include "effectManager.h"
 
+#include "gameData.h"
+
 // The poor GPU can be saved by increasing m_divisor in postProcessing.cpp
 // However, it makes some complicated business cuz the textures become too small, as is visible when you try it.
 
@@ -19,7 +21,7 @@ void Bloom::Apply(Post_Processing_Screen* pps, FBO* fbo)
 
 	m_bloom.BindFrameBuffer();
 
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
 	GLuint program = BloomEffect::GetInstance().GetNormal();
 	EffectManager::GetInstance().Enable(E_Bloom, program);
@@ -40,7 +42,7 @@ void Bloom::Apply(Post_Processing_Screen* pps, FBO* fbo)
 	
 	glViewport(0, 0, _width / m_divisor, _height / m_divisor);
 
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
 	EffectManager::GetInstance().Enable(E_Blur);
 	BlurEffect::GetInstance().SetHorizontalBlur(true);
@@ -66,7 +68,7 @@ void Bloom::Apply(Post_Processing_Screen* pps, FBO* fbo)
 
 	EffectManager::GetInstance().Enable(E_Blur);
 
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
 	BlurEffect::GetInstance().SetHorizontalBlur(false);
 	glBindTexture(GL_TEXTURE_2D, m_gaussV.GetColourTexture());
@@ -150,6 +152,9 @@ void Bloom::Apply(Post_Processing_Screen* pps, FBO* fbo)
 
 void Bloom::ResetTextureSizes()
 {
+	//int right = OrthoProjInfo::GetRegularInstance().Right;
+	if (std::get<int>(GameData::Options.at("effect_quality")) == 0)
+		m_divisor = OrthoProjInfo::GetRegularInstance().Size / 32;
 	m_gaussH.ResetTextures(_width / (int)m_divisor, _height / (int)m_divisor);
 	m_gaussV.ResetTextures(_width / (int)m_divisor, _height / (int)m_divisor);
 	m_bloom.ResetTextures(_width, _height);

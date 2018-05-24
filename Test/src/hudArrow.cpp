@@ -14,8 +14,9 @@ HudArrow::HudArrow(Actor_ptr targeter)
 	_graphic->SetColorAll(Vector3f(targeter->BasePosition).Normalize(), 0.5f);
 	_graphic->Update();
 
-	_hidden = true;
-	_showing = false;
+	bool value = targeter->_Fighter->Team != 0;
+	_hidden = value;
+	_showing = !value;
 
 	SetPosition(_start, _end);
 
@@ -86,6 +87,9 @@ void HudArrow::Update()
 
 void HudArrow::ToggleHidden(bool hidden)
 {
+	if (_targeter->_Fighter->Team == 0)
+		hidden = !hidden;
+
 	_showing = !hidden;
 
 	if (_targeter->_Fighter->Dead)
