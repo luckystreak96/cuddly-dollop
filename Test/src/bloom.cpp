@@ -19,6 +19,9 @@ void Bloom::Apply(Post_Processing_Screen* pps, FBO* fbo)
 {
 	//BEGIN BLOOM STAGE
 
+	// Disable depth test because the framebuffers do weird stuff with depth
+	glDisable(GL_DEPTH_TEST);
+
 	m_bloom.BindFrameBuffer();
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
@@ -82,25 +85,25 @@ void Bloom::Apply(Post_Processing_Screen* pps, FBO* fbo)
 
 	//BEGIN SECOND GAUSSIAN BLUR (FOR MAXIMUM BLURINESS)
 
-	//m_gaussV.BindFrameBuffer();
+	m_gaussV.BindFrameBuffer();
 
-	//glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
-	//glBindTexture(GL_TEXTURE_2D, m_gaussH.GetColourTexture());
-	//BlurEffect::GetInstance().SetHorizontalBlur(true);
-	//pps->Draw(false);
+	glBindTexture(GL_TEXTURE_2D, m_gaussH.GetColourTexture());
+	BlurEffect::GetInstance().SetHorizontalBlur(true);
+	pps->Draw(false);
 
 	//m_gaussV.UnbindFrameBuffer();
 
-	//m_gaussH.BindFrameBuffer();
+	m_gaussH.BindFrameBuffer();
 
-	//glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-	//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
-	//glBindTexture(GL_TEXTURE_2D, m_gaussV.GetColourTexture());
-	//BlurEffect::GetInstance().SetHorizontalBlur(false);
-	//pps->Draw(false);
+	glBindTexture(GL_TEXTURE_2D, m_gaussV.GetColourTexture());
+	BlurEffect::GetInstance().SetHorizontalBlur(false);
+	pps->Draw(false);
 
 	//m_gaussH.UnbindFrameBuffer();
 
@@ -129,7 +132,7 @@ void Bloom::Apply(Post_Processing_Screen* pps, FBO* fbo)
 	{
 		//Combine blur with actual frame
 		EffectManager::GetInstance().Enable(E_Combine);
-		float intensity = 0.2f;
+		float intensity = 0.15f;
 		CombineEffect::GetInstance().SetIntensity(intensity);
 		glActiveTexture(GL_TEXTURE1);
 		glBindTexture(GL_TEXTURE_2D, m_gaussH.GetColourTexture());
@@ -139,13 +142,18 @@ void Bloom::Apply(Post_Processing_Screen* pps, FBO* fbo)
 	else
 	{
 		EffectManager::GetInstance().Enable(E_Basic);
-		glBindTexture(GL_TEXTURE_2D, m_gaussV.GetColourTexture());
+		glBindTexture(GL_TEXTURE_2D, m_gaussH.GetColourTexture());
 	}
 
 	//Draw only base frame
 	fbo->BindFrameBuffer();
 	pps->Draw(false);
 	fbo->UnbindFrameBuffer();
+
+	glEnable(GL_DEPTH_TEST);
+
+	// for a cool effect
+	//glBlendFunc(GL_ONE, GL_ONE);
 
 	//EffectManager::GetInstance().SetNoTranslateMode(false);
 }

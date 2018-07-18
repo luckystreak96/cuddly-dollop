@@ -98,16 +98,19 @@ void Leaf::ResetLocation(Vector3f& zoneSize, bool firstSpawn, bool smooth)
 	float value = fmod(((float)rand() / 1000.0f), 0.1f);
 	velocity.x = (rand() % 2) == 0 ? value : -value;
 	int random = rand();
+
+	// Set color
+	Vector3f base = Vector3f(0.5f, 0.5f, 0.5f);
 	if (random % 5 == 0)
-		physics.SetColorAll(Vector3f(0, 0.5f, 0.1f), 1.0f);
+		physics.SetColorAll(base + Vector3f(0, 0.5f, 0.1f), 1.0f);
 	else if (random % 4 == 0)
-		physics.SetColorAll(Vector3f(0, 0.9f, 0.03f), 1.0f);
+		physics.SetColorAll(base + Vector3f(0, 0.9f, 0.03f), 1.0f);
 	else if (random % 3 == 0)
-		physics.SetColorAll(Vector3f(0.65f, 0.82f, 0.02f), 1.0f);
+		physics.SetColorAll(base + Vector3f(0.65f, 0.82f, 0.02f), 1.0f);
 	else if (random % 2 == 0)
-		physics.SetColorAll(Vector3f(1.0f, 0.85f, 0.02f), 1.0f);
+		physics.SetColorAll(base + Vector3f(1.0f, 0.85f, 0.02f), 1.0f);
 	else
-		physics.SetColorAll(Vector3f(0.8f, 0.8f, 0.1f), 1.0f);
+		physics.SetColorAll(base + Vector3f(0.8f, 0.8f, 0.1f), 1.0f);
 }
 
 void Leaf::SetTrans(Transformation& trans)

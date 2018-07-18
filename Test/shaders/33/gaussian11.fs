@@ -35,7 +35,7 @@ void main()
         }
     }
     // Prevent something from becoming blindingly bright
-    if(result.r + result.g + result.b > 2.0)
-        result /= 2;
+    //if(result.r + result.g + result.b > 2.0)
+    //    result /= 2;
     FragColor = vec4(result, 1.0);
 }
