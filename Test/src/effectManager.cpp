@@ -40,6 +40,11 @@ void EffectManager::SetAllTilePositions(float size)
 	}
 }
 
+void EffectManager::SetLightIntensity(float intensity)
+{
+	m_currentEffect.first->SetLightIntensity(intensity);
+}
+
 void EffectManager::SetWorldTrans(float* t1, float* t2)
 {
 	m_worldTrans = t1;

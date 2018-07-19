@@ -23,6 +23,7 @@ public:
 	void Enable(GLuint program = 0);//enable shader -- glUseShaderProgram(m_shaderProgram);
 	static void SetModelPosition(float* mat);
 	static void SetWorldPosition(float* mat);
+	static void SetLightIntensity(float intensity);
 	static void SetTileSize(float size);
 	static void SetDrawType(DrawType dt);
 	static float* GetPrevWorldPos();

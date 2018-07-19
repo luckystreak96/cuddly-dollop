@@ -22,6 +22,7 @@ public:
 	void UpdateWorld();
 	void ResetWorldUpdateFlag();
 	void SetAllTilePositions(float size);
+	void SetLightIntensity(float intensity);
 	void SetNoTranslateMode(bool translateMode);
 
 private:

@@ -48,6 +48,11 @@ void Effect::SetWorldPosition(float* mat)
 	m_prevWorld = mat;
 }
 
+void Effect::SetLightIntensity(float intensity)
+{
+	glUniform1f(GetUniformLocation("gLightIntensity"), (GLfloat)intensity);
+}
+
 void Effect::SetTileSize(float size)
 {
 	glUniform1f(GetUniformLocation("gSize"), (const GLfloat)size);
