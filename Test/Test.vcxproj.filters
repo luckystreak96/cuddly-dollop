@@ -512,6 +512,9 @@
     <ClInclude Include="src\menuFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\animColorFlash.h">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -891,6 +894,9 @@
     </ClCompile>
     <ClCompile Include="src\menuFactory.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\animColorFlash.cpp">
+      <Filter>Source Files\Engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

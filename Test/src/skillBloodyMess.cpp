@@ -3,6 +3,7 @@
 #include "particleManager.h"
 #include "gameData.h"
 #include "animWait.h"
+#include "animColorFlash.h"
 
 SkillBloodyMess::SkillBloodyMess()
 {
@@ -51,6 +52,7 @@ void SkillBloodyMess::ApplyEffect()
 	// Set wait animation to space out the attacks to better follow whats going on
 	Anim_ptr wait = Anim_ptr(new AnimWait(0.3));
 	_anims->push_back(wait);
+	_anims->push_front(Anim_ptr(new AnimColorFlash(Vector3f(3.0, 0.15, 0.15), _targets[_targetProgress])));
 
 	// Damage text
 	SpawnDamageText(_targets.at(_targetProgress), dmg._value);
