@@ -173,7 +173,7 @@ void Camera::ExecuteFollow()
 	else if (abs(_translate.y - ((top) / size) / _scale.y) > _mapsize.y)
 		_translate.y = -(_mapsize.y - ((top) / size) / _scale.y);
 
-	_transform->SetTranslation(_translate);
+	_transform->SetTranslation(_translate + _extraTranslate);
 }
 
 void Camera::SetScale(Vector3f& scale)

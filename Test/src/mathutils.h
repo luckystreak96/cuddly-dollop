@@ -67,6 +67,8 @@ public:
 	Lerper _lerperTrans;
 	// the lerp class for scaling
 	Lerper _lerperScale;
+	// the extra position to add (for stuff like screen shaking that wants to ignore lerp)
+	Vector3f _extraTranslate;
 	// the transformation matrix handler
 	std::unique_ptr<Transformation> _transform;
 private:

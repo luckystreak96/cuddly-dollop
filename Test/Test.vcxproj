@@ -170,6 +170,7 @@
     <ClInclude Include="src\animColorFlash.h" />
     <ClInclude Include="src\animJumpTo.h" />
     <ClInclude Include="src\animMoveTo.h" />
+    <ClInclude Include="src\animScreenShake.h" />
     <ClInclude Include="src\animWait.h" />
     <ClInclude Include="src\animXpBar.h" />
     <ClInclude Include="src\battleData.h" />
@@ -304,6 +305,7 @@
     <ClCompile Include="src\animColorFlash.cpp" />
     <ClCompile Include="src\animJumpTo.cpp" />
     <ClCompile Include="src\animMoveTo.cpp" />
+    <ClCompile Include="src\animScreenShake.cpp" />
     <ClCompile Include="src\animWait.cpp" />
     <ClCompile Include="src\animXpBar.cpp" />
     <ClCompile Include="src\battleAnimation.cpp" />

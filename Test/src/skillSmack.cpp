@@ -3,6 +3,7 @@
 #include "particleManager.h"
 #include "gameData.h"
 #include "animColorFlash.h"
+#include "animScreenShake.h"
 
 SkillSmack::SkillSmack()
 {
@@ -49,6 +50,7 @@ void SkillSmack::ApplyEffect()
 	// Damage text
 	SpawnDamageText(_targets.at(0), dmg._value);
 	_anims->push_front(Anim_ptr(new AnimColorFlash(Vector3f(3, 3, 5), _targets[0])));
+	_anims->push_front(Anim_ptr(new AnimScreenShake()));
 
 	Particle_ptr particles = Particle_ptr(new ParticleGenerator());
 	Vector3f pos = _targets.at(0)->_Graphics->GetPos() + Vector3f(0.5f, 0.5f, 0.6f);

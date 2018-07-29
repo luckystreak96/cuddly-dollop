@@ -7,7 +7,9 @@ out vec4 FragColor;
 
 uniform sampler2D gSampler;
 //uniform vec3 gLightColor = vec3(1, 0.85, 0.6);
-uniform vec3 gLightColor = vec3(1.0, 0.9, 0.95);
+//uniform vec3 gLightColor = vec3(1.0);
+//uniform vec3 gLightColor = vec3(1.0, 0.9, 0.95);//pinkish
+uniform vec3 gLightColor = vec3(1.0, 0.98, 0.95);//sunlight
 uniform float gLightIntensity = 0.9;
 
 void main()
