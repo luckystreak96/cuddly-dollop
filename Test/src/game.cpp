@@ -40,6 +40,9 @@ bool Game::init(Vector2f version)
 	std::shared_ptr<SceneWorld> world = std::shared_ptr<SceneWorld>(new SceneWorld(GameData::Flags.count("map") ? GameData::Flags.at("map") : 1));
 	SceneManager::GetInstance().SetScene(world);
 
+	PersProjInfo::GetRegularInstance().zNear = 1.f;
+	PersProjInfo::GetRegularInstance().zFar = 5000.f;
+	PersProjInfo::GetRegularInstance().FOV = 90.f;
 	OrthoProjInfo::GetRegularInstance().zNear = 100.f;
 	OrthoProjInfo::GetRegularInstance().zFar = -100.f;
 	//OrthoProjInfo::GetRegularInstance().Size = 64.f;

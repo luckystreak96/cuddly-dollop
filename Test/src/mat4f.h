@@ -29,6 +29,7 @@ class Mat4f
 
         void InitProjPers(PersProjInfo p);
         void InitOrthoProj(OrthoProjInfo o);
+		void Init3dCameraTrans(const Vector3f& target, const Vector3f& up);
 
         void Copy(const float (&mat)[4][4], float (&target)[4][4]);
         void Multiply(float (&first)[4][4], const float (&mat)[4][4]);

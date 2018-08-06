@@ -2,6 +2,8 @@
 #include "effectManager.h"
 #include "bloom.h"
 
+float PlayerGraphicsComponent::_rotation = -0.4f;
+
 PlayerGraphicsComponent::PlayerGraphicsComponent(std::string tex, std::string model) : GraphicsComponent(model, tex), m_firstLoad(true)
 {
 	_updateMModels = true;
@@ -80,10 +82,13 @@ void PlayerGraphicsComponent::Draw(bool withTex)
 
 void PlayerGraphicsComponent::Update()
 {
+	m_modelMat.SetRotation(_rotation, 0, 0);
+	//std::cout << _rotation << std::endl;
 	// When you need to update a component according to position
 	if (m_prevPosition != m_pos && _observers.size())
 		UpdateObservers();
 	m_prevPosition = m_pos;
+
 
 	int dir = m_direction;
 	//Change the direction hes facing
@@ -134,7 +139,9 @@ void PlayerGraphicsComponent::Update()
 	if (SetTileModelTC(&m_vertices, forceUpdate))
 		ResetVBO();
 
+	//m_pos.z -= 32;
 	GraphicsComponent::Update();
+	//m_pos.z += 32;
 }
 
 void PlayerGraphicsComponent::SetAnimation(Anim_Enum anim, std::string spritesheet)

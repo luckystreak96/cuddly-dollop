@@ -319,6 +319,7 @@ void GraphicsComponent::InsertMModels(Transformation& t)
 	Vector3f temp = t.GetTranslation();
 	temp.x *= OrthoProjInfo::GetRegularInstance().Size;
 	temp.y *= OrthoProjInfo::GetRegularInstance().Size;
+	temp.z *= OrthoProjInfo::GetRegularInstance().Size;
 	t.SetTranslation(temp);
 	int num = _instancedDraw ? 1 : 4;
 	m_mmodels.insert(m_mmodels.end(), num, t.GetWorldTrans());
@@ -333,6 +334,7 @@ void GraphicsComponent::InsertMModels(Transformation& t, int position)
 	Vector3f temp = t.GetTranslation();
 	temp.x *= OrthoProjInfo::GetRegularInstance().Size;
 	temp.y *= OrthoProjInfo::GetRegularInstance().Size;
+	temp.z *= OrthoProjInfo::GetRegularInstance().Size;
 	t.SetTranslation(temp);
 	int num = _instancedDraw ? 1 : 4;
 	Mat4f& trans = t.GetWorldTrans();

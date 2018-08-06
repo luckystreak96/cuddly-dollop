@@ -25,7 +25,7 @@ Renderer::Renderer() : m_toDraw(std::vector<GraphicsComponent*>()), m_width(1), 
 
 void Renderer::Setup()
 {
-	if (false && InputManager::GetInstance().FrameKeyStatus(A_Cancel, KeyStatus::KeyPressed))
+	if (true && InputManager::GetInstance().FrameKeyStatus(A_Cancel, KeyStatus::KeyPressed))
 		apply = !apply;
 
 	glStencilMask(0xFF);
