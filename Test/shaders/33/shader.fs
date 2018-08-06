@@ -21,7 +21,7 @@ void main()
 
 	float intensity = gLightIntensity;
 	float distance = sqrt(pow(960 - gl_FragCoord.x, 2) + pow(540 - gl_FragCoord.y, 2));
-	intensity = 1 - clamp(pow(distance, 2) * 0.0000003 - 0.000125 * distance + 0.001, 0, 1);
+	intensity = 1 - clamp(pow(distance, 2) * 0.0000004 - 0.000125 * distance + 0.001, 0, 1);
 	intensity *= gLightIntensity;
 	color.rgb *= intensity * gLightColor;
 	//color.rgb *= 1.1 - sin(gl_FragCoord.x / 50) * 0.25;

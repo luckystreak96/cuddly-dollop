@@ -47,7 +47,7 @@ void Actor::SetDefault()
 	_Graphics->SetTexture(Sprite);
 	_Name = "Player";
 	Selected = false;
-	ChoosingAction = false;
+	ChoosingAction = true;
 }
 
 void Actor::UpdateColor()

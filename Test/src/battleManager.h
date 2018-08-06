@@ -70,6 +70,7 @@ public:
 	PostBattleState _postBattleState;
 	bool m_isPlayerTurn;
 	bool m_animating;
+	bool m_singleFileAttacks;
 	bool _showingSkills;
 	int _winner;
 

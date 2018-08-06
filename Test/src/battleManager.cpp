@@ -32,12 +32,17 @@ BattleManager::BattleManager(std::vector<Actor_ptr> actors)
 
 void BattleManager::Init()
 {
+	bool singleFile = true;
+
+	{
+		m_singleFileAttacks = singleFile;
+		m_isPlayerTurn = !singleFile;
+	}
 	m_attackSequenceProgress = 0;
-	m_isPlayerTurn = true;
 	_hud.Init(_actors);
 	_postBattleState = PBS_FightingInProgress;
 	_showingSkills = false;
-	_state = BS_ChooseActor;
+	_state = m_singleFileAttacks ? BS_TurnStart : BS_ChooseActor;
 	m_animating = false;
 	counter = 0;
 	_winner = -1;
@@ -57,9 +62,9 @@ void BattleManager::Init()
 	}
 
 	// Make sure the first person to choose is a player
-	//if (_postBattleState == PBS_FightingInProgress)
-	//	while (_actorQueue.front()->_Fighter->Team != 0)
-	//		CycleActors();
+	if (m_singleFileAttacks && _postBattleState == PBS_FightingInProgress)
+		while (_actorQueue.front()->_Fighter->Team != 0)
+			CycleActors();
 
 	if (_actorQueue.size() > 0)
 	{
@@ -79,7 +84,7 @@ void BattleManager::Init()
 			_numAllies++;
 	}
 
-	if (_actors.size())
+	if (!m_singleFileAttacks && _actors.size())
 	{
 		InitiateChooseActor();
 		for (auto& x : _actors)
@@ -173,7 +178,8 @@ void BattleManager::MoveToLight(bool moveup, bool turnEnd)
 		if (moveup)
 		{
 			Anim_ptr move1 = Anim_ptr(new AnimMoveTo(_owner->_Graphics->GetPos() + Vector3f(_owner->_Fighter->Team == 0 ? 1.f : -1, 0, 0), _owner));
-			move1->_async = false;
+			if (m_singleFileAttacks) // We dont want async movement when there's too many attacks gonna happen
+				move1->_async = false;
 			_animations.push_back(move1);
 		}
 		else
@@ -238,7 +244,10 @@ void BattleManager::TurnStart()
 	else
 	{
 		_owner->_Fighter->TurnStart(_actors);
-		_state = BS_ActionProgress;
+		if (m_singleFileAttacks)
+			_state = BS_SelectAction;
+		else
+			_state = BS_ActionProgress;
 	}
 }
 
@@ -362,14 +371,23 @@ void BattleManager::TurnEnd()
 	MoveToLight(false, true);
 	CycleActors();
 
-	if (!m_isPlayerTurn)
-		_state = BS_TurnStart;
-	else
+	if (m_singleFileAttacks)
 	{
-		InitiateChooseActor();
-		ResetPartyPredictedSkills();
+		_state = BS_TurnStart;
 		for (int i = 0; i < _actorQueue.size(); i++)
 			_actorQueue[i]->_Fighter->_OrderPosition = i + 1;
+	}
+	else
+	{
+		if (!m_isPlayerTurn)
+			_state = BS_TurnStart;
+		else
+		{
+			InitiateChooseActor();
+			ResetPartyPredictedSkills();
+			for (int i = 0; i < _actorQueue.size(); i++)
+				_actorQueue[i]->_Fighter->_OrderPosition = i + 1;
+		}
 	}
 }
 
@@ -397,11 +415,20 @@ void BattleManager::UpdateLogic()
 			break;
 		case BS_TurnStart:
 			// zoom back to normal
-			if (!m_isPlayerTurn)
+			if (m_singleFileAttacks)
 			{
 				Camera::_currentCam->SetScale(Vector3f(1));
 				Camera::_currentCam->SetFollow(Camera::_currentCam->MapCenter());
 				TurnStart();
+			}
+			else
+			{
+				if (!m_isPlayerTurn)
+				{
+					Camera::_currentCam->SetScale(Vector3f(1));
+					Camera::_currentCam->SetFollow(Camera::_currentCam->MapCenter());
+					TurnStart();
+				}
 			}
 			break;
 		case BS_SelectAction:
@@ -410,7 +437,7 @@ void BattleManager::UpdateLogic()
 			break;
 		case BS_SelectTargets:
 			// Handled by input, method only for show
-			if (m_isPlayerTurn)
+			if (m_singleFileAttacks || (m_isPlayerTurn && !m_singleFileAttacks))
 				SelectTargets();
 			break;
 		case BS_ActionProgress:
@@ -511,7 +538,7 @@ void BattleManager::ManageInput()
 	if (input.count(A_Cancel))
 		HandleCancelInput();
 
-	if (_state == BS_ChooseActor && input.count(A_Menu))
+	if (!m_singleFileAttacks && _state == BS_ChooseActor && input.count(A_Menu))
 		BeginAnimations();
 }
 
@@ -556,9 +583,9 @@ void BattleManager::HandleUpDownInput(std::set<int> input)
 	}
 
 	// Choose your targets
-	else if (_state == BS_SelectTargets || _state == BS_ChooseActor)
+	else if (_state == BS_SelectTargets || !m_singleFileAttacks && _state == BS_ChooseActor)
 	{
-		if (_state != BS_ChooseActor && _selectedSkill && _selectedSkill->_targetAmount == TA_Party)
+		if ((!m_singleFileAttacks && _state != BS_ChooseActor && _selectedSkill && _selectedSkill->_targetAmount == TA_Party) || m_singleFileAttacks && _selectedSkill->_targetAmount == TA_Party)
 		{
 		}
 		else if (_state == BS_ChooseActor || _selectedSkill && _selectedSkill->_targetAmount == TA_One)
@@ -722,7 +749,7 @@ void BattleManager::HandleCancelInput()
 			x->Selected = false;
 		}
 	}
-	else if (_state == BS_SelectAction)
+	else if (!m_singleFileAttacks && _state == BS_SelectAction)
 	{
 		InitiateChooseActor();
 	}
@@ -823,11 +850,13 @@ void BattleManager::UseSkill()
 	{
 		_state = _selectedSkill->Setup(&_targets, &_actorQueue, &_animations, _owner);
 		_owner->_Fighter->PredictedSkill = _selectedSkill;
+		if (m_singleFileAttacks)
+			_selectedSkill->Start();
 	}
 	else
 		_state = BS_SelectAction;
 
-	if (m_isPlayerTurn)
+	if (!m_singleFileAttacks && m_isPlayerTurn)
 	{
 		_owner->ChoosingAction = false;
 		InitiateChooseActor();
@@ -850,11 +879,14 @@ void BattleManager::CycleActors()
 	_targets.clear();
 	_selectedIndex = 0;
 
-	m_attackSequenceProgress++;
-	if (m_attackSequenceProgress == _actorQueue.size())
+	if (!m_singleFileAttacks)
 	{
-		m_attackSequenceProgress = 0;
-		m_isPlayerTurn = true;
+		m_attackSequenceProgress++;
+		if (m_attackSequenceProgress == _actorQueue.size())
+		{
+			m_attackSequenceProgress = 0;
+			m_isPlayerTurn = true;
+		}
 	}
 }
 
