@@ -136,8 +136,8 @@ bool Animation::SetTileModelTC(std::vector<Vertex>* verts, bool forceUpdate)
 
 	for (int i = 0; i < verts->size(); i++)
 	{
-		verts->at(i).tex.x = m_baseTexCoords[i].x == 0 ? x + halfPixX : x + x_increment - halfPixX;
-		verts->at(i).tex.y = m_baseTexCoords[i].y == 0 ? y + halfpixY : y + y_increment - halfpixY;
+		verts->at(i).tex.x = m_baseTexCoords[i % 4].x == 0 ? x + halfPixX : x + x_increment - halfPixX;
+		verts->at(i).tex.y = m_baseTexCoords[i % 4].y == 0 ? y + halfpixY : y + y_increment - halfpixY;
 	}
 	return true;
 }

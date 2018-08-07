@@ -85,13 +85,11 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 	if (key == GLFW_KEY_F9 && action == GLFW_RELEASE)
 		Transformation::perspectiveOrtho = !Transformation::perspectiveOrtho;
 	if (key == GLFW_KEY_F6 && (action == GLFW_PRESS || action == GLFW_REPEAT))
-		PersProjInfo::GetRegularInstance().Height += 100;
-	//Camera::_currentCam->_3dTarget.x > 4.0f ? Camera::_currentCam->_3dTarget.x = 0.0f : Camera::_currentCam->_3dTarget.x += 0.1f;
+		Camera::_currentCam->_3dTarget.x > 4.0f ? Camera::_currentCam->_3dTarget.x = 0.0f : Camera::_currentCam->_3dTarget.x += 0.1f;
 	if (key == GLFW_KEY_F7 && (action == GLFW_PRESS || action == GLFW_REPEAT))
 		Camera::_currentCam->_3dTarget.y > 4.0f ? Camera::_currentCam->_3dTarget.y = 0.0f : Camera::_currentCam->_3dTarget.y += 0.1f;
 	if (key == GLFW_KEY_F8 && (action == GLFW_PRESS || action == GLFW_REPEAT))
-		PersProjInfo::GetRegularInstance().Height -= 100;
-	//Camera::_currentCam->_3dTarget.z > 4.0f ? Camera::_currentCam->_3dTarget.z = 0.0f : Camera::_currentCam->_3dTarget.z += 0.1f;
+		Camera::_currentCam->_3dTarget.z > 4.0f ? Camera::_currentCam->_3dTarget.z = 0.0f : Camera::_currentCam->_3dTarget.z += 0.1f;
 
 	if (key == GLFW_KEY_F2 && (action == GLFW_PRESS || action == GLFW_REPEAT))
 		GraphicsComponent::_rotation += 0.1f;

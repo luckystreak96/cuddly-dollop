@@ -246,6 +246,11 @@ namespace MathUtils
 		return result;
 	}
 
+	float HeightGivenLengthOfHypotenuseAndAngle(float length, float angleRadians)
+	{
+		return length * cosf(angleRadians);
+	}
+
 	//void CalcNormals(std::vector<GLuint>& indices, std::vector<Vertex>& verts)
 	//{
 	//	int vertCount = 0;

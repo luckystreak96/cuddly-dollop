@@ -95,6 +95,8 @@ void MapHandler::Update(bool forced)
 		for (auto x : m_tiles)
 		{
 			Vector3f pos = x->Physics()->Position();
+			// increase z by 1 to make people touch the tiles
+			pos.z -= 1;
 			Transformation t;
 			t.SetTranslation(pos);
 			std::string texture = x->GetTexture();
