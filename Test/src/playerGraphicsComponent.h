@@ -18,9 +18,6 @@ public:
 	void SetTexture(std::string texture);
 	void SetAnimation(Anim_Enum anim, std::string spritesheet);
 
-public:
-	static float _rotation;
-
 private:
 	bool m_firstLoad;
 	int m_actualDelay;

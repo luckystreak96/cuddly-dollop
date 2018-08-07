@@ -12,7 +12,7 @@
 #include "input_manager.h"
 
 // MAKE IT BE A CENTERED_TILE AND PLACE IT CORRECTLY OR ITLL BE DUMB AF
-Renderer::Renderer() : m_toDraw(std::vector<GraphicsComponent*>()), m_width(1), m_height(1), apply(true)
+Renderer::Renderer() : m_toDraw(std::vector<GraphicsComponent*>()), m_width(1), m_height(1), apply(false)
 {
 	pps.GetModelMat()->SetTranslation(0, 0, 0);
 	pps.Update();

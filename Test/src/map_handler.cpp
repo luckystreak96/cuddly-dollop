@@ -90,14 +90,32 @@ void MapHandler::Update(bool forced)
 	//	I USE THE MATRIX INSTEAD OF MULTIPLYING THE OTHER OBJECTS VERTEX POS BY THEIR POS.
 	if (m_graphics->GetMModels().size() == 0 || forced)
 	{
+		int i = 0;
 		m_graphics->ClearMModels();
 		for (auto x : m_tiles)
 		{
 			Vector3f pos = x->Physics()->Position();
 			Transformation t;
 			t.SetTranslation(pos);
+			std::string texture = x->GetTexture();
+			AdjustSprite(texture, t, i);
 			m_graphics->InsertMModels(t);
+			i += 4;
 		}
+		m_graphics->ResetVBO();
+	}
+}
+
+void MapHandler::AdjustSprite(std::string sprite, Transformation& t, int index)
+{
+	if (sprite == "sapin_b.png")
+	{
+		t.SetRotation(GraphicsComponent::_rotation, 0, 0);
+		t.SetScale(Vector3f(1, 2, 1));
+		float y = m_graphics->GetVertices()->at(index + 2).tex.y;
+		float increase = TextureAtlas::m_textureAtlas.GetTexCoordWH().y;
+		m_graphics->GetVertices()->at(index + 2).tex.y += TextureAtlas::m_textureAtlas.GetTexCoordWH().y;
+		m_graphics->GetVertices()->at(index + 3).tex.y += TextureAtlas::m_textureAtlas.GetTexCoordWH().y;
 	}
 }
 

@@ -9,6 +9,7 @@
 #include <sstream>
 #include <cassert>
 #include "utils.h"
+#include "vector3f.h"
 
 
 class TextureAtlas
@@ -19,8 +20,10 @@ public:
 	{
 		ILuint texId;
 		TextureIndex texIdx;
+		int x;
+		int y;
 
-		TextureInfo(ILuint _texId, unsigned int _texIdx) : texId(_texId), texIdx(_texIdx) {}
+		TextureInfo(ILuint _texId, unsigned int _texIdx, int x, int y) : texId(_texId), texIdx(_texIdx), x(x), y(y) {}
 	};
 	typedef std::map<std::string, TextureInfo> TextureList;
 
@@ -35,6 +38,7 @@ public:
 	bool IsValid() const;
 	void Bind() const;
 	GLuint GetID();
+	Vector2f GetTexCoordWH();
 
 	void TextureIndexToCoord(TextureIndex idx, float& u, float& v) const;
 

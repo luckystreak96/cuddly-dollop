@@ -1,6 +1,8 @@
 #include "graphicsComponent.h"
 #include <algorithm>
 
+float GraphicsComponent::_rotation = -0.4f;
+
 void GraphicsComponent::ReceiveMessage(std::vector<std::string> msg)
 {
 
@@ -336,6 +338,7 @@ void GraphicsComponent::InsertMModels(Transformation& t, int position)
 	temp.y *= OrthoProjInfo::GetRegularInstance().Size;
 	temp.z *= OrthoProjInfo::GetRegularInstance().Size;
 	t.SetTranslation(temp);
+	t.SetRotation(t.GetRotation());
 	int num = _instancedDraw ? 1 : 4;
 	Mat4f& trans = t.GetWorldTrans();
 	for (int i = 0; i < num; i++)

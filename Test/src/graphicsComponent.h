@@ -75,6 +75,8 @@ public:
 	bool _updateMModels;
 	bool _outline;
 
+	static float _rotation;
+
 protected:
 	GLsizei m_lastMModelSize;
 	GLuint m_mlMatLoc;

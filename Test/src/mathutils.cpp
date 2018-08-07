@@ -185,7 +185,7 @@ void Camera::SetFollow(Vector3f& target)
 {
 	if (target == _followTarget)
 		return;
-	_followTarget = target + Vector3f(0, Transformation::perspectiveOrtho ? 0 : -2, 0);
+	_followTarget = target + Vector3f(0, Transformation::perspectiveOrtho ? 0 : -2.5, 0);
 
 	EnableNormalCam();
 }
@@ -217,7 +217,7 @@ void Camera::SetFollowCenteredXY(Vector3f target)
 Vector3f Camera::Get3dPos()
 {
 	Vector3f result = Vector3f();// _translate;
-	result.z = 100;
+	result.z = 15;
 	return result;
 }
 
