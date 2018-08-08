@@ -55,7 +55,7 @@ void SkillBloodyMess::ApplyEffect()
 	_anims->push_front(Anim_ptr(new AnimColorFlash(Vector3f(3.0, 0.15, 0.15), _targets[_targetProgress])));
 
 	// Damage text
-	SpawnDamageText(_targets.at(_targetProgress), dmg._value);
+	SpawnDamageText(_targets.at(_targetProgress), dmg);
 
 	Particle_ptr particles = Particle_ptr(new ParticleGenerator());
 	Vector3f pos = _targets.at(_targetProgress)->_Graphics->GetPos() + Vector3f(0.5f, 0.5f, 0.6f);

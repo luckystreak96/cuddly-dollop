@@ -6,6 +6,7 @@
 #include <vector>
 #include "statUser.h"
 #include "passiveSkill.h"
+#include "statusEffect.h"
 
 class Skill;
 typedef std::shared_ptr<Skill> Skill_ptr;
@@ -30,6 +31,10 @@ public:
 	virtual void DamageModifiers(Damage& dmg, bool critting);
 	virtual void ApplyLethal();
 	void SetOrderPosition(int pos);
+
+	// Type related
+	// Returns amount of stacks of an element that is held
+	int HasElement(SkillElement element);
 
 	// Turn and targets
 	virtual bool RespectsTargeting(Actor* owner, int targetMode);
@@ -58,7 +63,12 @@ public:
 	virtual int DefenseDamageModification(bool critting);
 
 public:
+	// Permanent
 	std::vector<Passive_ptr> _Passives;
+
+	// Expire after a time or a battle
+	std::vector<StatusEffect> _Statuses;
+
 	bool Dead;
 	int NoPredictCountDown;
 	// Flag for possible invisibility or untargetability

@@ -35,11 +35,36 @@ Fighter::Fighter(Fighter& f)
 	ReCalculateStats();
 }
 
+int Fighter::HasElement(SkillElement element)
+{
+	int result = 0;
+	for (auto& x : _Statuses)
+		if (x._Element == element)
+			result++;
+
+	return result;
+}
+
 void Fighter::ReCalculateStats()
 {
 	// Stats are decided first by the curve, then the passives, then the equipment etc
 	SetStatsFromCurve();
 	PassiveFactory::ApplyAllPassives(this, &_Passives);
+
+	std::vector<Passive_ptr> statuses;
+	for (auto& x : _Statuses)
+	{
+		for (auto y : x._Effects)
+		{
+			for (int i = 0; i < std::get<1>(y); i++)
+				statuses.push_back(std::get<0>(y));
+		}
+	}
+
+	PassiveFactory::ApplyAllPassives(this, &statuses);
+
+	//ResetRealModified();
+
 	CurrentHealthCheck();
 }
 

@@ -5,6 +5,21 @@
 #include "actorFactory.h"
 #include "statCurve.h"
 
+Passive_ptr PassiveFactory::BuildPassive(std::string name, PassivePriority priority, PassiveType type, PassiveSpecifier specifier, float fvalue, int ivalue, std::string svalue)
+{
+	Passive_ptr result = std::shared_ptr<PassiveSkill>(new PassiveSkill());
+
+	result->_Name = name;
+	result->_Priority = priority;
+	result->_Specifier = specifier;
+	result->_Type = type;
+	result->_Data._Float = fvalue;
+	result->_Data._Integer = ivalue;
+	result->_Data._String = svalue;
+
+	return result;
+}
+
 void PassiveFactory::ApplyAllPassives(Fighter* fighter, std::vector<Passive_ptr>* passives)
 {
 	// Sort the skills by type

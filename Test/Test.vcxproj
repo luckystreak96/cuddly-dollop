@@ -291,6 +291,7 @@
     <ClInclude Include="src\skill.h" />
     <ClInclude Include="src\soundManager.h" />
     <ClInclude Include="src\statCurve.h" />
+    <ClInclude Include="src\statusEffect.h" />
     <ClInclude Include="src\statUser.h" />
     <ClInclude Include="src\texture.h" />
     <ClInclude Include="src\textureatlas.h" />
@@ -421,6 +422,7 @@
     <ClCompile Include="src\skill.cpp" />
     <ClCompile Include="src\soundManager.cpp" />
     <ClCompile Include="src\statCurve.cpp" />
+    <ClCompile Include="src\statusEffect.cpp" />
     <ClCompile Include="src\statUser.cpp" />
     <ClCompile Include="src\texture.cpp" />
     <ClCompile Include="src\textureatlas.cpp" />

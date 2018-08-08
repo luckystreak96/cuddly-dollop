@@ -2,6 +2,9 @@
 #include "battleManager.h"
 #include "fontFloat.h"
 #include "GLFW/glfw3.h"
+#include "particleManager.h"
+#include "animScreenShake.h"
+#include "animColorFlash.h"
 
 Skill::Skill()
 {
@@ -14,6 +17,7 @@ void Skill::DefaultSetup()
 	_name = "SKILL?";
 	_done = false;
 	_skillType = ST_Physical;
+	_skillElement = SE_None;
 	_currentCooldown = 0;
 	_minTargets = 1;
 	_targetMode = TM_Alive;
@@ -34,7 +38,7 @@ void Skill::DefaultSetup()
 Damage Skill::HandleDamage(int target)
 {
 	Damage dmg = _preCalculatedDamage;
-	if(!_isPreCalculated)
+	//if (!_isPreCalculated)
 		dmg = CalculateDamage();
 
 	// Apply first damage modifications
@@ -69,7 +73,44 @@ Damage Skill::HandleDamage(int target)
 	else
 		_targets.at(target)->_Fighter->TakeDamage(dmg);
 
+	// Check for bonus damage
+	if (_skillElement != SE_None)
+	{
+		SkillElement targetElement;
+		if (_skillElement == SE_Determined)
+			targetElement = SE_Pragmatic;
+		else if (_skillElement == SE_Pragmatic)
+			targetElement = SE_StrongWilled;
+		else if (_skillElement == SE_StrongWilled)
+			targetElement = SE_Determined;
+
+		if (_targets.at(target)->_Fighter->HasElement(targetElement))
+			ApplyBonusEffect();
+	}
+
 	return dmg;
+}
+
+void Skill::ApplyBonusEffect()
+{
+	Damage dmg = Damage();
+	dmg._value = 10;
+	dmg._type = SkillType::ST_Bonus;
+
+	// Damage text
+	SpawnDamageText(_targets.at(0), dmg);
+	_anims->push_front(Anim_ptr(new AnimColorFlash(Vector3f(3, 3, 5), _targets[0])));
+	//_anims->push_front(Anim_ptr(new AnimScreenShake()));
+
+	Particle_ptr particles = Particle_ptr(new ParticleGenerator());
+	Vector3f pos = _targets.at(0)->_Graphics->GetPos() + Vector3f(0.5f, 0.5f, 0.6f);
+	particles->SetPowerLevel(0.3f);
+	particles->Init(PT_Explosion, dmg._value, pos, false, "star.png");
+	Vector3f color = Vector3f(1.f, 1.f, 1.f);
+	particles->SetColor(color);
+	ParticleManager::GetInstance().AddParticles(particles);
+
+	_targets.at(0)->_Fighter->TakeDamage(dmg);
 }
 
 
@@ -130,7 +171,7 @@ BattleState Skill::Setup(std::vector<Actor_ptr>* targets, std::deque<Actor_ptr>*
 	_ac._tried = false;
 	_ac._success = false;
 	_owner = owner;
-	if(owner->_Fighter->Team == 0)
+	if (owner->_Fighter->Team == 0)
 		_targets = std::vector<Actor_ptr>(*targets);
 	_actors = actors;
 	_anims = anims;
@@ -205,7 +246,7 @@ void Skill::SpawnStatusText(Actor_ptr target, std::string statusText)
 	FontManager::GetInstance().AddFont(font);
 }
 
-void Skill::SpawnDamageText(Actor_ptr target, int dmg)
+void Skill::SpawnDamageText(Actor_ptr target, Damage dmg)
 {
 	Vector3f pos;
 	Font_ptr font;
@@ -218,19 +259,23 @@ void Skill::SpawnDamageText(Actor_ptr target, int dmg)
 	font = Font_ptr(new FontFloat(0.7));
 	if (_critting)
 		font->SetScale(0.75f, 0.75f);
-	font->SetText((dmg < 0 || _skillType == ST_Healing ? "+" : "") + std::to_string(dmg), pos, true);
+	else if (dmg._type == ST_Bonus)
+		font->SetScale(1.0f, 1.0f);
+	font->SetText((dmg._value < 0 || _skillType == ST_Healing ? "+" : "") + std::to_string(dmg._value), pos, true);
 
 	// color
 	Vector3f color;
 	if (_critting)
 		// purpleish
 		color = _ac._success ? Vector3f(0.85f, 0.23f, 0.54f) : Vector3f(0.35f, 0.31f, 0.87f);
-	else if (dmg >= 0 && _skillType != ST_Healing)
+	else if (dmg._value >= 0 && _skillType != ST_Healing)
 		// redish / yellowish
 		color = _ac._success ? Vector3f(1, 0.8f, 0) : Vector3f(1, 0, 0);
-	else
+	else if (dmg._value > 0 && _skillType == ST_Healing)
 		// Greenish
 		color = _ac._success ? Vector3f(0, 0.95f, 0.6f) : Vector3f(0, 1, 0);
+	else if (_skillType == ST_Bonus)
+		color = Vector3f(1, 1.f, 1.f);
 	dynamic_cast<FontFloat*>(font.get())->Color = color;
 
 	FontManager::GetInstance().AddFont(font);

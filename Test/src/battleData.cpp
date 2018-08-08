@@ -4,6 +4,7 @@
 
 #include "actorFactory.h"
 #include "statCurve.h"
+#include "passiveFactory.h"
 
 #undef GetObject
 
@@ -13,6 +14,33 @@ std::vector<Actor_ptr> BattleData::Party = std::vector<Actor_ptr>();
 std::map<int, Passive_ptr> BattleData::PassiveSkills = std::map<int, Passive_ptr>();
 std::map<int, Actor_ptr> BattleData::Actors = std::map<int, Actor_ptr>();
 
+std::map<StatusList, StatusEffect> BattleData::StatusEffects = std::map<StatusList, StatusEffect>();
+	
+
+void BattleData::LoadStatusEffects()
+{
+	StatusList status = Determined;
+	StatusEffect result;
+	result._Name = "Determined";
+	result._Element = SE_Determined;
+
+	auto passive = PassiveFactory::BuildPassive("", PassivePriority::PP_AbsoluteFirst, PassiveType::PT_Stat, PassiveSpecifier::PS_Flat, 5, 0, "strength");
+	result._Effects.push_back(std::tuple<Passive_ptr, int>(passive, 1));
+	passive = PassiveFactory::BuildPassive("", PassivePriority::PP_AbsoluteFirst, PassiveType::PT_Stat, PassiveSpecifier::PS_Percent, 0.1, 0, "strength");
+	result._Effects.push_back(std::tuple<Passive_ptr, int>(passive, 1));
+
+	StatusEffects.emplace(status, result);
+
+	status = Pragmatic;
+	result._Name = "Pragmatic";
+	result._Element = SE_Pragmatic;
+
+	passive = PassiveFactory::BuildPassive("", PassivePriority::PP_AbsoluteFirst, PassiveType::PT_Stat, PassiveSpecifier::PS_Flat, 1, 1, "max_health");
+	result._Effects.push_back(std::tuple<Passive_ptr, int>(passive, 1));
+
+	StatusEffects.emplace(status, result);
+}
+
 void BattleData::NewGame()
 {
 	if (!Party.size() > 0)
@@ -21,6 +49,7 @@ void BattleData::NewGame()
 
 void BattleData::LoadAll()
 {
+	LoadStatusEffects();
 	LoadCurves();
 	LoadPassives();
 	LoadActors();
