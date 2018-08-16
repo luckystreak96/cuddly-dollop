@@ -10,6 +10,7 @@
 #include <rapidjson/filewritestream.h>
 
 #include "passiveSkill.h"
+#include "statusEffect.h"
 
 using namespace rapidjson;
 
@@ -23,12 +24,14 @@ public:
 	static void LoadCurves();
 	static void LoadPassives();
 	static void LoadActors();
+	static void LoadStatusEffects();
 
 public:
 	// Party
 	static std::vector<Actor_ptr> Party;
 	static std::map<int, int> StatCurves;
 	static std::map<int, Passive_ptr> PassiveSkills;
+	static std::map<StatusList, StatusEffect> StatusEffects;
 	static std::map<int, Actor_ptr> Actors;
 
 };

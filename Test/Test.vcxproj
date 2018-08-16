@@ -167,6 +167,7 @@
   <ItemGroup>
     <ClInclude Include="src\actorFactory.h" />
     <ClInclude Include="src\animBasic.h" />
+    <ClInclude Include="src\animBonusEffect.h" />
     <ClInclude Include="src\animColorFlash.h" />
     <ClInclude Include="src\animJumpTo.h" />
     <ClInclude Include="src\animMoveTo.h" />
@@ -291,6 +292,7 @@
     <ClInclude Include="src\skill.h" />
     <ClInclude Include="src\soundManager.h" />
     <ClInclude Include="src\statCurve.h" />
+    <ClInclude Include="src\statusEffect.h" />
     <ClInclude Include="src\statUser.h" />
     <ClInclude Include="src\texture.h" />
     <ClInclude Include="src\textureatlas.h" />
@@ -302,6 +304,7 @@
   <ItemGroup>
     <ClCompile Include="src\actorFactory.cpp" />
     <ClCompile Include="src\animBasic.cpp" />
+    <ClCompile Include="src\animBonusEffect.cpp" />
     <ClCompile Include="src\animColorFlash.cpp" />
     <ClCompile Include="src\animJumpTo.cpp" />
     <ClCompile Include="src\animMoveTo.cpp" />
@@ -421,6 +424,7 @@
     <ClCompile Include="src\skill.cpp" />
     <ClCompile Include="src\soundManager.cpp" />
     <ClCompile Include="src\statCurve.cpp" />
+    <ClCompile Include="src\statusEffect.cpp" />
     <ClCompile Include="src\statUser.cpp" />
     <ClCompile Include="src\texture.cpp" />
     <ClCompile Include="src\textureatlas.cpp" />

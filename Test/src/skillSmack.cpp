@@ -4,6 +4,7 @@
 #include "gameData.h"
 #include "animColorFlash.h"
 #include "animScreenShake.h"
+#include "battleData.h"
 
 SkillSmack::SkillSmack()
 {
@@ -14,6 +15,7 @@ SkillSmack::SkillSmack()
 void SkillSmack::DefaultSetup()
 {
 	_name = "Smack";
+	_skillElement = SE_Determined;
 	_targetMode = TM_Alive;
 	_defaultTarget = DT_Enemy;
 	_ac._start = 0.15;
@@ -26,10 +28,10 @@ Damage SkillSmack::CalculateDamage()
 {
 	// Crit chance
 	int roll = rand() % 100;
-	//if (roll <= _owner->_Fighter->Crit.Modified)
+	if (roll <= _owner->_Fighter->Crit.Modified)
 		_critting = true;
-	//else
-		//_critting = false;
+	else
+		_critting = false;
 
 	// Damage
 	int dmg = 2 + _owner->_Fighter->Strength.Modified * 0.8f + rand() % (_owner->_Fighter->GetLevel() + 2);
@@ -48,9 +50,9 @@ void SkillSmack::ApplyEffect()
 	Damage dmg = HandleDamage();
 
 	// Damage text
-	SpawnDamageText(_targets.at(0), dmg._value);
+	SpawnDamageText(_targets.at(0), dmg);
 	_anims->push_front(Anim_ptr(new AnimColorFlash(Vector3f(3, 3, 5), _targets[0])));
-	_anims->push_front(Anim_ptr(new AnimScreenShake()));
+	//_anims->push_front(Anim_ptr(new AnimScreenShake()));
 
 	Particle_ptr particles = Particle_ptr(new ParticleGenerator());
 	Vector3f pos = _targets.at(0)->_Graphics->GetPos() + Vector3f(0.5f, 0.5f, 0.6f);
@@ -61,4 +63,7 @@ void SkillSmack::ApplyEffect()
 	ParticleManager::GetInstance().AddParticles(particles);
 
 	SoundManager::GetInstance().PlaySoundFX("res/audio/fx/swish_2.wav");
+
+	_targets.at(0)->_Fighter->_Statuses.push_back(BattleData::StatusEffects.at(StatusList::Determined));
+	_targets.at(0)->_Fighter->ReCalculateStats();
 }

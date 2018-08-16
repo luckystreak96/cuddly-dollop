@@ -122,7 +122,7 @@ void SkillRanged::ApplyEffect()
 	_targets.at(0)->_Fighter->TakeDamage(result);
 
 	// Damage text
-	SpawnDamageText(_targets.at(0), result._value);
+	SpawnDamageText(_targets.at(0), result);
 }
 
 bool SkillRanged::TimingCondition(double progress, double duration)

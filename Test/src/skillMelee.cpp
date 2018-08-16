@@ -126,7 +126,7 @@ void SkillMelee::ApplyEffect()
 	_targets.at(0)->_Fighter->TakeDamage(result);
 
 	// Damage text
-	SpawnDamageText(_targets.at(0), result._value);
+	SpawnDamageText(_targets.at(0), result);
 }
 
 bool SkillMelee::TimingCondition(double progress, double duration)

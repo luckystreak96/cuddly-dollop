@@ -7,6 +7,7 @@
 #include <memory>
 #include <iostream>
 #include "actor.h"
+#include "statusEffect.h"
 #include "battleAnimation.h"
 
 enum BattleState { BS_ChooseActor, BS_TurnStart, BS_SelectAction, BS_SelectTargets, BS_ActionProgress, BS_ActionDone, BS_TurnEnd };
@@ -15,7 +16,7 @@ class Skill;
 typedef std::shared_ptr<Skill> Skill_ptr;
 
 enum ActionCommandType { ACT_Defend, ACT_Special };
-enum SkillType { ST_Physical, ST_Magical, ST_Healing };
+enum SkillType { ST_Physical, ST_Magical, ST_Healing, ST_Bonus };
 enum TargetMode { TM_Enemy, TM_Ally, TM_Alive, TM_Dead, TM_Any };
 enum DefaultTarget { DT_Self, DT_Enemy, DT_Ally };
 enum TargetAmount { TA_One, TA_Party };
@@ -46,10 +47,11 @@ public:
 	virtual void Update();
 	virtual void Reset();
 	virtual bool IsReady();
-	virtual void SpawnDamageText(Actor_ptr target, int dmg);
+	virtual void SpawnDamageText(Actor_ptr target, Damage dmg);
 	virtual void SpawnStatusText(Actor_ptr target, std::string statusName);
 	virtual Damage CalculateDamage() { return Damage(); }
 	virtual Damage HandleDamage(int target = 0);
+	virtual void ApplyBonusEffect(Actor_ptr target);
 
 	// Make sure all targets are still valid
 	virtual bool ValidateTargets();
@@ -72,6 +74,7 @@ public:
 	std::set<int> _input;
 	std::string _name;
 	SkillType _skillType;
+	SkillElement _skillElement;
 	bool _done;
 	bool _critting;
 	bool _isPreCalculated;
