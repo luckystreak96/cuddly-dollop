@@ -28,6 +28,7 @@ public:
 	// Damage related
 	virtual Damage TakeDamage(Damage& dmg);
 	virtual Damage ApplyHealing(Damage& heal);
+	virtual void ApplyBonusDamage(Actor_ptr target);
 	virtual void DamageModifiers(Damage& dmg, bool critting);
 	virtual void ApplyLethal();
 	void SetOrderPosition(int pos);

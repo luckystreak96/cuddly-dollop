@@ -167,6 +167,7 @@
   <ItemGroup>
     <ClInclude Include="src\actorFactory.h" />
     <ClInclude Include="src\animBasic.h" />
+    <ClInclude Include="src\animBonusEffect.h" />
     <ClInclude Include="src\animColorFlash.h" />
     <ClInclude Include="src\animJumpTo.h" />
     <ClInclude Include="src\animMoveTo.h" />
@@ -303,6 +304,7 @@
   <ItemGroup>
     <ClCompile Include="src\actorFactory.cpp" />
     <ClCompile Include="src\animBasic.cpp" />
+    <ClCompile Include="src\animBonusEffect.cpp" />
     <ClCompile Include="src\animColorFlash.cpp" />
     <ClCompile Include="src\animJumpTo.cpp" />
     <ClCompile Include="src\animMoveTo.cpp" />

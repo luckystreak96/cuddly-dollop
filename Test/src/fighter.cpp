@@ -269,6 +269,11 @@ Damage Fighter::ApplyHealing(Damage& heal)
 	return heal;
 }
 
+void Fighter::ApplyBonusDamage(Actor_ptr target)
+{
+	PredictedSkill->ApplyBonusEffect(target);
+}
+
 bool Fighter::RespectsTargeting(Actor* owner, int tm)
 {
 	switch (tm)

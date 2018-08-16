@@ -51,7 +51,7 @@ public:
 	virtual void SpawnStatusText(Actor_ptr target, std::string statusName);
 	virtual Damage CalculateDamage() { return Damage(); }
 	virtual Damage HandleDamage(int target = 0);
-	virtual void ApplyBonusEffect();
+	virtual void ApplyBonusEffect(Actor_ptr target);
 
 	// Make sure all targets are still valid
 	virtual bool ValidateTargets();
