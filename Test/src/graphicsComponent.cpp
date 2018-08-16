@@ -1,11 +1,17 @@
 #include "graphicsComponent.h"
 #include <algorithm>
 
-float GraphicsComponent::_rotation = -0.4f;
+float GraphicsComponent::_persRotation = -0.4f;
+float GraphicsComponent::_orthoRotation = -0.0125f;
 
 void GraphicsComponent::ReceiveMessage(std::vector<std::string> msg)
 {
 
+}
+
+float GraphicsComponent::GetProjectionRotation()
+{
+	return Transformation::perspectiveOrtho ? _orthoRotation : _persRotation;
 }
 
 GraphicsComponent::~GraphicsComponent()
@@ -321,7 +327,10 @@ void GraphicsComponent::InsertMModels(Transformation& t)
 	Vector3f temp = t.GetTranslation();
 	temp.x *= OrthoProjInfo::GetRegularInstance().Size;
 	temp.y *= OrthoProjInfo::GetRegularInstance().Size;
-	temp.z *= OrthoProjInfo::GetRegularInstance().Size;
+	if (!Transformation::perspectiveOrtho)
+		temp.z *= OrthoProjInfo::GetRegularInstance().Size;
+	else
+		temp.z *= 1.3f;
 	t.SetTranslation(temp);
 	int num = _instancedDraw ? 1 : 4;
 	m_mmodels.insert(m_mmodels.end(), num, t.GetWorldTrans());
@@ -336,7 +345,10 @@ void GraphicsComponent::InsertMModels(Transformation& t, int position)
 	Vector3f temp = t.GetTranslation();
 	temp.x *= OrthoProjInfo::GetRegularInstance().Size;
 	temp.y *= OrthoProjInfo::GetRegularInstance().Size;
-	temp.z *= OrthoProjInfo::GetRegularInstance().Size;
+	if (!Transformation::perspectiveOrtho)
+		temp.z *= OrthoProjInfo::GetRegularInstance().Size;
+	else
+		temp.z *= 1.3f;
 	t.SetTranslation(temp);
 	t.SetRotation(t.GetRotation());
 	int num = _instancedDraw ? 1 : 4;

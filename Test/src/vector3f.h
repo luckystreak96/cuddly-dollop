@@ -3,6 +3,7 @@
 
 #include <math.h>
 #include <iostream>
+#include <string>
 
 class Vector3f
 {
@@ -43,6 +44,7 @@ public:
 	float VectorProjection(Vector3f normal);
 	float Distance2D(Vector3f& other);
 	float PercentDistance(Vector3f& other);
+	std::string Print();
 
 	float x = 0.0;
 	float y = 0.0;

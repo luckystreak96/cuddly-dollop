@@ -68,6 +68,7 @@ public:
 	void SetPhysics(Vector3f pos, Vector3f vel = Vector3f()) { m_pos = pos; m_vel = vel;/* m_modelMat.SetTranslation(pos);*/ };
 	void SetNewBuffers(std::vector<Vertex>* verts, std::vector<GLuint>* inds);
 	void ApplyModelToVertices();
+	static float GetProjectionRotation();
 
 public:
 	bool mustDraw = true;
@@ -75,7 +76,8 @@ public:
 	bool _updateMModels;
 	bool _outline;
 
-	static float _rotation;
+	static float _persRotation;
+	static float _orthoRotation;
 
 protected:
 	GLsizei m_lastMModelSize;

@@ -53,7 +53,8 @@ void SkillMelee::Update()
 
 	HandleActionCommand(progress / duration);
 
-	Camera::_currentCam->SetScale(Vector3f(1.5f));
+	if(Transformation::perspectiveOrtho)
+		Camera::_currentCam->SetScale(Vector3f(1.5f));
 
 	switch (_animProg)
 	{

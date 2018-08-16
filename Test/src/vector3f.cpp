@@ -84,6 +84,11 @@ float Vector3f::VectorProjection(Vector3f normal)
 	return Dot(normal);
 }
 
+std::string Vector3f::Print()
+{
+	return std::to_string(x) + ", " + std::to_string(y) + ", " + std::to_string(z);
+}
+
 float& Vector3f::operator[](int i)
 {
 	if (i == 0)

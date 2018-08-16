@@ -38,9 +38,9 @@ bool Actor::ActorBattleOrderSort(Actor_ptr a, Actor_ptr b)
 
 void Actor::SetDefault()
 {
-	if(!_Graphics)
+	if (!_Graphics)
 		_Graphics = PGraphics_ptr(new PlayerGraphicsComponent());
-	if(!_Fighter)
+	if (!_Fighter)
 		_Fighter = Fighter_ptr(new Fighter());
 
 	Sprite = "res/sprites/entities/entity_ghost.png";
@@ -56,7 +56,7 @@ void Actor::UpdateColor()
 
 	_Graphics->_outline = Selected;// Always default to no outline unless selected
 
-	if(Selected)
+	if (Selected)
 	{
 		if (_ColorState != CS_Selected)
 		{
@@ -74,12 +74,12 @@ void Actor::UpdateColor()
 			_ColorState = CS_Invis;
 		}
 	}
-	else if(_Fighter->PredictedSkill != NULL && _Fighter->Team == 0 && !ChoosingAction)
+	else if (_Fighter->PredictedSkill != NULL && _Fighter->Team == 0 && !ChoosingAction)
 	{
 		_Graphics->SetColorAll(Vector3f(0.6f, 0.6f, 0.6f), 1.f);
 		_ColorState = CS_Darker;
 	}
-	else if(_ColorState != CS_Normal)
+	else if (_ColorState != CS_Normal)
 	{
 		_Graphics->SetColorAll();
 		_ColorState = CS_Normal;
@@ -90,6 +90,13 @@ void Actor::UpdateColor()
 void Actor::Update()
 {
 	UpdateColor();
+	//if (!Transformation::perspectiveOrtho)
+		_Graphics->GetPosRef().z += MathUtils::HeightGivenLengthOfHypotenuseAndAngle(0.5f, -GraphicsComponent::_persRotation);
 	_Graphics->Update();
 }
 
+void Actor::AdjustHeightForAngle()
+{
+	//if (!Transformation::perspectiveOrtho)
+		_Graphics->GetPosRef().z -= MathUtils::HeightGivenLengthOfHypotenuseAndAngle(0.5f, -GraphicsComponent::_persRotation);
+}

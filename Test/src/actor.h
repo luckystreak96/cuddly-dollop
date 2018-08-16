@@ -15,6 +15,7 @@ public:
 	Actor(Actor& a);
 	void Update();
 	void UpdateColor();
+	void AdjustHeightForAngle();
 
 public:
 	Fighter_ptr _Fighter;

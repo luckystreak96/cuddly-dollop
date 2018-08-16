@@ -92,9 +92,9 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 		Camera::_currentCam->_3dTarget.z > 4.0f ? Camera::_currentCam->_3dTarget.z = 0.0f : Camera::_currentCam->_3dTarget.z += 0.1f;
 
 	if (key == GLFW_KEY_F2 && (action == GLFW_PRESS || action == GLFW_REPEAT))
-		GraphicsComponent::_rotation += 0.1f;
+		GraphicsComponent::_persRotation += 0.1f;
 	if (key == GLFW_KEY_F3 && (action == GLFW_PRESS || action == GLFW_REPEAT))
-		GraphicsComponent::_rotation -= 0.1f;
+		GraphicsComponent::_persRotation -= 0.1f;
 
 
 	if (key == GLFW_KEY_F11 && action == GLFW_RELEASE)

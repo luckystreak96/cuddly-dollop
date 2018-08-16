@@ -153,25 +153,28 @@ void Camera::ExecuteFollow()
 	float bottom = OrthoProjInfo::GetRegularInstance().Bottom;
 	float top = OrthoProjInfo::GetRegularInstance().Top;
 
-	// If the pan would bring you left further than the left limit OR the map is too small to fit the screen width,
-	//  just pan at the left limit
-	//if (_translate.x - ((left) / size) / _scale.x > 0 ||
-	//	_mapsize.x < ((right) / size) * 2)
-	//	_translate.x = ((left) / size) / _scale.x;
-	//// If the map is big enough for the screen to pan it right and you would normally pass the limits,
-	////  set the pan to the exact right limit
-	//else if (abs(_translate.x - ((right) / size) / _scale.x) > _mapsize.x)
-	//	_translate.x = -(_mapsize.x - ((right) / size) / _scale.x);
+	if (Transformation::perspectiveOrtho)
+	{
+		// If the pan would bring you left further than the left limit OR the map is too small to fit the screen width,
+		//  just pan at the left limit
+		if (_translate.x - ((left) / size) / _scale.x > 0 ||
+			_mapsize.x < ((right) / size) * 2)
+			_translate.x = ((left) / size) / _scale.x;
+		// If the map is big enough for the screen to pan it right and you would normally pass the limits,
+		//  set the pan to the exact right limit
+		else if (abs(_translate.x - ((right) / size) / _scale.x) > _mapsize.x)
+			_translate.x = -(_mapsize.x - ((right) / size) / _scale.x);
 
-	//// If the pan would bring you down further than the bottom OR the map isnt high enough to fill the screen,
-	////  just stay at the bottom
-	//if (_translate.y - ((bottom) / size) / _scale.y > 0 ||
-	//	_mapsize.y < ((top) / size) * 2)
-	//	_translate.y = ((bottom) / size) / _scale.y;
-	//// If the map is big enough for the screen to pan it upwards and you would normally pass the limits,
-	////  set the pan to the exact top
-	//else if (abs(_translate.y - ((top) / size) / _scale.y) > _mapsize.y)
-	//	_translate.y = -(_mapsize.y - ((top) / size) / _scale.y);
+		// If the pan would bring you down further than the bottom OR the map isnt high enough to fill the screen,
+		//  just stay at the bottom
+		if (_translate.y - ((bottom) / size) / _scale.y > 0 ||
+			_mapsize.y < ((top) / size) * 2)
+			_translate.y = ((bottom) / size) / _scale.y;
+		// If the map is big enough for the screen to pan it upwards and you would normally pass the limits,
+		//  set the pan to the exact top
+		else if (abs(_translate.y - ((top) / size) / _scale.y) > _mapsize.y)
+			_translate.y = -(_mapsize.y - ((top) / size) / _scale.y);
+	}
 
 	_transform->SetTranslation(_translate + _extraTranslate);
 }
