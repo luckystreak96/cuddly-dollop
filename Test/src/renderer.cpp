@@ -121,8 +121,10 @@ void Renderer::Draw()
 	for (auto& x : m_ppe)
 		x->Apply(&pps, &m_fbo);
 
-	EffectManager::GetInstance().Enable(E_Basic);
+	EffectManager::GetInstance().Enable(E_Gamma);
 	glBindTexture(GL_TEXTURE_2D, m_fbo.GetColourTexture());
 	pps.Draw(false);
+	EffectManager::GetInstance().Enable(E_Basic);
+	glBindTexture(GL_TEXTURE_2D, m_fbo.GetColourTexture());
 	EffectManager::GetInstance().SetNoTranslateMode(false);
 }

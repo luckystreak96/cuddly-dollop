@@ -1,4 +1,5 @@
 #include "blurEffect.h"
+#include "gameData.h"
 
 BlurEffect::BlurEffect()
 {
@@ -9,7 +10,21 @@ bool BlurEffect::Init()
 {
 	std::string vs = "shaders/" + GetGLVersionString() + "/shader.vs";
 	//std::string fs = "shaders/" + GetGLVersionString() + "/blur.fs";
-	std::string fs = "shaders/" + GetGLVersionString() + "/gaussian11.fs";
+	std::string level = "11";
+	int eq = std::get<int>(GameData::Options.at("effect_quality"));
+	switch (eq)
+	{
+	case 0:
+		level = "9";
+		break;
+	case 1:
+		level = "9";
+		break;
+	case 2:
+		level = "11";
+		break;
+	}
+	std::string fs = "shaders/" + GetGLVersionString() + "/gaussian" + level + ".fs";
 
 	AddShader(vs, GL_VERTEX_SHADER, m_shaderProg);
 	AddShader(fs, GL_FRAGMENT_SHADER, m_shaderProg);

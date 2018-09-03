@@ -52,8 +52,6 @@ bool SceneWorld::Init()
 	NextScene = SceneGenData();
 	m_jsonHandler = std::shared_ptr<JsonHandler>(new JsonHandler(m_currentMap));
 
-	m_bloomEffect = false;
-
 	OrthoProjInfo::GetRegularInstance().changed = true;
 	//m_camera._transform = Transformation();
 
@@ -117,8 +115,10 @@ void SceneWorld::ManageInput()
 {
 	Scene::ManageInput();
 
-	if (InputManager::GetInstance().FrameKeyStatus('B', KeyPressed))
-		m_bloomEffect = !m_bloomEffect;
+	if (InputManager::GetInstance().FrameKeyStatus('[', KeyPressed))
+		Camera::_currentCam->SetScale(Vector3f(4.0f, 4.0f, 1.0f));
+	if (InputManager::GetInstance().FrameKeyStatus(']', KeyPressed))
+		Camera::_currentCam->SetScale(Vector3f(1.0f, 1.0f, 1.0f));
 
 	if (InputManager::GetInstance().FrameKeyStatus('T', KeyPressed))
 	{

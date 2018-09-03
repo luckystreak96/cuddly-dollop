@@ -21,6 +21,9 @@ public:
 	void ResetTextureSizes();
 
 private:
+	void ApplyBlur(Post_Processing_Screen* pps, int numTimes);
+
+private:
 	FBO m_bloom;
 	FBO m_gaussH;
 	FBO m_gaussV;	

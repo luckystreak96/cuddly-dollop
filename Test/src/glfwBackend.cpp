@@ -12,6 +12,7 @@
 GLFWwindow* GLFWManager::m_window = NULL;
 Vector2f GLFWManager::_mngrGLVersion = Vector2f(2, 0);
 bool GLFWManager::_joyStickMode = false;
+bool GLFWManager::_swapInterval = 0;
 
 void Resize(GLFWwindow* window)
 {
@@ -97,9 +98,9 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 		}
 		else
 			glfwSetWindowMonitor(window, NULL, 5, 35, mode->width - 10, mode->height - 80, mode->refreshRate);
-
-		glfwSwapInterval(1);
 	}
+	else if (key == GLFW_KEY_F10 && action == GLFW_RELEASE)
+		glfwSwapInterval(GLFWManager::_swapInterval == 0 ? 1 : 0);
 
 	KeyStatus status;
 	if (action == GLFW_PRESS)
@@ -268,7 +269,7 @@ GLFWManager::GLFWManager()
 	}
 
 
-	if (false && glDebugMessageCallbackARB != NULL) {
+	if (true && glDebugMessageCallbackARB != NULL) {
 		// Debug Output is supported, hooray!
 		glDebugMessageControlARB(GL_DONT_CARE, GL_DONT_CARE, GL_DEBUG_SEVERITY_HIGH, 0, NULL, GL_TRUE);
 		//glDebugMessageControlARB(GL_DEBUG_SOURCE_OTHER, GL_DEBUG_TYPE_OTHER, GL_DEBUG_SEVERITY_NOTIFICATION, 0, NULL, GL_FALSE);
@@ -294,9 +295,14 @@ GLFWManager::GLFWManager()
 	glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ZERO);
 	//glBlendFuncSeparate(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA, GL_ONE, GL_ONE);
 
-	glfwSwapInterval(1);
+	glfwSwapInterval(GLFWManager::_swapInterval);
 
 	printf("GL version: %s\n", glGetString(GL_VERSION));
+
+	printf("\nSpecial keys:\n");
+	printf("-------------\n");
+	printf("F%i - %s", 10, "Toggle vertical sync\n");
+	printf("F%i - %s", 11, "Toggle fullscreen\n");
 
 	Resize(m_window);
 }

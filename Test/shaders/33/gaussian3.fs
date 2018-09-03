@@ -5,17 +5,17 @@ in vec2 TexCoord0;
 
 uniform sampler2D gSampler;
 
-uniform bool horizontal = true;
+uniform int horizontal = 1;
 
-uniform float weight[2] = float[] (0.44198,	0.27901);
+float weight[2] = float[] (0.44198,	0.27901);
 
 void main()
 {
     vec2 tex_offset = 1.0 / textureSize(gSampler, 0); // gets size of single texel
-    if(texture(gSampler, TexCoord0).a < 0.2)
-      discard;
+    //if(texture(gSampler, TexCoord0).a < 0.2)
+    //  discard;
     vec3 result = texture(gSampler, TexCoord0).rgb * weight[0]; // current fragment's contribution
-    if(horizontal)
+    if(horizontal == 1)
     {
         for(int i = 1; i < 2; ++i)
         {

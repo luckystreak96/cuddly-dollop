@@ -16,6 +16,7 @@ EffectManager::EffectManager()
 		m_firstUpdates.emplace((Effects)i, false);
 
 	m_effects.emplace(E_Basic, &BasicEffect::GetInstance());
+	m_effects.emplace(E_Gamma, &GammaEffect::GetInstance());
 	m_effects.emplace(E_SingleColor, &SingleColorEffect::GetInstance());
 	m_effects.emplace(E_Combine, &CombineEffect::GetInstance());
 	m_effects.emplace(E_Bloom, &BloomEffect::GetInstance());

@@ -19,6 +19,7 @@ public:
 	static GLFWwindow* m_window;
 	static Vector2f _mngrGLVersion;
 	static bool _joyStickMode;
+	static bool _swapInterval;
 
 private:
 	int m_screenWidth, m_screenHeight, m_refreshRate;

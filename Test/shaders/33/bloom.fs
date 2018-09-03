@@ -14,6 +14,7 @@ void main()
 	//if(brightness > 0.6)
     //{
     	//color.a = brightness;
+	//brightness = clamp(brightness, 0.0, 0.8);
 	color.rgb *= pow(brightness, 3);
 	FragColor = color;
     //}
