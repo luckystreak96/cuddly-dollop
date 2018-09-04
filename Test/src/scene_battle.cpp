@@ -82,7 +82,9 @@ bool SceneBattle::Init()
 
 		Vector3f position = Vector3f(4.0f + i * 0.25f, startY + i * 1.25f, 4.0f);
 		m_party.at(i)->_Graphics->SetPhysics(position, Vector3f());
-		m_party.at(i)->BasePosition = position;
+		if(!Transformation::perspectiveOrtho)
+			m_party.at(i)->AdjustHeightForAngle();
+		m_party.at(i)->BasePosition = m_party.at(i)->_Graphics->GetPos();
 		m_party.at(i)->_Graphics->_row = AE_Right; // make player face right cuz girl looks bad looking down
 		m_party.at(i)->_Graphics->_animation = AE_Right; // make player face right cuz girl looks bad looking down
 	}
@@ -96,7 +98,9 @@ bool SceneBattle::Init()
 
 		Vector3f position = Vector3f(13.5f - i * 0.25f, startY + i * 1.25f, 4.0f);
 		m_enemies.at(i)->_Graphics->SetPhysics(position, Vector3f());
-		m_enemies.at(i)->BasePosition = position;
+		if(!Transformation::perspectiveOrtho)
+			m_enemies.at(i)->AdjustHeightForAngle();
+		m_enemies.at(i)->BasePosition = m_enemies.at(i)->_Graphics->GetPos();
 		// Set to right cause the sprites are flipped
 		m_enemies.at(i)->_Graphics->_row = AE_Right;
 		m_enemies.at(i)->_Graphics->_animation = AE_Right;
@@ -192,9 +196,11 @@ SceneGenData SceneBattle::Update()
 	for (auto it : m_celist)
 		it.second->Update();
 
+	//std::cout << "1 -- " << m_party.at(0)->_Graphics->GetPosRef().Print() << std::endl;
 	for (auto a : _actors)
 		a->Update();
 
+	//std::cout << "2 -- " << m_party.at(0)->_Graphics->GetPosRef().Print() << std::endl;
 	m_mapHandler->Update(OrthoProjInfo::GetRegularInstance().changed);
 
 	SetAudioPosition();

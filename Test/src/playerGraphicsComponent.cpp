@@ -80,10 +80,15 @@ void PlayerGraphicsComponent::Draw(bool withTex)
 
 void PlayerGraphicsComponent::Update()
 {
+	m_modelMat.SetRotation(GetProjectionRotation(), 0, 0);
+	//if (!Transformation::perspectiveOrtho)
+		m_pos.z -= MathUtils::HeightGivenLengthOfHypotenuseAndAngle(0.5f, -GetProjectionRotation());
+	//std::cout << _persRotation << std::endl;
 	// When you need to update a component according to position
 	if (m_prevPosition != m_pos && _observers.size())
 		UpdateObservers();
 	m_prevPosition = m_pos;
+
 
 	int dir = m_direction;
 	//Change the direction hes facing
@@ -134,7 +139,9 @@ void PlayerGraphicsComponent::Update()
 	if (SetTileModelTC(&m_vertices, forceUpdate))
 		ResetVBO();
 
+	//m_pos.z -= 32;
 	GraphicsComponent::Update();
+	//m_pos.z += 32;
 }
 
 void PlayerGraphicsComponent::SetAnimation(Anim_Enum anim, std::string spritesheet)

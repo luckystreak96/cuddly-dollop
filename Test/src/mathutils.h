@@ -46,6 +46,8 @@ public:
 	// Resets dad cam as if we set a new target
 	void EnableNormalCam();
 
+	Vector3f Get3dPos();
+
 private:
 	// Returns the random values for DadCam
 	float RandomDad();
@@ -71,13 +73,13 @@ public:
 	Vector3f _extraTranslate;
 	// the transformation matrix handler
 	std::unique_ptr<Transformation> _transform;
+	// the current position
+	Vector3f _translate;
 private:
 	// used to track how long to wait till dadCam
 	int _dadCountdown;
 	// decides if dadcam is in progress
 	bool _followingDad;
-	// the current position
-	Vector3f _translate;
 	// the current scale
 	Vector3f _scale;
 	// the target to translate to
@@ -88,6 +90,11 @@ private:
 	Vector3f _scaleTargetDad;
 	// the scale to scale towards
 	Vector3f _scaleTarget;
+
+public:
+	Vector3f _3dTarget;
+	Vector3f _3dUp;
+	float _z;
 };
 
 
@@ -95,6 +102,8 @@ namespace MathUtils
 {
 	//void CalcNormals(std::vector<GLuint>& indices, std::vector<Vertex>& verts);
 	Vector3f FindPositionInParabola(float progressPercent, Vector3f startPoint, Vector3f endPoint);
+
+	float HeightGivenLengthOfHypotenuseAndAngle(float length, float angleRadians);
 }
 
 #endif

@@ -71,14 +71,32 @@ void Resize(GLFWwindow* window)
 	OrthoProjInfo::GetRegularInstance().Top = (h / 2.0f);
 	OrthoProjInfo::GetRegularInstance().Left = -(w / 2.0f);
 	OrthoProjInfo::GetRegularInstance().Right = (w / 2.0f);
-	OrthoProjInfo::GetRegularInstance().Size = size * multiplierFinal;
+	OrthoProjInfo::GetRegularInstance().Size = /*Transformation::perspectiveOrtho ?*/ size * multiplierFinal /*: size*/;
 	OrthoProjInfo::GetRegularInstance().changed = true;
+
+	PersProjInfo::GetRegularInstance().Height = h;
+	PersProjInfo::GetRegularInstance().Width = w;
 }
 
 static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
 	if (key == GameData::KeyMap.at(A_Exit) && action == GLFW_PRESS)
 		GLFWManager::Exit();
+
+	if (key == GLFW_KEY_F9 && action == GLFW_RELEASE)
+		Transformation::perspectiveOrtho = !Transformation::perspectiveOrtho;
+	if (key == GLFW_KEY_F6 && (action == GLFW_PRESS || action == GLFW_REPEAT))
+		Camera::_currentCam->_3dTarget.x > 4.0f ? Camera::_currentCam->_3dTarget.x = 0.0f : Camera::_currentCam->_3dTarget.x += 0.1f;
+	if (key == GLFW_KEY_F7 && (action == GLFW_PRESS || action == GLFW_REPEAT))
+		Camera::_currentCam->_3dTarget.y > 4.0f ? Camera::_currentCam->_3dTarget.y = 0.0f : Camera::_currentCam->_3dTarget.y += 0.1f;
+	if (key == GLFW_KEY_F8 && (action == GLFW_PRESS || action == GLFW_REPEAT))
+		Camera::_currentCam->_3dTarget.z > 4.0f ? Camera::_currentCam->_3dTarget.z = 0.0f : Camera::_currentCam->_3dTarget.z += 0.1f;
+
+	if (key == GLFW_KEY_F2 && (action == GLFW_PRESS || action == GLFW_REPEAT))
+		GraphicsComponent::_persRotation += 0.1f;
+	if (key == GLFW_KEY_F3 && (action == GLFW_PRESS || action == GLFW_REPEAT))
+		GraphicsComponent::_persRotation -= 0.1f;
+
 
 	if (key == GLFW_KEY_F11 && action == GLFW_RELEASE)
 	{

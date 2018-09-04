@@ -3,32 +3,34 @@
 
 #include <iostream>
 
+bool Transformation::perspectiveOrtho = false;
+
 Transformation::Transformation()
 {
 }
 
 Mat4f& Transformation::GetWorldTrans()
 {
-    Mat4f scale, translate, rotate;
+	Mat4f scale, translate, rotate;
 
-    scale.InitScaleMat(m_scale);
-    rotate.InitRotateMat(m_rotate);
-    translate.InitTranslateMat(m_translate);
-    m_WTrans = translate * rotate * scale;
+	scale.InitScaleMat(m_scale);
+	rotate.InitRotateMat(m_rotate);
+	translate.InitTranslateMat(m_translate);
+	m_WTrans = translate * rotate * scale;
 
-    return m_WTrans;
+	return m_WTrans;
 }
 
 Mat4f& Transformation::GetWorldTransCentered()
 {
-    Mat4f scale, translate, rotate;
+	Mat4f scale, translate, rotate;
 
-    scale.InitScaleMat(m_scale);
-    rotate.InitRotateMat(m_rotate);
-    translate.InitTranslateMat(m_translate);
-    m_WTrans = rotate * scale * translate;
+	scale.InitScaleMat(m_scale);
+	rotate.InitRotateMat(m_rotate);
+	translate.InitTranslateMat(m_translate);
+	m_WTrans = rotate * scale * translate;
 
-    return m_WTrans;
+	return m_WTrans;
 }
 
 Mat4f& Transformation::GetWorldTransNoTranslate()
@@ -46,70 +48,106 @@ Mat4f& Transformation::GetWorldTransNoTranslate()
 
 Mat4f& Transformation::GetWOTrans()
 {
+	Mat4f camtranslate, camrotate;
+	camtranslate.InitTranslateMat(Camera::_currentCam->Get3dPos());
+	camrotate.Init3dCameraTrans(Camera::_currentCam->_3dTarget, Camera::_currentCam->_3dUp);
+
 	m_WTrans = GetWorldTrans();
-	m_Proj.InitOrthoProj(*m_orthoProj);
-	m_WPTrans = m_Proj * m_WTrans;
+	if (perspectiveOrtho)
+	{
+		m_Proj.InitOrthoProj(*m_orthoProj);
+		m_WPTrans = m_Proj * m_WTrans;
+	}
+	else
+	{
+		m_Proj.InitProjPers(PersProjInfo::GetRegularInstance());
+		m_WPTrans = m_Proj * (camrotate * camtranslate) * m_WTrans;
+	}
 
 	return m_WPTrans;
 }
 
 Mat4f& Transformation::GetWOTransCentered()
 {
+	Mat4f camtranslate, camrotate;
+	camtranslate.InitTranslateMat(Camera::_currentCam->Get3dPos());
+	camrotate.Init3dCameraTrans(Camera::_currentCam->_3dTarget, Camera::_currentCam->_3dUp);
+
 	m_WTrans = GetWorldTransCentered();
-	m_Proj.InitOrthoProj(*m_orthoProj);
-	m_WPTrans = m_Proj * m_WTrans;
+	if (perspectiveOrtho)
+	{
+		m_Proj.InitOrthoProj(*m_orthoProj);
+		m_WPTrans = m_Proj * m_WTrans;
+	}
+	else
+	{
+		m_Proj.InitProjPers(PersProjInfo::GetRegularInstance());
+		m_WPTrans = m_Proj * (camrotate * camtranslate) * m_WTrans;
+	}
 
 	return m_WPTrans;
 }
 
 Mat4f& Transformation::GetWOTransNoTranslate()
 {
+	Mat4f camtranslate, camrotate;
+	camtranslate.InitTranslateMat(Camera::_currentCam->Get3dPos());
+	camrotate.Init3dCameraTrans(Camera::_currentCam->_3dTarget, Camera::_currentCam->_3dUp);
+
 	m_WTrans = GetWorldTransNoTranslate();
-	m_Proj.InitOrthoProj(*m_orthoProj);
-	m_WPTransNoTranslate = m_Proj * m_WTrans;
+	if (perspectiveOrtho)
+	{
+		m_Proj.InitOrthoProj(*m_orthoProj);
+		m_WPTransNoTranslate = m_Proj * m_WTrans;
+	}
+	else
+	{
+		m_Proj.InitProjPers(PersProjInfo::GetRegularInstance());
+		m_WPTransNoTranslate = m_Proj * (camrotate * camtranslate) * m_WTrans;
+	}
 
 	return m_WPTransNoTranslate;
 }
 
 Mat4f& Transformation::GetWPTrans()
 {
-    m_WTrans = GetWorldTrans();
-    m_Proj.InitProjPers(*m_persProjInfo);
-    m_WPTrans = m_Proj * m_WTrans;
+	m_WTrans = GetWorldTrans();
+	m_Proj.InitProjPers(*m_persProjInfo);
+	m_WPTrans = m_Proj * m_WTrans;
 
-    return m_WPTrans;
+	return m_WPTrans;
 }
 
 Mat4f& Transformation::GetTrans()
 {
-    Mat4f scale, translate, rotate, persProjTrans;
-    scale.InitScaleMat(m_scale);
-    translate.InitTranslateMat(m_translate);
-    rotate.InitRotateMat(m_rotate);
-    m_Proj.InitProjPers(*m_persProjInfo);
+	Mat4f scale, translate, rotate, persProjTrans;
+	scale.InitScaleMat(m_scale);
+	translate.InitTranslateMat(m_translate);
+	rotate.InitRotateMat(m_rotate);
+	m_Proj.InitProjPers(*m_persProjInfo);
 
-    m_transformation = m_Proj * (translate * rotate * scale);
-    return m_transformation;
+	m_transformation = m_Proj * (translate * rotate * scale);
+	return m_transformation;
 }
 
 void Transformation::SetScale(float x, float y, float z)
 {
-    m_scale = Vector3f(x, y, z);
+	m_scale = Vector3f(x, y, z);
 }
 
 void Transformation::SetTranslation(float x, float y, float z)
 {
-    m_translate = Vector3f(x, y, z);
+	m_translate = Vector3f(x, y, z);
 }
 
 void Transformation::SetRotation(float x, float y, float z)
 {
-    m_rotate = Vector3f(x, y, z);
+	m_rotate = Vector3f(x, y, z);
 }
 
 void Transformation::SetPersProjInfo(PersProjInfo* p)
 {
-    m_persProjInfo = p;
+	m_persProjInfo = p;
 }
 
 void Transformation::SetOrthoProj(OrthoProjInfo* o)
@@ -120,12 +158,12 @@ void Transformation::SetOrthoProj(OrthoProjInfo* o)
 
 void Transformation::SetScale(const Vector3f& vec)
 {
-    SetScale(vec.x, vec.y, vec.z);
+	SetScale(vec.x, vec.y, vec.z);
 }
 
 void Transformation::SetTranslation(const Vector3f& vec)
 {
-    SetTranslation(vec.x, vec.y, vec.z);
+	SetTranslation(vec.x, vec.y, vec.z);
 }
 
 void Transformation::AddTranslation(float x, float y, float z)
@@ -137,7 +175,7 @@ void Transformation::AddTranslation(float x, float y, float z)
 
 void Transformation::SetRotation(Vector3f& vec)
 {
-    SetRotation(vec.x, vec.y, vec.z);
+	SetRotation(vec.x, vec.y, vec.z);
 }
 
 //Between 0 and 1

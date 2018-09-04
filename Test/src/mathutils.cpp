@@ -4,7 +4,7 @@
 Camera* Camera::_currentCam = NULL;
 
 Camera::Camera() : Target(1), _followSpeed(0.005f), _scale(Vector3f(1)), _scaleTargetDad(Vector3f(1)), _style(CAMSTYLE_Follow),
-_scaleTarget(Vector3f(1)), _paused(false)
+_scaleTarget(Vector3f(1)), _paused(false), _3dTarget(0, 0.5f, 1), _3dUp(0, 1, 0)
 {
 	_transform = std::make_unique<Transformation>(Transformation());
 }
@@ -153,25 +153,28 @@ void Camera::ExecuteFollow()
 	float bottom = OrthoProjInfo::GetRegularInstance().Bottom;
 	float top = OrthoProjInfo::GetRegularInstance().Top;
 
-	// If the pan would bring you left further than the left limit OR the map is too small to fit the screen width,
-	//  just pan at the left limit
-	if (_translate.x - ((left) / size) / _scale.x > 0 ||
-		_mapsize.x < ((right) / size) * 2)
-		_translate.x = ((left) / size) / _scale.x;
-	// If the map is big enough for the screen to pan it right and you would normally pass the limits,
-	//  set the pan to the exact right limit
-	else if (abs(_translate.x - ((right) / size) / _scale.x) > _mapsize.x)
-		_translate.x = -(_mapsize.x - ((right) / size) / _scale.x);
+	if (Transformation::perspectiveOrtho)
+	{
+		// If the pan would bring you left further than the left limit OR the map is too small to fit the screen width,
+		//  just pan at the left limit
+		if (_translate.x - ((left) / size) / _scale.x > 0 ||
+			_mapsize.x < ((right) / size) * 2)
+			_translate.x = ((left) / size) / _scale.x;
+		// If the map is big enough for the screen to pan it right and you would normally pass the limits,
+		//  set the pan to the exact right limit
+		else if (abs(_translate.x - ((right) / size) / _scale.x) > _mapsize.x)
+			_translate.x = -(_mapsize.x - ((right) / size) / _scale.x);
 
-	// If the pan would bring you down further than the bottom OR the map isnt high enough to fill the screen,
-	//  just stay at the bottom
-	if (_translate.y - ((bottom) / size) / _scale.y > 0 ||
-		_mapsize.y < ((top) / size) * 2)
-		_translate.y = ((bottom) / size) / _scale.y;
-	// If the map is big enough for the screen to pan it upwards and you would normally pass the limits,
-	//  set the pan to the exact top
-	else if (abs(_translate.y - ((top) / size) / _scale.y) > _mapsize.y)
-		_translate.y = -(_mapsize.y - ((top) / size) / _scale.y);
+		// If the pan would bring you down further than the bottom OR the map isnt high enough to fill the screen,
+		//  just stay at the bottom
+		if (_translate.y - ((bottom) / size) / _scale.y > 0 ||
+			_mapsize.y < ((top) / size) * 2)
+			_translate.y = ((bottom) / size) / _scale.y;
+		// If the map is big enough for the screen to pan it upwards and you would normally pass the limits,
+		//  set the pan to the exact top
+		else if (abs(_translate.y - ((top) / size) / _scale.y) > _mapsize.y)
+			_translate.y = -(_mapsize.y - ((top) / size) / _scale.y);
+	}
 
 	_transform->SetTranslation(_translate + _extraTranslate);
 }
@@ -185,7 +188,7 @@ void Camera::SetFollow(Vector3f& target)
 {
 	if (target == _followTarget)
 		return;
-	_followTarget = target;
+	_followTarget = target + Vector3f(0, Transformation::perspectiveOrtho ? 0 : -2.5, 0);
 
 	EnableNormalCam();
 }
@@ -214,6 +217,13 @@ void Camera::SetFollowCenteredXY(Vector3f target)
 	SetFollow(target);
 }
 
+Vector3f Camera::Get3dPos()
+{
+	Vector3f result = Vector3f();// _translate;
+	result.z = 15;
+	return result;
+}
+
 namespace MathUtils
 {
 	// ProgressPercent = between 0 and 1
@@ -237,6 +247,11 @@ namespace MathUtils
 		result.z = startPoint.z;
 
 		return result;
+	}
+
+	float HeightGivenLengthOfHypotenuseAndAngle(float length, float angleRadians)
+	{
+		return length * cosf(angleRadians);
 	}
 
 	//void CalcNormals(std::vector<GLuint>& indices, std::vector<Vertex>& verts)

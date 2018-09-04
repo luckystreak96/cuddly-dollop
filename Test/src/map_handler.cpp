@@ -88,15 +88,42 @@ void MapHandler::Update(bool forced)
 	//	THE Z ACCORDINGLY. THIS IS DONE THIS WAY BECAUSE OF MESHES, THEY CALCULATE POS AHEAD OF
 	//	TIME AND CHANGE THE VERTEX POSITIONS -- BUT NOT ANY OTHER OBJECT. TO KEEP THE Z CONSISTENT,
 	//	I USE THE MATRIX INSTEAD OF MULTIPLYING THE OTHER OBJECTS VERTEX POS BY THEIR POS.
+	bool firstTime = m_graphics->GetMModels().size() == 0;
 	if (m_graphics->GetMModels().size() == 0 || forced)
 	{
+		int i = 0;
 		m_graphics->ClearMModels();
 		for (auto x : m_tiles)
 		{
 			Vector3f pos = x->Physics()->Position();
+			if (!Transformation::perspectiveOrtho)
+			{
+				// increase z by 1 to make people touch the tiles
+				pos.z -= 1;
+			}
 			Transformation t;
 			t.SetTranslation(pos);
+			std::string texture = x->GetTexture();
+			AdjustSprite(texture, t, i, firstTime);
 			m_graphics->InsertMModels(t);
+			i += 4;
+		}
+		m_graphics->ResetVBO();
+	}
+}
+
+void MapHandler::AdjustSprite(std::string sprite, Transformation& t, int index, bool firstTime)
+{
+	if (sprite == "sapin_b.png")
+	{
+		t.SetRotation(GraphicsComponent::GetProjectionRotation(), 0, 0);
+		t.SetScale(Vector3f(1, 2, 1));
+		if (firstTime)
+		{
+			float y = m_graphics->GetVertices()->at(index + 2).tex.y;
+			float increase = TextureAtlas::m_textureAtlas.GetTexCoordWH().y;
+			m_graphics->GetVertices()->at(index + 2).tex.y += TextureAtlas::m_textureAtlas.GetTexCoordWH().y;
+			m_graphics->GetVertices()->at(index + 3).tex.y += TextureAtlas::m_textureAtlas.GetTexCoordWH().y;
 		}
 	}
 }

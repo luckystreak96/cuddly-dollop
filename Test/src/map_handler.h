@@ -32,6 +32,7 @@ public:
 	unsigned int Size();
 	void SetupMesh();
 	GraphComp_ptr Graphics() { return m_graphics; }
+	void AdjustSprite(std::string sprite, Transformation& t, int index, bool firstTime);
 
 	// Returns the farthest reaches of the map in  x, y and z
 	Vector3f GetMapSize();
