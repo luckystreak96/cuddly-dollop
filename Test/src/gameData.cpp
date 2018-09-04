@@ -259,8 +259,8 @@ void GameData::EnsureBaseSettings()
 		Options.emplace("resolution", 3);
 	if (!Options.count("effect_quality"))
 		Options.emplace("effect_quality", 0);
-	if (!Options.count("effect_quality"))
-		Options.emplace("effect_quality", 0);
+	if (!Options.count("3d"))
+		Options.emplace("3d", false);
 	if (!Strings.count("name"))
 		Strings.emplace("name", "Yanik");
 

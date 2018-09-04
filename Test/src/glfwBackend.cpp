@@ -83,8 +83,8 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 	if (key == GameData::KeyMap.at(A_Exit) && action == GLFW_PRESS)
 		GLFWManager::Exit();
 
-	if (key == GLFW_KEY_F9 && action == GLFW_RELEASE)
-		Transformation::perspectiveOrtho = !Transformation::perspectiveOrtho;
+	//if (key == GLFW_KEY_F9 && action == GLFW_RELEASE)
+	//	Transformation::perspectiveOrtho = !Transformation::perspectiveOrtho;
 	if (key == GLFW_KEY_F6 && (action == GLFW_PRESS || action == GLFW_REPEAT))
 		Camera::_currentCam->_3dTarget.x > 4.0f ? Camera::_currentCam->_3dTarget.x = 0.0f : Camera::_currentCam->_3dTarget.x += 0.1f;
 	if (key == GLFW_KEY_F7 && (action == GLFW_PRESS || action == GLFW_REPEAT))
@@ -116,9 +116,14 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 		}
 		else
 			glfwSetWindowMonitor(window, NULL, 5, 35, mode->width - 10, mode->height - 80, mode->refreshRate);
+
+		glfwSwapInterval(GLFWManager::_swapInterval);
 	}
-	else if (key == GLFW_KEY_F10 && action == GLFW_RELEASE)
-		glfwSwapInterval(GLFWManager::_swapInterval == 0 ? 1 : 0);
+	if (key == GLFW_KEY_F10 && action == GLFW_RELEASE)
+	{
+		GLFWManager::_swapInterval = GLFWManager::_swapInterval == 0 ? 1 : 0;
+		glfwSwapInterval(GLFWManager::_swapInterval);
+	}
 
 	KeyStatus status;
 	if (action == GLFW_PRESS)

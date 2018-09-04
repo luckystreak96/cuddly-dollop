@@ -16,7 +16,7 @@ void main()
 
 
 	//vec3 toneMapped = color.rgb / (color.rgb + vec3(1.0));
-	const float exposure = 0.8;
+	const float exposure = 1.0;
 	vec3 toneMapped = vec3(1.0) - exp(-color.rgb * exposure);
 	color.rgb = toneMapped;
 

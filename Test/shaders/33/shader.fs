@@ -10,7 +10,7 @@ uniform sampler2D gSampler;
 //uniform vec3 gLightColor = vec3(1.0);
 //uniform vec3 gLightColor = vec3(1.0, 0.9, 0.95);//pinkish
 uniform vec3 gLightColor = vec3(1.0, 0.98, 0.95);//sunlight
-uniform float gAmbientLight = 0.9;
+uniform float gAmbientLight = 1.2;
 uniform float gLightIntensity;
 
 void main()

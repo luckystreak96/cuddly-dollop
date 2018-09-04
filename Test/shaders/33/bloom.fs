@@ -14,11 +14,11 @@ void main()
 	if(brightness > 1.0)
 		FragColor = color;
 	else
-		FragColor = vec4(0, 0, 0, 1);
+		FragColor = color * pow(brightness, 2);
     //{
     	//color.a = brightness;
 	//brightness = clamp(brightness, 0.0, 0.8);
-	color.rgb *= pow(brightness, 1);
+	//color.rgb *= pow(brightness, 1);
     //}
 	//else if(brightness > 0.4)
 	//{
