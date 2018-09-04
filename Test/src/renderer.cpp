@@ -19,13 +19,13 @@ Renderer::Renderer() : m_toDraw(std::vector<GraphicsComponent*>()), m_width(1), 
 
 	// TEST ERASE ME MAYBE
 	//m_ppe.push_back(std::make_shared<NightTimeProcessing>(NightTimeProcessing()));
-	m_ppe.push_back(std::shared_ptr<Bloom>(new Bloom()));
 	//m_ppe.push_back(std::make_shared<ContrastProcessing>(ContrastProcessing()));
+	m_ppe.push_back(std::shared_ptr<Bloom>(new Bloom()));
 }
 
 void Renderer::Setup()
 {
-	if (false && InputManager::GetInstance().FrameKeyStatus(A_Cancel, KeyStatus::KeyPressed))
+	if (InputManager::GetInstance().FrameKeyStatus(A_Cancel, KeyStatus::KeyPressed))
 		apply = !apply;
 
 	glStencilMask(0xFF);

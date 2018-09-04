@@ -15,6 +15,7 @@ public:
 	void SetWorldPosition(float* mat);
 	void SetModelPosition(float* mat);
 	void SetSize(float* mat);
+	void SetLightPower(float lightPower);
 private:
 	BasicEffect();
 };

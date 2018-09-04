@@ -11,8 +11,14 @@ void main()
 {
 	vec4 color = texture2D(gSampler, TexCoord0.st);
 
-	if(color.a < 0.1)
-		discard;
+	//if(color.a < 0.1)
+	//	discard;
+
+
+	//vec3 toneMapped = color.rgb / (color.rgb + vec3(1.0));
+	const float exposure = 0.8;
+	vec3 toneMapped = vec3(1.0) - exp(-color.rgb * exposure);
+	color.rgb = toneMapped;
 
 	const float gamma = 2.2;
     color.rgb = pow(color.rgb, vec3(1.0/gamma));
