@@ -12,7 +12,7 @@
 GLFWwindow* GLFWManager::m_window = NULL;
 Vector2f GLFWManager::_mngrGLVersion = Vector2f(2, 0);
 bool GLFWManager::_joyStickMode = false;
-bool GLFWManager::_swapInterval = 0;
+bool GLFWManager::_swapInterval = 1;
 
 void Resize(GLFWwindow* window)
 {
@@ -287,7 +287,7 @@ GLFWManager::GLFWManager()
 	}
 
 
-	if (true && glDebugMessageCallbackARB != NULL) {
+	if (false && glDebugMessageCallbackARB != NULL) {
 		// Debug Output is supported, hooray!
 		glDebugMessageControlARB(GL_DONT_CARE, GL_DONT_CARE, GL_DEBUG_SEVERITY_HIGH, 0, NULL, GL_TRUE);
 		//glDebugMessageControlARB(GL_DEBUG_SOURCE_OTHER, GL_DEBUG_TYPE_OTHER, GL_DEBUG_SEVERITY_NOTIFICATION, 0, NULL, GL_FALSE);
