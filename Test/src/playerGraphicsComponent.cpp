@@ -81,7 +81,7 @@ void PlayerGraphicsComponent::Draw(bool withTex)
 void PlayerGraphicsComponent::Update()
 {
 	m_modelMat.SetRotation(GetProjectionRotation(), 0, 0);
-	//if (!Transformation::perspectiveOrtho)
+	if (!Transformation::perspectiveOrtho)
 		m_pos.z -= MathUtils::HeightGivenLengthOfHypotenuseAndAngle(0.5f, -GetProjectionRotation());
 	//std::cout << _persRotation << std::endl;
 	// When you need to update a component according to position

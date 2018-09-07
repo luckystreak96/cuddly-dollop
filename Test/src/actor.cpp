@@ -90,13 +90,13 @@ void Actor::UpdateColor()
 void Actor::Update()
 {
 	UpdateColor();
-	//if (!Transformation::perspectiveOrtho)
+	if (!Transformation::perspectiveOrtho)
 		_Graphics->GetPosRef().z += MathUtils::HeightGivenLengthOfHypotenuseAndAngle(0.5f, -GraphicsComponent::_persRotation);
 	_Graphics->Update();
 }
 
 void Actor::AdjustHeightForAngle()
 {
-	//if (!Transformation::perspectiveOrtho)
+	if (!Transformation::perspectiveOrtho)
 		_Graphics->GetPosRef().z -= MathUtils::HeightGivenLengthOfHypotenuseAndAngle(0.5f, -GraphicsComponent::_persRotation);
 }
