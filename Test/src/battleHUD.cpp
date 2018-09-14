@@ -16,24 +16,24 @@ void BattleHUD::Destroy()
 	_hudBG.clear();
 }
 
-void BattleHUD::Init(std::vector<Actor_ptr> actors)
+void BattleHUD::Init(std::map<int, std::pair<Fighter_ptr, Actor_ptr>> map)
 {
-	_actors = actors;
+	_actors = map;
 
 	int enemies = 0;
 	int party = 0;
 	for (auto& x : _actors)
 	{
 		// Health bar
-		AddActorHealthBar(x, party, enemies);
+		AddActorHealthBar(x.second, party, enemies);
 
 		//if (x->_Fighter->Team != 0)
 		{
 			// Attack prediction
-			AddActorAttackPrediction(x);
+			AddActorAttackPrediction(x.second);
 
 			// Attack prediction arrow
-			AddActorAttackPredictionArrow(x);
+			AddActorAttackPredictionArrow(x.second);
 		}
 	}
 
@@ -60,8 +60,17 @@ void BattleHUD::Init(std::vector<Actor_ptr> actors)
 	_hudBG.push_back(bottomBG);
 }
 
+void BattleHUD::Init(std::vector<Fighter_ptr> fighters, std::map<int, Actor_ptr> actors)
+{
+	_actors = std::map<int, std::pair<Fighter_ptr, Actor_ptr>>();
+	for (auto& x : fighters)
+		_actors.emplace(x, actors.at(x->_BattleFieldPosition));
 
-void BattleHUD::AddActorHealthBar(Actor_ptr ap, int& party, int& enemies)
+	Init(_actors);
+}
+
+
+void BattleHUD::AddActorHealthBar(std::pair<Fighter_ptr, Actor_ptr> ap, int& party, int& enemies)
 {
 	Vector3f pos;
 	int right = OrthoProjInfo::GetRegularInstance().Right * 2;
@@ -70,7 +79,7 @@ void BattleHUD::AddActorHealthBar(Actor_ptr ap, int& party, int& enemies)
 	float orthoWidth = (float)right / (float)size;
 	float orthoHeight = (float)up / (float)size;
 	std::cout << orthoWidth << std::endl;
-	if (ap->_Fighter->Team == 0)
+	if (ap.first->Team == 0)
 	{
 		float xpos1 = (0.25f / 15.f) * orthoWidth;
 		float xpos2 = (2.5f / 15.f) * orthoWidth;
@@ -87,25 +96,25 @@ void BattleHUD::AddActorHealthBar(Actor_ptr ap, int& party, int& enemies)
 		enemies++;
 	}
 
-	HudComp_ptr healthBar = std::make_shared<HudHealthBar>(HudHealthBar(ap.get(), pos));
-	ap->_Fighter->_observers.push_back(healthBar);
-	ap->_Graphics->_observers.push_back(healthBar);
+	HudComp_ptr healthBar = std::make_shared<HudHealthBar>(HudHealthBar(ap, pos));
+	ap.first->_observers.push_back(healthBar);
+	ap.second->_observers.push_back(healthBar);
 	_hudComponents.push_back(healthBar);
 }
 
-void BattleHUD::AddActorAttackPrediction(Actor_ptr ap)
+void BattleHUD::AddActorAttackPrediction(std::pair<Fighter_ptr, Actor_ptr> ap)
 {
-	HudComp_ptr damagePrediction = std::make_shared<HudTurnOrder>(HudTurnOrder(ap.get()));
-	ap->_Fighter->_observers.push_back(damagePrediction);
-	ap->_Graphics->_observers.push_back(damagePrediction);
+	HudComp_ptr damagePrediction = std::make_shared<HudTurnOrder>(HudTurnOrder(ap));
+	ap.first->_observers.push_back(damagePrediction);
+	ap.second->_observers.push_back(damagePrediction);
 	_hudComponents.push_back(damagePrediction);
 }
 
-void BattleHUD::AddActorAttackPredictionArrow(Actor_ptr ap)
+void BattleHUD::AddActorAttackPredictionArrow(std::pair<Fighter_ptr, Actor_ptr> fa)
 {
-	HudComp_ptr damagePrediction = HudComp_ptr(new HudArrow(ap));
-	ap->_Fighter->_observers.push_back(damagePrediction);
-	_hudComponents.push_back(damagePrediction);
+	HudComp_ptr arrow = HudComp_ptr(new HudArrow(fa, &_actors));
+	fa.first->_observers.push_back(arrow);
+	_hudComponents.push_back(arrow);
 }
 
 void BattleHUD::ToggleTurnOrderDisplay(bool hidden)
@@ -124,7 +133,7 @@ void BattleHUD::ToggleTurnOrderDisplay(bool hidden)
 void BattleHUD::ToggleDamagePredictionArrowDisplay(bool hidden)
 {
 	for (auto& x : _actors)
-		if (x->_Fighter->Team == 0 && x->_Fighter->NoPredictCountDown > 0)
+		if (x.second.first->Team == 0 && x.second.first->NoPredictCountDown > 0)
 			hidden = true;
 
 	HudArrow* pred;
@@ -140,13 +149,13 @@ void BattleHUD::ToggleDamagePredictionArrowDisplay(bool hidden)
 	}
 }
 
-HudHealthBar* BattleHUD::GetActorHealthBar(Actor* actor)
+HudHealthBar* BattleHUD::GetActorHealthBar(Fighter_ptr fighter)
 {
 	HudHealthBar* bar;
 	for (auto& x : _hudComponents)
 	{
 		bar = dynamic_cast<HudHealthBar*>(x.get());
-		if (bar != NULL && bar->_actor == actor)
+		if (bar != NULL && bar->_actor.first == fighter)
 			return bar;
 	}
 }

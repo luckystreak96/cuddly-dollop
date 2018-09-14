@@ -8,7 +8,7 @@ class SkillRanged : public Skill
 {
 
 public:
-	SkillRanged();
+	using Skill::Skill;
 	virtual void Start();
 	virtual BattleState Setup(std::vector<Actor_ptr>* targets, std::deque<Actor_ptr>* actors, std::deque<Anim_ptr>* anims, Actor_ptr owner);
 	virtual void Update();
@@ -18,7 +18,7 @@ public:
 	virtual bool TimingCondition(double progress, double duration);
 
 protected:
-	void DefaultSetup();
+	virtual void DefaultSetup();
 	Vector3f _basePos;
 	Vector3f _cameraTarget;
 	int _targetProgress;

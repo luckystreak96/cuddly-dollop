@@ -11,7 +11,7 @@ class HudTurnOrder : public HudComponent
 {
 public:
 	// Don't forget to tell the Observable that you're an observer
-	HudTurnOrder(Actor* owner);
+	HudTurnOrder(std::pair<Fighter_ptr, Actor_ptr> owner);
 	void Update();
 	void AdjustPosition();
 	void Destroy();
@@ -22,7 +22,7 @@ public:
 	Vector3f CalculateTextPosition();
 
 	// Remember who you're showing
-	Actor* _actor;
+	std::pair<Fighter_ptr, Actor_ptr> _actor;
 	unsigned int _turnFont;
 
 private:

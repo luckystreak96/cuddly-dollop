@@ -3,14 +3,9 @@
 #include "gameData.h"
 #include "battleData.h"
 
-SkillHeal::SkillHeal()
-{
-	//Skill::DefaultSetup();
-	DefaultSetup();
-}
-
 void SkillHeal::DefaultSetup()
 {
+	SkillMelee::DefaultSetup();
 	_name = "Heal";
 	_skillType = ST_Healing;
 	_targetMode = TM_Any;
@@ -20,7 +15,7 @@ void SkillHeal::DefaultSetup()
 Damage SkillHeal::CalculateDamage()
 {
 	Damage result;
-	result._value = 3 + _owner->_Fighter->Strength.Modified / 2 + rand() % ((_owner->_Fighter->GetLevel() + 2) / 2 + 1);
+	result._value = 3 + _owner.lock()->_Fighter->Strength.Modified / 2 + rand() % ((_owner.lock()->_Fighter->GetLevel() + 2) / 2 + 1);
 	return result;
 }
 

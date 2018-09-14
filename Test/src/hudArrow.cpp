@@ -5,16 +5,17 @@
 #include "actor.h"
 #include "skill.h"
 
-HudArrow::HudArrow(Actor_ptr targeter)
+HudArrow::HudArrow(std::pair<Fighter_ptr, Actor_ptr> targeter, std::map<int, std::pair<Fighter_ptr, Actor_ptr>>* actors)
 {
 	_targeter = targeter;
+	_targets = actors;
 
 	// arrow
 	_graphic = GraphComp_ptr(new GraphicsComponent("CENTERED_TILE_X", "res/sprites/special/arrow.png"));
-	_graphic->SetColorAll(Vector3f(targeter->BasePosition).Normalize(), 0.5f);
+	_graphic->SetColorAll(Vector3f(targeter.second->BasePosition).Normalize(), 0.5f);
 	_graphic->Update();
 
-	bool value = targeter->_Fighter->Team != 0;
+	bool value = targeter.first->Team != 0;
 	_hidden = value;
 	_showing = !value;
 
@@ -57,16 +58,16 @@ void HudArrow::Destroy()
 
 void HudArrow::Update()
 {
-	if (_targeter && _targeter->_Fighter->PredictedSkill)
+	if (_targeter.first && _targeter.first->PredictedSkill)
 	{
-		Vector3f start = _targeter->BasePosition;
-		Vector3f end = _targeter->_Fighter->PredictedSkill->_targets.at(0)->BasePosition;
+		Vector3f start = _targeter.second->BasePosition;
+		Vector3f end = _targets->at(_targeter.first->GetTargets().at(0)).second->BasePosition;
 		SetPosition(start, end);
 	}
 
 	if (_showing)
 	{
-		if (_targeter->_Fighter->Dead)
+		if (_targeter.first->Dead)
 			_hidden = true;
 		else
 			_hidden = false;
@@ -87,12 +88,12 @@ void HudArrow::Update()
 
 void HudArrow::ToggleHidden(bool hidden)
 {
-	if (_targeter->_Fighter->Team == 0)
+	if (_targeter.first->Team == 0)
 		hidden = !hidden;
 
 	_showing = !hidden;
 
-	if (_targeter->_Fighter->Dead)
+	if (_targeter.first->Dead)
 	{
 		_hidden = true;
 		return;
@@ -105,6 +106,6 @@ void HudArrow::SetRender()
 {
 	// FontManager handles setting the render for the label
 
-	if (!_hidden && _targeter->_Fighter->PredictedSkill)
+	if (!_hidden && _targeter.first->PredictedSkill)
 		Renderer::GetInstance().Add(_graphic);
 }

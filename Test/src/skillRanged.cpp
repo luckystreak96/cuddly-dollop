@@ -4,14 +4,9 @@
 #include "animBasic.h"
 #include "animMoveTo.h"
 
-SkillRanged::SkillRanged()
-{
-	Skill::DefaultSetup();
-	DefaultSetup();
-}
-
 void SkillRanged::DefaultSetup()
 {
+	Skill::DefaultSetup();
 	_name = "Skill Ranged -_-";
 	_targetProgress = 0;
 }
@@ -27,9 +22,9 @@ BattleState SkillRanged::Setup(std::vector<Actor_ptr>* targets, std::deque<Actor
 void SkillRanged::Start()
 {
 	Skill::Start();
-	_basePos = _owner->_Graphics->GetPos();
+	_basePos = _owner.lock()->_Graphics->GetPos();
 
-	_anims->push_back(Anim_ptr(new AnimMoveTo(_owner->_Graphics->GetPosRef() + Vector3f(_owner->_Fighter->Team ? -1 : 1, 0, 0), _owner)));
+	_anims->push_back(Anim_ptr(new AnimMoveTo(_owner.lock()->_Graphics->GetPosRef() + Vector3f(_owner.lock()->_Fighter->Team ? -1 : 1, 0, 0), _owner.lock())));
 
 	// Reset for re-use
 	_cameraTarget = Vector3f();
@@ -38,7 +33,7 @@ void SkillRanged::Start()
 	for (auto& x : _targets)
 		_cameraTarget += x->_Graphics->GetPosRef();
 
-	_cameraTarget.x += _owner->_Graphics->GetPosRef().x;
+	_cameraTarget.x += _owner.lock()->_Graphics->GetPosRef().x;
 	_cameraTarget /= (float)_targets.size();
 
 	_targetProgress = 0;
@@ -75,7 +70,7 @@ void SkillRanged::Update()
 			if (_targetProgress == _targets.size())
 			{
 				// walk back at a decent speed
-				_anims->push_back(Anim_ptr(new AnimMoveTo(_owner->BasePosition, _owner, 1)));
+				_anims->push_back(Anim_ptr(new AnimMoveTo(_owner.lock()->BasePosition, _owner.lock(), 1)));
 				_animProg++;
 			}
 			else
@@ -98,7 +93,7 @@ void SkillRanged::Update()
 	case 2:
 		// SET THIS SKILL TO DONE
 		Camera::_currentCam->SetScale(Vector3f(1.f));
-		Camera::_currentCam->SetFollowCenteredXY(_owner->_Graphics->GetPosRef());
+		Camera::_currentCam->SetFollowCenteredXY(_owner.lock()->_Graphics->GetPosRef());
 		if (!AnimationsDone())
 			break;
 		_done = true;
@@ -110,7 +105,7 @@ void SkillRanged::Update()
 
 void SkillRanged::Animate()
 {
-	_anims->push_back(Anim_ptr(new AnimBasic(AE_Attack, _owner, 1.0)));
+	_anims->push_back(Anim_ptr(new AnimBasic(AE_Attack, _owner.lock(), 1.0)));
 }
 
 void SkillRanged::ApplyEffect()

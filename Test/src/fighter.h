@@ -7,15 +7,10 @@
 #include "statUser.h"
 #include "passiveSkill.h"
 #include "statusEffect.h"
-
-class Skill;
-typedef std::shared_ptr<Skill> Skill_ptr;
+#include "skill.h"
 
 class Fighter;
 typedef std::shared_ptr<Fighter> Fighter_ptr;
-
-class Actor;
-typedef std::shared_ptr<Actor> Actor_ptr;
 
 struct Damage;
 
@@ -28,7 +23,7 @@ public:
 	// Damage related
 	virtual Damage TakeDamage(Damage& dmg);
 	virtual Damage ApplyHealing(Damage& heal);
-	virtual void ApplyBonusDamage(Actor_ptr target);
+	virtual void ApplyBonusDamage(Fighter_ptr target);
 	virtual void DamageModifiers(Damage& dmg, bool critting);
 	virtual void ApplyLethal();
 	void SetOrderPosition(int pos);
@@ -37,11 +32,18 @@ public:
 	// Returns amount of stacks of an element that is held
 	int HasElement(SkillElement element);
 
+	//Skills
+	void SetSkills(std::vector<Skill_ptr>);
+	const std::vector<Skill_ptr>& GetSkills() const;
+	virtual void UseSkill();
+
 	// Turn and targets
-	virtual bool RespectsTargeting(Actor* owner, int targetMode);
-	virtual void TurnStart(std::vector<Actor_ptr>& actors);
+	virtual bool RespectsTargeting(Fighter_ptr owner, int targetMode);
+	virtual void TurnStart(std::vector<Fighter_ptr>& actors);
+	std::vector<int> GetTargets() { return _targets; }
+
 	// Returns whether a skill could be chosen or not
-	virtual bool PredictNextSkill(Actor_ptr owner, std::vector<Actor_ptr>* actors);
+	virtual bool PredictNextSkill(Fighter_ptr owner, std::vector<Fighter_ptr>* actors);
 
 	// Action Commands
 	virtual void SpecialActionCommand(Damage& dmg);
@@ -60,6 +62,16 @@ public:
 	void ReCalculateStats();
 	void SetStatsFromCurve();
 
+	// Other
+	int GetId() { return m_id; }
+	std::string GetSprite() { return m_sprite; }
+	void SetSprite(std::string sprite) { m_sprite = sprite; }
+	std::string GetName() { return m_name; }
+	void SetName(std::string sprite) { m_name = sprite; }
+
+	static bool FighterSpeedSort(Fighter_ptr a, Fighter_ptr b);
+	static bool FighterBattleOrderSort(Fighter_ptr a, Fighter_ptr b);
+
 public:
 	virtual int DefenseDamageModification(bool critting);
 
@@ -76,10 +88,16 @@ public:
 	bool Targetable;
 	int _OrderPosition;
 	int _BattleFieldPosition;
-	Actor_ptr Protector;
+	Fighter_ptr Protector;
 	int Team;
-	std::vector<Skill_ptr> Skills;
 	Skill_ptr PredictedSkill;
+
+protected:
+	int m_id;
+	std::string m_name;
+	std::vector<Skill_ptr> m_skills;
+	std::vector<int> _targets;
+	std::string m_sprite;
 
 protected:
 	virtual void SetDefault();

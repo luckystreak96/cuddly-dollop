@@ -5,14 +5,9 @@
 #include "animWait.h"
 #include "animColorFlash.h"
 
-SkillBloodyMess::SkillBloodyMess()
-{
-	Skill::DefaultSetup();
-	DefaultSetup();
-}
-
 void SkillBloodyMess::DefaultSetup()
 {
+	SkillRanged::DefaultSetup();
 	_name = "Bloody Mess";
 	_targetMode = TM_Alive;
 	_targetAmount = TA_Party;
@@ -27,14 +22,14 @@ Damage SkillBloodyMess::CalculateDamage()
 {
 	// Crit chance
 	int roll = rand() % 100;
-	if (roll <= _owner->_Fighter->Crit.Modified)
+	if (roll <= _owner.lock()->_Fighter->Crit.Modified)
 		_critting = true;
 	else
 		_critting = false;
 
 	// Damage
-	int dmg = 4 + _owner->_Fighter->Strength.Modified * 1.6f + _owner->_Fighter->GetLevel();
-	dmg += rand() % max((dmg / 20), 2 + _owner->_Fighter->GetLevel());
+	int dmg = 4 + _owner.lock()->_Fighter->Strength.Modified * 1.6f + _owner.lock()->_Fighter->GetLevel();
+	dmg += rand() % max((dmg / 20), 2 + _owner.lock()->_Fighter->GetLevel());
 	if (_critting)
 		dmg *= 2;
 
@@ -71,5 +66,5 @@ void SkillBloodyMess::ApplyEffect()
 
 	// Removes vision for next turn
 	if (_targetProgress == 1)// we only want to increment this once, not 4 times
-		_owner->_Fighter->NoPredictCountDown++;
+		_owner.lock()->_Fighter->NoPredictCountDown++;
 }

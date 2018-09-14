@@ -9,7 +9,8 @@ class BattleHUD
 {
 public:
 	BattleHUD();
-	void Init(std::vector<Actor_ptr> actors);
+	void Init(std::vector<Fighter_ptr> fighters, std::map<int, Actor_ptr> actors);
+	void Init(std::map<int, std::pair<Fighter_ptr, Actor_ptr>>);
 	void Update();
 	void SetRender();
 	void Destroy();
@@ -17,15 +18,15 @@ public:
 	void ToggleDamagePredictionArrowDisplay(bool hidden);
 
 	// Returns the HudHealthBar attached to the specified actor
-	HudHealthBar* GetActorHealthBar(Actor* actor);
+	HudHealthBar* GetActorHealthBar(Fighter_ptr fighter);
 
 private:
-	void AddActorHealthBar(Actor_ptr ap, int& party, int& enemies);
-	void AddActorAttackPrediction(Actor_ptr ap);
-	void AddActorAttackPredictionArrow(Actor_ptr ap);
+	void AddActorHealthBar(std::pair<Fighter_ptr, Actor_ptr> ap, int& party, int& enemies);
+	void AddActorAttackPrediction(std::pair<Fighter_ptr, Actor_ptr> ap);
+	void AddActorAttackPredictionArrow(std::pair<Fighter_ptr, Actor_ptr>);
 
 public:
-	std::vector<Actor_ptr> _actors;
+	std::map<int, std::pair<Fighter_ptr, Actor_ptr>> _actors;
 	std::vector<HudComp_ptr> _hudComponents;
 
 	std::vector<GraphComp_ptr> _hudBG;

@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-#include "actorFactory.h"
+#include "fighterFactory.h"
 #include "statCurve.h"
 #include "passiveFactory.h"
 
@@ -10,9 +10,9 @@
 
 using namespace rapidjson;
 
-std::vector<Actor_ptr> BattleData::Party = std::vector<Actor_ptr>();
+std::vector<Fighter_ptr> BattleData::Party = std::vector<Fighter_ptr>();
 std::map<int, Passive_ptr> BattleData::PassiveSkills = std::map<int, Passive_ptr>();
-std::map<int, Actor_ptr> BattleData::Actors = std::map<int, Actor_ptr>();
+std::map<int, Fighter_ptr> BattleData::Fighters = std::map<int, Fighter_ptr>();
 
 std::map<StatusList, StatusEffect> BattleData::StatusEffects = std::map<StatusList, StatusEffect>();
 	
@@ -44,7 +44,7 @@ void BattleData::LoadStatusEffects()
 void BattleData::NewGame()
 {
 	if (!Party.size() > 0)
-		Party.push_back(ActorFactory::BuildBaseAlly());
+		Party.push_back(FighterFactory::BuildBaseAlly());
 }
 
 void BattleData::LoadAll()
@@ -206,22 +206,22 @@ void BattleData::LoadActors()
 	doc.Parse(file.c_str());
 
 	// Get the flags
-	if (doc.HasMember("actors") && doc["actors"].IsArray())
+	if (doc.HasMember("fighters") && doc["fighters"].IsArray())
 	{
-		std::map<int, Actor_ptr> data;
-		auto actors = doc["actors"].GetArray();
+		std::map<int, Fighter_ptr> data;
+		auto fighters = doc["fighters"].GetArray();
 		// Loop through actors
-		for (auto& actor : actors)
+		for (auto& fighter : fighters)
 		{
-			int actorID = -1;
-			if (actor.HasMember("id"))
-				actorID = actor["id"].GetInt();
+			int fighterID = -1;
+			if (fighter.HasMember("id"))
+				fighterID = fighter["id"].GetInt();
 
-			// emplace actor
-			data.emplace(actorID, ActorFactory::BuildActor(actor));
+			// emplace fighter
+			data.emplace(fighterID, FighterFactory::BuildFighter(fighter));
 		}
 
-		Actors = data;
+		Fighters = data;
 	}
 }
 
@@ -230,7 +230,7 @@ void BattleData::LoadParty(rapidjson::Document& doc)
 	if (doc.HasMember("party") && doc["party"].IsArray())
 	{
 		auto party = doc["party"].GetArray();
-		BattleData::Party = ActorFactory::BuildParty(party);
+		BattleData::Party = FighterFactory::BuildParty(party);
 	}
 }
 
@@ -238,7 +238,7 @@ void BattleData::SaveParty(rapidjson::Document& saveFile, Document::AllocatorTyp
 {
 	// Save party data
 	Value party_v(kArrayType);
-	for (auto& actor : Party)
+	for (auto& fighter : Party)
 	{
 		Value ob(kObjectType);
 		Value first(kStringType);
@@ -246,89 +246,90 @@ void BattleData::SaveParty(rapidjson::Document& saveFile, Document::AllocatorTyp
 
 		// name
 		first.SetString(StringRef("name"), allocator);
-		second.SetString(StringRef(actor->_Name.c_str()), allocator);
+		second.SetString(StringRef(fighter->GetName().c_str()), allocator);
 		ob.AddMember(first, second, allocator);
 
 		// sprite
 		first.SetString(StringRef("sprite"), allocator);
-		second.SetString(StringRef(actor->Sprite.c_str()), allocator);
+		second.SetString(StringRef(fighter->GetSprite().c_str()), allocator);
 		ob.AddMember(first, second, allocator);
 
 		// curve
 		first.SetString(StringRef("curve"), allocator);
-		second.SetString(StringRef(actor->_Fighter->Curve.c_str()), allocator);
+		second.SetString(StringRef(fighter->Curve.c_str()), allocator);
 		ob.AddMember(first, second, allocator);
 
 		// health
 		first.SetString(StringRef("health"), allocator);
-		second.SetInt(actor->_Fighter->Health);
+		second.SetInt(fighter->Health);
 		ob.AddMember(first, second, allocator);
 
 		// maxHealth
 		first.SetString(StringRef("max_health"), allocator);
-		second.SetInt(actor->_Fighter->GetMaxHealth().Base);
+		second.SetInt(fighter->GetMaxHealth().Base);
 		ob.AddMember(first, second, allocator);
 
 		// level
 		first.SetString(StringRef("level"), allocator);
-		second.SetInt(actor->_Fighter->GetLevel());
+		second.SetInt(fighter->GetLevel());
 		ob.AddMember(first, second, allocator);
 
 		// exp
 		first.SetString(StringRef("exp"), allocator);
-		second.SetInt(actor->_Fighter->GetExp());
+		second.SetInt(fighter->GetExp());
 		ob.AddMember(first, second, allocator);
 
 		// skillpoints
 		first.SetString(StringRef("skillpoints"), allocator);
-		second.SetInt(actor->_Fighter->SkillPoints);
+		second.SetInt(fighter->SkillPoints);
 		ob.AddMember(first, second, allocator);
 
 		// speed
 		first.SetString(StringRef("speed"), allocator);
-		second.SetInt(actor->_Fighter->Speed.Base);
+		second.SetInt(fighter->Speed.Base);
 		ob.AddMember(first, second, allocator);
 
 		// crit
 		first.SetString(StringRef("crit"), allocator);
-		second.SetInt(actor->_Fighter->Crit.Base);
+		second.SetInt(fighter->Crit.Base);
 		ob.AddMember(first, second, allocator);
 
 		// defense 
 		first.SetString(StringRef("defense"), allocator);
-		second.SetInt(actor->_Fighter->Defense.Base);
+		second.SetInt(fighter->Defense.Base);
 		ob.AddMember(first, second, allocator);
 
 		// strength
 		first.SetString(StringRef("strength"), allocator);
-		second.SetInt(actor->_Fighter->Strength.Base);
+		second.SetInt(fighter->Strength.Base);
 		ob.AddMember(first, second, allocator);
 
 		// endurance
 		first.SetString(StringRef("endurance"), allocator);
-		second.SetInt(actor->_Fighter->GetEndurance().Base);
+		second.SetInt(fighter->GetEndurance().Base);
 		ob.AddMember(first, second, allocator);
 
 		// dead
 		first.SetString(StringRef("dead"), allocator);
-		second.SetBool(actor->_Fighter->Dead);
+		second.SetBool(fighter->Dead);
 		ob.AddMember(first, second, allocator);
 
 		// skills
 		first.SetString(StringRef("skills"), allocator);
 		second = Value(kArrayType);
-		for (auto skill : actor->_Fighter->Skills)
+
+		for (auto& x : fighter->GetSkills())
 		{
 			Value skl(kStringType);
-			skl.SetString(StringRef(skill->_name.c_str()), allocator);
+			skl.SetString(StringRef(x->GetName().c_str()), allocator);
 			second.PushBack(skl, allocator);
 		}
 		ob.AddMember(first, second, allocator);
 
 		// passives
-		first.SetString(StringRef("actors"), allocator);
+		first.SetString(StringRef("fighters"), allocator);
 		second = Value(kArrayType);
-		for (auto passive : actor->_Fighter->_Passives)
+		for (auto passive : fighter->_Passives)
 		{
 			Value skl(rapidjson::Type::kNumberType);
 			skl.SetInt(passive->_Id);

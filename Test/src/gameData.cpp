@@ -4,7 +4,7 @@
 #include <ostream>
 #include <GLFW/glfw3.h>
 #include "localizationData.h"
-#include "actorFactory.h"
+#include "fighterFactory.h"
 #include "skill.h"
 #include "battleData.h"
 

@@ -6,14 +6,9 @@
 #include "animScreenShake.h"
 #include "battleData.h"
 
-SkillSmack::SkillSmack()
-{
-	Skill::DefaultSetup();
-	DefaultSetup();
-}
-
 void SkillSmack::DefaultSetup()
 {
+	SkillMelee::DefaultSetup();
 	_name = "Smack";
 	_skillElement = SE_Determined;
 	_targetMode = TM_Alive;
@@ -28,13 +23,13 @@ Damage SkillSmack::CalculateDamage()
 {
 	// Crit chance
 	int roll = rand() % 100;
-	if (roll <= _owner->_Fighter->Crit.Modified)
+	if (roll <= _owner.lock()->_Fighter->Crit.Modified)
 		_critting = true;
 	else
 		_critting = false;
 
 	// Damage
-	int dmg = 2 + _owner->_Fighter->Strength.Modified * 0.8f + rand() % (_owner->_Fighter->GetLevel() + 2);
+	int dmg = 2 + _owner.lock()->_Fighter->Strength.Modified * 0.8f + rand() % (_owner.lock()->_Fighter->GetLevel() + 2);
 	if (_critting)
 		dmg *= 1.5;
 

@@ -6,9 +6,7 @@
 #include <set>
 #include <memory>
 #include <iostream>
-#include "actor.h"
 #include "statusEffect.h"
-#include "battleAnimation.h"
 
 enum BattleState { BS_ChooseActor, BS_TurnStart, BS_SelectAction, BS_SelectTargets, BS_ActionProgress, BS_ActionDone, BS_TurnEnd };
 
@@ -20,6 +18,12 @@ enum SkillType { ST_Physical, ST_Magical, ST_Healing, ST_Bonus };
 enum TargetMode { TM_Enemy, TM_Ally, TM_Alive, TM_Dead, TM_Any };
 enum DefaultTarget { DT_Self, DT_Enemy, DT_Ally };
 enum TargetAmount { TA_One, TA_Party };
+
+enum AnimationOperation {
+	AS_JumpTo, AS_ColorFlash, AS_ScreenShake, AS_BonusEffect, AS_MoveTo, AS_Wait,
+	AC_CameraFollow, AC_CameraScale, AC_CameraCenter,
+	AA_DealDamage
+};
 
 struct Damage
 {
@@ -42,16 +46,12 @@ class Skill
 {
 public:
 	Skill();
-	virtual BattleState Setup(std::vector<Actor_ptr>* targets, std::deque<Actor_ptr>* actors, std::deque<Anim_ptr>* anims, Actor_ptr owner);
-	virtual void Start();
+	virtual BattleState Setup();
 	virtual void Update();
 	virtual void Reset();
 	virtual bool IsReady();
-	virtual void SpawnDamageText(Actor_ptr target, Damage dmg);
-	virtual void SpawnStatusText(Actor_ptr target, std::string statusName);
+
 	virtual Damage CalculateDamage() { return Damage(); }
-	virtual Damage HandleDamage(int target = 0);
-	virtual void ApplyBonusEffect(Actor_ptr target);
 
 	// Make sure all targets are still valid
 	virtual bool ValidateTargets();
@@ -67,10 +67,9 @@ public:
 
 	virtual void SetupProtector();
 
+	const std::string GetName() const { return _name; }
+
 public:
-	std::deque<Actor_ptr>* _actors;
-	std::deque<Anim_ptr>* _anims;
-	std::vector<Actor_ptr> _targets;
 	std::set<int> _input;
 	std::string _name;
 	SkillType _skillType;
@@ -86,14 +85,13 @@ public:
 	// Maximum upgrades to the skill (so you dont waste skill points)
 	int _skillUpgradeMax;
 	ActionCommand _ac;
-	Actor_ptr _owner;
 	TargetMode _targetMode;
 	TargetAmount _targetAmount;
 	DefaultTarget _defaultTarget;
 	Damage _preCalculatedDamage;
 
 protected:
-	void DefaultSetup();
+	virtual void DefaultSetup();
 };
 
 

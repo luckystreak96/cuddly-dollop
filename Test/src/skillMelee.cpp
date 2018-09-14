@@ -3,21 +3,16 @@
 #include "animJumpTo.h"
 #include "animBasic.h"
 
-SkillMelee::SkillMelee()
-{
-	Skill::DefaultSetup();
-	DefaultSetup();
-}
-
 void SkillMelee::DefaultSetup()
 {
+	Skill::DefaultSetup();
 	_name = "Skill Melee -_-";
 }
 
 // Must return the new state
-BattleState SkillMelee::Setup(std::vector<Actor_ptr>* targets, std::deque<Actor_ptr>* actors, std::deque<Anim_ptr>* anims, Actor_ptr owner)
+BattleState SkillMelee::Setup()
 {
-	Skill::Setup(targets, actors, anims, owner);
+	Skill::Setup();
 
 	return BS_ActionProgress;
 }
@@ -25,13 +20,13 @@ BattleState SkillMelee::Setup(std::vector<Actor_ptr>* targets, std::deque<Actor_
 void SkillMelee::Start()
 {
 	Skill::Start();
-	_basePos = _owner->_Graphics->GetPos();
+	_basePos = _owner.lock()->_Graphics->GetPos();
 	// INSERT JUMP FOREWARD ANIMATION HERE
-	float distance = _owner->_Fighter->Team == 0 ? 0.7f : -0.7f;
+	float distance = _owner.lock()->_Fighter->Team == 0 ? 0.7f : -0.7f;
 	bool protector = _targets.at(0)->_Fighter->Protector != NULL && !_targets.at(0)->_Fighter->Protector->_Fighter->Dead;
 	if (protector)
 		distance *= 2.0f;
-	_anims->push_back(Anim_ptr(new AnimJumpTo(_targets.at(0)->_Graphics->GetPos() - Vector3f(distance, 0, 0), _owner)));
+	_anims->push_back(Anim_ptr(new AnimJumpTo(_targets.at(0)->_Graphics->GetPos() - Vector3f(distance, 0, 0), _owner.lock())));
 	if (protector)
 	{
 		Skill::SetupProtector();
@@ -86,11 +81,11 @@ void SkillMelee::Update()
 	case 2:
 		// JUMP BACK
 		Camera::_currentCam->SetScale(Vector3f(1.f));
-		Camera::_currentCam->SetFollowCenteredXY(_owner->_Graphics->GetPosRef());
+		Camera::_currentCam->SetFollowCenteredXY(_owner.lock()->_Graphics->GetPosRef());
 		//Camera::_currentCam->SetFollowCenteredXY(_owner->BasePosition);
 		if (!AnimationsDone())
 			break;
-		_anims->push_back(Anim_ptr(new AnimJumpTo(_basePos, _owner)));
+		_anims->push_back(Anim_ptr(new AnimJumpTo(_basePos, _owner.lock())));
 		// Someone is protecting
 		if (_targets.size() > 1)
 		{
@@ -103,7 +98,7 @@ void SkillMelee::Update()
 	case 3:
 		// SET THIS SKILL TO DONE
 		Camera::_currentCam->SetScale(Vector3f(1.f));
-		Camera::_currentCam->SetFollowCenteredXY(_owner->_Graphics->GetPosRef());
+		Camera::_currentCam->SetFollowCenteredXY(_owner.lock()->_Graphics->GetPosRef());
 		if (!AnimationsDone())
 			break;
 		_done = true;
@@ -115,7 +110,7 @@ void SkillMelee::Update()
 
 void SkillMelee::Animate()
 {
-	_anims->push_back(Anim_ptr(new AnimBasic(AE_Attack, _owner, 1)));
+	_anims->push_back(Anim_ptr(new AnimBasic(AE_Attack, _owner.lock(), 1)));
 }
 
 void SkillMelee::ApplyEffect()

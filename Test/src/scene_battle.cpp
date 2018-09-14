@@ -14,26 +14,26 @@
 #include "bloom.h"
 #include "input_manager.h"
 #include "entityFactory.h"
-#include "actorFactory.h"
+#include "fighterFactory.h"
 #include "particleManager.h"
 
 SceneBattle::SceneBattle() : m_zoom(false)
 {
 	m_currentMap = 3;
-	_actors.push_back(Actor_ptr(ActorFactory::BuildBaseAlly()));
-	_actors.push_back(Actor_ptr(ActorFactory::BuildBaseAlly()));
-	_actors.push_back(Actor_ptr(ActorFactory::BuildBaseAlly()));
-	//_actors.push_back(Actor_ptr(ActorFactory::BuildBaseAlly()));
+	_actors.push_back(Actor_ptr(FighterFactory::BuildBaseAlly()));
+	_actors.push_back(Actor_ptr(FighterFactory::BuildBaseAlly()));
+	_actors.push_back(Actor_ptr(FighterFactory::BuildBaseAlly()));
+	//_actors.push_back(Actor_ptr(FighterFactory::BuildBaseAlly()));
 	for (auto x : BattleData::Party)
 		_actors.push_back(x);
 
-	_actors.push_back(Actor_ptr(ActorFactory::BuildActor(1)));
-	_actors.push_back(Actor_ptr(ActorFactory::BuildActor(1)));
-	_actors.push_back(Actor_ptr(ActorFactory::BuildActor(1)));
-	_actors.push_back(Actor_ptr(ActorFactory::BuildActor(1)));
-	//_actors.push_back(Actor_ptr(ActorFactory::BuildBaseEnemy()));
-	//_actors.push_back(Actor_ptr(ActorFactory::BuildBaseEnemy()));
-	//_actors.push_back(Actor_ptr(ActorFactory::BuildBaseEnemy()));
+	_actors.push_back(Actor_ptr(FighterFactory::BuildFighter(1)));
+	_actors.push_back(Actor_ptr(FighterFactory::BuildFighter(1)));
+	_actors.push_back(Actor_ptr(FighterFactory::BuildFighter(1)));
+	_actors.push_back(Actor_ptr(FighterFactory::BuildFighter(1)));
+	//_actors.push_back(Actor_ptr(FighterFactory::BuildBaseEnemy()));
+	//_actors.push_back(Actor_ptr(FighterFactory::BuildBaseEnemy()));
+	//_actors.push_back(Actor_ptr(FighterFactory::BuildBaseEnemy()));
 	Init();
 	m_battle = BattleManager(_actors);
 	SoundManager::GetInstance();
@@ -136,6 +136,14 @@ SceneBattle::~SceneBattle()
 {
 	FontManager::GetInstance().RemoveFont(m_fontFPS);
 	m_battle._hud.Destroy();
+
+	for (auto& x : _actors)
+		for (auto& y : x->_Fighter->m_skills)
+		{
+			y->_actors->clear();
+			y->_targets.clear();
+			y->_anims = nullptr;
+		}
 }
 
 void SceneBattle::ManageInput()

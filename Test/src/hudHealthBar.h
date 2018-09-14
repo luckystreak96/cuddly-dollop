@@ -10,7 +10,7 @@ class HudHealthBar : public HudBar
 {
 public:
 	// Don't forget to tell the Observable that you're an observer
-	HudHealthBar(Actor* ap, Vector3f position);
+	HudHealthBar(std::pair<Fighter_ptr, Actor_ptr> ap, Vector3f position);
 	void Update();
 	void Destroy();
 	void SetRender();
@@ -23,7 +23,7 @@ public:
 	void UpdateSmallHPPosition();
 
 	// Remember who you're showing
-	Actor* _actor;
+	std::pair<Fighter_ptr, Actor_ptr> _actor;
 
 private:
 	// maxhp variables

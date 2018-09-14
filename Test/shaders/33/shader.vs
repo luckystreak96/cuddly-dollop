@@ -18,14 +18,7 @@ uniform float gSize = 32;
 
 void main()
 {
-	if(gType == 0) //Draw it flat
-	{
-		gl_Position = gWorld * transpose(Model) * vec4(Position.x * gSize, Position.y * gSize, Position.z, 1.0);
-	}
-	else if (gType == 1) // Dont draw flat
-	{
-		gl_Position = gWorld * transpose(Model) * vec4(Position.x * gSize, Position.y * gSize, Position.z, 1.0);
-	}
+	gl_Position = gWorld * transpose(Model) * vec4(Position.x * gSize, Position.y * gSize, Position.z, 1.0);
 
     TexCoord0 = TexCoord;
 	Color0 = Color;
