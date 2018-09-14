@@ -23,14 +23,14 @@ public:
 	void ManageInput();
 
 public:
-	std::vector<Actor_ptr> _actors;
 	std::shared_ptr<Scene> _prevScene;
 	
 private:
 	EventManager m_eventManager;
 	BattleManager m_battle;
-	std::vector<Actor_ptr> m_party;
-	std::vector<Actor_ptr> m_enemies;
+	std::vector<Actor_ptr> m_actors;
+
+	std::vector<Fighter_ptr> m_fighters;
 	bool m_zoom;
 	bool m_bloomEffect;
 	std::shared_ptr<JsonHandler> m_jsonHandler = NULL;

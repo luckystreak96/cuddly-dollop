@@ -22,6 +22,7 @@ public:
 	void Update();
 	int FindWinner();
 	void SetRender();
+	bool Animating();
 
 	static std::set<int> DefaultTargetActorIndex(std::vector<Fighter_ptr>* actors, Fighter_ptr _owner, Skill_ptr selectedSkill);
 
@@ -37,12 +38,11 @@ private:
 	void MoveToLight(bool moveUp, bool turnEnd = false);
 	
 	// Skills
-	Damage HandleDamage(int target = 0);
+	Damage HandleDamage(Skill_ptr skill, int target);
 	void ApplyBonusEffect(Fighter_ptr target);
 
 	// Graphics
 	void UpdateColors();
-	bool AnimationsDone() { return m_graphics.GetAnimationsSize() == 0; }
 	void ExpAnimation(Fighter_ptr, int xp);
 
 	void UpdateSkillDisplay();
@@ -92,7 +92,7 @@ public:
 	int counter;
 
 private:
-	BattleAnimationManager m_graphics;
+	std::unique_ptr<BattleAnimationManager> m_graphics;
 };
 
 #endif

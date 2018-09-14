@@ -21,16 +21,21 @@ public:
 	void UpdateColor(bool dead, bool selected);
 	void AdjustHeightForAngle();
 
+	void SetId(int id) { ID = id; }
 	int GetId() { return ID; }
 
 public:
-	int ID;
 	ColorState _ColorState;
 	bool Selected;
 	bool ChoosingAction;
-	Vector3f BasePosition;
+
+	// Position when chilling in back
+	Vector3f WaitPosition;
+	// Position after stepping up
+	Vector3f ActivePosition;
 
 protected:
+	int ID;
 	void SetDefault();
 };
 

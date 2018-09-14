@@ -12,7 +12,7 @@ HudArrow::HudArrow(std::pair<Fighter_ptr, Actor_ptr> targeter, std::map<int, std
 
 	// arrow
 	_graphic = GraphComp_ptr(new GraphicsComponent("CENTERED_TILE_X", "res/sprites/special/arrow.png"));
-	_graphic->SetColorAll(Vector3f(targeter.second->BasePosition).Normalize(), 0.5f);
+	_graphic->SetColorAll(Vector3f(targeter.second->WaitPosition).Normalize(), 0.5f);
 	_graphic->Update();
 
 	bool value = targeter.first->Team != 0;
@@ -60,8 +60,8 @@ void HudArrow::Update()
 {
 	if (_targeter.first && _targeter.first->PredictedSkill)
 	{
-		Vector3f start = _targeter.second->BasePosition;
-		Vector3f end = _targets->at(_targeter.first->GetTargets().at(0)).second->BasePosition;
+		Vector3f start = _targeter.second->WaitPosition;
+		Vector3f end = _targets->at(_targeter.first->GetTargets().at(0)).second->WaitPosition;
 		SetPosition(start, end);
 	}
 

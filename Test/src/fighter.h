@@ -72,6 +72,8 @@ public:
 	static bool FighterSpeedSort(Fighter_ptr a, Fighter_ptr b);
 	static bool FighterBattleOrderSort(Fighter_ptr a, Fighter_ptr b);
 
+	bool operator<(Fighter other) { _BattleFieldPosition < other._BattleFieldPosition; }
+
 public:
 	virtual int DefenseDamageModification(bool critting);
 

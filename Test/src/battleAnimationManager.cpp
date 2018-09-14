@@ -20,17 +20,25 @@ void BattleAnimationManager::MoveUp(int fighterid, bool foreward)
 	{
 		Anim_ptr move1 = Anim_ptr(new AnimMoveTo(owner->GetPos() + Vector3f(fighterid < 4 ? 1.f : -1, 0, 0), owner));
 		//if (m_singleFileAttacks) // We dont want async movement when there's too many attacks gonna happen
-			move1->_async = false;
+		move1->_async = false;
 		m_animations.push_back(move1);
 	}
 	else
 	{
-		Anim_ptr move2 = Anim_ptr(new AnimMoveTo(owner->BasePosition, owner));
+		Anim_ptr move2 = Anim_ptr(new AnimMoveTo(owner->WaitPosition, owner));
 		m_animations.push_back(move2);
 	}
 }
 
+// Return whether or not any non-async animations are running
+bool BattleAnimationManager::Animating()
+{
+	for (auto& x : m_animations)
+		if (!x->_async)
+			return true;
 
+	return false;
+}
 
 Anim_ptr BattleAnimationManager::CreateAnimation(AnimationOperation ao)
 {

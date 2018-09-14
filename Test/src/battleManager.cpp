@@ -13,6 +13,11 @@ BattleManager::BattleManager()
 	Init();
 }
 
+bool BattleManager::Animating()
+{
+	return m_graphics->Animating();
+}
+
 BattleManager::BattleManager(std::vector<Fighter_ptr> actors)
 {
 	// Populate actors
@@ -36,7 +41,7 @@ BattleManager::~BattleManager()
 		FontManager::GetInstance().RemoveFont(x);
 }
 
-Damage BattleManager::HandleDamage(int target)
+Damage BattleManager::HandleDamage(Skill_ptr skill, int target)
 {
 	Damage dmg = CalculateDamage();
 
@@ -122,7 +127,7 @@ void BattleManager::Init()
 		m_isPlayerTurn = !singleFile;
 	}
 	m_attackSequenceProgress = 0;
-	_hud.Init(_actors);
+	//_hud.Init(_actors);
 	_postBattleState = PBS_FightingInProgress;
 	_showingSkills = false;
 	_state = m_singleFileAttacks ? BS_TurnStart : BS_ChooseActor;
@@ -180,7 +185,7 @@ void BattleManager::UpdateColors()
 	{
 		if (_state == BS_SelectTargets || _state == BS_ChooseActor)
 		{
-			m_graphics.UpdateColors(x->GetId(), _selectedIndices.count(x->_BattleFieldPosition), x->Dead);
+			m_graphics->UpdateColors(x->GetId(), _selectedIndices.count(x->_BattleFieldPosition), x->Dead);
 		}
 		else if (_state == BS_SelectAction)
 		{
@@ -200,7 +205,7 @@ void BattleManager::UpdateColors()
 void BattleManager::Update()
 {
 	// Return if the battle logic is over
-	if (_postBattleState == PBS_FightingInProgress || _selectedSkill && !_selectedSkill->_done)
+	if (_postBattleState == PBS_FightingInProgress || !Animating())// || _selectedSkill && !_selectedSkill->_done)
 	{
 		// Battle stuffs
 		ManageInput();
@@ -211,10 +216,10 @@ void BattleManager::Update()
 	UpdateColors();
 
 	// Update animations
-	m_graphics.UpdateAnimations();
+	m_graphics->UpdateAnimations();
 
 	// End the battle, gain exp and show stuff
-	if (AnimationsDone() && _state == BS_TurnStart)
+	if (!Animating() && _state == BS_TurnStart)
 	{
 		switch (_postBattleState)
 		{
@@ -260,15 +265,15 @@ void BattleManager::Update()
 
 void BattleManager::ExpAnimation(Fighter_ptr fighter, int xp)
 {
-	m_graphics.Push_Back_Animation(_hud.GetActorHealthBar(fighter)->SetupExpAnimation(fighter->GetExp() + xp));
-	m_graphics.CreateFloatingText(fighter->GetId(), "+" + std::to_string(xp) + " XP");
+	m_graphics->Push_Back_Animation(_hud.GetActorHealthBar(fighter)->SetupExpAnimation(fighter->GetExp() + xp));
+	m_graphics->CreateFloatingText(fighter->_BattleFieldPosition, "+" + std::to_string(xp) + " XP");
 }
 
 // Move Animation
 void BattleManager::MoveToLight(bool moveup, bool turnEnd)
 {
 	if (!_owner->Dead || turnEnd)
-		m_graphics.MoveUp(_owner->_BattleFieldPosition, moveup);
+		m_graphics->MoveUp(_owner->_BattleFieldPosition, moveup);
 
 }
 
@@ -283,7 +288,7 @@ void BattleManager::UpdateSkillDisplay()
 			_showingSkills = false;
 		}
 	}
-	else if (_owner->Team == 0 && !_showingSkills && AnimationsDone() && _state == BS_SelectAction)
+	else if (_owner->Team == 0 && !_showingSkills && !Animating() && _state == BS_SelectAction)
 	{
 		SetChooseSkillText();
 		_showingSkills = true;
@@ -396,7 +401,7 @@ void BattleManager::SelectTargets()
 
 void BattleManager::ActionProgress()
 {
-	if (!AnimationsDone() && _selectedSkill == NULL)
+	if (Animating() && _selectedSkill == NULL)
 		return;
 
 	if (_selectedSkill == NULL && _owner->PredictedSkill != NULL)
@@ -482,7 +487,7 @@ void BattleManager::UpdateLogic()
 	UpdateSkillDisplay();
 
 	// If there are animations, let them run out
-	if (_state == BS_ActionProgress || AnimationsDone())
+	if (_state == BS_ActionProgress)// || !Animating())
 	{
 		switch (_state)
 		{
@@ -568,7 +573,7 @@ void BattleManager::ManageInput()
 
 	// Dont allow any input if theres an animation running
 	// This doesnt apply if theres a skill in progress, gotta be interactive!
-	if ((!AnimationsDone() || _owner->Team != 0) && _state != BS_ActionProgress)
+	if ((Animating() || _owner->Team != 0) && _state != BS_ActionProgress)
 		return;
 
 	// Get input
@@ -861,7 +866,7 @@ void BattleManager::UseSkill()
 	//std::cout << "Using skill: " << _selectedSkill->_name << std::endl;
 	if (_selectedSkill != NULL)
 	{
-		_state = _selectedSkill->Setup();
+		_state = BS_ActionProgress;
 		_owner->PredictedSkill = _selectedSkill;
 		if (m_singleFileAttacks)
 			_owner->UseSkill();

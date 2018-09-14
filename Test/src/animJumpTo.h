@@ -8,6 +8,8 @@
 class AnimJumpTo : public BattleAnimation
 {
 public:
+	// battle version
+	AnimJumpTo(bool jumpToActivePosition, Actor_ptr owner);
 	AnimJumpTo(Vector3f destination, Actor_ptr target);
 	virtual void Update();
 

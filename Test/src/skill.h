@@ -20,9 +20,13 @@ enum DefaultTarget { DT_Self, DT_Enemy, DT_Ally };
 enum TargetAmount { TA_One, TA_Party };
 
 enum AnimationOperation {
-	AS_JumpTo, AS_ColorFlash, AS_ScreenShake, AS_BonusEffect, AS_MoveTo, AS_Wait,
+	AS_JumpTo, AS_JumpBack, AS_ColorFlash, AS_ScreenShake, AS_BonusEffect, AS_MoveTo, AS_Wait, AS_Animation, AS_FloatingText,
 	AC_CameraFollow, AC_CameraScale, AC_CameraCenter,
 	AA_DealDamage
+};
+
+enum SkillProgress {
+	SP_0_None, SP_1_Before_Anim, SP_2_BeginAnim, SP_3_DealDamage, SP_4_PostSkillAnim, SP_5_SkillDone
 };
 
 struct Damage
@@ -46,8 +50,10 @@ class Skill
 {
 public:
 	Skill();
-	virtual BattleState Setup();
-	virtual void Update();
+	virtual void Setup();
+	virtual SkillProgress Update();
+	// Returns and then empties animations
+	virtual std::vector<AnimationOperation> GetAnimations();
 	virtual void Reset();
 	virtual bool IsReady();
 
@@ -91,7 +97,13 @@ public:
 	Damage _preCalculatedDamage;
 
 protected:
+	SkillProgress m_state;
+	int m_progress;
+	std::vector<AnimationOperation> m_animationBuffer;
+
+protected:
 	virtual void DefaultSetup();
+	virtual void SetAnimations();
 };
 
 

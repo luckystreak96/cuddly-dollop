@@ -24,6 +24,7 @@ public:
 	// Animations
 	void UpdateAnimations();
 	int GetAnimationsSize() { return m_animations.size(); }
+	bool Animating();
 	void Push_Back_Animation(Anim_ptr anim);
 
 private:

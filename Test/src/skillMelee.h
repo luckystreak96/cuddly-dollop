@@ -10,12 +10,13 @@ class SkillMelee: public Skill
 public:
 	using Skill::Skill;
 	virtual void Start();
-	virtual BattleState Setup();
-	virtual void Update();
+	virtual void Setup();
+	//virtual SkillProgress Update();
 	virtual bool IsReady();
 	virtual void Animate();
 	virtual void ApplyEffect();
 	virtual bool TimingCondition(double progress, double duration);
+	virtual void SetAnimations();
 
 protected:
 	void DefaultSetup();

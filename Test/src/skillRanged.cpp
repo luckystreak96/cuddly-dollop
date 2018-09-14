@@ -70,7 +70,7 @@ void SkillRanged::Update()
 			if (_targetProgress == _targets.size())
 			{
 				// walk back at a decent speed
-				_anims->push_back(Anim_ptr(new AnimMoveTo(_owner.lock()->BasePosition, _owner.lock(), 1)));
+				_anims->push_back(Anim_ptr(new AnimMoveTo(_owner.lock()->WaitPosition, _owner.lock(), 1)));
 				_animProg++;
 			}
 			else

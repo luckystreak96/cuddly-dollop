@@ -93,12 +93,26 @@ void Skill::CheckActionCommand(double percentProgress)
 }
 
 // Must return the new state
-BattleState Skill::Setup()
+void Skill::Setup()
 {
 	_ac._tried = false;
 	_ac._success = false;
 	_animProg = 0;
-	return BS_ActionDone;
+	m_progress = 0;
+	m_state = SP_1_Before_Anim;
+}
+
+std::vector<AnimationOperation> Skill::GetAnimations()
+{
+	std::vector<AnimationOperation> result;
+	result.swap(m_animationBuffer);
+	return result;
+}
+
+void Skill::SetAnimations()
+{
+	m_animationBuffer.clear();
+	_done = true;
 }
 
 void Skill::HandleActionCommand(double percentProgress)
@@ -127,10 +141,15 @@ void Skill::SetupProtector()
 }
 
 
-void Skill::Update()
+SkillProgress Skill::Update()
 {
 	// Reset input
 	_input = std::set<int>();
+
+	m_progress++;
+	SetAnimations();
+
+	return m_state;
 }
 
 void Skill::Reset()
