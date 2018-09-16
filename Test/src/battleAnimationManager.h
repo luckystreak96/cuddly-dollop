@@ -14,7 +14,7 @@ public:
 
 	const std::map<int, Actor_ptr>& GetActors() { return m_actors; }
 
-	Anim_ptr CreateAnimation(AnimationOperation ao);
+	Anim_ptr CreateAnimation(triple ao);
 	void UpdateColors(int fighterid, bool selected = false, bool dead = false);
 	void MoveUp(int fighterid, bool foreward);
 	virtual void SpawnDamageText(Actor_ptr target, Damage dmg, Skill_ptr skill);
@@ -26,6 +26,9 @@ public:
 	int GetAnimationsSize() { return m_animations.size(); }
 	bool Animating();
 	void Push_Back_Animation(Anim_ptr anim);
+
+public:
+	int _owner;
 
 private:
 	std::map<int, Actor_ptr> m_actors;

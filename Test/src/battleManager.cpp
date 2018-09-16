@@ -41,6 +41,51 @@ BattleManager::~BattleManager()
 		FontManager::GetInstance().RemoveFont(x);
 }
 
+void BattleManager::ProcessSkill()
+{
+	std::vector<triple> operations = _selectedSkill->GetAnimations();
+
+	for (auto& x : operations)
+	{
+		// need to fill in the vector of floats
+		// ('<' because of AARG_FloatAsync)
+		if (get<1>(x) < AARG_Float)
+			SetSkillArguments(x);
+
+		if (get<0>(x) > AA_Start)
+		{
+			// x is an action
+
+		}
+		else
+		{
+			// x is an animation
+			m_graphics->Push_Back_Animation(m_graphics->CreateAnimation(x));
+		}
+	}
+}
+
+void BattleManager::SetSkillArguments(triple& x)
+{
+	get<2>(x).clear();
+	switch (get<1>(x))
+	{
+	case AARG_Owner:
+		get<2>(x).push_back(_owner->GetId());
+		break;
+	case AARG_Targets:
+		for (auto y : _targets)
+			get<2>(x).push_back(y);
+		break;
+	case AARG_Target:
+		get<2>(x).push_back(*_targets.begin());
+		break;
+	default:
+		break;
+	}
+}
+
+
 Damage BattleManager::HandleDamage(Skill_ptr skill, int target)
 {
 	Damage dmg = CalculateDamage();
@@ -337,6 +382,8 @@ void BattleManager::TurnStart()
 		else
 			_state = BS_ActionProgress;
 	}
+
+	m_graphics->_owner = _owner->GetId();
 }
 
 void BattleManager::PrintAttackPrediction(Fighter_ptr x)
@@ -423,6 +470,7 @@ void BattleManager::ActionProgress()
 		else
 		{
 			_selectedSkill->Update();
+			ProcessSkill();
 		}
 	}
 	else
@@ -727,7 +775,7 @@ void BattleManager::HandleLeftRightInput(std::set<int> input)
 					{
 						// Try to find nearest target straight right
 						if (value + increment + _numAllies < _actors.size() && _actors[value + _numAllies + increment]->RespectsTargeting(_owner, _selectedSkill->_targetMode))
-							Select(  value + _numAllies + increment);
+							Select(value + _numAllies + increment);
 						else if (value - increment + _numAllies >= _numAllies && _actors[value + _numAllies - increment]->RespectsTargeting(_owner, _selectedSkill->_targetMode))
 							Select(value + _numAllies - increment);
 					}
@@ -772,7 +820,7 @@ void BattleManager::HandleAcceptInput()
 	}
 	else if (_state == BS_ChooseActor)
 	{
-				_owner = _actors.at(*_selectedIndices.begin());
+		_owner = _actors.at(*_selectedIndices.begin());
 
 
 		_state = BS_SelectAction;

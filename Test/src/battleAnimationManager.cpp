@@ -2,6 +2,10 @@
 #include "fontFloat.h"
 #include "fontManager.h"
 #include "animMoveTo.h"
+#include "animJumpTo.h"
+#include "animBasic.h"
+#include "animWait.h"
+#include "animScreenShake.h"
 
 BattleAnimationManager::BattleAnimationManager()
 {
@@ -40,13 +44,25 @@ bool BattleAnimationManager::Animating()
 	return false;
 }
 
-Anim_ptr BattleAnimationManager::CreateAnimation(AnimationOperation ao)
+Anim_ptr BattleAnimationManager::CreateAnimation(triple ao)
 {
+	AnimationOperation op = get<0>(ao);
+	AnimationArgument aa = get<1>(ao);
+	floats args = get<2>(ao);
 	Anim_ptr result;
+	Vector3f pos;
+	Actor_ptr actor;
+	float distance;
 
-	switch (ao)
+	switch (get<0>(ao))
 	{
 	case AS_JumpTo:
+		actor = m_actors.at(args.at(0));
+		distance = actor->GetId() > 3 ? -0.7f : 0.7f;
+		result = Anim_ptr(new AnimJumpTo(actor->GetPos() + Vector3f(distance, 0, 0), m_actors.at(_owner)));
+		break;
+	case AS_JumpBack:
+		result = Anim_ptr(new AnimJumpTo(true, m_actors.at(_owner)));
 		break;
 	case AS_ColorFlash:
 		break;
@@ -57,12 +73,26 @@ Anim_ptr BattleAnimationManager::CreateAnimation(AnimationOperation ao)
 	case AS_MoveTo:
 		break;
 	case AS_Wait:
+		result = Anim_ptr(new AnimWait(args.at(0)));
+		break;
+	case AS_Animation:
+		result = Anim_ptr(new AnimBasic((Anim_Enum)args.at(0), m_actors.at(_owner), 1));
+		result->_async = aa >= AARG_AsyncStart;
+		break;
+	case AS_FloatingText:
 		break;
 	case AC_CameraFollow:
+		for (auto& x : args)
+			pos += m_actors.at(x)->GetPosRef();
+		pos /= args.size();
+		Camera::_currentCam->SetFollowCenteredXY(pos);
 		break;
 	case AC_CameraScale:
+		Camera::_currentCam->SetScale(Vector3f(args.at(0), args.at(0), 0));
 		break;
 	case AC_CameraCenter:
+		break;
+	case AA_Start:
 		break;
 	case AA_DealDamage:
 		break;

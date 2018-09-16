@@ -44,6 +44,8 @@ private:
 	// Graphics
 	void UpdateColors();
 	void ExpAnimation(Fighter_ptr, int xp);
+	void ProcessSkill();
+	void SetSkillArguments(triple& x);
 
 	void UpdateSkillDisplay();
 	void TurnStart();

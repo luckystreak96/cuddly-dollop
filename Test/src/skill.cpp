@@ -102,9 +102,9 @@ void Skill::Setup()
 	m_state = SP_1_Before_Anim;
 }
 
-std::vector<AnimationOperation> Skill::GetAnimations()
+std::vector<triple> Skill::GetAnimations()
 {
-	std::vector<AnimationOperation> result;
+	std::vector<triple> result;
 	result.swap(m_animationBuffer);
 	return result;
 }

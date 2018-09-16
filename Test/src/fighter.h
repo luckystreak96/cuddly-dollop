@@ -63,7 +63,7 @@ public:
 	void SetStatsFromCurve();
 
 	// Other
-	int GetId() { return m_id; }
+	int GetId() { return _BattleFieldPosition; }
 	std::string GetSprite() { return m_sprite; }
 	void SetSprite(std::string sprite) { m_sprite = sprite; }
 	std::string GetName() { return m_name; }

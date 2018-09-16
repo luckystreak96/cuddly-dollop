@@ -4,6 +4,7 @@
 #include <vector>
 #include <deque>
 #include <set>
+#include <tuple>
 #include <memory>
 #include <iostream>
 #include "statusEffect.h"
@@ -22,8 +23,16 @@ enum TargetAmount { TA_One, TA_Party };
 enum AnimationOperation {
 	AS_JumpTo, AS_JumpBack, AS_ColorFlash, AS_ScreenShake, AS_BonusEffect, AS_MoveTo, AS_Wait, AS_Animation, AS_FloatingText,
 	AC_CameraFollow, AC_CameraScale, AC_CameraCenter,
-	AA_DealDamage
+	AA_Start, AA_DealDamage
+}; // AA_Start is there to be able to do > on the enum
+
+enum AnimationArgument {
+	AARG_Owner, AARG_Targets, AARG_Target, AARG_Float, AARG_AsyncStart, AARG_FloatAsync
 };
+
+using namespace std;
+using floats = vector<float>;
+using triple = tuple<AnimationOperation, AnimationArgument, floats>;
 
 enum SkillProgress {
 	SP_0_None, SP_1_Before_Anim, SP_2_BeginAnim, SP_3_DealDamage, SP_4_PostSkillAnim, SP_5_SkillDone
@@ -53,7 +62,7 @@ public:
 	virtual void Setup();
 	virtual SkillProgress Update();
 	// Returns and then empties animations
-	virtual std::vector<AnimationOperation> GetAnimations();
+	virtual std::vector<triple> GetAnimations();
 	virtual void Reset();
 	virtual bool IsReady();
 
@@ -99,7 +108,7 @@ public:
 protected:
 	SkillProgress m_state;
 	int m_progress;
-	std::vector<AnimationOperation> m_animationBuffer;
+	std::vector<triple> m_animationBuffer;
 
 protected:
 	virtual void DefaultSetup();

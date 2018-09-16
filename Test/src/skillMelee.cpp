@@ -43,11 +43,11 @@ void SkillMelee::SetAnimations()
 		break;
 	case 2:
 		m_state = SP_2_BeginAnim;
-		AC_CameraFollow; // follow the target async
-		AC_CameraScale; // zoom 1.5
-		AS_JumpTo; // jump to target
-		AS_Animation; // smack animation async
-		AS_Wait; // wait half the animation time
+		triple(AC_CameraFollow, AARG_Targets, floats({0})); // follow the target async
+		triple(AC_CameraScale, AARG_Float, floats({ 1.5f })); // zoom 1.5
+		triple(AS_JumpTo, AARG_Target, floats({ 0 })); // jump to target
+		triple(AS_Animation, AARG_FloatAsync, floats({ AE_Attack })); // smack animation async
+		triple(AS_Wait, AARG_Float, floats({ 0.5f })); // wait half the animation time
 		break;
 	case 3:
 		m_state = SP_3_DealDamage;
