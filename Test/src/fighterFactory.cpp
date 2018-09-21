@@ -115,7 +115,8 @@ Fighter_ptr FighterFactory::BuildFighter(rapidjson::Value& a)
 		std::vector<Skill_ptr> skill_list;
 
 		for (rapidjson::Value::ConstValueIterator itr = skills.Begin(); itr != skills.End(); ++itr)
-			skill_list.push_back(BuildSkill(itr->GetString(), fighter));
+			skill_list.push_back(BuildSkill(itr->GetString()));
+		fighter->SetSkills(skill_list);
 	}
 
 	if (a.HasMember("passives") && a["passives"].IsArray())
@@ -211,7 +212,7 @@ std::vector<Fighter_ptr> FighterFactory::BuildParty(rapidjson::GenericArray<fals
 	return result;
 }
 
-Skill_ptr FighterFactory::BuildSkill(std::string name, Fighter_ptr fighter)
+Skill_ptr FighterFactory::BuildSkill(std::string name)
 {
 	Skill_ptr result;
 	if (name == "Smack")

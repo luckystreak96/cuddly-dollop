@@ -17,6 +17,7 @@ Fighter::Fighter(Fighter& f)
 	SetDefault();
 
 	m_skills.clear();
+	m_sprite = f.m_sprite;
 	Health = f.Health;
 	Curve = f.Curve;
 	SetLevel(f.Level);
@@ -26,7 +27,7 @@ Fighter::Fighter(Fighter& f)
 	Dead = f.Dead;
 
 	for (auto& x : f.m_skills)
-		m_skills.push_back(FighterFactory::BuildSkill(x->GetName(), Fighter_ptr(this)));
+		m_skills.push_back(FighterFactory::BuildSkill(x->GetName()));
 
 	for (auto& x : f._Passives)
 		_Passives.push_back(BattleData::PassiveSkills.at(x->_Id));
@@ -38,6 +39,12 @@ const std::vector<Skill_ptr>& Fighter::GetSkills() const
 {
 	return m_skills;
 }
+
+std::vector<Skill_ptr>& Fighter::GetSkills()
+{
+	return m_skills;
+}
+
 
 bool Fighter::FighterSpeedSort(Fighter_ptr a, Fighter_ptr b)
 {
@@ -209,7 +216,7 @@ void Fighter::SetDefault()
 
 void Fighter::UseSkill()
 {
-	std::sort(_targets.begin(), _targets.end(), Fighter::FighterBattleOrderSort);
+	//std::sort(_targets.begin(), _targets.end(), Fighter::FighterBattleOrderSort);
 }
 
 
@@ -279,7 +286,7 @@ Damage Fighter::TakeDamage(Damage& dmg)
 	//DamageModifiers(dmg);
 	dmg._value = fmax(0, dmg._value);
 	Health -= dmg._value;
-	Health = fmin(MaxHealth.Real, Health);
+	Health = min(MaxHealth.Real, Health);
 	Health = fmax(Health, 0);
 	ApplyLethal();
 	UpdateObservers();
@@ -302,7 +309,7 @@ Damage Fighter::ApplyHealing(Damage& heal)
 
 void Fighter::ApplyBonusDamage(Fighter_ptr target)
 {
-	PredictedSkill->ApplyBonusEffect(target);
+	//PredictedSkill->ApplyBonusEffect(target);
 }
 
 bool Fighter::RespectsTargeting(Fighter_ptr owner, int tm)

@@ -35,6 +35,7 @@ public:
 	//Skills
 	void SetSkills(std::vector<Skill_ptr>);
 	const std::vector<Skill_ptr>& GetSkills() const;
+	std::vector<Skill_ptr>& GetSkills();
 	virtual void UseSkill();
 
 	// Turn and targets
@@ -72,7 +73,7 @@ public:
 	static bool FighterSpeedSort(Fighter_ptr a, Fighter_ptr b);
 	static bool FighterBattleOrderSort(Fighter_ptr a, Fighter_ptr b);
 
-	bool operator<(Fighter other) { _BattleFieldPosition < other._BattleFieldPosition; }
+	bool operator<(Fighter other) { return _BattleFieldPosition < other._BattleFieldPosition; }
 
 public:
 	virtual int DefenseDamageModification(bool critting);

@@ -55,7 +55,7 @@ void AnimJumpTo::Update()
 		return;
 
 	// Set position
-	Vector3f result = MathUtils::FindPositionInParabola(_progress / _duration, _initialPos, _destination);
+	Vector3f result = MathUtils::FindPositionInParabola((float)(_progress / _duration), _initialPos, _destination);
 	_target->SetPhysics(result, Vector3f());
 
 	// Set sprite

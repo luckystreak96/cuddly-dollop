@@ -9,15 +9,15 @@ AnimMoveTo::AnimMoveTo(Vector3f position, Actor_ptr target)
 {
 	_destination = position;
 	_target = target;
-	_initialPos = target->_Graphics->GetPosRef();
+	_initialPos = target->GetPosRef();
 	_speed = (_destination - _initialPos) / 30.0f;
 	_speed.z = 0;
 	_done = false;
 	_progress = 0;
 	_duration = 0.4;
-	_prevDir = _target->_Graphics->_animation;
-	_target->_Graphics->SetAnimation(_target->_Graphics->GetMoveDirection(_prevDir), _target->Sprite);
-	_target->_Graphics->_forceAnimation = true;
+	_prevDir = _target->_animation;
+	_target->SetAnimation(_target->GetMoveDirection(_prevDir), _target->GetTexture());
+	_target->_forceAnimation = true;
 }
 
 void AnimMoveTo::Update()
@@ -28,15 +28,15 @@ void AnimMoveTo::Update()
 
 	// Set position
 	Vector3f result = (_destination - _initialPos) * _progress / _duration;
-	_target->_Graphics->SetPhysics(result + _initialPos, Vector3f());
+	_target->SetPhysics(result + _initialPos, Vector3f());
 
 	// Update percent
 	_progress += 0.025;
-	if (_progress >= _duration || _target->_Graphics->GetPosRef() == _destination)
+	if (_progress >= _duration || _target->GetPosRef() == _destination)
 	{
 		_done = true;
-		_target->_Graphics->SetPhysics(_destination, Vector3f());
-		_target->_Graphics->SetAnimation(_prevDir, _target->Sprite);
-		_target->_Graphics->_forceAnimation = false;
+		_target->SetPhysics(_destination, Vector3f());
+		_target->SetAnimation(_prevDir, _target->GetTexture());
+		_target->_forceAnimation = false;
 	}
 }

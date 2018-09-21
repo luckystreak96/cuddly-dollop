@@ -46,8 +46,8 @@ void PassiveFactory::ApplyAllPassives(Fighter* fighter, std::vector<Passive_ptr>
 	if (typeVectors.count(PassiveType::PT_Skill))
 	{
 		for (auto passive : typeVectors.at(PT_Skill))
-			if (std::find_if(fighter->m_skills.begin(), fighter->m_skills.end(), [=](Skill_ptr p) {return p->_name == passive->_Data._String; }) == fighter->m_skills.end())
-				fighter->m_skills.push_back(FighterFactory::BuildSkill(passive->_Data._String));
+			if (std::find_if(fighter->GetSkills().begin(), fighter->GetSkills().end(), [=](Skill_ptr p) {return p->_name == passive->_Data._String; }) == fighter->GetSkills().end())
+				fighter->GetSkills().push_back(FighterFactory::BuildSkill(passive->_Data._String));
 	}
 	//ApplySkillPassives(fighter, typeVectors.at(PT_Skill));
 
@@ -94,11 +94,11 @@ void PassiveFactory::ApplySkillUpgradePassives(Fighter* fighter, std::vector<Pas
 {
 	for (auto passive : passives)
 	{
-		std::vector<Skill_ptr>::iterator skill = std::find_if(fighter->m_skills.begin(), fighter->m_skills.end(),
+		std::vector<Skill_ptr>::iterator skill = std::find_if(fighter->GetSkills().begin(), fighter->GetSkills().end(),
 			[=](Skill_ptr p) { return p->_name == passive->_Data._String; }
 		);
 
-		if (skill != fighter->m_skills.end())
+		if (skill != fighter->GetSkills().end())
 			if ((*skill)->ApplySkillUpgrade())
 				fighter->SkillPoints -= 1;
 	}

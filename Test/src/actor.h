@@ -9,7 +9,7 @@
 class Actor;
 using Actor_ptr = std::shared_ptr<Actor>;
 
-enum ColorState { CS_Invis, CS_Selected, CS_Normal, CS_Update, CS_Darker };
+enum ColorState { CS_ActionCommand, CS_Invis, CS_Selected, CS_Normal, CS_Update, CS_Darker };
 
 class Actor : public PlayerGraphicsComponent
 {
@@ -18,7 +18,7 @@ public:
 	Actor(Actor& a);
 	~Actor();
 	void Update();
-	void UpdateColor(bool dead, bool selected);
+	void UpdateColor(bool dead, bool selected, int actionCommandLevel = 0);
 	void AdjustHeightForAngle();
 
 	void SetId(int id) { ID = id; }

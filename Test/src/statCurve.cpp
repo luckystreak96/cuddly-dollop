@@ -47,22 +47,22 @@ void StatCurve::ApplyFunction(Stat* stat, float value, std::string opName, StatU
 	float a = value;
 	if (opName == "square")
 	{
-		stat->Base = a * pow(x, 2);
+		stat->Base = (int)(a * pow(x, 2));
 		//stat->Real = stat->Base;
 	}
 	else if (opName == "quadratic")
 	{
-		stat->Base = (a * pow(x + 18, 3));
+		stat->Base = (int)(a * pow(x + 18, 3));
 		//stat->Real = stat->Base;
 	}
 	else if (opName == "square_root")
 	{
-		stat->Base = sqrt(a * x);
+		stat->Base = (int)sqrt(a * x);
 		//stat->Real = stat->Base;
 	}
 	else if (opName == "linear")
 	{
-		stat->Base = x * a;
+		stat->Base = (int)(x * a);
 		//stat->Real = stat->Base;
 	}
 

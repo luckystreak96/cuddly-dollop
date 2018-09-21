@@ -24,6 +24,7 @@ void Skill::DefaultSetup()
 	_targetMode = TM_Alive;
 	_targetAmount = TA_One;
 	_defaultTarget = DT_Self;
+	m_progress = 0;
 	_ac._start = 0;
 	_ac._startHard = 1000;
 	_ac._end = 0;
@@ -34,26 +35,6 @@ void Skill::DefaultSetup()
 	_skillUpgradeProgress = 0;
 	_skillUpgradeMax = 0;
 	_isPreCalculated = false;
-}
-
-
-
-
-
-
-bool Skill::ValidateTargets()
-{
-	bool valid = false;
-
-	// Check if all targets are alive
-	for (auto& x : _targets)
-		if (x->_Fighter->RespectsTargeting(_owner.lock().get(), _targetMode))
-		{
-			valid = true;
-			break;
-		}
-
-	return valid;
 }
 
 void Skill::CheckActionCommand(double percentProgress)
@@ -115,30 +96,36 @@ void Skill::SetAnimations()
 	_done = true;
 }
 
+// Handle Action command stuff
 void Skill::HandleActionCommand(double percentProgress)
 {
-	// Handle Action command stuff
-	if (_ac._animProg == _animProg)
+	// Can only happen if you press within the right animation
+	if (_ac._animProg == m_progress)
 	{
-		if (percentProgress <= _ac._end && percentProgress >= _ac._startHard)
-			_owner.lock()->_Graphics->SetColorAll(Vector3f(3.0f, 3.0f, 3.0f), 1.0f);
-		else if (percentProgress <= _ac._end && percentProgress >= _ac._start)
-			_owner.lock()->_Graphics->SetColorAll(Vector3f(2.0f, 2.0f, 2.0f), 1.0f);
-		else
-			_owner.lock()->_ColorState = CS_Update;
-
 		// Handle input for action command
-		// Can only happen if you press within the right animation
 		CheckActionCommand(percentProgress);
 	}
 }
 
-void Skill::SetupProtector()
+int Skill::action_command_level(double percentProgress)
 {
-	_targets.push_back(_targets.at(0));
-	_targets.at(0) = _targets.at(0)->_Fighter->Protector;
-
+	if (_ac._animProg == m_progress)
+	{
+		if (percentProgress <= _ac._end && percentProgress >= _ac._startHard)
+			return 1;
+		else if (percentProgress <= _ac._end && percentProgress >= _ac._start)
+			return 2;
+	}
+	return 0;
 }
+
+
+//void Skill::SetupProtector()
+//{
+//	_targets.push_back(_targets.at(0));
+//	_targets.at(0) = _targets.at(0)->_Fighter->Protector;
+//
+//}
 
 
 SkillProgress Skill::Update()
@@ -154,6 +141,7 @@ SkillProgress Skill::Update()
 
 void Skill::Reset()
 {
+	m_progress = 0;
 	_done = false;
 }
 
@@ -164,13 +152,13 @@ bool Skill::IsReady()
 
 
 
-bool Skill::AnimationsDone()
-{
-	bool done = true;
-	for (auto& x : *_anims)
-		if (!x->_async)
-			done = false;
-
-	return done;
-}
-
+//bool Skill::AnimationsDone()
+//{
+//	bool done = true;
+//	for (auto& x : *_anims)
+//		if (!x->_async)
+//			done = false;
+//
+//	return done;
+//}
+//

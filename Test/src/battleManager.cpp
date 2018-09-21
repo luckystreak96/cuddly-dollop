@@ -8,6 +8,8 @@
 #include "localizationData.h"
 #include "battleAnimationManager.h"
 
+using namespace std;
+
 BattleManager::BattleManager()
 {
 	Init();
@@ -52,15 +54,21 @@ void BattleManager::ProcessSkill()
 		if (get<1>(x) < AARG_Float)
 			SetSkillArguments(x);
 
+		// x is an action
 		if (get<0>(x) > AA_Start)
 		{
-			// x is an action
-
+			// Deal damage
+			int target = (int)get<2>(x).front();
+			Damage dmg = HandleDamage(target);
+			// Show dmg
+			m_graphics->DamageAnimation(target, _selectedSkill, dmg);
 		}
+		// x is an animation
 		else
 		{
-			// x is an animation
-			m_graphics->Push_Back_Animation(m_graphics->CreateAnimation(x));
+			Anim_ptr animation = m_graphics->CreateAnimation(x);
+			if (animation)
+				m_graphics->Push_Back_Animation(animation);
 		}
 	}
 }
@@ -71,14 +79,14 @@ void BattleManager::SetSkillArguments(triple& x)
 	switch (get<1>(x))
 	{
 	case AARG_Owner:
-		get<2>(x).push_back(_owner->GetId());
+		get<2>(x).push_back((float)_owner->GetId());
 		break;
 	case AARG_Targets:
 		for (auto y : _targets)
-			get<2>(x).push_back(y);
+			get<2>(x).push_back((float)y);
 		break;
 	case AARG_Target:
-		get<2>(x).push_back(*_targets.begin());
+		get<2>(x).push_back((float)*_targets.begin());
 		break;
 	default:
 		break;
@@ -86,85 +94,88 @@ void BattleManager::SetSkillArguments(triple& x)
 }
 
 
-Damage BattleManager::HandleDamage(Skill_ptr skill, int target)
+Damage BattleManager::HandleDamage(int target)
 {
-	Damage dmg = CalculateDamage();
+	Damage dmg = _selectedSkill->CalculateDamage();
+	Fighter_ptr& f = _actors.at(target);
 
 	// Apply first damage modifications
-	if (_skillType != ST_Healing)
-		_targets.at(target)->_Fighter->DamageModifiers(dmg, _critting);
+	if (_selectedSkill->_skillType != ST_Healing)
+		f->DamageModifiers(dmg, dmg._critting);
 
-	if (_ac._success)
+	if (_selectedSkill->_ac._success)
 	{
 		// Your team under attack from enemy -> Defense Action Command
-		if (_owner.lock()->_Fighter->Team != 0 && _targets.at(target)->_Fighter->Team == 0)
+		if (_owner->Team != 0 && f->Team == 0)
 		{
-			if (_ac._type == ACT_Special)
-				_targets.at(target)->_Fighter->SpecialActionCommand(dmg);
-			else if (_skillType == ST_Physical)
-				_targets.at(target)->_Fighter->PhysicalDefenseActionCommand(dmg);
+			if (_selectedSkill->_ac._type == ACT_Special)
+				f->SpecialActionCommand(dmg);
+			else if (_selectedSkill->_skillType == ST_Physical)
+				f->PhysicalDefenseActionCommand(dmg);
 			else
-				_targets.at(target)->_Fighter->MagicalDefenseActionCommand(dmg);
+				f->MagicalDefenseActionCommand(dmg);
 		}
 		// Your team attacking -> Offense Action Command
-		else if (_owner.lock()->_Fighter->Team == 0)
+		else if (_owner->Team == 0)
 		{
-			if (_skillType == ST_Physical)
-				_targets.at(target)->_Fighter->PhysicalOffenseActionCommand(dmg);
+			if (_selectedSkill->_skillType == ST_Physical)
+				f->PhysicalOffenseActionCommand(dmg);
 			else
-				_targets.at(target)->_Fighter->MagicalOffenseActionCommand(dmg);
+				f->MagicalOffenseActionCommand(dmg);
 		}
 	}
 
 	// Deal the dmg
-	if (_skillType == ST_Healing)
-		_targets.at(target)->_Fighter->ApplyHealing(dmg);
+	if (_selectedSkill->_skillType == ST_Healing)
+		f->ApplyHealing(dmg);
 	else
-		_targets.at(target)->_Fighter->TakeDamage(dmg);
+		f->TakeDamage(dmg);
 
 	// Check for bonus damage
-	if (_skillElement != SE_None)
+	if (_selectedSkill->_skillElement != SE_None)
 	{
 		SkillElement targetElement;
-		if (_skillElement == SE_Determined)
+		if (_selectedSkill->_skillElement == SE_Determined)
 			targetElement = SE_Pragmatic;
-		else if (_skillElement == SE_Pragmatic)
+		else if (_selectedSkill->_skillElement == SE_Pragmatic)
 			targetElement = SE_StrongWilled;
-		else if (_skillElement == SE_StrongWilled)
+		else if (_selectedSkill->_skillElement == SE_StrongWilled)
 			targetElement = SE_Determined;
 
-		if (_targets.at(target)->_Fighter->HasElement(targetElement))
-			_anims->push_front(Anim_ptr(new AnimBonusEffect(_owner.lock(), _targets.at(0))));
-		//ApplyBonusEffect();
+		//if (f->HasElement(targetElement))
+			//	_anims->push_front(Anim_ptr(new AnimBonusEffect(_owner.lock(), _targets.at(0))));
+			//ApplyBonusEffect(f);
 	}
 
 	return dmg;
 }
 
-void BattleManager::ApplyBonusEffect(Fighter_ptr target)
-{
-	Damage dmg = Damage();
-	dmg._value = 10;
-	dmg._type = SkillType::ST_Bonus;
-
-	// Damage text
-	SpawnDamageText(target, dmg);
-	_anims->push_front(Anim_ptr(new AnimColorFlash(Vector3f(3, 3, 5), target)));
-	//_anims->push_front(Anim_ptr(new AnimScreenShake()));
-
-	Particle_ptr particles = Particle_ptr(new ParticleGenerator());
-	Vector3f pos = target->_Graphics->GetPos() + Vector3f(0.5f, 0.5f, 0.6f);
-	particles->SetPowerLevel(0.3f);
-	particles->Init(PT_Explosion, dmg._value, pos, false, "star.png");
-	Vector3f color = Vector3f(1.f, 1.f, 1.f);
-	particles->SetColor(color);
-	ParticleManager::GetInstance().AddParticles(particles);
-
-	target->TakeDamage(dmg);
-}
+//void BattleManager::ApplyBonusEffect(Fighter_ptr target)
+//{
+//	Damage dmg = Damage();
+//	dmg._value = 10;
+//	dmg._type = SkillType::ST_Bonus;
+//
+//	// Damage text
+//	SpawnDamageText(target, dmg);
+//	_anims->push_front(Anim_ptr(new AnimColorFlash(Vector3f(3, 3, 5), target)));
+//	//_anims->push_front(Anim_ptr(new AnimScreenShake()));
+//
+//	Particle_ptr particles = Particle_ptr(new ParticleGenerator());
+//	Vector3f pos = target->_Graphics->GetPos() + Vector3f(0.5f, 0.5f, 0.6f);
+//	particles->SetPowerLevel(0.3f);
+//	particles->Init(PT_Explosion, dmg._value, pos, false, "star.png");
+//	Vector3f color = Vector3f(1.f, 1.f, 1.f);
+//	particles->SetColor(color);
+//	ParticleManager::GetInstance().AddParticles(particles);
+//
+//	target->TakeDamage(dmg);
+//}
 
 void BattleManager::Init()
 {
+	m_graphics = std::shared_ptr<BattleAnimationManager>(new BattleAnimationManager());
+
 	bool singleFile = true;
 
 	{
@@ -220,7 +231,7 @@ void BattleManager::Init()
 	if (!m_singleFileAttacks && _actors.size())
 		InitiateChooseActor();
 
-	for (int i = 0; i < _actorQueue.size(); i++)
+	for (unsigned int i = 0; i < _actorQueue.size(); i++)
 		_actorQueue[i]->_OrderPosition = i + 1;
 }
 
@@ -230,16 +241,16 @@ void BattleManager::UpdateColors()
 	{
 		if (_state == BS_SelectTargets || _state == BS_ChooseActor)
 		{
-			m_graphics->UpdateColors(x->GetId(), _selectedIndices.count(x->_BattleFieldPosition), x->Dead);
+			m_graphics->UpdateColors(x->GetId(), _selectedIndices.count(x->_BattleFieldPosition), x->Dead, _selectedSkill->action_command_level(m_graphics->get_animation_progress()));
 		}
 		else if (_state == BS_SelectAction)
 		{
 			if (_owner->Team == 0)
 			{
-				if (_fonts.size() > *_selectedIndices.begin())
+				if (_fonts.size() > (unsigned int)*_selectedIndices.begin())
 				{
 					for (auto x : _fonts)
-						FontManager::GetInstance().GetFont(_fonts[x])->GetGraphics()->SetColorAll();
+						FontManager::GetInstance().GetFont(x)->GetGraphics()->SetColorAll();
 					FontManager::GetInstance().GetFont(_fonts[*_selectedIndices.begin()])->GetGraphics()->SetColorAll(Vector3f(1, 0, 0));
 				}
 			}
@@ -341,17 +352,38 @@ void BattleManager::UpdateSkillDisplay()
 	}
 }
 
+bool BattleManager::ValidateTargets()
+{
+	bool valid = false;
+
+	// Check if all targets are alive
+	for (auto& x : _targets)
+		if (_actors.at(x)->RespectsTargeting(_owner, _selectedSkill->_targetMode))
+		{
+			valid = true;
+			break;
+		}
+
+	return valid;
+}
+
 void BattleManager::TurnStart()
 {
 	// Make sure enemy targets are still valid
 	for (auto& x : _actors)
 	{
 		// Setup next skill if the current skill targets are invalidated
-		if (x->Team != 0 && x->PredictedSkill != NULL && x->PredictedSkill->ValidateTargets() == false)
+		if (x->Team != 0 && x->PredictedSkill != NULL && ValidateTargets() == false)
 		{
 			x->PredictNextSkill(x, &_actors);
 			PrintAttackPrediction(x);
 		}
+	}
+
+	if (_owner->Team != 0)
+	{
+		for (auto x : _owner->GetTargets())
+			_targets.insert(x);
 	}
 
 	// Check to see if predictions should be dispayed
@@ -428,7 +460,7 @@ void BattleManager::InitiateChooseActor()
 	Select(0);
 
 	// Choose who to select by default
-	for (int i = 0; i < _actors.size(); i++)
+	for (unsigned int i = 0; i < _actors.size(); i++)
 	{
 		if (_actors[i]->Team == 0 && _actors[i]->PredictedSkill == NULL)
 		{
@@ -469,8 +501,12 @@ void BattleManager::ActionProgress()
 		}
 		else
 		{
-			_selectedSkill->Update();
-			ProcessSkill();
+			_selectedSkill->HandleActionCommand(m_graphics->get_animation_progress());
+			if (!Animating())
+			{
+				_selectedSkill->Update();
+				ProcessSkill();
+			}
 		}
 	}
 	else
@@ -505,7 +541,7 @@ void BattleManager::TurnEnd()
 	if (m_singleFileAttacks)
 	{
 		_state = BS_TurnStart;
-		for (int i = 0; i < _actorQueue.size(); i++)
+		for (unsigned int i = 0; i < _actorQueue.size(); i++)
 			_actorQueue[i]->_OrderPosition = i + 1;
 	}
 	else
@@ -516,7 +552,7 @@ void BattleManager::TurnEnd()
 		{
 			InitiateChooseActor();
 			ResetPartyPredictedSkills();
-			for (int i = 0; i < _actorQueue.size(); i++)
+			for (unsigned int i = 0; i < _actorQueue.size(); i++)
 				_actorQueue[i]->_OrderPosition = i + 1;
 		}
 	}
@@ -535,7 +571,7 @@ void BattleManager::UpdateLogic()
 	UpdateSkillDisplay();
 
 	// If there are animations, let them run out
-	if (_state == BS_ActionProgress)// || !Animating())
+	if (_state == BS_ActionProgress || !Animating())
 	{
 		switch (_state)
 		{
@@ -591,7 +627,7 @@ void BattleManager::SetChooseSkillText()
 	while (_fonts.size() < _chooseSkill.size())
 		_fonts.push_back(FontManager::GetInstance().AddFont(true, false, true, "res/fonts/lowercase.png"));
 
-	for (int i = 0; i < _chooseSkill.size(); i++)
+	for (unsigned int i = 0; i < _chooseSkill.size(); i++)
 	{
 		FontManager::GetInstance().EnableFont(_fonts[i]);
 		FontManager::GetInstance().SetScale(_fonts[i], 0.5f, 0.5f);
@@ -602,7 +638,7 @@ void BattleManager::SetChooseSkillText()
 
 void BattleManager::RemoveChooseSkillText()
 {
-	for (int i = 0; i < _fonts.size(); i++)
+	for (unsigned int i = 0; i < _fonts.size(); i++)
 		FontManager::GetInstance().GetFont(_fonts[i])->_enabled = false;
 }
 
@@ -692,7 +728,7 @@ void BattleManager::HandleUpDownInput(std::set<int> input)
 	if (_state == BS_SelectAction)
 	{
 		int selectTarget = 0;
-		if (down && *_selectedIndices.begin() < _chooseSkill.size() - 1)
+		if (down && *_selectedIndices.begin() < (int)_chooseSkill.size() - 1)
 		{
 			selectTarget = *_selectedIndices.begin() + 1;
 		}
@@ -716,10 +752,10 @@ void BattleManager::HandleUpDownInput(std::set<int> input)
 		else if (_state == BS_ChooseActor || _selectedSkill && _selectedSkill->_targetAmount == TA_One)
 		{
 			if ((down && ((*_selectedIndices.begin() > 0 && *_selectedIndices.begin() < _numAllies) || *_selectedIndices.begin() > _numAllies)) ||
-				(!down && (*_selectedIndices.begin() < _numAllies - 1 || (*_selectedIndices.begin() >= _numAllies && *_selectedIndices.begin() < _actors.size() - 1))))
+				(!down && (*_selectedIndices.begin() < _numAllies - 1 || (*_selectedIndices.begin() >= _numAllies && *_selectedIndices.begin() < (int)_actors.size() - 1))))
 			{
 				for (int i = *_selectedIndices.begin() + (down ? -1 : 1);
-					(down && i >= 0) || (!down && i < _actors.size());
+					(down && i >= 0) || (!down && i < (int)_actors.size());
 					down ? i-- : i++)
 				{
 					// If up or down would bring you to the other team
@@ -750,7 +786,7 @@ void BattleManager::HandleLeftRightInput(std::set<int> input)
 			std::set<int> result;
 			if (_selectedSkill->_targetAmount == TA_Party)
 			{
-				for (int i = 0; i < _actors.size(); i++)
+				for (unsigned int i = 0; i < _actors.size(); i++)
 					if (((left && _actors.at(i)->Team == 0) || (!left && _actors.at(i)->Team != 0))
 						&& _actors.at(i)->RespectsTargeting(_owner, _selectedSkill->_targetMode))
 						result.emplace(i);
@@ -774,7 +810,7 @@ void BattleManager::HandleLeftRightInput(std::set<int> input)
 					else
 					{
 						// Try to find nearest target straight right
-						if (value + increment + _numAllies < _actors.size() && _actors[value + _numAllies + increment]->RespectsTargeting(_owner, _selectedSkill->_targetMode))
+						if (value + increment + _numAllies < (int)_actors.size() && _actors[value + _numAllies + increment]->RespectsTargeting(_owner, _selectedSkill->_targetMode))
 							Select(value + _numAllies + increment);
 						else if (value - increment + _numAllies >= _numAllies && _actors[value + _numAllies - increment]->RespectsTargeting(_owner, _selectedSkill->_targetMode))
 							Select(value + _numAllies - increment);
@@ -811,7 +847,7 @@ void BattleManager::HandleAcceptInput()
 	{
 		_targets = _selectedIndices;
 
-		if (_targets.size() < _selectedSkill->_minTargets)
+		if ((int)_targets.size() < _selectedSkill->_minTargets)
 			return;
 
 		_selectedSkill->Reset();
@@ -853,7 +889,7 @@ std::set<int> BattleManager::DefaultTargetActorIndex(std::vector<Fighter_ptr>* a
 	bool type = selectedSkill->_targetAmount;
 	int i;
 	bool done = false;
-	for (i = 0; i < actors->size(); i++)
+	for (i = 0; i < (int)actors->size(); i++)
 	{
 		switch (selectedSkill->_defaultTarget)
 		{

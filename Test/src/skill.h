@@ -30,9 +30,9 @@ enum AnimationArgument {
 	AARG_Owner, AARG_Targets, AARG_Target, AARG_Float, AARG_AsyncStart, AARG_FloatAsync
 };
 
-using namespace std;
-using floats = vector<float>;
-using triple = tuple<AnimationOperation, AnimationArgument, floats>;
+//using namespace std;
+using floats = std::vector<float>;
+using triple = std::tuple<AnimationOperation, AnimationArgument, floats>;
 
 enum SkillProgress {
 	SP_0_None, SP_1_Before_Anim, SP_2_BeginAnim, SP_3_DealDamage, SP_4_PostSkillAnim, SP_5_SkillDone
@@ -41,6 +41,7 @@ enum SkillProgress {
 struct Damage
 {
 	int _value;
+	bool _critting;
 	SkillType _type;
 };
 
@@ -69,7 +70,7 @@ public:
 	virtual Damage CalculateDamage() { return Damage(); }
 
 	// Make sure all targets are still valid
-	virtual bool ValidateTargets();
+	//virtual bool ValidateTargets();
 
 	// This method should change values to apply a skill upgrade.
 	// Call Skill::ApplySkillUpgrade() at the end of the redefined method
@@ -78,9 +79,10 @@ public:
 
 	void CheckActionCommand(double percentProgress);
 	void HandleActionCommand(double percentProgress);
-	bool AnimationsDone();
+	int action_command_level(double percentProgress);
+	//bool AnimationsDone();
 
-	virtual void SetupProtector();
+	//virtual void SetupProtector();
 
 	const std::string GetName() const { return _name; }
 

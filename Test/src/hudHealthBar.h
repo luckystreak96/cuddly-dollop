@@ -3,8 +3,8 @@
 
 #include "hudBar.h"
 #include "battleAnimation.h"
-
-class Actor;
+#include "actor.h"
+#include "fighter.h"
 
 class HudHealthBar : public HudBar
 {

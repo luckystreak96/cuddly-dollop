@@ -16,6 +16,7 @@
 #include "entityFactory.h"
 #include "fighterFactory.h"
 #include "particleManager.h"
+#include "battleAnimationManager.h"
 
 SceneBattle::SceneBattle() : m_zoom(false)
 {
@@ -37,7 +38,14 @@ SceneBattle::SceneBattle() : m_zoom(false)
 	Init();
 	m_battle = BattleManager(m_fighters);
 
+	std::map<int, Actor_ptr> actors;
 
+	for (auto& x : m_actors)
+	{
+		actors.emplace(x->GetId(), x);
+	}
+
+	m_battle.GetGraphics()->SetActors(actors);
 
 	SoundManager::GetInstance();
 	m_fade.SetFade(true);
@@ -69,7 +77,8 @@ bool SceneBattle::Init()
 
 	std::vector<Actor_ptr> party;
 	std::vector<Actor_ptr> enemies;
-	int a, b;
+	int a = 0;
+	int b = 4;
 
 	// Set battlefield position for proper iteration
 	for (auto& x : m_fighters)
@@ -92,6 +101,8 @@ bool SceneBattle::Init()
 
 		m_actors.push_back(actor);
 	}
+
+
 
 
 	float startY = (4.25f + (1.25f * (4 - party.size())) / 2.0f);
@@ -144,6 +155,8 @@ bool SceneBattle::Init()
 			}
 		}
 	}
+
+
 
 	Scene::DrawBegin();
 

@@ -102,7 +102,7 @@ bool SceneWorld::Init()
 void SceneWorld::ShowStats()
 {
 	for (auto& x : BattleData::Party)
-		FontManager::GetInstance().CreateFloatingText(m_celist.at(1)->PhysicsRaw()->PositionRef(), std::to_string(x->_Fighter->Strength.Real));
+		FontManager::GetInstance().CreateFloatingText(m_celist.at(1)->PhysicsRaw()->PositionRef(), std::to_string(x->Strength.Real));
 }
 
 SceneWorld::~SceneWorld()

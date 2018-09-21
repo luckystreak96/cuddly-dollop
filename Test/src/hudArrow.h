@@ -4,6 +4,7 @@
 #include "hudComponent.h"
 #include "graphicsComponent.h"
 #include "actor.h"
+#include "fighter.h"
 
 class HudArrow : public HudComponent
 {

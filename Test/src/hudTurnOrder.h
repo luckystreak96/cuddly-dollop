@@ -4,8 +4,8 @@
 #include "hudBar.h"
 #include "battleAnimation.h"
 #include "skill.h"
-
-class Actor;
+#include "fighter.h"
+#include "actor.h"
 
 class HudTurnOrder : public HudComponent
 {

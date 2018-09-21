@@ -10,7 +10,7 @@ class BattleHUD
 public:
 	BattleHUD();
 	void Init(std::vector<Fighter_ptr> fighters, std::map<int, Actor_ptr> actors);
-	void Init(std::map<int, std::pair<Fighter_ptr, Actor_ptr>>);
+	void Init(std::map<int, std::pair<Fighter_ptr, Actor_ptr>> map);
 	void Update();
 	void SetRender();
 	void Destroy();

@@ -23,6 +23,7 @@ public:
 	int FindWinner();
 	void SetRender();
 	bool Animating();
+	std::shared_ptr<BattleAnimationManager> GetGraphics() { return m_graphics; }
 
 	static std::set<int> DefaultTargetActorIndex(std::vector<Fighter_ptr>* actors, Fighter_ptr _owner, Skill_ptr selectedSkill);
 
@@ -38,8 +39,10 @@ private:
 	void MoveToLight(bool moveUp, bool turnEnd = false);
 	
 	// Skills
-	Damage HandleDamage(Skill_ptr skill, int target);
-	void ApplyBonusEffect(Fighter_ptr target);
+	Damage HandleDamage(int target);
+	//void ApplyBonusEffect(Fighter_ptr target);
+	bool ValidateTargets();
+	void HandleActionCommand();
 
 	// Graphics
 	void UpdateColors();
@@ -94,7 +97,7 @@ public:
 	int counter;
 
 private:
-	std::unique_ptr<BattleAnimationManager> m_graphics;
+	std::shared_ptr<BattleAnimationManager> m_graphics;
 };
 
 #endif

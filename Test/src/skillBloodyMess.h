@@ -9,8 +9,8 @@ class SkillBloodyMess : public SkillRanged
 
 public:
 	using SkillRanged::SkillRanged;
-	virtual void ApplyEffect();
-	Damage CalculateDamage();
+	//virtual void ApplyEffect();
+	//Damage CalculateDamage();
 
 protected:
 	virtual void DefaultSetup();

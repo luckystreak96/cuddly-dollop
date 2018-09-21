@@ -6,6 +6,8 @@
 #include "actor.h"
 #include "lerper.h"
 #include "animXpBar.h"
+#include "fighter.h"
+#include "actor.h"
 
 HudHealthBar::HudHealthBar(std::pair<Fighter_ptr, Actor_ptr> ap, Vector3f position)
 {

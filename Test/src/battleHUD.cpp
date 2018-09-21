@@ -64,7 +64,7 @@ void BattleHUD::Init(std::vector<Fighter_ptr> fighters, std::map<int, Actor_ptr>
 {
 	_actors = std::map<int, std::pair<Fighter_ptr, Actor_ptr>>();
 	for (auto& x : fighters)
-		_actors.emplace(x, actors.at(x->_BattleFieldPosition));
+		_actors.emplace(x->_BattleFieldPosition, std::pair<Fighter_ptr, Actor_ptr>(x, actors.at(x->_BattleFieldPosition)));
 
 	Init(_actors);
 }
@@ -73,9 +73,9 @@ void BattleHUD::Init(std::vector<Fighter_ptr> fighters, std::map<int, Actor_ptr>
 void BattleHUD::AddActorHealthBar(std::pair<Fighter_ptr, Actor_ptr> ap, int& party, int& enemies)
 {
 	Vector3f pos;
-	int right = OrthoProjInfo::GetRegularInstance().Right * 2;
-	int up = OrthoProjInfo::GetRegularInstance().Top * 2;
-	int size = OrthoProjInfo::GetRegularInstance().Size;
+	int right = (int)OrthoProjInfo::GetRegularInstance().Right * 2;
+	int up = (int)OrthoProjInfo::GetRegularInstance().Top * 2;
+	int size = (int)OrthoProjInfo::GetRegularInstance().Size;
 	float orthoWidth = (float)right / (float)size;
 	float orthoHeight = (float)up / (float)size;
 	std::cout << orthoWidth << std::endl;

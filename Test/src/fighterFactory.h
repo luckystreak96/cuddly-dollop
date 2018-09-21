@@ -20,7 +20,7 @@ public:
 	static std::vector<Fighter_ptr> BuildParty(rapidjson::GenericArray<false, rapidjson::Value>& arr);
 	static Fighter_ptr BuildFighter(rapidjson::Value& a);
 	static Fighter_ptr BuildFighter(int id, int team = 1, int level = 1, int fluctuation = 3);
-	static Skill_ptr BuildSkill(std::string name, Fighter_ptr actor);
+	static Skill_ptr BuildSkill(std::string name);
 };
 
 #endif // !EVENT_FACTORY_H__

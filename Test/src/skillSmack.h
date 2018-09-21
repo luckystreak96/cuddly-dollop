@@ -8,9 +8,9 @@ class SkillSmack : public SkillMelee
 {
 
 public:
-	using SkillMelee::SkillMelee;
-	virtual void ApplyEffect();
-	Damage CalculateDamage();
+	SkillSmack();
+	//virtual void ApplyEffect();
+	//Damage CalculateDamage();
 
 protected:
 	virtual void DefaultSetup();

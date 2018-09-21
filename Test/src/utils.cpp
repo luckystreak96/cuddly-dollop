@@ -97,7 +97,7 @@ std::string Utils::RemoveWhiteSpace(std::string& str)
 std::vector<uint32_t> Utils::ConvertUTF8(std::string text)
 {
 	std::vector<uint32_t> result;
-	for (int i = 0; i < text.size(); i++)
+	for (unsigned int i = 0; i < text.size(); i++)
 	{
 		uint32_t let = (uint8_t)text[i];
 		uint32_t let2 = 0;

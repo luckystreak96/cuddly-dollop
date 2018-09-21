@@ -24,11 +24,19 @@ void Actor::SetDefault()
 	ChoosingAction = true;
 }
 
-void Actor::UpdateColor(bool dead, bool selected)
+void Actor::UpdateColor(bool dead, bool selected, int actionCommandLevel)
 {
 	_outline = selected;// Always default to no outline unless selected
 
-	if (selected)
+	if (actionCommandLevel > 0 && _ColorState != CS_ActionCommand)
+	{
+		if (actionCommandLevel == 1)
+			SetColorAll(Vector3f(3.0f, 3.0f, 3.0f), 1.0f);
+		else if (actionCommandLevel == 2)
+			SetColorAll(Vector3f(2.0f, 2.0f, 2.0f), 1.0f);
+		_ColorState = CS_Update;
+	}
+	else if (selected)
 	{
 		if (_ColorState != CS_Selected)
 		{
@@ -63,7 +71,7 @@ void Actor::Update()
 {
 	if (!Transformation::perspectiveOrtho)
 		GetPosRef().z += MathUtils::HeightGivenLengthOfHypotenuseAndAngle(0.5f, -GraphicsComponent::_persRotation);
-	Update();
+	PlayerGraphicsComponent::Update();
 }
 
 void Actor::AdjustHeightForAngle()

@@ -6,15 +6,20 @@
 #include "animBasic.h"
 #include "animWait.h"
 #include "animScreenShake.h"
+#include "animColorFlash.h"
+#include "particleManager.h"
+#include "soundManager.h"
+
+using namespace std;
 
 BattleAnimationManager::BattleAnimationManager()
 {
 
 }
 
-void BattleAnimationManager::UpdateColors(int fighterid, bool selected, bool dead)
+void BattleAnimationManager::UpdateColors(int fighterid, bool selected, bool dead, int actionCommandLevel)
 {
-	m_actors.at(fighterid)->UpdateColor(selected, dead);
+	m_actors.at(fighterid)->UpdateColor(selected, dead, actionCommandLevel);
 }
 
 void BattleAnimationManager::MoveUp(int fighterid, bool foreward)
@@ -43,6 +48,64 @@ bool BattleAnimationManager::Animating()
 
 	return false;
 }
+
+double BattleAnimationManager::get_animation_progress()
+{
+	double duration = -1;
+	double progress = 0;
+	if (m_animations.size() > 0)
+	{
+		progress = m_animations.front()->_progress;
+		duration = m_animations.front()->_duration;
+	}
+	return progress / duration;
+}
+
+
+void BattleAnimationManager::DamageAnimation(int target, Skill_ptr skill, Damage dmg)
+{
+	// Damage text
+	SpawnDamageText(m_actors.at(target), dmg, skill);
+
+	// Color flash
+	m_animations.push_front(Anim_ptr(new AnimColorFlash(Vector3f(3, 3, 5), m_actors[target])));
+
+	// Particles
+	Vector3f pos = m_actors[target]->GetPos() + Vector3f(0.5f, 0.5f, 0.6f);
+	Particle_ptr particles = Particle_ptr(new ParticleGenerator());
+	particles->SetPowerLevel(0.3f);
+	particles->Init(PT_Explosion, abs(dmg._value), pos, false, "star.png");
+	particles->SetColor(CalculateDamageColor(skill, dmg));
+	ParticleManager::GetInstance().AddParticles(particles);
+
+	// Sound fx
+	SoundManager::GetInstance().PlaySoundFX("res/audio/fx/swish_2.wav");
+}
+
+Vector3f BattleAnimationManager::CalculateDamageColor(Skill_ptr skill, Damage dmg)
+{
+	return dmg._critting ? Vector3f(0.35f, 0.31f, 0.87f) : Vector3f(1.0f, 0.2f, 0.2f);
+}
+
+Vector3f BattleAnimationManager::CalculateTextColor(Skill_ptr skill, Damage dmg)
+{
+	// color
+	Vector3f color;
+	if (dmg._critting)
+		// purpleish
+		color = skill->_ac._success ? Vector3f(0.85f, 0.23f, 0.54f) : Vector3f(0.35f, 0.31f, 0.87f);
+	else if (dmg._value >= 0 && skill->_skillType != ST_Healing && dmg._type != ST_Bonus)
+		// redish / yellowish
+		color = skill->_ac._success ? Vector3f(1, 0.8f, 0) : Vector3f(1, 0, 0);
+	else if (dmg._value > 0 && skill->_skillType == ST_Healing || dmg._value < 0 && dmg._type == ST_Bonus)
+		// Greenish
+		color = skill->_ac._success ? Vector3f(0, 0.95f, 0.6f) : Vector3f(0, 1, 0);
+	else if (dmg._type == ST_Bonus)
+		color = Vector3f(1, 1.f, 1.f);
+
+	return color;
+}
+
 
 Anim_ptr BattleAnimationManager::CreateAnimation(triple ao)
 {
@@ -76,7 +139,7 @@ Anim_ptr BattleAnimationManager::CreateAnimation(triple ao)
 		result = Anim_ptr(new AnimWait(args.at(0)));
 		break;
 	case AS_Animation:
-		result = Anim_ptr(new AnimBasic((Anim_Enum)args.at(0), m_actors.at(_owner), 1));
+		result = Anim_ptr(new AnimBasic((Anim_Enum)(int)args.at(0), m_actors.at(_owner), 1));
 		result->_async = aa >= AARG_AsyncStart;
 		break;
 	case AS_FloatingText:
@@ -170,20 +233,7 @@ void BattleAnimationManager::SpawnDamageText(Actor_ptr target, Damage dmg, Skill
 		font->SetScale(1.0f, 1.0f);
 	font->SetText((dmg._value < 0 || skill->_skillType == ST_Healing ? "+" : "") + std::to_string(dmg._value), pos, true);
 
-	// color
-	Vector3f color;
-	if (skill->_critting)
-		// purpleish
-		color = skill->_ac._success ? Vector3f(0.85f, 0.23f, 0.54f) : Vector3f(0.35f, 0.31f, 0.87f);
-	else if (dmg._value >= 0 && skill->_skillType != ST_Healing && dmg._type != ST_Bonus)
-		// redish / yellowish
-		color = skill->_ac._success ? Vector3f(1, 0.8f, 0) : Vector3f(1, 0, 0);
-	else if (dmg._value > 0 && skill->_skillType == ST_Healing || dmg._value < 0 && dmg._type == ST_Bonus)
-		// Greenish
-		color = skill->_ac._success ? Vector3f(0, 0.95f, 0.6f) : Vector3f(0, 1, 0);
-	else if (dmg._type == ST_Bonus)
-		color = Vector3f(1, 1.f, 1.f);
-	dynamic_cast<FontFloat*>(font.get())->Color = color;
+	dynamic_cast<FontFloat*>(font.get())->Color = CalculateTextColor(skill, dmg);
 
 	FontManager::GetInstance().AddFont(font);
 }

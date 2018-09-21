@@ -5,15 +5,21 @@
 
 void SkillMelee::DefaultSetup()
 {
-	Skill::DefaultSetup();
+	//Skill::DefaultSetup();
 	_name = "Skill Melee -_-";
 }
 
-// Must return the new state
-void SkillMelee::Setup()
+SkillMelee::SkillMelee() : Skill()
 {
-	Skill::Setup();
+	DefaultSetup();
 }
+
+
+// Must return the new state
+//void SkillMelee::Setup()
+//{
+//	Skill::Setup();
+//}
 
 //void SkillMelee::Start()
 //{
@@ -43,11 +49,11 @@ void SkillMelee::SetAnimations()
 		break;
 	case 2:
 		m_state = SP_2_BeginAnim;
-		triple(AC_CameraFollow, AARG_Targets, floats({0})); // follow the target async
-		triple(AC_CameraScale, AARG_Float, floats({ 1.5f })); // zoom 1.5
-		triple(AS_JumpTo, AARG_Target, floats({ 0 })); // jump to target
-		triple(AS_Animation, AARG_FloatAsync, floats({ AE_Attack })); // smack animation async
-		triple(AS_Wait, AARG_Float, floats({ 0.5f })); // wait half the animation time
+		m_animationBuffer.push_back(triple(AC_CameraFollow, AARG_Targets, floats({0}))); // follow the target async
+		m_animationBuffer.push_back(triple(AC_CameraScale, AARG_Float, floats({ 1.5f }))); // zoom 1.5
+		m_animationBuffer.push_back(triple(AS_JumpTo, AARG_Target, floats({ 0 }))); // jump to target
+		m_animationBuffer.push_back(triple(AS_Animation, AARG_FloatAsync, floats({ AE_Attack }))); // smack animation async
+		m_animationBuffer.push_back(triple(AS_Wait, AARG_Float, floats({ 0.5f }))); // wait half the animation time
 		break;
 	case 3:
 		m_state = SP_3_DealDamage;
@@ -151,17 +157,17 @@ void SkillMelee::SetAnimations()
 //	_anims->push_back(Anim_ptr(new AnimBasic(AE_Attack, _owner.lock(), 1)));
 //}
 
-void SkillMelee::ApplyEffect()
-{
-	Damage result;
-	result._value = 0;
-	result._type = ST_Physical;
-	//dmg = rand() % 3 + 1;
-	_targets.at(0)->_Fighter->TakeDamage(result);
-
-	// Damage text
-	SpawnDamageText(_targets.at(0), result);
-}
+//void SkillMelee::ApplyEffect()
+//{
+//	Damage result;
+//	result._value = 0;
+//	result._type = ST_Physical;
+//	//dmg = rand() % 3 + 1;
+//	_targets.at(0)->_Fighter->TakeDamage(result);
+//
+//	// Damage text
+//	SpawnDamageText(_targets.at(0), result);
+//}
 
 bool SkillMelee::TimingCondition(double progress, double duration)
 {

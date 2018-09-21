@@ -13,8 +13,8 @@ void SkillProtect::DefaultSetup()
 
 void SkillProtect::ApplyEffect()
 {
-	SpawnStatusText(_targets.at(0), "Protecting");
-	_targets.at(0)->_Fighter->Protector = _owner.lock();
+	//SpawnStatusText(_targets.at(0), "Protecting");
+	//_targets.at(0)->_Fighter->Protector = _owner.lock();
 
 	//Particle_ptr particles = Particle_ptr(new ParticleGenerator());
 	//Vector3f pos = _targets.at(0)->GetPos() + Vector3f(0.5f, 0.5f, 0.6f);
