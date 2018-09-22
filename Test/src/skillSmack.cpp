@@ -22,29 +22,30 @@ void SkillSmack::DefaultSetup()
 	_ac._start = 0.15;
 	_ac._startHard = 0.35;
 	_ac._end = 0.5;
-	_ac._animProg = 1;
+	_ac._animProg = 2;
 }
 
-//Damage SkillSmack::CalculateDamage()
-//{
-//	// Crit chance
-//	int roll = rand() % 100;
-//	if (roll <= _owner.lock()->_Fighter->Crit.Modified)
-//		_critting = true;
-//	else
-//		_critting = false;
-//
-//	// Damage
-//	int dmg = 2 + _owner.lock()->_Fighter->Strength.Modified * 0.8f + rand() % (_owner.lock()->_Fighter->GetLevel() + 2);
-//	if (_critting)
-//		dmg *= 1.5;
-//
-//	Damage result;
-//	result._value = dmg;
-//	result._type = ST_Physical;
-//	
-//	return result;
-//}
+Damage SkillSmack::CalculateDamage(StatUser& user)
+{
+	// Crit chance
+	int roll = rand() % 100;
+	if (roll <= user.Crit.Modified)
+		_critting = true;
+	else
+		_critting = false;
+
+	// Damage
+	int dmg = /*2*/12 + user.Strength.Modified * 0.8f + rand() % (user.GetLevel() + 2);
+	if (_critting)
+		dmg *= 1.5;
+
+	Damage result;
+	result._value = dmg;
+	result._type = ST_Physical;
+	result._critting = _critting;
+	
+	return result;
+}
 //
 //void SkillSmack::ApplyEffect()
 //{

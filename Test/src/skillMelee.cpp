@@ -40,6 +40,13 @@ SkillMelee::SkillMelee() : Skill()
 //	}
 //}
 
+Damage SkillMelee::CalculateDamage(StatUser& user)
+{
+	Damage dmg;
+	dmg._value = 4;
+	return dmg;
+}
+
 void SkillMelee::SetAnimations()
 {
 	switch (m_progress)
@@ -52,26 +59,26 @@ void SkillMelee::SetAnimations()
 		m_animationBuffer.push_back(triple(AC_CameraFollow, AARG_Targets, floats({0}))); // follow the target async
 		m_animationBuffer.push_back(triple(AC_CameraScale, AARG_Float, floats({ 1.5f }))); // zoom 1.5
 		m_animationBuffer.push_back(triple(AS_JumpTo, AARG_Target, floats({ 0 }))); // jump to target
-		m_animationBuffer.push_back(triple(AS_Animation, AARG_FloatAsync, floats({ AE_Attack }))); // smack animation async
-		m_animationBuffer.push_back(triple(AS_Wait, AARG_Float, floats({ 0.5f }))); // wait half the animation time
+		m_animationBuffer.push_back(triple(AS_Animation, AARG_FloatAsync, floats({ AE_Attack, 0.6f }))); // smack animation async (animation, seconds)
+		m_animationBuffer.push_back(triple(AS_Wait, AARG_Float, floats({ 0.3f }))); // wait half the animation time
 		break;
 	case 3:
 		m_state = SP_3_DealDamage;
-		AS_ScreenShake; // shake screen
-		AA_DealDamage; // Deal damage
-		AS_FloatingText; // Spawn damage text
-		AS_Wait; // wait other half of animation time
+		m_animationBuffer.push_back(triple(AS_ScreenShake, AARG_Float, floats({2.f, 0.2f}))); // shake screen, amount of shake and time
+		m_animationBuffer.push_back(triple(AA_DealDamage, AARG_Target, floats())); // Deal damage
+		m_animationBuffer.push_back(triple(AS_FloatingText, AARG_Float, floats())); // Spawn damage text
+		m_animationBuffer.push_back(triple(AS_Wait, AARG_Float, floats({ 0.3f }))); // wait other half of animation time
 		break;
 	case 4:
 		m_state = SP_4_PostSkillAnim;
-		AS_JumpBack; // jump back using animJumpTo's new constructor that just jumps back to active position
-		AC_CameraScale; // zoom 1.0 async
-		AC_CameraFollow; // follow owner
+		m_animationBuffer.push_back(triple(AS_JumpBack, AARG_Target, floats())); // jump back using animJumpTo's new constructor that just jumps back to active position
+		m_animationBuffer.push_back(triple(AC_CameraScale, AARG_Float, floats({ 1.0f }))); // zoom 1.0 async
+		m_animationBuffer.push_back(triple(AC_CameraFollow, AARG_Owner, floats()));; // follow owner
 		break;
 	case 5:
 		m_state = SP_5_SkillDone;
 		_done = true;
-		AC_CameraCenter; // center camera
+		m_animationBuffer.push_back(triple(AC_CameraCenter, AARG_Targets, floats()));; // center camera
 		break;
 	default:
 		break;

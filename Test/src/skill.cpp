@@ -25,6 +25,7 @@ void Skill::DefaultSetup()
 	_targetAmount = TA_One;
 	_defaultTarget = DT_Self;
 	m_progress = 0;
+	_ac._tried = false;
 	_ac._start = 0;
 	_ac._startHard = 1000;
 	_ac._end = 0;
@@ -141,6 +142,8 @@ SkillProgress Skill::Update()
 
 void Skill::Reset()
 {
+	_ac._tried = false;
+	_ac._success = false;
 	m_progress = 0;
 	_done = false;
 }

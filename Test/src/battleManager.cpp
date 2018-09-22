@@ -68,7 +68,7 @@ void BattleManager::ProcessSkill()
 		{
 			Anim_ptr animation = m_graphics->CreateAnimation(x);
 			if (animation)
-				m_graphics->Push_Back_Animation(animation);
+				m_graphics->insert_animation(animation);
 		}
 	}
 }
@@ -96,7 +96,7 @@ void BattleManager::SetSkillArguments(triple& x)
 
 Damage BattleManager::HandleDamage(int target)
 {
-	Damage dmg = _selectedSkill->CalculateDamage();
+	Damage dmg = _selectedSkill->CalculateDamage(*_owner);
 	Fighter_ptr& f = _actors.at(target);
 
 	// Apply first damage modifications
@@ -239,11 +239,7 @@ void BattleManager::UpdateColors()
 {
 	for (auto& x : _actors)
 	{
-		if (_state == BS_SelectTargets || _state == BS_ChooseActor)
-		{
-			m_graphics->UpdateColors(x->GetId(), _selectedIndices.count(x->_BattleFieldPosition), x->Dead, _selectedSkill->action_command_level(m_graphics->get_animation_progress()));
-		}
-		else if (_state == BS_SelectAction)
+		if (_state == BS_SelectAction)
 		{
 			if (_owner->Team == 0)
 			{
@@ -255,13 +251,23 @@ void BattleManager::UpdateColors()
 				}
 			}
 		}
+		else
+		{
+			bool deny = false;
+			if (_state != BS_SelectTargets)
+				deny = true;
+			int actionCommandLevel = 0;
+			if (_owner->_BattleFieldPosition == x->GetId() && _selectedSkill)
+				actionCommandLevel = _selectedSkill->action_command_level(m_graphics->get_animation_progress());
+			m_graphics->UpdateColors(x->GetId(), !deny && _selectedIndices.count(x->_BattleFieldPosition), x->Dead, actionCommandLevel);
+		}
 	}
 }
 
 void BattleManager::Update()
 {
 	// Return if the battle logic is over
-	if (_postBattleState == PBS_FightingInProgress || !Animating())// || _selectedSkill && !_selectedSkill->_done)
+	if (_postBattleState == PBS_FightingInProgress/* && !Animating()*/)// || _selectedSkill && !_selectedSkill->_done)
 	{
 		// Battle stuffs
 		ManageInput();
@@ -275,7 +281,7 @@ void BattleManager::Update()
 	m_graphics->UpdateAnimations();
 
 	// End the battle, gain exp and show stuff
-	if (!Animating() && _state == BS_TurnStart)
+	if (/*!Animating() && */_state == BS_TurnStart)
 	{
 		switch (_postBattleState)
 		{
@@ -321,7 +327,7 @@ void BattleManager::Update()
 
 void BattleManager::ExpAnimation(Fighter_ptr fighter, int xp)
 {
-	m_graphics->Push_Back_Animation(_hud.GetActorHealthBar(fighter)->SetupExpAnimation(fighter->GetExp() + xp));
+	m_graphics->insert_animation(_hud.GetActorHealthBar(fighter)->SetupExpAnimation(fighter->GetExp() + xp));
 	m_graphics->CreateFloatingText(fighter->_BattleFieldPosition, "+" + std::to_string(xp) + " XP");
 }
 
@@ -852,6 +858,7 @@ void BattleManager::HandleAcceptInput()
 
 		_selectedSkill->Reset();
 		UseSkill();
+		Select(0);
 		//_targets = std::vector<int>();
 	}
 	else if (_state == BS_ChooseActor)

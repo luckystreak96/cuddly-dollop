@@ -12,6 +12,7 @@ public:
 	AnimJumpTo(bool jumpToActivePosition, Actor_ptr owner);
 	AnimJumpTo(Vector3f destination, Actor_ptr target);
 	virtual void Update();
+	void first_time();
 
 public:
 	Actor_ptr _target;

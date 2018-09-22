@@ -33,7 +33,7 @@ public:
 	void UpdateAnimations();
 	int GetAnimationsSize() { return m_animations.size(); }
 	bool Animating();
-	void Push_Back_Animation(Anim_ptr anim);
+	void insert_animation(Anim_ptr anim);
 	double get_animation_progress();
 
 public:

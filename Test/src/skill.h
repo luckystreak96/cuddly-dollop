@@ -8,6 +8,7 @@
 #include <memory>
 #include <iostream>
 #include "statusEffect.h"
+#include "statUser.h"
 
 enum BattleState { BS_ChooseActor, BS_TurnStart, BS_SelectAction, BS_SelectTargets, BS_ActionProgress, BS_ActionDone, BS_TurnEnd };
 
@@ -67,7 +68,7 @@ public:
 	virtual void Reset();
 	virtual bool IsReady();
 
-	virtual Damage CalculateDamage() { return Damage(); }
+	virtual Damage CalculateDamage(StatUser& user) { return Damage(); }
 
 	// Make sure all targets are still valid
 	//virtual bool ValidateTargets();

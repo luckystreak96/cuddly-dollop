@@ -15,6 +15,7 @@ public:
 public:
 	bool _done;
 	bool _async;
+	bool _firstTime;
 	double _duration;
 	double _progress;
 };

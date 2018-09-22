@@ -149,7 +149,7 @@ bool Fighter::PredictNextSkill(Fighter_ptr owner, std::vector<Fighter_ptr>* figh
 			done = true;
 
 		//selectedSkill->_owner = owner;
-		selectedSkill->_preCalculatedDamage = selectedSkill->CalculateDamage();
+		selectedSkill->_preCalculatedDamage = selectedSkill->CalculateDamage(*this);
 	}
 
 	_targets.clear();

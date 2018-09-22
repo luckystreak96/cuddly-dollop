@@ -19,7 +19,7 @@ BattleAnimationManager::BattleAnimationManager()
 
 void BattleAnimationManager::UpdateColors(int fighterid, bool selected, bool dead, int actionCommandLevel)
 {
-	m_actors.at(fighterid)->UpdateColor(selected, dead, actionCommandLevel);
+	m_actors.at(fighterid)->UpdateColor(dead, selected, actionCommandLevel);
 }
 
 void BattleAnimationManager::MoveUp(int fighterid, bool foreward)
@@ -55,8 +55,15 @@ double BattleAnimationManager::get_animation_progress()
 	double progress = 0;
 	if (m_animations.size() > 0)
 	{
-		progress = m_animations.front()->_progress;
-		duration = m_animations.front()->_duration;
+		int counter = 0;
+		for (auto& x : m_animations)
+			if (!x->_async)
+				counter++;
+		if (counter <= 1)
+		{
+			progress = m_animations.front()->_progress;
+			duration = m_animations.front()->_duration;
+		}
 	}
 	return progress / duration;
 }
@@ -68,7 +75,7 @@ void BattleAnimationManager::DamageAnimation(int target, Skill_ptr skill, Damage
 	SpawnDamageText(m_actors.at(target), dmg, skill);
 
 	// Color flash
-	m_animations.push_front(Anim_ptr(new AnimColorFlash(Vector3f(3, 3, 5), m_actors[target])));
+	m_animations.push_front(Anim_ptr(new AnimColorFlash(Vector3f(5, 3, 3), m_actors[target])));
 
 	// Particles
 	Vector3f pos = m_actors[target]->GetPos() + Vector3f(0.5f, 0.5f, 0.6f);
@@ -130,6 +137,7 @@ Anim_ptr BattleAnimationManager::CreateAnimation(triple ao)
 	case AS_ColorFlash:
 		break;
 	case AS_ScreenShake:
+		result = Anim_ptr(new AnimScreenShake(args[0], args[1]));
 		break;
 	case AS_BonusEffect:
 		break;
@@ -139,7 +147,7 @@ Anim_ptr BattleAnimationManager::CreateAnimation(triple ao)
 		result = Anim_ptr(new AnimWait(args.at(0)));
 		break;
 	case AS_Animation:
-		result = Anim_ptr(new AnimBasic((Anim_Enum)(int)args.at(0), m_actors.at(_owner), 1));
+		result = Anim_ptr(new AnimBasic((Anim_Enum)(int)args.at(0), m_actors.at(_owner), args.at(1)));
 		result->_async = aa >= AARG_AsyncStart;
 		break;
 	case AS_FloatingText:
@@ -154,6 +162,7 @@ Anim_ptr BattleAnimationManager::CreateAnimation(triple ao)
 		Camera::_currentCam->SetScale(Vector3f(args.at(0), args.at(0), 0));
 		break;
 	case AC_CameraCenter:
+		Camera::_currentCam->SetFollowCenteredXY(Camera::_currentCam->MapCenter());
 		break;
 	case AA_Start:
 		break;
@@ -171,9 +180,9 @@ void BattleAnimationManager::UpdateAnimations()
 	if (m_animations.size() > 0)
 	{
 		bool nonAsyncHit = false;
-		for (int i = 0; i < m_animations.size(); i++)
+		for (int i = 0; i < m_animations.size() && !nonAsyncHit; i++)
 		{
-			if (m_animations.at(i)->_async || i == 0 || !nonAsyncHit)
+			if (m_animations.at(i)->_async || i == 0 || (!m_animations.at(i)->_async && !nonAsyncHit))
 				m_animations.at(i)->Update();
 			if (!m_animations.at(i)->_async)
 				nonAsyncHit = true;
@@ -191,7 +200,7 @@ void BattleAnimationManager::CreateFloatingText(int fighterid, std::string text)
 	FontManager::GetInstance().CreateFloatingText(m_actors.at(fighterid)->GetPosRef(), text);
 }
 
-void BattleAnimationManager::Push_Back_Animation(Anim_ptr anim)
+void BattleAnimationManager::insert_animation(Anim_ptr anim)
 {
 	m_animations.push_back(anim);
 }

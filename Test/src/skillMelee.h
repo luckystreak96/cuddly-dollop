@@ -17,6 +17,7 @@ public:
 	//virtual void ApplyEffect();
 	virtual bool TimingCondition(double progress, double duration);
 	virtual void SetAnimations();
+	virtual Damage CalculateDamage(StatUser& user);
 
 protected:
 	virtual void DefaultSetup();
