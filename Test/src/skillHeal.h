@@ -8,12 +8,13 @@ class SkillHeal : public SkillMelee
 {
 
 public:
-	using SkillMelee::SkillMelee;
+	SkillHeal();
 	//virtual void ApplyEffect();
-	//virtual Damage CalculateDamage();
+	virtual Damage CalculateDamage(StatUser& user);
 
 protected:
 	virtual void DefaultSetup();
+	virtual void ModifyAnimations();
 };
 
 #endif

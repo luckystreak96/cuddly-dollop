@@ -91,7 +91,30 @@ void BattleAnimationManager::DamageAnimation(int target, Skill_ptr skill, Damage
 
 Vector3f BattleAnimationManager::CalculateDamageColor(Skill_ptr skill, Damage dmg)
 {
-	return dmg._critting ? Vector3f(0.35f, 0.31f, 0.87f) : Vector3f(1.0f, 0.2f, 0.2f);
+	// color
+	Vector3f color;
+	if (dmg._critting)
+		// purpleish
+		color += Vector3f(0.35f, 0.31f, 0.87f);
+
+	if (dmg._type != ST_Healing)
+	{
+		if (skill->_ac._success && skill->_ac._type != ACT_Defend ||
+			!skill->_ac._success && skill->_ac._type == ACT_Defend)
+			color += Vector3f(1.0f, 0.0f, 0.0f);
+		else
+			color += Vector3f(1.0f, 0.2f, 0.2f);
+	}
+	else
+	{
+		if (skill->_ac._success)
+			color += Vector3f(0, 1, 0);
+		else
+			color += Vector3f(0.2f, 1, 0.2f);
+	}
+
+	return color;
+	//return dmg._critting ? Vector3f(0.35f, 0.31f, 0.87f) : Vector3f(1.0f, 0.2f, 0.2f);
 }
 
 Vector3f BattleAnimationManager::CalculateTextColor(Skill_ptr skill, Damage dmg)
@@ -109,6 +132,9 @@ Vector3f BattleAnimationManager::CalculateTextColor(Skill_ptr skill, Damage dmg)
 		color = skill->_ac._success ? Vector3f(0, 0.95f, 0.6f) : Vector3f(0, 1, 0);
 	else if (dmg._type == ST_Bonus)
 		color = Vector3f(1, 1.f, 1.f);
+
+	if (skill->_ac._success && skill->_ac._type == ACT_Defend)
+		color += 0.2f;
 
 	return color;
 }
@@ -129,6 +155,8 @@ Anim_ptr BattleAnimationManager::CreateAnimation(triple ao)
 	case AS_JumpTo:
 		actor = m_actors.at(args.at(0));
 		distance = actor->GetId() > 3 ? -0.7f : 0.7f;
+		if (m_actors.at(_owner)->GetId() / 4 == actor->GetId() / 4)
+			distance = -distance;
 		result = Anim_ptr(new AnimJumpTo(actor->GetPos() + Vector3f(distance, 0, 0), m_actors.at(_owner)));
 		break;
 	case AS_JumpBack:

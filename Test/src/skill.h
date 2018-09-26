@@ -15,7 +15,7 @@ enum BattleState { BS_ChooseActor, BS_TurnStart, BS_SelectAction, BS_SelectTarge
 class Skill;
 typedef std::shared_ptr<Skill> Skill_ptr;
 
-enum ActionCommandType { ACT_Defend, ACT_Special };
+enum ActionCommandType { ACT_Attack, ACT_Defend, ACT_Special };
 enum SkillType { ST_Physical, ST_Magical, ST_Healing, ST_Bonus };
 enum TargetMode { TM_Enemy, TM_Ally, TM_Alive, TM_Dead, TM_Any };
 enum DefaultTarget { DT_Self, DT_Enemy, DT_Ally };
@@ -116,6 +116,7 @@ protected:
 protected:
 	virtual void DefaultSetup();
 	virtual void SetAnimations();
+	virtual void ModifyAnimations();// method so children can change little things
 };
 
 

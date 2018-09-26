@@ -238,22 +238,22 @@ void Fighter::ApplyLethal()
 
 void Fighter::MagicalDefenseActionCommand(Damage& dmg)
 {
-	dmg._value -= Defense.Real / 2;
+	dmg._value -= Defense.Real;
 }
 
 void Fighter::MagicalOffenseActionCommand(Damage& dmg)
 {
-	dmg._value += (dmg._value > 0) ? Strength.Real / 2 : -Strength.Real / 2;
+	dmg._value += (dmg._value > 0) ? Strength.Real : -Strength.Real;
 }
 
 void Fighter::PhysicalDefenseActionCommand(Damage& dmg)
 {
-	dmg._value -= Defense.Real / 2 + fmax(Level / 2, 1);
+	dmg._value -= Defense.Real + fmax(Level / 2, 1);
 }
 
 void Fighter::PhysicalOffenseActionCommand(Damage& dmg)
 {
-	dmg._value += Strength.Real / 2 + Level;
+	dmg._value += Strength.Real + Level;
 }
 
 void Fighter::SpecialActionCommand(Damage& dmg)

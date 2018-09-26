@@ -83,6 +83,7 @@ void SkillMelee::SetAnimations()
 	default:
 		break;
 	}
+	ModifyAnimations();
 }
 
 //SkillProgress SkillMelee::Update()

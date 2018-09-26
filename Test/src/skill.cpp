@@ -12,6 +12,10 @@ Skill::Skill()
 	DefaultSetup();
 }
 
+void Skill::ModifyAnimations()
+{
+}
+
 void Skill::DefaultSetup()
 {
 	_cooldown = 0;
@@ -31,7 +35,7 @@ void Skill::DefaultSetup()
 	_ac._end = 0;
 	_ac._success = false;
 	_ac._animProg = 1;
-	_ac._type = ACT_Defend;
+	_ac._type = ACT_Attack;
 	_critting = false;
 	_skillUpgradeProgress = 0;
 	_skillUpgradeMax = 0;
@@ -60,10 +64,10 @@ void Skill::CheckActionCommand(double percentProgress)
 				}
 				else if (_input.count(A_Accept))
 				{
-
 					if (percentProgress >= _ac._start)
 					{
-						_ac._type = ACT_Defend;
+						// defend or attack is determined by battlemanager
+						//_ac._type = ACT_Defend;
 						_ac._success = true;
 					}
 				}
@@ -79,6 +83,7 @@ void Skill::Setup()
 {
 	_ac._tried = false;
 	_ac._success = false;
+	_ac._type = ACT_Attack;
 	_animProg = 0;
 	m_progress = 0;
 	m_state = SP_1_Before_Anim;

@@ -103,6 +103,9 @@ Damage BattleManager::HandleDamage(int target)
 	if (_selectedSkill->_skillType != ST_Healing)
 		f->DamageModifiers(dmg, dmg._critting);
 
+	if (_owner->Team != 0 && f->Team == 0 && _selectedSkill->_ac._type == ACT_Attack)
+			_selectedSkill->_ac._type = ACT_Defend;
+
 	if (_selectedSkill->_ac._success)
 	{
 		// Your team under attack from enemy -> Defense Action Command
