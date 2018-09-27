@@ -6,6 +6,8 @@
 #include "actor.h"
 #include "mathutils.h"
 #include "battleAnimation.h"
+#include "battleHUD.h"
+#include "battleUnit.h"
 
 class BattleAnimationManager
 {
@@ -28,6 +30,7 @@ public:
 
 	// Specific Animations
 	void DamageAnimation(int target, Skill_ptr skill, Damage dmg);
+	void ExpAnimation(int id, int xp);
 
 	// Animations
 	void UpdateAnimations();
@@ -36,12 +39,21 @@ public:
 	void insert_animation(Anim_ptr anim);
 	double get_animation_progress();
 
+	// HUD
+	void SetupHUD(BattleUnit unit);
+	void UpdateHUD();
+
+	void SetRender();
+
 public:
 	int _owner;
 
 private:
 	std::map<int, Actor_ptr> m_actors;
 	std::deque<Anim_ptr> m_animations;
+
+	BattleHUD m_hud;
+	int m_particleSprite;
 };
 
 #endif

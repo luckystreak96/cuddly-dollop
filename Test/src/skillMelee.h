@@ -21,7 +21,7 @@ public:
 
 protected:
 	virtual void DefaultSetup();
-	Vector3f _basePos;
+	//Vector3f _basePos;
 };
 
 #endif

@@ -2,6 +2,7 @@
 #include "renderer.h"
 #include "fontManager.h"
 #include "hudArrow.h"
+#include "hudTurnOrder.h"
 
 BattleHUD::BattleHUD()
 {
@@ -9,34 +10,44 @@ BattleHUD::BattleHUD()
 
 void BattleHUD::Destroy()
 {
-	for (auto& x : _hudComponents)
-		x->Destroy();
-	_hudComponents.clear();
+	for (auto& x : _units)
+	{
+		for (auto& y : x.second.hud)
+		{
+			y->Destroy();
+		}
+		x.second.hud.clear();
+	}
+	//_hudComponents.clear();
 
 	_hudBG.clear();
 }
 
-void BattleHUD::Init(std::map<int, std::pair<Fighter_ptr, Actor_ptr>> map)
+void BattleHUD::AddUnit(BattleUnit unit)
 {
-	_actors = map;
+	HudBattleUnit hudUnit;
+	hudUnit.unit = unit;
+	_units.emplace(unit.id, hudUnit);
 
-	int enemies = 0;
-	int party = 0;
-	for (auto& x : _actors)
-	{
-		// Health bar
-		AddActorHealthBar(x.second, party, enemies);
+	SetupUnit(unit.id);
+}
 
-		//if (x->_Fighter->Team != 0)
-		{
-			// Attack prediction
-			AddActorAttackPrediction(x.second);
+void BattleHUD::SetupUnit(int id)
+{
+	// Health bar
+	AddActorHealthBar(id);
 
-			// Attack prediction arrow
-			AddActorAttackPredictionArrow(x.second);
-		}
-	}
+	// Attack prediction
+	AddActorAttackPrediction(id);
 
+	// Attack prediction arrow
+	AddActorAttackPredictionArrow(id);
+}
+
+
+
+void BattleHUD::Init()
+{
 	float top = OrthoProjInfo::GetRegularInstance().Top;
 	float right = OrthoProjInfo::GetRegularInstance().Right;
 	float size = OrthoProjInfo::GetRegularInstance().Size;
@@ -60,17 +71,7 @@ void BattleHUD::Init(std::map<int, std::pair<Fighter_ptr, Actor_ptr>> map)
 	_hudBG.push_back(bottomBG);
 }
 
-void BattleHUD::Init(std::vector<Fighter_ptr> fighters, std::map<int, Actor_ptr> actors)
-{
-	_actors = std::map<int, std::pair<Fighter_ptr, Actor_ptr>>();
-	for (auto& x : fighters)
-		_actors.emplace(x->_BattleFieldPosition, std::pair<Fighter_ptr, Actor_ptr>(x, actors.at(x->_BattleFieldPosition)));
-
-	Init(_actors);
-}
-
-
-void BattleHUD::AddActorHealthBar(std::pair<Fighter_ptr, Actor_ptr> ap, int& party, int& enemies)
+void BattleHUD::AddActorHealthBar(int id)
 {
 	Vector3f pos;
 	int right = (int)OrthoProjInfo::GetRegularInstance().Right * 2;
@@ -78,84 +79,88 @@ void BattleHUD::AddActorHealthBar(std::pair<Fighter_ptr, Actor_ptr> ap, int& par
 	int size = (int)OrthoProjInfo::GetRegularInstance().Size;
 	float orthoWidth = (float)right / (float)size;
 	float orthoHeight = (float)up / (float)size;
-	std::cout << orthoWidth << std::endl;
-	if (ap.first->Team == 0)
+
+	HudBattleUnit& u = _units.at(id);
+
+	if (u.unit.team == 0)
 	{
 		float xpos1 = (0.25f / 15.f) * orthoWidth;
 		float xpos2 = (2.5f / 15.f) * orthoWidth;
 		float ypos = (0.135f / 8.4375f) * orthoHeight;
-		pos = Vector3f(xpos1 + xpos2 * party, ypos, 0);
-		party++;
+		pos = Vector3f(xpos1 + xpos2 * (u.unit.id % 4), ypos, 0);
 	}
 	else
 	{
 		float xpos1 = (12.8f / 15.f) * orthoWidth;
 		float xpos2 = (2.5f / 15.f) * orthoWidth;
 		float ypos = 7.825f / 8.4375f;
-		pos = Vector3f(xpos1 - xpos2 * enemies, ypos * orthoHeight, 0);
-		enemies++;
+		pos = Vector3f(xpos1 - xpos2 * (u.unit.id % 4), ypos * orthoHeight, 0);
 	}
 
-	HudComp_ptr healthBar = std::make_shared<HudHealthBar>(HudHealthBar(ap, pos));
-	ap.first->_observers.push_back(healthBar);
-	ap.second->_observers.push_back(healthBar);
-	_hudComponents.push_back(healthBar);
+	HudComp_ptr healthBar = std::shared_ptr<HudHealthBar>(new HudHealthBar(u.unit, pos));
+	u.unit.fobservers->push_back(healthBar);
+	u.unit.aobservers->push_back(healthBar);
+	u.hud.push_back(healthBar);
 }
 
-void BattleHUD::AddActorAttackPrediction(std::pair<Fighter_ptr, Actor_ptr> ap)
+void BattleHUD::AddActorAttackPrediction(int id)
 {
-	HudComp_ptr damagePrediction = std::make_shared<HudTurnOrder>(HudTurnOrder(ap));
-	ap.first->_observers.push_back(damagePrediction);
-	ap.second->_observers.push_back(damagePrediction);
-	_hudComponents.push_back(damagePrediction);
+	BattleUnit& u = _units.at(id).unit;
+	HudComp_ptr damagePrediction = std::shared_ptr<HudTurnOrder>(new HudTurnOrder(u));
+	u.aobservers->push_back(damagePrediction);
+	u.fobservers->push_back(damagePrediction);
+	_units.at(id).hud.push_back(damagePrediction);
 }
 
-void BattleHUD::AddActorAttackPredictionArrow(std::pair<Fighter_ptr, Actor_ptr> fa)
+void BattleHUD::AddActorAttackPredictionArrow(int id)
 {
-	HudComp_ptr arrow = HudComp_ptr(new HudArrow(fa, &_actors));
-	fa.first->_observers.push_back(arrow);
-	_hudComponents.push_back(arrow);
+	HudComp_ptr arrow = HudComp_ptr(new HudArrow(_units.at(id).unit, &_units));
+	_units.at(id).unit.fobservers->push_back(arrow);
+	_units.at(id).hud.push_back(arrow);
 }
 
 void BattleHUD::ToggleTurnOrderDisplay(bool hidden)
 {
 	HudTurnOrder* pred;
-	for (auto& x : _hudComponents)
-	{
-		pred = dynamic_cast<HudTurnOrder*>(x.get());
-		if (pred != NULL)
+	for (auto& y : _units)
+		for (auto& x : y.second.hud)
 		{
-			pred->ToggleDisplay(hidden);
+			pred = dynamic_cast<HudTurnOrder*>(x.get());
+			if (pred != NULL)
+			{
+				pred->ToggleDisplay(hidden);
+			}
 		}
-	}
 }
 
 void BattleHUD::ToggleDamagePredictionArrowDisplay(bool hidden)
 {
-	for (auto& x : _actors)
-		if (x.second.first->Team == 0 && x.second.first->NoPredictCountDown > 0)
+	for (auto& x : _units)
+		if (x.second.unit.team == 0 /*&& x.second.first->NoPredictCountDown > 0*/)
 			hidden = true;
 
 	HudArrow* pred;
-	for (auto& x : _hudComponents)
-	{
-		pred = dynamic_cast<HudArrow*>(x.get());
-		if (pred != NULL)
+	for (auto& y : _units)
+		for (auto& x : y.second.hud)
 		{
-			//if (pred->_targeter->_Fighter->Team == 0 && hidden)
-			//	continue;
-			pred->ToggleHidden(hidden);
+			pred = dynamic_cast<HudArrow*>(x.get());
+			if (pred != NULL)
+			{
+				//if (pred->_targeter->_Fighter->Team == 0 && hidden)
+				//	continue;
+				pred->ToggleHidden(hidden);
+			}
 		}
-	}
 }
 
-HudHealthBar* BattleHUD::GetActorHealthBar(Fighter_ptr fighter)
+HudHealthBar* BattleHUD::GetActorHealthBar(int id)
 {
 	HudHealthBar* bar;
-	for (auto& x : _hudComponents)
+	auto& y = _units.at(id).hud;
+	for (auto& x : y)
 	{
 		bar = dynamic_cast<HudHealthBar*>(x.get());
-		if (bar != NULL && bar->_actor.first == fighter)
+		if (bar != NULL)
 			return bar;
 	}
 }
@@ -165,7 +170,9 @@ void BattleHUD::Update()
 	if (OrthoProjInfo::GetRegularInstance().changed)
 	{
 		Destroy();
-		Init(_actors);
+		Init();
+		for (auto& x : _units)
+			SetupUnit(x.first);
 	}
 
 	// Update target arrows
@@ -180,8 +187,9 @@ void BattleHUD::Update()
 
 void BattleHUD::SetRender()
 {
-	for (auto& x : _hudComponents)
-		x->SetRender();
+	for (auto& y : _units)
+		for (auto& x : y.second.hud)
+			x->SetRender();
 
 	for (auto& x : _hudBG)
 		Renderer::GetInstance().Add(x);

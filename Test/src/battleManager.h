@@ -8,6 +8,7 @@
 #include "fighter.h"
 #include "fontManager.h"
 #include "battleHUD.h"
+#include "battleUnit.h"
 
 enum PostBattleState { PBS_FightingInProgress, PBS_FightingDone, PBS_ExpAnimation, PBS_ConfirmCompletion, PBS_PostBattleComplete };
 
@@ -19,6 +20,7 @@ public:
 	BattleManager();
 	BattleManager(std::vector<Fighter_ptr> actors);
 	~BattleManager();
+	void SetupHUD();
 	void Update();
 	int FindWinner();
 	void SetRender();
@@ -41,7 +43,7 @@ private:
 	// Skills
 	Damage HandleDamage(int target);
 	//void ApplyBonusEffect(Fighter_ptr target);
-	bool ValidateTargets();
+	bool ValidateTargets(Fighter_ptr f);
 	void HandleActionCommand();
 
 	// Graphics
@@ -69,6 +71,9 @@ private:
 	void HandleCancelInput();
 
 	void PrintAttackPrediction(Fighter_ptr actor);
+
+	// HUD
+	BattleUnit create_battle_unit(Fighter_ptr fighter);
 
 public:
 	std::deque<Fighter_ptr> _actorQueue;

@@ -46,6 +46,7 @@ SceneBattle::SceneBattle() : m_zoom(false)
 	}
 
 	m_battle.GetGraphics()->SetActors(actors);
+	m_battle.SetupHUD();
 
 	SoundManager::GetInstance();
 	m_fade.SetFade(true);
@@ -278,7 +279,8 @@ void SceneBattle::Draw()
 	for (auto& a : m_actors)
 		Renderer::GetInstance().Add(a);
 
-	m_battle.SetRender();
+	//m_battle.SetRender();
+	m_battle.GetGraphics()->SetRender();
 
 	// Can enable post-processing effects here
 	Scene::DrawEnd();

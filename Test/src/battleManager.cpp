@@ -57,11 +57,20 @@ void BattleManager::ProcessSkill()
 		// x is an action
 		if (get<0>(x) > AA_Start)
 		{
-			// Deal damage
-			int target = (int)get<2>(x).front();
-			Damage dmg = HandleDamage(target);
-			// Show dmg
-			m_graphics->DamageAnimation(target, _selectedSkill, dmg);
+			if (get<0>(x) == AA_DealDamage)
+			{
+				int t = get<2>(x).front();
+				// Deal damage
+				Damage dmg = HandleDamage(t);
+				// Show dmg
+				m_graphics->DamageAnimation(t, _selectedSkill, dmg);
+
+				if (_targets.size() > 1)
+				{
+					_selectedSkill->SetAnimProgressRepeat();
+					_targets.erase(t);
+				}
+			}
 		}
 		// x is an animation
 		else
@@ -75,18 +84,30 @@ void BattleManager::ProcessSkill()
 
 void BattleManager::SetSkillArguments(triple& x)
 {
-	get<2>(x).clear();
 	switch (get<1>(x))
 	{
-	case AARG_Owner:
+	case AARG_OwnerTargets:
+		get<2>(x).clear();
 		get<2>(x).push_back((float)_owner->GetId());
+		for (auto y : _targets)
+			get<2>(x).push_back((float)y);
+		break;
+	case AARG_Owner:
+		if (get<2>(x).size() < 1)
+			get<2>(x).push_back((float)_owner->GetId());
+		else
+			get<2>(x)[0] = (float)_owner->GetId();
 		break;
 	case AARG_Targets:
+		get<2>(x).clear();
 		for (auto y : _targets)
 			get<2>(x).push_back((float)y);
 		break;
 	case AARG_Target:
-		get<2>(x).push_back((float)*_targets.begin());
+		if (get<2>(x).size() < 1)
+			get<2>(x).push_back((float)*_targets.begin());
+		else
+			get<2>(x)[0] = (float)*_targets.begin();
 		break;
 	default:
 		break;
@@ -104,7 +125,7 @@ Damage BattleManager::HandleDamage(int target)
 		f->DamageModifiers(dmg, dmg._critting);
 
 	if (_owner->Team != 0 && f->Team == 0 && _selectedSkill->_ac._type == ACT_Attack)
-			_selectedSkill->_ac._type = ACT_Defend;
+		_selectedSkill->_ac._type = ACT_Defend;
 
 	if (_selectedSkill->_ac._success)
 	{
@@ -175,6 +196,32 @@ Damage BattleManager::HandleDamage(int target)
 //	target->TakeDamage(dmg);
 //}
 
+BattleUnit BattleManager::create_battle_unit(Fighter_ptr fighter)
+{
+	BattleUnit unit;
+	unit.name = fighter->GetName();
+	unit.fobservers = &fighter->_observers;
+	unit.stats = (StatUser*)&*fighter;
+	unit.id = fighter->GetId();
+	unit.team = fighter->Team;
+	unit.turnOrder = &fighter->_OrderPosition;
+	unit.dead = &fighter->Dead;
+	unit.targets = fighter->GetTargets();
+
+	return unit;
+}
+
+void BattleManager::SetupHUD()
+{
+	// setup hud
+	for (auto& x : _actors)
+	{
+		BattleUnit unit = create_battle_unit(x);
+		m_graphics->SetupHUD(unit);
+	}
+}
+
+
 void BattleManager::Init()
 {
 	m_graphics = std::shared_ptr<BattleAnimationManager>(new BattleAnimationManager());
@@ -186,7 +233,7 @@ void BattleManager::Init()
 		m_isPlayerTurn = !singleFile;
 	}
 	m_attackSequenceProgress = 0;
-	//_hud.Init(_actors);
+
 	_postBattleState = PBS_FightingInProgress;
 	_showingSkills = false;
 	_state = m_singleFileAttacks ? BS_TurnStart : BS_ChooseActor;
@@ -311,7 +358,8 @@ void BattleManager::Update()
 			{
 				if (actor->Team == 0 && !actor->Dead)
 				{
-					ExpAnimation(actor, xp);
+					//ExpAnimation(actor, xp);
+					m_graphics->ExpAnimation(actor->GetId(), xp);
 				}
 			}
 
@@ -325,13 +373,14 @@ void BattleManager::Update()
 		}
 	}
 
-	_hud.Update();
+	m_graphics->UpdateHUD();
+	//_hud.Update();
 }
 
 void BattleManager::ExpAnimation(Fighter_ptr fighter, int xp)
 {
-	m_graphics->insert_animation(_hud.GetActorHealthBar(fighter)->SetupExpAnimation(fighter->GetExp() + xp));
-	m_graphics->CreateFloatingText(fighter->_BattleFieldPosition, "+" + std::to_string(xp) + " XP");
+	//m_graphics->insert_animation(_hud.GetActorHealthBar(fighter->GetId())->SetupExpAnimation(fighter->GetExp() + xp));
+	//m_graphics->CreateFloatingText(fighter->_BattleFieldPosition, "+" + std::to_string(xp) + " XP");
 }
 
 // Move Animation
@@ -361,13 +410,13 @@ void BattleManager::UpdateSkillDisplay()
 	}
 }
 
-bool BattleManager::ValidateTargets()
+bool BattleManager::ValidateTargets(Fighter_ptr f)
 {
 	bool valid = false;
 
 	// Check if all targets are alive
-	for (auto& x : _targets)
-		if (_actors.at(x)->RespectsTargeting(_owner, _selectedSkill->_targetMode))
+	for (auto& x : *f->GetTargets())
+		if (_selectedSkill && _actors.at(x)->RespectsTargeting(_owner, _selectedSkill->_targetMode))
 		{
 			valid = true;
 			break;
@@ -382,7 +431,7 @@ void BattleManager::TurnStart()
 	for (auto& x : _actors)
 	{
 		// Setup next skill if the current skill targets are invalidated
-		if (x->Team != 0 && x->PredictedSkill != NULL && ValidateTargets() == false)
+		if (x->Team != 0 && x->PredictedSkill != NULL && ValidateTargets(x) == false)
 		{
 			x->PredictNextSkill(x, &_actors);
 			PrintAttackPrediction(x);
@@ -391,7 +440,7 @@ void BattleManager::TurnStart()
 
 	if (_owner->Team != 0)
 	{
-		for (auto x : _owner->GetTargets())
+		for (auto x : *_owner->GetTargets())
 			_targets.insert(x);
 	}
 

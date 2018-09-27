@@ -1,6 +1,4 @@
 #include "skillMelee.h"
-#include "battleManager.h"
-#include "animJumpTo.h"
 #include "animBasic.h"
 
 void SkillMelee::DefaultSetup()

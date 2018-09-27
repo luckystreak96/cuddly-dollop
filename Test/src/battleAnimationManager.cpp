@@ -9,12 +9,13 @@
 #include "animColorFlash.h"
 #include "particleManager.h"
 #include "soundManager.h"
+#include "renderer.h"
 
 using namespace std;
 
 BattleAnimationManager::BattleAnimationManager()
 {
-
+	m_particleSprite = PS_Star;
 }
 
 void BattleAnimationManager::UpdateColors(int fighterid, bool selected, bool dead, int actionCommandLevel)
@@ -81,7 +82,7 @@ void BattleAnimationManager::DamageAnimation(int target, Skill_ptr skill, Damage
 	Vector3f pos = m_actors[target]->GetPos() + Vector3f(0.5f, 0.5f, 0.6f);
 	Particle_ptr particles = Particle_ptr(new ParticleGenerator());
 	particles->SetPowerLevel(0.3f);
-	particles->Init(PT_Explosion, abs(dmg._value), pos, false, "star.png");
+	particles->Init(PT_Explosion, abs(dmg._value), pos, false, SpriteFromEnum.at((ParticleSprite)m_particleSprite));
 	particles->SetColor(CalculateDamageColor(skill, dmg));
 	ParticleManager::GetInstance().AddParticles(particles);
 
@@ -149,6 +150,7 @@ Anim_ptr BattleAnimationManager::CreateAnimation(triple ao)
 	Vector3f pos;
 	Actor_ptr actor;
 	float distance;
+	int counter = 0;
 
 	switch (get<0>(ao))
 	{
@@ -170,6 +172,12 @@ Anim_ptr BattleAnimationManager::CreateAnimation(triple ao)
 	case AS_BonusEffect:
 		break;
 	case AS_MoveTo:
+		if (aa == AARG_Owner)
+			actor = m_actors.at(_owner);
+		else
+			actor = m_actors.at(args[0]);
+
+		result = Anim_ptr(new AnimMoveTo(actor->GetPos() + Vector3f(args[1], args[2], 0), actor));
 		break;
 	case AS_Wait:
 		result = Anim_ptr(new AnimWait(args.at(0)));
@@ -191,6 +199,9 @@ Anim_ptr BattleAnimationManager::CreateAnimation(triple ao)
 		break;
 	case AC_CameraCenter:
 		Camera::_currentCam->SetFollowCenteredXY(Camera::_currentCam->MapCenter());
+		break;
+	case AO_DamageParticle:
+		m_particleSprite = args[0];
 		break;
 	case AA_Start:
 		break;
@@ -274,3 +285,27 @@ void BattleAnimationManager::SpawnDamageText(Actor_ptr target, Damage dmg, Skill
 
 	FontManager::GetInstance().AddFont(font);
 }
+
+void BattleAnimationManager::SetupHUD(BattleUnit unit)
+{
+	unit.position = &m_actors.at(unit.id)->GetPosRef();
+	unit.aobservers = &m_actors.at(unit.id)->_observers;
+	m_hud.AddUnit(unit);
+}
+
+void BattleAnimationManager::UpdateHUD()
+{
+	m_hud.Update();
+}
+
+void BattleAnimationManager::ExpAnimation(int id, int xp)
+{
+	insert_animation(m_hud.GetActorHealthBar(id)->SetupExpAnimation(xp));
+	CreateFloatingText(id, "+" + std::to_string(xp) + " XP");
+}
+
+void BattleAnimationManager::SetRender()
+{
+	m_hud.SetRender();
+}
+

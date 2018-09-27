@@ -1,16 +1,17 @@
 #ifndef BATTLE_HUD_H__
 #define BATTLE_HUD_H__
 
-#include "actor.h"
+//#include "actor.h"
 #include "hudHealthBar.h"
-#include "hudTurnOrder.h"
+#include "battleUnit.h"
+//#include "hudTurnOrder.h"
+#include <map>
 
 class BattleHUD
 {
 public:
 	BattleHUD();
-	void Init(std::vector<Fighter_ptr> fighters, std::map<int, Actor_ptr> actors);
-	void Init(std::map<int, std::pair<Fighter_ptr, Actor_ptr>> map);
+	void Init();
 	void Update();
 	void SetRender();
 	void Destroy();
@@ -18,16 +19,20 @@ public:
 	void ToggleDamagePredictionArrowDisplay(bool hidden);
 
 	// Returns the HudHealthBar attached to the specified actor
-	HudHealthBar* GetActorHealthBar(Fighter_ptr fighter);
+	HudHealthBar* GetActorHealthBar(int id);
+
+	void AddUnit(BattleUnit unit);
+	void SetupUnit(int id);
 
 private:
-	void AddActorHealthBar(std::pair<Fighter_ptr, Actor_ptr> ap, int& party, int& enemies);
-	void AddActorAttackPrediction(std::pair<Fighter_ptr, Actor_ptr> ap);
-	void AddActorAttackPredictionArrow(std::pair<Fighter_ptr, Actor_ptr>);
+	void AddActorHealthBar(int id);
+	void AddActorAttackPrediction(int id);
+	void AddActorAttackPredictionArrow(int id);
 
-public:
-	std::map<int, std::pair<Fighter_ptr, Actor_ptr>> _actors;
-	std::vector<HudComp_ptr> _hudComponents;
+private:
+	//std::map<int, Actor_ptr> _actors;
+	//std::vector<HudComp_ptr> _hudComponents;
+	std::map<int, HudBattleUnit> _units;
 
 	std::vector<GraphComp_ptr> _hudBG;
 };

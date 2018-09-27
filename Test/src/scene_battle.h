@@ -9,6 +9,7 @@
 #include "collisionManager.h"
 #include "eventManager.h"
 #include "battleManager.h"
+#include "actor.h"
 
 class SceneBattle : public Scene
 {

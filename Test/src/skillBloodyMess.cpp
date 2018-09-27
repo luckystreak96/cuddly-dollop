@@ -1,13 +1,15 @@
 #include "skillBloodyMess.h"
 #include "soundManager.h"
 #include "particleManager.h"
-#include "gameData.h"
-#include "animWait.h"
-#include "animColorFlash.h"
+
+SkillBloodyMess::SkillBloodyMess() : SkillRanged()
+{
+	DefaultSetup();
+}
 
 void SkillBloodyMess::DefaultSetup()
 {
-	SkillRanged::DefaultSetup();
+	//SkillRanged::DefaultSetup();
 	_name = "Bloody Mess";
 	_targetMode = TM_Alive;
 	_targetAmount = TA_Party;
@@ -15,30 +17,47 @@ void SkillBloodyMess::DefaultSetup()
 	_ac._start = 0.15;
 	_ac._startHard = 0.35;
 	_ac._end = 0.5;
-	_ac._animProg = 1;
+	_ac._animProg = 2;
 }
 
-//Damage SkillBloodyMess::CalculateDamage()
-//{
-//	// Crit chance
-//	int roll = rand() % 100;
-//	if (roll <= _owner.lock()->_Fighter->Crit.Modified)
-//		_critting = true;
-//	else
-//		_critting = false;
-//
-//	// Damage
-//	int dmg = 4 + _owner.lock()->_Fighter->Strength.Modified * 1.6f + _owner.lock()->_Fighter->GetLevel();
-//	dmg += rand() % max((dmg / 20), 2 + _owner.lock()->_Fighter->GetLevel());
-//	if (_critting)
-//		dmg *= 2;
-//
-//	Damage result;
-//	result._value = dmg;
-//	result._type = ST_Magical;
-//
-//	return result;
-//}
+Damage SkillBloodyMess::CalculateDamage(StatUser& user)
+{
+	// Crit chance
+	int roll = rand() % 100;
+	if (roll <= user.Crit.Modified * 2)
+		_critting = true;
+	else
+		_critting = false;
+
+	// Damage
+	int dmg = 4 + user.Strength.Modified * 1.6f + user.GetLevel();
+	dmg += rand() % (user.GetLevel() + 2);
+	if (_critting)
+		dmg *= 2;
+
+	Damage result;
+	result._value = dmg;
+	result._type = ST_Magical;
+	result._critting = _critting;
+
+	return result;
+}
+
+void SkillBloodyMess::ModifyAnimations()
+{
+	switch (m_progress)
+	{
+	case 3:
+		std::get<2>(m_animationBuffer[3])[0] = 0.25f;// modify wait
+		m_animationBuffer.insert(m_animationBuffer.begin() + 1, triple(AO_DamageParticle, AARG_Float, floats({1})));
+		m_animationBuffer.insert(m_animationBuffer.end(), triple(AO_DamageParticle, AARG_Float, floats({0})));
+		//std::get<1>(m_animationBuffer[1]) = AARG_FloatTargets;// modify aarg
+		//std::get<2>(m_animationBuffer[1]).push_back(PT_Explosion);// modify aarg
+		break;
+	default:
+		break;
+	}
+}
 //
 //void SkillBloodyMess::ApplyEffect()
 //{

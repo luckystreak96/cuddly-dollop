@@ -1,14 +1,62 @@
 #include "skillRanged.h"
-#include "battleManager.h"
-#include "animJumpTo.h"
 #include "animBasic.h"
-#include "animMoveTo.h"
+
+SkillRanged::SkillRanged() : Skill()
+{
+	DefaultSetup();
+}
 
 void SkillRanged::DefaultSetup()
 {
-	Skill::DefaultSetup();
+	//Skill::DefaultSetup();
 	_name = "Skill Ranged -_-";
-	_targetProgress = 0;
+	//_targetProgress = 0;
+}
+
+Damage SkillRanged::CalculateDamage(StatUser& user)
+{
+	Damage dmg;
+	dmg._value = 17;
+	return dmg;
+}
+
+void SkillRanged::SetAnimations()
+{
+	switch (m_progress)
+	{
+	case 1:
+		m_state = SP_1_Before_Anim;// warn others that we're coming
+		break;
+	case 2:
+		m_state = SP_2_BeginAnim;
+		m_animationBuffer.push_back(triple(AC_CameraFollow, AARG_OwnerTargets, floats({ 0 }))); // follow the targets and player
+		m_animationBuffer.push_back(triple(AC_CameraScale, AARG_Float, floats({ 1.5f }))); // zoom 1.5
+		m_animationBuffer.push_back(triple(AS_MoveTo, AARG_Owner, floats({ 0, 1, 0 }))); // move self forward (1, 0)
+		m_animationBuffer.push_back(triple(AS_Animation, AARG_FloatAsync, floats({ AE_Attack, 1.0f }))); // smack animation async (animation, seconds)
+		m_animationBuffer.push_back(triple(AS_Wait, AARG_Float, floats({ 0.5f }))); // wait half the animation time
+		break;
+	case 3:
+		m_state = SP_3_DealDamage;
+		m_animationBuffer.push_back(triple(AS_ScreenShake, AARG_Float, floats({ 0.5f, 0.1f }))); // shake screen, amount of shake and time
+		m_animationBuffer.push_back(triple(AA_DealDamage, AARG_Targets, floats())); // Deal damage
+		m_animationBuffer.push_back(triple(AS_FloatingText, AARG_Float, floats())); // Spawn damage text
+		m_animationBuffer.push_back(triple(AS_Wait, AARG_Float, floats({ 0.5f }))); // wait other half of animation time
+		break;
+	case 4:
+		m_state = SP_4_PostSkillAnim;
+		//m_animationBuffer.push_back(triple(AS_JumpBack, AARG_Target, floats())); // jump back using animJumpTo's new constructor that just jumps back to active position
+		m_animationBuffer.push_back(triple(AC_CameraScale, AARG_Float, floats({ 1.0f }))); // zoom 1.0 async
+		m_animationBuffer.push_back(triple(AC_CameraFollow, AARG_Owner, floats()));; // follow owner
+		break;
+	case 5:
+		m_state = SP_5_SkillDone;
+		_done = true;
+		m_animationBuffer.push_back(triple(AC_CameraCenter, AARG_Targets, floats()));; // center camera
+		break;
+	default:
+		break;
+	}
+	ModifyAnimations();
 }
 
 // Must return the new state

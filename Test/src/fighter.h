@@ -41,7 +41,7 @@ public:
 	// Turn and targets
 	virtual bool RespectsTargeting(Fighter_ptr owner, int targetMode);
 	virtual void TurnStart(std::vector<Fighter_ptr>& actors);
-	std::vector<int> GetTargets() { return _targets; }
+	std::vector<int>* GetTargets() { return &_targets; }
 
 	// Returns whether a skill could be chosen or not
 	virtual bool PredictNextSkill(Fighter_ptr owner, std::vector<Fighter_ptr>* actors);

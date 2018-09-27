@@ -24,11 +24,12 @@ enum TargetAmount { TA_One, TA_Party };
 enum AnimationOperation {
 	AS_JumpTo, AS_JumpBack, AS_ColorFlash, AS_ScreenShake, AS_BonusEffect, AS_MoveTo, AS_Wait, AS_Animation, AS_FloatingText,
 	AC_CameraFollow, AC_CameraScale, AC_CameraCenter,
+	AO_DamageParticle,
 	AA_Start, AA_DealDamage
 }; // AA_Start is there to be able to do > on the enum
 
 enum AnimationArgument {
-	AARG_Owner, AARG_Targets, AARG_Target, AARG_Float, AARG_AsyncStart, AARG_FloatAsync
+	AARG_Owner, AARG_Targets, AARG_FloatTargets, AARG_Target, AARG_OwnerTargets, AARG_Float, AARG_AsyncStart, AARG_FloatAsync
 };
 
 //using namespace std;
@@ -67,6 +68,7 @@ public:
 	virtual std::vector<triple> GetAnimations();
 	virtual void Reset();
 	virtual bool IsReady();
+	void SetAnimProgressRepeat() { --m_progress; }
 
 	virtual Damage CalculateDamage(StatUser& user) { return Damage(); }
 

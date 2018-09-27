@@ -35,7 +35,7 @@ Damage SkillHeal::CalculateDamage(StatUser& user)
 		_critting = false;
 
 	// Damage
-	int dmg = 6 + user.Strength.Modified * 2.0f + rand() % (user.GetLevel() + 8);
+	int dmg = 6 + user.Strength.Modified * 2.0f + rand() % (user.GetLevel() + 5);
 	if (_critting)
 		dmg *= 1.5;
 
