@@ -11,7 +11,6 @@ class BattleHUD
 {
 public:
 	BattleHUD();
-	void Init();
 	void Update();
 	void SetRender();
 	void Destroy();
@@ -25,6 +24,7 @@ public:
 	void SetupUnit(int id);
 
 private:
+	void GenerateBackground();
 	void AddActorHealthBar(int id);
 	void AddActorAttackPrediction(int id);
 	void AddActorAttackPredictionArrow(int id);

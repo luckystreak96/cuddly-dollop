@@ -23,7 +23,7 @@ Vector3f Camera::MapCenter()
 	result.y = ((_mapsize.y + 1) - ((top * 2.f) / size)) / 2.f;
 	result.x += right / size;
 	result.y += top / size;
-	result.z = _transform->GetTranslation().z;
+	//result.z = _transform->GetTranslation().z;
 
 	return result;
 }
@@ -176,12 +176,18 @@ void Camera::ExecuteFollow()
 			_translate.y = -(_mapsize.y - ((top) / size) / _scale.y);
 	}
 
+	//if (_translate.z != 0 || _extraTranslate.z != 0)
+	//	std::cout << "Camera is translating z!" << std::endl;
+
+	//_translate.z = 4;
+
 	_transform->SetTranslation(_translate + _extraTranslate);
 }
 
 void Camera::SetScale(Vector3f& scale)
 {
 	_scaleTarget = scale;
+	_scaleTarget.z = 1; // No change this plz
 }
 
 void Camera::SetFollow(Vector3f& target)

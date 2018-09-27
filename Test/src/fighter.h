@@ -68,7 +68,7 @@ public:
 	std::string GetSprite() { return m_sprite; }
 	void SetSprite(std::string sprite) { m_sprite = sprite; }
 	std::string GetName() { return m_name; }
-	void SetName(std::string sprite) { m_name = sprite; }
+	void SetName(std::string name) { m_name = name; }
 
 	static bool FighterSpeedSort(Fighter_ptr a, Fighter_ptr b);
 	static bool FighterBattleOrderSort(Fighter_ptr a, Fighter_ptr b);

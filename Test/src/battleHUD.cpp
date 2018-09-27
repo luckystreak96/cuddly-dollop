@@ -6,6 +6,7 @@
 
 BattleHUD::BattleHUD()
 {
+	GenerateBackground();
 }
 
 void BattleHUD::Destroy()
@@ -46,7 +47,7 @@ void BattleHUD::SetupUnit(int id)
 
 
 
-void BattleHUD::Init()
+void BattleHUD::GenerateBackground()
 {
 	float top = OrthoProjInfo::GetRegularInstance().Top;
 	float right = OrthoProjInfo::GetRegularInstance().Right;
@@ -170,7 +171,7 @@ void BattleHUD::Update()
 	if (OrthoProjInfo::GetRegularInstance().changed)
 	{
 		Destroy();
-		Init();
+		GenerateBackground();
 		for (auto& x : _units)
 			SetupUnit(x.first);
 	}

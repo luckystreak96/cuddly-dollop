@@ -18,6 +18,7 @@ Fighter::Fighter(Fighter& f)
 
 	m_skills.clear();
 	m_sprite = f.m_sprite;
+	m_name = f.m_name;
 	Health = f.Health;
 	Curve = f.Curve;
 	SetLevel(f.Level);

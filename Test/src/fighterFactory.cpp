@@ -27,6 +27,7 @@ Fighter_ptr FighterFactory::BuildBaseAlly()
 	PassiveFactory::ApplyAllPassives(result.get(), &result->_Passives);
 	result->Health = result->GetMaxHealth().Real;
 	result->SetSprite("res/sprites/entities/entity_girl.png");
+	result->SetName("Girl");
 
 	result->ResetModified();
 
@@ -73,7 +74,7 @@ Fighter_ptr FighterFactory::BuildFighter(rapidjson::Value& a)
 	//	fighter->_Fighter->SetMaxHealth(a["max_health"].GetInt());
 
 	if (a.HasMember("name"))
-		fighter->GetName() = a["name"].GetString();
+		fighter->SetName(a["name"].GetString());
 
 	if (a.HasMember("curve"))
 		fighter->Curve = a["curve"].GetString();
@@ -138,76 +139,7 @@ std::vector<Fighter_ptr> FighterFactory::BuildParty(rapidjson::GenericArray<fals
 {
 	std::vector<Fighter_ptr> result;
 	for (auto& a : arr)
-	{
-		//Actor_ptr fighter = Actor_ptr(new Actor());
-		////fighter->_Fighter->m_skills.clear();
-		//if (a.HasMember("health"))
-		//	fighter->_Fighter->Health = a["health"].GetInt();
-
-		////if (a.HasMember("max_health"))
-		////	fighter->_Fighter->SetMaxHealth(a["max_health"].GetInt());
-
-		//if (a.HasMember("name"))
-		//	fighter->_Name = a["name"].GetString();
-
-		//if (a.HasMember("curve"))
-		//	fighter->_Fighter->Curve = a["curve"].GetString();
-
-		//if (a.HasMember("level"))
-		//	fighter->_Fighter->SetLevel(a["level"].GetInt());
-
-		//if (a.HasMember("exp"))
-		//	fighter->_Fighter->SetExp(a["exp"].GetInt());
-
-		//if (a.HasMember("skillpoints"))
-		//	fighter->_Fighter->SkillPoints = a["skillpoints"].GetInt();
-
-		////if (a.HasMember("speed"))
-		////	fighter->_Fighter->Speed = a["speed"].GetInt();
-
-		////if (a.HasMember("strength"))
-		////	fighter->_Fighter->Strength = a["strength"].GetInt();
-
-		////if (a.HasMember("endurance"))
-		////	fighter->_Fighter->SetEndurance(a["endurance"].GetInt());
-
-		////if (a.HasMember("defense"))
-		////	fighter->_Fighter->Defense = a["defense"].GetInt();
-
-		////if (a.HasMember("crit"))
-		////	fighter->_Fighter->Crit = a["crit"].GetInt();
-
-		//if (a.HasMember("dead"))
-		//	fighter->_Fighter->Dead = a["dead"].GetBool();
-
-		//if (a.HasMember("sprite"))
-		//{
-		//	fighter->Sprite = a["sprite"].GetString();
-		//	fighter->_Graphics->SetTexture(fighter->Sprite);
-		//}
-
-		//if (a.HasMember("skills") && a["skills"].IsArray())
-		//{
-		//	auto skills = a["skills"].GetArray();
-		//	for (rapidjson::Value::ConstValueIterator itr = skills.Begin(); itr != skills.End(); ++itr)
-		//		fighter->_Fighter->m_skills.push_back(BuildSkill(itr->GetString()));
-		//}
-
-		//if (a.HasMember("passives") && a["passives"].IsArray())
-		//{
-		//	auto passive = a["passives"].GetArray();
-		//	for (rapidjson::Value::ConstValueIterator itr = passive.Begin(); itr != passive.End(); ++itr)
-		//		fighter->_Fighter->_Passives.push_back(BattleData::PassiveSkills.at(itr->GetInt()));
-		//}
-
-		//// Stats are decided first by the curve, then the passives, then the equipment etc
-		//fighter->_Fighter->SetStatsFromCurve();
-		//PassiveFactory::ApplyAllPassives(fighter->_Fighter.get(), &fighter->_Fighter->_Passives);
-		//fighter->_Fighter->CurrentHealthCheck();
-
-		//result.push_back(fighter);
 		result.push_back(BuildFighter(a));
-	}
 
 	return result;
 }

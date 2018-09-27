@@ -236,12 +236,13 @@ SceneGenData SceneBattle::Update()
 	for (auto it : m_celist)
 		it.second->Update();
 
-	//std::cout << "1 -- " << m_party.at(0)->_Graphics->GetPosRef().Print() << std::endl;
+	//std::cout << m_actors.at(0)->GetPosRef().Print() << std::endl;
 	for (auto a : m_actors)
 		a->Update();
 
 	//std::cout << "2 -- " << m_party.at(0)->_Graphics->GetPosRef().Print() << std::endl;
 	m_mapHandler->Update(OrthoProjInfo::GetRegularInstance().changed);
+	//std::cout << m_mapHandler->Graphics()->GetPosRef().Print() << std::endl;
 
 	SetAudioPosition();
 	SoundManager::GetInstance().Update();
