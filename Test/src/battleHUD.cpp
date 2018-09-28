@@ -9,6 +9,11 @@ BattleHUD::BattleHUD()
 	GenerateBackground();
 }
 
+BattleHUD::~BattleHUD()
+{
+	Destroy();
+}
+
 void BattleHUD::Destroy()
 {
 	for (auto& x : _units)

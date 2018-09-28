@@ -270,11 +270,19 @@ void SceneWorld::UpdateHUD()
 {
 	//Display FPS
 #ifdef _DEBUG
-	FontManager::GetInstance().SetText(m_fontFPS, /*std::to_string(m_celist.at(1)->PhysicsRaw()->PositionRef().z),*/std::to_string(ElapsedTime::GetInstance().GetFPS()),
-		Vector3f(0, OrthoProjInfo::GetRegularInstance().Top * 2.f / OrthoProjInfo::GetRegularInstance().Size - 0.5f, -10));
+	static double fps = 0;
+	unsigned int curfps = ElapsedTime::GetInstance().GetFPS();
+	if (fps != curfps)
+	{
+
+		FontManager::GetInstance().SetText(m_fontFPS, /*std::to_string(m_celist.at(1)->PhysicsRaw()->PositionRef().z),*/std::to_string(curfps),
+			Vector3f(0, OrthoProjInfo::GetRegularInstance().Top * 2.f / OrthoProjInfo::GetRegularInstance().Size - 0.5f, -10));
+
+		fps = curfps;
+	}
 #endif
 
-	srand(clock());
+	//srand(clock());
 
 	FontManager::GetInstance().Update(ElapsedTime::GetInstance().GetElapsedTime());
 }

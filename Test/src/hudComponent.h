@@ -8,9 +8,15 @@
 class HudComponent : public Observer
 {
 public:
+	HudComponent();
+	~HudComponent();
 	virtual void Update();
 	virtual void Destroy();
 	virtual void SetRender();
+
+private:
+	static int counter;
+
 };
 
 typedef std::shared_ptr<HudComponent> HudComp_ptr;

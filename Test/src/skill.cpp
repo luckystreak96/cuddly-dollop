@@ -1,11 +1,7 @@
 #include "skill.h"
 #include "battleManager.h"
-#include "fontFloat.h"
 #include "GLFW/glfw3.h"
-#include "particleManager.h"
-#include "animScreenShake.h"
-#include "animColorFlash.h"
-#include "animBonusEffect.h"
+#include "input_manager.h"
 
 Skill::Skill()
 {

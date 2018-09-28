@@ -10,6 +10,7 @@ class HudHealthBar : public HudBar
 public:
 	// Don't forget to tell the Observable that you're an observer
 	HudHealthBar(BattleUnit unit, Vector3f pos);
+	~HudHealthBar();
 	void Update();
 	void Destroy();
 	void SetRender();

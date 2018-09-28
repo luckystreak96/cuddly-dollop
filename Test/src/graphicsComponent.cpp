@@ -3,6 +3,7 @@
 
 float GraphicsComponent::_persRotation = -0.4f;
 float GraphicsComponent::_orthoRotation = -0.0125f;
+int GraphicsComponent::counter = 0;
 
 void GraphicsComponent::ReceiveMessage(std::vector<std::string> msg)
 {
@@ -17,6 +18,8 @@ float GraphicsComponent::GetProjectionRotation()
 GraphicsComponent::~GraphicsComponent()
 {
 	UnloadGLResources();
+	counter--;
+	std::cout << counter << " GraphicsComponents exist." << std::endl;
 }
 
 void GraphicsComponent::SetNewBuffers(std::vector<Vertex>* verts, std::vector<GLuint>* inds)
@@ -61,6 +64,7 @@ void GraphicsComponent::Construct()
 {
 	_outline = false;
 	m_direction = dir_Down;
+	m_lastInteraction = m_direction;
 	_instancedDraw = false;
 	m_lastMModelSize = 0;
 	m_mlMatLoc = 0;
@@ -76,8 +80,10 @@ void GraphicsComponent::Construct()
 }
 
 GraphicsComponent::GraphicsComponent(std::string modelName, std::string texPath) : m_texture(texPath), m_modelName(modelName)
-, _updateMModels(false)
+, _mModelsNoReplace(false)
 {
+	counter++;
+	std::cout << counter << " GraphicsComponents exist." << std::endl;
 	m_IBO = 0;
 	m_VBO = 0;
 	m_VAO = 0;
@@ -86,8 +92,10 @@ GraphicsComponent::GraphicsComponent(std::string modelName, std::string texPath)
 }
 
 GraphicsComponent::GraphicsComponent(std::vector<Vertex>* verts, std::vector<GLuint>* inds, std::string texPath) : m_texture(texPath), m_modelName("NONE"),
-_updateMModels(false)
+_mModelsNoReplace(false)
 {
+	counter++;
+	std::cout << counter << " GraphicsComponents exist." << std::endl;
 	m_IBO = 0;
 	m_VBO = 0;
 	m_VAO = 0;
@@ -103,13 +111,29 @@ _updateMModels(false)
 
 void GraphicsComponent::Update()
 {
-	if (UpdateTranslation() || m_mmodels.size() == 0 || OrthoProjInfo::GetRegularInstance().changed)
+	if (UpdateTranslation() || m_updateMModels || m_mmodels.size() == 0 || OrthoProjInfo::GetRegularInstance().changed)
+	{
 		UpdateMModels();
+		m_updateMModels = false;
+	}
 }
+
+void GraphicsComponent::SetScale(float x, float y, float z)
+{
+	m_modelMat.SetScale(x, y, z);
+	m_updateMModels = true;
+}
+
+void GraphicsComponent::SetScale(Vector3f s)
+{
+	m_modelMat.SetScale(s);
+	m_updateMModels = true;
+}
+
 
 void GraphicsComponent::UpdateMModels()
 {
-	if (_updateMModels && m_mmodels.size() > 0)
+	if (_mModelsNoReplace && m_mmodels.size() > 0)
 		InsertMModels(m_modelMat, 0);
 	else
 	{
@@ -121,13 +145,16 @@ void GraphicsComponent::UpdateMModels()
 bool GraphicsComponent::UpdateTranslation()
 {
 	Vector3f translation;
+	Vector3f offset;
 
 	if (m_modelName == "CENTERED_TILE")
-		translation = m_pos + Vector3f(0.5f, 0.5f, 0.0f);
-	else if (m_modelName == "SCREEN")
-		translation = m_pos/* + Vector3f(0.5f, 0.5f, 0)*/;
-	else
-		translation = m_pos;
+		offset = Vector3f(0.5f, 0.5f, 0.0f);
+	//else if (m_modelName == "SCREEN")
+	//	translation = m_pos/* + Vector3f(0.5f, 0.5f, 0)*/;
+	//else
+	//	translation = m_pos;
+
+	translation = m_pos + offset;
 
 	if (translation == m_modelMat.GetTranslation())
 		return false;
@@ -228,6 +255,11 @@ void GraphicsComponent::Draw(bool withTex)
 	glBindBuffer(GL_ARRAY_BUFFER, m_MMBO);
 	if (m_mmodelsUpdated)
 	{
+		//static int modelUpdate = 0;
+		//modelUpdate++;
+
+		//std::cout << modelUpdate << std::endl;
+
 		if (m_mmodels.size() * sizeof(Mat4f) > m_lastMModelSize)
 			glBufferData(GL_ARRAY_BUFFER, sizeof(Mat4f) * m_mmodels.size(), &m_mmodels.at(0), GL_DYNAMIC_DRAW);
 		else
@@ -310,7 +342,7 @@ void GraphicsComponent::ResetVBO()
 // Sets the color of all vertices to change the color of the sprite
 void GraphicsComponent::SetColorAll(Vector3f color, float alpha)
 {
-	if (m_vertices[0].color == color && m_vertices[0].alpha == alpha)
+	if (m_vertices.size() && m_vertices[0].color == color && m_vertices[0].alpha == alpha)
 		return;
 
 	for (auto& v : m_vertices)
@@ -324,6 +356,7 @@ void GraphicsComponent::SetColorAll(Vector3f color, float alpha)
 // Adds 4 model matrices to MModels (does not clear MModels first)
 void GraphicsComponent::InsertMModels(Transformation& t)
 {
+	Vector3f reminder = t.GetTranslation();
 	Vector3f temp = t.GetTranslation();
 	temp.x *= OrthoProjInfo::GetRegularInstance().Size;
 	temp.y *= OrthoProjInfo::GetRegularInstance().Size;
@@ -334,6 +367,8 @@ void GraphicsComponent::InsertMModels(Transformation& t)
 	t.SetTranslation(temp);
 	int num = _instancedDraw ? 1 : 4;
 	m_mmodels.insert(m_mmodels.end(), num, t.GetWorldTrans());
+
+	t.SetTranslation(reminder);
 	m_mmodelsUpdated = true;
 	//m_mmodels.push_back(Mat4f(t.GetWorldTrans()));
 	//m_mmodels.insert(m_mmodels.end(), 1, t.GetWorldTrans());
@@ -342,6 +377,7 @@ void GraphicsComponent::InsertMModels(Transformation& t)
 // Updates 4 model matrices to MModels instead of appending
 void GraphicsComponent::InsertMModels(Transformation& t, int position)
 {
+	Vector3f reminder = t.GetTranslation();
 	Vector3f temp = t.GetTranslation();
 	temp.x *= OrthoProjInfo::GetRegularInstance().Size;
 	temp.y *= OrthoProjInfo::GetRegularInstance().Size;
@@ -355,6 +391,7 @@ void GraphicsComponent::InsertMModels(Transformation& t, int position)
 	Mat4f& trans = t.GetWorldTrans();
 	for (int i = 0; i < num; i++)
 		m_mmodels[position * 4 + i] = trans;
+	t.SetTranslation(reminder);
 	m_mmodelsUpdated = true;
 	//m_mmodels.push_back(Mat4f(t.GetWorldTrans()));
 	//m_mmodels.insert(m_mmodels.end(), 1, t.GetWorldTrans());

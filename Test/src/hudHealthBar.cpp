@@ -9,6 +9,12 @@
 #include "fighter.h"
 #include "actor.h"
 
+
+HudHealthBar::~HudHealthBar()
+{
+	Destroy();
+}
+
 HudHealthBar::HudHealthBar(BattleUnit unit, Vector3f position)
 {
 	// Set initial values
@@ -36,8 +42,8 @@ HudHealthBar::HudHealthBar(BattleUnit unit, Vector3f position)
 		_smallBackground = GraphComp_ptr(new FontGraphicsComponent("BAR", "res/sprites/special/bar_background.png"));
 
 		m_actorPrevPos = *unit.position;
-		_smallForeground->GetModelMat()->SetScale(scale);
-		_smallBackground->GetModelMat()->SetScale(scale);
+		_smallForeground->SetScale(scale);
+		_smallBackground->SetScale(scale);
 		_smallBackground->SetColorAll(Vector3f(0.08f, 0.4f, 1.0f));
 		UpdateSmallHPPosition();
 	}
@@ -53,7 +59,7 @@ HudHealthBar::HudHealthBar(BattleUnit unit, Vector3f position)
 	ptr->SetPhysics(position, Vector3f());
 	ptr2->SetPhysics(position + Vector3f(0, 0, 0.1f), Vector3f());
 	ptrExp->SetPhysics(position + Vector3f(0, -0.07f, 0.1f), Vector3f());
-	ptrExp->GetModelMat()->SetScale(Vector3f(fmax(((float)m_observedXP - (float)unit.stats->CalculateLevelExp(unit.stats->GetLevel() - 1)) / (float)m_xpMax, 0.005f), 0.1f, 1));
+	ptrExp->SetScale(fmax(((float)m_observedXP - (float)unit.stats->CalculateLevelExp(unit.stats->GetLevel() - 1)) / (float)m_xpMax, 0.005f), 0.1f, 1);
 
 	ptr2->SetColorAll(Vector3f(3), 0.05f);
 	ptrExp->SetColorAll(Vector3f(0.6f, 0.5f, 0.05f), 1.f);
@@ -161,11 +167,11 @@ void HudHealthBar::Update()
 	}
 
 	_smallBackground->SetColorAll(color * Vector3f(1.5f), 0.9f);
-	_smallBackground->GetModelMat()->SetScale(fmax((float)health / (float)m_max, 0) / 3.0f, 0.3f, 1);
+	_smallBackground->SetScale(fmax((float)health / (float)m_max, 0) / 3.0f, 0.3f, 1);
 	_smallBackground->Update();
 
 	_foreground->SetColorAll(color, 0.9f);
-	_foreground->GetModelMat()->SetScale(fmax((float)health / (float)m_max, 0), 1, 1);
+	_foreground->SetScale(fmax((float)health / (float)m_max, 0), 1, 1);
 	_foreground->Update();
 	_background->Update();
 }
@@ -200,7 +206,7 @@ bool HudHealthBar::UpdateExpAnimation(float newxp)
 		return UpdateExpAnimation(actualXP);
 	}
 
-	_xpBar->GetModelMat()->SetScale(Vector3f(fmax(newxp / (float)max, 0.005f), 0.1f, 1));
+	_xpBar->SetScale(fmax(newxp / (float)max, 0.005f), 0.1f, 1);
 	_xpBar->Update();
 
 	_unit.stats->SetExp((int)actualXP);

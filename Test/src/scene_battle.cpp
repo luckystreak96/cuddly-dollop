@@ -167,7 +167,7 @@ bool SceneBattle::Init()
 SceneBattle::~SceneBattle()
 {
 	FontManager::GetInstance().RemoveFont(m_fontFPS);
-	m_battle._hud.Destroy();
+	//m_battle._hud.Destroy();
 
 	//for (auto& x : m_fighters)
 	//	for (auto& y : x->_Fighter->m_skills)
@@ -254,11 +254,21 @@ SceneGenData SceneBattle::Update()
 
 	//Display FPS
 #ifdef _DEBUG
-	FontManager::GetInstance().SetText(m_fontFPS, std::to_string(ElapsedTime::GetInstance().GetFPS()),
-		Vector3f(0, OrthoProjInfo::GetRegularInstance().Top * 2.f / OrthoProjInfo::GetRegularInstance().Size - 0.5f, 0));
+	static double fps = 0;
+	unsigned int curfps = ElapsedTime::GetInstance().GetFPS();
+	if (fps != curfps)
+	{
+
+		FontManager::GetInstance().SetText(m_fontFPS, /*std::to_string(m_celist.at(1)->PhysicsRaw()->PositionRef().z),*/std::to_string(curfps),
+			Vector3f(0, OrthoProjInfo::GetRegularInstance().Top * 2.f / OrthoProjInfo::GetRegularInstance().Size - 0.5f, -10));
+
+		fps = curfps;
+	}
+	//FontManager::GetInstance().SetText(m_fontFPS, std::to_string(ElapsedTime::GetInstance().GetFPS()),
+	//	Vector3f(0, OrthoProjInfo::GetRegularInstance().Top * 2.f / OrthoProjInfo::GetRegularInstance().Size - 0.5f, 0));
 #endif
 
-	srand(clock());
+	//srand(clock());
 	FontManager::GetInstance().Update(ElapsedTime::GetInstance().GetElapsedTime());
 	ParticleManager::GetInstance().Update(ElapsedTime::GetInstance().GetElapsedTime());
 

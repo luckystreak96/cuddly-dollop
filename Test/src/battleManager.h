@@ -1,14 +1,13 @@
 #ifndef BATTLE_MANAGER_H__
 #define BATTLE_MANAGER_H__
 
+#include "fighter.h"
+#include "battleUnit.h"
+
 #include <deque>
 #include <vector>
 #include <map>
 #include <memory>
-#include "fighter.h"
-#include "fontManager.h"
-#include "battleHUD.h"
-#include "battleUnit.h"
 
 enum PostBattleState { PBS_FightingInProgress, PBS_FightingDone, PBS_ExpAnimation, PBS_ConfirmCompletion, PBS_PostBattleComplete };
 
@@ -83,7 +82,6 @@ public:
 	std::vector<unsigned int> _fonts;
 
 
-	BattleHUD _hud;
 	Skill_ptr _selectedSkill;
 	Fighter_ptr _owner;
 	std::set<int> _selectedIndices;

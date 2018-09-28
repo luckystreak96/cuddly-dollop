@@ -11,6 +11,7 @@ class BattleHUD
 {
 public:
 	BattleHUD();
+	~BattleHUD();
 	void Update();
 	void SetRender();
 	void Destroy();

@@ -709,8 +709,8 @@ void BattleManager::ManageInput()
 		_state == BS_ActionDone)
 	{
 		bool status = !InputManager::GetInstance().FrameKeyStatus(A_AltR, KeyStatus::AnyPress);
-		_hud.ToggleTurnOrderDisplay(status);
-		_hud.ToggleDamagePredictionArrowDisplay(status);
+		//_hud.ToggleTurnOrderDisplay(status);
+		//_hud.ToggleDamagePredictionArrowDisplay(status);
 	}
 
 	// Dont allow any input if theres an animation running
@@ -1070,5 +1070,5 @@ int BattleManager::FindWinner()
 
 void BattleManager::SetRender()
 {
-	_hud.SetRender();
+	//_hud.SetRender();
 }

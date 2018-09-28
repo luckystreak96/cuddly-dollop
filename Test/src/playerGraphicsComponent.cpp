@@ -4,7 +4,7 @@
 
 PlayerGraphicsComponent::PlayerGraphicsComponent(std::string tex, std::string model) : GraphicsComponent(model, tex), m_firstLoad(true)
 {
-	_updateMModels = true;
+	_mModelsNoReplace = true;
 	m_modelName = model;
 	m_texture = tex;
 	SetWidthHeight(tex);
@@ -42,7 +42,7 @@ void PlayerGraphicsComponent::DrawOutline(bool withTex)
 	float xsize = m_modelMat.GetScale().x;
 	Vector3f size = Vector3f(xsize * 1.1f, 1.075f, 1);
 	m_modelMat.SetScale(size);
-	//_updateMModels = true;
+	//_mModelsNoReplace = true;
 
 	//InsertMModels(m_modelMat, 0);
 	UpdateTranslation();
