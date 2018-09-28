@@ -77,7 +77,8 @@
       "skillpoints": 4,
       "dead": false,
       "skills": [
-        "Smack"
+        "Smack",
+        "Heal"
       ],
       "passives": []
     }
