@@ -113,7 +113,7 @@ bool SceneBattle::Init()
 	{
 		Vector3f position = Vector3f(4.0f + i * 0.25f, startY + i * 1.25f, 4.0f);
 		party.at(i)->SetPhysics(position, Vector3f());
-		if (!Transformation::perspectiveOrtho)
+		//if (!Transformation::perspectiveOrtho)
 			party.at(i)->AdjustHeightForAngle();
 		party.at(i)->WaitPosition = party.at(i)->GetPos();
 		party.at(i)->ActivePosition = party.at(i)->GetPos() + Vector3f(1, 0, 0);
@@ -127,7 +127,7 @@ bool SceneBattle::Init()
 	{
 		Vector3f position = Vector3f(13.5f - i * 0.25f, startY + i * 1.25f, 4.0f);
 		enemies.at(i)->SetPhysics(position, Vector3f());
-		if (!Transformation::perspectiveOrtho)
+		//if (!Transformation::perspectiveOrtho)
 			enemies.at(i)->AdjustHeightForAngle();
 		enemies.at(i)->WaitPosition = enemies.at(i)->GetPos();
 		enemies.at(i)->ActivePosition = enemies.at(i)->GetPos() + Vector3f(-1, 0, 0);

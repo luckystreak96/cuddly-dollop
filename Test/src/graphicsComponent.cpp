@@ -2,7 +2,7 @@
 #include <algorithm>
 
 float GraphicsComponent::_persRotation = -0.4f;
-float GraphicsComponent::_orthoRotation = -0.0125f;
+float GraphicsComponent::_orthoRotation = -0.0225f;
 int GraphicsComponent::counter = 0;
 
 void GraphicsComponent::ReceiveMessage(std::vector<std::string> msg)

@@ -8,12 +8,16 @@ out vec4 FragColor;
 uniform sampler2D gSampler;
 //uniform vec3 gLightColor = vec3(1.0, 0.9, 0.95);//pinkish
 uniform vec3 gLightColor = vec3(1.0, 0.98, 0.95);//sunlight
+//uniform vec3 gLightColor = vec3(1.0, 1.2, 0.65);//greenlight
 uniform float gAmbientLight = 1.2;
 uniform float gLightIntensity;
+
+
 
 void main()
 {
 	vec4 color = texture2D(gSampler, TexCoord0.st);
+
 
 	color *= vec4(Color0, 1.0);
 	color.a *= Alpha0;

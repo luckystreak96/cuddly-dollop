@@ -13,8 +13,11 @@ void ElapsedTime::CalculateElapsedTime()
 	{
 		prev_time = floor(uptime);
 		m_FPS = counter;
+		m_secondPassed = true;
 		counter = 0;
 	}
+	else
+		m_secondPassed = false;
 
 	m_elapsedTime = uptime - prev_point;
 

@@ -41,6 +41,9 @@ BattleManager::~BattleManager()
 {
 	for (auto& x : _fonts)
 		FontManager::GetInstance().RemoveFont(x);
+
+	for (auto& x : _actors)
+		x->_observers.clear();
 }
 
 void BattleManager::ProcessSkill()

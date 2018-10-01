@@ -97,6 +97,9 @@ void Renderer::Sort()
 
 	//Sort the components
 	std::sort(m_toDraw.begin(), m_toDraw.end(), ComponentSort);
+
+	//if (ElapsedTime::GetInstance().OneSecond())
+	//	std::cout << "Drawing " << m_toDraw.size() << " GraphicsComponents" << std::endl;
 }
 
 void Renderer::Draw()
