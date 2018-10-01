@@ -1,12 +1,14 @@
 #include "battleManager.h"
 #include "input_manager.h"
+#include "fontManager.h"
+#include "localizationData.h"
+#include "battleAnimationManager.h"
+#include "battleData.h"
+
 #include <GLFW/glfw3.h>
 #include <set>
 #include <algorithm>
 #include <iostream>
-#include "fontManager.h"
-#include "localizationData.h"
-#include "battleAnimationManager.h"
 
 using namespace std;
 
@@ -60,9 +62,9 @@ void BattleManager::ProcessSkill()
 		// x is an action
 		if (get<0>(x) > AA_Start)
 		{
+			int t = get<2>(x).front();
 			if (get<0>(x) == AA_DealDamage)
 			{
-				int t = get<2>(x).front();
 				// Deal damage
 				Damage dmg = HandleDamage(t);
 				// Show dmg
@@ -73,6 +75,17 @@ void BattleManager::ProcessSkill()
 					_selectedSkill->SetAnimProgressRepeat();
 					_targets.erase(t);
 				}
+			}
+			//else if (get<0>(x) == AA_DealBonusDamage)
+			//{
+			//	ApplyBonusEffect();
+			//}
+			else if (get<0>(x) == AA_ApplyEffect)
+			{
+				//_actors.at(t)->_Statuses.push_back(BattleData::StatusEffects.at(StatusList::Determined));
+				for (auto& status : *_selectedSkill->GetStatusEffects())
+					_actors.at(t)->_Statuses.push_back(BattleData::StatusEffects.at(status));
+				_actors.at(t)->ReCalculateStats();
 			}
 		}
 		// x is an animation
@@ -152,12 +165,6 @@ Damage BattleManager::HandleDamage(int target)
 		}
 	}
 
-	// Deal the dmg
-	if (_selectedSkill->_skillType == ST_Healing)
-		f->ApplyHealing(dmg);
-	else
-		f->TakeDamage(dmg);
-
 	// Check for bonus damage
 	if (_selectedSkill->_skillElement != SE_None)
 	{
@@ -169,35 +176,57 @@ Damage BattleManager::HandleDamage(int target)
 		else if (_selectedSkill->_skillElement == SE_StrongWilled)
 			targetElement = SE_Determined;
 
-		//if (f->HasElement(targetElement))
-			//	_anims->push_front(Anim_ptr(new AnimBonusEffect(_owner.lock(), _targets.at(0))));
-			//ApplyBonusEffect(f);
+		if (f->HasElement(targetElement))
+		{
+			Damage bonus = ApplyBonusEffect(f);
+			dmg._value += bonus._value;
+			dmg._type = SkillType::ST_Bonus; // only affects the way it is shown on screen
+		}
 	}
+
+	// Deal the dmg
+	if (_selectedSkill->_skillType == ST_Healing)
+		f->ApplyHealing(dmg);
+	else
+		f->TakeDamage(dmg);
+
 
 	return dmg;
 }
 
-//void BattleManager::ApplyBonusEffect(Fighter_ptr target)
-//{
-//	Damage dmg = Damage();
-//	dmg._value = 10;
-//	dmg._type = SkillType::ST_Bonus;
-//
-//	// Damage text
-//	SpawnDamageText(target, dmg);
-//	_anims->push_front(Anim_ptr(new AnimColorFlash(Vector3f(3, 3, 5), target)));
-//	//_anims->push_front(Anim_ptr(new AnimScreenShake()));
-//
-//	Particle_ptr particles = Particle_ptr(new ParticleGenerator());
-//	Vector3f pos = target->_Graphics->GetPos() + Vector3f(0.5f, 0.5f, 0.6f);
-//	particles->SetPowerLevel(0.3f);
-//	particles->Init(PT_Explosion, dmg._value, pos, false, "star.png");
-//	Vector3f color = Vector3f(1.f, 1.f, 1.f);
-//	particles->SetColor(color);
-//	ParticleManager::GetInstance().AddParticles(particles);
-//
-//	target->TakeDamage(dmg);
-//}
+Damage BattleManager::ApplyBonusEffect(Fighter_ptr target)
+{
+	Damage dmg = Damage();
+	dmg._value = 10;
+	dmg._type = SkillType::ST_Bonus;
+
+	return dmg;
+
+	// Add more effects according to Fighters attributes here
+
+	//target->TakeDamage(dmg);
+	//m_graphics->DamageAnimation(target->GetId(), _selectedSkill, dmg);
+
+	//m_animationBuffer.push_back(triple(AS_Wait, AARG_Float, floats({ 0.3f }))); // wait half the animation time
+	//break;
+	//case 3:
+	//	m_state = SP_3_DealDamage;
+	//	m_animationBuffer.push_back(triple(AS_ScreenShake, AARG_Float, floats({ 2.f, 0.2f }))); // shake screen, amount of shake and time
+	//	m_animationBuffer.push_back(triple(AA_DealDamage, AARG_Target, floats())); // Deal damage
+	// Damage text
+	//SpawnDamageText(target, dmg);
+	//_anims->push_front(Anim_ptr(new AnimColorFlash(Vector3f(3, 3, 5), target)));
+	//_anims->push_front(Anim_ptr(new AnimScreenShake()));
+
+	//Particle_ptr particles = Particle_ptr(new ParticleGenerator());
+	//Vector3f pos = target->_Graphics->GetPos() + Vector3f(0.5f, 0.5f, 0.6f);
+	//particles->SetPowerLevel(0.3f);
+	//particles->Init(PT_Explosion, dmg._value, pos, false, "star.png");
+	//Vector3f color = Vector3f(1.f, 1.f, 1.f);
+	//particles->SetColor(color);
+	//ParticleManager::GetInstance().AddParticles(particles);
+
+}
 
 BattleUnit BattleManager::create_battle_unit(Fighter_ptr fighter)
 {

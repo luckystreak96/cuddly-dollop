@@ -1,4 +1,5 @@
 #include "physics_2d.h"
+#include <unordered_set>
 
 namespace Physics_2D {
 
@@ -274,7 +275,7 @@ namespace Physics_2D {
 	// 1 - The object is going somewhere that lacks any valid blocks (ex: walking off a cliff -- the other blocks are too far)
 	// 2 - The object bumps into something within his z-range (if the z is 4, then any object within the range [4,5[ )
 	//		For objects greater than 1.5 higher, the object goes under it.
-	std::map<unsigned int, std::shared_ptr<Entity>> CollisionRemastered(std::map<unsigned int, std::shared_ptr<Entity>>* clist, std::vector<std::shared_ptr<MapTile>>* mt)
+	std::map<unsigned int, std::shared_ptr<Entity>> CollisionRemastered(std::map<unsigned int, std::shared_ptr<Entity>>* clist, std::vector<std::vector<std::vector<MapTile*>>>* mt)
 	{
 		std::map<unsigned int, std::shared_ptr<Entity>> result = std::map<unsigned int, std::shared_ptr<Entity>>();
 
@@ -314,26 +315,41 @@ namespace Physics_2D {
 			//Create list of touching
 			auto bb1 = x->PhysicsRaw()->GetMoveBoundingBox();
 
-			float x1 = x->PhysicsRaw()->Position().x;
-			float y1 = x->PhysicsRaw()->Position().y;
-			for (auto& ts : *mt)
+			//float x1 = bb1[Left];
+			//float x2 = bb1[Right];
+			//float y1 = bb1[Down];
+			//float y2 = bb1[Up];
 			{
-				PhysicsComponent* p = ts->PhysicsRaw();
-				if (p->_ethereal)
-					continue;
+				std::vector<Vector2f> chunks;
+				for (int i = 0; i < 2; i++)
+				{
+					int h = MapHandler::GetXChunk(bb1[i]);
+					for (int j = 0; j < 2; j++)
+					{
+						int v = MapHandler::GetXChunk(bb1[j + 2]);
+						if (std::find(chunks.begin(), chunks.end(), Vector2f(h, v)) != chunks.end())
+							continue;
+						chunks.push_back(Vector2f(h, v));
+						for (auto& ts : (*mt)[h][v])
+						{
+							PhysicsComponent* p = ts->PhysicsRaw();
+							if (p->_ethereal)
+								continue;
 
-				if (p->Position().x < x1 - 2 ||
-					p->Position().y < y1 - 2 ||
-					p->Position().y > y1 + 2)
-					continue;
-				else if (p->Position().x > x1 + 2)
-					break;
-				auto bb2 = p->GetMoveBoundingBox();
+							//if (p->Position().x < x1 - 2 ||
+							//	p->Position().y < y1 - 2 ||
+							//	p->Position().y > y1 + 2)
+							//	continue;
+							//else if (p->Position().x > x1 + 2)
+							//	break;
+							auto bb2 = p->GetMoveBoundingBox();
 
-				if (Physics::Intersect2D(bb1, bb2))
-					touching.at(id).push_back(p);
+							if (Physics::Intersect2D(bb1, bb2))
+								touching.at(id).push_back(p);
+						}
+					}
+				}
 			}
-
 
 
 			float oz = x->PhysicsRaw()->Position().z;
@@ -343,8 +359,8 @@ namespace Physics_2D {
 
 			for (auto x : dupes)
 			{
-				if (std::find(touching.at(id).begin(), touching[id].end(), x) != touching[id].end())
-					touching.at(id).erase(std::remove(touching.at(id).begin(), touching.at(id).end(), x));
+				if (std::find(touching[id].begin(), touching[id].end(), x) != touching[id].end())
+					touching[id].erase(std::remove(touching[id].begin(), touching[id].end(), x));
 			}
 
 			//What is this object touching
@@ -556,7 +572,7 @@ namespace Physics_2D {
 					if (etherealCollision)
 						ApplyCollision(x->PhysicsRaw(), x2->PhysicsRaw());
 
-					if(absoluteCollision)
+					if (absoluteCollision)
 						redo = true;
 
 					// Shoot out the event cause its touching the player

@@ -41,7 +41,7 @@ private:
 	
 	// Skills
 	Damage HandleDamage(int target);
-	//void ApplyBonusEffect(Fighter_ptr target);
+	Damage ApplyBonusEffect(Fighter_ptr target);
 	bool ValidateTargets(Fighter_ptr f);
 	void HandleActionCommand();
 

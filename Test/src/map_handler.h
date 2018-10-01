@@ -23,12 +23,15 @@ public:
 	MapHandler(unsigned int id, std::shared_ptr<JsonHandler> jh);
 	~MapHandler();
 	MapHandler(const std::string& filePath);
+	void OrderTiles();
 	void FinalizeSetup();
 	void SetRender();
 	void Draw();
 	void Update(bool forced = false);
 	std::vector<std::shared_ptr<MapTile>>* Tiles();
-	std::vector<std::shared_ptr<MapTile>>* OrderedTiles();
+	std::vector<std::vector<std::vector<MapTile*>>>* OrderedTiles();
+	static int GetXChunk(int x) { return x / m_chunkSize; }
+	static int GetYChunk(int y) { return y / m_chunkSize; }
 	unsigned int Size();
 	void SetupMesh();
 	GraphComp_ptr Graphics() { return m_graphics; }
@@ -41,12 +44,13 @@ public:
 
 private:
 	std::vector<std::shared_ptr<MapTile>> m_tiles;
-	std::vector<std::shared_ptr<MapTile>> m_OrderedTiles;
+	std::vector<std::vector<std::vector<MapTile*>>> m_OrderedTiles;
 	Mesh m_mesh;
 	GraphComp_ptr m_graphics = NULL;
 	std::shared_ptr<JsonHandler> m_jsonHandler;
 	int m_MBO_instances;
 	unsigned int m_id;
+	static int m_chunkSize;
 	std::string m_texture;
 	// The width height and depth of the map in tiles
 	Vector3f m_mapSize;

@@ -59,7 +59,7 @@ bool SceneWorld::Init()
 	m_camera._mapsize = m_mapHandler->GetMapSize();
 	m_camera.ForcePosition(m_camera.MapCenter() - Vector3f(2.0f, 2.0f, 0));
 	m_camera._style = CAMSTYLE_FollowDadNoScale;
-	m_collisionManager.SetMapTiles(m_mapHandler->Tiles());
+	m_collisionManager.SetMapTiles(m_mapHandler->OrderedTiles());
 
 	m_celist = EntityFactory::GetEntities(m_currentMap, m_jsonHandler);
 	m_camera.ForcePosition(m_celist.at(1)->PhysicsRaw()->PositionRef());

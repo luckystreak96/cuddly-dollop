@@ -64,6 +64,7 @@ void SkillMelee::SetAnimations()
 		m_state = SP_3_DealDamage;
 		m_animationBuffer.push_back(triple(AS_ScreenShake, AARG_Float, floats({2.f, 0.2f}))); // shake screen, amount of shake and time
 		m_animationBuffer.push_back(triple(AA_DealDamage, AARG_Target, floats())); // Deal damage
+		m_animationBuffer.push_back(triple(AA_ApplyEffect, AARG_Target, floats())); // Deal damage
 		m_animationBuffer.push_back(triple(AS_FloatingText, AARG_Float, floats())); // Spawn damage text
 		m_animationBuffer.push_back(triple(AS_Wait, AARG_Float, floats({ 0.3f }))); // wait other half of animation time
 		break;

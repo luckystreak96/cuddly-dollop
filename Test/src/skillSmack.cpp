@@ -15,6 +15,7 @@ SkillSmack::SkillSmack() : SkillMelee()
 void SkillSmack::DefaultSetup()
 {
 	//SkillMelee::DefaultSetup();
+	m_statuses.push_back(Determined);
 	_name = "Smack";
 	_skillElement = SE_Determined;
 	_targetMode = TM_Alive;

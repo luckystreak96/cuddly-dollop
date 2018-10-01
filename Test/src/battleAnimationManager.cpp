@@ -114,6 +114,9 @@ Vector3f BattleAnimationManager::CalculateDamageColor(Skill_ptr skill, Damage dm
 			color += Vector3f(0.2f, 1, 0.2f);
 	}
 
+	if (dmg._type == ST_Bonus)
+		color += 1.0f;
+
 	return color;
 	//return dmg._critting ? Vector3f(0.35f, 0.31f, 0.87f) : Vector3f(1.0f, 0.2f, 0.2f);
 }

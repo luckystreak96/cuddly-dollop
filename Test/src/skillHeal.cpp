@@ -11,6 +11,7 @@ SkillHeal::SkillHeal() : SkillMelee()
 void SkillHeal::DefaultSetup()
 {
 	//SkillMelee::DefaultSetup();
+	m_statuses.push_back(Pragmatic);
 	_name = "Heal";
 	_skillType = ST_Healing;
 	_targetMode = TM_Any;

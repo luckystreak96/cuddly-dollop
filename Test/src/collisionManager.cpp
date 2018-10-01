@@ -3,7 +3,7 @@
 CollisionManager::CollisionManager() : m_entities(NULL), m_tiles(NULL) {}
 
 
-CollisionManager::CollisionManager(std::map<unsigned int, std::shared_ptr<Entity>>* e, std::vector<std::shared_ptr<MapTile>>* t) :
+CollisionManager::CollisionManager(std::map<unsigned int, std::shared_ptr<Entity>>* e, std::vector<std::vector<std::vector<MapTile*>>>* t) :
 	m_entities(e), m_tiles(t)
 {
 }
@@ -12,7 +12,7 @@ void CollisionManager::SetEntities(std::map<unsigned int, std::shared_ptr<Entity
 {
 	m_entities = e;
 }
-void CollisionManager::SetMapTiles(std::vector<std::shared_ptr<MapTile>>* t)
+void CollisionManager::SetMapTiles(std::vector<std::vector<std::vector<MapTile*>>>* t)
 {
 	m_tiles = t;
 }
