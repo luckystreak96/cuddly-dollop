@@ -4,26 +4,46 @@
 #include <vector>
 #include <deque>
 #include <set>
+#include <tuple>
 #include <memory>
 #include <iostream>
-#include "actor.h"
 #include "statusEffect.h"
-#include "battleAnimation.h"
+#include "statUser.h"
 
 enum BattleState { BS_ChooseActor, BS_TurnStart, BS_SelectAction, BS_SelectTargets, BS_ActionProgress, BS_ActionDone, BS_TurnEnd };
 
 class Skill;
 typedef std::shared_ptr<Skill> Skill_ptr;
 
-enum ActionCommandType { ACT_Defend, ACT_Special };
+enum ActionCommandType { ACT_Attack, ACT_Defend, ACT_Special };
 enum SkillType { ST_Physical, ST_Magical, ST_Healing, ST_Bonus };
 enum TargetMode { TM_Enemy, TM_Ally, TM_Alive, TM_Dead, TM_Any };
 enum DefaultTarget { DT_Self, DT_Enemy, DT_Ally };
 enum TargetAmount { TA_One, TA_Party };
 
+enum AnimationOperation {
+	AS_JumpTo, AS_JumpBack, AS_ColorFlash, AS_ScreenShake, AS_BonusEffect, AS_MoveTo, AS_Wait, AS_Animation, AS_FloatingText,
+	AC_CameraFollow, AC_CameraScale, AC_CameraCenter,
+	AO_DamageParticle,
+	AA_Start, AA_DealDamage, AA_ApplyEffect, AA_DealBonusDamage
+}; // AA_Start is there to be able to do > on the enum
+
+enum AnimationArgument {
+	AARG_Owner, AARG_Targets, AARG_FloatTargets, AARG_Target, AARG_OwnerTargets, AARG_Float, AARG_AsyncStart, AARG_FloatAsync
+};
+
+//using namespace std;
+using floats = std::vector<float>;
+using triple = std::tuple<AnimationOperation, AnimationArgument, floats>;
+
+enum SkillProgress {
+	SP_0_None, SP_1_Before_Anim, SP_2_BeginAnim, SP_3_DealDamage, SP_4_PostSkillAnim, SP_5_SkillDone
+};
+
 struct Damage
 {
 	int _value;
+	bool _critting;
 	SkillType _type;
 };
 
@@ -42,19 +62,20 @@ class Skill
 {
 public:
 	Skill();
-	virtual BattleState Setup(std::vector<Actor_ptr>* targets, std::deque<Actor_ptr>* actors, std::deque<Anim_ptr>* anims, Actor_ptr owner);
-	virtual void Start();
-	virtual void Update();
+	virtual void Setup();
+	virtual SkillProgress Update();
+	// Returns and then empties animations
+	virtual std::vector<triple> GetAnimations();
 	virtual void Reset();
 	virtual bool IsReady();
-	virtual void SpawnDamageText(Actor_ptr target, Damage dmg);
-	virtual void SpawnStatusText(Actor_ptr target, std::string statusName);
-	virtual Damage CalculateDamage() { return Damage(); }
-	virtual Damage HandleDamage(int target = 0);
-	virtual void ApplyBonusEffect(Actor_ptr target);
+	void SetAnimProgressRepeat() { --m_progress; }
+
+	std::vector<StatusList>* GetStatusEffects() { return &m_statuses; }
+
+	virtual Damage CalculateDamage(StatUser& user) { return Damage(); }
 
 	// Make sure all targets are still valid
-	virtual bool ValidateTargets();
+	//virtual bool ValidateTargets();
 
 	// This method should change values to apply a skill upgrade.
 	// Call Skill::ApplySkillUpgrade() at the end of the redefined method
@@ -63,14 +84,14 @@ public:
 
 	void CheckActionCommand(double percentProgress);
 	void HandleActionCommand(double percentProgress);
-	bool AnimationsDone();
+	int action_command_level(double percentProgress);
+	//bool AnimationsDone();
 
-	virtual void SetupProtector();
+	//virtual void SetupProtector();
+
+	const std::string GetName() const { return _name; }
 
 public:
-	std::deque<Actor_ptr>* _actors;
-	std::deque<Anim_ptr>* _anims;
-	std::vector<Actor_ptr> _targets;
 	std::set<int> _input;
 	std::string _name;
 	SkillType _skillType;
@@ -86,14 +107,21 @@ public:
 	// Maximum upgrades to the skill (so you dont waste skill points)
 	int _skillUpgradeMax;
 	ActionCommand _ac;
-	Actor_ptr _owner;
 	TargetMode _targetMode;
 	TargetAmount _targetAmount;
 	DefaultTarget _defaultTarget;
 	Damage _preCalculatedDamage;
 
 protected:
-	void DefaultSetup();
+	SkillProgress m_state;
+	int m_progress;
+	std::vector<triple> m_animationBuffer;
+	std::vector<StatusList> m_statuses;
+
+protected:
+	virtual void DefaultSetup();
+	virtual void SetAnimations();
+	virtual void ModifyAnimations();// method so children can change little things
 };
 
 

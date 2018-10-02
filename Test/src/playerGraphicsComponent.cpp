@@ -4,7 +4,7 @@
 
 PlayerGraphicsComponent::PlayerGraphicsComponent(std::string tex, std::string model) : GraphicsComponent(model, tex), m_firstLoad(true)
 {
-	_updateMModels = true;
+	_mModelsNoReplace = true;
 	m_modelName = model;
 	m_texture = tex;
 	SetWidthHeight(tex);
@@ -42,7 +42,7 @@ void PlayerGraphicsComponent::DrawOutline(bool withTex)
 	float xsize = m_modelMat.GetScale().x;
 	Vector3f size = Vector3f(xsize * 1.1f, 1.075f, 1);
 	m_modelMat.SetScale(size);
-	//_updateMModels = true;
+	//_mModelsNoReplace = true;
 
 	//InsertMModels(m_modelMat, 0);
 	UpdateTranslation();
@@ -81,8 +81,8 @@ void PlayerGraphicsComponent::Draw(bool withTex)
 void PlayerGraphicsComponent::Update()
 {
 	m_modelMat.SetRotation(GetProjectionRotation(), 0, 0);
-	if (!Transformation::perspectiveOrtho)
-		m_pos.z -= MathUtils::HeightGivenLengthOfHypotenuseAndAngle(0.5f, -GetProjectionRotation());
+	//if (!Transformation::perspectiveOrtho)
+	//	m_pos.z -= MathUtils::HeightGivenLengthOfHypotenuseAndAngle(0.5f, -GetProjectionRotation());
 	//std::cout << _persRotation << std::endl;
 	// When you need to update a component according to position
 	if (m_prevPosition != m_pos && _observers.size())
@@ -139,9 +139,10 @@ void PlayerGraphicsComponent::Update()
 	if (SetTileModelTC(&m_vertices, forceUpdate))
 		ResetVBO();
 
-	//m_pos.z -= 32;
+	// Used so that the characters rotation doesnt mess up graphics
+	m_pos.z -= 0.25f;
 	GraphicsComponent::Update();
-	//m_pos.z += 32;
+	m_pos.z += 0.25f;
 }
 
 void PlayerGraphicsComponent::SetAnimation(Anim_Enum anim, std::string spritesheet)

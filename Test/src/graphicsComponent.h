@@ -55,6 +55,8 @@ public:
 	Direction GetDirection();
 	void SetDirection(Direction dir);
 	void SetDirection(GraphComp_ptr graph);
+	void SetScale(float x, float y, float z);
+	void SetScale(Vector3f scale);
 	int GetHighestIndex();
 	void ClearMModels();
 	void SetBuffers();
@@ -73,7 +75,7 @@ public:
 public:
 	bool mustDraw = true;
 	bool _instancedDraw;
-	bool _updateMModels;
+	bool _mModelsNoReplace;
 	bool _outline;
 
 	static float _persRotation;
@@ -97,14 +99,18 @@ protected:
 	Vector3f m_size = Vector3f(-1, -1, -1);
 	Vector3f m_normalSize = Vector3f(-1, -1, -1);
 	Vector3f m_pos;
+	Vector3f m_scale;
 	std::string m_texture;
 	std::string m_modelName;
 	bool m_external_loaded = false;
 	bool m_GL_loaded = false;
 	bool m_mmodelsUpdated;
+	bool m_updateMModels;
 	Transformation m_modelMat;
 	Vector3f m_vel;
 	Vector3f m_rot;
+
+	static int counter;
 };
 
 #endif

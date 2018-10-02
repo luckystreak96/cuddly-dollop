@@ -380,9 +380,6 @@
     <ClInclude Include="src\battleAnimation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\actorFactory.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\animJumpTo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -390,9 +387,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\animBasic.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\battleHUD.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\particleManager.h">
@@ -522,6 +516,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\animBonusEffect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\battleAnimationManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\fighterFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\battleUnit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\battleHUD.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -766,9 +772,6 @@
     <ClCompile Include="src\battleManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\actorFactory.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\animJumpTo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -776,9 +779,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\animBasic.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\battleHUD.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\scene.cpp">
@@ -914,6 +914,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\animBonusEffect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\battleAnimationManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\fighterFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\battleHUD.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

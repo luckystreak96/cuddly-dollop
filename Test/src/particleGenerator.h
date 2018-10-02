@@ -14,13 +14,18 @@ class ParticleGenerator;
 typedef std::shared_ptr<ParticleGenerator> Particle_ptr;
 
 enum ParticleType { PT_Snow, PT_Rain, PT_ObjectRain, PT_Music, PT_Explosion, PT_Leaf };
-static const std::map<std::string, ParticleType> ParticleFromString = { 
+enum ParticleSprite { PS_Star, PS_Blood };
+static const std::map<std::string, ParticleType> ParticleFromString = {
 	std::make_pair("snow", PT_Snow),
-	std::make_pair("rain", PT_Rain), 
+	std::make_pair("rain", PT_Rain),
 	std::make_pair("object", PT_ObjectRain),
 	std::make_pair("music", PT_Music),
 	std::make_pair("explosion", PT_Explosion),
 	std::make_pair("leaf", PT_Leaf)
+};
+static const std::map<ParticleSprite, std::string> SpriteFromEnum = {
+	std::make_pair(PS_Star, "star.png"),
+	std::make_pair(PS_Blood, "blood.png"),
 };
 
 struct Particle

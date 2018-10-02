@@ -117,7 +117,7 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 		else
 			glfwSetWindowMonitor(window, NULL, 5, 35, mode->width - 10, mode->height - 80, mode->refreshRate);
 
-		glfwSwapInterval(GLFWManager::_swapInterval);
+		//glfwSwapInterval(GLFWManager::_swapInterval);
 	}
 	if (key == GLFW_KEY_F10 && action == GLFW_RELEASE)
 	{

@@ -2,6 +2,8 @@
 
 #define COMPOSITION "TILE"
 
+int MapHandler::m_chunkSize = 3;
+
 MapHandler::MapHandler(unsigned int id, std::shared_ptr<JsonHandler> jh) : m_mesh(Mesh()), m_id(id), m_jsonHandler(jh)
 {
 	auto map = m_jsonHandler->LoadMap(id);
@@ -22,8 +24,30 @@ MapHandler::MapHandler(unsigned int id, std::shared_ptr<JsonHandler> jh) : m_mes
 			tile->Physics()->SetEthereal(true);
 		m_tiles.push_back(tile);
 	}
-	m_OrderedTiles = std::vector<std::shared_ptr<MapTile>>(m_tiles);
+	//m_OrderedTiles = std::vector<std::shared_ptr<MapTile>>(m_tiles);
 	FinalizeSetup();
+	OrderTiles();
+}
+
+void MapHandler::OrderTiles()
+{
+	int maxX = m_mapSize.x / m_chunkSize + 1;
+	int maxY = m_mapSize.y / m_chunkSize + 1;
+	for (int i = 0; i < maxX; i++)
+	{
+		m_OrderedTiles.push_back(std::vector<std::vector<MapTile*>>());
+		for (int y = 0; y < maxY; y++)
+		{
+			m_OrderedTiles[i].push_back(std::vector<MapTile*>());
+		}
+	}
+
+	for (auto& t : m_tiles)
+	{
+		int x = t->PhysicsRaw()->PositionRef().x / m_chunkSize;
+		int y = t->PhysicsRaw()->PositionRef().y / m_chunkSize;
+		m_OrderedTiles[x][y].push_back(&*t);
+	}
 }
 
 void MapHandler::FinalizeSetup()
@@ -148,7 +172,7 @@ std::vector<std::shared_ptr<MapTile>>* MapHandler::Tiles()
 	return &m_tiles;
 }
 
-std::vector<std::shared_ptr<MapTile>>* MapHandler::OrderedTiles()
+std::vector<std::vector<std::vector<MapTile*>>>* MapHandler::OrderedTiles()
 {
 	return &m_OrderedTiles;
 }

@@ -2,11 +2,10 @@
 
 #include "skill.h"
 #include "skillSmack.h"
-#include "actor.h"
 #include "statCurve.h"
 #include "passiveFactory.h"
 #include "battleManager.h"
-#include "actorFactory.h"
+#include "fighterFactory.h"
 
 Fighter::Fighter()
 {
@@ -17,7 +16,9 @@ Fighter::Fighter(Fighter& f)
 {
 	SetDefault();
 
-	Skills.clear();
+	m_skills.clear();
+	m_sprite = f.m_sprite;
+	m_name = f.m_name;
 	Health = f.Health;
 	Curve = f.Curve;
 	SetLevel(f.Level);
@@ -26,13 +27,38 @@ Fighter::Fighter(Fighter& f)
 
 	Dead = f.Dead;
 
-	for (auto& x : f.Skills)
-		Skills.push_back(ActorFactory::BuildSkill(x->_name));
+	for (auto& x : f.m_skills)
+		m_skills.push_back(FighterFactory::BuildSkill(x->GetName()));
 
 	for (auto& x : f._Passives)
 		_Passives.push_back(BattleData::PassiveSkills.at(x->_Id));
 
 	ReCalculateStats();
+}
+
+const std::vector<Skill_ptr>& Fighter::GetSkills() const
+{
+	return m_skills;
+}
+
+std::vector<Skill_ptr>& Fighter::GetSkills()
+{
+	return m_skills;
+}
+
+
+bool Fighter::FighterSpeedSort(Fighter_ptr a, Fighter_ptr b)
+{
+	if (a && b)
+		return a->Speed.Modified > b->Speed.Modified;
+	return true;
+}
+
+bool Fighter::FighterBattleOrderSort(Fighter_ptr a, Fighter_ptr b)
+{
+	if (a && b)
+		return a->_BattleFieldPosition < b->_BattleFieldPosition;
+	return true;
 }
 
 int Fighter::HasElement(SkillElement element)
@@ -74,7 +100,7 @@ void Fighter::SetLevel(int level)
 	ReCalculateStats();
 }
 
-bool Fighter::PredictNextSkill(Actor_ptr owner, std::vector<Actor_ptr>* actors)
+bool Fighter::PredictNextSkill(Fighter_ptr owner, std::vector<Fighter_ptr>* fighters)
 {
 	bool done = false;
 	int targ = 0;
@@ -90,32 +116,32 @@ bool Fighter::PredictNextSkill(Actor_ptr owner, std::vector<Actor_ptr>* actors)
 		int skill;
 		do {
 			// None of the skills found valid targets -> end turn
-			if (alreadyTriedSkills.size() == owner->_Fighter->Skills.size())
+			if (alreadyTriedSkills.size() == owner->m_skills.size())
 			{
 				done = true;
 				//_state = BS_ActionDone;
 				PredictedSkill = NULL;
 				return false;
 			}
-			skill = rand() % owner->_Fighter->Skills.size();
-			selectedSkill = owner->_Fighter->Skills.at(skill);
+			skill = rand() % owner->m_skills.size();
+			selectedSkill = owner->m_skills.at(skill);
 		} while (alreadyTriedSkills.count(skill));
 		alreadyTriedSkills.emplace(skill); // havent tried this, lets go
 
 		do {
-			// if you already tried all the actors, select another skill
-			if (alreadyTargeted.size() == actors->size())
+			// if you already tried all the fighters, select another skill
+			if (alreadyTargeted.size() == fighters->size())
 			{
 				targ = -1;
 				break;
 			}
-			targ = rand() % actors->size();
+			targ = rand() % fighters->size();
 			// if the target is illegal, re-pick and dont choose that target again
-			if (!actors->at(targ)->_Fighter->RespectsTargeting(owner.get(), selectedSkill->_targetMode) || // doesnt respect targeting
-				((actors->at(targ)->_Fighter->Team != owner->_Fighter->Team && selectedSkill->_defaultTarget == DT_Ally) ||
-				(actors->at(targ)->_Fighter->Team == owner->_Fighter->Team && selectedSkill->_defaultTarget == DT_Enemy)))
+			if (!fighters->at(targ)->RespectsTargeting(owner, selectedSkill->_targetMode) || // doesnt respect targeting
+				((fighters->at(targ)->Team != owner->Team && selectedSkill->_defaultTarget == DT_Ally) ||
+				(fighters->at(targ)->Team == owner->Team && selectedSkill->_defaultTarget == DT_Enemy)))
 				alreadyTargeted.emplace(targ);
-		} while (targ < 0 || targ >= actors->size() || alreadyTargeted.count(targ)); // is targeting someone of a different team than the default target
+		} while (targ < 0 || targ >= fighters->size() || alreadyTargeted.count(targ)); // is targeting someone of a different team than the default target
 
 		alreadyTargeted.emplace(targ);
 
@@ -123,12 +149,12 @@ bool Fighter::PredictNextSkill(Actor_ptr owner, std::vector<Actor_ptr>* actors)
 		if (targ != -1)
 			done = true;
 
-		selectedSkill->_owner = owner;
-		selectedSkill->_preCalculatedDamage = selectedSkill->CalculateDamage();
+		//selectedSkill->_owner = owner;
+		selectedSkill->_preCalculatedDamage = selectedSkill->CalculateDamage(*this);
 	}
 
-	selectedSkill->_targets.clear();
-	selectedSkill->_targets.push_back(actors->at(targ));
+	_targets.clear();
+	_targets.push_back(fighters->at(targ)->GetId());
 	PredictedSkill = selectedSkill;
 	PredictedSkill->_isPreCalculated = true;
 
@@ -137,6 +163,13 @@ bool Fighter::PredictNextSkill(Actor_ptr owner, std::vector<Actor_ptr>* actors)
 
 	return true;
 }
+
+void Fighter::SetSkills(std::vector<Skill_ptr> skills)
+{
+	// swap values of the vectors
+	m_skills.swap(skills);
+}
+
 
 
 void Fighter::GiveExp(int xp)
@@ -173,7 +206,7 @@ void Fighter::SetDefault()
 {
 	_OrderPosition = 0;
 	_BattleFieldPosition = 0;
-	Skills.push_back(Skill_ptr(new SkillSmack()));
+	//m_skills.push_back(Skill_ptr(new SkillSmack()));
 	Dead = false;
 	Targetable = true;
 	Team = 0;
@@ -182,12 +215,18 @@ void Fighter::SetDefault()
 	SetStatsFromCurve();
 }
 
-void Fighter::TurnStart(std::vector<Actor_ptr>& actors)
+void Fighter::UseSkill()
+{
+	//std::sort(_targets.begin(), _targets.end(), Fighter::FighterBattleOrderSort);
+}
+
+
+void Fighter::TurnStart(std::vector<Fighter_ptr>& actors)
 {
 	for (auto a : actors)
 	{
-		if (a->_Fighter->Protector && a->_Fighter->Protector->_Fighter.get() == this)
-			a->_Fighter->Protector = NULL;
+		if (a->Protector && a->Protector.get() == this)
+			a->Protector = NULL;
 	}
 }
 
@@ -200,22 +239,22 @@ void Fighter::ApplyLethal()
 
 void Fighter::MagicalDefenseActionCommand(Damage& dmg)
 {
-	dmg._value -= Defense.Real / 2;
+	dmg._value -= Defense.Real;
 }
 
 void Fighter::MagicalOffenseActionCommand(Damage& dmg)
 {
-	dmg._value += (dmg._value > 0) ? Strength.Real / 2 : -Strength.Real / 2;
+	dmg._value += (dmg._value > 0) ? Strength.Real : -Strength.Real;
 }
 
 void Fighter::PhysicalDefenseActionCommand(Damage& dmg)
 {
-	dmg._value -= Defense.Real / 2 + fmax(Level / 2, 1);
+	dmg._value -= Defense.Real + fmax(Level / 2, 1);
 }
 
 void Fighter::PhysicalOffenseActionCommand(Damage& dmg)
 {
-	dmg._value += Strength.Real / 2 + Level;
+	dmg._value += Strength.Real + Level;
 }
 
 void Fighter::SpecialActionCommand(Damage& dmg)
@@ -248,7 +287,7 @@ Damage Fighter::TakeDamage(Damage& dmg)
 	//DamageModifiers(dmg);
 	dmg._value = fmax(0, dmg._value);
 	Health -= dmg._value;
-	Health = fmin(MaxHealth.Real, Health);
+	Health = min(MaxHealth.Real, Health);
 	Health = fmax(Health, 0);
 	ApplyLethal();
 	UpdateObservers();
@@ -269,25 +308,25 @@ Damage Fighter::ApplyHealing(Damage& heal)
 	return heal;
 }
 
-void Fighter::ApplyBonusDamage(Actor_ptr target)
+void Fighter::ApplyBonusDamage(Fighter_ptr target)
 {
-	PredictedSkill->ApplyBonusEffect(target);
+	//PredictedSkill->ApplyBonusEffect(target);
 }
 
-bool Fighter::RespectsTargeting(Actor* owner, int tm)
+bool Fighter::RespectsTargeting(Fighter_ptr owner, int tm)
 {
 	switch (tm)
 	{
 	case TM_Alive:
 		return !Dead;
 	case TM_Ally:
-		return Team == owner->_Fighter->Team;
+		return Team == owner->Team;
 	case TM_Any:
 		return true;
 	case TM_Dead:
 		return Dead;
 	case TM_Enemy:
-		return Team != owner->_Fighter->Team;
+		return Team != owner->Team;
 	}
 
 	return true;

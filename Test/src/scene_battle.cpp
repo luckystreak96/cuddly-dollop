@@ -14,28 +14,40 @@
 #include "bloom.h"
 #include "input_manager.h"
 #include "entityFactory.h"
-#include "actorFactory.h"
+#include "fighterFactory.h"
 #include "particleManager.h"
+#include "battleAnimationManager.h"
 
 SceneBattle::SceneBattle() : m_zoom(false)
 {
 	m_currentMap = 3;
-	_actors.push_back(Actor_ptr(ActorFactory::BuildBaseAlly()));
-	_actors.push_back(Actor_ptr(ActorFactory::BuildBaseAlly()));
-	_actors.push_back(Actor_ptr(ActorFactory::BuildBaseAlly()));
-	//_actors.push_back(Actor_ptr(ActorFactory::BuildBaseAlly()));
+	m_fighters.push_back(Fighter_ptr(FighterFactory::BuildBaseAlly()));
+	m_fighters.push_back(Fighter_ptr(FighterFactory::BuildBaseAlly()));
+	m_fighters.push_back(Fighter_ptr(FighterFactory::BuildBaseAlly()));
+	//_actors.push_back(Fighter_ptr(FighterFactory::BuildBaseAlly()));
 	for (auto x : BattleData::Party)
-		_actors.push_back(x);
+		m_fighters.push_back(x);
 
-	_actors.push_back(Actor_ptr(ActorFactory::BuildActor(1)));
-	_actors.push_back(Actor_ptr(ActorFactory::BuildActor(1)));
-	_actors.push_back(Actor_ptr(ActorFactory::BuildActor(1)));
-	_actors.push_back(Actor_ptr(ActorFactory::BuildActor(1)));
-	//_actors.push_back(Actor_ptr(ActorFactory::BuildBaseEnemy()));
-	//_actors.push_back(Actor_ptr(ActorFactory::BuildBaseEnemy()));
-	//_actors.push_back(Actor_ptr(ActorFactory::BuildBaseEnemy()));
+	m_fighters.push_back(Fighter_ptr(FighterFactory::BuildFighter(1)));
+	m_fighters.push_back(Fighter_ptr(FighterFactory::BuildFighter(1)));
+	m_fighters.push_back(Fighter_ptr(FighterFactory::BuildFighter(1)));
+	m_fighters.push_back(Fighter_ptr(FighterFactory::BuildFighter(1)));
+	//_actors.push_back(Fighter_ptr(FighterFactory::BuildBaseEnemy()));
+	//_actors.push_back(Fighter_ptr(FighterFactory::BuildBaseEnemy()));
+	//_actors.push_back(Fighter_ptr(FighterFactory::BuildBaseEnemy()));
 	Init();
-	m_battle = BattleManager(_actors);
+	m_battle = BattleManager(m_fighters);
+
+	std::map<int, Actor_ptr> actors;
+
+	for (auto& x : m_actors)
+	{
+		actors.emplace(x->GetId(), x);
+	}
+
+	m_battle.GetGraphics()->SetActors(actors);
+	m_battle.SetupHUD();
+
 	SoundManager::GetInstance();
 	m_fade.SetFade(true);
 	static bool firstEverLoad = true;
@@ -64,47 +76,65 @@ bool SceneBattle::Init()
 	m_camera._lerperTrans.MaxVelocity = 0.1f;
 	m_camera._style = CAMSTYLE_FollowDad;
 
-	for (auto x : _actors)
+	std::vector<Actor_ptr> party;
+	std::vector<Actor_ptr> enemies;
+	int a = 0;
+	int b = 4;
+
+	// Set battlefield position for proper iteration
+	for (auto& x : m_fighters)
 	{
-		if (x->_Fighter->Team == 0)
-			m_party.push_back(x);
+		Actor_ptr actor = Actor_ptr(new Actor());
+		actor->SetTexture(x->GetSprite());
+
+		if (x->Team == 0)
+		{
+			x->_BattleFieldPosition = a++;
+			actor->SetId(x->_BattleFieldPosition);
+			party.push_back(actor);
+		}
 		else
-			m_enemies.push_back(x);
+		{
+			x->_BattleFieldPosition = b++;
+			actor->SetId(x->_BattleFieldPosition);
+			enemies.push_back(actor);
+		}
+
+		m_actors.push_back(actor);
 	}
 
-	float startY = (4.25f + (1.25f * (4 - m_party.size())) / 2.0f);
+
+
+
+	float startY = (4.25f + (1.25f * (4 - party.size())) / 2.0f);
 	//float startY = 4.25f;
 
-	for (int i = 0; i < m_party.size(); i++)
+	for (int i = 0; i < party.size(); i++)
 	{
-		// Set battlefield position for proper iteration
-		m_party.at(i)->_Fighter->_BattleFieldPosition = i;
-
 		Vector3f position = Vector3f(4.0f + i * 0.25f, startY + i * 1.25f, 4.0f);
-		m_party.at(i)->_Graphics->SetPhysics(position, Vector3f());
-		if(!Transformation::perspectiveOrtho)
-			m_party.at(i)->AdjustHeightForAngle();
-		m_party.at(i)->BasePosition = m_party.at(i)->_Graphics->GetPos();
-		m_party.at(i)->_Graphics->_row = AE_Right; // make player face right cuz girl looks bad looking down
-		m_party.at(i)->_Graphics->_animation = AE_Right; // make player face right cuz girl looks bad looking down
+		party.at(i)->SetPhysics(position, Vector3f());
+		//if (!Transformation::perspectiveOrtho)
+			party.at(i)->AdjustHeightForAngle();
+		party.at(i)->WaitPosition = party.at(i)->GetPos();
+		party.at(i)->ActivePosition = party.at(i)->GetPos() + Vector3f(1, 0, 0);
+		party.at(i)->_row = AE_Right; // make player face right cuz girl looks bad looking down
+		party.at(i)->_animation = AE_Right; // make player face right cuz girl looks bad looking down
 	}
 
-	startY = (4.25f + (1.25f * (4 - m_enemies.size())) / 2.0f);
+	startY = (4.25f + (1.25f * (4 - enemies.size())) / 2.0f);
 
-	for (int i = 0; i < m_enemies.size(); i++)
+	for (int i = 0; i < enemies.size(); i++)
 	{
-		// Set battlefield position for proper iteration
-		m_enemies.at(i)->_Fighter->_BattleFieldPosition = i + m_party.size();
-
 		Vector3f position = Vector3f(13.5f - i * 0.25f, startY + i * 1.25f, 4.0f);
-		m_enemies.at(i)->_Graphics->SetPhysics(position, Vector3f());
-		if(!Transformation::perspectiveOrtho)
-			m_enemies.at(i)->AdjustHeightForAngle();
-		m_enemies.at(i)->BasePosition = m_enemies.at(i)->_Graphics->GetPos();
+		enemies.at(i)->SetPhysics(position, Vector3f());
+		//if (!Transformation::perspectiveOrtho)
+			enemies.at(i)->AdjustHeightForAngle();
+		enemies.at(i)->WaitPosition = enemies.at(i)->GetPos();
+		enemies.at(i)->ActivePosition = enemies.at(i)->GetPos() + Vector3f(-1, 0, 0);
 		// Set to right cause the sprites are flipped
-		m_enemies.at(i)->_Graphics->_row = AE_Right;
-		m_enemies.at(i)->_Graphics->_animation = AE_Right;
-		m_enemies.at(i)->_Graphics->GetModelMat()->SetScale(-1, 1, 1);
+		enemies.at(i)->_row = AE_Right;
+		enemies.at(i)->_animation = AE_Right;
+		enemies.at(i)->GetModelMat()->SetScale(-1, 1, 1);
 	}
 
 	m_eventManager.SetEntitiesMap(&m_celist);
@@ -127,6 +157,8 @@ bool SceneBattle::Init()
 		}
 	}
 
+
+
 	Scene::DrawBegin();
 
 	return true;
@@ -135,7 +167,15 @@ bool SceneBattle::Init()
 SceneBattle::~SceneBattle()
 {
 	FontManager::GetInstance().RemoveFont(m_fontFPS);
-	m_battle._hud.Destroy();
+	//m_battle._hud.Destroy();
+
+	//for (auto& x : m_fighters)
+	//	for (auto& y : x->_Fighter->m_skills)
+	//	{
+	//		y->_actors->clear();
+	//		y->_targets.clear();
+	//		y->_anims = nullptr;
+	//	}
 }
 
 void SceneBattle::ManageInput()
@@ -144,7 +184,7 @@ void SceneBattle::ManageInput()
 
 	if (InputManager::GetInstance().FrameKeyStatus(A_Accept, KeyStatus::KeyPressed))
 	{
-		if (!m_battle._animations.size() && m_battle._postBattleState != PBS_FightingInProgress && m_battle._postBattleState != PBS_PostBattleComplete)
+		if (!m_battle.Animating() && m_battle._postBattleState != PBS_FightingInProgress && m_battle._postBattleState != PBS_PostBattleComplete)
 			m_battle._postBattleState = (PostBattleState)((int)m_battle._postBattleState + 1);
 
 		if (m_fade.IsDone() && m_battle._postBattleState == PBS_PostBattleComplete)
@@ -196,12 +236,13 @@ SceneGenData SceneBattle::Update()
 	for (auto it : m_celist)
 		it.second->Update();
 
-	//std::cout << "1 -- " << m_party.at(0)->_Graphics->GetPosRef().Print() << std::endl;
-	for (auto a : _actors)
+	//std::cout << m_actors.at(0)->GetPosRef().Print() << std::endl;
+	for (auto a : m_actors)
 		a->Update();
 
 	//std::cout << "2 -- " << m_party.at(0)->_Graphics->GetPosRef().Print() << std::endl;
 	m_mapHandler->Update(OrthoProjInfo::GetRegularInstance().changed);
+	//std::cout << m_mapHandler->Graphics()->GetPosRef().Print() << std::endl;
 
 	SetAudioPosition();
 	SoundManager::GetInstance().Update();
@@ -213,11 +254,21 @@ SceneGenData SceneBattle::Update()
 
 	//Display FPS
 #ifdef _DEBUG
-	FontManager::GetInstance().SetText(m_fontFPS, std::to_string(ElapsedTime::GetInstance().GetFPS()),
-		Vector3f(0, OrthoProjInfo::GetRegularInstance().Top * 2.f / OrthoProjInfo::GetRegularInstance().Size - 0.5f, 0));
+	static double fps = 0;
+	unsigned int curfps = ElapsedTime::GetInstance().GetFPS();
+	if (fps != curfps)
+	{
+
+		FontManager::GetInstance().SetText(m_fontFPS, /*std::to_string(m_celist.at(1)->PhysicsRaw()->PositionRef().z),*/std::to_string(curfps),
+			Vector3f(0, OrthoProjInfo::GetRegularInstance().Top * 2.f / OrthoProjInfo::GetRegularInstance().Size - 0.5f, -10));
+
+		fps = curfps;
+	}
+	//FontManager::GetInstance().SetText(m_fontFPS, std::to_string(ElapsedTime::GetInstance().GetFPS()),
+	//	Vector3f(0, OrthoProjInfo::GetRegularInstance().Top * 2.f / OrthoProjInfo::GetRegularInstance().Size - 0.5f, 0));
 #endif
 
-	srand(clock());
+	//srand(clock());
 	FontManager::GetInstance().Update(ElapsedTime::GetInstance().GetElapsedTime());
 	ParticleManager::GetInstance().Update(ElapsedTime::GetInstance().GetElapsedTime());
 
@@ -236,10 +287,11 @@ void SceneBattle::Draw()
 	FontManager::GetInstance().SetRender();
 	ParticleManager::GetInstance().SetRender();
 
-	for (auto& a : _actors)
-		Renderer::GetInstance().Add(a->_Graphics);
+	for (auto& a : m_actors)
+		Renderer::GetInstance().Add(a);
 
-	m_battle.SetRender();
+	//m_battle.SetRender();
+	m_battle.GetGraphics()->SetRender();
 
 	// Can enable post-processing effects here
 	Scene::DrawEnd();

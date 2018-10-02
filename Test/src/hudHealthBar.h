@@ -3,14 +3,14 @@
 
 #include "hudBar.h"
 #include "battleAnimation.h"
-
-class Actor;
+#include "battleUnit.h"
 
 class HudHealthBar : public HudBar
 {
 public:
 	// Don't forget to tell the Observable that you're an observer
-	HudHealthBar(Actor* ap, Vector3f position);
+	HudHealthBar(BattleUnit unit, Vector3f pos);
+	~HudHealthBar();
 	void Update();
 	void Destroy();
 	void SetRender();
@@ -23,7 +23,7 @@ public:
 	void UpdateSmallHPPosition();
 
 	// Remember who you're showing
-	Actor* _actor;
+	BattleUnit _unit;
 
 private:
 	// maxhp variables

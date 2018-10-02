@@ -3,13 +3,13 @@
 
 #include "hudComponent.h"
 #include "graphicsComponent.h"
-#include "actor.h"
+#include "battleUnit.h"
 
 class HudArrow : public HudComponent
 {
 public:
 	// Don't forget to tell the Observable that you're an observer
-	HudArrow(Actor_ptr targeter);
+	HudArrow(BattleUnit unit, std::map<int, HudBattleUnit>* units);
 	virtual void Update();
 	virtual void Destroy();
 	virtual void SetRender();
@@ -17,7 +17,8 @@ public:
 	void ToggleHidden(bool hidden);
 
 public:
-	Actor_ptr _targeter;
+	BattleUnit _unit;
+	std::map<int, HudBattleUnit>* _units;
 
 protected:
 	Vector3f _start;

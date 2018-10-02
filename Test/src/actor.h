@@ -6,32 +6,36 @@
 #include "playerGraphicsComponent.h"
 #include "fighter.h"
 
-enum ColorState { CS_Invis, CS_Selected, CS_Normal, CS_Update, CS_Darker };
+class Actor;
+using Actor_ptr = std::shared_ptr<Actor>;
 
-class Actor
+enum ColorState { CS_ActionCommand, CS_Invis, CS_Selected, CS_Normal, CS_Update, CS_Darker };
+
+class Actor : public PlayerGraphicsComponent
 {
 public:
 	Actor();
 	Actor(Actor& a);
+	~Actor();
 	void Update();
-	void UpdateColor();
+	void UpdateColor(bool dead, bool selected, int actionCommandLevel = 0);
 	void AdjustHeightForAngle();
 
-public:
-	Fighter_ptr _Fighter;
-	PGraphics_ptr _Graphics;
+	void SetId(int id) { ID = id; }
+	int GetId() { return ID; }
 
 public:
 	ColorState _ColorState;
-	std::string _Name;
 	bool Selected;
 	bool ChoosingAction;
-	std::string Sprite;
-	Vector3f BasePosition;
-	static bool ActorSpeedSort(Actor_ptr a, Actor_ptr b);
-	static bool ActorBattleOrderSort(Actor_ptr a, Actor_ptr b);
+
+	// Position when chilling in back
+	Vector3f WaitPosition;
+	// Position after stepping up
+	Vector3f ActivePosition;
 
 protected:
+	int ID;
 	void SetDefault();
 };
 

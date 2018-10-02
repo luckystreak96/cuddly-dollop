@@ -56,7 +56,7 @@ void FontManager::SetScale(unsigned int font, float xScale, float yScale)
 	temp->SetScale(xScale, yScale);
 }
 
-void FontManager::SetText(unsigned int font, std::string text, Vector3f location, bool centered)
+void FontManager::SetText(unsigned int& font, std::string& text, Vector3f& location, bool centered)
 {
 	Font_ptr temp = GetFont(font);
 	if (temp == NULL)

@@ -8,12 +8,15 @@
 #include "physicsComponent.h"
 #include "graphicsComponent.h"
 
-Entity::Entity(unsigned int id, std::string spritesheet, bool playerInput, bool fullSize) 
-	: m_id(id), m_hasEvents(false), m_fullSize(fullSize), _justTouched(false)
+Entity::Entity(unsigned int id, std::string spritesheet, bool playerInput, bool fullSize)
+	: m_id(id), m_hasEvents(false), m_fullSize(fullSize), _justTouched(false), m_graphicsComponent(nullptr)
 {
-	m_graphicsComponent = !playerInput ? GraphComp_ptr(new PlayerGraphicsComponent(spritesheet, "CENTERED_TILE")) : 
-		GraphComp_ptr(new PlayerGraphicsComponent(spritesheet, "CENTERED_TILE"));
-	components.push_back(m_graphicsComponent);
+	if (ResourceManager::GetInstance().LoadTexture(spritesheet))
+	{
+		m_graphicsComponent = !playerInput ? GraphComp_ptr(new PlayerGraphicsComponent(spritesheet, "CENTERED_TILE")) :
+			GraphComp_ptr(new PlayerGraphicsComponent(spritesheet, "CENTERED_TILE"));
+		components.push_back(m_graphicsComponent);
+	}
 
 	m_physicsComponent = m_fullSize ? std::shared_ptr<PhysicsComponent>(new PlayerPhysicsComponent(Vector3f(), "TILE", Vector3f(0.95f, 0.95f, 0), Vector3f(1, 0, 0))) : std::shared_ptr<PhysicsComponent>(new PlayerPhysicsComponent(Vector3f(), "TILE", Vector3f(0.8f, 0.4f, 0), Vector3f(1, 0, 0)));
 	components.push_back(m_physicsComponent);
@@ -44,19 +47,26 @@ void Entity::Update()
 
 	m_inputComponent->Update();
 
-	m_graphicsComponent->SetPhysics(m_physicsComponent->Position(), m_physicsComponent->Velocity());
-	m_graphicsComponent->Update();
+	if (m_graphicsComponent)
+	{
+		m_graphicsComponent->SetPhysics(m_physicsComponent->Position(), m_physicsComponent->Velocity());
+		m_graphicsComponent->Update();
+	}
 }
 
 void Entity::Draw()
 {
-	Effect::SetModelPosition(&m_graphicsComponent->GetModelMat()->GetWorldTrans().m[0][0]);
-	m_graphicsComponent->Draw();
+	if (m_graphicsComponent)
+	{
+		Effect::SetModelPosition(&m_graphicsComponent->GetModelMat()->GetWorldTrans().m[0][0]);
+		m_graphicsComponent->Draw();
+	}
 }
 
 void Entity::SetRender()
 {
-	Renderer::GetInstance().Add(m_graphicsComponent);
+	if (m_graphicsComponent)
+		Renderer::GetInstance().Add(m_graphicsComponent);
 }
 
 unsigned int Entity::GetID()

@@ -14,7 +14,7 @@ m_lettersPerRow(16), m_lettersPerColumn(16), m_xScale(1.0f), m_yScale(1.0f), m_l
 	CreateHash();
 	ResourceManager::GetInstance().LoadTexture(path);
 
-	SetText(" ");
+	SetText(std::string(" "));
 }
 
 Font::~Font()
@@ -253,7 +253,7 @@ void Font::Reset()
 	SetText(_text, m_basePosition, m_centered, m_xBndry);
 }
 
-void Font::SetText(std::string text, Vector3f location, bool centered, float xBoundry)
+void Font::SetText(std::string& text, Vector3f& location, bool centered, float xBoundry)
 {
 	if (text == _text/* && m_graphics*/)
 		return;

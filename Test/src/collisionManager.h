@@ -7,13 +7,13 @@ class CollisionManager
 {
 public:
 	CollisionManager();
-	CollisionManager(std::map<unsigned int, std::shared_ptr<Entity>>* e, std::vector<std::shared_ptr<MapTile>>* t);
+	CollisionManager(std::map<unsigned int, std::shared_ptr<Entity>>* e, std::vector<std::vector<std::vector<MapTile*>>>* t);
 	std::map<unsigned int, std::shared_ptr<Entity>> CalculateCollision();
 	void SetEntities(std::map<unsigned int, std::shared_ptr<Entity>>* e);
-	void SetMapTiles(std::vector<std::shared_ptr<MapTile>>* t);
+	void SetMapTiles(std::vector<std::vector<std::vector<MapTile*>>>* t);
 private:
 	std::map<unsigned int, std::shared_ptr<Entity>>* m_entities;
-	std::vector<std::shared_ptr<MapTile>>* m_tiles;
+	std::vector<std::vector<std::vector<MapTile*>>>* m_tiles;
 };
 
 #endif

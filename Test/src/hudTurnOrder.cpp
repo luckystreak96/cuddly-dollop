@@ -7,14 +7,14 @@
 #include "lerper.h"
 #include "skill.h"
 
-HudTurnOrder::HudTurnOrder(Actor* owner)
+HudTurnOrder::HudTurnOrder(BattleUnit u)
 {
 	m_mustDisplay = false;
-	_actor = owner;
+	_unit = u;
 
-	m_prevActorPos = _actor->_Graphics->GetPosRef();
+	m_prevActorPos = *u.position;//_actor.second->GetPosRef();
 
-	m_observedOrder = _actor->_Fighter->_OrderPosition;
+	m_observedOrder = *u.turnOrder;//_actor.first->_OrderPosition;
 
 	m_prevOrder = -43893893;// set this to a fucked up number so itll do it's first update
 
@@ -58,7 +58,7 @@ void HudTurnOrder::Destroy()
 
 void HudTurnOrder::Update()
 {
-	Vector3f pos = _actor->_Graphics->GetPosRef();
+	Vector3f pos = *_unit.position;
 	if (m_prevActorPos != pos)
 	{
 		m_prevActorPos = pos;
@@ -73,7 +73,7 @@ void HudTurnOrder::Update()
 		FontManager::GetInstance().GetFont(_turnFont)->SetOffset(CalculateTextPosition());
 	}
 
-	m_observedOrder = _actor->_Fighter->_OrderPosition;
+	m_observedOrder = *_unit.turnOrder;
 
 	// Ensure that the value we're following actually changed to do something
 	if (m_prevOrder == m_observedOrder && m_mustDisplayNextUpdate == m_mustDisplay)
@@ -131,14 +131,14 @@ void HudTurnOrder::AdjustPosition()
 
 void HudTurnOrder::SetRender()
 {
-	if (!m_mustDisplay || _actor->_Fighter->Dead)
+	if (!m_mustDisplay || *_unit.dead)
 	{
 		//if (_actor->_Fighter->Dead)
 			FontManager::GetInstance().DisableFont(_turnFont);
 		return;// returning here allows us to not render the bg
 	}
 
-	if (m_mustDisplay && !_actor->_Fighter->Dead)
+	if (m_mustDisplay && !*_unit.dead)
 		FontManager::GetInstance().EnableFont(_turnFont);
 
 	// FontManager handles setting the render for the label

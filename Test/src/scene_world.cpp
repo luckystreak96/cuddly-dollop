@@ -30,17 +30,17 @@ SceneWorld::SceneWorld(unsigned int map_id) : m_zoom(false)
 void SceneWorld::Brb()
 {
 	NextScene = SceneGenData();
-#ifdef _DEBUG
+//#ifdef _DEBUG
 	FontManager::GetInstance().DisableFont(m_fontFPS);
-#endif
+//#endif
 }
 
 void SceneWorld::Resume()
 {
 	m_fade.SetFade(true);
-#ifdef _DEBUG
+//#ifdef _DEBUG
 	FontManager::GetInstance().EnableFont(m_fontFPS);
-#endif
+//#endif
 	Scene::Resume();
 }
 
@@ -59,7 +59,7 @@ bool SceneWorld::Init()
 	m_camera._mapsize = m_mapHandler->GetMapSize();
 	m_camera.ForcePosition(m_camera.MapCenter() - Vector3f(2.0f, 2.0f, 0));
 	m_camera._style = CAMSTYLE_FollowDadNoScale;
-	m_collisionManager.SetMapTiles(m_mapHandler->Tiles());
+	m_collisionManager.SetMapTiles(m_mapHandler->OrderedTiles());
 
 	m_celist = EntityFactory::GetEntities(m_currentMap, m_jsonHandler);
 	m_camera.ForcePosition(m_celist.at(1)->PhysicsRaw()->PositionRef());
@@ -77,11 +77,11 @@ bool SceneWorld::Init()
 		}
 	}
 
-#ifdef _DEBUG
+//#ifdef _DEBUG
 	//m_fontTitle = FontManager::GetInstance().AddFont(false, false);
 	m_fontFPS = FontManager::GetInstance().AddFont(true, false, true, "res/fonts/lowercase.png");
 	FontManager::GetInstance().SetScale(m_fontFPS, 0.5f, 0.5f);
-#endif
+//#endif
 
 	// Autorun events
 	for (auto e : m_celist)
@@ -102,7 +102,7 @@ bool SceneWorld::Init()
 void SceneWorld::ShowStats()
 {
 	for (auto& x : BattleData::Party)
-		FontManager::GetInstance().CreateFloatingText(m_celist.at(1)->PhysicsRaw()->PositionRef(), std::to_string(x->_Fighter->Strength.Real));
+		FontManager::GetInstance().CreateFloatingText(m_celist.at(1)->PhysicsRaw()->PositionRef(), std::to_string(x->Strength.Real));
 }
 
 SceneWorld::~SceneWorld()
@@ -269,12 +269,17 @@ SceneGenData SceneWorld::Update()
 void SceneWorld::UpdateHUD()
 {
 	//Display FPS
-#ifdef _DEBUG
-	FontManager::GetInstance().SetText(m_fontFPS, /*std::to_string(m_celist.at(1)->PhysicsRaw()->PositionRef().z),*/std::to_string(ElapsedTime::GetInstance().GetFPS()),
-		Vector3f(0, OrthoProjInfo::GetRegularInstance().Top * 2.f / OrthoProjInfo::GetRegularInstance().Size - 0.5f, -10));
-#endif
+//#ifdef _DEBUG
+	//static double fps = 0;
+	//unsigned int curfps = ElapsedTime::GetInstance().GetFPS();
+	if (ElapsedTime::GetInstance().OneSecond())
+	{
+		FontManager::GetInstance().SetText(m_fontFPS, /*std::to_string(m_celist.at(1)->PhysicsRaw()->PositionRef().z),*/std::to_string(ElapsedTime::GetInstance().GetFPS()),
+			Vector3f(0, OrthoProjInfo::GetRegularInstance().Top * 2.f / OrthoProjInfo::GetRegularInstance().Size - 0.5f, -10));
+	}
+//#endif
 
-	srand(clock());
+	//srand(clock());
 
 	FontManager::GetInstance().Update(ElapsedTime::GetInstance().GetElapsedTime());
 }

@@ -15,6 +15,7 @@ public:
 	}
 
 	double GetElapsedTime() { return m_elapsedTime; }
+	bool OneSecond() { return m_secondPassed; }
 	unsigned int GetFPS() { return m_FPS; }
 	void CalculateElapsedTime();
 	void SetBufferElapsedTime(float fps) { m_elapsedTime = 1.f / fps; }
@@ -22,6 +23,7 @@ public:
 private:
 	ElapsedTime() {}
 	double m_elapsedTime;
+	bool m_secondPassed;
 	unsigned int m_FPS;
 };
 

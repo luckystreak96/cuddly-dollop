@@ -9,11 +9,12 @@ class SkillHeal : public SkillMelee
 
 public:
 	SkillHeal();
-	virtual void ApplyEffect();
-	virtual Damage CalculateDamage();
+	//virtual void ApplyEffect();
+	virtual Damage CalculateDamage(StatUser& user);
 
 protected:
-	void DefaultSetup();
+	virtual void DefaultSetup();
+	virtual void ModifyAnimations();
 };
 
 #endif

@@ -4,14 +4,13 @@
 #include "hudBar.h"
 #include "battleAnimation.h"
 #include "skill.h"
-
-class Actor;
+#include "battleUnit.h"
 
 class HudTurnOrder : public HudComponent
 {
 public:
 	// Don't forget to tell the Observable that you're an observer
-	HudTurnOrder(Actor* owner);
+	HudTurnOrder(BattleUnit u);
 	void Update();
 	void AdjustPosition();
 	void Destroy();
@@ -22,7 +21,7 @@ public:
 	Vector3f CalculateTextPosition();
 
 	// Remember who you're showing
-	Actor* _actor;
+	BattleUnit _unit;
 	unsigned int _turnFont;
 
 private:

@@ -6,6 +6,7 @@
 
 class PassiveFactory
 {
+	friend class Fighter;
 public:
 	static Passive_ptr BuildPassive(std::string name, PassivePriority priority, PassiveType type, PassiveSpecifier specifier, float fvalue = 0, int ivalue = 0, std::string svalue = "");
 

@@ -10,6 +10,7 @@ class AnimBasic : public BattleAnimation
 public:
 	AnimBasic(Anim_Enum anim, Actor_ptr target, double seconds);
 	virtual void Update();
+	void first_time();
 
 public:
 	Actor_ptr _target;

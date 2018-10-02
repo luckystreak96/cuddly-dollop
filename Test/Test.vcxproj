@@ -99,6 +99,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>C:\Users\yanik\Documents\cuddly-dollop\Test\res\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/std:c++latest</AdditionalOptions>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -130,6 +131,9 @@
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>C:\Users\yanik\Documents\cuddly-dollop\Test\res\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/std:c++latest</AdditionalOptions>
+      <DisableSpecificWarnings>4996</DisableSpecificWarnings>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <OmitFramePointers>true</OmitFramePointers>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -165,7 +169,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\actorFactory.h" />
+    <ClInclude Include="src\battleHUD.h" />
+    <ClInclude Include="src\battleUnit.h" />
+    <ClInclude Include="src\fighterFactory.h" />
     <ClInclude Include="src\animBasic.h" />
     <ClInclude Include="src\animBonusEffect.h" />
     <ClInclude Include="src\animColorFlash.h" />
@@ -174,8 +180,8 @@
     <ClInclude Include="src\animScreenShake.h" />
     <ClInclude Include="src\animWait.h" />
     <ClInclude Include="src\animXpBar.h" />
+    <ClInclude Include="src\battleAnimationManager.h" />
     <ClInclude Include="src\battleData.h" />
-    <ClInclude Include="src\battleHUD.h" />
     <ClInclude Include="src\contrastEffect.h" />
     <ClInclude Include="src\contrastProcessing.h" />
     <ClInclude Include="src\fighter.h" />
@@ -302,7 +308,8 @@
     <ClInclude Include="src\vertex.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\actorFactory.cpp" />
+    <ClCompile Include="src\battleHUD.cpp" />
+    <ClCompile Include="src\fighterFactory.cpp" />
     <ClCompile Include="src\animBasic.cpp" />
     <ClCompile Include="src\animBonusEffect.cpp" />
     <ClCompile Include="src\animColorFlash.cpp" />
@@ -312,8 +319,8 @@
     <ClCompile Include="src\animWait.cpp" />
     <ClCompile Include="src\animXpBar.cpp" />
     <ClCompile Include="src\battleAnimation.cpp" />
+    <ClCompile Include="src\battleAnimationManager.cpp" />
     <ClCompile Include="src\battleData.cpp" />
-    <ClCompile Include="src\battleHUD.cpp" />
     <ClCompile Include="src\contrastEffect.cpp" />
     <ClCompile Include="src\contrastProcessing.cpp" />
     <ClCompile Include="src\fighter.cpp" />

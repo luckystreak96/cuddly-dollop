@@ -7,7 +7,7 @@ AnimColorFlash::AnimColorFlash(Vector3f color, Actor_ptr target, double duration
 	_done = false;
 	_progress = 0;
 	_color = color;
-	_prevColor = _target->_Graphics->GetVertices()->front().color;
+	_prevColor = _target->GetVertices()->front().color;
 	_async = true;
 }
 
@@ -17,7 +17,7 @@ void AnimColorFlash::Update()
 	if (_done)
 		return;
 
-	_target->_Graphics->SetColorAll(_color);
+	_target->SetColorAll(_color);
 
 	// Update percent
 	_progress += 0.025;
@@ -25,6 +25,6 @@ void AnimColorFlash::Update()
 	{
 		_done = true;
 		_target->_ColorState = CS_Update;
-		_target->UpdateColor();
+		//_target->UpdateColor();
 	}
 }

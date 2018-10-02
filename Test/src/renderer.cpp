@@ -14,8 +14,17 @@
 // MAKE IT BE A CENTERED_TILE AND PLACE IT CORRECTLY OR ITLL BE DUMB AF
 Renderer::Renderer() : m_toDraw(std::vector<GraphicsComponent*>()), m_width(1), m_height(1), apply(true)
 {
-	pps.GetModelMat()->SetTranslation(0, 0, 0);
+	//Setup the tile to draw
+	float size = OrthoProjInfo::GetRegularInstance().Size;
+	float right = OrthoProjInfo::GetRegularInstance().Right;
+	float top = OrthoProjInfo::GetRegularInstance().Top;
+
+	pps.SetPhysics(Vector3f(right / size, top / size, 0), Vector3f());
+	pps.GetModelMat()->SetScale(Vector3f((right * 2) / size, (top * 2) / size, 1));
 	pps.Update();
+
+	//pps.GetModelMat()->SetTranslation(0, 0, 0);
+	//pps.Update();
 
 	// TEST ERASE ME MAYBE
 	//m_ppe.push_back(std::make_shared<NightTimeProcessing>(NightTimeProcessing()));
@@ -51,15 +60,6 @@ void Renderer::Setup()
 				x->ResetTextureSizes();
 			}
 		}
-
-		//Setup the tile to draw
-		float size = OrthoProjInfo::GetRegularInstance().Size;
-		float right = OrthoProjInfo::GetRegularInstance().Right;
-		float top = OrthoProjInfo::GetRegularInstance().Top;
-
-		pps.SetPhysics(Vector3f(right / size, top / size, 0), Vector3f());
-		pps.GetModelMat()->SetScale(Vector3f((right * 2) / size, (top * 2) / size, 1));
-		pps.Update();
 
 		//FBO
 		m_fbo.BindFrameBuffer();
@@ -97,6 +97,9 @@ void Renderer::Sort()
 
 	//Sort the components
 	std::sort(m_toDraw.begin(), m_toDraw.end(), ComponentSort);
+
+	//if (ElapsedTime::GetInstance().OneSecond())
+	//	std::cout << "Drawing " << m_toDraw.size() << " GraphicsComponents" << std::endl;
 }
 
 void Renderer::Draw()

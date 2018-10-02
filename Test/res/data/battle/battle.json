@@ -65,7 +65,7 @@
       "_float": 6.0
     }
   ],
-  "actors": [
+  "fighters": [
     {
       "id": 1,
       "name": "Jerry",
@@ -77,7 +77,8 @@
       "skillpoints": 4,
       "dead": false,
       "skills": [
-        "Smack"
+        "Smack",
+        "Heal"
       ],
       "passives": []
     }

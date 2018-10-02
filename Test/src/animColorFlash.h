@@ -8,6 +8,7 @@
 class AnimColorFlash : public BattleAnimation
 {
 public:
+	// Async = true
 	AnimColorFlash(Vector3f color, Actor_ptr target, double duration = 0.2);
 	virtual void Update();
 

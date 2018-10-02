@@ -20,7 +20,7 @@ void AnimBonusEffect::Update()
 	_progress += 0.025;
 	if (_progress >= _duration)
 	{
-		_owner->_Fighter->ApplyBonusDamage(_target);
+		//_owner->_Fighter->ApplyBonusDamage(_target);
 		_done = true;
 	}
 }

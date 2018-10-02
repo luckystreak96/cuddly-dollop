@@ -147,7 +147,7 @@ void Mat4f::InitProjPers(PersProjInfo p)
 {
 	const float ar = p.Width / p.Height;
 	const float zRange = p.zNear - p.zFar;
-	const float tanHalfFOV = tanf(ToRadian(p.FOV / 2.0));
+	const float tanHalfFOV = tanf(ToRadian(p.FOV / 2.0f));
 
 	m[0][0] = 1.0f / (tanHalfFOV * ar);
 	m[0][1] = 0.0f;

@@ -6,22 +6,31 @@
 #include "actor.h"
 #include "lerper.h"
 #include "animXpBar.h"
+#include "fighter.h"
+#include "actor.h"
 
-HudHealthBar::HudHealthBar(Actor* ap, Vector3f position)
+
+HudHealthBar::~HudHealthBar()
+{
+	Destroy();
+}
+
+HudHealthBar::HudHealthBar(BattleUnit unit, Vector3f position)
 {
 	// Set initial values
-	_actor = ap;
-	m_observed = &ap->_Fighter->Health;
-	m_max = ap->_Fighter->GetMaxHealth().Modified;
-	std::string name = ap->_Name;
+	_unit = unit;
+	m_observed = &unit.stats->Health;// &ap.first->Health;
+	m_max = unit.stats->GetMaxHealth().Modified;
+	std::string name = unit.name;
 
-	m_observedMaxHP = &ap->_Fighter->GetMaxHealthPointer()->Modified;
+	m_observedMaxHP = &unit.stats->GetMaxHealthPointer()->Modified;//&ap.first->GetMaxHealthPointer()->Modified;
 
-	m_startXP = ap->_Fighter->GetExp();
-	m_currentLevel = ap->_Fighter->GetLevel();
+	m_startXP = unit.stats->GetExp();//ap.first->GetExp();
+	m_currentLevel = unit.stats->GetLevel();//ap.first->GetLevel();
 
-	m_observedXP = ap->_Fighter->GetExp();
-	m_xpMax = ap->_Fighter->CalculateNextLevelExp() - ap->_Fighter->CalculateLevelExp(ap->_Fighter->GetLevel() - 1);
+	m_observedXP = unit.stats->GetExp();//ap.first->GetExp();
+	m_xpMax = unit.stats->CalculateNextLevelExp() - unit.stats->CalculateLevelExp(unit.stats->GetLevel() - 1);
+	//m_xpMax = ap.first->CalculateNextLevelExp() - ap.first->CalculateLevelExp(ap.first->GetLevel() - 1);
 
 	m_prevValue = m_prevXP = m_prevMaxHP = -43893893;// set this to a fucked up number so itll do it's first update
 
@@ -32,9 +41,9 @@ HudHealthBar::HudHealthBar(Actor* ap, Vector3f position)
 		_smallForeground = GraphComp_ptr(new FontGraphicsComponent("BAR", "res/sprites/special/bar_foreground.png"));
 		_smallBackground = GraphComp_ptr(new FontGraphicsComponent("BAR", "res/sprites/special/bar_background.png"));
 
-		m_actorPrevPos = _actor->_Graphics->GetPosRef();
-		_smallForeground->GetModelMat()->SetScale(scale);
-		_smallBackground->GetModelMat()->SetScale(scale);
+		m_actorPrevPos = *unit.position;
+		_smallForeground->SetScale(scale);
+		_smallBackground->SetScale(scale);
 		_smallBackground->SetColorAll(Vector3f(0.08f, 0.4f, 1.0f));
 		UpdateSmallHPPosition();
 	}
@@ -50,7 +59,7 @@ HudHealthBar::HudHealthBar(Actor* ap, Vector3f position)
 	ptr->SetPhysics(position, Vector3f());
 	ptr2->SetPhysics(position + Vector3f(0, 0, 0.1f), Vector3f());
 	ptrExp->SetPhysics(position + Vector3f(0, -0.07f, 0.1f), Vector3f());
-	ptrExp->GetModelMat()->SetScale(Vector3f(fmax(((float)m_observedXP - (float)ap->_Fighter->CalculateLevelExp(ap->_Fighter->GetLevel() - 1)) / (float)m_xpMax, 0.005f), 0.1f, 1));
+	ptrExp->SetScale(fmax(((float)m_observedXP - (float)unit.stats->CalculateLevelExp(unit.stats->GetLevel() - 1)) / (float)m_xpMax, 0.005f), 0.1f, 1);
 
 	ptr2->SetColorAll(Vector3f(3), 0.05f);
 	ptrExp->SetColorAll(Vector3f(0.6f, 0.5f, 0.05f), 1.f);
@@ -65,6 +74,8 @@ HudHealthBar::HudHealthBar(Actor* ap, Vector3f position)
 	FontManager::GetInstance().GetFont(font)->_letterSpacing = 0.55f;
 
 	// name
+	if (name == "")
+		name = "????";
 	unsigned int namefont = FontManager::GetInstance().AddFont(true, false, true, "res/fonts/lowercase.png");
 	FontManager::GetInstance().SetScale(namefont, 0.25f, 0.25f);
 	FontManager::GetInstance().GetFont(namefont)->_letterSpacing = 0.6f;
@@ -102,7 +113,7 @@ void HudHealthBar::Destroy()
 
 void HudHealthBar::UpdateSmallHPPosition()
 {
-	m_actorPrevPos = _actor->_Graphics->GetPosRef();
+	m_actorPrevPos = *_unit.position;
 	_smallForeground->SetPhysics(m_actorPrevPos + Vector3f(0.18f, -0.1f, -0.1f), Vector3f());
 	_smallBackground->SetPhysics(m_actorPrevPos + Vector3f(0.18f, -0.1f, 0.1f), Vector3f());
 	_smallForeground->Update();
@@ -111,7 +122,7 @@ void HudHealthBar::UpdateSmallHPPosition()
 
 void HudHealthBar::Update()
 {
-	if (_actor->_Graphics->GetPosRef() != m_actorPrevPos)
+	if (*_unit.position != m_actorPrevPos)
 		UpdateSmallHPPosition();
 
 	// Ensure that the value we're following actually changed to do something
@@ -156,11 +167,11 @@ void HudHealthBar::Update()
 	}
 
 	_smallBackground->SetColorAll(color * Vector3f(1.5f), 0.9f);
-	_smallBackground->GetModelMat()->SetScale(fmax((float)health / (float)m_max, 0) / 3.0f, 0.3f, 1);
+	_smallBackground->SetScale(fmax((float)health / (float)m_max, 0) / 3.0f, 0.3f, 1);
 	_smallBackground->Update();
 
 	_foreground->SetColorAll(color, 0.9f);
-	_foreground->GetModelMat()->SetScale(fmax((float)health / (float)m_max, 0), 1, 1);
+	_foreground->SetScale(fmax((float)health / (float)m_max, 0), 1, 1);
 	_foreground->Update();
 	_background->Update();
 }
@@ -168,9 +179,9 @@ void HudHealthBar::Update()
 
 Anim_ptr HudHealthBar::SetupExpAnimation(int targetXP)
 {
-	m_targetXP = targetXP;
-	m_targetLevel = _actor->_Fighter->GetLevel();
-	Anim_ptr result = std::make_shared<AnimXpBar>(AnimXpBar(this, m_observedXP, m_targetXP));
+	m_targetXP = _unit.stats->GetExp() + targetXP;
+	m_targetLevel = _unit.stats->GetLevel();
+	Anim_ptr result = std::shared_ptr<AnimXpBar>(new AnimXpBar(this, m_observedXP, m_targetXP));
 	return result;
 }
 
@@ -180,8 +191,8 @@ bool HudHealthBar::UpdateExpAnimation(float newxp)
 	if (actualXP > m_targetXP)
 		actualXP = m_targetXP;
 
-	newxp -= _actor->_Fighter->CalculateLevelExp(m_currentLevel - 1);
-	float max = _actor->_Fighter->CalculateLevelExp(m_currentLevel) - _actor->_Fighter->CalculateLevelExp(m_currentLevel - 1);
+	newxp -= _unit.stats->CalculateLevelExp(m_currentLevel - 1);
+	float max = _unit.stats->CalculateLevelExp(m_currentLevel) - _unit.stats->CalculateLevelExp(m_currentLevel - 1);
 
 	// Level up
 	if (newxp >= max)
@@ -191,14 +202,14 @@ bool HudHealthBar::UpdateExpAnimation(float newxp)
 		Vector3f offset = Vector3f(1.45f, 0.275f, -1);
 		FontManager::GetInstance().SetText(_levelFont, "Lv " + std::to_string(m_currentLevel), _foreground->GetPos() + offset, false);
 
-		FontManager::GetInstance().CreateFloatingText(_actor->_Graphics->GetPosRef(), "Level up!", Vector3f(0.95f, 0.8f, 0.05f));
+		FontManager::GetInstance().CreateFloatingText(*_unit.position, "Level up!", Vector3f(0.95f, 0.8f, 0.05f));
 		return UpdateExpAnimation(actualXP);
 	}
 
-	_xpBar->GetModelMat()->SetScale(Vector3f(fmax(newxp / (float)max, 0.005f), 0.1f, 1));
+	_xpBar->SetScale(fmax(newxp / (float)max, 0.005f), 0.1f, 1);
 	_xpBar->Update();
 
-	_actor->_Fighter->SetExp((int)actualXP);
+	_unit.stats->SetExp((int)actualXP);
 
 	// done
 	if (actualXP >= m_targetXP)

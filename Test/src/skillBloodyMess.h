@@ -9,11 +9,13 @@ class SkillBloodyMess : public SkillRanged
 
 public:
 	SkillBloodyMess();
-	virtual void ApplyEffect();
-	Damage CalculateDamage();
+	//virtual void ApplyEffect();
+	Damage CalculateDamage(StatUser& user);
+	//Damage CalculateDamage();
 
 protected:
-	void DefaultSetup();
+	virtual void DefaultSetup();
+	virtual void ModifyAnimations();
 };
 
 #endif

@@ -9,6 +9,7 @@
 
 Bloom::Bloom() : PostProcessing()
 {
+	m_divisor = 4.0f;
 }
 
 Bloom::~Bloom()
@@ -31,7 +32,7 @@ void Bloom::Apply(Post_Processing_Screen* pps, FBO* fbo)
 	glBindTexture(GL_TEXTURE_2D, fbo->GetColourTexture());
 	pps->Draw(false);
 
-	ApplyBlur(pps, 7);
+	ApplyBlur(pps, 2);
 
 	//END BLOOM STAGE
 
@@ -121,8 +122,8 @@ void Bloom::ApplyBlur(Post_Processing_Screen* pps, int numTimes)
 void Bloom::ResetTextureSizes()
 {
 	//int right = OrthoProjInfo::GetRegularInstance().Right;
-	//if (std::get<int>(GameData::Options.at("effect_quality")) == 0)
-		m_divisor = 8.f;
+	if (std::get<int>(GameData::Options.at("effect_quality")) == 0)
+		m_divisor = 4.f;
 	//m_divisor = OrthoProjInfo::GetRegularInstance().Size / 32;
 	m_gaussH.ResetTextures(_width / (int)m_divisor, _height / (int)m_divisor);
 	m_gaussV.ResetTextures(_width / (int)m_divisor, _height / (int)m_divisor);
