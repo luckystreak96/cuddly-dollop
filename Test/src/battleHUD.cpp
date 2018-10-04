@@ -47,7 +47,8 @@ void BattleHUD::SetupUnit(int id)
 	AddActorAttackPrediction(id);
 
 	// Attack prediction arrow
-	AddActorAttackPredictionArrow(id);
+	// Slight problem - sometimes an enemy can target an ally that hasnt been added yet
+	//AddActorAttackPredictionArrow(id);
 }
 
 

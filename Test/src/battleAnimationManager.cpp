@@ -247,6 +247,12 @@ void BattleAnimationManager::insert_animation(Anim_ptr anim)
 	m_animations.push_back(anim);
 }
 
+void BattleAnimationManager::set_last_animation_non_async()
+{
+	m_animations.back()->_async = false;
+}
+
+
 
 void BattleAnimationManager::SpawnStatusText(Actor_ptr target, std::string statusText)
 {

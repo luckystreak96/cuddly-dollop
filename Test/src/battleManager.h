@@ -44,11 +44,12 @@ private:
 	Damage ApplyBonusEffect(Fighter_ptr target);
 	bool ValidateTargets(Fighter_ptr f);
 	void HandleActionCommand();
+	void ProcessSkill();
+	void ProcessSkillReactions(SkillProgress prog);
 
 	// Graphics
 	void UpdateColors();
 	void ExpAnimation(Fighter_ptr, int xp);
-	void ProcessSkill();
 	void SetSkillArguments(triple& x);
 
 	void UpdateSkillDisplay();

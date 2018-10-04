@@ -48,6 +48,45 @@ BattleManager::~BattleManager()
 		x->_observers.clear();
 }
 
+// 3 steps:
+//	1 - Check statuses instead of passiveskills
+//	2 - Make passiveskills create statuses at the start of battle
+//	3 - Find a way to get these interventions to trigger at the right moment and do the right things :)
+void BattleManager::ProcessSkillReactions(SkillProgress prog)
+{
+	for (auto& fighter : _actors)
+	{
+		if (!fighter->Dead)
+		{
+			for (auto& passiveSkill : fighter->_Passives)
+			{
+				if (passiveSkill->_Type == PassiveType::PT_Special)
+				{
+
+					switch (prog)
+					{
+					case SP_0_None:
+						break;
+					case SP_1_Before_Anim:
+						break;
+					case SP_2_BeginAnim:
+						break;
+					case SP_3_DealDamage:
+						break;
+					case SP_4_PostSkillAnim:
+						break;
+					case SP_5_SkillDone:
+						break;
+					default:
+						break;
+					}
+				}
+			}
+		}
+	}
+}
+
+
 void BattleManager::ProcessSkill()
 {
 	std::vector<triple> operations = _selectedSkill->GetAnimations();
@@ -57,7 +96,7 @@ void BattleManager::ProcessSkill()
 		// need to fill in the vector of floats
 		// ('<' because of AARG_FloatAsync)
 		if (get<1>(x) < AARG_Float)
-			SetSkillArguments(x);
+			SetSkillArguments(x); // single target skill chosen by *_targets.begin()
 
 		// x is an action
 		if (get<0>(x) > AA_Start)
@@ -76,10 +115,6 @@ void BattleManager::ProcessSkill()
 					_targets.erase(t);
 				}
 			}
-			//else if (get<0>(x) == AA_DealBonusDamage)
-			//{
-			//	ApplyBonusEffect();
-			//}
 			else if (get<0>(x) == AA_ApplyEffect)
 			{
 				//_actors.at(t)->_Statuses.push_back(BattleData::StatusEffects.at(StatusList::Determined));
@@ -200,32 +235,9 @@ Damage BattleManager::ApplyBonusEffect(Fighter_ptr target)
 	dmg._value = 10;
 	dmg._type = SkillType::ST_Bonus;
 
-	return dmg;
-
 	// Add more effects according to Fighters attributes here
 
-	//target->TakeDamage(dmg);
-	//m_graphics->DamageAnimation(target->GetId(), _selectedSkill, dmg);
-
-	//m_animationBuffer.push_back(triple(AS_Wait, AARG_Float, floats({ 0.3f }))); // wait half the animation time
-	//break;
-	//case 3:
-	//	m_state = SP_3_DealDamage;
-	//	m_animationBuffer.push_back(triple(AS_ScreenShake, AARG_Float, floats({ 2.f, 0.2f }))); // shake screen, amount of shake and time
-	//	m_animationBuffer.push_back(triple(AA_DealDamage, AARG_Target, floats())); // Deal damage
-	// Damage text
-	//SpawnDamageText(target, dmg);
-	//_anims->push_front(Anim_ptr(new AnimColorFlash(Vector3f(3, 3, 5), target)));
-	//_anims->push_front(Anim_ptr(new AnimScreenShake()));
-
-	//Particle_ptr particles = Particle_ptr(new ParticleGenerator());
-	//Vector3f pos = target->_Graphics->GetPos() + Vector3f(0.5f, 0.5f, 0.6f);
-	//particles->SetPowerLevel(0.3f);
-	//particles->Init(PT_Explosion, dmg._value, pos, false, "star.png");
-	//Vector3f color = Vector3f(1.f, 1.f, 1.f);
-	//particles->SetColor(color);
-	//ParticleManager::GetInstance().AddParticles(particles);
-
+	return dmg;
 }
 
 BattleUnit BattleManager::create_battle_unit(Fighter_ptr fighter)
@@ -394,6 +406,8 @@ void BattleManager::Update()
 					m_graphics->ExpAnimation(actor->GetId(), xp);
 				}
 			}
+			m_graphics->set_last_animation_non_async();
+			//m_graphics->insert_animation(m_graphics->CreateAnimation(triple(AnimationOperation::AS_Wait, AnimationArgument::AARG_Float, floats({ 0.0f }))));
 
 			_postBattleState = PBS_ConfirmCompletion;
 		}
@@ -594,7 +608,8 @@ void BattleManager::ActionProgress()
 			_selectedSkill->HandleActionCommand(m_graphics->get_animation_progress());
 			if (!Animating())
 			{
-				_selectedSkill->Update();
+				SkillProgress prog = _selectedSkill->Update();
+				ProcessSkillReactions(prog);
 				ProcessSkill();
 			}
 		}

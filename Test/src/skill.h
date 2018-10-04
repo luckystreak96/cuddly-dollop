@@ -25,7 +25,7 @@ enum AnimationOperation {
 	AS_JumpTo, AS_JumpBack, AS_ColorFlash, AS_ScreenShake, AS_BonusEffect, AS_MoveTo, AS_Wait, AS_Animation, AS_FloatingText,
 	AC_CameraFollow, AC_CameraScale, AC_CameraCenter,
 	AO_DamageParticle,
-	AA_Start, AA_DealDamage, AA_ApplyEffect, AA_DealBonusDamage
+	AA_Start, AA_DealDamage, AA_ApplyEffect
 }; // AA_Start is there to be able to do > on the enum
 
 enum AnimationArgument {

@@ -38,6 +38,7 @@ public:
 	bool Animating();
 	void insert_animation(Anim_ptr anim);
 	double get_animation_progress();
+	void set_last_animation_non_async();
 
 	// HUD
 	void SetupHUD(BattleUnit unit);
