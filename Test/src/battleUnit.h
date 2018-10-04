@@ -21,7 +21,7 @@ struct BattleUnit
 	bool* dead;
 	std::vector<int>* targets;
 
-	bool operator<(BattleUnit other) { id < other.id; }
+	//bool operator<(BattleUnit other) { id < other.id; }
 };
 
 struct HudBattleUnit

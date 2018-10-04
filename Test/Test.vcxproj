@@ -207,6 +207,9 @@
     <ClInclude Include="src\particleManager.h" />
     <ClInclude Include="src\passiveFactory.h" />
     <ClInclude Include="src\passiveSkill.h" />
+    <ClInclude Include="src\physics_manager.h" />
+    <ClInclude Include="src\physics_rpg.h" />
+    <ClInclude Include="src\physics_type.h" />
     <ClInclude Include="src\projection.h" />
     <ClInclude Include="src\skillBloodyMess.h" />
     <ClInclude Include="src\skillHeal.h" />
@@ -346,6 +349,8 @@
     <ClCompile Include="src\particleManager.cpp" />
     <ClCompile Include="src\passiveFactory.cpp" />
     <ClCompile Include="src\passiveSkill.cpp" />
+    <ClCompile Include="src\physics_manager.cpp" />
+    <ClCompile Include="src\physics_rpg.cpp" />
     <ClCompile Include="src\projection.cpp" />
     <ClCompile Include="src\scene.cpp" />
     <ClCompile Include="src\skillBloodyMess.cpp" />

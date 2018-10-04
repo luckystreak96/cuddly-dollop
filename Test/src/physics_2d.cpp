@@ -11,6 +11,7 @@ namespace Physics_2D {
 		return true;
 	}
 
+	// Finds redundant tiles in physics calculation
 	std::vector<PhysicsComponent*> FindDupes(std::vector<PhysicsComponent*>* list, float targetHeight)
 	{
 		std::vector<PhysicsComponent*> dupes;
@@ -30,21 +31,21 @@ namespace Physics_2D {
 		// - Tiles underneath tiles that are legal for the player
 		// - Tiles that are too high
 		// - Anything below a collision tile (floor under a rock)
-		for (auto& x : tiles)
+		for (auto& tile : tiles)
 		{
 			// - Anything below a collision tile (floor under a rock)
 			Vector3f collisionBlock = Vector3f(-1);
-			for (auto& y : x.second)
-				if (y->PositionRef().z == targetHeight)
+			for (auto& tileAtPos : tile.second)
+				if (tileAtPos->PositionRef().z == targetHeight)
 				{
-					collisionBlock = y->PositionRef();
+					collisionBlock = tileAtPos->PositionRef();
 					break;
 				}
 
 			if (collisionBlock != -1)
 			{
 
-				for (auto& y : x.second)
+				for (auto& y : tile.second)
 					if (y->PositionRef().z > collisionBlock.z)
 						dupes.push_back(y);
 			}
@@ -53,14 +54,14 @@ namespace Physics_2D {
 			else //if(collisionBlock == -1)
 			{
 				bool stand = false;
-				for (auto& y : x.second)
+				for (auto& y : tile.second)
 					if (IsLegalHeight(y->PositionRef().z, targetHeight))
 					{
 						stand = true;
 						break;
 					}
 
-				for (auto& y : x.second)
+				for (auto& y : tile.second)
 					if (y->PositionRef().z < targetHeight + 0.5f && y->PositionRef().z > targetHeight - 0.5f)
 					{
 						stand = false;
@@ -71,7 +72,7 @@ namespace Physics_2D {
 				{
 					bool playerHeight = false;
 					bool higherStep = false;
-					for (auto& y : x.second)
+					for (auto& y : tile.second)
 					{
 						if (y->PositionRef().z == targetHeight + 1)
 							playerHeight = true;
@@ -79,7 +80,7 @@ namespace Physics_2D {
 							higherStep = true;
 					}
 
-					for (auto& y : x.second)
+					for (auto& y : tile.second)
 					{
 						float val = targetHeight + 1 + (playerHeight ? 0 : (higherStep ? -0.5f : 0.5f));
 						if (y->PositionRef().z > val)
@@ -89,19 +90,19 @@ namespace Physics_2D {
 				else
 				{
 					PhysicsComponent* low = nullptr;
-					for (auto& y : x.second)
+					for (auto& y : tile.second)
 						if (y->PositionRef().z > targetHeight + 1)
 							if (low == nullptr || low->PositionRef().z > y->PositionRef().z)
 								low = y;
 
-					for (auto& y : x.second)
+					for (auto& y : tile.second)
 						if (y->PositionRef().z > low->PositionRef().z)
 							dupes.push_back(y);
 				}
 			}
 
 			// - Tiles that are too high
-			for (auto& y : x.second)
+			for (auto& y : tile.second)
 				if (y->PositionRef().z < targetHeight - 0.5f)
 					dupes.push_back(y);
 		}
@@ -132,7 +133,7 @@ namespace Physics_2D {
 			return false;
 
 		//How to deal with a collision
-		//	1: Use velocity/elapsed time to know what collided first (x or y)
+		//	1: Use velocity/elapsed time to know what collided first (tile or y)
 		//	2: Change the velocity of that direction to 0
 
 		//Percentage of movement to collide
@@ -165,9 +166,9 @@ namespace Physics_2D {
 
 		if (x_perc == 10 && y_perc == 10)
 			return false;//The two were already collided?
-		else if (x_perc < y_perc)//x collision
+		else if (x_perc < y_perc)//tile collision
 			ApplyCollision(a, b, Axis::X);
-		else//if both x and y were equally apart, default to y
+		else//if both tile and y were equally apart, default to y
 			ApplyCollision(a, b, Axis::Y);
 
 		return true;
@@ -291,7 +292,7 @@ namespace Physics_2D {
 		//{
 
 			//How to deal with a collision
-			//	1: Use velocity/elapsed time to know what collided first (x or y)
+			//	1: Use velocity/elapsed time to know what collided first (tile or y)
 			//	2: Change the velocity of that direction to 0
 
 			//	2: Ensure that the dude isnt falling off a cliff
@@ -336,11 +337,11 @@ namespace Physics_2D {
 							if (p->_ethereal)
 								continue;
 
-							//if (p->Position().x < x1 - 2 ||
+							//if (p->Position().tile < x1 - 2 ||
 							//	p->Position().y < y1 - 2 ||
 							//	p->Position().y > y1 + 2)
 							//	continue;
-							//else if (p->Position().x > x1 + 2)
+							//else if (p->Position().tile > x1 + 2)
 							//	break;
 							auto bb2 = p->GetMoveBoundingBox();
 
@@ -549,7 +550,7 @@ namespace Physics_2D {
 				{
 					auto& x2 = xs2.second;
 					// We dont want to re-pass the same collision checks
-					if (x2 == x /*|| x2->PhysicsRaw()->Velocity() == 0 && x->PhysicsRaw()->Velocity() == 0*/)
+					if (x2 == x /*|| x2->PhysicsRaw()->Velocity() == 0 && tile->PhysicsRaw()->Velocity() == 0*/)
 						continue;
 
 					//Are the objects inside each other right now? (nothing will go fast enough to skip this)

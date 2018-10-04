@@ -4,10 +4,12 @@
 #include "define.h"
 #include "iComponent.h"
 #include "vector3f.h"
-#include <cassert>
-#include <memory>
 #include "model.h"
 #include "elapsedTime.h"
+#include "../res/include/GL/glew.h"
+
+#include <cassert>
+#include <memory>
 #include <array>
 
 class PhysicsComponent;

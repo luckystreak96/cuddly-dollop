@@ -1,7 +1,7 @@
 #ifndef MODEL_H__
 #define MODEL_H__
 
-#include "GL/glew.h"
+#include "../res/include/GL/glew.h"
 #include <iostream>
 #include <string>
 #include <sstream>

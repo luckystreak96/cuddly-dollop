@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Cuddly-dollop", "Test\Test.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dollop-editor", "dollop-editor\dollop-editor.csproj", "{219D7DA4-C4E1-427A-A875-62EB47DF7178}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Cuddly-dollop_Tests", "Cuddly-dollop_Tests\Cuddly-dollop_Tests.vcxproj", "{680CD15A-B421-401E-9691-B6D1D97A2173}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,16 @@ Global
 		{219D7DA4-C4E1-427A-A875-62EB47DF7178}.Release|x64.Build.0 = Debug|Any CPU
 		{219D7DA4-C4E1-427A-A875-62EB47DF7178}.Release|x86.ActiveCfg = Debug|Any CPU
 		{219D7DA4-C4E1-427A-A875-62EB47DF7178}.Release|x86.Build.0 = Debug|Any CPU
+		{680CD15A-B421-401E-9691-B6D1D97A2173}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{680CD15A-B421-401E-9691-B6D1D97A2173}.Debug|x64.ActiveCfg = Debug|x64
+		{680CD15A-B421-401E-9691-B6D1D97A2173}.Debug|x64.Build.0 = Debug|x64
+		{680CD15A-B421-401E-9691-B6D1D97A2173}.Debug|x86.ActiveCfg = Debug|Win32
+		{680CD15A-B421-401E-9691-B6D1D97A2173}.Debug|x86.Build.0 = Debug|Win32
+		{680CD15A-B421-401E-9691-B6D1D97A2173}.Release|Any CPU.ActiveCfg = Release|Win32
+		{680CD15A-B421-401E-9691-B6D1D97A2173}.Release|x64.ActiveCfg = Release|x64
+		{680CD15A-B421-401E-9691-B6D1D97A2173}.Release|x64.Build.0 = Release|x64
+		{680CD15A-B421-401E-9691-B6D1D97A2173}.Release|x86.ActiveCfg = Release|Win32
+		{680CD15A-B421-401E-9691-B6D1D97A2173}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

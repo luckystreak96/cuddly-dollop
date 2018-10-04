@@ -530,6 +530,15 @@
     <ClInclude Include="src\battleHUD.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\physics_manager.h">
+      <Filter>Header Files\Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\physics_rpg.h">
+      <Filter>Header Files\Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\physics_type.h">
+      <Filter>Header Files\Engine\Physics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -924,6 +933,12 @@
     </ClCompile>
     <ClCompile Include="src\battleHUD.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\physics_manager.cpp">
+      <Filter>Source Files\Engine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\physics_rpg.cpp">
+      <Filter>Source Files\Engine\Physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
