@@ -4,8 +4,7 @@
 #include "define.h"
 #include "iComponent.h"
 #include "vector3f.h"
-#include "model.h"
-#include "elapsedTime.h"
+#include "vertex.h"
 #include "../res/include/GL/glew.h"
 
 #include <cassert>
@@ -18,7 +17,7 @@ typedef std::shared_ptr<PhysicsComponent> Physics_ptr;
 class PhysicsComponent : public IComponent
 {
 public:
-	PhysicsComponent(Vector3f pos = Vector3f(), std::string modelName = "TILE", Vector3f size = Vector3f(), Vector3f numTilesSize = Vector3f(-1, -1, -1));
+	PhysicsComponent(Vector3f pos, std::string modelName = "TILE", Vector3f size = Vector3f(), Vector3f numTilesSize = Vector3f(-1, -1, -1));
 	virtual void Update();
 	void SetDefaults(std::string name = "TILE");//cancer
 	std::string GetName();
@@ -57,9 +56,16 @@ public:
 	void SetConversationLock(bool locked);
 	//static inline bool SortFunc(Drawable* d, Drawable* d2) { return d->Position().z < d2->Position().z; }
 
-	bool mustCollide = true;
+private:
+	PhysicsComponent();
+
+public:
 	bool walkOn;
 	bool _ethereal;
+	bool _collided_last_frame;
+	bool _unmoving;
+
+
 protected:
 	Vector3f m_pos;
 	Vector3f m_velocity;
@@ -67,18 +73,13 @@ protected:
 	std::vector<Vertex> m_vertices;
 	std::vector<Vertex> m_translatedVertices;
 	std::vector<Vertex> m_originalVertices;
-	std::vector<Vector3f> m_models;
 	Vector3f m_size = Vector3f(-1, -1, -1);
 	Vector3f m_BBcenter = Vector3f(-1, -1, -1);
 	bool m_conversationLock;
-	//Texture m_texture;
-	std::string m_texture;
-	std::string m_modelName = "NONE"; //cancer
+	std::string m_modelName = "NONE";
 	Vector3f m_rot = Vector3f(0, 0, 0);
 	std::array<float, 6> m_boundingBox = std::array<float, 6>();
 	std::array<float, 6> m_moveBoundingBox = std::array<float, 6>();
-	//Array2d<float> m_boundingBox = Array2d<float>(6, 1);
-	//Array2d<float> m_moveBoundingBox = Array2d<float>(6, 1);
 };
 
 #endif

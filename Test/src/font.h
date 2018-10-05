@@ -11,8 +11,7 @@
 #include "resource_manager.h"
 #include "graphicsComponent.h"
 #include "mesh.h"
-#include "physicsComponent.h"
-#include "renderer.h"
+//#include "physicsComponent.h"
 #include "fontGraphicsComponent.h"
 
 class Font;
@@ -75,11 +74,14 @@ protected:
 	std::vector<Vector3f> m_letterPositions;
 	std::map<uint32_t, unsigned int> m_letters;
 	Mesh m_mesh;
-	//std::vector<Vertex> m_verts;
 	const unsigned int m_lettersPerRow;
 	const unsigned int m_lettersPerColumn;
 
-	PhysicsComponent m_phys;
+	//PhysicsComponent m_phys;
+	Vector3f m_pos;
+	//std::vector<float> m_vertices;
+	std::vector<Vertex> m_verts;
+	std::vector<GLuint> m_indices;
 	Transformation trans;
 
 	Vector3f m_basePosition;

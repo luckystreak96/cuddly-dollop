@@ -84,9 +84,10 @@ void Model::loadModel(std::string model_name)
 
 			std::stringstream stream(model.substr(vertStart, indStart - vertStart - 2));
 			std::string currentFloat;
-			m_lastVertices = std::vector<float>();
-			m_lastIndices = std::vector<GLuint>();
-			m_lastTex = std::vector<float>();
+			m_lastVertices.clear();
+			m_lastVertexVertices.clear();
+			m_lastIndices.clear();
+			m_lastTex.clear();
 
 			while (std::getline(stream, currentFloat, ','))
 			{
@@ -120,6 +121,20 @@ std::string Model::GetName()
 std::vector<float> Model::getVertices()
 {
 	return m_lastVertices;
+}
+
+std::vector<Vertex> Model::getVertexVertices()
+{
+	if (m_lastVertexVertices.size() != 0)
+		return m_lastVertexVertices;
+
+	for (int x = 0; x < m_lastVertices.size() / 3; x++)
+	{
+		m_lastVertexVertices.push_back(
+			Vertex(Vector3f(m_lastVertices[x * 3], m_lastVertices[x * 3 + 1], m_lastVertices[x * 3 + 2]),
+				Vector2f(x * 2 < m_lastTex.size() ? m_lastTex[x * 2] : 0, x * 2 + 1 < m_lastTex.size() ? m_lastTex[x * 2 + 1] : 0)));//TEXCOORD MOD HERE PLZ
+	}
+	return m_lastVertexVertices;
 }
 
 std::vector<GLuint> Model::getIndices()

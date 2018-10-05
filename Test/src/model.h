@@ -24,13 +24,15 @@ class Model
         void loadModel(std::string modelname);
         void PrintLastModel();
         std::vector<float> getVertices();
+        std::vector<Vertex> getVertexVertices();
         std::vector<GLuint> getIndices();
         std::vector<float> GetTex();
 		std::string GetName();
     private:
         Model();
         std::string m_lastName;
-        std::vector<float> m_lastVertices;
+		std::vector<float> m_lastVertices;
+		std::vector<Vertex> m_lastVertexVertices;
         std::vector<GLuint> m_lastIndices;
         std::vector<float> m_lastTex;
 

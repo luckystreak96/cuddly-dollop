@@ -309,6 +309,7 @@
     <ClInclude Include="src\utils.h" />
     <ClInclude Include="src\vector3f.h" />
     <ClInclude Include="src\vertex.h" />
+    <ClInclude Include="tests\catch.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\battleHUD.cpp" />
@@ -444,6 +445,8 @@
     <ClCompile Include="src\utils.cpp" />
     <ClCompile Include="src\vector3f.cpp" />
     <ClCompile Include="src\vertex.cpp" />
+    <ClCompile Include="tests\test_main.cpp" />
+    <ClCompile Include="tests\test_physics.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\data\3.json" />

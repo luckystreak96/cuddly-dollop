@@ -5,6 +5,8 @@
 #include "physicsComponent.h"
 #include "observer.h"
 
+#include <set>
+
 class physics_manager : public Observer
 {
 public:
@@ -13,10 +15,13 @@ public:
 
 	void calculate_frame();
 
+	void add_physics(PhysicsComponent* ptr);
+	void remove_physics(PhysicsComponent* ptr);
+
 private:
 
 private:
-	std::vector<PhysicsComponent*> m_components;
+	std::set<PhysicsComponent*> m_components;
 	physics_type* m_engine;
 };
 

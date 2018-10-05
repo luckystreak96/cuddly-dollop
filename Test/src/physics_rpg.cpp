@@ -19,3 +19,20 @@ void physics_rpg::calculate_position_adjustments()
 {
 
 }
+
+
+void physics_rpg::notify_ptr_added(PhysicsComponent* ptr)
+{
+	if (m_initialized)
+	{
+
+	}
+}
+
+void physics_rpg::notify_ptr_removed(PhysicsComponent* ptr)
+{
+	if (m_initialized)
+	{
+
+	}
+}

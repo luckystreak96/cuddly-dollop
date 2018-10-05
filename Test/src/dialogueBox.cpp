@@ -3,6 +3,7 @@
 #include <cassert>
 
 #include "localizationData.h"
+#include "renderer.h"
 
 DialogueBox* DialogueBox::m_owner = NULL;
 std::shared_ptr<MenuBackgroundBox> DialogueBox::m_box = NULL;
@@ -44,11 +45,14 @@ void DialogueBox::Construct()
 		m_box->Update();
 	}
 	//m_box->SetPhysics(Vector3f(0.5f, 0.5f, 0.5f), Vector3f(0, 0, 0));
+	//std::vector<float> verts = Model::GetInstance().getVertices();
+	//for (int i = 0; i < verts.size(); i++)
+	//	m_verts.push_back(Vertex(Vector3f(verts[i], verts[i + 1], verts[i + 2]), Vector2f()));
 	//m_box->SetScale(Vector3f(1.0f, 0.5f, 1.0f));
 	//UpdateBox();
 	//m_box->SetStatic(true);
 
-	m_phys.SetPosition(Vector3f());
+	m_pos = Vector3f();
 	m_static = true;
 	m_lockLevel = 1;
 	m_mode = BLOCKING;

@@ -1,10 +1,19 @@
 #include "physicsComponent.h"
 
-PhysicsComponent::PhysicsComponent(Vector3f pos, std::string modelName, Vector3f size, Vector3f numTiles) : m_size(size),
-m_BBcenter(numTiles), m_conversationLock(false), walkOn(true)
+#include "model.h"
+#include "elapsedTime.h"
+
+PhysicsComponent::PhysicsComponent() : m_conversationLock(false), walkOn(true), _collided_last_frame(false)
 {
-	m_pos = pos;
 	m_velocity = Vector3f();
+}
+
+
+PhysicsComponent::PhysicsComponent(Vector3f pos, std::string modelName, Vector3f size, Vector3f numTiles) : PhysicsComponent()
+{
+	m_size = (size);
+	m_BBcenter = (numTiles);
+	m_pos = pos;
 
 	SetDefaults(modelName);
 }
@@ -124,34 +133,14 @@ void PhysicsComponent::SetDefaults(std::string name)
 
 	Model::GetInstance().loadModel(name);
 	m_modelName = Model::GetInstance().GetName();
-	std::vector<float> verts = Model::GetInstance().getVertices();
-	std::vector<float> tex = Model::GetInstance().GetTex();
 
-	assert(verts.size() % 3 == 0);//full vertices only plz
-								  //assert(tex.size() == (verts.size() % 3) * 2);//2 texcoords per vertex
 
-	int numVertex = (int)verts.size() / 3;
-
-	m_originalVertices = std::vector<Vertex>();
-
-	for (int x = 0; x < numVertex; x++)
-	{
-		m_originalVertices.push_back(
-			Vertex(Vector3f(verts[x * 3], verts[x * 3 + 1], verts[x * 3 + 2]),
-				Vector2f(x * 2 < tex.size() ? tex[x * 2] : 0, x * 2 + 1 < tex.size() ? tex[x * 2 + 1] : 0)));//TEXCOORD MOD HERE PLZ
-	}
-
+	m_originalVertices = std::vector<Vertex>(Model::GetInstance().getVertexVertices());
 	m_vertices = std::vector<Vertex>(m_originalVertices);
+	//assert(m_vertices.size() % 3 == 0);//full vertices only plz
 
-	{
-		std::vector<GLuint> indices = Model::GetInstance().getIndices();
-		assert(indices.size() % 3 == 0);
-
-		m_indices = std::vector<GLuint>();
-
-		for (auto i : indices)
-			m_indices.push_back(i);
-	}
+	m_indices = std::vector<GLuint>(Model::GetInstance().getIndices());
+	assert(m_indices.size() % 3 == 0);
 
 	//MathUtils::CalcNormals(m_indices, m_vertices);
 

@@ -2,14 +2,19 @@
 #include "utils.h"
 #include "gameData.h"
 
-Font::Font(bool sTatic, bool temporary, bool lightSpeed, std::string path) : m_texture(path), m_phys(PhysicsComponent(Vector3f(), "TEXT")),
+#include "renderer.h"
+
+
+Font::Font(bool sTatic, bool temporary, bool lightSpeed, std::string path) : m_texture(path),
 m_elapsedTime(0), m_textSpeed(1.0), m_timePerLetter(0.03), m_static(sTatic), m_temporary(temporary), m_lifetime(5.0), _letterSpacing(1.0f), MaxTime(30000),
 m_lettersPerRow(16), m_lettersPerColumn(16), m_xScale(1.0f), m_yScale(1.0f), m_lightSpeed(lightSpeed), _enabled(true), m_centered(false), m_xBndry(-1), m_x(0), m_y(0)
 {
 	m_mesh = Mesh(m_lettersPerRow * m_lettersPerColumn);
 	int bitmapWidth = 16;
 
-	m_phys.Update();
+	Model::GetInstance().loadModel("TEXT");
+	m_verts = Model::GetInstance().getVertexVertices();
+	m_indices = Model::GetInstance().getIndices();
 
 	CreateHash();
 	ResourceManager::GetInstance().LoadTexture(path);
@@ -205,7 +210,7 @@ void Font::SetupMesh(float xBndry, float yBndry)
 		m_graphics = std::shared_ptr<FontGraphicsComponent>(new FontGraphicsComponent(m_mesh.GetMeshVertices(), m_mesh.GetMeshIndices(), m_texture));
 	//m_graphics->FullReset(m_mesh.GetMeshVertices(), m_mesh.GetMeshIndices());
 	m_graphics->SetNewBuffers(m_mesh.GetMeshVertices(), m_mesh.GetMeshIndices());
-	m_graphics->SetPhysics(m_phys.Position(), Vector3f());
+	m_graphics->SetPhysics(m_pos, Vector3f());
 	m_graphics->SetStatic(m_static);
 
 	UpdateModel();
@@ -224,9 +229,9 @@ void Font::AddWordToMesh(std::string word, float x, float y)
 		pos.x = i * _letterSpacing * m_xScale + x;
 		pos.y = y;
 
-		m_letterPositions.push_back(pos + m_phys.Position());
+		m_letterPositions.push_back(pos + m_pos);
 
-		m_mesh.AddToMesh(m_phys.GetVerticesRef(), m_phys.GetIndicesRef(), m_phys.GetHighestIndex(), pos, m_texture, index);
+		m_mesh.AddToMesh(m_verts, m_indices, 3, pos, m_texture, index);
 	}
 }
 
@@ -280,7 +285,7 @@ void Font::SetText(std::string& text, Vector3f& location, bool centered, float x
 	m_basePosition.x = location.x/* - value*/;
 	m_basePosition.y = location.y;
 
-	m_phys.SetPosition(location);
+	m_pos = (location);
 
 	SetupMesh(xBoundry);
 }

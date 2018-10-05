@@ -7,7 +7,7 @@
 #include <math.h>
 #include <cmath>
 #include "mathutils.h"
-#include "model.h"
+#include "vertex.h"
 #include "math.h"
 #include "array2d.h"
 #include "define.h"

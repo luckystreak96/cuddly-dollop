@@ -11,6 +11,17 @@ void physics_manager::calculate_frame()
 	m_engine->calculate_position_adjustments();
 }
 
+void physics_manager::add_physics(PhysicsComponent* ptr)
+{
+	m_components.emplace(ptr);
+	m_engine->notify_ptr_added(ptr);
+}
+
+void physics_manager::remove_physics(PhysicsComponent* ptr)
+{
+	m_components.erase(ptr);
+	m_engine->notify_ptr_removed(ptr);
+}
 
 physics_manager::~physics_manager()
 {
