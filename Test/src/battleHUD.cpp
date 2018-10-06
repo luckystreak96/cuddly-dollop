@@ -170,6 +170,8 @@ HudHealthBar* BattleHUD::GetActorHealthBar(int id)
 		if (bar != NULL)
 			return bar;
 	}
+
+	return nullptr;
 }
 
 void BattleHUD::Update()

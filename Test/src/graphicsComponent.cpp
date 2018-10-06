@@ -19,8 +19,7 @@ float GraphicsComponent::GetProjectionRotation()
 GraphicsComponent::~GraphicsComponent()
 {
 	UnloadGLResources();
-	counter--;
-	std::cout << counter << " GraphicsComponents exist." << std::endl;
+	//std::cout << --counter << " GraphicsComponents exist." << std::endl;
 }
 
 void GraphicsComponent::SetNewBuffers(std::vector<Vertex>* verts, std::vector<GLuint>* inds)
@@ -83,8 +82,7 @@ void GraphicsComponent::Construct()
 GraphicsComponent::GraphicsComponent(std::string modelName, std::string texPath) : m_texture(texPath), m_modelName(modelName)
 , _mModelsNoReplace(false)
 {
-	counter++;
-	std::cout << counter << " GraphicsComponents exist." << std::endl;
+	//std::cout << ++counter << " GraphicsComponents exist." << std::endl;
 	m_IBO = 0;
 	m_VBO = 0;
 	m_VAO = 0;
@@ -95,8 +93,7 @@ GraphicsComponent::GraphicsComponent(std::string modelName, std::string texPath)
 GraphicsComponent::GraphicsComponent(std::vector<Vertex>* verts, std::vector<GLuint>* inds, std::string texPath) : m_texture(texPath), m_modelName("NONE"),
 _mModelsNoReplace(false)
 {
-	counter++;
-	std::cout << counter << " GraphicsComponents exist." << std::endl;
+	//std::cout << ++counter << " GraphicsComponents exist." << std::endl;
 	m_IBO = 0;
 	m_VBO = 0;
 	m_VAO = 0;
@@ -346,11 +343,12 @@ void GraphicsComponent::SetColorAll(Vector3f color, float alpha)
 	if (m_vertices.size() && m_vertices[0].color == color && m_vertices[0].alpha == alpha)
 		return;
 
-	for (auto& v : m_vertices)
-	{
-		v.color = color;
-		v.alpha = alpha;
-	}
+	Vertex::SetColorAll(m_vertices.begin(), m_vertices.end(), color, alpha);
+	//for (auto& v : m_vertices)
+	//{
+	//	v.color = color;
+	//	v.alpha = alpha;
+	//}
 	ResetVBO();
 }
 

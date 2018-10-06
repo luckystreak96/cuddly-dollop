@@ -3,5 +3,5 @@
 void PlayerPhysicsComponent::Update()
 {
 	PhysicsComponent::Update();
-	PhysicsComponent::ApplyGravity();
+	PhysicsComponent::apply_natural_deceleration();
 }

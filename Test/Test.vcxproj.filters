@@ -949,9 +949,6 @@
     <ClCompile Include="src\physics_rpg.cpp">
       <Filter>Source Files\Engine\Physics</Filter>
     </ClCompile>
-    <ClCompile Include="tests\test_main.cpp">
-      <Filter>Source Files\Tests</Filter>
-    </ClCompile>
     <ClCompile Include="tests\test_physics.cpp">
       <Filter>Source Files\Tests</Filter>
     </ClCompile>

@@ -18,16 +18,6 @@ PhysicsComponent::PhysicsComponent(Vector3f pos, std::string modelName, Vector3f
 	SetDefaults(modelName);
 }
 
-// Sets the color of all vertices to change the color of the sprite
-void PhysicsComponent::SetColorAll(Vector3f color, float alpha)
-{
-	for (auto& v : m_vertices)
-	{
-		v.color = color;
-		v.alpha = alpha;
-	}
-}
-
 void PhysicsComponent::Update()
 {
 	if (m_velocity != 0)
@@ -36,7 +26,7 @@ void PhysicsComponent::Update()
 	SetMovedBB();
 }
 
-void PhysicsComponent::ApplyGravity()
+void PhysicsComponent::apply_natural_deceleration()
 {
 	//Slow down a bit
 
@@ -91,7 +81,7 @@ void PhysicsComponent::ActionMove(bool up, bool down, bool left, bool right, flo
 {
 	if (m_conversationLock)
 		return;
-	//ApplyGravity();
+	//apply_natural_deceleration();
 	xperc = abs(xperc);
 	yperc = abs(yperc);
 	float total = sqrtf(pow(xperc, 2) + pow(yperc, 2));
@@ -129,15 +119,10 @@ void PhysicsComponent::ActionMove(bool up, bool down, bool left, bool right, flo
 void PhysicsComponent::SetDefaults(std::string name)
 {
 	_ethereal = false;
-	m_modelName = name;
 
 	Model::GetInstance().loadModel(name);
-	m_modelName = Model::GetInstance().GetName();
 
-
-	m_originalVertices = std::vector<Vertex>(Model::GetInstance().getVertexVertices());
-	m_vertices = std::vector<Vertex>(m_originalVertices);
-	//assert(m_vertices.size() % 3 == 0);//full vertices only plz
+	m_vertices = std::vector<Vertex>(Model::GetInstance().getVertexVertices());
 
 	m_indices = std::vector<GLuint>(Model::GetInstance().getIndices());
 	assert(m_indices.size() % 3 == 0);
@@ -147,21 +132,6 @@ void PhysicsComponent::SetDefaults(std::string name)
 	SetBoundingBox();
 }
 
-void PhysicsComponent::SetTranslatedVertices()
-{
-	m_translatedVertices = std::vector<Vertex>(m_vertices);
-	for (Vertex& v : m_translatedVertices)
-	{
-		v.vertex.x += m_pos.x + m_velocity.x * (float)ElapsedTime::GetInstance().GetElapsedTime();
-		v.vertex.y += m_pos.y + m_velocity.y * (float)ElapsedTime::GetInstance().GetElapsedTime();
-		v.vertex.z += m_pos.z + m_velocity.z * (float)ElapsedTime::GetInstance().GetElapsedTime();
-	}
-}
-
-std::vector<Vertex> PhysicsComponent::GetTranslatedVertices()
-{
-	return m_translatedVertices;
-}
 
 //Create the destination BB for collision testing
 void PhysicsComponent::SetMovedBB()
@@ -189,19 +159,6 @@ std::array<float, 6> PhysicsComponent::GetEtherealMoveBoundingBox()
 	}
 	else
 		return m_moveBoundingBox;
-}
-
-Vector3f PhysicsComponent::BBSize()
-{
-	float w = m_boundingBox[Right] - m_boundingBox[Left];
-	float h = m_boundingBox[Up] - m_boundingBox[Down];
-	float d = m_boundingBox[Far] - m_boundingBox[Close];
-	return Vector3f(w, h, d);
-}
-
-std::string PhysicsComponent::GetName()
-{
-	return m_modelName;
 }
 
 void PhysicsComponent::SetBoundingBox()
@@ -323,11 +280,6 @@ void PhysicsComponent::AbsolutePosition(Vector3f absolutePos, Vector3f useAxis)
 	SetMovedBB();
 }
 
-std::vector<Vertex> PhysicsComponent::GetVertices()
-{
-	return m_vertices;
-}
-
 std::vector<GLuint> PhysicsComponent::GetIndices()
 {
 	return m_indices;
@@ -345,11 +297,12 @@ std::vector<GLuint>& PhysicsComponent::GetIndicesRef()
 
 int PhysicsComponent::GetHighestIndex()
 {
-	GLuint highest = 0;
-	for (auto i : m_indices)
-		highest = i > highest ? i : highest;
+	return m_vertices.size() - 1;
+	//GLuint highest = 0;
+	//for (auto i : m_indices)
+	//	highest = i > highest ? i : highest;
 
-	return highest;
+	//return highest;
 }
 
 void PhysicsComponent::DesiredMove()
@@ -358,7 +311,7 @@ void PhysicsComponent::DesiredMove()
 		SetMovedBB();
 }
 
-void PhysicsComponent::RemoveVelocity()
+void PhysicsComponent::set_velocity_zero()
 {
 	m_velocity = Vector3f();
 	SetMovedBB();
@@ -367,7 +320,7 @@ void PhysicsComponent::RemoveVelocity()
 void PhysicsComponent::SetConversationLock(bool locked)
 {
 	m_conversationLock = locked;
-	RemoveVelocity();
+	set_velocity_zero();
 }
 
 void PhysicsComponent::SetEthereal(bool ethereal)

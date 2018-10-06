@@ -19,8 +19,7 @@ class PhysicsComponent : public IComponent
 public:
 	PhysicsComponent(Vector3f pos, std::string modelName = "TILE", Vector3f size = Vector3f(), Vector3f numTilesSize = Vector3f(-1, -1, -1));
 	virtual void Update();
-	void SetDefaults(std::string name = "TILE");//cancer
-	std::string GetName();
+	void SetDefaults(std::string name = "TILE");
 	void ActionMove(bool up, bool down, bool left, bool right, float xperc, float yperc);
 	void SetEthereal(bool ethereal);
 	void Move();
@@ -30,29 +29,24 @@ public:
 	std::array<float, 6> GetBoundingBox();
 	std::array<float, 6>& GetMoveBoundingBox();
 	std::array<float, 6> GetEtherealMoveBoundingBox();
-	Vector3f BBSize();
 	void RelativePosition(Vector3f movementPos);
 	void AbsolutePosition(Vector3f absolutePos, Vector3f useAxis = Vector3f(1, 1, 1));
-	std::vector<Vertex> GetVertices();
 	std::vector<Vertex>& GetVerticesRef();
-	std::vector<Vertex> GetTranslatedVertices();
 	std::vector<GLuint> GetIndices();
 	std::vector<GLuint>& GetIndicesRef();
 	int GetHighestIndex();
-	void SetColorAll(Vector3f color, float alpha);
 	void XCollide();
 	void YCollide();
 	virtual void DesiredMove();
 	void SetMovedBB();
-	void SetTranslatedVertices();
 	Vector3f Position() { return m_pos; };
 	Vector3f& PositionRef() { return m_pos; };
 	Vector3f GetCenter() { return Vector3f(m_boundingBox[Left] + m_size.x / 2, m_boundingBox[Down] + m_size.y / 2, m_boundingBox[Far] + m_size.z / 2);/*return m_pos + (m_size / 2);*/ }
 	void SetPosition(Vector3f pos) { m_pos = pos; };
 	Vector3f Velocity() { return m_velocity; };
 	Vector3f GetSize() { return m_size; }
-	void RemoveVelocity();
-	void ApplyGravity();
+	void set_velocity_zero();
+	void apply_natural_deceleration();
 	void SetConversationLock(bool locked);
 	//static inline bool SortFunc(Drawable* d, Drawable* d2) { return d->Position().z < d2->Position().z; }
 
@@ -71,12 +65,9 @@ protected:
 	Vector3f m_velocity;
 	std::vector<GLuint> m_indices;
 	std::vector<Vertex> m_vertices;
-	std::vector<Vertex> m_translatedVertices;
-	std::vector<Vertex> m_originalVertices;
 	Vector3f m_size = Vector3f(-1, -1, -1);
 	Vector3f m_BBcenter = Vector3f(-1, -1, -1);
 	bool m_conversationLock;
-	std::string m_modelName = "NONE";
 	Vector3f m_rot = Vector3f(0, 0, 0);
 	std::array<float, 6> m_boundingBox = std::array<float, 6>();
 	std::array<float, 6> m_moveBoundingBox = std::array<float, 6>();

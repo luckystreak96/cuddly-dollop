@@ -1,16 +1,18 @@
 #include "particleGenerator.h"
-#include "define.h"
-#include <thread>
-#include "mathutils.h"
+
+#include "renderer.h"
+
+#include <time.h>
 
 ParticleGenerator::ParticleGenerator() : m_mesh(Mesh()), m_power(2.0f), completed(false)
 {
-
+	Model::GetInstance().loadModel("CENTERED_PARTICLE_TILE");
+	m_model_vertices = Model::GetInstance().getVertexVertices();
+	m_model_indices = Model::GetInstance().getIndices();
 }
 
-Particle::Particle()
-	: physics(PhysicsComponent(Vector3f(0, 0, 0.6f), "CENTERED_PARTICLE_TILE")),
-	texture("snowflake.png"), position(Vector3f(0, 0, 0.6f)), done(false), size(Vector3f(1, 1, 1))
+Particle::Particle() : texture("snowflake.png"), position(Vector3f(0, 0, 0.6f)),
+done(false), size(Vector3f(1, 1, 1)), color(Vector3f(1.f)), alpha(1.f)
 {
 }
 
@@ -102,15 +104,25 @@ void Leaf::ResetLocation(Vector3f& zoneSize, bool firstSpawn, bool smooth)
 	// Set color
 	Vector3f base = Vector3f(0.5f, 0.5f, 0.5f);
 	if (random % 5 == 0)
-		physics.SetColorAll(base + Vector3f(0, 0.5f, 0.1f), 1.0f);
+	{
+		color = base + Vector3f(0, 0.5f, 0.1f);
+	}
 	else if (random % 4 == 0)
-		physics.SetColorAll(base + Vector3f(0, 0.9f, 0.03f), 1.0f);
+	{
+		color = base + Vector3f(0, 0.9f, 0.03f);
+	}
 	else if (random % 3 == 0)
-		physics.SetColorAll(base + Vector3f(0.65f, 0.82f, 0.02f), 1.0f);
+	{
+		color = base + Vector3f(0.65f, 0.82f, 0.02f);
+	}
 	else if (random % 2 == 0)
-		physics.SetColorAll(base + Vector3f(1.0f, 0.85f, 0.02f), 1.0f);
+	{
+		color = base + Vector3f(1.0f, 0.85f, 0.02f);
+	}
 	else
-		physics.SetColorAll(base + Vector3f(0.8f, 0.8f, 0.1f), 1.0f);
+	{
+		color = base + Vector3f(0.8f, 0.8f, 0.1f);
+	}
 }
 
 void Leaf::SetTrans(Transformation& trans)
@@ -326,8 +338,8 @@ void ParticleGenerator::SetupMesh()
 	std::sort(m_particles.begin(), m_particles.end(), ParticleSort);
 	for (auto& t : m_particles)
 	{
-		std::vector<Vertex> verts = t->physics.GetVertices();
-		m_mesh.AddToMesh(verts, t->physics.GetIndices(), t->physics.GetHighestIndex(), t->position, t->texture);
+		Vertex::SetColorAll(m_model_vertices.begin(), m_model_vertices.end(), t->color, t->alpha);
+		m_mesh.AddToMesh(m_model_vertices, m_model_indices, m_model_vertices.size() - 1, t->position, t->texture);
 	}
 
 	m_MBO_instances = m_particles.size();

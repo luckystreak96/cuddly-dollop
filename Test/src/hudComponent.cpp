@@ -5,14 +5,12 @@ int HudComponent::counter = 0;
 
 HudComponent::HudComponent()
 {
-	counter++;
-	std::cout << counter << " HudComponents exist." << std::endl;
+	//std::cout << ++counter << " HudComponents exist." << std::endl;
 }
 
 HudComponent::~HudComponent()
 {
-	counter--;
-	std::cout << counter << " HudComponents exist." << std::endl;
+	//std::cout << --counter << " HudComponents exist." << std::endl;
 }
 
 

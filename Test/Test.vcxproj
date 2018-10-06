@@ -445,7 +445,6 @@
     <ClCompile Include="src\utils.cpp" />
     <ClCompile Include="src\vector3f.cpp" />
     <ClCompile Include="src\vertex.cpp" />
-    <ClCompile Include="tests\test_main.cpp" />
     <ClCompile Include="tests\test_physics.cpp" />
   </ItemGroup>
   <ItemGroup>

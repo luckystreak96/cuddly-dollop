@@ -1,14 +1,11 @@
 #ifndef PARTICLE_GENERATOR_H__
 #define PARTICLE_GENERATOR_H__
 
+#include "graphicsComponent.h"
+#include "mesh.h"
+
 #include <vector>
 #include <memory>
-#include "graphicsComponent.h"
-#include "physicsComponent.h"
-#include "mesh.h"
-#include "resource_manager.h"
-#include "renderer.h"
-#include <time.h>
 
 class ParticleGenerator;
 typedef std::shared_ptr<ParticleGenerator> Particle_ptr;
@@ -33,8 +30,10 @@ struct Particle
 	Particle();
 
 	std::string texture;
-	PhysicsComponent physics;
+	//PhysicsComponent physics;
 	Vector3f position;
+	Vector3f color;
+	float alpha;
 	Vector3f size;
 	Vector3f velocity;
 	Mat4f matrix;
@@ -114,6 +113,8 @@ public:
 	bool completed;
 private:
 	std::vector<std::shared_ptr<Particle>> m_particles;
+	std::vector<Vertex> m_model_vertices;
+	std::vector<GLuint> m_model_indices;
 	Mesh m_mesh;
 	GraphComp_ptr m_graphics = NULL;
 	int m_MBO_instances;

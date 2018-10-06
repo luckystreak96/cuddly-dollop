@@ -92,7 +92,7 @@ void MapHandler::SetupMesh()
 	//std::sort(m_tiles.begin(), m_tiles.end(), MapTile::SortFunc);
 	for (auto t : m_tiles)
 	{
-		std::vector<Vertex> verts = t->Physics()->GetVertices();
+		std::vector<Vertex> verts = t->Physics()->GetVerticesRef();
 		m_mesh.AddToMesh(verts, t->Physics()->GetIndices(), t->Physics()->GetHighestIndex(), t->Physics()->Position(), t->GetTexture());
 	}
 
