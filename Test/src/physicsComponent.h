@@ -10,6 +10,7 @@
 #include <cassert>
 #include <memory>
 #include <array>
+#include <vector>
 
 class PhysicsComponent;
 typedef std::shared_ptr<PhysicsComponent> Physics_ptr;
@@ -28,6 +29,8 @@ public:
 	void SetBoundingBoxSize(Vector3f size, Vector3f numSquare = Vector3f(1, 1, 1));
 	std::array<float, 6> GetBoundingBox();
 	std::array<float, 6>& GetMoveBoundingBox();
+	std::array<float, 6> GetXMoveBoundingBox();
+	std::array<float, 6> GetYMoveBoundingBox();
 	std::array<float, 6> GetEtherealMoveBoundingBox();
 	void RelativePosition(Vector3f movementPos);
 	void AbsolutePosition(Vector3f absolutePos, Vector3f useAxis = Vector3f(1, 1, 1));
@@ -45,6 +48,9 @@ public:
 	void SetPosition(Vector3f pos) { m_pos = pos; };
 	Vector3f Velocity() { return m_velocity; };
 	Vector3f GetSize() { return m_size; }
+	Vector3f get_velocity_movement();
+	int get_tile_expanse();
+	int get_tile_expanse(std::array<float, 6> bb);
 	void set_velocity_zero();
 	void apply_natural_deceleration();
 	void SetConversationLock(bool locked);
@@ -56,8 +62,10 @@ private:
 public:
 	bool walkOn;
 	bool _ethereal;
-	bool _collided_last_frame;
 	bool _unmoving;
+
+	// Contains id of component that it collided with
+	int _collided_last_frame;
 
 
 protected:

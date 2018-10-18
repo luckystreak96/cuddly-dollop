@@ -3,7 +3,7 @@
 #include "model.h"
 #include "elapsedTime.h"
 
-PhysicsComponent::PhysicsComponent() : m_conversationLock(false), walkOn(true), _collided_last_frame(false)
+PhysicsComponent::PhysicsComponent() : m_conversationLock(false), walkOn(true), _collided_last_frame(-1), _unmoving(false)
 {
 	m_velocity = Vector3f();
 }
@@ -16,6 +16,7 @@ PhysicsComponent::PhysicsComponent(Vector3f pos, std::string modelName, Vector3f
 	m_pos = pos;
 
 	SetDefaults(modelName);
+	Update();
 }
 
 void PhysicsComponent::Update()
@@ -73,8 +74,8 @@ void PhysicsComponent::YCollide()
 
 void PhysicsComponent::Move()
 {
-	Vector3f distance = m_velocity * /*0.01667f;*/ (float)ElapsedTime::GetInstance().GetElapsedTime();
-	RelativePosition(distance);
+	//Vector3f distance = m_velocity * /*0.01667f;*/ (float)ElapsedTime::GetInstance().GetElapsedTime();
+	RelativePosition(get_velocity_movement());
 }
 
 void PhysicsComponent::ActionMove(bool up, bool down, bool left, bool right, float xperc, float yperc)
@@ -137,10 +138,38 @@ void PhysicsComponent::SetDefaults(std::string name)
 void PhysicsComponent::SetMovedBB()
 {
 	m_moveBoundingBox = std::array<float, 6>(m_boundingBox);
-	m_moveBoundingBox[Right] += m_velocity.x * (float)ElapsedTime::GetInstance().GetElapsedTime();
-	m_moveBoundingBox[Left] += m_velocity.x * (float)ElapsedTime::GetInstance().GetElapsedTime();
-	m_moveBoundingBox[Up] += m_velocity.y * (float)ElapsedTime::GetInstance().GetElapsedTime();
-	m_moveBoundingBox[Down] += m_velocity.y * (float)ElapsedTime::GetInstance().GetElapsedTime();
+	m_moveBoundingBox[Right] += get_velocity_movement().x;//(float)ElapsedTime::GetInstance().GetElapsedTime();
+	m_moveBoundingBox[Left] += get_velocity_movement().x;//(float)ElapsedTime::GetInstance().GetElapsedTime();
+	m_moveBoundingBox[Up] += get_velocity_movement().y;//(float)ElapsedTime::GetInstance().GetElapsedTime();
+	m_moveBoundingBox[Down] += get_velocity_movement().y;//(float)ElapsedTime::GetInstance().GetElapsedTime();
+}
+
+std::array<float, 6> PhysicsComponent::GetXMoveBoundingBox()
+{
+	std::array<float, 6> result = std::array<float, 6>(m_boundingBox);
+	result[Right] += get_velocity_movement().x;//(float)ElapsedTime::GetInstance().GetElapsedTime();
+	result[Left] += get_velocity_movement().x;//(float)ElapsedTime::GetInstance().GetElapsedTime();
+
+	return result;
+}
+
+std::array<float, 6> PhysicsComponent::GetYMoveBoundingBox()
+{
+	std::array<float, 6> result = std::array<float, 6>(m_boundingBox);
+	result[Up] += get_velocity_movement().y;//(float)ElapsedTime::GetInstance().GetElapsedTime();
+	result[Down] += get_velocity_movement().y;//(float)ElapsedTime::GetInstance().GetElapsedTime();
+
+	return result;
+}
+
+int PhysicsComponent::get_tile_expanse()
+{
+	return get_tile_expanse(m_moveBoundingBox);
+}
+
+int PhysicsComponent::get_tile_expanse(std::array<float, 6> bb)
+{
+	return ((int)bb[Up] - (int)bb[Down] + 1) * ((int)bb[Right] - (int)bb[Left] + 1);
 }
 
 
@@ -148,6 +177,12 @@ std::array<float, 6>& PhysicsComponent::GetMoveBoundingBox()
 {
 	return m_moveBoundingBox;
 }
+
+Vector3f PhysicsComponent::get_velocity_movement()
+{
+	return m_velocity * 0.016f;
+}
+
 
 std::array<float, 6> PhysicsComponent::GetEtherealMoveBoundingBox()
 {

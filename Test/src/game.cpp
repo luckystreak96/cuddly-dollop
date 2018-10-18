@@ -17,6 +17,7 @@ Game::Game() : m_exit(false)
 {
 	GameData::LoadSettings();
 	LocalizationData::LoadLocalization();
+	Model::GetInstance().init("res/models/models.data");
 }
 
 Game::~Game()
@@ -27,7 +28,6 @@ bool Game::init(Vector2f version)
 {
 	// Settings decide 3d or 2d
 	Transformation::perspectiveOrtho = !std::get<bool>(GameData::Options.at("3d"));
-	Model::GetInstance().init("res/models/models.data");
 	Animation::SetupAnimationMetaData();
 	GameData::LoadGameData();
 	GameData::NewGame();

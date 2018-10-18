@@ -9,6 +9,7 @@
 #include "collisionManager.h"
 #include "eventManager.h"
 #include "menu.h"
+#include "physics_manager.h"
 
 class SceneWorld : public Scene
 {
@@ -26,12 +27,17 @@ public:
 	void TriggerEvents(unsigned int entity_id);
 	void ManageInput();
 	void SetAudioPosition();
+	void calculate_physics();
+
+private:
+	void setup_physics_manager();
 	
 private:
 	std::shared_ptr<Entity> m_player = NULL;
 	std::shared_ptr<Menu> m_menu = NULL;
 	EventManager m_eventManager;
-	CollisionManager m_collisionManager;
+	//CollisionManager m_collisionManager;
+	physics_manager m_physics_manager;
 	bool m_zoom;
 	bool m_bloomEffect;
 	std::shared_ptr<JsonHandler> m_jsonHandler = NULL;

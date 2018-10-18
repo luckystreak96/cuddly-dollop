@@ -14,8 +14,9 @@
 #include "entityFactory.h"
 #include "battleData.h"
 #include "menuSettings.h"
+#include "physics_rpg.h"
 
-SceneWorld::SceneWorld(unsigned int map_id) : m_zoom(false)
+SceneWorld::SceneWorld(unsigned int map_id) : m_zoom(false), m_physics_manager(new physics_rpg())
 {
 	m_currentMap = map_id;
 	Init();
@@ -59,12 +60,12 @@ bool SceneWorld::Init()
 	m_camera._mapsize = m_mapHandler->GetMapSize();
 	m_camera.ForcePosition(m_camera.MapCenter() - Vector3f(2.0f, 2.0f, 0));
 	m_camera._style = CAMSTYLE_FollowDadNoScale;
-	m_collisionManager.SetMapTiles(m_mapHandler->OrderedTiles());
+	//m_collisionManager.SetMapTiles(m_mapHandler->OrderedTiles());
 
 	m_celist = EntityFactory::GetEntities(m_currentMap, m_jsonHandler);
 	m_camera.ForcePosition(m_celist.at(1)->PhysicsRaw()->PositionRef());
 	m_eventManager.SetEntitiesMap(&m_celist);
-	m_collisionManager.SetEntities(&m_celist);
+	//m_collisionManager.SetEntities(&m_celist);
 
 	if (m_celist.count(1))
 	{
@@ -96,8 +97,20 @@ bool SceneWorld::Init()
 		}
 	}
 
+	setup_physics_manager();
+
 	return true;
 }
+
+void SceneWorld::setup_physics_manager()
+{
+	for (auto& x : m_celist)
+		m_physics_manager.add_physics(x.second->PhysicsRaw());
+
+	for (auto& x : *m_mapHandler->Tiles())
+		m_physics_manager.add_physics(x->PhysicsRaw());
+}
+
 
 void SceneWorld::ShowStats()
 {
@@ -226,27 +239,7 @@ SceneGenData SceneWorld::Update()
 		for (auto it : m_celist)
 			it.second->Physics()->DesiredMove();
 
-		//Collision
-		std::map<unsigned int, std::shared_ptr<Entity>> collided = m_collisionManager.CalculateCollision();
-		for (auto &pair : collided)
-		{
-			auto entity = pair.second;
-			// ...push back the event
-			for (auto x : *entity->GetQueues())
-				if (x->GetActivationType() == AT_Touch)
-					// If he wasn't just touched...
-					if (!entity->_justTouched || x->GetID() != -1)
-						m_eventManager.PushBack(x);
-
-			entity->_justTouched = true;
-		}
-
-		// Handle just-touched
-		for (auto &pair : m_celist)
-		{
-			if (!collided.count(pair.first))
-				pair.second->_justTouched = false;
-		}
+		calculate_physics();
 
 		//Update
 		for (auto it : m_celist)
@@ -265,6 +258,33 @@ SceneGenData SceneWorld::Update()
 
 	return NextScene;
 }
+
+void SceneWorld::calculate_physics()
+{
+	// Replace collision
+	m_physics_manager.calculate_frame();
+
+	for (auto& candidate : m_celist)
+	{
+		if (candidate.second->PhysicsRaw()->_collided_last_frame > -1)
+		{
+			std::shared_ptr<Entity> ent = m_celist.at(candidate.second->PhysicsRaw()->_collided_last_frame);
+			// ...push back the event
+			for (auto queue : *ent->GetQueues())
+				if (queue->GetActivationType() == AT_Touch)
+					// If he wasn't just touched...
+					if (!ent->_justTouched || queue->GetID() != -1)
+						m_eventManager.PushBack(queue);
+
+			ent->_justTouched = true;
+
+			candidate.second->PhysicsRaw()->_collided_last_frame = -1;
+		}
+		else
+			candidate.second->_justTouched = false;
+	}
+}
+
 
 void SceneWorld::UpdateHUD()
 {

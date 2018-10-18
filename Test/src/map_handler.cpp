@@ -7,24 +7,30 @@ int MapHandler::m_chunkSize = 3;
 MapHandler::MapHandler(unsigned int id, std::shared_ptr<JsonHandler> jh) : m_mesh(Mesh()), m_id(id), m_jsonHandler(jh)
 {
 	auto map = m_jsonHandler->LoadMap(id);
+
 	if (!map.HasMember("tiles"))
 		return;
+
 	for (auto& x : map["tiles"].GetArray())
 	{
 		Vector3f pos;
-		std::string sprite;
 		pos.x = x["x"].GetFloat();
 		pos.y = x["y"].GetFloat();
 		pos.z = x["z"].GetFloat();
+		std::string sprite;
 		sprite = std::string(x["sprite"].GetString());
+
 		std::shared_ptr<MapTile> tile = std::shared_ptr<MapTile>(new MapTile(pos, COMPOSITION, sprite));
 		if (x.HasMember("walkOn") && x["walkOn"].GetBool() == false)
 			tile->Physics()->walkOn = false;
 		if (x.HasMember("deco") && x["deco"].GetBool() == true)
 			tile->Physics()->SetEthereal(true);
+
+		tile->PhysicsRaw()->_unmoving = true;
+
 		m_tiles.push_back(tile);
 	}
-	//m_OrderedTiles = std::vector<std::shared_ptr<MapTile>>(m_tiles);
+
 	FinalizeSetup();
 	OrderTiles();
 }

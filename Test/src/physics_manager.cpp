@@ -13,12 +13,16 @@ void physics_manager::calculate_frame()
 
 void physics_manager::add_physics(PhysicsComponent* ptr)
 {
+	//if (ptr == nullptr)
+	//	return;
 	m_components.emplace(ptr);
 	m_engine->notify_ptr_added(ptr);
 }
 
 void physics_manager::remove_physics(PhysicsComponent* ptr)
 {
+	//if (ptr == nullptr)
+	//	return;
 	m_components.erase(ptr);
 	m_engine->notify_ptr_removed(ptr);
 }

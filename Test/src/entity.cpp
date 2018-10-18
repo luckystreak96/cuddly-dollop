@@ -15,14 +15,19 @@ Entity::Entity(unsigned int id, std::string spritesheet, bool playerInput, bool 
 	{
 		m_graphicsComponent = !playerInput ? GraphComp_ptr(new PlayerGraphicsComponent(spritesheet, "CENTERED_TILE")) :
 			GraphComp_ptr(new PlayerGraphicsComponent(spritesheet, "CENTERED_TILE"));
+		m_graphicsComponent->_id = id;
 		components.push_back(m_graphicsComponent);
 	}
 
-	m_physicsComponent = m_fullSize ? std::shared_ptr<PhysicsComponent>(new PlayerPhysicsComponent(Vector3f(), "TILE", Vector3f(0.95f, 0.95f, 0), Vector3f(1, 0, 0))) : std::shared_ptr<PhysicsComponent>(new PlayerPhysicsComponent(Vector3f(), "TILE", Vector3f(0.8f, 0.4f, 0), Vector3f(1, 0, 0)));
+	m_physicsComponent = m_fullSize ? Physics_ptr(new PlayerPhysicsComponent(Vector3f(), "TILE", Vector3f(0.95f, 0.95f, 0), Vector3f(1, 0, 0))) :
+		Physics_ptr(new PlayerPhysicsComponent(Vector3f(), "TILE", Vector3f(0.8f, 0.4f, 0), Vector3f(1, 0, 0)));
+	m_physicsComponent->_id = id;
+	//m_physicsComponent->_unmoving = false;
 	components.push_back(m_physicsComponent);
 
 	m_inputComponent = playerInput ? std::shared_ptr<InputComponent>(new PlayerInputComponent(m_physicsComponent, m_graphicsComponent)) :
 		std::shared_ptr<InputComponent>(new InputComponent());
+	m_inputComponent->_id = id;
 	components.push_back(m_inputComponent);
 }
 
