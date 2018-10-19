@@ -1,5 +1,4 @@
 #include "FBO.h"
-#include "define_gl.h"
 #include "glfwBackend.h"
 #include <iostream>
 

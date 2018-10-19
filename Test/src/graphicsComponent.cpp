@@ -24,9 +24,12 @@ GraphicsComponent::~GraphicsComponent()
 
 void GraphicsComponent::SetNewBuffers(std::vector<Vertex>* verts, std::vector<GLuint>* inds)
 {
+	_must_update_vbo_ibo = true;
+
 	m_vertices = std::vector<Vertex>(*verts);
 	m_indices = std::vector<GLuint>(*inds);
 	m_lastMModelSize = 0;
+	return;
 	SetBuffers();
 }
 
@@ -44,12 +47,12 @@ void GraphicsComponent::FullReset(std::vector<Vertex>* verts, std::vector<GLuint
 
 	//MathUtils::CalcNormals(m_indices, m_vertices);
 
-	m_originalVertices = std::vector<Vertex>(m_vertices);
-	for (auto x : m_originalVertices)
-	{
-		x.vertex.x *= 64.0f;
-		x.vertex.y *= 64.0f;
-	}
+	//m_originalVertices = std::vector<Vertex>(m_vertices);
+	//for (auto x : m_originalVertices)
+	//{
+	//	x.vertex.x *= 64.0f;
+	//	x.vertex.y *= 64.0f;
+	//}
 	for (auto x : m_vertices)
 	{
 		x.vertex.x *= 64.0f;
@@ -62,6 +65,12 @@ void GraphicsComponent::FullReset(std::vector<Vertex>* verts, std::vector<GLuint
 
 void GraphicsComponent::Construct()
 {
+	m_IBO = 0;
+	m_VBO = 0;
+	m_VAO = 0;
+	m_MMBO = 0;
+
+	_must_update_vbo = false;
 	_outline = false;
 	m_direction = dir_Down;
 	m_lastInteraction = m_direction;
@@ -83,10 +92,6 @@ GraphicsComponent::GraphicsComponent(std::string modelName, std::string texPath)
 , _mModelsNoReplace(false)
 {
 	//std::cout << ++counter << " GraphicsComponents exist." << std::endl;
-	m_IBO = 0;
-	m_VBO = 0;
-	m_VAO = 0;
-	m_MMBO = 0;
 	Construct();
 }
 
@@ -94,15 +99,10 @@ GraphicsComponent::GraphicsComponent(std::vector<Vertex>* verts, std::vector<GLu
 _mModelsNoReplace(false)
 {
 	//std::cout << ++counter << " GraphicsComponents exist." << std::endl;
-	m_IBO = 0;
-	m_VBO = 0;
-	m_VAO = 0;
-	m_MMBO = 0;
-
 	m_vertices = std::vector<Vertex>(*verts);
 	m_indices = std::vector<GLuint>(*inds);
 
-	m_originalVertices = std::vector<Vertex>(m_vertices);
+	//m_originalVertices = std::vector<Vertex>(m_vertices);
 
 	Construct();
 }
@@ -238,6 +238,20 @@ void GraphicsComponent::Draw(bool withTex)
 	if (!m_external_loaded || !m_GL_loaded || !mustDraw || (m_modelName == "NONE" && m_vertices.size() <= 0))
 		return;
 
+	if (_must_update_vbo_ibo)
+	{
+		SetBuffers();
+		_must_update_vbo_ibo = false;
+	}
+	else if (_must_update_vbo)
+	{
+		// This doesn't work well if the number of vertices changes - to be kept in mind (glBufferSubData)
+		glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
+		glBufferSubData(GL_ARRAY_BUFFER, 0, m_vertices.size() * sizeof(Vertex), &m_vertices[0]);
+		_must_update_vbo = false;
+	}
+
+
 	// Bind VAO (which binds vbo + IBO)
 	glBindVertexArray(m_VAO);
 
@@ -328,6 +342,9 @@ void GraphicsComponent::SetBuffers()
 
 void GraphicsComponent::ResetVBO()
 {
+	_must_update_vbo = true;
+	return;
+
 	// Crashes if size is 0 lol
 	if (m_vertices.size() <= 0)
 		return;
@@ -418,14 +435,14 @@ void GraphicsComponent::SetDefaults(std::string name)
 	if (name == "NONE" || name == "")
 		return;
 
-	m_IBO = 0;
-	m_VBO = 0;
+	//m_IBO = 0;
+	//m_VBO = 0;
 
 	Model::GetInstance().loadModel(name);
 	m_modelName = Model::GetInstance().GetName();
 
-	m_originalVertices = std::vector<Vertex>(Model::GetInstance().getVertexVertices());
-	m_vertices = std::vector<Vertex>(m_originalVertices);
+	m_vertices = std::vector<Vertex>(Model::GetInstance().getVertexVertices());
+	//m_vertices = std::vector<Vertex>(m_originalVertices);
 	//assert(m_vertices.size() % 3 == 0);//full vertices only plz
 
 	m_indices = std::vector<GLuint>(Model::GetInstance().getIndices());

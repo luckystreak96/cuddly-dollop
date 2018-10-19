@@ -88,37 +88,41 @@ unsigned int InputManager::GetKeyCount()
 
 bool InputManager::FrameKeyStatus(InputAction action, KeyStatus status, unsigned int accessLevel)
 {
-	assert(GameData::KeyMap.count(action));
-	unsigned int actionNum = GameData::KeyMap.count(action) ? GameData::KeyMap.at(action) : 0;
-	return FrameKeyStatus(actionNum, status, accessLevel);
+	if (!GameData::KeyMap[action])
+		return false;
+	//unsigned int actionNum = GameData::KeyMap.count(action) ? GameData::KeyMap.at(action) : 0;
+	return FrameKeyStatus(GameData::KeyMap[action], status, accessLevel);
 }
 
 bool InputManager::FrameKeyStatus(std::vector<InputAction> action, KeyStatus status, unsigned int accessLevel)
 {
-	bool result = false;
 	for (auto& x : action)
 	{
-		assert(GameData::KeyMap.count(x));
-		unsigned int actionNum = GameData::KeyMap.count(x) ? GameData::KeyMap.at(x) : 0;
-		result = FrameKeyStatus(actionNum, status, accessLevel);
-
-		if (result)
-			break;
+		if (!GameData::KeyMap[x])
+			continue;
+		//assert(GameData::KeyMap.count(x));
+		//unsigned int actionNum = GameData::KeyMap.count(x) ? GameData::KeyMap.at(x) : 0;
+		if (FrameKeyStatus(GameData::KeyMap[x], status, accessLevel))
+			return true;
 	}
 
-	return result;
+	return false;
 }
 
 bool InputManager::FrameKeyStatus(unsigned int key, KeyStatus status, unsigned int accessLevel)
 {
+	//auto it = m_keyMap.find(key);
+	if (!m_keyMap.count(key))
+		return false;
+
 	//The key is never considered pressed to a method that doesnt currently have access
 	if (accessLevel < m_lockLevel.front())
 		return false;
 
 	if (status == AnyPress)
-		return m_keyMap.count(key) && (m_keyMap[key].first == KeyPressed || m_keyMap[key].first == HoldDownPress);
+		return (m_keyMap[key].first == KeyPressed || m_keyMap[key].first == HoldDownPress);
 
-	return m_keyMap.count(key) && m_keyMap[key].first == status;
+	return m_keyMap[key].first == status;
 }
 
 std::list<std::pair<unsigned int, KeyStatus>> InputManager::GetKeys()
@@ -152,7 +156,9 @@ void InputManager::Input(unsigned int key, KeyStatus status)
 
 void InputManager::SetKeyPercent(InputAction action, float percent)
 {
-	unsigned int actionNum = GameData::KeyMap.count(action) ? GameData::KeyMap.at(action) : 0;
+	unsigned int actionNum = GameData::KeyMap[action];
+	if (actionNum == 0)
+		return;
 	if (!m_powers.count(actionNum))
 		m_powers.emplace(actionNum, percent);
 	else
@@ -161,7 +167,9 @@ void InputManager::SetKeyPercent(InputAction action, float percent)
 
 float InputManager::GetKeyPercent(InputAction action)
 {
-	unsigned int actionNum = GameData::KeyMap.count(action) ? GameData::KeyMap.at(action) : 0;
+	unsigned int actionNum = GameData::KeyMap[action];
+	if (actionNum == 0)
+		return 1;
 	if (m_powers.count(actionNum))
 		return m_powers[actionNum];
 	else

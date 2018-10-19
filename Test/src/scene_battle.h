@@ -6,7 +6,6 @@
 #include "transform.h"
 #include "entity.h"
 #include "map_handler.h"
-#include "collisionManager.h"
 #include "eventManager.h"
 #include "battleManager.h"
 #include "actor.h"

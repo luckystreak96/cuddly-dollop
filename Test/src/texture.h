@@ -1,13 +1,13 @@
 #ifndef TEXTURE_H__
 #define TEXTURE_H__
 
-#include <iostream>
-#include <string>
 #include "GL/glew.h"
 #include <IL/il.h>
 #include <IL/ilu.h>
 #include <IL/ilut.h>
 #include <IL/devil_internal_exports.h>
+#include <iostream>
+#include <string>
 #include <cassert>
 
 class Texture

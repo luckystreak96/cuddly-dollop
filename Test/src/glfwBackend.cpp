@@ -1,13 +1,21 @@
 #include "glfwBackend.h" // include this first or get gl b4 glew error
+
+#include "game.h"
+#include "input_manager.h"
+#include "gameData.h"
+#include "resource_manager.h"
+#include "mathutils.h"
+#include "projection.h"
+#include "renderer.h"
+
 #include <IL/il.h>
 #include <IL/ilu.h>
 #include <IL/ilut.h>
 #include <vector>
 #include <algorithm>
+#include <algorithm>
 #include <assert.h>
-#include "game.h"
-#include "input_manager.h"
-#include "gameData.h"
+#include <thread>
 
 GLFWwindow* GLFWManager::m_window = NULL;
 Vector2f GLFWManager::_mngrGLVersion = Vector2f(2, 0);
@@ -92,10 +100,10 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 	if (key == GLFW_KEY_F8 && (action == GLFW_PRESS || action == GLFW_REPEAT))
 		Camera::_currentCam->_3dTarget.z > 4.0f ? Camera::_currentCam->_3dTarget.z = 0.0f : Camera::_currentCam->_3dTarget.z += 0.1f;
 
-	if (key == GLFW_KEY_F2 && (action == GLFW_PRESS || action == GLFW_REPEAT))
-		GraphicsComponent::_persRotation += 0.1f;
-	if (key == GLFW_KEY_F3 && (action == GLFW_PRESS || action == GLFW_REPEAT))
-		GraphicsComponent::_persRotation -= 0.1f;
+	//if (key == GLFW_KEY_F2 && (action == GLFW_PRESS || action == GLFW_REPEAT))
+	//	GraphicsComponent::_persRotation += 0.1f;
+	//if (key == GLFW_KEY_F3 && (action == GLFW_PRESS || action == GLFW_REPEAT))
+	//	GraphicsComponent::_persRotation -= 0.1f;
 
 
 	if (key == GLFW_KEY_F11 && action == GLFW_RELEASE)
@@ -342,13 +350,22 @@ void GLFWManager::GLFWMainLoop(Game* game)
 		exit(1);
 	}
 
+	//std::thread draw_thread;
+
 	// Main loop
 	while (!glfwWindowShouldClose(m_window))
 	{
+		//static int counter = 5;
 		glfwPollEvents();
 		HandleJoystickInput();
 		game->renderSceneCB();
-		glfwSwapBuffers(m_window);
+		//counter--;
+		//if (counter > 0)
+		//if (draw_thread.joinable())
+			//draw_thread.join();
+		//draw_thread = std::thread(glfwSwapBuffers, m_window);
+		Renderer::GetInstance().SwapBuffers(m_window);
+		//glfwSwapBuffers(m_window);
 	}
 
 	// Destroy GLFW context

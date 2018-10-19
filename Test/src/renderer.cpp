@@ -32,8 +32,19 @@ Renderer::Renderer() : m_toDraw(std::vector<GraphicsComponent*>()), m_width(1), 
 	m_ppe.push_back(std::shared_ptr<Bloom>(new Bloom()));
 }
 
+void Renderer::SwapBuffers(GLFWwindow* window)
+{
+	//if (m_swapThread.joinable())
+	//	m_swapThread.join();
+	//m_swapThread = std::thread(glfwSwapBuffers, window);
+	glfwSwapBuffers(window);
+}
+
+
 void Renderer::Setup()
 {
+	//if (m_swapThread.joinable())
+	//	m_swapThread.join();
 	if (InputManager::GetInstance().FrameKeyStatus(A_Cancel, KeyStatus::KeyPressed))
 		apply = !apply;
 

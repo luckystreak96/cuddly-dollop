@@ -1,15 +1,16 @@
 #ifndef MATHUTILS_H__
 #define MATHUTILS_H__
 
-#include <cassert>
-#include <vector>
-#include <memory>
 #include "vector3f.h"
 #include "vertex.h"
-#include "GL/glew.h"
+//#include "GL/glew.h"
 #include "lerper.h"
 #include "mat4f.h"
 #include "projection.h"
+
+#include <cassert>
+#include <vector>
+#include <memory>
 
 class Transformation;
 

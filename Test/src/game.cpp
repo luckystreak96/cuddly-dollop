@@ -1,14 +1,17 @@
 #include "game.h"
+
 #include "gameData.h"
 #include "localizationData.h"
 #include "textureatlas.h"
-#include <GLFW/glfw3.h>
 #include "vector3f.h"
 #include "effect.h"
 #include "FBO.h"
 #include "soundManager.h"
 #include "scene_manager.h"
 #include "scene_world.h"
+#include "animation.h"
+
+#include <GLFW/glfw3.h>
 #ifndef _WIN32
 #include <dirent.h>
 #endif

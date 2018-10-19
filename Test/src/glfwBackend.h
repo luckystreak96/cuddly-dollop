@@ -1,10 +1,10 @@
 #ifndef GLFWBACKEND_H__
 #define GLFWBACKEND_H__
 
-#include <iostream>
 #include "GL/glew.h"
 #include <GLFW/glfw3.h>
 #include "vector3f.h"
+#include <iostream>
 
 class Game;
 

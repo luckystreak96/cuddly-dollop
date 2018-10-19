@@ -1,13 +1,13 @@
 #ifndef GAME_H__
 #define GAME_H__
 
-#include <iostream>//duh
-#include <cassert>//Asserts
+#include <iostream>
+#include <cassert>
 #include <memory>
 #include <string>
 #include <vector>
 
-#include "GL/glew.h"//duh
+#include "GL/glew.h"
 
 #include "textureatlas.h"
 #include "input_manager.h"

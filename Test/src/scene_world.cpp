@@ -296,6 +296,7 @@ void SceneWorld::UpdateHUD()
 	{
 		FontManager::GetInstance().SetText(m_fontFPS, /*std::to_string(m_celist.at(1)->PhysicsRaw()->PositionRef().z),*/std::to_string(ElapsedTime::GetInstance().GetFPS()),
 			Vector3f(0, OrthoProjInfo::GetRegularInstance().Top * 2.f / OrthoProjInfo::GetRegularInstance().Size - 0.5f, -10));
+		std::cout << ElapsedTime::GetInstance().GetFPS() << std::endl;
 	}
 //#endif
 

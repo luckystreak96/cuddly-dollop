@@ -36,7 +36,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <WholeProgramOptimization>PGOptimize</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
@@ -231,10 +231,8 @@
     <ClInclude Include="src\bloomEffect.h" />
     <ClInclude Include="src\blurEffect.h" />
     <ClInclude Include="src\blur_framebuffer.h" />
-    <ClInclude Include="src\collisionManager.h" />
     <ClInclude Include="src\combineEffect.h" />
     <ClInclude Include="src\define.h" />
-    <ClInclude Include="src\define_gl.h" />
     <ClInclude Include="src\dialogueBox.h" />
     <ClInclude Include="src\dialogueGraph.h" />
     <ClInclude Include="src\effect.h" />
@@ -282,7 +280,6 @@
     <ClInclude Include="src\particleGenerator.h" />
     <ClInclude Include="src\physics.h" />
     <ClInclude Include="src\physicsComponent.h" />
-    <ClInclude Include="src\physics_2d.h" />
     <ClInclude Include="src\playerGraphicsComponent.h" />
     <ClInclude Include="src\playerInputComponent.h" />
     <ClInclude Include="src\playerPhysicsComponent.h" />
@@ -371,7 +368,6 @@
     <ClCompile Include="src\bloomEffect.cpp" />
     <ClCompile Include="src\blurEffect.cpp" />
     <ClCompile Include="src\blur_framebuffer.cpp" />
-    <ClCompile Include="src\collisionManager.cpp" />
     <ClCompile Include="src\combineEffect.cpp" />
     <ClCompile Include="src\define.cpp" />
     <ClCompile Include="src\dialogueBox.cpp" />
@@ -420,7 +416,6 @@
     <ClCompile Include="src\particleGenerator.cpp" />
     <ClCompile Include="src\physics.cpp" />
     <ClCompile Include="src\physicsComponent.cpp" />
-    <ClCompile Include="src\physics_2d.cpp" />
     <ClCompile Include="src\playerGraphicsComponent.cpp" />
     <ClCompile Include="src\playerInputComponent.cpp" />
     <ClCompile Include="src\playerPhysicsComponent.cpp" />

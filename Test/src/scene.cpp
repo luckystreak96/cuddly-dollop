@@ -67,9 +67,12 @@ SceneGenData Scene::Act()
 		int lol = 60;
 
 	// Draw the scene, when paused the sort func removes dupes so they dont stack and we gud :)
+	//static int counter = 5;
+	//counter--;
+	//if (counter > 0)
 		Draw();
 
-	switch(_type)
+	switch (_type)
 	{
 	case ST_Battle:
 		if (!m_fade.IsDone() || result.id == 0)

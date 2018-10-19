@@ -1,14 +1,17 @@
 #ifndef RENDERER_H__
 #define RENDERER_H__
 
-//#include "GL/glew.h"
-#include <vector>
-#include <set>
-#include <memory>
+#include "GL/glew.h"
+#include <GLFW/glfw3.h>
 #include "graphicsComponent.h"
 #include "FBO.h"
 #include "post_processing_screen.h"
 #include "postProcessing.h"
+
+#include <vector>
+#include <set>
+#include <memory>
+#include <thread>
 
 class Renderer
 {
@@ -27,6 +30,7 @@ public:
 	void Draw();
 	void Add(GraphComp_ptr c);
 	void Clear();
+	void SwapBuffers(GLFWwindow* window);
 	inline unsigned int Count() { return m_toDraw.size(); }
 private:
 	Renderer();
@@ -36,6 +40,8 @@ private:
 private:
 	std::vector<GraphicsComponent*> m_toDraw;
 	std::vector<std::shared_ptr<PostProcessing>> m_ppe;
+
+	std::thread m_swapThread;
 
 	// Post processing variables
 	int m_width;

@@ -1,11 +1,8 @@
 #ifndef GRAPHICS_COMPONENT_H__
 #define GRAPHICS_COMPONENT_H__
 
+#include <GL/glew.h>//keep this up here to avoid "included gl.h before glew.h" error
 #include "iComponent.h"
-#include <iostream>
-#include <string>
-#include <math.h>
-#include <cmath>
 #include "mathutils.h"
 #include "vertex.h"
 #include "math.h"
@@ -15,7 +12,11 @@
 #include "elapsedTime.h"
 #include "resource_user.h"
 #include "resource_manager.h"
-#include <GL/glew.h>
+
+#include <iostream>
+#include <string>
+#include <math.h>
+#include <cmath>
 
 enum Direction { dir_Left, dir_Down, dir_Right, dir_Up };
 
@@ -73,6 +74,8 @@ public:
 	static float GetProjectionRotation();
 
 public:
+	bool _must_update_vbo_ibo;
+	bool _must_update_vbo;
 	bool mustDraw = true;
 	bool _instancedDraw;
 	bool _mModelsNoReplace;
@@ -93,7 +96,7 @@ protected:
 	int m_MBO_instances = 1;
 	std::vector<GLuint> m_indices;
 	std::vector<Vertex> m_vertices;
-	std::vector<Vertex> m_originalVertices;
+	//std::vector<Vertex> m_originalVertices;
 	std::vector<Mat4f> m_mmodels;
 	std::vector<Mat4f> m_test;
 	Vector3f m_size = Vector3f(-1, -1, -1);

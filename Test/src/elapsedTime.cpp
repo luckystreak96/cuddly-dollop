@@ -24,11 +24,11 @@ void ElapsedTime::CalculateElapsedTime()
 	if (m_elapsedTime > 0.03)
 		m_elapsedTime = 0.03;
 
-	if (m_elapsedTime < .005f)
-	{
-		m_elapsedTime = -1;
-	}
-	else
+	//if (m_elapsedTime < .005f)
+	//{
+	//	m_elapsedTime = -1;
+	//}
+	//else
 	{
 		prev_point = uptime;
 		counter++;

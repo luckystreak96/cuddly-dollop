@@ -1,6 +1,13 @@
 #ifndef GAME_DATA_H__
 #define GAME_DATA_H__
 
+#include "utils.h"
+#include "eventQueue.h"
+//#include "actor.h"
+#include "vector3f.h"
+#include "input_manager.h"
+
+#include <variant>
 #include <map>
 #include <cstdio>
 #include <rapidjson/writer.h>
@@ -8,12 +15,6 @@
 #include <rapidjson/rapidjson.h>
 #include <rapidjson/filewritestream.h>
 #include <memory>
-#include "utils.h"
-#include "eventQueue.h"
-#include <variant>
-#include "actor.h"
-#include "vector3f.h"
-#include "input_manager.h"
 
 typedef std::map<std::string, std::variant<bool, float, int, std::string>> OptionMap;
 
@@ -52,7 +53,7 @@ public:
 	static OptionMap Options;
 
 	// Key mapping settings
-	static std::map<InputAction, unsigned int> KeyMap;
+	static std::vector<unsigned int> KeyMap;
 
 	//static std::string Language;
 	

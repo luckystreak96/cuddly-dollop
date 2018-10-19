@@ -1,8 +1,11 @@
 #include "gameData.h"
 
+#include <GL/glew.h>//necessary or glfw3 include makes error
+#include <GLFW/glfw3.h>
+
 #include <fstream>
 #include <ostream>
-#include <GLFW/glfw3.h>
+
 #include "localizationData.h"
 #include "fighterFactory.h"
 #include "skill.h"
@@ -18,7 +21,7 @@ std::map<std::string, int> GameData::Flags = std::map<std::string, int>();
 std::map<std::string, std::string> GameData::Strings = std::map<std::string, std::string>();
 std::map<std::string, Vector3f> GameData::Positions = std::map<std::string, Vector3f>();
 OptionMap GameData::Options = OptionMap();
-std::map<InputAction, unsigned int> GameData::KeyMap = std::map<InputAction, unsigned int>();
+std::vector<unsigned int> GameData::KeyMap = std::vector<unsigned int>(A_Last);
 
 rapidjson::Document GameData::m_document;
 std::string GameData::m_file;
@@ -217,6 +220,9 @@ void GameData::LoadSettings()
 			}
 	}
 
+	for (int i = 0; i < KeyMap.size(); i++)
+		KeyMap[i] = 0;
+
 	// Get the keybindings
 	if (m_document.HasMember("keybindings") && m_document["keybindings"].IsArray())
 	{
@@ -237,7 +243,7 @@ void GameData::LoadSettings()
 				else
 					continue;
 
-				KeyMap.emplace(InputManager::StringToInputAction(name), sec);
+				KeyMap[InputManager::StringToInputAction(name)] = sec;
 			}
 	}
 
@@ -264,28 +270,28 @@ void GameData::EnsureBaseSettings()
 	if (!Strings.count("name"))
 		Strings.emplace("name", "Yanik");
 
-	if (!KeyMap.count(A_Accept))
-		KeyMap.emplace(A_Accept, GLFW_KEY_X);
-	if (!KeyMap.count(A_Cancel))
-		KeyMap.emplace(A_Cancel, GLFW_KEY_Z);
-	if (!KeyMap.count(A_Exit))
-		KeyMap.emplace(A_Exit, GLFW_KEY_ESCAPE);
-	if (!KeyMap.count(A_Mute))
-		KeyMap.emplace(A_Mute, GLFW_KEY_M);
-	if (!KeyMap.count(A_Pause))
-		KeyMap.emplace(A_Pause, GLFW_KEY_P);
-	if (!KeyMap.count(A_Up))
-		KeyMap.emplace(A_Up, GLFW_KEY_UP);
-	if (!KeyMap.count(A_Down))
-		KeyMap.emplace(A_Down, GLFW_KEY_DOWN);
-	if (!KeyMap.count(A_Right))
-		KeyMap.emplace(A_Right, GLFW_KEY_RIGHT);
-	if (!KeyMap.count(A_Left))
-		KeyMap.emplace(A_Left, GLFW_KEY_LEFT);
-	if (!KeyMap.count(A_Menu))
-		KeyMap.emplace(A_Menu, GLFW_KEY_ENTER);
-	if (!KeyMap.count(A_AltR))
-		KeyMap.emplace(A_AltR, GLFW_KEY_D);
+	if (KeyMap[A_Accept] == 0)
+		KeyMap[A_Accept] = GLFW_KEY_X;
+	if (KeyMap[A_Cancel] == 0)
+		KeyMap[A_Cancel] = GLFW_KEY_Z;
+	if (KeyMap[A_Exit] == 0)
+		KeyMap[A_Exit] = GLFW_KEY_ESCAPE;
+	if (KeyMap[A_Mute] == 0)
+		KeyMap[A_Mute] = GLFW_KEY_M;
+	if (KeyMap[A_Pause] == 0)
+		KeyMap[A_Pause] = GLFW_KEY_P;
+	if (KeyMap[A_Up] == 0)
+		KeyMap[A_Up] = GLFW_KEY_UP;
+	if (KeyMap[A_Down] == 0)
+		KeyMap[A_Down] = GLFW_KEY_DOWN;
+	if (KeyMap[A_Right] == 0)
+		KeyMap[A_Right] = GLFW_KEY_RIGHT;
+	if (KeyMap[A_Left] == 0)
+		KeyMap[A_Left] = GLFW_KEY_LEFT;
+	if (KeyMap[A_Menu] == 0)
+		KeyMap[A_Menu] = GLFW_KEY_ENTER;
+	if (KeyMap[A_AltR] == 0)
+		KeyMap[A_AltR] = GLFW_KEY_D;
 }
 
 void GameData::SaveGameData()
@@ -416,14 +422,14 @@ void GameData::SaveSettings()
 
 	// Save KeyBindings
 	Value keybindings(kArrayType);
-	for (auto x : KeyMap)
+	for (int i = 0; i < KeyMap.size(); i++)
 	{
 		Value ob(kObjectType);
 		Value first(kStringType);
-		first.SetString(StringRef(InputManager::InputActionStrings[x.first].c_str()), allocator);
+		first.SetString(StringRef(InputManager::InputActionStrings[(InputAction)i].c_str()), allocator);
 		Value second;
 
-		second.SetUint(x.second);
+		second.SetUint(KeyMap[i]);
 
 		ob.AddMember(first, second, allocator);
 		keybindings.PushBack(ob, allocator);
