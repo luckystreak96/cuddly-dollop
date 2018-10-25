@@ -29,7 +29,6 @@ void GraphicsComponent::SetNewBuffers(std::vector<Vertex>* verts, std::vector<GL
 	m_vertices = std::vector<Vertex>(*verts);
 	m_indices = std::vector<GLuint>(*inds);
 	m_lastMModelSize = 0;
-	return;
 	SetBuffers();
 }
 
@@ -70,6 +69,7 @@ void GraphicsComponent::Construct()
 	m_VAO = 0;
 	m_MMBO = 0;
 
+	m_tex_ptr = ResourceManager::GetInstance().GetTexture(m_texture);
 	_must_update_vbo = false;
 	_outline = false;
 	m_direction = dir_Down;
@@ -232,24 +232,30 @@ void GLErrorCheck()
 		std::cout << glewGetErrorString(err) << std::endl;
 }
 
+bool GraphicsComponent::will_not_draw()
+{
+	return (!m_external_loaded || !m_GL_loaded || !mustDraw || (m_modelName == "NONE" && m_vertices.size() <= 0));
+}
+
+
 void GraphicsComponent::Draw(bool withTex)
 {
 	// Must be drawn?
-	if (!m_external_loaded || !m_GL_loaded || !mustDraw || (m_modelName == "NONE" && m_vertices.size() <= 0))
+	if (will_not_draw())
 		return;
 
-	if (_must_update_vbo_ibo)
-	{
-		SetBuffers();
-		_must_update_vbo_ibo = false;
-	}
-	else if (_must_update_vbo)
-	{
-		// This doesn't work well if the number of vertices changes - to be kept in mind (glBufferSubData)
-		glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
-		glBufferSubData(GL_ARRAY_BUFFER, 0, m_vertices.size() * sizeof(Vertex), &m_vertices[0]);
-		_must_update_vbo = false;
-	}
+	//if (_must_update_vbo_ibo)
+	//{
+	//	SetBuffers();
+	//	_must_update_vbo_ibo = false;
+	//}
+	//else if (_must_update_vbo)
+	//{
+	//	// This doesn't work well if the number of vertices changes - to be kept in mind (glBufferSubData)
+	//	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
+	//	glBufferSubData(GL_ARRAY_BUFFER, 0, m_vertices.size() * sizeof(Vertex), &m_vertices[0]);
+	//	_must_update_vbo = false;
+	//}
 
 
 	// Bind VAO (which binds vbo + IBO)
@@ -258,9 +264,9 @@ void GraphicsComponent::Draw(bool withTex)
 	// Bind texture
 	if (withTex)
 	{
-		Texture* tex = ResourceManager::GetInstance().GetTexture(m_texture);
-		if (tex)
-			tex->Bind(GL_TEXTURE0);
+		//Texture* tex = ResourceManager::GetInstance().GetTexture(m_texture);
+		if (m_tex_ptr)
+			m_tex_ptr->Bind(GL_TEXTURE0);
 	}
 
 	// Bind mmbo
@@ -291,6 +297,12 @@ void GraphicsComponent::Draw(bool withTex)
 	if (_instancedDraw)
 	{
 		glDrawElementsInstanced(GL_TRIANGLES, (GLsizei)m_indices.size(), GL_UNSIGNED_INT, 0, m_mmodels.size());
+		//glDrawElementsInstancedBaseVertex(GL_TRIANGLES,
+		//	(GLsizei)m_indices.size(),
+		//	GL_UNSIGNED_INT,
+		//	0,
+		//	m_mmodels.size(),
+		//	0);
 	}
 	else
 	{
@@ -342,8 +354,8 @@ void GraphicsComponent::SetBuffers()
 
 void GraphicsComponent::ResetVBO()
 {
-	_must_update_vbo = true;
-	return;
+	//_must_update_vbo = true;
+	//return;
 
 	// Crashes if size is 0 lol
 	if (m_vertices.size() <= 0)
@@ -406,7 +418,7 @@ void GraphicsComponent::InsertMModels(Transformation& t, int position)
 	int num = _instancedDraw ? 1 : 4;
 	Mat4f& trans = t.GetWorldTrans();
 	for (int i = 0; i < num; i++)
-		m_mmodels[position * 4 + i] = trans;
+		m_mmodels[position * num + i] = trans;
 	t.SetTranslation(reminder);
 	m_mmodelsUpdated = true;
 	//m_mmodels.push_back(Mat4f(t.GetWorldTrans()));
@@ -422,7 +434,7 @@ void GraphicsComponent::InsertMModels(Mat4f& mat, int position)
 	mat.m[2][3] *= size;
 	int num = _instancedDraw ? 1 : 4;
 	for (int i = 0; i < num; i++)
-		m_mmodels[position * 4 + i] = mat;
+		m_mmodels[position * num + i] = mat;
 	m_mmodelsUpdated = true;
 	//m_mmodels.push_back(Mat4f(t.GetWorldTrans()));
 	//m_mmodels.insert(m_mmodels.end(), 1, t.GetWorldTrans());

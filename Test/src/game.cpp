@@ -74,6 +74,7 @@ void Game::SetupTextureAtlas()
 		TextureAtlas::m_textureAtlas.AddTexture(s);
 	TextureAtlas::m_textureAtlas.Generate(32, false, "res/tiles.png");
 	TextureAtlas::m_textureAtlas.ShortenTextureList();
+	ResourceManager::GetInstance().LoadTexture("res/tiles.png");
 
 
 	//// SPECIAL FILE

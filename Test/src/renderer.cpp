@@ -88,6 +88,8 @@ void Renderer::ResetTextureSizes()
 
 void Renderer::Add(GraphComp_ptr c)
 {
+	if (c->will_not_draw())
+		return;
 	m_toDraw.push_back(c.get());
 }
 
@@ -120,12 +122,14 @@ void Renderer::Draw()
 
 	//Draw everything
 	for (auto x : m_toDraw)
+	{
 		x->Draw();
+	}
 
-	if (!apply)
-		return;
 
 	m_fbo.UnbindFrameBuffer();
+	if (!apply)
+		return;
 
 	EffectManager::GetInstance().SetNoTranslateMode(true);
 

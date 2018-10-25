@@ -334,21 +334,40 @@ ParticleGenerator::~ParticleGenerator()
 void ParticleGenerator::SetupMesh()
 {
 	m_mesh.Reset();
-	//m_mesh._instancedDraw = true;
-	std::sort(m_particles.begin(), m_particles.end(), ParticleSort);
-	for (auto& t : m_particles)
-	{
-		Vertex::SetColorAll(m_model_vertices.begin(), m_model_vertices.end(), t->color, t->alpha);
-		m_mesh.AddToMesh(m_model_vertices, m_model_indices, m_model_vertices.size() - 1, t->position, t->texture);
-	}
 
-	m_MBO_instances = m_particles.size();
+	//std::sort(m_particles.begin(), m_particles.end(), ParticleSort);
+	//for (auto& t : m_particles)
+	//{
+	//	Vertex::SetColorAll(m_model_vertices.begin(), m_model_vertices.end(), t->color, t->alpha);
+	//m_mesh.AddToMesh(m_model_vertices, m_model_indices, m_model_vertices.size() - 1, t->position, t->texture);
+	//}
+
+	//m_MBO_instances = m_particles.size();
 
 	m_texture = "res/tiles.png";
-	//m_mesh.Finalize(m_texture);
-	m_graphics = GraphComp_ptr(new GraphicsComponent(m_mesh.GetMeshVertices(), m_mesh.GetMeshIndices(), m_texture));
-	//m_graphics->_instancedDraw = true;
+
+	m_graphics = GraphComp_ptr(new GraphicsComponent("CENTERED_PARTICLE_TILE", m_texture));
+
+	std::vector<Vector2f> vecs = {
+Vector2f(0, 0),
+Vector2f(1, 0),
+Vector2f(0, 1),
+Vector2f(1, 1)
+	};
+
+	int counter = 0;
+	for (auto& v : *m_graphics->GetVertices())
+	{
+		Vector2f temp = Vector2f(vecs[counter % 4].x, vecs[counter % 4].y);
+		TextureAtlas::m_textureAtlas.TextureIndexToCoord(TextureAtlas::m_textureAtlas.AddTexture(m_particles[0]->texture), temp.x, temp.y);
+
+		v.tex = temp;
+		counter++;
+	}
+	//m_graphics = GraphComp_ptr(new GraphicsComponent(m_mesh.GetMeshVertices(), m_mesh.GetMeshIndices(), m_texture));
+	m_graphics->_instancedDraw = true;
 	m_graphics->SetPhysics(Vector3f(0, 0, 0.6f), Vector3f());
+	m_graphics->ResetVBO();
 }
 
 void ParticleGenerator::LogicUpdate()
@@ -375,7 +394,7 @@ void ParticleGenerator::LogicUpdate()
 
 	// if the number of particles is still the same, update the mmodels instead of re-inserting them
 	m_prevModels = m_graphics->GetMModels().size();
-	if (m_prevModels / 4 == m_particles.size())
+	if (m_prevModels == m_particles.size())
 	{
 		Transformation t;
 		for (int i = 0; i < m_particles.size(); i++)

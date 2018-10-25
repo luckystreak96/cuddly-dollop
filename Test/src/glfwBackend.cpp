@@ -229,7 +229,7 @@ GLFWManager::GLFWManager()
 	m_screenHeight = mode->height;
 	m_refreshRate = mode->refreshRate;
 
-	std::vector<Vector2f> versions{ /*Vector2f(4, 6),*/ Vector2f(3, 3), Vector2f(2, 0), Vector2f(1, 1) };
+	std::vector<Vector2f> versions{ Vector2f(4, 3), Vector2f(3, 3), Vector2f(2, 0), Vector2f(1, 1) };
 
 	// Try the different GL contexts
 	for (auto x : versions)
@@ -237,7 +237,7 @@ GLFWManager::GLFWManager()
 		// GL Version
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, x.x);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, x.y);
-		glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, 1);
+		glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);
 
 
 		// Create window
@@ -300,12 +300,14 @@ GLFWManager::GLFWManager()
 	}
 
 
-	if (false && glDebugMessageCallbackARB != NULL) {
+	if (true && glDebugMessageCallbackARB != NULL) {
 		// Debug Output is supported, hooray!
-		glDebugMessageControlARB(GL_DONT_CARE, GL_DONT_CARE, GL_DEBUG_SEVERITY_HIGH, 0, NULL, GL_TRUE);
+		//glDebugMessageControlARB(GL_DONT_CARE, GL_DONT_CARE, GL_DEBUG_SEVERITY_HIGH, 0, NULL, GL_TRUE);
 		//glDebugMessageControlARB(GL_DEBUG_SOURCE_OTHER, GL_DEBUG_TYPE_OTHER, GL_DEBUG_SEVERITY_NOTIFICATION, 0, NULL, GL_FALSE);
-		glDebugMessageCallbackARB((GLDEBUGPROCARB)ETB_GL_ERROR_CALLBACK, NULL);
+		glEnable(GL_DEBUG_OUTPUT);
 		glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS_ARB);// forces the pipeline to flush every line so debugging isnt total garbage
+		glDebugMessageControlARB(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, NULL, GL_TRUE);
+		glDebugMessageCallbackARB((GLDEBUGPROCARB)ETB_GL_ERROR_CALLBACK, NULL);
 	}
 
 	//glEnable(GL_CULL_FACE);
@@ -364,7 +366,10 @@ void GLFWManager::GLFWMainLoop(Game* game)
 		//if (draw_thread.joinable())
 			//draw_thread.join();
 		//draw_thread = std::thread(glfwSwapBuffers, m_window);
-		Renderer::GetInstance().SwapBuffers(m_window);
+		//glFlush();
+		//Sleep(1);
+		//glFinish();
+		//Renderer::GetInstance().SwapBuffers(m_window);
 		//glfwSwapBuffers(m_window);
 	}
 

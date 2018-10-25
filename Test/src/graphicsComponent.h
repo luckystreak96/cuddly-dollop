@@ -71,6 +71,7 @@ public:
 	void SetPhysics(Vector3f pos, Vector3f vel = Vector3f()) { m_pos = pos; m_vel = vel;/* m_modelMat.SetTranslation(pos);*/ };
 	void SetNewBuffers(std::vector<Vertex>* verts, std::vector<GLuint>* inds);
 	void ApplyModelToVertices();
+	bool will_not_draw();
 	static float GetProjectionRotation();
 
 public:
@@ -96,6 +97,7 @@ protected:
 	int m_MBO_instances = 1;
 	std::vector<GLuint> m_indices;
 	std::vector<Vertex> m_vertices;
+	std::vector<Vector3f> m_color;
 	//std::vector<Vertex> m_originalVertices;
 	std::vector<Mat4f> m_mmodels;
 	std::vector<Mat4f> m_test;
@@ -112,6 +114,7 @@ protected:
 	Transformation m_modelMat;
 	Vector3f m_vel;
 	Vector3f m_rot;
+	Texture* m_tex_ptr;
 
 	static int counter;
 };
