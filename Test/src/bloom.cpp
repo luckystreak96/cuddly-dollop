@@ -32,7 +32,7 @@ void Bloom::Apply(Post_Processing_Screen* pps, FBO* fbo)
 	glBindTexture(GL_TEXTURE_2D, fbo->GetColourTexture());
 	pps->Draw(false);
 
-	ApplyBlur(pps, 2);
+	ApplyBlur(pps, 1);
 
 	//END BLOOM STAGE
 

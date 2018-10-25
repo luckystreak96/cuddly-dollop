@@ -306,7 +306,7 @@ GLFWManager::GLFWManager()
 		//glDebugMessageControlARB(GL_DEBUG_SOURCE_OTHER, GL_DEBUG_TYPE_OTHER, GL_DEBUG_SEVERITY_NOTIFICATION, 0, NULL, GL_FALSE);
 		glEnable(GL_DEBUG_OUTPUT);
 		glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS_ARB);// forces the pipeline to flush every line so debugging isnt total garbage
-		glDebugMessageControlARB(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, NULL, GL_TRUE);
+		glDebugMessageControlARB(GL_DONT_CARE, GL_DONT_CARE, GL_DEBUG_SEVERITY_NOTIFICATION, 0, NULL, GL_FALSE);
 		glDebugMessageCallbackARB((GLDEBUGPROCARB)ETB_GL_ERROR_CALLBACK, NULL);
 	}
 
@@ -370,7 +370,7 @@ void GLFWManager::GLFWMainLoop(Game* game)
 		//Sleep(1);
 		//glFinish();
 		//Renderer::GetInstance().SwapBuffers(m_window);
-		//glfwSwapBuffers(m_window);
+		glfwSwapBuffers(m_window);
 	}
 
 	// Destroy GLFW context

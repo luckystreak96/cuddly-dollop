@@ -42,10 +42,10 @@ int main(int argc, char** argv)
 	GLFWManager manager = GLFWManager();
 
 #ifdef NDEBUG
-	FreeConsole();
-#endif
-
 	std::cout << run_tests(argc, argv) << " tests have failed." << std::endl;
+#endif
+	//FreeConsole();
+
 
 	manager.GLFWMainLoop(game);
 
