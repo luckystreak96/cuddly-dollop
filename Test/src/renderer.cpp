@@ -120,16 +120,19 @@ void Renderer::Draw()
 	//Sort first
 	Sort();
 
+	//if (!apply)
+	//	EffectManager::GetInstance().Enable(E_Gamma);
+
 	//Draw everything
 	for (auto x : m_toDraw)
 	{
 		x->Draw();
 	}
 
-
-	m_fbo.UnbindFrameBuffer();
 	if (!apply)
 		return;
+
+	m_fbo.UnbindFrameBuffer();
 
 	EffectManager::GetInstance().SetNoTranslateMode(true);
 

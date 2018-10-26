@@ -17,15 +17,15 @@ void main()
     vec3 result = texture(gSampler, TexCoord0).rgb * weight[0]; // current fragment's contribution
     if(horizontal == 1)
     {
-        for(int i = 1; i < 6; ++i)
+        for(int i = 1; i < 5; ++i)
         {
-            result += texture(gSampler, TexCoord0 + vec2(tex_offset.x * i, 0.0)).rgb * weight[i];
-            result += texture(gSampler, TexCoord0 - vec2(tex_offset.x * i, 0.0)).rgb * weight[i];
+            result += texture(gSampler, TexCoord0 + vec2(tex_offset.y * i, 0.0)).rgb * weight[i];
+            result += texture(gSampler, TexCoord0 - vec2(tex_offset.y * i, 0.0)).rgb * weight[i];
         }
     }
     else
     {
-        for(int i = 1; i < 6; ++i)
+        for(int i = 1; i < 5; ++i)
         {
             result += texture(gSampler, TexCoord0 + vec2(0.0, tex_offset.y * i)).rgb * weight[i];
             result += texture(gSampler, TexCoord0 - vec2(0.0, tex_offset.y * i)).rgb * weight[i];

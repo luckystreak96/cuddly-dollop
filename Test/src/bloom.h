@@ -22,11 +22,14 @@ public:
 
 private:
 	void ApplyBlur(Post_Processing_Screen* pps, int numTimes);
+	int get_texture_size(int iteration);
 
 private:
+	std::vector<FBO> m_gaussesH;
+	std::vector<FBO> m_gaussesV;
 	FBO m_bloom;
-	FBO m_gaussH;
-	FBO m_gaussV;	
+	FBO m_gauss;
+	//FBO m_gaussV;	
 };
 
 #endif

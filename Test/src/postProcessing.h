@@ -12,7 +12,7 @@ public:
 	virtual void ResetTextureSizes() = 0;
 public:
 	//Decides how much to blur
-	float m_divisor;
+	int m_divisor;
 
 	int _width;
 	int _height;

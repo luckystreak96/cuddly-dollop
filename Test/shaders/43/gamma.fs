@@ -29,8 +29,8 @@ void main()
 {
 	vec4 color = texture2D(gSampler, TexCoord0.st);
 
-	//if(color.a < 0.1)
-	//	discard;
+	if(color.a < 0.05)
+		discard;
 
 
 	//vec3 toneMapped = color.rgb / (color.rgb + vec3(1.0));
