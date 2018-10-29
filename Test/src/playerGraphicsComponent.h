@@ -17,9 +17,11 @@ public:
 	void DrawOutline(bool withTex = true);
 	void SetTexture(std::string texture);
 	void SetAnimation(Anim_Enum anim, std::string spritesheet);
+	//void reset_to_default_animation();
 
 private:
 	bool m_firstLoad;
+	bool m_force_update;
 	int m_actualDelay;
 	Vector3f m_prevPosition;
 };

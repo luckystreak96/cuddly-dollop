@@ -98,6 +98,7 @@ void Animation::SetDefaults()
 	m_height = 4;
 	_specialAnimation = false;
 	_forceAnimation = false;
+	_default_animation = AE_Last;
 }
 
 // Choose which animation to go for

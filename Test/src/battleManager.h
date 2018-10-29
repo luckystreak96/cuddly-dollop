@@ -82,6 +82,7 @@ public:
 	std::set<int> _targets;
 	std::vector<Skill_ptr> _chooseSkill;
 	std::vector<unsigned int> _fonts;
+	std::map<SkillProgress, std::vector<triple>> _action_buffer;
 
 
 	Skill_ptr _selectedSkill;

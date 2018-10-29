@@ -5,7 +5,7 @@
 #include <tuple>
 
 enum SkillProgress {
-	SP_0_None, SP_1_Before_Anim, SP_2_BeginAnim, SP_3_DealDamage, SP_4_PostSkillAnim, SP_5_SkillDone
+	SP_0_None, SP_1_Before_Anim, SP_2_BeginAnim, SP_3_DealDamage, SP_4_PostSkillAnim, SP_5_SkillDone, SP_SkillLast
 };
 
 enum AnimationOperation {

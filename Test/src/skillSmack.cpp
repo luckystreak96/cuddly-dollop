@@ -36,7 +36,7 @@ Damage SkillSmack::CalculateDamage(StatUser& user)
 		_critting = false;
 
 	// Damage
-	int dmg = 4 + user.Strength.Modified * 0.8f + rand() % (user.GetLevel() + 2);
+	int dmg = 1 + user.Strength.Modified * 0.4f + rand() % (user.GetLevel() + 2);
 	if (_critting)
 		dmg *= 1.5;
 

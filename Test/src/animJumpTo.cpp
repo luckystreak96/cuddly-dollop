@@ -39,6 +39,8 @@ void AnimJumpTo::first_time()
 
 	_target->_specialAnimation = true;
 	_target->_forceAnimation = true;
+	_target->_animation = AE_Jump;
+
 	auto& data = Animation::GetMetaData(_target->GetTexture()).data;
 	_target->_row = data.at(AE_Jump)._position;
 	_length = abs(data.at(AE_Jump)._end - data.at(AE_Jump)._start) + 1;
@@ -73,8 +75,14 @@ void AnimJumpTo::Update()
 	{
 		_done = true;
 		_target->SetPhysics(_destination, Vector3f());
+
+		//auto& data = Animation::GetMetaData(_target->GetTexture()).data;
+		//_target->_row = data.at(AE_Jump)._position;
+		//_target->SetAnimation(AE_)
+
 		_target->_specialAnimation = false;
 		_target->_forceAnimation = false;
 		_target->_sprite = 0;
+		_target->Update();
 	}
 }

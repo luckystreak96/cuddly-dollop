@@ -16,7 +16,7 @@ enum TriggerCondition { TC_None, TC_Targeted };
 class StatusEffect
 {
 public:
-	StatusEffect() : _Element(SE_None) { _Id = counter++; }
+	StatusEffect() : _Element(SE_None), _Triggered(false) { _Id = counter++; }
 	std::vector<std::tuple<Passive_ptr, int>> _Effects;
 	std::vector<std::pair<SkillProgress, triple>> _Actions;
 	std::string _Name;
@@ -25,6 +25,7 @@ public:
 	unsigned int _Id;
 	SkillElement _Element;
 	TriggerCondition _Condition;
+	bool _Triggered;
 
 	static unsigned int counter;
 };

@@ -118,7 +118,7 @@ bool SceneBattle::Init()
 		party.at(i)->WaitPosition = party.at(i)->GetPos();
 		party.at(i)->ActivePosition = party.at(i)->GetPos() + Vector3f(1, 0, 0);
 		party.at(i)->_row = AE_Right; // make player face right cuz girl looks bad looking down
-		party.at(i)->_animation = AE_Right; // make player face right cuz girl looks bad looking down
+		party.at(i)->_default_animation = AE_Right; // make player face right cuz girl looks bad looking down
 	}
 
 	startY = (4.25f + (1.25f * (4 - enemies.size())) / 2.0f);
@@ -133,7 +133,7 @@ bool SceneBattle::Init()
 		enemies.at(i)->ActivePosition = enemies.at(i)->GetPos() + Vector3f(-1, 0, 0);
 		// Set to right cause the sprites are flipped
 		enemies.at(i)->_row = AE_Right;
-		enemies.at(i)->_animation = AE_Right;
+		enemies.at(i)->_default_animation = AE_Right;
 		enemies.at(i)->GetModelMat()->SetScale(-1, 1, 1);
 	}
 

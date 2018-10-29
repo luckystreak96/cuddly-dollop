@@ -73,21 +73,33 @@ bool BattleManager::status_condition_met(StatusEffect status, Fighter_ptr fighte
 //	3 - Find a way to get these interventions to trigger at the right moment and do the right things :)
 void BattleManager::ProcessSkillReactions(SkillProgress prog)
 {
+	if (_action_buffer[prog].size())
+		for (auto& action : _action_buffer[prog])
+			add_animation(action);
+
+	_action_buffer[prog].clear();
+
 	for (auto& fighter : _actors)
 	{
 		if (!fighter->Dead)
 		{
 			for (auto& status : fighter->_Statuses)
 			{
-				if (status_condition_met(status, fighter))
+				if (prog == SP_1_Before_Anim)
+					status._Triggered = false;
+
+				if (!status._Triggered && status_condition_met(status, fighter))
+				{
+					status._Triggered = true;
 					for (auto& action_type : status._Actions)
 					{
+						SetSkillArguments(action_type.second, status._Applier);
 						if (action_type.first == prog)
-						{
-							SetSkillArguments(action_type.second, status._Applier);
 							add_animation(action_type.second);
-						}
+						else
+							_action_buffer[action_type.first].push_back(action_type.second);
 					}
+				}
 			}
 		}
 	}
@@ -301,6 +313,9 @@ void BattleManager::Init()
 
 	bool singleFile = true;
 
+	for (unsigned int i = 0; i < SkillProgress::SP_SkillLast; i++)
+		_action_buffer.emplace((SkillProgress)i, std::vector<triple>());
+
 	{
 		m_singleFileAttacks = singleFile;
 		m_isPlayerTurn = !singleFile;
@@ -491,7 +506,7 @@ bool BattleManager::ValidateTargets(Fighter_ptr f)
 
 	// Check if all targets are alive
 	for (auto& x : *f->GetTargets())
-		if (_selectedSkill && _actors.at(x)->RespectsTargeting(_owner, _selectedSkill->_targetMode))
+		if (f->PredictedSkill && _actors.at(x)->RespectsTargeting(f, f->PredictedSkill->_targetMode))
 		{
 			valid = true;
 			break;
@@ -506,12 +521,14 @@ void BattleManager::TurnStart()
 	for (auto& x : _actors)
 	{
 		// Setup next skill if the current skill targets are invalidated
-		if (x->Team != 0 && x->PredictedSkill != NULL && ValidateTargets(x) == false)
+		if ((x->Team != 0 && x->PredictedSkill == nullptr)
+			|| (x->PredictedSkill != nullptr && ValidateTargets(x) == false))
 		{
 			x->PredictNextSkill(x, &_actors);
 			PrintAttackPrediction(x);
 		}
 	}
+	std::cout << std::endl;
 
 	if (_owner->Team != 0)
 	{
@@ -556,7 +573,7 @@ void BattleManager::PrintAttackPrediction(Fighter_ptr x)
 	if (x->PredictedSkill == NULL)
 		std::cout << "Gel at " << x->_BattleFieldPosition << " will do nothing." << std::endl;
 	else
-		std::cout << "Gel at " << x->_BattleFieldPosition << " will attack girl at " << "?" << " for " << x->PredictedSkill->_preCalculatedDamage._value << " damage" << std::endl;
+		std::cout << "Gel at " << x->_BattleFieldPosition << " will attack girl at " << x->GetTargets()->front() << " for " << x->PredictedSkill->_preCalculatedDamage._value << " damage" << std::endl;
 }
 
 // BS_SelectAction and BS_SelectTarget are both purely input handled for the player
@@ -663,11 +680,11 @@ void BattleManager::TurnEnd()
 	_owner->UpdateObservers();
 
 	// Setup next skill
-	if (_owner->Team != 0)
-	{
-		if (_owner->PredictNextSkill(_owner, &_actors))
-			PrintAttackPrediction(_owner);
-	}
+	//if (_owner->Team != 0)
+	//{
+	//	if (_owner->PredictNextSkill(_owner, &_actors))
+	//		PrintAttackPrediction(_owner);
+	//}
 
 	MoveToLight(false, true);
 	CycleActors();

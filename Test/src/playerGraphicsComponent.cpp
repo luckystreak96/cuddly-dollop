@@ -118,13 +118,17 @@ void PlayerGraphicsComponent::Update()
 	if ((dir != m_direction || (m_vel == 0 && _animation > 3) || (m_vel != 0 && _animation <= 3)) && !_specialAnimation && !_forceAnimation)
 	{
 		Anim_Enum animation;
-		if (m_vel == 0)
+		if (_default_animation != AE_Last)
+			animation = _default_animation;
+		else if (m_vel == 0)
 		{
 			animation = (Anim_Enum)((int)m_direction);
 		}
 		else
 			animation = GetMoveDirection((Anim_Enum)((int)m_direction));
+
 		SetAnimation(animation, m_texture);
+		m_force_update = true;
 	}
 
 	if (_animation >= AE_LeftMove && _animation <= AE_UpMove)
@@ -135,7 +139,7 @@ void PlayerGraphicsComponent::Update()
 			m_delay = m_actualDelay / 4;
 	}
 
-	bool forceUpdate = (dir != m_direction && !_specialAnimation) || (m_direction != m_lastInteraction) || m_firstLoad;
+	bool forceUpdate = (dir != m_direction && !_specialAnimation) || (m_direction != m_lastInteraction) || m_firstLoad || m_force_update;
 	if (SetTileModelTC(&m_vertices, forceUpdate))
 		ResetVBO();
 
@@ -143,6 +147,7 @@ void PlayerGraphicsComponent::Update()
 	m_pos.z -= 0.25f;
 	GraphicsComponent::Update();
 	m_pos.z += 0.25f;
+	m_force_update = false;
 }
 
 void PlayerGraphicsComponent::SetAnimation(Anim_Enum anim, std::string spritesheet)
@@ -150,6 +155,13 @@ void PlayerGraphicsComponent::SetAnimation(Anim_Enum anim, std::string spriteshe
 	Animation::SetAnimation(anim, spritesheet);
 	m_actualDelay = m_delay;
 }
+
+//void PlayerGraphicsComponent::reset_to_default_animation()
+//{
+//	Anim_Enum result;
+//	if(m_direction)
+//	SetAnimation(result, GetTexture());
+//}
 
 void PlayerGraphicsComponent::SetTexture(std::string texture)
 {

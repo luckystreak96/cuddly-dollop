@@ -63,6 +63,7 @@ public:
 	//which row/column to start in
 	int _row;
 	Anim_Enum _animation;
+	Anim_Enum _default_animation;
 
 protected:
 	void SetAnimation(Anim_Enum anim, std::string spritesheet);
