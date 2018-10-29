@@ -337,3 +337,19 @@ void Fighter::SetOrderPosition(int pos)
 	_OrderPosition = pos;
 	UpdateObservers();
 }
+
+
+BattleUnit Fighter::create_battle_unit()
+{
+	BattleUnit unit;
+	unit.name = m_name;
+	unit.fobservers = &_observers;
+	unit.stats = (StatUser*)&*this;
+	unit.id = _BattleFieldPosition;
+	unit.team = Team;
+	unit.turnOrder = &_OrderPosition;
+	unit.dead = &Dead;
+	unit.targets = &_targets;
+
+	return unit;
+}

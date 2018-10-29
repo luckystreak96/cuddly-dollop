@@ -32,6 +32,7 @@ public:
 	PassiveType _Type;
 	PassiveSpecifier _Specifier;
 	PassiveData _Data;
+	//passive_action_type _actionType;
 
 	static std::map<std::string, int> EnumToInt;
 };

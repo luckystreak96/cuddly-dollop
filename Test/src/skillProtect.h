@@ -8,8 +8,8 @@ class SkillProtect : public SkillMelee
 {
 
 public:
-	using SkillMelee::SkillMelee;
-	virtual void ApplyEffect();
+	SkillProtect();
+	Damage CalculateDamage(StatUser& user);
 
 protected:
 	virtual void DefaultSetup();

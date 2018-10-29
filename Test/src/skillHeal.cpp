@@ -11,7 +11,7 @@ SkillHeal::SkillHeal() : SkillMelee()
 void SkillHeal::DefaultSetup()
 {
 	//SkillMelee::DefaultSetup();
-	m_statuses.push_back(Pragmatic);
+	m_statuses.push_back(Status_Pragmatic);
 	_name = "Heal";
 	_skillType = ST_Healing;
 	_targetMode = TM_Any;
@@ -71,7 +71,7 @@ void SkillHeal::ModifyAnimations()
 //
 //	SoundManager::GetInstance().PlaySoundFX("res/audio/fx/swish_2.wav");
 //
-//	_targets.at(0)->_Fighter->_Statuses.push_back(BattleData::StatusEffects.at(StatusList::Pragmatic));
+//	_targets.at(0)->_Fighter->_Statuses.push_back(BattleData::StatusEffects.at(Status::Status_Pragmatic));
 //	_targets.at(0)->_Fighter->ReCalculateStats();
 //	_targets.at(0)->_Fighter->UpdateObservers();
 //}

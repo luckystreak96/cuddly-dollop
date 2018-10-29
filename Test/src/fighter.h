@@ -4,6 +4,7 @@
 #include <string>
 #include <memory>
 #include <vector>
+#include "battleUnit.h"
 #include "statUser.h"
 #include "passiveSkill.h"
 #include "statusEffect.h"
@@ -69,6 +70,9 @@ public:
 	void SetSprite(std::string sprite) { m_sprite = sprite; }
 	std::string GetName() { return m_name; }
 	void SetName(std::string name) { m_name = name; }
+
+	// HUD
+	BattleUnit create_battle_unit();
 
 	static bool FighterSpeedSort(Fighter_ptr a, Fighter_ptr b);
 	static bool FighterBattleOrderSort(Fighter_ptr a, Fighter_ptr b);

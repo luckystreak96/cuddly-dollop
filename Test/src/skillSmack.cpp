@@ -15,7 +15,7 @@ SkillSmack::SkillSmack() : SkillMelee()
 void SkillSmack::DefaultSetup()
 {
 	//SkillMelee::DefaultSetup();
-	m_statuses.push_back(Determined);
+	m_statuses.push_back(Status_Determined);
 	_name = "Smack";
 	_skillElement = SE_Determined;
 	_targetMode = TM_Alive;
@@ -67,6 +67,6 @@ Damage SkillSmack::CalculateDamage(StatUser& user)
 //
 //	SoundManager::GetInstance().PlaySoundFX("res/audio/fx/swish_2.wav");
 //
-//	_targets.at(0)->_Fighter->_Statuses.push_back(BattleData::StatusEffects.at(StatusList::Determined));
+//	_targets.at(0)->_Fighter->_Statuses.push_back(BattleData::StatusEffects.at(Status::Status_Determined));
 //	_targets.at(0)->_Fighter->ReCalculateStats();
 //}

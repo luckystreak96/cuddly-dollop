@@ -14,12 +14,13 @@ std::vector<Fighter_ptr> BattleData::Party = std::vector<Fighter_ptr>();
 std::map<int, Passive_ptr> BattleData::PassiveSkills = std::map<int, Passive_ptr>();
 std::map<int, Fighter_ptr> BattleData::Fighters = std::map<int, Fighter_ptr>();
 
-std::map<StatusList, StatusEffect> BattleData::StatusEffects = std::map<StatusList, StatusEffect>();
+std::map<Status, StatusEffect> BattleData::StatusEffects = std::map<Status, StatusEffect>();
 	
 
 void BattleData::LoadStatusEffects()
 {
-	StatusList status = Determined;
+	// DETERMINED
+	Status status = Status_Determined;
 	StatusEffect result;
 	result._Name = "Determined";
 	result._Element = SE_Determined;
@@ -31,12 +32,27 @@ void BattleData::LoadStatusEffects()
 
 	StatusEffects.emplace(status, result);
 
-	status = Pragmatic;
+	// PRAGMATIC
+	status = Status_Pragmatic;
 	result._Name = "Pragmatic";
 	result._Element = SE_Pragmatic;
 
 	passive = PassiveFactory::BuildPassive("", PassivePriority::PP_AbsoluteFirst, PassiveType::PT_Stat, PassiveSpecifier::PS_Flat, 1, 1, "max_health");
 	result._Effects.push_back(std::tuple<Passive_ptr, int>(passive, 1));
+
+	StatusEffects.emplace(status, result);
+
+	// PROTECTED
+	status = Status_Protected;
+	result._Name = "Protected";
+	result._Element = SE_Pragmatic;
+	result._Condition = TriggerCondition::TC_Targeted;
+
+	passive = PassiveFactory::BuildPassive("Protected", PassivePriority::PP_BeforeSkill, PassiveType::PT_Special, PassiveSpecifier::PS_Flat, 0, 0, "owner");
+	result._Effects.push_back(std::tuple<Passive_ptr, int>(passive, 1));
+	result._Actions.push_back(std::pair<SkillProgress, triple>(SP_1_Before_Anim, triple(AS_JumpTo, AARG_Passive2Owner, floats({})))); // jump to target
+	result._Actions.push_back(std::pair<SkillProgress, triple>(SP_1_Before_Anim, triple(AA_ChangeTarget, AARG_Passive2Owner, floats({})))); // jump to target
+	result._Actions.push_back(std::pair<SkillProgress, triple>(SP_4_PostSkillAnim, triple(AS_JumpBack, AARG_Passive2Owner, floats({})))); // jump back
 
 	StatusEffects.emplace(status, result);
 }

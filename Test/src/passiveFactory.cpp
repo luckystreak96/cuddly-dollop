@@ -20,6 +20,7 @@ Passive_ptr PassiveFactory::BuildPassive(std::string name, PassivePriority prior
 	return result;
 }
 
+
 void PassiveFactory::ApplyAllPassives(Fighter* fighter, std::vector<Passive_ptr>* passives)
 {
 	// Sort the skills by type

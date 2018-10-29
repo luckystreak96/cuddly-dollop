@@ -154,18 +154,23 @@ Anim_ptr BattleAnimationManager::CreateAnimation(triple ao)
 	Actor_ptr actor;
 	float distance;
 	int counter = 0;
+	int owner = _owner;
 
 	switch (get<0>(ao))
 	{
 	case AS_JumpTo:
+		if (aa == AARG_Passive2Owner)
+			owner = args[1];
 		actor = m_actors.at(args.at(0));
 		distance = actor->GetId() > 3 ? -0.7f : 0.7f;
-		if (m_actors.at(_owner)->GetId() / 4 == actor->GetId() / 4)
+		if (m_actors.at(owner)->GetId() / 4 == actor->GetId() / 4 && aa != AARG_Passive2Owner)
 			distance = -distance;
-		result = Anim_ptr(new AnimJumpTo(actor->GetPos() + Vector3f(distance, 0, 0), m_actors.at(_owner)));
+		result = Anim_ptr(new AnimJumpTo(actor->GetPos() + Vector3f(distance, 0, 0), m_actors.at(owner)));
 		break;
 	case AS_JumpBack:
-		result = Anim_ptr(new AnimJumpTo(true, m_actors.at(_owner)));
+		if(aa == AARG_Passive2Owner)
+			owner = args[1];
+		result = Anim_ptr(new AnimJumpTo(true, m_actors.at(owner)));
 		break;
 	case AS_ColorFlash:
 		break;

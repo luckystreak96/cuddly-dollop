@@ -31,7 +31,7 @@ public:
 	static std::vector<Fighter_ptr> Party;
 	static std::map<int, int> StatCurves;
 	static std::map<int, Passive_ptr> PassiveSkills;
-	static std::map<StatusList, StatusEffect> StatusEffects;
+	static std::map<Status, StatusEffect> StatusEffects;
 	static std::map<int, Fighter_ptr> Fighters;
 
 };

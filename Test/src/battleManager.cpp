@@ -1,9 +1,11 @@
 #include "battleManager.h"
+
 #include "input_manager.h"
 #include "fontManager.h"
 #include "localizationData.h"
 #include "battleAnimationManager.h"
 #include "battleData.h"
+#include "passiveFactory.h"
 
 #include <GLFW/glfw3.h>
 #include <set>
@@ -48,6 +50,23 @@ BattleManager::~BattleManager()
 		x->_observers.clear();
 }
 
+bool BattleManager::status_condition_met(StatusEffect status, Fighter_ptr fighter)
+{
+	switch (status._Condition)
+	{
+	case TriggerCondition::TC_None:
+		break;
+	case TriggerCondition::TC_Targeted:
+		if (_targets.count(fighter->_BattleFieldPosition) && _owner->Team != fighter->Team)
+			return true;
+		break;
+	default:
+		break;
+	}
+	return false;
+}
+
+
 // 3 steps:
 //	1 - Check statuses instead of passiveskills
 //	2 - Make passiveskills create statuses at the start of battle
@@ -58,29 +77,17 @@ void BattleManager::ProcessSkillReactions(SkillProgress prog)
 	{
 		if (!fighter->Dead)
 		{
-			for (auto& passiveSkill : fighter->_Passives)
+			for (auto& status : fighter->_Statuses)
 			{
-				if (passiveSkill->_Type == PassiveType::PT_Special)
-				{
-
-					switch (prog)
+				if (status_condition_met(status, fighter))
+					for (auto& action_type : status._Actions)
 					{
-					case SP_0_None:
-						break;
-					case SP_1_Before_Anim:
-						break;
-					case SP_2_BeginAnim:
-						break;
-					case SP_3_DealDamage:
-						break;
-					case SP_4_PostSkillAnim:
-						break;
-					case SP_5_SkillDone:
-						break;
-					default:
-						break;
+						if (action_type.first == prog)
+						{
+							SetSkillArguments(action_type.second, status._Applier);
+							add_animation(action_type.second);
+						}
 					}
-				}
 			}
 		}
 	}
@@ -92,46 +99,67 @@ void BattleManager::ProcessSkill()
 	std::vector<triple> operations = _selectedSkill->GetAnimations();
 
 	for (auto& x : operations)
+		add_animation(x);
+}
+
+void BattleManager::add_animation(triple& x)
+{
+	// need to fill in the vector of floats
+	// ('<' because of AARG_FloatAsync)
+	if (get<1>(x) < AARG_Float)
+		SetSkillArguments(x); // single target skill chosen by *_targets.begin()
+
+	// x is an action
+	if (get<0>(x) > AA_Start)
 	{
-		// need to fill in the vector of floats
-		// ('<' because of AARG_FloatAsync)
-		if (get<1>(x) < AARG_Float)
-			SetSkillArguments(x); // single target skill chosen by *_targets.begin()
-
-		// x is an action
-		if (get<0>(x) > AA_Start)
+		int t = get<2>(x).front();
+		if (get<0>(x) == AA_DealDamage)
 		{
-			int t = get<2>(x).front();
-			if (get<0>(x) == AA_DealDamage)
-			{
-				// Deal damage
-				Damage dmg = HandleDamage(t);
-				// Show dmg
-				m_graphics->DamageAnimation(t, _selectedSkill, dmg);
+			// Deal damage
+			Damage dmg = HandleDamage(t);
+			// Show dmg
+			m_graphics->DamageAnimation(t, _selectedSkill, dmg);
 
-				if (_targets.size() > 1)
-				{
-					_selectedSkill->SetAnimProgressRepeat();
-					_targets.erase(t);
-				}
-			}
-			else if (get<0>(x) == AA_ApplyEffect)
+			if (_targets.size() > 1)
 			{
-				//_actors.at(t)->_Statuses.push_back(BattleData::StatusEffects.at(StatusList::Determined));
-				for (auto& status : *_selectedSkill->GetStatusEffects())
-					_actors.at(t)->_Statuses.push_back(BattleData::StatusEffects.at(status));
-				_actors.at(t)->ReCalculateStats();
+				_selectedSkill->SetAnimProgressRepeat();
+				_targets.erase(t);
 			}
 		}
-		// x is an animation
-		else
+		else if (get<0>(x) == AA_ApplyEffect)
 		{
-			Anim_ptr animation = m_graphics->CreateAnimation(x);
-			if (animation)
-				m_graphics->insert_animation(animation);
+			//_actors.at(t)->_Statuses.push_back(BattleData::StatusEffects.at(Status::Status_Determined));
+			for (auto& status : *_selectedSkill->GetStatusEffects())
+			{
+				StatusEffect sts = BattleData::StatusEffects.at(status);
+				for (auto& pass : sts._Effects)
+				{
+					if (std::get<0>(pass)->_Data._String == "owner")
+						std::get<0>(pass)->_Data._Integer = _owner->_BattleFieldPosition;
+				}
+				sts._Applier = _owner->_BattleFieldPosition;
+				_actors.at(t)->_Statuses.push_back(sts);
+			}
+			_actors.at(t)->ReCalculateStats();
+		}
+		else if (get<0>(x) == AA_ChangeTarget)
+		{
+			if (_targets.count(get<2>(x)[1]))
+			{
+				_targets.erase(get<2>(x)[1]);
+				_targets.emplace(get<2>(x)[0]);
+			}
 		}
 	}
+	// x is an animation
+	else
+	{
+		Anim_ptr animation = m_graphics->CreateAnimation(x);
+		if (animation)
+			m_graphics->insert_animation(animation);
+	}
 }
+
 
 void BattleManager::SetSkillArguments(triple& x)
 {
@@ -159,6 +187,21 @@ void BattleManager::SetSkillArguments(triple& x)
 			get<2>(x).push_back((float)*_targets.begin());
 		else
 			get<2>(x)[0] = (float)*_targets.begin();
+		break;
+	default:
+		break;
+	}
+}
+
+void BattleManager::SetSkillArguments(triple& x, int applier)
+{
+	floats& f = get<2>(x);
+	switch (get<1>(x))
+	{
+	case AARG_Passive2Owner:
+		f.clear();
+		f.push_back(applier);
+		f.push_back(*_targets.begin());
 		break;
 	default:
 		break;
@@ -240,27 +283,13 @@ Damage BattleManager::ApplyBonusEffect(Fighter_ptr target)
 	return dmg;
 }
 
-BattleUnit BattleManager::create_battle_unit(Fighter_ptr fighter)
-{
-	BattleUnit unit;
-	unit.name = fighter->GetName();
-	unit.fobservers = &fighter->_observers;
-	unit.stats = (StatUser*)&*fighter;
-	unit.id = fighter->GetId();
-	unit.team = fighter->Team;
-	unit.turnOrder = &fighter->_OrderPosition;
-	unit.dead = &fighter->Dead;
-	unit.targets = fighter->GetTargets();
-
-	return unit;
-}
 
 void BattleManager::SetupHUD()
 {
 	// setup hud
 	for (auto& x : _actors)
 	{
-		BattleUnit unit = create_battle_unit(x);
+		BattleUnit unit = x->create_battle_unit();
 		m_graphics->SetupHUD(unit);
 	}
 }

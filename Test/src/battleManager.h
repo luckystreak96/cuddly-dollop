@@ -46,11 +46,14 @@ private:
 	void HandleActionCommand();
 	void ProcessSkill();
 	void ProcessSkillReactions(SkillProgress prog);
+	bool status_condition_met(StatusEffect status, Fighter_ptr fighter);
 
 	// Graphics
+	void add_animation(triple& x);
 	void UpdateColors();
 	void ExpAnimation(Fighter_ptr, int xp);
 	void SetSkillArguments(triple& x);
+	void SetSkillArguments(triple& x, int applier);
 
 	void UpdateSkillDisplay();
 	void TurnStart();
@@ -72,8 +75,6 @@ private:
 
 	void PrintAttackPrediction(Fighter_ptr actor);
 
-	// HUD
-	BattleUnit create_battle_unit(Fighter_ptr fighter);
 
 public:
 	std::deque<Fighter_ptr> _actorQueue;

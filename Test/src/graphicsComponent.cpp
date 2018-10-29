@@ -503,6 +503,7 @@ void GraphicsComponent::SetTexture(std::string newTex)
 {
 	m_texture = newTex;
 	LoadExternalResources();
+	m_tex_ptr = ResourceManager::GetInstance().GetTexture(m_texture);
 }
 
 Vector3f GraphicsComponent::GetPos() { return m_pos; }

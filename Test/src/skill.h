@@ -9,6 +9,7 @@
 #include <iostream>
 #include "statusEffect.h"
 #include "statUser.h"
+#include "triple.h"
 
 enum BattleState { BS_ChooseActor, BS_TurnStart, BS_SelectAction, BS_SelectTargets, BS_ActionProgress, BS_ActionDone, BS_TurnEnd };
 
@@ -20,25 +21,6 @@ enum SkillType { ST_Physical, ST_Magical, ST_Healing, ST_Bonus };
 enum TargetMode { TM_Enemy, TM_Ally, TM_Alive, TM_Dead, TM_Any };
 enum DefaultTarget { DT_Self, DT_Enemy, DT_Ally };
 enum TargetAmount { TA_One, TA_Party };
-
-enum AnimationOperation {
-	AS_JumpTo, AS_JumpBack, AS_ColorFlash, AS_ScreenShake, AS_BonusEffect, AS_MoveTo, AS_Wait, AS_Animation, AS_FloatingText,
-	AC_CameraFollow, AC_CameraScale, AC_CameraCenter,
-	AO_DamageParticle,
-	AA_Start, AA_DealDamage, AA_ApplyEffect
-}; // AA_Start is there to be able to do > on the enum
-
-enum AnimationArgument {
-	AARG_Owner, AARG_Targets, AARG_FloatTargets, AARG_Target, AARG_OwnerTargets, AARG_Float, AARG_AsyncStart, AARG_FloatAsync
-};
-
-//using namespace std;
-using floats = std::vector<float>;
-using triple = std::tuple<AnimationOperation, AnimationArgument, floats>;
-
-enum SkillProgress {
-	SP_0_None, SP_1_Before_Anim, SP_2_BeginAnim, SP_3_DealDamage, SP_4_PostSkillAnim, SP_5_SkillDone
-};
 
 struct Damage
 {
@@ -70,7 +52,7 @@ public:
 	virtual bool IsReady();
 	void SetAnimProgressRepeat() { --m_progress; }
 
-	std::vector<StatusList>* GetStatusEffects() { return &m_statuses; }
+	std::vector<Status>* GetStatusEffects() { return &m_statuses; }
 
 	virtual Damage CalculateDamage(StatUser& user) { return Damage(); }
 
@@ -116,7 +98,7 @@ protected:
 	SkillProgress m_state;
 	int m_progress;
 	std::vector<triple> m_animationBuffer;
-	std::vector<StatusList> m_statuses;
+	std::vector<Status> m_statuses;
 
 protected:
 	virtual void DefaultSetup();

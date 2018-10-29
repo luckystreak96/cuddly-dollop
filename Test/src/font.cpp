@@ -207,9 +207,10 @@ void Font::SetupMesh(float xBndry, float yBndry)
 
 	//delete m_graphics;
 	if (m_graphics == NULL)
-		m_graphics = std::shared_ptr<FontGraphicsComponent>(new FontGraphicsComponent(m_mesh.GetMeshVertices(), m_mesh.GetMeshIndices(), m_texture));
+		m_graphics = std::shared_ptr<FontGraphicsComponent>(new FontGraphicsComponent(&m_verts, &m_indices, m_texture));
 	//m_graphics->FullReset(m_mesh.GetMeshVertices(), m_mesh.GetMeshIndices());
-	m_graphics->SetNewBuffers(m_mesh.GetMeshVertices(), m_mesh.GetMeshIndices());
+	m_graphics->_instancedDraw = true;
+	//m_graphics->SetNewBuffers(m_mesh.GetMeshVertices(), m_mesh.GetMeshIndices());
 	m_graphics->SetPhysics(m_pos, Vector3f());
 	m_graphics->SetStatic(m_static);
 
@@ -231,7 +232,7 @@ void Font::AddWordToMesh(std::string word, float x, float y)
 
 		m_letterPositions.push_back(pos + m_pos);
 
-		m_mesh.AddToMesh(m_verts, m_indices, 3, pos, m_texture, index);
+		//m_mesh.AddToMesh(m_verts, m_indices, 3, pos, m_texture, index);
 	}
 }
 
