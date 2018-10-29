@@ -16,7 +16,7 @@ enum AnimationOperation {
 }; // AA_Start is there to be able to do > on the enum
 
 enum AnimationArgument {
-	AARG_Owner, AARG_Passive2Owner, AARG_Targets, AARG_FloatTargets, AARG_Target, AARG_OwnerTargets, AARG_Float, AARG_AsyncStart, AARG_FloatAsync
+	AARG_Owner, AARG_Passive_Applier2Owner, AARG_Targets, AARG_FloatTargets, AARG_Target, AARG_OwnerTargets, AARG_Float, AARG_AsyncStart, AARG_FloatAsync
 };
 
 //using namespace std;

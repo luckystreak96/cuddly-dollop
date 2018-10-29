@@ -22,11 +22,8 @@ public:
 	void SetupHUD();
 	void Update();
 	int FindWinner();
-	void SetRender();
 	bool Animating();
 	std::shared_ptr<BattleAnimationManager> GetGraphics() { return m_graphics; }
-
-	static std::set<int> DefaultTargetActorIndex(std::vector<Fighter_ptr>* actors, Fighter_ptr _owner, Skill_ptr selectedSkill);
 
 private:
 	void Init();
@@ -43,29 +40,31 @@ private:
 	Damage HandleDamage(int target);
 	Damage ApplyBonusEffect(Fighter_ptr target);
 	bool ValidateTargets(Fighter_ptr f);
-	void HandleActionCommand();
 	void ProcessSkill();
 	void ProcessSkillReactions(SkillProgress prog);
 	bool status_condition_met(StatusEffect status, Fighter_ptr fighter);
+	std::set<int> DefaultTargetActorIndex();
 
 	// Graphics
 	void add_animation(triple& x);
 	void UpdateColors();
-	void ExpAnimation(Fighter_ptr, int xp);
 	void SetSkillArguments(triple& x);
 	void SetSkillArguments(triple& x, int applier);
 
 	void UpdateSkillDisplay();
 	void TurnStart();
-	void SelectActor();
 	void InitiateChooseActor();
 	void ResetPartyPredictedSkills();
 	void SelectAction();
-	void SelectTargets();
 	void ActionProgress();
 	void ActionDone();
 	void TurnEnd();
-	void BeginAnimations();
+
+	// Logic Methods
+	// Method just for show, handled in input
+	void SelectActor() {}
+	// Method just for show, handled in input
+	void SelectTargets() {}
 
 	void ManageInput();
 	void HandleUpDownInput(std::set<int> input);
@@ -90,9 +89,7 @@ public:
 	std::set<int> _selectedIndices;
 	BattleState _state;
 	PostBattleState _postBattleState;
-	bool m_isPlayerTurn;
 	bool m_animating;
-	bool m_singleFileAttacks;
 	bool _showingSkills;
 	int _winner;
 

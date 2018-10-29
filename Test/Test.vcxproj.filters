@@ -542,6 +542,9 @@
     <ClInclude Include="src\triple.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="battle_state.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">

@@ -47,6 +47,12 @@ std::vector<Skill_ptr>& Fighter::GetSkills()
 }
 
 
+bool Fighter::SameTeam(Fighter_ptr fighter)
+{
+	return fighter->Team == Team;
+}
+
+
 bool Fighter::FighterSpeedSort(Fighter_ptr a, Fighter_ptr b)
 {
 	if (a && b)
@@ -213,21 +219,6 @@ void Fighter::SetDefault()
 	NoPredictCountDown = 0;
 	Protector = NULL;
 	SetStatsFromCurve();
-}
-
-void Fighter::UseSkill()
-{
-	//std::sort(_targets.begin(), _targets.end(), Fighter::FighterBattleOrderSort);
-}
-
-
-void Fighter::TurnStart(std::vector<Fighter_ptr>& actors)
-{
-	for (auto a : actors)
-	{
-		if (a->Protector && a->Protector.get() == this)
-			a->Protector = NULL;
-	}
 }
 
 void Fighter::ApplyLethal()

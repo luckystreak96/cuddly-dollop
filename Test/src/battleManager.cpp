@@ -52,18 +52,33 @@ BattleManager::~BattleManager()
 
 bool BattleManager::status_condition_met(StatusEffect status, Fighter_ptr fighter)
 {
-	switch (status._Condition)
-	{
-	case TriggerCondition::TC_None:
-		break;
-	case TriggerCondition::TC_Targeted:
-		if (_targets.count(fighter->_BattleFieldPosition) && _owner->Team != fighter->Team)
-			return true;
-		break;
-	default:
-		break;
-	}
-	return false;
+	bool result = true;
+
+	for (auto& condition : status._Conditions)
+		switch (condition)
+		{
+		case TriggerCondition::TC_None:
+			break;
+		case TriggerCondition::TC_Targeted:
+			if (_targets.count(fighter->_BattleFieldPosition) && _owner->Team != fighter->Team)
+				break;
+			result = false;
+			break;
+		case TriggerCondition::TC_Applier_Alive:
+			if (!_actors[status._Applier]->Dead)
+				break;
+			result = false;
+			break;
+		case TriggerCondition::TC_Status_Owner_Alive:
+			if (!_actors[fighter->_BattleFieldPosition]->Dead)
+				break;
+			result = false;
+			break;
+		default:
+			result = false;
+			break;
+		}
+	return result;
 }
 
 
@@ -81,24 +96,21 @@ void BattleManager::ProcessSkillReactions(SkillProgress prog)
 
 	for (auto& fighter : _actors)
 	{
-		if (!fighter->Dead)
+		for (auto& status : fighter->_Statuses)
 		{
-			for (auto& status : fighter->_Statuses)
-			{
-				if (prog == SP_1_Before_Anim)
-					status._Triggered = false;
+			if (prog == SP_1_Before_Anim)
+				status._Triggered = false;
 
-				if (!status._Triggered && status_condition_met(status, fighter))
+			if (!status._Triggered && status_condition_met(status, fighter))
+			{
+				status._Triggered = true;
+				for (auto& action_type : status._Actions)
 				{
-					status._Triggered = true;
-					for (auto& action_type : status._Actions)
-					{
-						SetSkillArguments(action_type.second, status._Applier);
-						if (action_type.first == prog)
-							add_animation(action_type.second);
-						else
-							_action_buffer[action_type.first].push_back(action_type.second);
-					}
+					SetSkillArguments(action_type.second, status._Applier);
+					if (action_type.first == prog)
+						add_animation(action_type.second);
+					else
+						_action_buffer[action_type.first].push_back(action_type.second);
 				}
 			}
 		}
@@ -144,11 +156,6 @@ void BattleManager::add_animation(triple& x)
 			for (auto& status : *_selectedSkill->GetStatusEffects())
 			{
 				StatusEffect sts = BattleData::StatusEffects.at(status);
-				for (auto& pass : sts._Effects)
-				{
-					if (std::get<0>(pass)->_Data._String == "owner")
-						std::get<0>(pass)->_Data._Integer = _owner->_BattleFieldPosition;
-				}
 				sts._Applier = _owner->_BattleFieldPosition;
 				_actors.at(t)->_Statuses.push_back(sts);
 			}
@@ -208,15 +215,11 @@ void BattleManager::SetSkillArguments(triple& x)
 void BattleManager::SetSkillArguments(triple& x, int applier)
 {
 	floats& f = get<2>(x);
-	switch (get<1>(x))
+	if (get<1>(x) == AARG_Passive_Applier2Owner)
 	{
-	case AARG_Passive2Owner:
 		f.clear();
 		f.push_back(applier);
 		f.push_back(*_targets.begin());
-		break;
-	default:
-		break;
 	}
 }
 
@@ -311,20 +314,15 @@ void BattleManager::Init()
 {
 	m_graphics = std::shared_ptr<BattleAnimationManager>(new BattleAnimationManager());
 
-	bool singleFile = true;
 
 	for (unsigned int i = 0; i < SkillProgress::SP_SkillLast; i++)
 		_action_buffer.emplace((SkillProgress)i, std::vector<triple>());
 
-	{
-		m_singleFileAttacks = singleFile;
-		m_isPlayerTurn = !singleFile;
-	}
 	m_attackSequenceProgress = 0;
 
 	_postBattleState = PBS_FightingInProgress;
 	_showingSkills = false;
-	_state = m_singleFileAttacks ? BS_TurnStart : BS_ChooseActor;
+	_state = BS_TurnStart;
 	m_animating = false;
 	counter = 0;
 	_winner = -1;
@@ -344,7 +342,7 @@ void BattleManager::Init()
 	}
 
 	// Make sure the first person to choose is a player
-	if (m_singleFileAttacks && _postBattleState == PBS_FightingInProgress)
+	if (_postBattleState == PBS_FightingInProgress)
 		while (_actorQueue.front()->Team != 0)
 			CycleActors();
 
@@ -366,9 +364,6 @@ void BattleManager::Init()
 			_numAllies++;
 	}
 
-	if (!m_singleFileAttacks && _actors.size())
-		InitiateChooseActor();
-
 	for (unsigned int i = 0; i < _actorQueue.size(); i++)
 		_actorQueue[i]->_OrderPosition = i + 1;
 }
@@ -387,6 +382,7 @@ void BattleManager::UpdateColors()
 						FontManager::GetInstance().GetFont(x)->GetGraphics()->SetColorAll();
 					FontManager::GetInstance().GetFont(_fonts[*_selectedIndices.begin()])->GetGraphics()->SetColorAll(Vector3f(1, 0, 0));
 				}
+				m_graphics->UpdateColors(x->GetId(), false, x->Dead, 0);
 			}
 		}
 		else
@@ -445,10 +441,7 @@ void BattleManager::Update()
 			for (auto& actor : _actors)
 			{
 				if (actor->Team == 0 && !actor->Dead)
-				{
-					//ExpAnimation(actor, xp);
 					m_graphics->ExpAnimation(actor->GetId(), xp);
-				}
 			}
 			m_graphics->set_last_animation_non_async();
 			//m_graphics->insert_animation(m_graphics->CreateAnimation(triple(AnimationOperation::AS_Wait, AnimationArgument::AARG_Float, floats({ 0.0f }))));
@@ -465,12 +458,6 @@ void BattleManager::Update()
 
 	m_graphics->UpdateHUD();
 	//_hud.Update();
-}
-
-void BattleManager::ExpAnimation(Fighter_ptr fighter, int xp)
-{
-	//m_graphics->insert_animation(_hud.GetActorHealthBar(fighter->GetId())->SetupExpAnimation(fighter->GetExp() + xp));
-	//m_graphics->CreateFloatingText(fighter->_BattleFieldPosition, "+" + std::to_string(xp) + " XP");
 }
 
 // Move Animation
@@ -517,6 +504,9 @@ bool BattleManager::ValidateTargets(Fighter_ptr f)
 
 void BattleManager::TurnStart()
 {
+	Camera::_currentCam->SetScale(Vector3f(1));
+	Camera::_currentCam->SetFollow(Camera::_currentCam->MapCenter());
+
 	// Make sure enemy targets are still valid
 	for (auto& x : _actors)
 	{
@@ -557,13 +547,7 @@ void BattleManager::TurnStart()
 	if (_owner->Dead)
 		_state = BS_TurnEnd;
 	else
-	{
-		_owner->TurnStart(_actors);
-		if (m_singleFileAttacks)
 			_state = BS_SelectAction;
-		else
-			_state = BS_ActionProgress;
-	}
 
 	m_graphics->_owner = _owner->GetId();
 }
@@ -596,11 +580,6 @@ void BattleManager::SelectAction()
 	}
 }
 
-void BattleManager::SelectActor()
-{
-
-}
-
 void BattleManager::InitiateChooseActor()
 {
 	_state = BS_ChooseActor;
@@ -624,10 +603,6 @@ void BattleManager::InitiateChooseActor()
 	Camera::_currentCam->SetFollow(Camera::_currentCam->MapCenter());
 }
 
-void BattleManager::SelectTargets()
-{
-}
-
 void BattleManager::ActionProgress()
 {
 	if (Animating() && _selectedSkill == NULL)
@@ -639,7 +614,6 @@ void BattleManager::ActionProgress()
 		//_targets = _owner->GetTargets();
 		if (_owner->Team != 0)
 			_selectedSkill->Setup();
-		_owner->UseSkill();
 		return;
 	}
 
@@ -689,24 +663,9 @@ void BattleManager::TurnEnd()
 	MoveToLight(false, true);
 	CycleActors();
 
-	if (m_singleFileAttacks)
-	{
-		_state = BS_TurnStart;
-		for (unsigned int i = 0; i < _actorQueue.size(); i++)
-			_actorQueue[i]->_OrderPosition = i + 1;
-	}
-	else
-	{
-		if (!m_isPlayerTurn)
-			_state = BS_TurnStart;
-		else
-		{
-			InitiateChooseActor();
-			ResetPartyPredictedSkills();
-			for (unsigned int i = 0; i < _actorQueue.size(); i++)
-				_actorQueue[i]->_OrderPosition = i + 1;
-		}
-	}
+	_state = BS_TurnStart;
+	for (unsigned int i = 0; i < _actorQueue.size(); i++)
+		_actorQueue[i]->_OrderPosition = i + 1;
 }
 
 void BattleManager::ResetPartyPredictedSkills()
@@ -727,27 +686,11 @@ void BattleManager::UpdateLogic()
 		switch (_state)
 		{
 		case BS_ChooseActor:
-			if (m_isPlayerTurn)
-				// Method just for show, selection is handled in input
-				SelectActor();
+			// Method just for show, selection is handled in input
+			SelectActor();
 			break;
 		case BS_TurnStart:
-			// zoom back to normal
-			if (m_singleFileAttacks)
-			{
-				Camera::_currentCam->SetScale(Vector3f(1));
-				Camera::_currentCam->SetFollow(Camera::_currentCam->MapCenter());
-				TurnStart();
-			}
-			else
-			{
-				if (!m_isPlayerTurn)
-				{
-					Camera::_currentCam->SetScale(Vector3f(1));
-					Camera::_currentCam->SetFollow(Camera::_currentCam->MapCenter());
-					TurnStart();
-				}
-			}
+			TurnStart();
 			break;
 		case BS_SelectAction:
 			// BS_SelectAction and BS_SelectTarget are both purely input handled for the player
@@ -755,8 +698,7 @@ void BattleManager::UpdateLogic()
 			break;
 		case BS_SelectTargets:
 			// Handled by input, method only for show
-			if (m_singleFileAttacks || (m_isPlayerTurn && !m_singleFileAttacks))
-				SelectTargets();
+			SelectTargets();
 			break;
 		case BS_ActionProgress:
 			// Update the skill
@@ -855,18 +797,6 @@ void BattleManager::ManageInput()
 	// Cancel input
 	if (input.count(A_Cancel))
 		HandleCancelInput();
-
-	if (!m_singleFileAttacks && _state == BS_ChooseActor && input.count(A_Menu))
-		BeginAnimations();
-}
-
-void BattleManager::BeginAnimations()
-{
-	Select(std::set<int>());
-	m_isPlayerTurn = false;
-	_owner = _actorQueue.front();
-	_selectedSkill = NULL;
-	_state = BS_TurnStart;
 }
 
 void BattleManager::HandleUpDownInput(std::set<int> input)
@@ -895,9 +825,9 @@ void BattleManager::HandleUpDownInput(std::set<int> input)
 	}
 
 	// Choose your targets
-	else if (_state == BS_SelectTargets || !m_singleFileAttacks && _state == BS_ChooseActor)
+	else if (_state == BS_SelectTargets)
 	{
-		if ((!m_singleFileAttacks && _state != BS_ChooseActor && _selectedSkill && _selectedSkill->_targetAmount == TA_Party) || m_singleFileAttacks && _selectedSkill->_targetAmount == TA_Party)
+		if (_selectedSkill->_targetAmount == TA_Party)
 		{
 		}
 		else if (_state == BS_ChooseActor || _selectedSkill && _selectedSkill->_targetAmount == TA_One)
@@ -991,7 +921,7 @@ void BattleManager::HandleAcceptInput()
 		_selectedSkill = _chooseSkill.at(*_selectedIndices.begin());
 		//std::cout << "Skill selected: " << _selectedSkill->_name << std::endl;
 		_state = BS_SelectTargets;
-		std::set<int> targets = DefaultTargetActorIndex(&_actors, _owner, _selectedSkill);
+		std::set<int> targets = DefaultTargetActorIndex();
 		Select(targets);
 	}
 	else if (_state == BS_SelectTargets)
@@ -1028,55 +958,28 @@ void BattleManager::HandleCancelInput()
 		SetChooseSkillText();
 		_showingSkills = true;
 	}
-	else if (!m_singleFileAttacks && _state == BS_SelectAction)
-	{
-		InitiateChooseActor();
-	}
-
 }
 
-std::set<int> BattleManager::DefaultTargetActorIndex(std::vector<Fighter_ptr>* actors, Fighter_ptr owner, Skill_ptr selectedSkill)
+std::set<int> BattleManager::DefaultTargetActorIndex()
 {
 	std::set<int> result;
-	bool type = selectedSkill->_targetAmount;
-	int i;
-	bool done = false;
-	for (i = 0; i < (int)actors->size(); i++)
+	bool type = _selectedSkill->_targetAmount;
+	for (int i = 0; i < (int)_actors.size(); i++)
 	{
-		switch (selectedSkill->_defaultTarget)
-		{
-		case DT_Self:
-			if ((actors->at(i) == owner && type == TA_One) || (actors->at(i)->Team == owner->Team && type == TA_Party))
-			{
-				result.emplace(i);
-				if (type == TA_One)
-					done = true;
-			}
-			break;
-		case DT_Ally:
-			if (actors->at(i)->Team == owner->Team && actors->at(i)->RespectsTargeting(owner, selectedSkill->_targetMode))
-			{
-				result.emplace(i);
-				if (type == TA_One)
-					done = true;
-			}
-			break;
-		case DT_Enemy:
-			if (actors->at(i)->Team != owner->Team && actors->at(i)->RespectsTargeting(owner, selectedSkill->_targetMode))
-			{
-				result.emplace(i);
-				if (type == TA_One)
-					done = true;
-			}
-			break;
-		}
+		Fighter_ptr fighter = _actors[i];
 
-		if (done)
+		if (_selectedSkill->_defaultTarget == DT_Self && (fighter == _owner || (type == TA_Party && fighter->SameTeam(_owner))))
+			result.emplace(i);
+		else if (_selectedSkill->_defaultTarget != DT_Self && (fighter->RespectsTargeting(_owner, _selectedSkill->_targetMode)
+			&& (fighter->SameTeam(_owner) == (_selectedSkill->_defaultTarget == DT_Ally))))
+			result.emplace(i);
+
+		if (result.size() && type == TA_One)
 			break;
 	}
 
-	if (i >= actors->size() && result.size() == 0)
-		result.emplace(0);
+	if (!result.size())
+		result.emplace(-1);
 
 	return result;
 }
@@ -1104,17 +1007,9 @@ void BattleManager::UseSkill()
 	{
 		_state = BS_ActionProgress;
 		_owner->PredictedSkill = _selectedSkill;
-		if (m_singleFileAttacks)
-			_owner->UseSkill();
 	}
 	else
 		_state = BS_SelectAction;
-
-	if (!m_singleFileAttacks && m_isPlayerTurn)
-	{
-		InitiateChooseActor();
-		_owner->UpdateObservers();
-	}
 }
 
 void BattleManager::CycleActors()
@@ -1127,16 +1022,6 @@ void BattleManager::CycleActors()
 	_chooseSkill = _owner->GetSkills();
 	_targets.clear();
 	Select(0);
-
-	if (!m_singleFileAttacks)
-	{
-		m_attackSequenceProgress++;
-		if (m_attackSequenceProgress == _actorQueue.size())
-		{
-			m_attackSequenceProgress = 0;
-			m_isPlayerTurn = true;
-		}
-	}
 }
 
 // Return winning team, -1 if battle isn't over
@@ -1159,9 +1044,4 @@ int BattleManager::FindWinner()
 
 	// Only one team is alive, return that team
 	return *activeTeams.begin();
-}
-
-void BattleManager::SetRender()
-{
-	//_hud.SetRender();
 }

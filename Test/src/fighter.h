@@ -37,11 +37,9 @@ public:
 	void SetSkills(std::vector<Skill_ptr>);
 	const std::vector<Skill_ptr>& GetSkills() const;
 	std::vector<Skill_ptr>& GetSkills();
-	virtual void UseSkill();
 
 	// Turn and targets
 	virtual bool RespectsTargeting(Fighter_ptr owner, int targetMode);
-	virtual void TurnStart(std::vector<Fighter_ptr>& actors);
 	std::vector<int>* GetTargets() { return &_targets; }
 
 	// Returns whether a skill could be chosen or not
@@ -70,6 +68,7 @@ public:
 	void SetSprite(std::string sprite) { m_sprite = sprite; }
 	std::string GetName() { return m_name; }
 	void SetName(std::string name) { m_name = name; }
+	bool SameTeam(Fighter_ptr fighter);
 
 	// HUD
 	BattleUnit create_battle_unit();

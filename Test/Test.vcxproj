@@ -171,6 +171,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="battle_state.h" />
     <ClInclude Include="src\battleHUD.h" />
     <ClInclude Include="src\battleUnit.h" />
     <ClInclude Include="src\fighterFactory.h" />

@@ -176,7 +176,7 @@ Anim_ptr BattleAnimationManager::CreateAnimation(triple ao)
 		result = Anim_ptr(new AnimJumpTo(actor->GetPos() + Vector3f(distance, 0, 0), m_actors.at(owner)));
 		break;
 	case AS_JumpBack:
-		if (aa == AARG_Passive2Owner)
+		if (aa == AARG_Passive_Applier2Owner)
 		{
 			boolean = false;
 			owner = args[0];
