@@ -81,6 +81,7 @@ void Font::ChangeLetter(unsigned int index, uint32_t newChar)
 	{
 		//Let the texture atlas figure out what the tex coords should be
 		m_mesh.GetAtlas()->TextureIndexToCoord(CharToCode(newChar), vecs.at(i).x, vecs.at(i).y);
+
 		//Update them in the vertices for the mesh and graphics (cuz y not)
 		if (m_mesh.GetMeshVertices()->size() > index + i)
 		{
@@ -88,6 +89,7 @@ void Font::ChangeLetter(unsigned int index, uint32_t newChar)
 			m_graphics->GetVertices()->at(index + i).tex = vecs.at(i);
 		}
 	}
+
 	//Make sure the component updates its stuff
 	m_graphics->ResetVBO();
 }
@@ -95,6 +97,7 @@ void Font::ChangeLetter(unsigned int index, uint32_t newChar)
 void Font::SetupMesh(float xBndry, float yBndry)
 {
 	m_mesh.Reset();
+	//m_mesh.AddToMesh(m_verts, m_indices, 3, Vector3f(), m_texture, 1);
 
 	// Split the text into words for op word wrap
 	std::vector<std::string> temp = Utils::Split(_text, ' ');
@@ -209,8 +212,9 @@ void Font::SetupMesh(float xBndry, float yBndry)
 	if (m_graphics == NULL)
 		m_graphics = std::shared_ptr<FontGraphicsComponent>(new FontGraphicsComponent(&m_verts, &m_indices, m_texture));
 	//m_graphics->FullReset(m_mesh.GetMeshVertices(), m_mesh.GetMeshIndices());
-	m_graphics->_instancedDraw = true;
-	//m_graphics->SetNewBuffers(m_mesh.GetMeshVertices(), m_mesh.GetMeshIndices());
+	//m_graphics->_instancedDraw = true;
+	//m_graphics->_instance_tex_draw = false;
+	m_graphics->SetNewBuffers(m_mesh.GetMeshVertices(), m_mesh.GetMeshIndices());
 	m_graphics->SetPhysics(m_pos, Vector3f());
 	m_graphics->SetStatic(m_static);
 
@@ -232,7 +236,7 @@ void Font::AddWordToMesh(std::string word, float x, float y)
 
 		m_letterPositions.push_back(pos + m_pos);
 
-		//m_mesh.AddToMesh(m_verts, m_indices, 3, pos, m_texture, index);
+		m_mesh.AddToMesh(m_verts, m_indices, 3, pos, m_texture, index);
 	}
 }
 

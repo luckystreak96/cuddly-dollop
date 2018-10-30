@@ -185,7 +185,7 @@ void BattleHUD::Update()
 	}
 
 	// Update target arrows
-	//for (auto& x : _actors)
+	//for (auto& x : _fighters)
 	//{
 	//	if (!x->_Fighter->Dead && x->_Fighter->PredictedSkill != NULL)
 	//	{

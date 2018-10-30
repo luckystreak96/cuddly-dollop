@@ -542,7 +542,10 @@
     <ClInclude Include="src\triple.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="battle_state.h">
+    <ClInclude Include="src\battle_info.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\battle_state.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -942,6 +945,9 @@
     </ClCompile>
     <ClCompile Include="tests\test_physics.cpp">
       <Filter>Source Files\Tests</Filter>
+    </ClCompile>
+    <ClCompile Include="src\battle_info.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

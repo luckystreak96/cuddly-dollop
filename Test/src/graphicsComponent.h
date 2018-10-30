@@ -97,8 +97,6 @@ protected:
 	int m_MBO_instances = 1;
 	std::vector<GLuint> m_indices;
 	std::vector<Vertex> m_vertices;
-	std::vector<Vector3f> m_color;
-	std::vector<Vector2f> m_verts;
 	std::vector<Mat4f> m_mmodels;
 	std::vector<Mat4f> m_test;
 	Vector3f m_size = Vector3f(-1, -1, -1);

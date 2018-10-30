@@ -3,8 +3,6 @@
 
 Mesh::Mesh(unsigned int atlasSize) : m_texAtlas(TextureAtlas(atlasSize)), _instancedDraw(false)
 {
-	m_IBO = 0;
-	m_VBO = 0;
 	m_indexProgress = 0;
 	m_texture = NULL;
 	m_progess = 0;
@@ -28,16 +26,11 @@ void Mesh::Reset()
 void Mesh::AddToMesh(std::vector<Vertex>& verts, const std::vector<GLuint>& inds, int biggestIndex, Vector3f pos, std::string tex, int index)
 {
 	if (!m_textures.count(tex)) {
-		//m_textures.erase(tex);
 		if (index == -1)
 			m_textures.emplace(tex, TextureAtlas::m_textureAtlas.AddTexture(tex));
 		else
 			m_textures.emplace(tex, m_texAtlas.AddTexture(tex));
 	}
-	//if (m_textures.emplace(tex, 0).second) {
-	//	m_textures.erase(tex);
-	//	m_textures.emplace(tex, TextureAtlas::m_textureAtlas.AddTexture(tex));
-	//}
 
 	std::vector<Vector2f> vecs = {
 	Vector2f(0, 0),
@@ -71,7 +64,6 @@ void Mesh::AddToMesh(std::vector<Vertex>& verts, const std::vector<GLuint>& inds
 
 	m_indexProgress += biggestIndex + 1;
 }
-
 
 void Mesh::Finalize(std::string name)
 {

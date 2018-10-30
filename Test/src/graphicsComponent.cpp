@@ -85,6 +85,9 @@ void GraphicsComponent::Construct()
 	SetDefaults(m_modelName);
 
 	LoadExternalResources();
+	if (m_tex_ptr == nullptr)
+		m_tex_ptr = ResourceManager::GetInstance().GetTexture(m_texture);
+
 	LoadGLResources();
 }
 
@@ -244,20 +247,6 @@ void GraphicsComponent::Draw(bool withTex)
 	if (will_not_draw())
 		return;
 
-	//if (_must_update_vbo_ibo)
-	//{
-	//	SetBuffers();
-	//	_must_update_vbo_ibo = false;
-	//}
-	//else if (_must_update_vbo)
-	//{
-	//	// This doesn't work well if the number of vertices changes - to be kept in mind (glBufferSubData)
-	//	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
-	//	glBufferSubData(GL_ARRAY_BUFFER, 0, m_vertices.size() * sizeof(Vertex), &m_vertices[0]);
-	//	_must_update_vbo = false;
-	//}
-
-
 	// Bind VAO (which binds vbo + IBO)
 	glBindVertexArray(m_VAO);
 
@@ -297,12 +286,6 @@ void GraphicsComponent::Draw(bool withTex)
 	if (_instancedDraw)
 	{
 		glDrawElementsInstanced(GL_TRIANGLES, (GLsizei)m_indices.size(), GL_UNSIGNED_INT, 0, m_mmodels.size());
-		//glDrawElementsInstancedBaseVertex(GL_TRIANGLES,
-		//	(GLsizei)m_indices.size(),
-		//	GL_UNSIGNED_INT,
-		//	0,
-		//	m_mmodels.size(),
-		//	0);
 	}
 	else
 	{

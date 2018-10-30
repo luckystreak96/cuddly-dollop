@@ -30,8 +30,7 @@ public:
 
 	bool _instancedDraw;
 private:
-	GLuint m_IBO;
-	GLuint m_VBO;
+	std::vector<Vertex> m_vertexList;
 	std::vector<GLuint> m_indices;
 	//std::vector<Transformation> m_models;
 	int m_indexProgress;
@@ -39,7 +38,6 @@ private:
 	Texture* m_texture;
 	int m_progess;
 	std::map<std::string, unsigned int> m_textures;
-	std::vector<Vertex> m_vertexList;
 };
 
 #endif

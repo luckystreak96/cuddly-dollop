@@ -171,9 +171,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="battle_state.h" />
     <ClInclude Include="src\battleHUD.h" />
     <ClInclude Include="src\battleUnit.h" />
+    <ClInclude Include="src\battle_info.h" />
+    <ClInclude Include="src\battle_state.h" />
     <ClInclude Include="src\fighterFactory.h" />
     <ClInclude Include="src\animBasic.h" />
     <ClInclude Include="src\animBonusEffect.h" />
@@ -314,6 +315,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\battleHUD.cpp" />
+    <ClCompile Include="src\battle_info.cpp" />
     <ClCompile Include="src\fighterFactory.cpp" />
     <ClCompile Include="src\animBasic.cpp" />
     <ClCompile Include="src\animBonusEffect.cpp" />

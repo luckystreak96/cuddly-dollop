@@ -107,6 +107,7 @@ MenuBackgroundBox::MenuBackgroundBox(Vector3f position, int width, int height) :
 		m_mesh.AddToMesh(*x->GetVertices(), x->GetIndices(), x->GetHighestIndex(), Vector3f(), x->GetTexture());
 
 	m_texture = "res/tiles.png";
+	m_tex_ptr = ResourceManager::GetInstance().GetTexture(m_texture);
 	SetStatic(true);
 
 	m_vertices = std::vector<Vertex>(*m_mesh.GetMeshVertices());

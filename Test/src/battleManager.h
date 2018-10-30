@@ -3,6 +3,7 @@
 
 #include "fighter.h"
 #include "battleUnit.h"
+#include "battle_info.h"
 
 #include <deque>
 #include <vector>
@@ -26,12 +27,9 @@ public:
 	std::shared_ptr<BattleAnimationManager> GetGraphics() { return m_graphics; }
 
 private:
-	void Init();
+	void Init(std::vector<Fighter_ptr> actors);
 	void UpdateLogic();
-	void CycleActors();
 	void UseSkill();
-	void Select(int target);
-	void Select(std::set<int> targets);
 	void RemoveChooseSkillText();
 	void SetChooseSkillText();
 	void MoveToLight(bool moveUp, bool turnEnd = false);
@@ -72,35 +70,15 @@ private:
 	void HandleAcceptInput();
 	void HandleCancelInput();
 
-	void PrintAttackPrediction(Fighter_ptr actor);
-
+	// printing logic
+	void print_attack_prediction(Fighter_ptr fighter);
 
 public:
-	std::deque<Fighter_ptr> _actorQueue;
-	std::vector<Fighter_ptr> _actors;
-	std::set<int> _targets;
-	std::vector<Skill_ptr> _chooseSkill;
-	std::vector<unsigned int> _fonts;
-	std::map<SkillProgress, std::vector<triple>> _action_buffer;
-
-
-	Skill_ptr _selectedSkill;
-	Fighter_ptr _owner;
-	std::set<int> _selectedIndices;
-	BattleState _state;
 	PostBattleState _postBattleState;
-	bool m_animating;
-	bool _showingSkills;
-	int _winner;
-
-	int m_attackSequenceProgress;
-
-	int _numAllies;
-
-	int counter;
 
 private:
 	std::shared_ptr<BattleAnimationManager> m_graphics;
+	battle_info m_info;
 };
 
 #endif

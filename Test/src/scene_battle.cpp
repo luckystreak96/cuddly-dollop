@@ -24,7 +24,7 @@ SceneBattle::SceneBattle() : m_zoom(false)
 	m_fighters.push_back(Fighter_ptr(FighterFactory::BuildBaseAlly()));
 	m_fighters.push_back(Fighter_ptr(FighterFactory::BuildBaseAlly()));
 	m_fighters.push_back(Fighter_ptr(FighterFactory::BuildBaseAlly()));
-	//_actors.push_back(Fighter_ptr(FighterFactory::BuildBaseAlly()));
+	//_fighters.push_back(Fighter_ptr(FighterFactory::BuildBaseAlly()));
 	for (auto x : BattleData::Party)
 		m_fighters.push_back(x);
 
@@ -32,9 +32,9 @@ SceneBattle::SceneBattle() : m_zoom(false)
 	m_fighters.push_back(Fighter_ptr(FighterFactory::BuildFighter(1)));
 	m_fighters.push_back(Fighter_ptr(FighterFactory::BuildFighter(1)));
 	m_fighters.push_back(Fighter_ptr(FighterFactory::BuildFighter(1)));
-	//_actors.push_back(Fighter_ptr(FighterFactory::BuildBaseEnemy()));
-	//_actors.push_back(Fighter_ptr(FighterFactory::BuildBaseEnemy()));
-	//_actors.push_back(Fighter_ptr(FighterFactory::BuildBaseEnemy()));
+	//_fighters.push_back(Fighter_ptr(FighterFactory::BuildBaseEnemy()));
+	//_fighters.push_back(Fighter_ptr(FighterFactory::BuildBaseEnemy()));
+	//_fighters.push_back(Fighter_ptr(FighterFactory::BuildBaseEnemy()));
 	Init();
 	m_battle = BattleManager(m_fighters);
 
@@ -172,7 +172,7 @@ SceneBattle::~SceneBattle()
 	//for (auto& x : m_fighters)
 	//	for (auto& y : x->_Fighter->m_skills)
 	//	{
-	//		y->_actors->clear();
+	//		y->_fighters->clear();
 	//		y->_targets.clear();
 	//		y->_anims = nullptr;
 	//	}
@@ -189,14 +189,14 @@ void SceneBattle::ManageInput()
 
 		if (m_fade.IsDone() && m_battle._postBattleState == PBS_PostBattleComplete)
 		{
-			if (m_battle._winner == 0)
+			if (m_battle.FindWinner() == 0)
 			{
 				m_fade.SetFade(false);
 				NextScene.scene = _prevScene;
 				NextScene.sceneType = ST_World;
 				NextScene.id = 1;
 			}
-			else if (m_battle._winner != 0 && !GameData::Loading)
+			else if (m_battle.FindWinner() != 0 && !GameData::Loading)
 			{
 				m_fade.SetFade(false);
 				GameData::LoadGameData();

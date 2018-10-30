@@ -31,7 +31,7 @@ private:
 	void AddActorAttackPredictionArrow(int id);
 
 private:
-	//std::map<int, Actor_ptr> _actors;
+	//std::map<int, Actor_ptr> _fighters;
 	//std::vector<HudComp_ptr> _hudComponents;
 	std::map<int, HudBattleUnit> _units;
 
