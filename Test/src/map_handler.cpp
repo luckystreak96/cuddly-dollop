@@ -95,11 +95,16 @@ MapHandler::MapHandler(const std::string& filePath)
 void MapHandler::SetupMesh()
 {
 	m_mesh.Reset();
-	//std::sort(m_tiles.begin(), m_tiles.end(), MapTile::SortFunc);
+
+	Model::GetInstance().loadModel(COMPOSITION);
+	m_mesh.AddToMesh(Model::GetInstance().getVertexVertices(), Model::GetInstance().getIndices(), 3, Vector3f(), "");
+	m_mesh.set_placeholder_uv_offset(true);
+
 	for (auto t : m_tiles)
 	{
-		std::vector<Vertex> verts = t->Physics()->GetVerticesRef();
-		m_mesh.AddToMesh(verts, t->Physics()->GetIndices(), t->Physics()->GetHighestIndex(), t->Physics()->Position(), t->GetTexture());
+		//std::vector<Vertex> verts = t->Physics()->GetVerticesRef();
+		m_mesh.add_tex_offset(t->GetTexture());
+		//m_mesh.AddToMesh(verts, t->Physics()->GetIndices(), t->Physics()->GetHighestIndex(), t->Physics()->Position(), t->GetTexture());
 	}
 
 	m_MBO_instances = m_tiles.size();
@@ -108,7 +113,9 @@ void MapHandler::SetupMesh()
 	//m_mesh.Finalize(m_texture);
 	m_graphics = GraphComp_ptr(new GraphicsComponent(m_mesh.GetMeshVertices(), m_mesh.GetMeshIndices(), m_texture));
 	m_graphics->SetPhysics(Vector3f(0, 0, 20.0f), Vector3f());
-	//m_graphics->_instancedDraw = true;
+	m_graphics->_instancedDraw = true;
+	m_graphics->_instanced_tex_coord_draw = true;
+	m_graphics->set_tex_coord_offsets(m_mesh.get_tex_coords());
 }
 
 void MapHandler::Update(bool forced)
@@ -121,7 +128,7 @@ void MapHandler::Update(bool forced)
 	bool firstTime = m_graphics->GetMModels().size() == 0;
 	if (m_graphics->GetMModels().size() == 0 || forced)
 	{
-		int i = 0;
+		//int i = 0;
 		m_graphics->ClearMModels();
 		for (auto x : m_tiles)
 		{
@@ -134,9 +141,9 @@ void MapHandler::Update(bool forced)
 			Transformation t;
 			t.SetTranslation(pos);
 			std::string texture = x->GetTexture();
-			AdjustSprite(texture, t, i, firstTime);
+			//AdjustSprite(texture, t, i, firstTime);
 			m_graphics->InsertMModels(t);
-			i += 4;
+			//++i;
 		}
 		m_graphics->ResetVBO();
 	}

@@ -21,6 +21,7 @@ m_lettersPerRow(16), m_lettersPerColumn(16), m_xScale(1.0f), m_yScale(1.0f), m_l
 
 	//m_mesh.init_instanced_tex_drawing(m_verts, m_indices, path);
 	m_mesh.AddToMesh(m_verts, m_indices, 3, Vector3f(), path, 0);
+	m_mesh.set_placeholder_uv_offset(false);
 
 	SetText(std::string(" "));
 }

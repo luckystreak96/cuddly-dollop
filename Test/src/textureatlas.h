@@ -30,6 +30,7 @@ public:
 public:
 	TextureAtlas(unsigned int nbTexture);
 	~TextureAtlas();
+	std::vector<Vector2f> get_placeholder_uv_offset();
 	TextureIndex AddTexture(const std::string& fname);
 	bool Generate(int textureSize, bool mipmap, std::string filename);
 	TextureList& GetTextureList();

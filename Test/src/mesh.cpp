@@ -19,6 +19,19 @@ Mesh::~Mesh()
 //	AddToMesh(*verts, *inds, 3, Vector3f(), tex, 0);
 //}
 
+void Mesh::set_placeholder_uv_offset(bool static_atlas)
+{
+	TextureAtlas* atlas;
+	if (static_atlas)
+		atlas = &TextureAtlas::m_textureAtlas;
+	else
+		atlas = &m_texAtlas;
+	std::vector<Vector2f> tex = atlas->get_placeholder_uv_offset();
+
+	for (int i = 0; i < tex.size(); i++)
+		m_vertexList[i].tex = tex[i];
+}
+
 void Mesh::Reset()
 {
 	m_progess = 0;
@@ -30,12 +43,20 @@ void Mesh::Reset()
 
 void Mesh::AddToMesh(std::vector<Vertex>& verts, const std::vector<GLuint>& inds, int biggestIndex, Vector3f pos, std::string tex, int index)
 {
-	if (!m_textures.count(tex)) {
-		if (index == -1)
-			m_textures.emplace(tex, TextureAtlas::m_textureAtlas.AddTexture(tex));
-		else
-			m_textures.emplace(tex, m_texAtlas.AddTexture(tex));
-	}
+	TextureAtlas* atlas;
+	if (index == -1)
+		atlas = &TextureAtlas::m_textureAtlas;
+	else
+		atlas = &m_texAtlas;
+
+	if (tex != "" && !m_textures.count(tex))
+		m_textures.emplace(tex, atlas->AddTexture(tex));
+
+	if (tex == "")
+			index = 0;
+
+	if (index == -1)
+		index = m_textures.at(tex);
 
 	std::vector<Vector2f> vecs = {
 	Vector2f(0, 0),
@@ -48,10 +69,7 @@ void Mesh::AddToMesh(std::vector<Vertex>& verts, const std::vector<GLuint>& inds
 	for (auto v : verts)
 	{
 		Vector2f temp = Vector2f(vecs[counter % 4].x, vecs[counter % 4].y);
-		if (index == -1)
-			TextureAtlas::m_textureAtlas.TextureIndexToCoord(m_textures.at(tex), temp.x, temp.y);
-		else
-			m_texAtlas.TextureIndexToCoord(index, temp.x, temp.y);
+		atlas->TextureIndexToCoord(index, temp.x, temp.y);
 
 		v.tex = temp;
 
@@ -109,15 +127,23 @@ std::vector<Vector2f>* Mesh::get_tex_coords()
 
 Vector2f Mesh::get_uv_offset_coords(std::string tex, int index)
 {
-	if (!m_textures.count(tex)) {
-		if (index == -1)
-			m_textures.emplace(tex, TextureAtlas::m_textureAtlas.AddTexture(tex));
-		else
-			m_textures.emplace(tex, m_texAtlas.AddTexture(tex));
-	}
+	TextureAtlas* atlas;
+	if (index == -1)
+		atlas = &TextureAtlas::m_textureAtlas;
+	else
+		atlas = &m_texAtlas;
 
-	float u = m_texAtlas.get_u_offset_coordinate(index);
-	float v = m_texAtlas.get_v_offset_coordinate(index);
+	//if (tex == "")
+	//	return atlas->get_placeholder_uv_offset();
+
+	if (!m_textures.count(tex))
+		m_textures.emplace(tex, atlas->AddTexture(tex));
+
+	if (index == -1)
+		index = m_textures.at(tex);
+
+	float u = atlas->get_u_offset_coordinate(index);
+	float v = atlas->get_v_offset_coordinate(index);
 
 	return Vector2f(u, v);
 }

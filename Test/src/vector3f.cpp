@@ -319,3 +319,11 @@ bool Vector2f::operator<(const Vector2f& r) const
 	else
 		return false;
 }
+
+Vector2f Vector2f::operator-()
+{
+	Vector2f result;
+	result.x = -this->x;
+	result.y = -this->y;
+	return result;
+}

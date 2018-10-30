@@ -22,6 +22,22 @@ TextureAtlas::~TextureAtlas()
 		glDeleteTextures(1, &m_textureId);
 }
 
+std::vector<Vector2f> TextureAtlas::get_placeholder_uv_offset()
+{
+	std::vector<Vector2f> result;
+	for (int v = 0; v < 2; v++)
+	{
+		for (int u = 0; u < 2; u++)
+		{
+			float u2 = (float)u;
+			float v2 = (float)v;
+			TextureIndexToCoord(m_nbTexturePerSide * (m_nbTexturePerSide - 1), u2, v2);
+			result.emplace_back(u2, v2);
+		}
+	}
+	return result;
+}
+
 TextureAtlas::TextureList& TextureAtlas::GetTextureList()
 {
 	return m_textureList;
@@ -269,7 +285,7 @@ float TextureAtlas::get_u_offset_coordinate(TextureIndex idx) const
 {
 	float len = 1.f / (float)m_nbTexturePerSide;
 
-	float u = (float)(((unsigned int)idx % m_nbTexturePerSide) + 1) * len;
+	float u = (float)((unsigned int)idx % m_nbTexturePerSide) * len;
 	for (auto& x : m_textureList)
 		if (x.second.texIdx == idx)
 			u = x.second.x * len;
@@ -281,7 +297,7 @@ float TextureAtlas::get_v_offset_coordinate(TextureIndex idx) const
 {
 	float len = 1.f / (float)m_nbTexturePerSide;
 
-	float v = (float)(m_nbTexturePerSide - (unsigned int)idx / m_nbTexturePerSide) * len;
+	float v = (float)(m_nbTexturePerSide - 1 - (unsigned int)idx / m_nbTexturePerSide) * len;
 	for (auto& x : m_textureList)
 		if (x.second.texIdx == idx)
 			v = x.second.y * len;

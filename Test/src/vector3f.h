@@ -58,6 +58,7 @@ public:
 	Vector2f(float x, float y);
 	bool operator==(const Vector2f& r);
 	bool operator<(const Vector2f& i) const;
+	Vector2f operator-();
 public:
 	float x = 0.0f;
 	float y = 0.0f;

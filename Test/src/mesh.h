@@ -24,6 +24,8 @@ public:
 	void AddToMesh(std::vector<Vertex>& verts, const std::vector<GLuint>& inds, int biggestIndex, Vector3f pos, std::string tex, int index = -1);
 	void add_tex_offset(std::string tex, int index = -1);
 	void change_tex_offset(int pos, std::string tex, int index = -1);
+	// Sets basic uv tex_coords (bottom right corner) to the 4 first vertices in m_vertexlist
+	void set_placeholder_uv_offset(bool static_atlas);
 	void Reset();
 	void Finalize(std::string name);
 	std::vector<Vertex>* GetMeshVertices();
