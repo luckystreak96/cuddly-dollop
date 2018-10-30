@@ -41,6 +41,8 @@ public:
 	Vector2f GetTexCoordWH();
 
 	void TextureIndexToCoord(TextureIndex idx, float& u, float& v) const;
+	float get_u_offset_coordinate(TextureIndex idx) const;
+	float get_v_offset_coordinate(TextureIndex idx) const;
 
 	static TextureAtlas m_textureAtlas;
 private:

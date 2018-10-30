@@ -265,6 +265,30 @@ void TextureAtlas::TextureIndexToCoord(TextureIndex idx, float& x, float& y) con
 	y = (v + h * y) + (y == 0 ? halfPixel : -halfPixel);
 }
 
+float TextureAtlas::get_u_offset_coordinate(TextureIndex idx) const
+{
+	float len = 1.f / (float)m_nbTexturePerSide;
+
+	float u = (float)(((unsigned int)idx % m_nbTexturePerSide) + 1) * len;
+	for (auto& x : m_textureList)
+		if (x.second.texIdx == idx)
+			u = x.second.x * len;
+
+	return u;
+}
+
+float TextureAtlas::get_v_offset_coordinate(TextureIndex idx) const
+{
+	float len = 1.f / (float)m_nbTexturePerSide;
+
+	float v = (float)(m_nbTexturePerSide - (unsigned int)idx / m_nbTexturePerSide) * len;
+	for (auto& x : m_textureList)
+		if (x.second.texIdx == idx)
+			v = x.second.y * len;
+
+	return v;
+}
+
 Vector2f TextureAtlas::GetTexCoordWH()
 {
 	return Vector2f(1.f / (float)m_nbTexturePerSide, 1.f / (float)m_nbTexturePerSide);

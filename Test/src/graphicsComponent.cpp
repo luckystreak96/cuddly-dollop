@@ -22,6 +22,11 @@ GraphicsComponent::~GraphicsComponent()
 	//std::cout << --counter << " GraphicsComponents exist." << std::endl;
 }
 
+void GraphicsComponent::set_tex_coord_offsets(std::vector<Vector2f>* tex)
+{
+	m_texCoords = std::vector<Vector2f>(*tex);
+}
+
 void GraphicsComponent::SetNewBuffers(std::vector<Vertex>* verts, std::vector<GLuint>* inds)
 {
 	_must_update_vbo_ibo = true;
@@ -67,6 +72,7 @@ void GraphicsComponent::Construct()
 	m_IBO = 0;
 	m_VBO = 0;
 	m_VAO = 0;
+	m_TBO = 0;
 	m_MMBO = 0;
 
 	m_tex_ptr = ResourceManager::GetInstance().GetTexture(m_texture);
@@ -75,6 +81,7 @@ void GraphicsComponent::Construct()
 	m_direction = dir_Down;
 	m_lastInteraction = m_direction;
 	_instancedDraw = false;
+	_instanced_tex_coord_draw = false;
 	m_lastMModelSize = 0;
 	m_mlMatLoc = 0;
 
@@ -83,6 +90,9 @@ void GraphicsComponent::Construct()
 	//m_modelMat.SetTranslation(m_pos);
 
 	SetDefaults(m_modelName);
+
+	while (m_texCoords.size() < m_vertices.size())
+		m_texCoords.push_back(Vector2f());
 
 	LoadExternalResources();
 	if (m_tex_ptr == nullptr)
@@ -218,10 +228,12 @@ bool GraphicsComponent::UnloadGLResources()
 		glDeleteBuffers(1, &m_IBO);
 	if (m_VBO != 0)
 		glDeleteBuffers(1, &m_VBO);
-	if (m_VAO != 0)
-		glDeleteVertexArrays(1, &m_VAO);
 	if (m_MMBO != 0)
 		glDeleteBuffers(1, &m_MMBO);
+	if (m_TBO != 0)
+		glDeleteBuffers(1, &m_TBO);
+	if (m_VAO != 0)
+		glDeleteVertexArrays(1, &m_VAO);
 
 	m_GL_loaded = false;
 
@@ -282,6 +294,9 @@ void GraphicsComponent::Draw(bool withTex)
 		glVertexAttribDivisor(i, _instancedDraw ? 1 : 0);
 	}
 
+	// texCoords
+	glVertexAttribDivisor(8, _instanced_tex_coord_draw ? 1 : 0);
+
 	// Draw
 	if (_instancedDraw)
 	{
@@ -302,7 +317,7 @@ void GraphicsComponent::SetupVAO()
 	glBindVertexArray(m_VAO);
 
 	// Setup binds
-	for (int i = 0; i < 8; i++)
+	for (int i = 0; i < 9; i++)
 		glEnableVertexAttribArray(i);
 
 	// Bind IBO
@@ -317,6 +332,11 @@ void GraphicsComponent::SetupVAO()
 	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*)(sizeof(float) * 5));//color
 	glVertexAttribPointer(3, 1, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const GLvoid*)(sizeof(float) * 8));//alpha
 
+	// Bind TBO
+	glBindBuffer(GL_ARRAY_BUFFER, m_TBO);
+	glBufferData(GL_ARRAY_BUFFER, m_texCoords.size() * sizeof(Vector2f), &m_texCoords[0], GL_STATIC_DRAW);
+	glVertexAttribPointer(8, 2, GL_FLOAT, GL_FALSE, sizeof(Vector2f), 0);//tex
+
 	// Unbind VAO
 	glBindVertexArray(0);
 }
@@ -329,6 +349,8 @@ void GraphicsComponent::SetBuffers()
 		glGenBuffers(1, &m_VBO);
 	if (m_MMBO == 0)
 		glGenBuffers(1, &m_MMBO);
+	if (m_TBO == 0)
+		glGenBuffers(1, &m_TBO);
 	if (m_VAO == 0)
 		glGenVertexArrays(1, &m_VAO);
 
@@ -337,9 +359,6 @@ void GraphicsComponent::SetBuffers()
 
 void GraphicsComponent::ResetVBO()
 {
-	//_must_update_vbo = true;
-	//return;
-
 	// Crashes if size is 0 lol
 	if (m_vertices.size() <= 0)
 		return;
@@ -347,6 +366,15 @@ void GraphicsComponent::ResetVBO()
 	// This doesn't work well if the number of vertices changes - to be kept in mind (glBufferSubData)
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 	glBufferSubData(GL_ARRAY_BUFFER, 0, m_vertices.size() * sizeof(Vertex), &m_vertices[0]);
+
+	if (!_instancedDraw)
+	{
+		while (m_texCoords.size() < m_vertices.size())
+			m_texCoords.push_back(Vector2f());
+	}
+
+	glBindBuffer(GL_ARRAY_BUFFER, m_TBO);
+	glBufferData(GL_ARRAY_BUFFER, m_texCoords.size() * sizeof(Vector2f), &m_texCoords[0], GL_STATIC_DRAW);
 }
 
 // Sets the color of all vertices to change the color of the sprite
@@ -528,6 +556,11 @@ void GraphicsComponent::SetDirection(GraphComp_ptr graph)
 std::vector<Mat4f>& GraphicsComponent::GetMModels()
 {
 	return m_mmodels;
+}
+
+void GraphicsComponent::modify_tex_offset(int pos, Vector2f newoffset)
+{
+	m_texCoords[pos] = newoffset;
 }
 
 

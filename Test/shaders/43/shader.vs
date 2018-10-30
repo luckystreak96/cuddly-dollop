@@ -7,6 +7,7 @@ layout(location = 2) in vec3 Color;
 layout(location = 3) in float Alpha;
 // World Position
 layout(location = 4) in mat4 Model;
+layout(location = 8) in vec2 TexCoord2;
 
 out vec2 TexCoord0;
 out vec3 Color0;
@@ -19,7 +20,7 @@ void main()
 {
 	gl_Position = gWorld * transpose(Model) * vec4(Position.x * gSize, Position.y * gSize, Position.z, 1.0);
 
-    TexCoord0 = TexCoord;
+    TexCoord0 = TexCoord + TexCoord2;
 	Color0 = Color;
 	Alpha0 = Alpha;
 }

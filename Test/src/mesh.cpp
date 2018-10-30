@@ -14,6 +14,11 @@ Mesh::~Mesh()
 		delete m_texture;
 }
 
+//void Mesh::init_instanced_tex_drawing(std::vector<Vertex>* verts, std::vector<GLuint>* inds, std::string tex)
+//{
+//	AddToMesh(*verts, *inds, 3, Vector3f(), tex, 0);
+//}
+
 void Mesh::Reset()
 {
 	m_progess = 0;
@@ -65,6 +70,16 @@ void Mesh::AddToMesh(std::vector<Vertex>& verts, const std::vector<GLuint>& inds
 	m_indexProgress += biggestIndex + 1;
 }
 
+void Mesh::add_tex_offset(std::string tex, int index)
+{
+	m_texCoords.push_back(get_uv_offset_coords(tex, index));
+}
+
+void Mesh::change_tex_offset(int pos, std::string tex, int index)
+{
+	m_texCoords[pos] = get_uv_offset_coords(tex, index);
+}
+
 void Mesh::Finalize(std::string name)
 {
 	//Make sure texture doesnt exist so it doesnt always lag on startup
@@ -85,4 +100,24 @@ std::vector<Vertex>* Mesh::GetMeshVertices()
 std::vector<GLuint>* Mesh::GetMeshIndices()
 {
 	return &m_indices;
+}
+
+std::vector<Vector2f>* Mesh::get_tex_coords()
+{
+	return &m_texCoords;
+}
+
+Vector2f Mesh::get_uv_offset_coords(std::string tex, int index)
+{
+	if (!m_textures.count(tex)) {
+		if (index == -1)
+			m_textures.emplace(tex, TextureAtlas::m_textureAtlas.AddTexture(tex));
+		else
+			m_textures.emplace(tex, m_texAtlas.AddTexture(tex));
+	}
+
+	float u = m_texAtlas.get_u_offset_coordinate(index);
+	float v = m_texAtlas.get_v_offset_coordinate(index);
+
+	return Vector2f(u, v);
 }

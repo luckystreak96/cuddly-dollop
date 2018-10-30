@@ -31,6 +31,8 @@ public:
 	GraphicsComponent(std::string modelName = "TILE", std::string texPath = std::string("res/sprites/tiles/mushroom.png"));
 	GraphicsComponent(std::vector<Vertex>* verts, std::vector<GLuint>* inds, std::string texPath = std::string("res/sprites/tiles/mushroom.png"));
 	~GraphicsComponent();
+	void set_tex_coord_offsets(std::vector<Vector2f>* tex);
+	void modify_tex_offset(int pos, Vector2f newoffset);
 	void FullReset(std::vector<Vertex>* verts, std::vector<GLuint>* inds);
 	void Construct();
 	void SetDefaults(std::string name = "TILE");
@@ -79,6 +81,7 @@ public:
 	bool _must_update_vbo;
 	bool mustDraw = true;
 	bool _instancedDraw;
+	bool _instanced_tex_coord_draw;
 	bool _mModelsNoReplace;
 	bool _outline;
 
@@ -90,13 +93,15 @@ protected:
 	GLuint m_mlMatLoc;
 	GLuint m_IBO;
 	GLuint m_VBO;
-	GLuint m_MMBO = 0;
+	GLuint m_MMBO;
+	GLuint m_TBO;
 	GLuint m_VAO;
 	Direction m_direction;
 	Direction m_lastInteraction;
 	int m_MBO_instances = 1;
 	std::vector<GLuint> m_indices;
 	std::vector<Vertex> m_vertices;
+	std::vector<Vector2f> m_texCoords;
 	std::vector<Mat4f> m_mmodels;
 	std::vector<Mat4f> m_test;
 	Vector3f m_size = Vector3f(-1, -1, -1);

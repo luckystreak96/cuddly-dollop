@@ -300,7 +300,7 @@ GLFWManager::GLFWManager()
 	}
 
 
-	if (false && glDebugMessageCallbackARB != NULL) {
+	if (true && glDebugMessageCallbackARB != NULL) {
 		// Debug Output is supported, hooray!
 		//glDebugMessageControlARB(GL_DONT_CARE, GL_DONT_CARE, GL_DEBUG_SEVERITY_HIGH, 0, NULL, GL_TRUE);
 		//glDebugMessageControlARB(GL_DEBUG_SOURCE_OTHER, GL_DEBUG_TYPE_OTHER, GL_DEBUG_SEVERITY_NOTIFICATION, 0, NULL, GL_FALSE);

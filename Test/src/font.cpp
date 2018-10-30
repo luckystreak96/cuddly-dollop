@@ -19,6 +19,9 @@ m_lettersPerRow(16), m_lettersPerColumn(16), m_xScale(1.0f), m_yScale(1.0f), m_l
 	CreateHash();
 	ResourceManager::GetInstance().LoadTexture(path);
 
+	//m_mesh.init_instanced_tex_drawing(m_verts, m_indices, path);
+	m_mesh.AddToMesh(m_verts, m_indices, 3, Vector3f(), path, 0);
+
 	SetText(std::string(" "));
 }
 
@@ -67,28 +70,35 @@ bool Font::TextDisplayDone()
 void Font::ChangeLetter(unsigned int index, uint32_t newChar)
 {
 	//The verts per letter are by groups of 4
-	index *= 4;
+	//index *= 4;
 
 	//The texture coords (they need the default values to register properly in the texAtlas func)
-	std::vector<Vector2f> vecs = {
-	Vector2f(0, 0),
-	Vector2f(1, 0),
-	Vector2f(0, 1),
-	Vector2f(1, 1)
-	};
+	//std::vector<Vector2f> vecs = {
+	//Vector2f(0, 0),
+	//Vector2f(1, 0),
+	//Vector2f(0, 1),
+	//Vector2f(1, 1)
+	//};
 
-	for (int i = 0; i < 4; i++)
-	{
+	//for (int i = 0; i < 4; i++)
+	//{
 		//Let the texture atlas figure out what the tex coords should be
-		m_mesh.GetAtlas()->TextureIndexToCoord(CharToCode(newChar), vecs.at(i).x, vecs.at(i).y);
+		//m_mesh.GetAtlas()->TextureIndexToCoord(CharToCode(newChar), vecs.at(i).x, vecs.at(i).y);
+		int letter = CharToCode(newChar);
+
 
 		//Update them in the vertices for the mesh and graphics (cuz y not)
-		if (m_mesh.GetMeshVertices()->size() > index + i)
+		if (m_mesh.get_tex_coords()->size() > index + 1)
 		{
-			m_mesh.GetMeshVertices()->at(index + i).tex = vecs.at(i);
-			m_graphics->GetVertices()->at(index + i).tex = vecs.at(i);
+			m_mesh.change_tex_offset(index, m_texture, letter);
+			m_graphics->modify_tex_offset(index, m_mesh.get_uv_offset_coords(m_texture, letter));
 		}
-	}
+		//if (m_mesh.GetMeshVertices()->size() > index + i)
+		//{
+		//	m_mesh.GetMeshVertices()->at(index + i).tex = vecs.at(i);
+		//	m_graphics->GetVertices()->at(index + i).tex = vecs.at(i);
+		//}
+	//}
 
 	//Make sure the component updates its stuff
 	m_graphics->ResetVBO();
@@ -96,7 +106,7 @@ void Font::ChangeLetter(unsigned int index, uint32_t newChar)
 
 void Font::SetupMesh(float xBndry, float yBndry)
 {
-	m_mesh.Reset();
+	//m_mesh.Reset();
 	//m_mesh.AddToMesh(m_verts, m_indices, 3, Vector3f(), m_texture, 1);
 
 	// Split the text into words for op word wrap
@@ -212,9 +222,10 @@ void Font::SetupMesh(float xBndry, float yBndry)
 	if (m_graphics == NULL)
 		m_graphics = std::shared_ptr<FontGraphicsComponent>(new FontGraphicsComponent(&m_verts, &m_indices, m_texture));
 	//m_graphics->FullReset(m_mesh.GetMeshVertices(), m_mesh.GetMeshIndices());
-	//m_graphics->_instancedDraw = true;
-	//m_graphics->_instance_tex_draw = false;
+	m_graphics->_instancedDraw = true;
+	m_graphics->_instanced_tex_coord_draw = true;
 	m_graphics->SetNewBuffers(m_mesh.GetMeshVertices(), m_mesh.GetMeshIndices());
+	m_graphics->set_tex_coord_offsets(m_mesh.get_tex_coords());
 	m_graphics->SetPhysics(m_pos, Vector3f());
 	m_graphics->SetStatic(m_static);
 
@@ -236,7 +247,8 @@ void Font::AddWordToMesh(std::string word, float x, float y)
 
 		m_letterPositions.push_back(pos + m_pos);
 
-		m_mesh.AddToMesh(m_verts, m_indices, 3, pos, m_texture, index);
+		m_mesh.add_tex_offset(m_texture, index);
+		//m_mesh.AddToMesh(m_verts, m_indices, 3, pos, m_texture, index);
 	}
 }
 
