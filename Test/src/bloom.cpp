@@ -22,6 +22,9 @@ void Bloom::Apply(Post_Processing_Screen* pps, FBO* fbo)
 {
 	//BEGIN BLOOM STAGE
 
+	if (std::get<int>(GameData::Options["bloom"]) == 0)
+		return;
+
 	// Disable depth test because the framebuffers do weird stuff with depth
 	glDisable(GL_DEPTH_TEST);
 

@@ -263,6 +263,8 @@ void GameData::EnsureBaseSettings()
 		Options.emplace("fullscreen", false);
 	if (!Options.count("resolution"))
 		Options.emplace("resolution", 3);
+	if (!Options.count("bloom"))
+		Options.emplace("bloom", 0);
 	if (!Options.count("effect_quality"))
 		Options.emplace("effect_quality", 0);
 	if (!Options.count("3d"))

@@ -103,7 +103,7 @@ void MapHandler::SetupMesh()
 	for (auto t : m_tiles)
 	{
 		//std::vector<Vertex> verts = t->Physics()->GetVerticesRef();
-		m_mesh.add_tex_offset(t->GetTexture());
+		m_mesh.add_tex_offset_static_atlas(t->GetTexture());
 		//m_mesh.AddToMesh(verts, t->Physics()->GetIndices(), t->Physics()->GetHighestIndex(), t->Physics()->Position(), t->GetTexture());
 	}
 

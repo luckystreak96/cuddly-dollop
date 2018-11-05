@@ -419,19 +419,22 @@ void BattleManager::MoveToLight(bool moveup, bool turnEnd)
 // Display or stop displaying skills
 void BattleManager::UpdateSkillDisplay()
 {
-	if (m_info._showingSkills)
+	if (m_showingSkills)
 	{
 		if (m_info._state != BS_SelectAction)
 		{
-			RemoveChooseSkillText();
-			m_info._showingSkills = false;
+			//RemoveChooseSkillText();
+			m_showingSkills = false;
+			m_graphics->update_skill_display(&m_info._chooseSkill, SDS_none);
+
 		}
 	}
-	else if (m_info._owner->Team == 0 && !m_info._showingSkills && !Animating() && m_info._state == BS_SelectAction)
+	else if (m_info._owner->Team == 0 && !m_showingSkills && !Animating() && m_info._state == BS_SelectAction)
 	{
-		SetChooseSkillText();
-		m_info._showingSkills = true;
-		m_info.select_index(0);
+		//SetChooseSkillText();
+		m_showingSkills = true;
+		//m_info.select_index(0);
+		m_graphics->update_skill_display(&m_info._chooseSkill, SDS_choose_skill);
 	}
 }
 
@@ -526,29 +529,6 @@ void BattleManager::SelectAction()
 
 		UseSkill();
 	}
-}
-
-void BattleManager::InitiateChooseActor()
-{
-	m_info._state = BS_ChooseActor;
-	RemoveChooseSkillText();
-	m_info._showingSkills = false;
-
-	m_info.select_index(0);
-
-	// Choose who to select by default
-	for (unsigned int i = 0; i < m_info._fighters.size(); i++)
-	{
-		if (m_info._fighters[i]->Team == 0 && m_info._fighters[i]->PredictedSkill == NULL)
-		{
-			m_info.select_index(i);
-			break;
-		}
-	}
-
-	//m_info.select_index(m_info._selectedIndices);
-	Camera::_currentCam->SetScale(Vector3f(1));
-	Camera::_currentCam->SetFollow(Camera::_currentCam->MapCenter());
 }
 
 void BattleManager::ActionProgress()
@@ -904,7 +884,7 @@ void BattleManager::HandleCancelInput()
 		m_info.select_index(0);
 		m_info._state = BS_SelectAction;
 		SetChooseSkillText();
-		m_info._showingSkills = true;
+		//m_info._showingSkills = true;
 	}
 }
 

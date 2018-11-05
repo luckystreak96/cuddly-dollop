@@ -21,8 +21,11 @@ public:
 	Mesh(unsigned int atlasSize = 8);
 	~Mesh();
 	//void init_instanced_tex_drawing(std::vector<Vertex>* verts, std::vector<GLuint>* inds, std::string tex);
+	void add_instanced_base_to_mesh_specific_atlas(std::string model, std::string tex);
+	void add_instanced_base_to_mesh_static_atlas(std::string model);
 	void AddToMesh(std::vector<Vertex>& verts, const std::vector<GLuint>& inds, int biggestIndex, Vector3f pos, std::string tex, int index = -1);
-	void add_tex_offset(std::string tex, int index = -1);
+	void add_tex_offset_static_atlas(std::string tex);
+	void add_tex_offset_specific_atlas(std::string tex, int index);
 	void change_tex_offset(int pos, std::string tex, int index = -1);
 	// Sets basic uv tex_coords (bottom right corner) to the 4 first vertices in m_vertexlist
 	void set_placeholder_uv_offset(bool static_atlas);
@@ -35,8 +38,14 @@ public:
 	TextureAtlas* GetAtlas() { return &m_texAtlas; }
 	Vector2f get_uv_offset_coords(std::string tex, int index = -1);
 
+private:
+	void add_instanced_base_to_mesh(std::string model, std::string tex, bool use_global_tileset);
+	void add_tex_offset(std::string tex, int index = -1);
+
+public:
 	bool _instancedDraw;
 	bool _tex_drawing;
+
 private:
 	std::vector<Vertex> m_vertexList;
 	std::vector<GLuint> m_indices;

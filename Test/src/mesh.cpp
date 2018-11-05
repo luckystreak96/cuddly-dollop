@@ -41,6 +41,42 @@ void Mesh::Reset()
 	m_textures.clear();
 }
 
+void Mesh::add_instanced_base_to_mesh_specific_atlas(std::string model, std::string tex)
+{
+	add_instanced_base_to_mesh(model, tex, false);
+}
+
+void Mesh::add_instanced_base_to_mesh_static_atlas(std::string model)
+{
+	add_instanced_base_to_mesh(model, "", true);
+}
+
+void Mesh::add_instanced_base_to_mesh(std::string model, std::string tex, bool use_global_tileset)
+{
+	Model::GetInstance().loadModel(model);
+	m_vertexList = Model::GetInstance().getVertexVertices();
+	m_indices = Model::GetInstance().getIndices();
+
+	if (use_global_tileset)
+		tex = "";
+	else
+		ResourceManager::GetInstance().LoadTexture(tex);
+
+	AddToMesh(m_vertexList, m_indices, 3, Vector3f(), tex, use_global_tileset ? -1 : 0);
+	set_placeholder_uv_offset(use_global_tileset);
+}
+
+void Mesh::add_tex_offset_static_atlas(std::string tex)
+{
+	add_tex_offset(tex);
+}
+
+void Mesh::add_tex_offset_specific_atlas(std::string tex, int index)
+{
+	add_tex_offset(tex, index);
+}
+
+
 void Mesh::AddToMesh(std::vector<Vertex>& verts, const std::vector<GLuint>& inds, int biggestIndex, Vector3f pos, std::string tex, int index)
 {
 	TextureAtlas* atlas;
@@ -53,7 +89,7 @@ void Mesh::AddToMesh(std::vector<Vertex>& verts, const std::vector<GLuint>& inds
 		m_textures.emplace(tex, atlas->AddTexture(tex));
 
 	if (tex == "")
-			index = 0;
+		index = 0;
 
 	if (index == -1)
 		index = m_textures.at(tex);

@@ -51,7 +51,6 @@ private:
 
 	void UpdateSkillDisplay();
 	void TurnStart();
-	void InitiateChooseActor();
 	void ResetPartyPredictedSkills();
 	void SelectAction();
 	void ActionProgress();
@@ -79,6 +78,7 @@ public:
 private:
 	std::shared_ptr<BattleAnimationManager> m_graphics;
 	battle_info m_info;
+	bool m_showingSkills;
 };
 
 #endif

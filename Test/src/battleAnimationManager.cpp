@@ -10,18 +10,43 @@
 #include "particleManager.h"
 #include "soundManager.h"
 #include "renderer.h"
+#include "localizationData.h"
 
 using namespace std;
 
-BattleAnimationManager::BattleAnimationManager()
+BattleAnimationManager::BattleAnimationManager() : m_skill_display(SDS_none), m_particleSprite(PS_Star)
 {
-	m_particleSprite = PS_Star;
 }
 
 void BattleAnimationManager::UpdateColors(int fighterid, bool selected, bool dead, int actionCommandLevel)
 {
 	m_actors.at(fighterid)->UpdateColor(dead, selected, actionCommandLevel);
 }
+
+void BattleAnimationManager::update_skill_display(std::vector<Skill_ptr>* skills, skill_display_state state)
+{
+	if (state == SDS_choose_skill)
+	{
+		// Create a list of fonts that is long enough for all the skills
+		while (m_fonts.size() < skills->size())
+			m_fonts.push_back(FontManager::GetInstance().AddFont(true, false, true, "res/fonts/lowercase.png"));
+
+		// Set the text of each font according to skill text
+		for (unsigned int i = 0; i < skills->size(); i++)
+		{
+			FontManager::GetInstance().EnableFont(m_fonts[i]);
+			FontManager::GetInstance().SetScale(m_fonts[i], 0.5f, 0.5f);
+			FontManager::GetInstance().SetText(m_fonts[i], _(skills->at(i)->_name), Vector3f(5.0f, 4.75f - i * 0.5f, 0));
+			//FontManager::GetInstance().GetFont(m_info._fonts[i])->SetText(m_info._chooseSkill->at(i)->_name, Vector3f(6, 7 - i, 1));
+		}
+	}
+	else
+	{
+		for (unsigned int i = 0; i < m_fonts.size(); i++)
+			FontManager::GetInstance().GetFont(m_fonts[i])->_enabled = false;
+	}
+}
+
 
 void BattleAnimationManager::MoveUp(int fighterid, bool foreward)
 {

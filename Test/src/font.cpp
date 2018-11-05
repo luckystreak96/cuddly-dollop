@@ -171,6 +171,7 @@ void Font::SetupMesh(float xBndry, float yBndry)
 	std::string newmessage = "";
 
 	m_letterPositions.clear();
+	m_mesh.get_tex_coords()->clear();
 
 	// Look at a word
 	for (auto w : words)
@@ -248,7 +249,7 @@ void Font::AddWordToMesh(std::string word, float x, float y)
 
 		m_letterPositions.push_back(pos + m_pos);
 
-		m_mesh.add_tex_offset(m_texture, index);
+		m_mesh.add_tex_offset_specific_atlas(m_texture, index);
 		//m_mesh.AddToMesh(m_verts, m_indices, 3, pos, m_texture, index);
 	}
 }

@@ -51,7 +51,7 @@ void Renderer::Setup()
 	glStencilMask(0xFF);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 	glStencilMask(0x00);
-	if (apply)
+	if (true || apply)
 	{
 		int w, h;
 		glfwGetWindowSize(GLFWManager::m_window, &w, &h);
@@ -129,8 +129,8 @@ void Renderer::Draw()
 		x->Draw();
 	}
 
-	if (!apply)
-		return;
+	//if (!apply)
+	//	return;
 
 	m_fbo.UnbindFrameBuffer();
 

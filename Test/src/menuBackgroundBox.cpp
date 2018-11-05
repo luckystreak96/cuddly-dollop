@@ -103,8 +103,15 @@ MenuBackgroundBox::MenuBackgroundBox(Vector3f position, int width, int height) :
 
 	m_MBO_instances = 1;
 
+	m_mesh.add_instanced_base_to_mesh_static_atlas("CENTERED_TILE");
+	_instancedDraw = true;
+	_instanced_tex_coord_draw = true;
+
 	for (auto& x : m_boxParts)
-		m_mesh.AddToMesh(*x->GetVertices(), x->GetIndices(), x->GetHighestIndex(), Vector3f(), x->GetTexture());
+	{
+		m_mesh.add_tex_offset_static_atlas(x->GetTexture());
+		//m_mesh.AddToMesh(*x->GetVertices(), x->GetIndices(), x->GetHighestIndex(), Vector3f(), x->GetTexture());
+	}
 
 	m_texture = "res/tiles.png";
 	m_tex_ptr = ResourceManager::GetInstance().GetTexture(m_texture);
@@ -114,6 +121,7 @@ MenuBackgroundBox::MenuBackgroundBox(Vector3f position, int width, int height) :
 	m_indices = std::vector<GLuint>(*m_mesh.GetMeshIndices());
 	ClearMModels();
 	Update();
+	set_tex_coord_offsets(m_mesh.get_tex_coords());
 	SetNewBuffers(&m_vertices, &m_indices);
 	LoadGLResources();
 }

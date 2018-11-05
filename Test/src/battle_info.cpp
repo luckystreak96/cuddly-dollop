@@ -1,6 +1,6 @@
 #include "battle_info.h"
 
-battle_info::battle_info() : _showingSkills(false), _state(BS_TurnStart), m_animating(false), _winner(-1)
+battle_info::battle_info() : _state(BS_TurnStart), m_animating(false), _winner(-1)
 {
 	for (unsigned int i = 0; i < SkillProgress::SP_SkillLast; i++)
 		_action_buffer.emplace((SkillProgress)i, std::vector<triple>());

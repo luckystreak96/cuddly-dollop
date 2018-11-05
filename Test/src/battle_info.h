@@ -41,7 +41,6 @@ public:
 	std::set<int> _selectedIndices;
 	BattleState _state;
 	bool m_animating;
-	bool _showingSkills;
 	int _winner;
 
 private:
