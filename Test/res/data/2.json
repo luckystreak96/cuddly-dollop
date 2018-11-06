@@ -3844,6 +3844,18 @@
       "y": 17.0,
       "z": 4.5,
       "sprite": "shadow_full.png"
+    },
+    {
+      "x": 10.0,
+      "y": 8.0,
+      "z": 4.9,
+      "sprite": "chair.png"
+    },
+    {
+      "x": 12.0,
+      "y": 8.0,
+      "z": 4.9,
+      "sprite": "chair.png"
     }
   ],
   "entities": [
@@ -3863,9 +3875,9 @@
       "player": false,
       "ethereal": false,
       "full_size": false,
-      "sprite": "entity_ghost_shiny_blue.png",
+      "sprite": "entity_slime.png",
       "x": 10.0,
-      "y": 8.0,
+      "y": 8.4,
       "z": 4.0,
       "queues": [
         {
