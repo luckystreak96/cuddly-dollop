@@ -4,17 +4,15 @@
 #include <iostream>
 #include <string>
 #include <time.h>
+#include <vector>
+
 #include "texture.h"
-#include "model.h"
-#include "array3d.h"
 #include "math.h"
-#include "mesh.h"
+//#include "mesh.h"
+#include "instance_mesh.h"
 #include "map_tile.h"
 #include "graphicsComponent.h"
-#include <vector>
-#include "renderer.h"
 #include "jsonHandler.h"
-#include "particleGenerator.h"
 
 
 class MapHandler
@@ -34,7 +32,7 @@ public:
 	static int GetYChunk(int y) { return y / m_chunkSize; }
 	unsigned int Size();
 	void SetupMesh();
-	GraphComp_ptr Graphics() { return m_graphics; }
+	GraphComp_ptr Graphics() { return m_mesh.get_graphics(); }
 	void AdjustSprite(std::string sprite, Transformation& t, int index, bool firstTime);
 
 	// Returns the farthest reaches of the map in  x, y and z
@@ -45,8 +43,8 @@ public:
 private:
 	std::vector<std::shared_ptr<MapTile>> m_tiles;
 	std::vector<std::vector<std::vector<MapTile*>>> m_OrderedTiles;
-	Mesh m_mesh;
-	GraphComp_ptr m_graphics = NULL;
+	instance_mesh m_mesh;
+	//GraphComp_ptr m_graphics = NULL;
 	std::shared_ptr<JsonHandler> m_jsonHandler;
 	int m_MBO_instances;
 	unsigned int m_id;

@@ -195,6 +195,7 @@
     <ClInclude Include="src\hudBar.h" />
     <ClInclude Include="src\hudComponent.h" />
     <ClInclude Include="src\hudHealthBar.h" />
+    <ClInclude Include="src\instance_mesh.h" />
     <ClInclude Include="src\lerper.h" />
     <ClInclude Include="src\localizationData.h" />
     <ClInclude Include="src\menu.h" />
@@ -337,6 +338,7 @@
     <ClCompile Include="src\hudBar.cpp" />
     <ClCompile Include="src\hudComponent.cpp" />
     <ClCompile Include="src\hudHealthBar.cpp" />
+    <ClCompile Include="src\instance_mesh.cpp" />
     <ClCompile Include="src\lerper.cpp" />
     <ClCompile Include="src\localizationData.cpp" />
     <ClCompile Include="src\menu.cpp" />

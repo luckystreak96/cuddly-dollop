@@ -1,10 +1,12 @@
 #include "scene.h"
+
 #include "mat4f.h"
 #include "map_handler.h"
 #include "input_manager.h"
 #include "soundManager.h"
 #include "effectManager.h"
 #include "entity.h"
+#include "renderer.h"
 
 SceneGenData Scene::NextScene = SceneGenData();
 bool Scene::_pause = false;

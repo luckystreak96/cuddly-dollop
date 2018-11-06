@@ -1,10 +1,12 @@
 #include "map_handler.h"
 
+#include "renderer.h"
+
 #define COMPOSITION "TILE"
 
 int MapHandler::m_chunkSize = 3;
 
-MapHandler::MapHandler(unsigned int id, std::shared_ptr<JsonHandler> jh) : m_mesh(Mesh()), m_id(id), m_jsonHandler(jh)
+MapHandler::MapHandler(unsigned int id, std::shared_ptr<JsonHandler> jh) : m_id(id), m_jsonHandler(jh)
 {
 	auto map = m_jsonHandler->LoadMap(id);
 
@@ -94,28 +96,15 @@ MapHandler::MapHandler(const std::string& filePath)
 
 void MapHandler::SetupMesh()
 {
-	m_mesh.Reset();
+	m_texture = "res/tiles.png";
 
-	Model::GetInstance().loadModel(COMPOSITION);
-	m_mesh.AddToMesh(Model::GetInstance().getVertexVertices(), Model::GetInstance().getIndices(), 3, Vector3f(), "");
-	m_mesh.set_placeholder_uv_offset(true);
+	m_mesh.init_static_atlas(GraphComp_ptr(new GraphicsComponent("", m_texture)), COMPOSITION);
+	m_mesh.set_graphics_position(Vector3f(0, 0, 20.0f));
 
 	for (auto t : m_tiles)
-	{
-		//std::vector<Vertex> verts = t->Physics()->GetVerticesRef();
 		m_mesh.add_tex_offset_static_atlas(t->GetTexture());
-		//m_mesh.AddToMesh(verts, t->Physics()->GetIndices(), t->Physics()->GetHighestIndex(), t->Physics()->Position(), t->GetTexture());
-	}
 
 	m_MBO_instances = m_tiles.size();
-
-	m_texture = "res/tiles.png";
-	//m_mesh.Finalize(m_texture);
-	m_graphics = GraphComp_ptr(new GraphicsComponent(m_mesh.GetMeshVertices(), m_mesh.GetMeshIndices(), m_texture));
-	m_graphics->SetPhysics(Vector3f(0, 0, 20.0f), Vector3f());
-	m_graphics->_instancedDraw = true;
-	m_graphics->_instanced_tex_coord_draw = true;
-	m_graphics->set_tex_coord_offsets(m_mesh.get_tex_coords());
 }
 
 void MapHandler::Update(bool forced)
@@ -125,11 +114,10 @@ void MapHandler::Update(bool forced)
 	//	THE Z ACCORDINGLY. THIS IS DONE THIS WAY BECAUSE OF MESHES, THEY CALCULATE POS AHEAD OF
 	//	TIME AND CHANGE THE VERTEX POSITIONS -- BUT NOT ANY OTHER OBJECT. TO KEEP THE Z CONSISTENT,
 	//	I USE THE MATRIX INSTEAD OF MULTIPLYING THE OTHER OBJECTS VERTEX POS BY THEIR POS.
-	bool firstTime = m_graphics->GetMModels().size() == 0;
-	if (m_graphics->GetMModels().size() == 0 || forced)
+	bool firstTime = m_mesh.get_graphics()->GetMModels().size() == 0;
+	if (m_mesh.get_graphics()->GetMModels().size() == 0 || forced)
 	{
-		//int i = 0;
-		m_graphics->ClearMModels();
+		m_mesh.get_graphics()->ClearMModels();
 		for (auto x : m_tiles)
 		{
 			Vector3f pos = x->Physics()->Position();
@@ -141,11 +129,8 @@ void MapHandler::Update(bool forced)
 			Transformation t;
 			t.SetTranslation(pos);
 			std::string texture = x->GetTexture();
-			//AdjustSprite(texture, t, i, firstTime);
-			m_graphics->InsertMModels(t);
-			//++i;
+			m_mesh.get_graphics()->InsertMModels(t);
 		}
-		m_graphics->ResetVBO();
 	}
 }
 
@@ -157,17 +142,17 @@ void MapHandler::AdjustSprite(std::string sprite, Transformation& t, int index, 
 		t.SetScale(Vector3f(1, 2, 1));
 		if (firstTime)
 		{
-			float y = m_graphics->GetVertices()->at(index + 2).tex.y;
+			float y = m_mesh.get_graphics()->GetVertices()->at(index + 2).tex.y;
 			float increase = TextureAtlas::m_textureAtlas.GetTexCoordWH().y;
-			m_graphics->GetVertices()->at(index + 2).tex.y += TextureAtlas::m_textureAtlas.GetTexCoordWH().y;
-			m_graphics->GetVertices()->at(index + 3).tex.y += TextureAtlas::m_textureAtlas.GetTexCoordWH().y;
+			m_mesh.get_graphics()->GetVertices()->at(index + 2).tex.y += TextureAtlas::m_textureAtlas.GetTexCoordWH().y;
+			m_mesh.get_graphics()->GetVertices()->at(index + 3).tex.y += TextureAtlas::m_textureAtlas.GetTexCoordWH().y;
 		}
 	}
 }
 
 void MapHandler::SetRender()
 {
-	Renderer::GetInstance().Add(m_graphics);
+	Renderer::GetInstance().Add(m_mesh.get_graphics());
 }
 
 void MapHandler::Draw()
@@ -175,9 +160,9 @@ void MapHandler::Draw()
 	//Set to 0 so the mesh doesnt move all the objects as well.
 	//This should only be modified if the whole mesh is moving, 
 	//otherwise each individual object inside it has its own coords set in the vertices.
-	m_graphics->GetModelMat()->SetTranslation(Vector3f(0, 0, 0));
+	m_mesh.get_graphics()->GetModelMat()->SetTranslation(Vector3f(0, 0, 0));
 
-	m_graphics->Draw();
+	m_mesh.get_graphics()->Draw();
 }
 
 std::vector<std::shared_ptr<MapTile>>* MapHandler::Tiles()

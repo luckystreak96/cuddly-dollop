@@ -1,27 +1,23 @@
 #include "font.h"
+
 #include "utils.h"
 #include "gameData.h"
-
 #include "renderer.h"
+#include "resource_manager.h"
+#include "fontGraphicsComponent.h"
 
 
 Font::Font(bool sTatic, bool temporary, bool lightSpeed, std::string path) : m_texture(path),
 m_elapsedTime(0), m_textSpeed(1.0), m_timePerLetter(0.03), m_static(sTatic), m_temporary(temporary), m_lifetime(5.0), _letterSpacing(1.0f), MaxTime(30000),
 m_lettersPerRow(16), m_lettersPerColumn(16), m_xScale(1.0f), m_yScale(1.0f), m_lightSpeed(lightSpeed), _enabled(true), m_centered(false), m_xBndry(-1), m_x(0), m_y(0)
 {
-	m_mesh = Mesh(m_lettersPerRow * m_lettersPerColumn);
-	int bitmapWidth = 16;
+	std::shared_ptr<FontGraphicsComponent> graphics = std::shared_ptr<FontGraphicsComponent>(new FontGraphicsComponent("", path));
+	graphics->SetStatic(m_static);
 
-	Model::GetInstance().loadModel("TEXT");
-	m_verts = Model::GetInstance().getVertexVertices();
-	m_indices = Model::GetInstance().getIndices();
+	m_mesh.init_specific_atlas(graphics, "TEXT", path, m_lettersPerRow * m_lettersPerColumn);
 
 	CreateHash();
 	ResourceManager::GetInstance().LoadTexture(path);
-
-	//m_mesh.init_instanced_tex_drawing(m_verts, m_indices, path);
-	m_mesh.AddToMesh(m_verts, m_indices, 3, Vector3f(), path, 0);
-	m_mesh.set_placeholder_uv_offset(false);
 
 	SetText(std::string(" "));
 }
@@ -70,46 +66,17 @@ bool Font::TextDisplayDone()
 
 void Font::ChangeLetter(unsigned int index, uint32_t newChar)
 {
-	//The verts per letter are by groups of 4
-	//index *= 4;
+	int letter = CharToCode(newChar);
 
-	//The texture coords (they need the default values to register properly in the texAtlas func)
-	//std::vector<Vector2f> vecs = {
-	//Vector2f(0, 0),
-	//Vector2f(1, 0),
-	//Vector2f(0, 1),
-	//Vector2f(1, 1)
-	//};
+	//Update the tex_coords for the mesh's instanced draw
+	if (m_mesh.tex_size() > index + 1)
+		m_mesh.change_tex_offset(index, m_texture, letter);
 
-	//for (int i = 0; i < 4; i++)
-	//{
-		//Let the texture atlas figure out what the tex coords should be
-		//m_mesh.GetAtlas()->TextureIndexToCoord(CharToCode(newChar), vecs.at(i).x, vecs.at(i).y);
-		int letter = CharToCode(newChar);
-
-
-		//Update them in the vertices for the mesh and graphics (cuz y not)
-		if (m_mesh.get_tex_coords()->size() > index + 1)
-		{
-			m_mesh.change_tex_offset(index, m_texture, letter);
-			m_graphics->modify_tex_offset(index, m_mesh.get_uv_offset_coords(m_texture, letter));
-		}
-		//if (m_mesh.GetMeshVertices()->size() > index + i)
-		//{
-		//	m_mesh.GetMeshVertices()->at(index + i).tex = vecs.at(i);
-		//	m_graphics->GetVertices()->at(index + i).tex = vecs.at(i);
-		//}
-	//}
-
-	//Make sure the component updates its stuff
-	m_graphics->ResetVBO();
+	// The mesh takes care of updating the buffers on get_graphics() call
 }
 
 void Font::SetupMesh(float xBndry, float yBndry)
 {
-	//m_mesh.Reset();
-	//m_mesh.AddToMesh(m_verts, m_indices, 3, Vector3f(), m_texture, 1);
-
 	// Split the text into words for op word wrap
 	std::vector<std::string> temp = Utils::Split(_text, ' ');
 	std::vector<std::string> words = std::vector<std::string>();//split(m_message, ' ');
@@ -171,7 +138,7 @@ void Font::SetupMesh(float xBndry, float yBndry)
 	std::string newmessage = "";
 
 	m_letterPositions.clear();
-	m_mesh.get_tex_coords()->clear();
+	m_mesh.tex_clear();// .get_tex_coords()->clear();
 
 	// Look at a word
 	for (auto w : words)
@@ -211,7 +178,6 @@ void Font::SetupMesh(float xBndry, float yBndry)
 	// To accomadate choices that might be drawn after
 	//m_y -= m_yScale;
 
-
 	// Set message to the non-\n version
 	_text = newmessage;
 	m_message = Utils::ConvertUTF8(newmessage);
@@ -219,17 +185,6 @@ void Font::SetupMesh(float xBndry, float yBndry)
 	// Reset messageprogress so we dont have \n's
 	for (auto x : m_message)
 		m_messageProgress.push_back(' ');
-
-	//delete m_graphics;
-	if (m_graphics == NULL)
-		m_graphics = std::shared_ptr<FontGraphicsComponent>(new FontGraphicsComponent(&m_verts, &m_indices, m_texture));
-	//m_graphics->FullReset(m_mesh.GetMeshVertices(), m_mesh.GetMeshIndices());
-	m_graphics->_instancedDraw = true;
-	m_graphics->_instanced_tex_coord_draw = true;
-	m_graphics->SetNewBuffers(m_mesh.GetMeshVertices(), m_mesh.GetMeshIndices());
-	m_graphics->set_tex_coord_offsets(m_mesh.get_tex_coords());
-	m_graphics->SetPhysics(m_pos, Vector3f());
-	m_graphics->SetStatic(m_static);
 
 	UpdateModel();
 }
@@ -250,7 +205,6 @@ void Font::AddWordToMesh(std::string word, float x, float y)
 		m_letterPositions.push_back(pos + m_pos);
 
 		m_mesh.add_tex_offset_specific_atlas(m_texture, index);
-		//m_mesh.AddToMesh(m_verts, m_indices, 3, pos, m_texture, index);
 	}
 }
 
@@ -342,7 +296,7 @@ void Font::SetTextVariables()
 
 void Font::Draw()
 {
-	m_graphics->Draw();
+	m_mesh.get_graphics()->Draw();
 }
 
 void Font::SetTextSpeed(double speed)
@@ -362,8 +316,8 @@ inline unsigned int Font::CharToCode(uint32_t c)
 
 void Font::SetRender()
 {
-	if (m_graphics != NULL)
-		Renderer::GetInstance().Add(m_graphics);
+	if (m_mesh.get_graphics() != NULL)
+		Renderer::GetInstance().Add(m_mesh.get_graphics());
 }
 
 void Font::SetScale(float xScale, float yScale)
@@ -376,30 +330,30 @@ void Font::SetScale(float xScale, float yScale)
 
 void Font::UpdateModel()
 {
-	if (m_graphics)
+	if (m_mesh.get_graphics())
 	{
-		m_graphics->ClearMModels();
+		m_mesh.get_graphics()->ClearMModels();
 		for (auto& x : m_letterPositions)
 		{
 			Transformation t;
 			t.SetTranslation(x);
 			t.SetScale(Vector3f(m_xScale, m_yScale, 1));
-			m_graphics->InsertMModels(t);
+			m_mesh.get_graphics()->InsertMModels(t);
 		}
 	}
 }
 
 void Font::UpdateModel(Vector3f offset)
 {
-	if (m_graphics)
+	if (m_mesh.get_graphics())
 	{
-		m_graphics->ClearMModels();
+		m_mesh.get_graphics()->ClearMModels();
 		for (auto& x : m_letterPositions)
 		{
 			Transformation t;
 			t.SetTranslation(x + offset);
 			t.SetScale(Vector3f(m_xScale, m_yScale, 1));
-			m_graphics->InsertMModels(t);
+			m_mesh.get_graphics()->InsertMModels(t);
 		}
 	}
 }

@@ -2,17 +2,14 @@
 #define FONT_H__
 
 #include "vector3f.h"
+#include "instance_mesh.h"
+
 #include <string>
 #include <sstream>
 #include <vector>
 #include <iterator>
 #include <map>
 #include <math.h>
-#include "resource_manager.h"
-#include "graphicsComponent.h"
-#include "mesh.h"
-//#include "physicsComponent.h"
-#include "fontGraphicsComponent.h"
 
 class Font;
 typedef std::shared_ptr<Font> Font_ptr;
@@ -31,7 +28,7 @@ public:
 	virtual void SetRender();
 	void SetTextVariables();
 	void SetTextSpeed(double speed);
-	std::shared_ptr<FontGraphicsComponent> GetGraphics() { return m_graphics; }
+	std::shared_ptr<GraphicsComponent> GetGraphics() { return m_mesh.get_graphics(); }
 	bool IsDead();
 	virtual void SetScale(float xScale, float yScale);
 	bool TextDisplayDone();
@@ -70,18 +67,13 @@ protected:
 	bool m_lightSpeed;
 	bool m_centered;
 
-	std::shared_ptr<FontGraphicsComponent> m_graphics = NULL;
 	std::vector<Vector3f> m_letterPositions;
 	std::map<uint32_t, unsigned int> m_letters;
-	Mesh m_mesh;
+	instance_mesh m_mesh;
 	const unsigned int m_lettersPerRow;
 	const unsigned int m_lettersPerColumn;
 
-	//PhysicsComponent m_phys;
 	Vector3f m_pos;
-	//std::vector<float> m_vertices;
-	std::vector<Vertex> m_verts;
-	std::vector<GLuint> m_indices;
 	Transformation trans;
 
 	Vector3f m_basePosition;

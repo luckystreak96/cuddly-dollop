@@ -8,8 +8,8 @@ enum OptionType { OT_Text };
 class MenuFactory
 {
 public:
-	static std::shared_ptr<FontGraphicsComponent> BuildOption(OptionType type, std::string text, Vector3f location, bool centered);
-	static std::vector<std::shared_ptr<FontGraphicsComponent>> BuildOptions(OptionType type, std::vector<std::string> text, Vector3f location, bool centered);
+	static std::shared_ptr<GraphicsComponent> BuildOption(OptionType type, std::string text, Vector3f location, bool centered);
+	static std::vector<std::shared_ptr<GraphicsComponent>> BuildOptions(OptionType type, std::vector<std::string> text, Vector3f location, bool centered);
 };
 
 #endif

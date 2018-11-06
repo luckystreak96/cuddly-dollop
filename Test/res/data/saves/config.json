@@ -13,10 +13,10 @@
             "mute": true
         },
         {
-            "resolution": 2
+            "resolution": 4
         },
         {
-            "bloom": 0
+            "bloom": 1
         }
     ],
     "keybindings": [

@@ -31,6 +31,7 @@ public:
 	bool Init();
 	void SetWorldPosition(float* mat);
 	void SetModelPosition(float* mat);
+	void SetLightPower(float lightPower);
 	void SetSize(float* mat);
 private:
 	GammaEffect();

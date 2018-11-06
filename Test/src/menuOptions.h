@@ -23,7 +23,7 @@ public:
 private:
 	std::vector<std::string> m_options;
 	bool m_firstUpdate;
-	std::vector<std::shared_ptr<FontGraphicsComponent>> m_graphics;
+	std::vector<std::shared_ptr<GraphicsComponent>> m_graphics;
 	Vector3f m_position;
 };
 

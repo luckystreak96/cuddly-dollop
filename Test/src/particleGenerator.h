@@ -1,11 +1,14 @@
 #ifndef PARTICLE_GENERATOR_H__
 #define PARTICLE_GENERATOR_H__
 
-#include "graphicsComponent.h"
-#include "mesh.h"
+#include "instance_mesh.h"
+//#include "graphicsComponent.h"
+//#include "mesh.h"
 
 #include <vector>
 #include <memory>
+
+class GraphicsComponent;
 
 class ParticleGenerator;
 typedef std::shared_ptr<ParticleGenerator> Particle_ptr;
@@ -104,7 +107,7 @@ public:
 	std::vector<std::shared_ptr<Particle>>* Particles();
 	unsigned int Size();
 	void SetupMesh();
-	GraphComp_ptr Graphics() { return m_graphics; }
+	std::shared_ptr<GraphicsComponent> Graphics() { return m_mesh.get_graphics(); }
 
 	// Returns the farthest reaches of the map in  x, y and z
 	Vector3f GetRange();
@@ -115,8 +118,9 @@ private:
 	std::vector<std::shared_ptr<Particle>> m_particles;
 	std::vector<Vertex> m_model_vertices;
 	std::vector<GLuint> m_model_indices;
-	Mesh m_mesh;
-	GraphComp_ptr m_graphics = NULL;
+	//Mesh m_mesh;
+	instance_mesh m_mesh;
+	//GraphComp_ptr m_graphics = NULL;
 	int m_MBO_instances;
 	unsigned int m_id;
 	size_t m_prevModels;

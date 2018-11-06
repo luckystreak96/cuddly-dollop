@@ -2,7 +2,7 @@
 
 #include "font.h"
 
-std::shared_ptr<FontGraphicsComponent> MenuFactory::BuildOption(OptionType type, std::string text, Vector3f location, bool centered)
+std::shared_ptr<GraphicsComponent> MenuFactory::BuildOption(OptionType type, std::string text, Vector3f location, bool centered)
 {
 	if (type == OT_Text)
 	{
@@ -14,9 +14,9 @@ std::shared_ptr<FontGraphicsComponent> MenuFactory::BuildOption(OptionType type,
 	}
 }
 
-std::vector<std::shared_ptr<FontGraphicsComponent>> MenuFactory::BuildOptions(OptionType type, std::vector<std::string> text, Vector3f location, bool centered)
+std::vector<std::shared_ptr<GraphicsComponent>> MenuFactory::BuildOptions(OptionType type, std::vector<std::string> text, Vector3f location, bool centered)
 {
-	std::vector<std::shared_ptr<FontGraphicsComponent>> result;
+	std::vector<std::shared_ptr<GraphicsComponent>> result;
 	for (int i = 0; i < text.size(); i++)
 		result.push_back(BuildOption(type, text[i], location - Vector3f(0, i, 0), centered));
 

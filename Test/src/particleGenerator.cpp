@@ -1,14 +1,15 @@
 #include "particleGenerator.h"
 
 #include "renderer.h"
+#include "graphicsComponent.h"
 
 #include <time.h>
 
-ParticleGenerator::ParticleGenerator() : m_mesh(Mesh()), m_power(2.0f), completed(false)
+ParticleGenerator::ParticleGenerator() : m_power(2.0f), completed(false)
 {
-	Model::GetInstance().loadModel("CENTERED_PARTICLE_TILE");
-	m_model_vertices = Model::GetInstance().getVertexVertices();
-	m_model_indices = Model::GetInstance().getIndices();
+	m_texture = "res/tiles.png";
+	m_mesh.init_static_atlas(GraphComp_ptr(new GraphicsComponent("", m_texture)), "CENTERED_PARTICLE_TILE");
+	m_mesh.set_graphics_position(Vector3f(0, 0, 0.6f));
 }
 
 Particle::Particle() : texture("snowflake.png"), position(Vector3f(0, 0, 0.6f)),
@@ -339,41 +340,10 @@ ParticleGenerator::~ParticleGenerator()
 
 void ParticleGenerator::SetupMesh()
 {
-	m_mesh.Reset();
+	m_mesh.tex_clear();
 
-	//std::sort(m_particles.begin(), m_particles.end(), ParticleSort);
-	//for (auto& t : m_particles)
-	//{
-	//	Vertex::SetColorAll(m_model_vertices.begin(), m_model_vertices.end(), t->color, t->alpha);
-	//m_mesh.AddToMesh(m_model_vertices, m_model_indices, m_model_vertices.size() - 1, t->position, t->texture);
-	//}
-
-	//m_MBO_instances = m_particles.size();
-
-	m_texture = "res/tiles.png";
-
-	m_graphics = GraphComp_ptr(new GraphicsComponent("CENTERED_PARTICLE_TILE", m_texture));
-
-	std::vector<Vector2f> vecs = {
-Vector2f(0, 0),
-Vector2f(1, 0),
-Vector2f(0, 1),
-Vector2f(1, 1)
-	};
-
-	int counter = 0;
-	for (auto& v : *m_graphics->GetVertices())
-	{
-		Vector2f temp = Vector2f(vecs[counter % 4].x, vecs[counter % 4].y);
-		TextureAtlas::m_textureAtlas.TextureIndexToCoord(TextureAtlas::m_textureAtlas.AddTexture(m_particles[0]->texture), temp.x, temp.y);
-
-		v.tex = temp;
-		counter++;
-	}
-	//m_graphics = GraphComp_ptr(new GraphicsComponent(m_mesh.GetMeshVertices(), m_mesh.GetMeshIndices(), m_texture));
-	m_graphics->_instancedDraw = true;
-	m_graphics->SetPhysics(Vector3f(0, 0, 0.6f), Vector3f());
-	m_graphics->ResetVBO();
+	for (auto& x : m_particles)
+		m_mesh.add_tex_offset_static_atlas(rand() % 4 == 0 ? "dust.png" : x->texture);
 }
 
 void ParticleGenerator::LogicUpdate()
@@ -399,7 +369,7 @@ void ParticleGenerator::LogicUpdate()
 	//int total = m_particles.size();
 
 	// if the number of particles is still the same, update the mmodels instead of re-inserting them
-	m_prevModels = m_graphics->GetMModels().size();
+	m_prevModels = m_mesh.get_graphics()->GetMModels().size();
 	if (m_prevModels == m_particles.size())
 	{
 		Transformation t;
@@ -412,7 +382,7 @@ void ParticleGenerator::LogicUpdate()
 				//onCam++;
 				t.SetTranslation(x->position);
 				x->SetTrans(t);
-				m_graphics->InsertMModels(t, i);
+				m_mesh.get_graphics()->InsertMModels(t, i);
 			}
 			// if its not on camera, hide the particle and make a cheap update
 			// needs to be hidden otherwise the modelMat doesnt change and itll stay frozen on screen until
@@ -422,21 +392,21 @@ void ParticleGenerator::LogicUpdate()
 				if (x->matrix.m[2][3] == -100)
 					continue;
 				x->matrix.m[2][3] = -100;
-				m_graphics->InsertMModels(x->matrix, i);
+				m_mesh.get_graphics()->InsertMModels(x->matrix, i);
 			}
 		}
 	}
 	// Update all the particle models
 	else
 	{
-		m_graphics->ClearMModels();
+		m_mesh.get_graphics()->ClearMModels();
 
 		Transformation t;
 		for (auto &x : m_particles)
 		{
 			t.SetTranslation(x->position);
 			x->SetTrans(t);
-			m_graphics->InsertMModels(t);
+			m_mesh.get_graphics()->InsertMModels(t);
 		}
 	}
 }
@@ -454,12 +424,12 @@ void ParticleGenerator::Update(Vector3f pos)
 
 void ParticleGenerator::SetRender()
 {
-	Renderer::GetInstance().Add(m_graphics);
+	Renderer::GetInstance().Add(m_mesh.get_graphics());
 }
 
 void ParticleGenerator::Draw()
 {
-	m_graphics->Draw();
+	m_mesh.get_graphics()->Draw();
 }
 
 std::vector<std::shared_ptr<Particle>>* ParticleGenerator::Particles()
@@ -484,5 +454,5 @@ void ParticleGenerator::SetPowerLevel(float power)
 
 void ParticleGenerator::SetColor(Vector3f color, float alpha)
 {
-	m_graphics->SetColorAll(color, alpha);
+	m_mesh.get_graphics()->SetColorAll(color, alpha);
 }

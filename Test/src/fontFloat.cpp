@@ -1,5 +1,7 @@
 #include "fontFloat.h"
 
+#include "graphicsComponent.h"
+
 FontFloat::FontFloat(double lifetime, std::string tex) : Font(false, true, true, tex),
 Alpha(1.0f)
 {
@@ -18,21 +20,21 @@ void FontFloat::Update(double elapsedTime)
 	m_offset.y += elapsedTime * 0.8;
 	Alpha = 1.f - (float)(m_elapsedTime / m_lifetime);
 	UpdateModel();
-	m_graphics->SetColorAll(Color, Alpha);
+	m_mesh.get_graphics()->SetColorAll(Color, Alpha);
 	Font::Update(elapsedTime);
 }
 
 void FontFloat::UpdateModel()
 {
-	if (m_graphics)
+	if (m_mesh.get_graphics())
 	{
-		m_graphics->ClearMModels();
+		m_mesh.get_graphics()->ClearMModels();
 		for (auto& x : m_letterPositions)
 		{
 			Transformation t;
 			t.SetTranslation(x + m_offset);
 			t.SetScale(Vector3f(m_xScale, m_yScale, 1));
-			m_graphics->InsertMModels(t);
+			m_mesh.get_graphics()->InsertMModels(t);
 		}
 	}
 }

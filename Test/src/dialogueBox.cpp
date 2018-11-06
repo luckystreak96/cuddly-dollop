@@ -8,7 +8,7 @@
 DialogueBox* DialogueBox::m_owner = NULL;
 std::shared_ptr<MenuBackgroundBox> DialogueBox::m_box = NULL;
 
-DialogueBox::DialogueBox(unsigned int entity_id, std::vector<Dialogue> d, std::vector<DialogueChoice> dc) : m_firstTime(true)
+DialogueBox::DialogueBox(unsigned int entity_id, std::vector<Dialogue> d, std::vector<DialogueChoice> dc) : Font(true), m_firstTime(true)
 {
 	auto graph = std::shared_ptr<DialogueGraph>(new DialogueGraph(d, dc));
 	m_dialogueGraphs.emplace("english", graph);
@@ -17,7 +17,7 @@ DialogueBox::DialogueBox(unsigned int entity_id, std::vector<Dialogue> d, std::v
 	Construct();
 }
 
-DialogueBox::DialogueBox(unsigned int entity_id, std::shared_ptr<DialogueGraph> dg) : m_firstTime(true)
+DialogueBox::DialogueBox(unsigned int entity_id, std::shared_ptr<DialogueGraph> dg) : Font(true), m_firstTime(true)
 {
 	m_dialogueGraphs.emplace("english", dg);
 	m_target = entity_id;
@@ -25,7 +25,7 @@ DialogueBox::DialogueBox(unsigned int entity_id, std::shared_ptr<DialogueGraph> 
 	Construct();
 }
 
-DialogueBox::DialogueBox(unsigned int entity_id, std::map<std::string, std::shared_ptr<DialogueGraph>> dg) : m_firstTime(true)
+DialogueBox::DialogueBox(unsigned int entity_id, std::map<std::string, std::shared_ptr<DialogueGraph>> dg) : Font(true), m_firstTime(true)
 {
 	m_dialogueGraphs = dg;
 	m_target = entity_id;
@@ -67,7 +67,7 @@ DialogueBox::~DialogueBox()
 void DialogueBox::Draw()
 {
 	m_box->Draw();
-	m_graphics->Draw();
+	m_mesh.get_graphics()->Draw();
 	for (auto x : m_choices)
 		x->Draw();
 }
@@ -260,8 +260,8 @@ void DialogueBox::SetRender()
 {
 	if (m_box != NULL)
 		Renderer::GetInstance().Add(m_box);
-	if (m_graphics != NULL)
-		Renderer::GetInstance().Add(m_graphics);
+	if (m_mesh.get_graphics() != NULL)
+		Renderer::GetInstance().Add(m_mesh.get_graphics());
 	for (auto x : m_choices)
 		x->SetRender();
 }

@@ -25,7 +25,7 @@ bool Fade::IsDone()
 void Fade::Begin()
 {
 	m_fadeProgress += (m_fadeIn ? 2.f : -2.f) * (float)ElapsedTime::GetInstance().GetElapsedTime();
-	//EffectManager::GetInstance().Enable(E_Fade);
 	//FadeEffect::GetInstance().SetFade(m_fadeProgress);
+	EffectManager::GetInstance().Enable(E_Gamma);
 	EffectManager::GetInstance().SetLightIntensity(m_fadeProgress <= 0 ? 0 : m_fadeProgress);
 }

@@ -122,6 +122,7 @@ void Renderer::Draw()
 
 	//if (!apply)
 	//	EffectManager::GetInstance().Enable(E_Gamma);
+	EffectManager::GetInstance().Enable(E_Basic);
 
 	//Draw everything
 	for (auto x : m_toDraw)

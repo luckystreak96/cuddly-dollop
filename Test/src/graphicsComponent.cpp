@@ -33,8 +33,11 @@ void GraphicsComponent::SetNewBuffers(std::vector<Vertex>* verts, std::vector<GL
 
 	m_vertices = std::vector<Vertex>(*verts);
 	m_indices = std::vector<GLuint>(*inds);
+	if (m_texCoords.size() == 0)
+		m_texCoords.push_back(Vector2f());
 	m_lastMModelSize = 0;
 	SetBuffers();
+	m_GL_loaded = true;
 }
 
 void GraphicsComponent::FullReset(std::vector<Vertex>* verts, std::vector<GLuint>* inds)
@@ -200,7 +203,7 @@ bool GraphicsComponent::UnloadExternalResources()
 
 bool GraphicsComponent::LoadGLResources()
 {
-	if (m_modelName == "NONE" && m_vertices.size() <= 0)
+	if ((m_modelName == "NONE" || m_modelName == "") && m_vertices.size() <= 0)
 	{
 		m_GL_loaded = false;
 		return false;

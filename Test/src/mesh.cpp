@@ -54,15 +54,17 @@ void Mesh::add_instanced_base_to_mesh_static_atlas(std::string model)
 void Mesh::add_instanced_base_to_mesh(std::string model, std::string tex, bool use_global_tileset)
 {
 	Model::GetInstance().loadModel(model);
-	m_vertexList = Model::GetInstance().getVertexVertices();
-	m_indices = Model::GetInstance().getIndices();
+	std::vector<Vertex> verts = Model::GetInstance().getVertexVertices();
+	std::vector<GLuint> inds = Model::GetInstance().getIndices();
+	//m_vertexList = Model::GetInstance().getVertexVertices();
+	//m_indices = Model::GetInstance().getIndices();
 
 	if (use_global_tileset)
 		tex = "";
 	else
 		ResourceManager::GetInstance().LoadTexture(tex);
 
-	AddToMesh(m_vertexList, m_indices, 3, Vector3f(), tex, use_global_tileset ? -1 : 0);
+	AddToMesh(verts, inds, 3, Vector3f(), tex, use_global_tileset ? -1 : 0);
 	set_placeholder_uv_offset(use_global_tileset);
 }
 

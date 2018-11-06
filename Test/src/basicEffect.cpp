@@ -78,6 +78,11 @@ void GammaEffect::SetModelPosition(float* mat)
 	glUniformMatrix4fv(GetUniformLocation("gModel"), 1, GL_TRUE, (const GLfloat*)mat);
 }
 
+void GammaEffect::SetLightPower(float power)
+{
+	glUniform1f(GetUniformLocation("gLightIntensity"), (const GLfloat)power);
+}
+
 void GammaEffect::SetSize(float* mat)
 {
 	glUniformMatrix4fv(GetUniformLocation("gSize"), 1, GL_TRUE, (const GLfloat*)mat);
