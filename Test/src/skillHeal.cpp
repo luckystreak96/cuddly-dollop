@@ -53,8 +53,10 @@ void SkillHeal::ModifyAnimations()
 	switch (m_progress)
 	{
 	case 3:
-		std::get<2>(m_animationBuffer[0])[0] = 20.f;
-		std::get<2>(m_animationBuffer[0])[1] = 2.f;
+		m_animationBuffer[0]._args[0] = 20.f;
+		m_animationBuffer[0]._args[1] = 2.f;
+		//std::get<2>(m_animationBuffer[0])[0] = 20.f;
+		//std::get<2>(m_animationBuffer[0])[1] = 2.f;
 		break;
 	default:
 		break;

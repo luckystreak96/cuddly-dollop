@@ -551,6 +551,12 @@
     <ClInclude Include="src\instance_mesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\colors.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\anim_particle_effect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -953,6 +959,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\instance_mesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\anim_particle_effect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

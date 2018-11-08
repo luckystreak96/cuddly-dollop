@@ -56,7 +56,9 @@ void SkillMelee::SetAnimations()
 		m_state = SP_2_BeginAnim;
 		m_animationBuffer.push_back(triple(AC_CameraFollow, AARG_Targets, floats({0}))); // follow the target async
 		m_animationBuffer.push_back(triple(AC_CameraScale, AARG_Float, floats({ 1.5f }))); // zoom 1.5
+		m_animationBuffer.push_back(triple(AS_ParticleEffect, AARG_Float, floats({ 3 })));
 		m_animationBuffer.push_back(triple(AS_JumpTo, AARG_Target, floats({ 0 }))); // jump to target
+		m_animationBuffer.push_back(triple(AS_ParticleEffect, AARG_Float, floats({ 3 })));
 		m_animationBuffer.push_back(triple(AS_Animation, AARG_FloatAsync, floats({ AE_Attack, 0.6f }))); // smack animation async (animation, seconds)
 		m_animationBuffer.push_back(triple(AS_Wait, AARG_Float, floats({ 0.3f }))); // wait half the animation time
 		break;

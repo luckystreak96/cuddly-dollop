@@ -171,10 +171,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\anim_particle_effect.h" />
     <ClInclude Include="src\battleHUD.h" />
     <ClInclude Include="src\battleUnit.h" />
     <ClInclude Include="src\battle_info.h" />
     <ClInclude Include="src\battle_state.h" />
+    <ClInclude Include="src\colors.h" />
     <ClInclude Include="src\fighterFactory.h" />
     <ClInclude Include="src\animBasic.h" />
     <ClInclude Include="src\animBonusEffect.h" />
@@ -315,6 +317,7 @@
     <ClInclude Include="tests\catch.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\anim_particle_effect.cpp" />
     <ClCompile Include="src\battleHUD.cpp" />
     <ClCompile Include="src\battle_info.cpp" />
     <ClCompile Include="src\fighterFactory.cpp" />

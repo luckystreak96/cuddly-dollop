@@ -33,6 +33,7 @@ public:
 	// Specific Animations
 	void DamageAnimation(int target, Skill_ptr skill, Damage dmg);
 	void ExpAnimation(int id, int xp);
+	void generate_particles(int amount, Vector3f colour, Vector3f position);
 
 	// Animations
 	void UpdateAnimations();

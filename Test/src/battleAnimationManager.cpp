@@ -7,10 +7,12 @@
 #include "animWait.h"
 #include "animScreenShake.h"
 #include "animColorFlash.h"
+#include "anim_particle_effect.h"
 #include "particleManager.h"
 #include "soundManager.h"
 #include "renderer.h"
 #include "localizationData.h"
+#include "colors.h"
 
 using namespace std;
 
@@ -115,6 +117,17 @@ void BattleAnimationManager::DamageAnimation(int target, Skill_ptr skill, Damage
 	SoundManager::GetInstance().PlaySoundFX("res/audio/fx/swish_2.wav");
 }
 
+void BattleAnimationManager::generate_particles(int amount, Vector3f color, Vector3f position)
+{
+	// Particles
+	Vector3f pos = position;
+	Particle_ptr particles = Particle_ptr(new ParticleGenerator());
+	particles->SetPowerLevel(0.3f);
+	particles->Init(PT_Explosion, amount, pos, false, SpriteFromEnum.at((ParticleSprite)m_particleSprite));
+	particles->SetColor(color);
+	ParticleManager::GetInstance().AddParticles(particles);
+}
+
 Vector3f BattleAnimationManager::CalculateDamageColor(Skill_ptr skill, Damage dmg)
 {
 	// color
@@ -171,9 +184,12 @@ Vector3f BattleAnimationManager::CalculateTextColor(Skill_ptr skill, Damage dmg)
 
 Anim_ptr BattleAnimationManager::CreateAnimation(triple ao)
 {
-	AnimationOperation op = get<0>(ao);
-	AnimationArgument aa = get<1>(ao);
-	floats args = get<2>(ao);
+	AnimationOperation op = ao._animation;
+	//AnimationOperation op = get<0>(ao);
+	AnimationArgument aa = ao._arg_type;
+	//AnimationArgument aa = get<1>(ao);
+	floats args = ao._args;
+	//floats args = get<2>(ao);
 	Anim_ptr result;
 	Vector3f pos;
 	Actor_ptr actor;
@@ -182,7 +198,7 @@ Anim_ptr BattleAnimationManager::CreateAnimation(triple ao)
 	int owner = _owner;
 	bool boolean = true;
 
-	switch (get<0>(ao))
+	switch (op)
 	{
 	case AS_JumpTo:
 		if (args.size() > 1)
@@ -212,6 +228,10 @@ Anim_ptr BattleAnimationManager::CreateAnimation(triple ao)
 		break;
 	case AS_ScreenShake:
 		result = Anim_ptr(new AnimScreenShake(args[0], args[1]));
+		break;
+	case AS_ParticleEffect:
+		result = Anim_ptr(new anim_particle_effect(args[0], colors::green, &m_actors[owner]->GetPosRef(), "leaf.png"));
+		//generate_particles(args[0], colors::black, m_actors[owner]->GetPosRef());
 		break;
 	case AS_BonusEffect:
 		break;

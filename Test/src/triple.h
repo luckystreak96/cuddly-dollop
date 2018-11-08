@@ -9,7 +9,7 @@ enum SkillProgress {
 };
 
 enum AnimationOperation {
-	AS_JumpTo, AS_JumpBack, AS_ColorFlash, AS_ScreenShake, AS_BonusEffect, AS_MoveTo, AS_Wait, AS_Animation, AS_FloatingText,
+	AS_JumpTo, AS_JumpBack, AS_ColorFlash, AS_ScreenShake, AS_BonusEffect, AS_MoveTo, AS_Wait, AS_Animation, AS_FloatingText, AS_ParticleEffect,
 	AC_CameraFollow, AC_CameraScale, AC_CameraCenter,
 	AO_DamageParticle,
 	AA_Start, AA_DealDamage, AA_ApplyEffect, AA_ChangeTarget
@@ -21,6 +21,15 @@ enum AnimationArgument {
 
 //using namespace std;
 using floats = std::vector<float>;
-using triple = std::tuple<AnimationOperation, AnimationArgument, floats>;
+
+struct triple
+{
+	triple(AnimationOperation animation, AnimationArgument arg_type, floats args) : _animation(animation), _arg_type(arg_type), _args(args) {}
+	AnimationOperation _animation;
+	AnimationArgument _arg_type;
+	floats _args;
+};
+
+//using triple = std::tuple<AnimationOperation, AnimationArgument, floats>;
 
 #endif // !TRIPLE_H__

@@ -47,7 +47,8 @@ void SkillBloodyMess::ModifyAnimations()
 	switch (m_progress)
 	{
 	case 3:
-		std::get<2>(m_animationBuffer[3])[0] = 0.25f;// modify wait
+		m_animationBuffer[3]._args[0] = 0.25f;// modify wait
+		//std::get<2>(m_animationBuffer[3])[0] = 0.25f;// modify wait
 		m_animationBuffer.insert(m_animationBuffer.begin() + 1, triple(AO_DamageParticle, AARG_Float, floats({1})));
 		m_animationBuffer.insert(m_animationBuffer.end(), triple(AO_DamageParticle, AARG_Float, floats({0})));
 		//std::get<1>(m_animationBuffer[1]) = AARG_FloatTargets;// modify aarg

@@ -117,14 +117,14 @@ void BattleManager::add_animation(triple& x)
 {
 	// need to fill in the vector of floats
 	// ('<' because of AARG_FloatAsync)
-	if (get<1>(x) < AARG_Float)
+	if (x._arg_type < AARG_Float)
 		SetSkillArguments(x); // single target skill chosen by *m_info._targets.begin()
 
 	// x is an action
-	if (get<0>(x) > AA_Start)
+	if (x._animation > AA_Start)
 	{
-		int t = get<2>(x).front();
-		if (get<0>(x) == AA_DealDamage)
+		int t = x._args.front();
+		if (x._animation == AA_DealDamage)
 		{
 			// Deal damage
 			Damage dmg = HandleDamage(t);
@@ -137,7 +137,7 @@ void BattleManager::add_animation(triple& x)
 				m_info._targets.erase(t);
 			}
 		}
-		else if (get<0>(x) == AA_ApplyEffect)
+		else if (x._animation == AA_ApplyEffect)
 		{
 			//m_info._fighters.at(t)->_Statuses.push_back(BattleData::StatusEffects.at(Status::Status_Determined));
 			for (auto& status : *m_info._selectedSkill->GetStatusEffects())
@@ -148,12 +148,12 @@ void BattleManager::add_animation(triple& x)
 			}
 			m_info._fighters.at(t)->ReCalculateStats();
 		}
-		else if (get<0>(x) == AA_ChangeTarget)
+		else if (x._animation == AA_ChangeTarget)
 		{
-			if (m_info._targets.count(get<2>(x)[1]))
+			if (m_info._targets.count(x._args[1]))
 			{
-				m_info._targets.erase(get<2>(x)[1]);
-				m_info._targets.emplace(get<2>(x)[0]);
+				m_info._targets.erase(x._args[1]);
+				m_info._targets.emplace(x._args[0]);
 			}
 		}
 	}
@@ -169,30 +169,30 @@ void BattleManager::add_animation(triple& x)
 
 void BattleManager::SetSkillArguments(triple& x)
 {
-	switch (get<1>(x))
+	switch (x._arg_type)
 	{
 	case AARG_OwnerTargets:
-		get<2>(x).clear();
-		get<2>(x).push_back((float)m_info._owner->GetId());
+		x._args.clear();
+		x._args.push_back((float)m_info._owner->GetId());
 		for (auto y : m_info._targets)
-			get<2>(x).push_back((float)y);
+			x._args.push_back((float)y);
 		break;
 	case AARG_Owner:
-		if (get<2>(x).size() < 1)
-			get<2>(x).push_back((float)m_info._owner->GetId());
+		if (x._args.size() < 1)
+			x._args.push_back((float)m_info._owner->GetId());
 		else
-			get<2>(x)[0] = (float)m_info._owner->GetId();
+			x._args[0] = (float)m_info._owner->GetId();
 		break;
 	case AARG_Targets:
-		get<2>(x).clear();
+		x._args.clear();
 		for (auto y : m_info._targets)
-			get<2>(x).push_back((float)y);
+			x._args.push_back((float)y);
 		break;
 	case AARG_Target:
-		if (get<2>(x).size() < 1)
-			get<2>(x).push_back((float)*m_info._targets.begin());
+		if (x._args.size() < 1)
+			x._args.push_back((float)*m_info._targets.begin());
 		else
-			get<2>(x)[0] = (float)*m_info._targets.begin();
+			x._args[0] = (float)*m_info._targets.begin();
 		break;
 	default:
 		break;
@@ -201,8 +201,8 @@ void BattleManager::SetSkillArguments(triple& x)
 
 void BattleManager::SetSkillArguments(triple& x, int applier)
 {
-	floats& f = get<2>(x);
-	if (get<1>(x) == AARG_Passive_Applier2Owner)
+	floats& f = x._args;
+	if (x._arg_type == AARG_Passive_Applier2Owner)
 	{
 		f.clear();
 		f.push_back(applier);
