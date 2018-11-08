@@ -343,7 +343,7 @@ void ParticleGenerator::SetupMesh()
 	m_mesh.tex_clear();
 
 	for (auto& x : m_particles)
-		m_mesh.add_tex_offset_static_atlas(rand() % 4 == 0 ? "dust.png" : x->texture);
+		m_mesh.add_tex_offset_static_atlas(x->texture);
 }
 
 void ParticleGenerator::LogicUpdate()

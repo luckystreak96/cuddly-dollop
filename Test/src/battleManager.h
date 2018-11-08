@@ -30,8 +30,6 @@ private:
 	void Init(std::vector<Fighter_ptr> actors);
 	void UpdateLogic();
 	void UseSkill();
-	void RemoveChooseSkillText();
-	void SetChooseSkillText();
 	void MoveToLight(bool moveUp, bool turnEnd = false);
 	
 	// Skills

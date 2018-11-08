@@ -2,7 +2,7 @@
 
 #include "font.h"
 
-std::shared_ptr<GraphicsComponent> MenuFactory::BuildOption(OptionType type, std::string text, Vector3f location, bool centered)
+Font MenuFactory::BuildOption(OptionType type, std::string text, Vector3f location, bool centered)
 {
 	if (type == OT_Text)
 	{
@@ -10,13 +10,26 @@ std::shared_ptr<GraphicsComponent> MenuFactory::BuildOption(OptionType type, std
 		font.SetScale(0.3f, 0.3f);
 		font.SetText(text, location, centered);
 		font.Update(100);
-		return font.GetGraphics();
+		return font;
 	}
 }
 
-std::vector<std::shared_ptr<GraphicsComponent>> MenuFactory::BuildOptions(OptionType type, std::vector<std::string> text, Vector3f location, bool centered)
+void MenuFactory::UpdateTextOption(std::string text, Vector3f location, bool centered, Font* font)
 {
-	std::vector<std::shared_ptr<GraphicsComponent>> result;
+	font->SetScale(0.3f, 0.3f);
+	font->SetText(text, location, centered);
+	font->Update(100);
+}
+
+void MenuFactory::UpdateOptions(std::vector<std::string> text, Vector3f location, bool centered, std::vector<Font>* fonts)
+{
+	for (int i = 0; i < fonts->size(); i++)
+		UpdateTextOption(text[i], location - Vector3f(0, i, 0), centered, &fonts->at(i));
+}
+
+std::vector<Font> MenuFactory::BuildOptions(OptionType type, std::vector<std::string> text, Vector3f location, bool centered)
+{
+	std::vector<Font> result;
 	for (int i = 0; i < text.size(); i++)
 		result.push_back(BuildOption(type, text[i], location - Vector3f(0, i, 0), centered));
 

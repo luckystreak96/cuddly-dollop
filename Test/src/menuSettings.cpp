@@ -23,7 +23,8 @@ MenuSettings::MenuSettings()
 	pos.x = ((bg->_bottomRight - bg->_topLeft).x / 2) + bg->_topLeft.x;
 	pos.y = bg->_topLeft.y - 0.5f;
 	pos.z = bg->_topLeft.z - 1;
-	m_options = MenuOptions(options, pos);
+	m_options.init(options, pos);
+	//m_options = MenuOptions(options, pos);
 }
 
 std::shared_ptr<MenuComponent> MenuSettings::Update(bool active)

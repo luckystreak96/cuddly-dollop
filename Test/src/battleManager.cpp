@@ -30,9 +30,6 @@ BattleManager::BattleManager(std::vector<Fighter_ptr> actors)
 
 BattleManager::~BattleManager()
 {
-	for (auto& x : m_info._fonts)
-		FontManager::GetInstance().RemoveFont(x);
-
 	for (auto& x : m_info._fighters)
 		x->_observers.clear();
 }
@@ -323,15 +320,7 @@ void BattleManager::UpdateColors()
 		if (m_info._state == BS_SelectAction)
 		{
 			if (m_info._owner->Team == 0)
-			{
-				if (m_info._fonts.size() > (unsigned int)*m_info._selectedIndices.begin())
-				{
-					for (auto x : m_info._fonts)
-						FontManager::GetInstance().GetFont(x)->GetGraphics()->SetColorAll();
-					FontManager::GetInstance().GetFont(m_info._fonts[*m_info._selectedIndices.begin()])->GetGraphics()->SetColorAll(Vector3f(1, 0, 0));
-				}
 				m_graphics->UpdateColors(x->GetId(), false, x->Dead, 0);
-			}
 		}
 		else
 		{
@@ -643,27 +632,6 @@ void BattleManager::UpdateLogic()
 	}
 }
 
-void BattleManager::SetChooseSkillText()
-{
-	while (m_info._fonts.size() < m_info._chooseSkill.size())
-		m_info._fonts.push_back(FontManager::GetInstance().AddFont(true, false, true, "res/fonts/lowercase.png"));
-
-	for (unsigned int i = 0; i < m_info._chooseSkill.size(); i++)
-	{
-		FontManager::GetInstance().EnableFont(m_info._fonts[i]);
-		FontManager::GetInstance().SetScale(m_info._fonts[i], 0.5f, 0.5f);
-		FontManager::GetInstance().SetText(m_info._fonts[i], _(m_info._chooseSkill.at(i)->_name), Vector3f(5.0f, 4.75f - i * 0.5f, 0));
-		//FontManager::GetInstance().GetFont(m_info._fonts[i])->SetText(m_info._chooseSkill->at(i)->_name, Vector3f(6, 7 - i, 1));
-	}
-}
-
-void BattleManager::RemoveChooseSkillText()
-{
-	for (unsigned int i = 0; i < m_info._fonts.size(); i++)
-		FontManager::GetInstance().GetFont(m_info._fonts[i])->_enabled = false;
-}
-
-
 void BattleManager::ManageInput()
 {
 	// When you hold R2 or D, show arrows, udpate once on action done in case an actor loses vision of enemy predictions
@@ -733,27 +701,8 @@ void BattleManager::HandleUpDownInput(std::set<int> input)
 	if (input.count(A_Down))
 		down = true;
 
-	// Choose your skill
-	if (m_info._state == BS_SelectAction)
-	{
-		int selectTarget = 0;
-		if (down && *m_info._selectedIndices.begin() < (int)m_info._chooseSkill.size() - 1)
-		{
-			selectTarget = *m_info._selectedIndices.begin() + 1;
-		}
-		else if (!down)
-		{
-			if (*m_info._selectedIndices.begin() > 0)
-				selectTarget = *m_info._selectedIndices.begin() - 1;
-			else
-				selectTarget = m_info._chooseSkill.size() - 1;
-		}
-
-		m_info.select_index(selectTarget);
-	}
-
 	// Choose your targets
-	else if (m_info._state == BS_SelectTargets)
+	if (m_info._state == BS_SelectTargets)
 	{
 		if (m_info._selectedSkill->_targetAmount == TA_Party)
 		{
@@ -846,7 +795,8 @@ void BattleManager::HandleAcceptInput()
 {
 	if (m_info._state == BS_SelectAction)
 	{
-		m_info._selectedSkill = m_info._chooseSkill.at(*m_info._selectedIndices.begin());
+		//m_info._selectedSkill = m_info._chooseSkill.at(*m_info._selectedIndices.begin());
+		m_info._selectedSkill = m_info._chooseSkill.at(m_graphics->get_menu_index());
 		//std::cout << "Skill selected: " << m_info._selectedSkill->_name << std::endl;
 		m_info._state = BS_SelectTargets;
 		std::set<int> targets = DefaultTargetActorIndex();
@@ -883,7 +833,6 @@ void BattleManager::HandleCancelInput()
 	{
 		m_info.select_index(0);
 		m_info._state = BS_SelectAction;
-		SetChooseSkillText();
 		//m_info._showingSkills = true;
 	}
 }

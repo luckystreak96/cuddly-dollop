@@ -6017,6 +6017,30 @@
       "y": 5.0,
       "z": 3.0,
       "sprite": "sapin_t.png"
+    },
+    {
+      "x": 17.0,
+      "y": 7.0,
+      "z": 4.0,
+      "sprite": "chair.png"
+    },
+    {
+      "x": 18.0,
+      "y": 7.0,
+      "z": 4.0,
+      "sprite": "table.png"
+    },
+    {
+      "x": 12.0,
+      "y": 3.0,
+      "z": 4.0,
+      "sprite": "table.png"
+    },
+    {
+      "x": 10.0,
+      "y": 3.0,
+      "z": 4.0,
+      "sprite": "table.png"
     }
   ],
   "entities": [
@@ -6235,8 +6259,8 @@
       "full_size": false,
       "sprite": "entity_ghost_green.png",
       "x": 17.0,
-      "y": 7.0,
-      "z": 4.0,
+      "y": 7.4,
+      "z": 3.0,
       "queues": [
         {
           "name": "queue",

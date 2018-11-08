@@ -8,6 +8,7 @@
 #include "battleAnimation.h"
 #include "battleHUD.h"
 #include "battleUnit.h"
+#include "menuOptions.h"
 
 enum skill_display_state {SDS_choose_skill, SDS_select_target, SDS_none};
 
@@ -47,6 +48,7 @@ public:
 	void SetupHUD(BattleUnit unit);
 	void UpdateHUD();
 	void update_skill_display(std::vector<Skill_ptr>* skills, skill_display_state state);
+	int get_menu_index();
 
 	void SetRender();
 
@@ -56,7 +58,8 @@ public:
 private:
 	std::map<int, Actor_ptr> m_actors;
 	std::deque<Anim_ptr> m_animations;
-	std::vector<unsigned int> m_fonts;
+	MenuOptions m_options;
+	//std::vector<unsigned int> m_fonts;
 
 	BattleHUD m_hud;
 	int m_particleSprite;

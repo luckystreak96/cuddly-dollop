@@ -29,24 +29,36 @@ void BattleAnimationManager::update_skill_display(std::vector<Skill_ptr>* skills
 {
 	if (state == SDS_choose_skill)
 	{
+		std::vector<std::string> moptions;
+		for (auto& x : *skills)
+			moptions.push_back(x->GetName());
+
+		m_options.init(moptions, Vector3f(5.0f, 4.75f - 0.5f, 0));
+
 		// Create a list of fonts that is long enough for all the skills
-		while (m_fonts.size() < skills->size())
-			m_fonts.push_back(FontManager::GetInstance().AddFont(true, false, true, "res/fonts/lowercase.png"));
+		//while (m_fonts.size() < skills->size())
+		//	m_fonts.push_back(FontManager::GetInstance().AddFont(true, false, true, "res/fonts/lowercase.png"));
 
 		// Set the text of each font according to skill text
-		for (unsigned int i = 0; i < skills->size(); i++)
-		{
-			FontManager::GetInstance().EnableFont(m_fonts[i]);
-			FontManager::GetInstance().SetScale(m_fonts[i], 0.5f, 0.5f);
-			FontManager::GetInstance().SetText(m_fonts[i], _(skills->at(i)->_name), Vector3f(5.0f, 4.75f - i * 0.5f, 0));
-			//FontManager::GetInstance().GetFont(m_info._fonts[i])->SetText(m_info._chooseSkill->at(i)->_name, Vector3f(6, 7 - i, 1));
-		}
+		//for (unsigned int i = 0; i < skills->size(); i++)
+		//{
+		//	FontManager::GetInstance().EnableFont(m_fonts[i]);
+		//	FontManager::GetInstance().SetScale(m_fonts[i], 0.5f, 0.5f);
+		//	FontManager::GetInstance().SetText(m_fonts[i], _(skills->at(i)->_name), Vector3f(5.0f, 4.75f - i * 0.5f, 0));
+		//	//FontManager::GetInstance().GetFont(m_info._fonts[i])->SetText(m_info._chooseSkill->at(i)->_name, Vector3f(6, 7 - i, 1));
+		//}
 	}
 	else
 	{
-		for (unsigned int i = 0; i < m_fonts.size(); i++)
-			FontManager::GetInstance().GetFont(m_fonts[i])->_enabled = false;
+		//for (unsigned int i = 0; i < m_fonts.size(); i++)
+		//	FontManager::GetInstance().GetFont(m_fonts[i])->_enabled = false;
+		m_options.disable();
 	}
+}
+
+int BattleAnimationManager::get_menu_index()
+{
+	return m_options._selectedOption;
 }
 
 
@@ -296,6 +308,8 @@ void BattleAnimationManager::UpdateAnimations()
 			}
 		}
 	}
+
+	m_options.Update();
 }
 
 void BattleAnimationManager::CreateFloatingText(int fighterid, std::string text)
@@ -377,5 +391,6 @@ void BattleAnimationManager::ExpAnimation(int id, int xp)
 void BattleAnimationManager::SetRender()
 {
 	m_hud.SetRender();
+	m_options.SetRender();
 }
 

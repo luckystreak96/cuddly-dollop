@@ -4,19 +4,52 @@
 #include "menuFactory.h"
 #include "renderer.h"
 
-MenuOptions::MenuOptions()
-{
-}
+MenuOptions::MenuOptions() : m_enabled(false), _selectedOption(-1) {}
 
-MenuOptions::MenuOptions(std::vector<std::string> options, Vector3f pos) : m_position(pos), m_options(std::vector<std::string>(options))
+void MenuOptions::init(std::vector<std::string> options, Vector3f pos)
 {
-	m_graphics = MenuFactory::BuildOptions(OT_Text, options, pos, true);
+	// If the new strings are the same as the old ones, then dont bother changing anything
+	if (options.size() != 0 && options.size() == m_options.size() && pos == m_position)
+	{
+		for (int i = 0; i < options.size(); i++)
+		{
+			if (options[i] == m_options[i])
+			{
+				m_enabled = true;
+				m_firstUpdate = true;
+				return;
+			}
+		}
+	}
+				
+	m_position = pos;
+	m_options = std::vector<std::string>(options);
+
+	if (m_fonts.size() >= options.size())
+	{
+		while (m_fonts.size() > options.size())
+			m_fonts.pop_back();
+		MenuFactory::UpdateOptions(options, pos, true, &m_fonts);
+	}
+	else
+	{
+		m_fonts.clear();
+		m_fonts = MenuFactory::BuildOptions(OT_Text, options, pos, true);
+	}
+
+	//if(_selectedOption != -1 && _selectedOption < m_fonts.size())
 	_selectedOption = 0;
 	m_firstUpdate = true;
+	m_enabled = true;
 }
+void MenuOptions::disable() { m_enabled = false; }
+void MenuOptions::enable() { if (m_fonts.size()) m_enabled = true; }
 
 bool MenuOptions::Update()
 {
+	if (!m_enabled)
+		return false;
+
 	bool result = false;
 	bool mustUpdate = false;
 
@@ -36,13 +69,13 @@ bool MenuOptions::Update()
 
 	if (mustUpdate || m_firstUpdate)
 	{
-		assert(m_graphics.size() == m_options.size());
-		for (int i = 0; i < m_graphics.size(); i++)
+		assert(m_fonts.size() == m_options.size());
+		for (int i = 0; i < m_fonts.size(); i++)
 		{
 			if (i == _selectedOption)
-				m_graphics[i]->SetColorAll(Vector3f(1, 0, 0));
+				m_fonts[i].GetGraphics()->SetColorAll(Vector3f(1, 0, 0));
 			else
-				m_graphics[i]->SetColorAll();
+				m_fonts[i].GetGraphics()->SetColorAll();
 		}
 
 		m_firstUpdate = false;
@@ -53,8 +86,11 @@ bool MenuOptions::Update()
 
 void MenuOptions::SetRender()
 {
-	for (auto& x : m_graphics)
-		Renderer::GetInstance().Add(x);
+	if (!m_enabled)
+		return;
+
+	for (auto& x : m_fonts)
+		Renderer::GetInstance().Add(x.GetGraphics());
 }
 
 //std::string MenuOptions::GetSelectedOption()
