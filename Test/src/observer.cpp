@@ -5,7 +5,7 @@ Observer::Observer() : _done(false)
 
 }
 
-void Observer::Update()
+void Observer::Update(Observable* observable)
 {
 
 }

@@ -2,15 +2,18 @@
 #define OBSERVABLE_H__
 
 #include <vector>
-#include "observer.h"
+//#include "observer.h"
+
+class Observer;
 
 class Observable
 {
 public:
 	virtual void UpdateObservers();
+	void AddObserver(Observer* obs);
 
 public:
-	std::vector<Obs_ptr> _observers;
+	std::vector<Observer*> _observers;
 };
 
 #endif // !OBSERVABLE_H__

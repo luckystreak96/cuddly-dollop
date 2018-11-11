@@ -1637,43 +1637,43 @@
       "x": 28.0,
       "y": 3.0,
       "z": 5.0,
-      "sprite": "grass_01.png"
+      "sprite": "dirt.png"
     },
     {
       "x": 27.0,
       "y": 3.0,
       "z": 5.0,
-      "sprite": "grass_01.png"
+      "sprite": "dirt.png"
     },
     {
       "x": 26.0,
       "y": 3.0,
       "z": 5.0,
-      "sprite": "grass_01.png"
+      "sprite": "dirt.png"
     },
     {
       "x": 25.0,
       "y": 3.0,
       "z": 5.0,
-      "sprite": "grass_01.png"
+      "sprite": "dirt.png"
     },
     {
       "x": 24.0,
       "y": 3.0,
       "z": 5.0,
-      "sprite": "grass_01.png"
+      "sprite": "dirt.png"
     },
     {
       "x": 23.0,
       "y": 3.0,
       "z": 5.0,
-      "sprite": "grass_01.png"
+      "sprite": "dirt.png"
     },
     {
       "x": 22.0,
       "y": 3.0,
       "z": 5.0,
-      "sprite": "grass_01.png"
+      "sprite": "dirt.png"
     },
     {
       "x": 20.0,
@@ -1913,43 +1913,43 @@
       "x": 22.0,
       "y": 1.0,
       "z": 5.0,
-      "sprite": "grass_01.png"
+      "sprite": "dirt.png"
     },
     {
       "x": 23.0,
       "y": 1.0,
       "z": 5.0,
-      "sprite": "grass_01.png"
+      "sprite": "dirt.png"
     },
     {
       "x": 24.0,
       "y": 1.0,
       "z": 5.0,
-      "sprite": "grass_01.png"
+      "sprite": "dirt.png"
     },
     {
       "x": 25.0,
       "y": 1.0,
       "z": 5.0,
-      "sprite": "grass_01.png"
+      "sprite": "dirt.png"
     },
     {
       "x": 26.0,
       "y": 1.0,
       "z": 5.0,
-      "sprite": "grass_01.png"
+      "sprite": "dirt.png"
     },
     {
       "x": 27.0,
       "y": 1.0,
       "z": 5.0,
-      "sprite": "grass_01.png"
+      "sprite": "dirt.png"
     },
     {
       "x": 28.0,
       "y": 1.0,
       "z": 5.0,
-      "sprite": "grass_01.png"
+      "sprite": "dirt.png"
     },
     {
       "x": 7.0,
@@ -2051,43 +2051,43 @@
       "x": 22.0,
       "y": 2.0,
       "z": 5.0,
-      "sprite": "grass_01.png"
+      "sprite": "dirt.png"
     },
     {
       "x": 23.0,
       "y": 2.0,
       "z": 5.0,
-      "sprite": "grass_01.png"
+      "sprite": "dirt.png"
     },
     {
       "x": 24.0,
       "y": 2.0,
       "z": 5.0,
-      "sprite": "grass_01.png"
+      "sprite": "dirt.png"
     },
     {
       "x": 25.0,
       "y": 2.0,
       "z": 5.0,
-      "sprite": "grass_01.png"
+      "sprite": "dirt.png"
     },
     {
       "x": 26.0,
       "y": 2.0,
       "z": 5.0,
-      "sprite": "grass_01.png"
+      "sprite": "dirt.png"
     },
     {
       "x": 27.0,
       "y": 2.0,
       "z": 5.0,
-      "sprite": "grass_01.png"
+      "sprite": "dirt.png"
     },
     {
       "x": 28.0,
       "y": 2.0,
       "z": 5.0,
-      "sprite": "grass_01.png"
+      "sprite": "dirt.png"
     },
     {
       "x": 5.0,
@@ -2237,43 +2237,43 @@
       "x": 22.0,
       "y": 0.0,
       "z": 5.0,
-      "sprite": "grass_01.png"
+      "sprite": "dirt.png"
     },
     {
       "x": 23.0,
       "y": 0.0,
       "z": 5.0,
-      "sprite": "grass_01.png"
+      "sprite": "dirt.png"
     },
     {
       "x": 24.0,
       "y": 0.0,
       "z": 5.0,
-      "sprite": "grass_01.png"
+      "sprite": "dirt.png"
     },
     {
       "x": 25.0,
       "y": 0.0,
       "z": 5.0,
-      "sprite": "grass_01.png"
+      "sprite": "dirt.png"
     },
     {
       "x": 26.0,
       "y": 0.0,
       "z": 5.0,
-      "sprite": "grass_01.png"
+      "sprite": "dirt.png"
     },
     {
       "x": 27.0,
       "y": 0.0,
       "z": 5.0,
-      "sprite": "grass_01.png"
+      "sprite": "dirt.png"
     },
     {
       "x": 28.0,
       "y": 0.0,
       "z": 5.0,
-      "sprite": "grass_01.png"
+      "sprite": "dirt.png"
     },
     {
       "x": 2.0,
@@ -3275,49 +3275,49 @@
       "x": 31.0,
       "y": 3.0,
       "z": 5.0,
-      "sprite": "grass_01.png"
+      "sprite": "dirt.png"
     },
     {
       "x": 31.0,
       "y": 2.0,
       "z": 5.0,
-      "sprite": "grass_01.png"
+      "sprite": "dirt.png"
     },
     {
       "x": 31.0,
       "y": 1.0,
       "z": 5.0,
-      "sprite": "grass_01.png"
+      "sprite": "dirt.png"
     },
     {
       "x": 31.0,
       "y": 0.0,
       "z": 5.0,
-      "sprite": "grass_01.png"
+      "sprite": "dirt.png"
     },
     {
       "x": 29.0,
       "y": 0.0,
       "z": 5.0,
-      "sprite": "grass_01.png"
+      "sprite": "dirt.png"
     },
     {
       "x": 29.0,
       "y": 1.0,
       "z": 5.0,
-      "sprite": "grass_01.png"
+      "sprite": "dirt.png"
     },
     {
       "x": 29.0,
       "y": 2.0,
       "z": 5.0,
-      "sprite": "grass_01.png"
+      "sprite": "dirt.png"
     },
     {
       "x": 29.0,
       "y": 3.0,
       "z": 5.0,
-      "sprite": "grass_01.png"
+      "sprite": "dirt.png"
     },
     {
       "x": 29.0,
@@ -3521,25 +3521,25 @@
       "x": 30.0,
       "y": 0.0,
       "z": 5.0,
-      "sprite": "grass_01.png"
+      "sprite": "dirt.png"
     },
     {
       "x": 30.0,
       "y": 1.0,
       "z": 5.0,
-      "sprite": "grass_01.png"
+      "sprite": "dirt.png"
     },
     {
       "x": 30.0,
       "y": 2.0,
       "z": 5.0,
-      "sprite": "grass_01.png"
+      "sprite": "dirt.png"
     },
     {
       "x": 30.0,
       "y": 3.0,
       "z": 5.0,
-      "sprite": "grass_01.png"
+      "sprite": "dirt.png"
     },
     {
       "x": 31.0,
@@ -3557,49 +3557,49 @@
       "x": 32.0,
       "y": 3.0,
       "z": 5.0,
-      "sprite": "grass_01.png"
+      "sprite": "dirt.png"
     },
     {
       "x": 32.0,
       "y": 2.0,
       "z": 5.0,
-      "sprite": "grass_01.png"
+      "sprite": "dirt.png"
     },
     {
       "x": 32.0,
       "y": 1.0,
       "z": 5.0,
-      "sprite": "grass_01.png"
+      "sprite": "dirt.png"
     },
     {
       "x": 33.0,
       "y": 1.0,
       "z": 5.0,
-      "sprite": "grass_01.png"
+      "sprite": "dirt.png"
     },
     {
       "x": 33.0,
       "y": 0.0,
       "z": 5.0,
-      "sprite": "grass_01.png"
+      "sprite": "dirt.png"
     },
     {
       "x": 32.0,
       "y": 0.0,
       "z": 5.0,
-      "sprite": "grass_01.png"
+      "sprite": "dirt.png"
     },
     {
       "x": 33.0,
       "y": 2.0,
       "z": 5.0,
-      "sprite": "grass_01.png"
+      "sprite": "dirt.png"
     },
     {
       "x": 33.0,
       "y": 3.0,
       "z": 5.0,
-      "sprite": "grass_01.png"
+      "sprite": "dirt.png"
     },
     {
       "x": 33.0,
@@ -6041,6 +6041,24 @@
       "y": 3.0,
       "z": 4.0,
       "sprite": "table.png"
+    },
+    {
+      "x": 10.0,
+      "y": 3.0,
+      "z": 3.5,
+      "sprite": "apple.png"
+    },
+    {
+      "x": 12.0,
+      "y": 3.0,
+      "z": 3.5,
+      "sprite": "apple.png"
+    },
+    {
+      "x": 18.0,
+      "y": 7.0,
+      "z": 3.5,
+      "sprite": "apple.png"
     }
   ],
   "entities": [

@@ -79,6 +79,8 @@ void InputManager::SetupFrameKeys()
 		if (a.second.first == KeyStatus::KeyPressed)
 			a.second.first = HoldDownPress;
 	}
+
+	UpdateObservers();
 }
 
 unsigned int InputManager::GetKeyCount()

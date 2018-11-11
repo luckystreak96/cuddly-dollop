@@ -1,16 +1,15 @@
 #ifndef OBSERVER_H__
 #define OBSERVER_H__
 
-#include <memory>
+#include "observable.h"
 
-class Observer;
-typedef std::shared_ptr<Observer> Obs_ptr;
+#include <memory>
 
 class Observer
 {
 public:
 	Observer();
-	virtual void Update();
+	virtual void Update(Observable* obs);
 	bool _done;
 };
 
