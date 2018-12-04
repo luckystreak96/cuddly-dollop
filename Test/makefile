@@ -6,11 +6,6 @@
 #vpath %.h res/include/%/
 
 
-# clean macro
-#clean : 
-#	rm -f $(REBUILDABLES)
-#	echo Clean done
-
 # build all macro
 #all : $(LINK_TARGET)
 #	echo All done
@@ -30,3 +25,8 @@ cuddly_dollop : $(OBJ_FILES)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	g++ $(CPPFLAGS) $(CXXFLAGS) -c -o $@ $<
+
+# clean macro
+clean : 
+	rm -f $(OBJ_DIR)/*
+	echo Clean done

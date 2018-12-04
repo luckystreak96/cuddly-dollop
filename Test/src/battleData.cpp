@@ -91,21 +91,21 @@ void BattleData::LoadCurves()
 	if (doc.HasMember("curves") && doc["curves"].IsObject())
 	{
 		std::map<std::string, CurveInfo> data;
-		auto curves = doc["curves"].GetObjectW();
+		auto curves = doc["curves"].GetObject();
 		// Loop through curves
 		for (Value::ConstMemberIterator itr = curves.MemberBegin(); itr != curves.MemberEnd(); ++itr)
 		{
 			std::string curveName = itr->name.GetString();
 			CurveInfo stats;
 
-			auto stat = itr->value.GetObjectW();
+			auto stat = itr->value.GetObject();
 			// Loop through the stats of a curve
 			for (Value::ConstMemberIterator itr2 = stat.MemberBegin(); itr2 != stat.MemberEnd(); ++itr2)
 			{
 				std::string statName = itr2->name.GetString();
 				CurveStyle style;
 				// Get the op and value
-				for (auto& statInfo : itr2->value.GetObjectW())
+				for (auto& statInfo : itr2->value.GetObject())
 				{
 					// Get the name
 					std::string statDetailIdent = statInfo.name.GetString();

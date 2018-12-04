@@ -23,13 +23,13 @@ public:
 	Camera();
 	void Update();
 	// Set the position to lerp towards
-	void SetFollow(Vector3f& pos);
+	void SetFollow(Vector3f pos);
 	// Position is pulled toward MapCenter.y
 	void SetFollowCenteredY(Vector3f pos);
 	// Position is pulled toward MapCenter.xy
 	void SetFollowCenteredXY(Vector3f pos);
 	// Set the scale to lerp toward
-	void SetScale(Vector3f& scale);
+	void SetScale(Vector3f scale);
 	// Update follow - lerp to _followTarget
 	void ExecuteFollow();
 	// Update scale - lerp to _scaleTarget
@@ -39,11 +39,11 @@ public:
 	// Set the speed the camera should lerp
 	void SetCameraFollowSpeed(CameraSpeeds cs);
 	// Forcefully set the position - no lerp
-	void ForcePosition(Vector3f& pos);
+	void ForcePosition(Vector3f pos);
 	// Forcefully set the scale - no lerp
-	void ForceScale(Vector3f& scale);
+	void ForceScale(Vector3f scale);
 	// Method assumes a CENTERED_TILE - returns if the object is on the screen
-	bool IsOnCamera(Vector3f& position, Vector3f& size);
+	bool IsOnCamera(Vector3f position, Vector3f size);
 	// Resets dad cam as if we set a new target
 	void EnableNormalCam();
 

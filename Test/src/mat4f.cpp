@@ -40,7 +40,7 @@ void Mat4f::ToIdentityMatrix(float(&matrix)[4][4])
 	matrix[3][0] = 0; matrix[3][1] = 0; matrix[3][2] = 0; matrix[3][3] = 1;
 }
 
-void Mat4f::InitTranslateMat(Vector3f &translation)
+void Mat4f::InitTranslateMat(Vector3f translation)
 {
 	ToIdentityMatrix(m);
 	m[0][3] = translation.x;
@@ -48,14 +48,14 @@ void Mat4f::InitTranslateMat(Vector3f &translation)
 	m[2][3] = translation.z;
 }
 
-void Mat4f::SetTranslation(Vector3f &translation)
+void Mat4f::SetTranslation(Vector3f translation)
 {
 	m[0][3] = translation.x;
 	m[1][3] = translation.y;
 	m[2][3] = translation.z;
 }
 
-void Mat4f::InitRotateMat(Vector3f &rot)
+void Mat4f::InitRotateMat(Vector3f rot)
 {
 	Mat4f rotMatX, rotMatY, rotMatZ;
 
@@ -72,7 +72,7 @@ void Mat4f::InitRotateMat(Vector3f &rot)
 	*this = rotMatZ * rotMatY * rotMatX;
 }
 
-void Mat4f::InitScaleMat(Vector3f &scale)
+void Mat4f::InitScaleMat(Vector3f scale)
 {
 	m[0][0] = scale.x;
 	m[1][1] = scale.y;
@@ -105,7 +105,7 @@ Mat4f Mat4f::operator*(const Mat4f &right) const
 	return mat;
 }
 
-Vector3f Mat4f::Multiply(Vector3f &right, float pretendVec4) const
+Vector3f Mat4f::Multiply(Vector3f right, float pretendVec4) const
 {
 	Vector3f vector = Vector3f();
 

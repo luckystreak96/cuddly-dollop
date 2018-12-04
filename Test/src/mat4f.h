@@ -17,15 +17,15 @@ class Mat4f
 		static Mat4f GetIdentity() { static Mat4f instance; return instance; };
 
         Mat4f operator*(const Mat4f &mat) const;
-		Vector3f Multiply(Vector3f &vec, float pretendVec4) const;
+		Vector3f Multiply(Vector3f vec, float pretendVec4) const;
 
         void ToIdentityMatrix(float (&matrix)[4][4]);
 
-        void InitScaleMat(Vector3f &scale);
-        void InitTranslateMat(Vector3f &translation);
-        void InitRotateMat(Vector3f &rot);
+        void InitScaleMat(Vector3f scale);
+        void InitTranslateMat(Vector3f translation);
+        void InitRotateMat(Vector3f rot);
 
-		void SetTranslation(Vector3f& trans);
+		void SetTranslation(Vector3f trans);
 
         void InitProjPers(PersProjInfo p);
         void InitOrthoProj(OrthoProjInfo o);

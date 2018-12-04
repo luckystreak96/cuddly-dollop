@@ -155,12 +155,12 @@ void Transformation::SetOrthoProj(OrthoProjInfo* o)
 }
 
 
-void Transformation::SetScale(const Vector3f& vec)
+void Transformation::SetScale(const Vector3f vec)
 {
 	SetScale(vec.x, vec.y, vec.z);
 }
 
-void Transformation::SetTranslation(const Vector3f& vec)
+void Transformation::SetTranslation(const Vector3f vec)
 {
 	SetTranslation(vec.x, vec.y, vec.z);
 }
@@ -172,7 +172,7 @@ void Transformation::AddTranslation(float x, float y, float z)
 	m_translate.z += z;
 }
 
-void Transformation::SetRotation(Vector3f& vec)
+void Transformation::SetRotation(Vector3f vec)
 {
 	SetRotation(vec.x, vec.y, vec.z);
 }

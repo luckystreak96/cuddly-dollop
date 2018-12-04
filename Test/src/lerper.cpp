@@ -9,20 +9,20 @@ Lerper::Lerper()
 }
 
 
-Vector3f Lerper::LerpVelocity(Vector3f& position, Vector3f& target)
+Vector3f Lerper::LerpVelocity(Vector3f position, Vector3f target)
 {
 	return (target - position) * Amount;
 }
 
 // Returns the next position with lerp smoothing
-Vector3f Lerper::Lerp(Vector3f& position, Vector3f& target)
+Vector3f Lerper::Lerp(Vector3f position, Vector3f target)
 {
 	// get the amount to move
-	Vector3f& v = LerpVelocity(position, target);
+	Vector3f v = LerpVelocity(position, target);
 	// if its zero just return
 	if (v == 0) return target;
 	// store this value
-	Vector3f& vo = v;
+	Vector3f vo = v;
 
 	// don't allow increases in velocity beyond the specifed acceleration (ease in)
 	// this also makes for smooth changes when switching direction

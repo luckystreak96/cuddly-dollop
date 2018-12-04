@@ -17,7 +17,7 @@ public:
 	Vector3f operator-();
 	Vector3f& operator+=(const Vector3f& r);
 	Vector3f OnlyXY();
-	bool NearXY(Vector3f& other, float distance) const;
+	bool NearXY(Vector3f other, float distance) const;
 	friend std::ostream& operator<<(std::ostream& output, const Vector3f& D);
 	bool operator<(const Vector3f& r);
 	bool operator>(const Vector3f& r);
@@ -30,10 +30,10 @@ public:
 	Vector3f& operator-=(const Vector3f& r);
 	float& operator[](int i);
 	Vector3f& operator*=(float c);
-	Vector3f& operator*=(Vector3f& c);
+	Vector3f& operator*=(Vector3f c);
 	Vector3f& operator/=(float c);
 	Vector3f operator*(float r);
-	Vector3f operator*(Vector3f& v);
+	Vector3f operator*(Vector3f v);
 	Vector3f operator/(float r);
 	Vector3f operator+(Vector3f v);
 	Vector3f operator-(Vector3f v);

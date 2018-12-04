@@ -7,6 +7,8 @@
 #include "battleManager.h"
 #include "fighterFactory.h"
 
+#include <algorithm>
+
 Fighter::Fighter()
 {
 	SetDefault();
@@ -278,7 +280,7 @@ Damage Fighter::TakeDamage(Damage& dmg)
 	//DamageModifiers(dmg);
 	dmg._value = fmax(0, dmg._value);
 	Health -= dmg._value;
-	Health = min(MaxHealth.Real, Health);
+	Health = std::min(MaxHealth.Real, Health);
 	Health = fmax(Health, 0);
 	ApplyLethal();
 	UpdateObservers();

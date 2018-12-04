@@ -20,7 +20,7 @@ void Observable::UpdateObservers()
 		_observers.erase(_observers.begin() + to_remove[prog]);
 }
 
-void Observable::AddObserver(Observer* obs)
+void Observable::AddObserver(Obs_ptr obs)
 {
 	_observers.push_back(obs);
 }

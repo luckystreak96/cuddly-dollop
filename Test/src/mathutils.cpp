@@ -44,7 +44,7 @@ void Camera::SetCameraFollowSpeed(CameraSpeeds cs)
 	}
 }
 
-bool Camera::IsOnCamera(Vector3f& position, Vector3f& size)
+bool Camera::IsOnCamera(Vector3f position, Vector3f size)
 {
 	float targetRightLimit = position.x + 0.5f * size.x;
 	float targetLeftLimit = position.x - 0.5f * size.x;
@@ -70,12 +70,12 @@ bool Camera::IsOnCamera(Vector3f& position, Vector3f& size)
 	return false;
 }
 
-void Camera::ForcePosition(Vector3f& pos)
+void Camera::ForcePosition(Vector3f pos)
 {
 	_translate = -pos;
 }
 
-void Camera::ForceScale(Vector3f& scale)
+void Camera::ForceScale(Vector3f scale)
 {
 	_scale = scale;
 }
@@ -184,13 +184,13 @@ void Camera::ExecuteFollow()
 	_transform->SetTranslation(_translate + _extraTranslate);
 }
 
-void Camera::SetScale(Vector3f& scale)
+void Camera::SetScale(Vector3f scale)
 {
 	_scaleTarget = scale;
 	_scaleTarget.z = 1; // No change this plz
 }
 
-void Camera::SetFollow(Vector3f& target)
+void Camera::SetFollow(Vector3f target)
 {
 	if (target == _followTarget)
 		return;

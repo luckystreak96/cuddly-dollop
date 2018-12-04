@@ -3,6 +3,7 @@
 #include "statUser.h"
 #include <iostream>
 #include <assert.h>
+#include <math.h> // pow
 
 std::map<std::string, CurveInfo> StatCurve::Curves = std::map<std::string, CurveInfo>();
 

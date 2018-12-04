@@ -11,12 +11,12 @@ public:
 	Transformation();
 
 	void SetScale(float x, float y, float z);
-	void SetScale(const Vector3f& vec);
+	void SetScale(const Vector3f vec);
 	void SetTranslation(float x, float y, float z);
-	void SetTranslation(const Vector3f& vec);
+	void SetTranslation(const Vector3f vec);
 	void AddTranslation(float x, float y, float z);
 	void SetRotation(float x, float y, float z);
-	void SetRotation(Vector3f& vec);
+	void SetRotation(Vector3f vec);
 	void SetPersProjInfo(PersProjInfo* p);
 	void SetOrthoProj(OrthoProjInfo* o);
 	void SetFollowSpeed(float percentSpeed);

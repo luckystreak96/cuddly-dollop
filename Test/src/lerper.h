@@ -7,10 +7,10 @@ class Lerper
 {
 public:
 	Lerper();
-	Vector3f Lerp(Vector3f& position, Vector3f& target);
+	Vector3f Lerp(Vector3f position, Vector3f target);
 private:
 	// Returns the amount of movement at this staget of the lerp
-	Vector3f LerpVelocity(Vector3f& position, Vector3f& target);
+	Vector3f LerpVelocity(Vector3f position, Vector3f target);
 public:
 	// The Lerp amount - the larger this is the faster the object will move
 	// Don't set it > 0 and probably start with values in the range 0.01->0.1 

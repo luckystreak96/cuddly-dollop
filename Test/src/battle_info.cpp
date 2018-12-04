@@ -1,5 +1,7 @@
 #include "battle_info.h"
 
+#include <algorithm>
+
 battle_info::battle_info() : _state(BS_TurnStart), m_animating(false), _winner(-1)
 {
 	for (unsigned int i = 0; i < SkillProgress::SP_SkillLast; i++)

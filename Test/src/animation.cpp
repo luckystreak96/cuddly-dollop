@@ -106,7 +106,7 @@ void Animation::SetAnimation(Anim_Enum anim, std::string spritesheet)
 {
 	//if ((int)anim < m_height)
 	//{
-		auto& data = GetMetaData(spritesheet).data;
+		auto data = GetMetaData(spritesheet).data;
 		_row = (int)data.at(anim)._position;
 		_animation = anim;
 		m_numFrames = abs(data.at(anim)._end - data.at(anim)._start) + 1;

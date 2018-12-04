@@ -41,7 +41,7 @@ void AnimJumpTo::first_time()
 	_target->_forceAnimation = true;
 	_target->_animation = AE_Jump;
 
-	auto& data = Animation::GetMetaData(_target->GetTexture()).data;
+	auto data = Animation::GetMetaData(_target->GetTexture()).data;
 	_target->_row = data.at(AE_Jump)._position;
 	_length = abs(data.at(AE_Jump)._end - data.at(AE_Jump)._start) + 1;
 	_start = data.at(AE_Jump)._start;

@@ -191,7 +191,7 @@ bool TextureAtlas::Generate(int textureSize, bool mipmap, std::string filename)
 					x = imgIdx % m_nbTexturePerSide;
 					y = m_nbTexturePerSide - 1 - imgIdx / m_nbTexturePerSide;
 					imgIdx++;
-					for (auto& iter = m_textureList.begin(); iter != m_textureList.end(); ++iter)
+					for (auto iter = m_textureList.begin(); iter != m_textureList.end(); ++iter)
 						if (iter->second.x == x && iter->second.y == y)
 							exit = false;
 				}

@@ -21,7 +21,7 @@ public:
 	~Font();
 
 public:
-	virtual void SetText(std::string& text, Vector3f& location = Vector3f(0, 0, -1), bool centered = false, float xBoundry = -1);
+	virtual void SetText(std::string text, Vector3f location = Vector3f(0, 0, -1), bool centered = false, float xBoundry = -1);
 	void ChangeLetter(unsigned int index, uint32_t newChar);
 	virtual void Draw();
 	virtual void Update(double elapsedTime);

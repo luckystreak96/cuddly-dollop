@@ -16,7 +16,7 @@ void AnimBasic::first_time()
 	_target->_specialAnimation = true;
 	_target->_forceAnimation = true;
 
-	auto& data = Animation::GetMetaData(_target->GetTexture()).data;
+	auto data = Animation::GetMetaData(_target->GetTexture()).data;
 	_target->_row = data.at(AE_Attack)._position;
 	_length = abs(data.at(AE_Attack)._end - data.at(AE_Attack)._start) + 1;
 	_start = data.at(AE_Attack)._start;

@@ -231,7 +231,7 @@ void Font::Reset()
 	SetText(_text, m_basePosition, m_centered, m_xBndry);
 }
 
-void Font::SetText(std::string& text, Vector3f& location, bool centered, float xBoundry)
+void Font::SetText(std::string text, Vector3f location, bool centered, float xBoundry)
 {
 	if (text == _text/* && m_graphics*/)
 		return;
