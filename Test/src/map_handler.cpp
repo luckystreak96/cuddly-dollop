@@ -13,12 +13,14 @@ MapHandler::MapHandler(unsigned int id, std::shared_ptr<JsonHandler> jh) : m_id(
 	if (!map.HasMember("tiles"))
 		return;
 
+    // the tilesize must be multiplied by this
+	float size = OrthoProjInfo::GetRegularInstance().Size;
 	for (auto& x : map["tiles"].GetArray())
 	{
 		Vector3f pos;
-		pos.x = x["x"].GetFloat();
-		pos.y = x["y"].GetFloat();
-		pos.z = x["z"].GetFloat();
+		pos.x = x["x"].GetFloat() * size;
+		pos.y = x["y"].GetFloat() * size;
+		pos.z = x["z"].GetFloat();// * size;
 		std::string sprite;
 		sprite = std::string(x["sprite"].GetString());
 
@@ -100,6 +102,13 @@ void MapHandler::SetupMesh()
 
 	m_mesh.init_static_atlas(GraphComp_ptr(new GraphicsComponent("", m_texture)), COMPOSITION);
 	m_mesh.set_graphics_position(Vector3f(0, 0, 20.0f));
+
+    float size = OrthoProjInfo::GetRegularInstance().Size;
+    for(auto& vert : *m_mesh.get_graphics()->GetVertices())
+      {
+			vert.vertex.x *= size;
+			vert.vertex.y *= size;
+      }
 
 	for (auto t : m_tiles)
 		m_mesh.add_tex_offset_static_atlas(t->GetTexture());

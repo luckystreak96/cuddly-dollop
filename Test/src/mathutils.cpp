@@ -18,9 +18,9 @@ Vector3f Camera::MapCenter()
 	// (Maplength - viewWidth) / 2
 	Vector3f result;
 	// +1 otherwise it's not well centered
-	result.x = ((_mapsize.x + 1) - ((abs(left) + abs(right)) / size)) / 2.f;
+	result.x = ((_mapsize.x + size) - ((abs(left) + abs(right)) / size)) / 2.f;
 	// didn't do a +1 cause the map looks good without it (xd)
-	result.y = ((_mapsize.y + 1) - ((top * 2.f) / size)) / 2.f;
+	result.y = ((_mapsize.y + size) - ((top * 2.f) / size)) / 2.f;
 	result.x += right / size;
 	result.y += top / size;
 	//result.z = _transform->GetTranslation().z;
@@ -120,7 +120,8 @@ void Camera::Update()
 
 float Camera::RandomDad()
 {
-	float result = fmod(rand(), 1.4f) - 0.7f;
+  float size = OrthoProjInfo::GetRegularInstance().Size;
+	float result = fmod(rand(), 1.4f * size) - 0.7f * size;
 	return result;
 }
 
@@ -204,8 +205,8 @@ void Camera::EnableNormalCam()
 	// Reset the dad-following check
 	_followingDad = false;
 	_dadCountdown = 0;
-	_lerperTrans.Amount = 0.025f;
-	_lerperTrans.Acceleration = 0.02f;
+	_lerperTrans.Amount = 0.025f * 64.f;
+	_lerperTrans.Acceleration = 0.02f * 64.f;
 }
 
 void Camera::SetFollowCenteredY(Vector3f target)

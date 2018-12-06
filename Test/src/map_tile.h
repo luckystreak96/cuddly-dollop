@@ -8,13 +8,6 @@
 #include "math.h"
 #include "physicsComponent.h"
 
-/*
-	TODO:
-		Make the editor have a radio button for tile editing, entity mode and tile attribute editing
-			The only tile attribute for now is walkOn, it must display something visually in that mode and toggle when you click
-		Go inside physics2D -> make tiles with walkOn==false calculate collision a little differently (gotta figure out how tho xd)
-*/
-
 class MapTile
 {
 public:

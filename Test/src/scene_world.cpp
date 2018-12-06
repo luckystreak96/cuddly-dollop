@@ -132,6 +132,8 @@ void SceneWorld::ManageInput()
 		Camera::_currentCam->SetScale(Vector3f(4.0f, 4.0f, 1.0f));
 	if (InputManager::GetInstance().FrameKeyStatus(']', KeyPressed))
 		Camera::_currentCam->SetScale(Vector3f(1.0f, 1.0f, 1.0f));
+	if (InputManager::GetInstance().FrameKeyStatus(';', KeyPressed))
+		FontManager::GetInstance().CreateFloatingText(m_celist.at(1)->PhysicsRaw()->PositionRef(), std::to_string(m_celist.at(1)->PhysicsRaw()->PositionRef().x));
 
 	if (InputManager::GetInstance().FrameKeyStatus('T', KeyPressed))
 	{
@@ -294,9 +296,9 @@ void SceneWorld::UpdateHUD()
 	//unsigned int curfps = ElapsedTime::GetInstance().GetFPS();
 	if (ElapsedTime::GetInstance().OneSecond())
 	{
-		FontManager::GetInstance().SetText(m_fontFPS, /*std::to_string(m_celist.at(1)->PhysicsRaw()->PositionRef().z),*/std::to_string(ElapsedTime::GetInstance().GetFPS()),
+      FontManager::GetInstance().SetText(m_fontFPS, std::to_string(ElapsedTime::GetInstance().GetFPS()),
 			Vector3f(0, OrthoProjInfo::GetRegularInstance().Top * 2.f / OrthoProjInfo::GetRegularInstance().Size - 0.5f, -10));
-		std::cout << ElapsedTime::GetInstance().GetFPS() << std::endl;
+      //std::cout << ElapsedTime::GetInstance().GetFPS() << std::endl;
 	}
 //#endif
 

@@ -18,7 +18,7 @@ uniform float gSize = 32;
 
 void main()
 {
-	gl_Position = gWorld * transpose(Model) * vec4(Position.x * gSize, Position.y * gSize, Position.z, 1.0);
+	gl_Position = gWorld * transpose(Model) * vec4(Position.x, Position.y, Position.z, 1.0);
 
     TexCoord0 = TexCoord + TexCoord2;
 	Color0 = Color;

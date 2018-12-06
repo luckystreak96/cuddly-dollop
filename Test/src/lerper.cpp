@@ -1,17 +1,22 @@
 #include "lerper.h"
 
+bool epsilon(float first, float second)
+{
+  return (abs(first - second) < 0.005f);
+}
+
 Lerper::Lerper()
 {
-	Amount = 0.025f;
-	Acceleration = 0.002f;
+	Amount = 0.025f * 64.f;
+	Acceleration = 0.002f * 64.f;
 	MinVelocity = 0;
-	MaxVelocity = 1.0f;
+	MaxVelocity = 64.0f;
 }
 
 
 Vector3f Lerper::LerpVelocity(Vector3f position, Vector3f target)
 {
-	return (target - position) * Amount;
+	return (target / 64.f - position / 64.f) * Amount;
 }
 
 // Returns the next position with lerp smoothing
@@ -99,10 +104,12 @@ Vector3f Lerper::Lerp(Vector3f position, Vector3f target)
 	//if ((vo.y < 0 && position.y <= target.y) || (vo.y > 0 && position.y >= target.y))
 	//	position.y = target.y;
 
-	if (position.x == target.x && position.y == target.y)
+	if (epsilon(position.x, target.x) && epsilon(position.y, target.y))
 	{
 		// Target has been reached!
-
+      //position.x = target.x;
+      //position.y = target.y;
+      //previous_velocity = 0;
 	}
 	return position;
 }

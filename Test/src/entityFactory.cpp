@@ -33,8 +33,9 @@ std::shared_ptr<Entity> EntityFactory::BuildEntity(std::map<std::string, EntityA
 	// Position
 	if (args.count("x"))
 	{
-		float x = GetFloat(args.at("x"));
-		float y = GetFloat(args.at("y"));
+      float size = OrthoProjInfo::GetRegularInstance().Size;
+		float x = GetFloat(args.at("x")) * size;
+		float y = GetFloat(args.at("y")) * size;
 		float z = GetFloat(args.at("z"));
 		result->Physics()->AbsolutePosition(Vector3f(x, y, z));
 	}

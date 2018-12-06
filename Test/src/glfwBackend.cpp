@@ -45,8 +45,11 @@ void Resize(GLFWwindow* window)
 	multiplierFinal = std::get<int>(GameData::Options.at("resolution"));
 
 	int viewW, viewH;
-	viewW = multiplierFinal * 480;
-	viewH = multiplierFinal * 270;
+	//viewW = multiplierFinal * 480;
+	//viewH = multiplierFinal * 270;
+	viewW = 1024;
+	viewH = 768;
+
 
 	GLFWmonitor* monitor = glfwGetPrimaryMonitor();
 	const GLFWvidmode* mode = glfwGetVideoMode(monitor);
@@ -79,7 +82,8 @@ void Resize(GLFWwindow* window)
 	OrthoProjInfo::GetRegularInstance().Top = (h / 2.0f);
 	OrthoProjInfo::GetRegularInstance().Left = -(w / 2.0f);
 	OrthoProjInfo::GetRegularInstance().Right = (w / 2.0f);
-	OrthoProjInfo::GetRegularInstance().Size = /*Transformation::perspectiveOrtho ?*/ size * multiplierFinal /*: size*/;
+	//OrthoProjInfo::GetRegularInstance().Size = /*Transformation::perspectiveOrtho ?*/ size * multiplierFinal /*: size*/;
+	OrthoProjInfo::GetRegularInstance().Size = 64;
 	OrthoProjInfo::GetRegularInstance().changed = true;
 
 	PersProjInfo::GetRegularInstance().Height = h;

@@ -121,8 +121,8 @@ void Scene::SetOrthoStuffs()
 	m_backupTrans = m_camera._transform->GetTranslation();
 
 	Vector3f temp = m_backupTrans;
-	temp.x *= OrthoProjInfo::GetRegularInstance().Size;
-	temp.y *= OrthoProjInfo::GetRegularInstance().Size;
+	//temp.x *= OrthoProjInfo::GetRegularInstance().Size;
+	//temp.y *= OrthoProjInfo::GetRegularInstance().Size;
 
 	// Floor so we dont move the camera half a pixel and fuck up the graphics
 	temp.x = floorf(temp.x);

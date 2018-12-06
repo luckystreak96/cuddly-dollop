@@ -161,8 +161,9 @@ bool GraphicsComponent::UpdateTranslation()
 	Vector3f translation;
 	Vector3f offset;
 
+    float size = OrthoProjInfo::GetRegularInstance().Size;
 	if (m_modelName == "CENTERED_TILE")
-		offset = Vector3f(0.5f, 0.5f, 0.0f);
+		offset = Vector3f(0.5f * size, 0.5f * size, 0.0f);
 	//else if (m_modelName == "SCREEN")
 	//	translation = m_pos/* + Vector3f(0.5f, 0.5f, 0)*/;
 	//else
@@ -400,8 +401,8 @@ void GraphicsComponent::InsertMModels(Transformation& t)
 {
 	Vector3f reminder = t.GetTranslation();
 	Vector3f temp = t.GetTranslation();
-	temp.x *= OrthoProjInfo::GetRegularInstance().Size;
-	temp.y *= OrthoProjInfo::GetRegularInstance().Size;
+	//temp.x *= OrthoProjInfo::GetRegularInstance().Size;
+	//temp.y *= OrthoProjInfo::GetRegularInstance().Size;
 	if (!Transformation::perspectiveOrtho)
 		temp.z *= OrthoProjInfo::GetRegularInstance().Size;
 	else
@@ -421,8 +422,8 @@ void GraphicsComponent::InsertMModels(Transformation& t, int position)
 {
 	Vector3f reminder = t.GetTranslation();
 	Vector3f temp = t.GetTranslation();
-	temp.x *= OrthoProjInfo::GetRegularInstance().Size;
-	temp.y *= OrthoProjInfo::GetRegularInstance().Size;
+	//temp.x *= OrthoProjInfo::GetRegularInstance().Size;
+	//temp.y *= OrthoProjInfo::GetRegularInstance().Size;
 	if (!Transformation::perspectiveOrtho)
 		temp.z *= OrthoProjInfo::GetRegularInstance().Size;
 	else
@@ -468,6 +469,12 @@ void GraphicsComponent::SetDefaults(std::string name)
 	m_modelName = Model::GetInstance().GetName();
 
 	m_vertices = std::vector<Vertex>(Model::GetInstance().getVertexVertices());
+    float size = OrthoProjInfo::GetRegularInstance().Size;
+    for(auto& x : m_vertices)
+      {
+        x.vertex.x *= size;
+        x.vertex.y *= size;
+      }
 	//m_vertices = std::vector<Vertex>(m_originalVertices);
 	//assert(m_vertices.size() % 3 == 0);//full vertices only plz
 
