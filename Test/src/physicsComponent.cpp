@@ -93,7 +93,7 @@ void PhysicsComponent::ActionMove(bool up, bool down, bool left, bool right, flo
 		yperc /= total;
 	}
 
-	float speed = 1.5f;
+	float speed = 1.5f * 64.0f;
 	float speedXPerc = speed * xperc;
 	float speedYPerc = speed * yperc;
 	if (left)
@@ -119,7 +119,7 @@ void PhysicsComponent::ActionMove(bool up, bool down, bool left, bool right, flo
 
 void PhysicsComponent::SetDefaults(std::string name)
 {
-	_ethereal = false;
+	_ethereal = true;
 
 	Model::GetInstance().loadModel(name);
 

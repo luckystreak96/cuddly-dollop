@@ -55,10 +55,12 @@ bool Camera::IsOnCamera(Vector3f position, Vector3f size)
 	float top = OrthoProjInfo::GetRegularInstance().Top;
 	float orthoSize = OrthoProjInfo::GetRegularInstance().Size;
 
-	float cameraRightLimit = -_translate.x + (right / orthoSize) / _scale.x;
-	float cameraLeftLimit = -_translate.x - (right / orthoSize) / _scale.x;
-	float cameraTopLimit = -_translate.y + (top / orthoSize) / _scale.y;
-	float cameraBottomLimit = -_translate.y - (top / orthoSize) / _scale.y;
+	float cameraRightLimit = -_translate.x + (right) / _scale.x;
+	float cameraLeftLimit = -_translate.x - (right) / _scale.x;
+	float cameraTopLimit = -_translate.y + (top) / _scale.y;
+	float cameraBottomLimit = -_translate.y - (top) / _scale.y;
+
+    //std::cout << "Rightlimit: " << cameraRightLimit << std::endl;
 
 	// Needs to be in left-right limits AND top-down limits
 	if (((targetRightLimit > cameraLeftLimit && targetRightLimit < cameraRightLimit) ||

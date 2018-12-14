@@ -69,7 +69,7 @@ void Snow::SetTrans(Transformation& trans)
 
 void Leaf::Update(Vector3f& zoneSize)
 {
-	velocity.x = sin(counter * 3.0f) / 20.0f;
+	velocity.x = sin(counter * 3.0f) * 5.0f;
 	position += velocity;
 	if (position.y < -1 || position.x < -2 || position.x > zoneSize.x + 2)
 		ResetLocation(zoneSize);
@@ -80,6 +80,8 @@ Leaf::Leaf(Vector3f zoneSize, bool smooth)
 {
 	texture = "leaf.png";
 	size = fmod((float)rand() / 10.f, 0.1f) + 0.2f;
+    size.x *= 64.0f;
+    size.y *= 64.0f;
 	ResetLocation(zoneSize, true, smooth);
 }
 
@@ -97,9 +99,11 @@ void Leaf::ResetLocation(Vector3f& zoneSize, bool firstSpawn, bool smooth)
 	position.x = fmod(((float)rand() / 1000.0f), zoneSize.x + 2.0f) - 2.0f;
 	position.y = fmod(rand() / 1000.0f, ((firstSpawn ? (int)zoneSize.y * 2 : (int)zoneSize.y))) + (firstSpawn ? 0 : zoneSize.y);
 	velocity.y = -fmod(((float)rand() / 1000.0f), 0.003f) - 0.003f;
-	velocity.y *= pow(size.x * 10.f, 2);
+	velocity.y *= pow(size.x * 0.2f, 2);
 	float value = fmod(((float)rand() / 1000.0f), 0.1f);
 	velocity.x = (rand() % 2) == 0 ? value : -value;
+    velocity.x *= 64.0f;
+    velocity.y *= 64.0f;
 	int random = rand();
 
 	// Set color
@@ -273,6 +277,7 @@ void Explosion::ResetLocation(Vector3f& spawnPos, bool firstSpawn, bool smooth)
 
 void ParticleGenerator::Init(ParticleType c, unsigned int num_particles, Vector3f zoneSize, bool smooth, std::string tex)
 {
+  std::cout << "Zonesize: " << zoneSize.y << std::endl;
 	if (num_particles == 0)
 	{
 		num_particles = 1;
@@ -349,6 +354,7 @@ void ParticleGenerator::SetupMesh()
 void ParticleGenerator::LogicUpdate()
 {
 	int count = 0;
+    //std::cout << "X: " << m_particles[0]->position.x << "  Y: " << m_particles[0]->position.y << std::endl;
 	for (auto &d : m_particles)
 	{
 		d->Update(m_zoneSize);

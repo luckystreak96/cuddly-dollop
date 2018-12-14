@@ -3,6 +3,9 @@
 EventWeather::EventWeather(int particleCount, ParticleType type, Vector3f mapsize, bool smooth, std::string sprite) 
 	: m_firstSetup(true), m_particleType(type), m_mapSize(mapsize), m_count(particleCount), m_smooth(smooth), m_sprite(sprite)
 {
+  float size = OrthoProjInfo::GetRegularInstance().Size;
+  //m_mapSize.x *= size;
+  //m_mapSize.y *= size;
 	m_target = 0;
 	m_lockLevel = 0;
 	m_mode = EventExecutionMode::ASYNC;
@@ -39,6 +42,9 @@ std::shared_ptr<IEvent> EventWeather::Clone()
 void EventWeather::SetMapSize(Vector3f mapsize)
 {
 	m_mapSize = mapsize;
+  float size = OrthoProjInfo::GetRegularInstance().Size;
+  m_mapSize.x *= size;
+  m_mapSize.y *= size;
 }
 
 

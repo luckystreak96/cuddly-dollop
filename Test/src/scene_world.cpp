@@ -97,7 +97,7 @@ bool SceneWorld::Init()
 		}
 	}
 
-	setup_physics_manager();
+	//setup_physics_manager();
 
 	return true;
 }
@@ -132,6 +132,8 @@ void SceneWorld::ManageInput()
 		Camera::_currentCam->SetScale(Vector3f(4.0f, 4.0f, 1.0f));
 	if (InputManager::GetInstance().FrameKeyStatus(']', KeyPressed))
 		Camera::_currentCam->SetScale(Vector3f(1.0f, 1.0f, 1.0f));
+	if (InputManager::GetInstance().FrameKeyStatus('=', KeyPressed))
+		Camera::_currentCam->SetScale(Vector3f(0.1f, 0.1f, 1.0f));
 	if (InputManager::GetInstance().FrameKeyStatus(';', KeyPressed))
 		FontManager::GetInstance().CreateFloatingText(m_celist.at(1)->PhysicsRaw()->PositionRef(), std::to_string(m_celist.at(1)->PhysicsRaw()->PositionRef().x));
 
