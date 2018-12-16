@@ -27,7 +27,7 @@ class IEvent
 {
 public:
 	IEvent();
-	virtual ~IEvent() = default;
+	virtual ~IEvent();
 
 	// Returns true if the event is done updating
 	virtual EventUpdateResponse UpdateEvent(double elapsedTime, std::map<unsigned int, std::shared_ptr<Entity>>* ents);

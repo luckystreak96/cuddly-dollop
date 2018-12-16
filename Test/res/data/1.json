@@ -6086,7 +6086,7 @@
               "execution_type": "blocking",
               "args": {
                 "id": 0,
-                "distance": 4.0
+                "distance": 256.0
               }
             },
             {
@@ -6094,7 +6094,7 @@
               "execution_type": "blocking",
               "args": {
                 "id": 0,
-                "distance": 4.0
+                "distance": 256.0
               }
             }
           ]
@@ -6995,7 +6995,7 @@
                 "type": "explosion",
                 "count": 50,
                 "id": 11,
-                "power": 0.3,
+                "power": 1.1,
                 "sprite": "dust.png"
               }
             }

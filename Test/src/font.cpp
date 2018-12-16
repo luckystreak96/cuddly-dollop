@@ -8,13 +8,18 @@
 
 
 Font::Font(bool sTatic, bool temporary, bool lightSpeed, std::string path) : m_texture(path),
-m_elapsedTime(0), m_textSpeed(1.0), m_timePerLetter(0.03), m_static(sTatic), m_temporary(temporary), m_lifetime(5.0), _letterSpacing(1.0f), MaxTime(30000),
+m_elapsedTime(0), m_textSpeed(1.0), m_timePerLetter(0.03), m_static(sTatic), m_temporary(temporary), m_lifetime(5.0), _letterSpacing(1.0f * 64.0f), MaxTime(30000),
 m_lettersPerRow(16), m_lettersPerColumn(16), m_xScale(1.0f), m_yScale(1.0f), m_lightSpeed(lightSpeed), _enabled(true), m_centered(false), m_xBndry(-1), m_x(0), m_y(0)
 {
 	std::shared_ptr<FontGraphicsComponent> graphics = std::shared_ptr<FontGraphicsComponent>(new FontGraphicsComponent("", path));
 	graphics->SetStatic(m_static);
 
 	m_mesh.init_specific_atlas(graphics, "TEXT", path, m_lettersPerRow * m_lettersPerColumn);
+	//for (auto& x : *m_mesh.get_graphics()->GetVertices())
+	//{
+	//	x.vertex.x *= 64.0f;
+	//	x.vertex.y *= 64.0f;
+	//}
 
 	CreateHash();
 	ResourceManager::GetInstance().LoadTexture(path);

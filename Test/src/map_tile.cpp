@@ -9,3 +9,8 @@ MapTile::MapTile(Vector3f pos, std::string modelName, std::string texPath, Vecto
     //pos *= 64.0f;
 	m_trans.SetTranslation(pos);
 }
+
+MapTile::~MapTile()
+{
+
+}

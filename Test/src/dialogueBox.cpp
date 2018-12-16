@@ -41,7 +41,7 @@ void DialogueBox::Construct()
 	// Only need to create the box once
 	if (!m_box)
 	{
-		m_box = std::shared_ptr<MenuBackgroundBox>(new MenuBackgroundBox(Vector3f(-1, 0.25f, -10), 14, 3));
+		m_box = std::shared_ptr<MenuBackgroundBox>(new MenuBackgroundBox(Vector3f(-1, 0.25f * 64.0f, -10), 14, 3));
 		m_box->Update();
 	}
 	//m_box->SetPhysics(Vector3f(0.5f, 0.5f, 0.5f), Vector3f(0, 0, 0));
@@ -76,8 +76,8 @@ void DialogueBox::SetText(std::string text)
 {
 	auto graph = GetLocalizedGraph();
 
-	float x = 0.65f;
-	float y = m_box->_topLeft.y - 0.5f;
+	float x = 1.5f * 64.0f;
+	float y = m_box->_topLeft.y - 0.6f * 64.0f;
 	// LOCALIZATION HERE
 	Font::SetText(_(text), Vector3f(x, y, -15.0f), false, m_maxWidth);
 	m_choices.clear();

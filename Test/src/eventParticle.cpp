@@ -25,7 +25,7 @@ EventUpdateResponse EventParticle::UpdateEvent(double elapsedTime, std::map<unsi
 			pos = ents->at(m_target)->Physics()->Position() + Vector3f(ents->at(m_target)->Physics()->GetSize().x / 2.0f, 0.3f, 0.6f);
 			break;
 		default:
-			pos = ents->at(m_target)->Physics()->Position() + Vector3f(/*ents->at(m_target)->Physics()->GetSize().x **/ 0.75f, /*ents->at(m_target)->Physics()->GetSize().y * 2.0f + 0.1f*/ 0.8f, 0.6f);
+			pos = ents->at(m_target)->Physics()->Position() + Vector3f(ents->at(m_target)->Physics()->GetSize().x * 0.9f, ents->at(m_target)->Physics()->GetSize().y * 1.25f, 0.6f);
 		}
 	}
 

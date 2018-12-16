@@ -44,7 +44,7 @@ struct Particle
 	bool done;
 	virtual void Update(Vector3f& mapSize) {};
 	virtual void ResetLocation(Vector3f& mapSize, bool firstSpawn = false, bool smooth = false) {};
-	virtual void SetTrans(Transformation& trans) {};
+	virtual void SetTrans(Transformation& trans) {}
 	virtual Mat4f& GetTrans() { return matrix; }
 };
 

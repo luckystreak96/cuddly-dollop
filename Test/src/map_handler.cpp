@@ -37,12 +37,13 @@ MapHandler::MapHandler(unsigned int id, std::shared_ptr<JsonHandler> jh) : m_id(
 
 	FinalizeSetup();
 	OrderTiles();
+
 }
 
 void MapHandler::OrderTiles()
 {
-	int maxX = m_mapSize.x / m_chunkSize + 1;
-	int maxY = m_mapSize.y / m_chunkSize + 1;
+	int maxX = m_mapSize.x / 64 / m_chunkSize + 1;
+	int maxY = m_mapSize.y / 64 / m_chunkSize + 1;
 	for (int i = 0; i < maxX; i++)
 	{
 		m_OrderedTiles.push_back(std::vector<std::vector<MapTile*>>());
@@ -54,8 +55,8 @@ void MapHandler::OrderTiles()
 
 	for (auto& t : m_tiles)
 	{
-		int x = t->PhysicsRaw()->PositionRef().x / m_chunkSize;
-		int y = t->PhysicsRaw()->PositionRef().y / m_chunkSize;
+		int x = t->PhysicsRaw()->PositionRef().x / 64 / m_chunkSize;
+		int y = t->PhysicsRaw()->PositionRef().y / 64 / m_chunkSize;
 		m_OrderedTiles[x][y].push_back(&*t);
 	}
 }
@@ -89,6 +90,7 @@ void MapHandler::FinalizeSetup()
 
 MapHandler::~MapHandler()
 {
+
 }
 
 MapHandler::MapHandler(const std::string& filePath)
@@ -104,11 +106,11 @@ void MapHandler::SetupMesh()
 	m_mesh.set_graphics_position(Vector3f(0, 0, 20.0f));
 
     float size = OrthoProjInfo::GetRegularInstance().Size;
-    for(auto& vert : *m_mesh.get_graphics()->GetVertices())
-      {
-			vert.vertex.x *= size;
-			vert.vertex.y *= size;
-      }
+    //for(auto& vert : *m_mesh.get_graphics()->GetVertices())
+    //  {
+	//		vert.vertex.x *= size;
+	//		vert.vertex.y *= size;
+     // }
 
 	for (auto t : m_tiles)
 		m_mesh.add_tex_offset_static_atlas(t->GetTexture());

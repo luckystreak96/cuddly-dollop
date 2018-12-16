@@ -9,6 +9,8 @@
 
 #include <algorithm>
 
+#undef min
+
 Fighter::Fighter()
 {
 	SetDefault();

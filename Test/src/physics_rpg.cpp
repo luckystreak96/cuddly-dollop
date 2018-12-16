@@ -73,9 +73,17 @@ float physics_rpg::collision_percent(PhysicsComponent* p, bool x_axis)
 	if (floor_counter < p->get_tile_expanse(bb))
 	{
 		if (velocity_movement > 0)
-			return abs(p->GetBoundingBox()[right_up] - floorf(p->GetBoundingBox()[right_up] + 1)) / abs(velocity_movement);
+		{
+			float bbside = p->GetBoundingBox()[right_up];
+			return abs((bbside - ((int)(bbside / 64.0f) + 1.0f) * 64.0f) / 64.0f) / abs(velocity_movement);
+		}
+		//return abs(p->GetBoundingBox()[right_up] - floorf(p->GetBoundingBox()[right_up] + 1)) / abs(velocity_movement);
 		else
-			return abs(p->GetBoundingBox()[left_down] - floorf(p->GetBoundingBox()[left_down])) / abs(velocity_movement);
+		{
+			float bbside = p->GetBoundingBox()[left_down];
+			return abs((bbside - (int)(bbside / 64.0f) * 64.0f) / 64.0f) / abs(velocity_movement);
+		}
+		//return abs(p->GetBoundingBox()[left_down] - floorf(p->GetBoundingBox()[left_down])) / abs(velocity_movement);
 
 	}
 
@@ -294,7 +302,7 @@ int physics_rpg::get_list_position(float p)
 {
 	// the +1 is for padding on the bottom and the left sides of the map
 	// so you cant walk off screen because itll be considered a chunk :)
-	return p + 1.f / m_zone_range;
+	return (p / 64.0f) + 1.f / m_zone_range;
 }
 
 

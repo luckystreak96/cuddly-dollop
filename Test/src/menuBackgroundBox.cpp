@@ -18,20 +18,22 @@ MenuBackgroundBox::MenuBackgroundBox(Vector3f position, int width, int height) :
 	// Center the menu
 	{
 		if (position.x == -1)
-			leftPos = right / size - ((float)width + 1.0f) / 2.0f;
+			leftPos = right - ((float)width + 1.0f) / 2.0f * size;
 
 		if (position.y == -1)
-			bottomPos = top / size - ((float)height + 1.0f) / 2.0f;
+			bottomPos = top - ((float)height + 1.0f) / 2.0f * size;
 	}
 
-	leftPos += 0.5f;
-	bottomPos += 0.5f;
+	leftPos += 0.5f * size;
+	bottomPos += 0.5f * size;
 
 	// Top + bottom rows
-	for (int i = 1; i < width; i++)
+	for (int i = 1 * size; i < width * size; i += size)
 	{
 		GraphComp_ptr x = GraphComp_ptr(new GraphicsComponent("CENTERED_TILE", "menu_top.png"));
-		x->SetPhysics(Vector3f(leftPos + i, bottomPos + height, -10.f));
+		x->SetPhysics(Vector3f(leftPos + i, bottomPos + height * size, -10.f));
+		//std::cout << leftPos + i << std::endl;
+		//std::cout << bottomPos + height * 64 << std::endl;
 		x->SetColorAll(color, alpha);
 		m_boxParts.push_back(x);
 
@@ -43,7 +45,7 @@ MenuBackgroundBox::MenuBackgroundBox(Vector3f position, int width, int height) :
 	}
 
 	// Left + right columns
-	for (int i = 1; i < height; i++)
+	for (int i = 1 * size; i < height * size; i += size)
 	{
 		GraphComp_ptr x = GraphComp_ptr(new GraphicsComponent("CENTERED_TILE", "menu_top.png"));
 		x->SetPhysics(Vector3f(leftPos, bottomPos + i, -10.f));
@@ -52,16 +54,16 @@ MenuBackgroundBox::MenuBackgroundBox(Vector3f position, int width, int height) :
 		m_boxParts.push_back(x);
 
 		GraphComp_ptr y = GraphComp_ptr(new GraphicsComponent("CENTERED_TILE", "menu_top.png"));
-		y->SetPhysics(Vector3f(leftPos + width, bottomPos + i, -10.f));
+		y->SetPhysics(Vector3f(leftPos + width * size, bottomPos + i, -10.f));
 		y->GetModelMat()->SetRotation(0, 0, -1.57f);// 1.57 is somehow 90 degrees
 		y->SetColorAll(color, alpha);
 		m_boxParts.push_back(y);
 	}
 
 	// Center
-	for (int w = 1; w < width; w++)
+	for (int w = 1 * size; w < width * size; w+=size)
 	{
-		for (int h = 1; h < height; h++)
+		for (int h = 1 * size; h < height * size; h+=size)
 		{
 			GraphComp_ptr x = GraphComp_ptr(new GraphicsComponent("CENTERED_TILE", "menu_center.png"));
 			x->SetPhysics(Vector3f(leftPos + w, bottomPos + h, -10.f));
@@ -77,13 +79,13 @@ MenuBackgroundBox::MenuBackgroundBox(Vector3f position, int width, int height) :
 
 	// Corners
 	GraphComp_ptr topleft = GraphComp_ptr(new GraphicsComponent("CENTERED_TILE", "menu_corner.png"));
-	topleft->SetPhysics(Vector3f(leftPos, bottomPos + height, -10.f));
+	topleft->SetPhysics(Vector3f(leftPos, bottomPos + height * size, -10.f));
 	topleft->SetColorAll(color, alpha);
 	m_boxParts.push_back(topleft);
-	_topLeft = Vector3f(leftPos - 0.5f, bottomPos + height + 0.5f, -10);
+	_topLeft = Vector3f(leftPos - 0.5f * size, bottomPos + height * size + 0.5f * size, -10);
 
 	GraphComp_ptr topright = GraphComp_ptr(new GraphicsComponent("CENTERED_TILE", "menu_corner.png"));
-	topright->SetPhysics(Vector3f(leftPos + width, bottomPos + height, -10.f));
+	topright->SetPhysics(Vector3f(leftPos + width * size, bottomPos + height * size, -10.f));
 	topright->GetModelMat()->SetRotation(0, 0, -1.57f);// 1.57 is somehow 90 degrees
 	topright->SetColorAll(color, alpha);
 	m_boxParts.push_back(topright);
@@ -95,11 +97,11 @@ MenuBackgroundBox::MenuBackgroundBox(Vector3f position, int width, int height) :
 	m_boxParts.push_back(bottomleft);
 
 	GraphComp_ptr bottomright = GraphComp_ptr(new GraphicsComponent("CENTERED_TILE", "menu_corner.png"));
-	bottomright->SetPhysics(Vector3f(leftPos + width, bottomPos, -10.f));
+	bottomright->SetPhysics(Vector3f(leftPos + width * size, bottomPos, -10.f));
 	bottomright->GetModelMat()->SetRotation(0, 0, 3.141592f);// 1.57 is somehow 90 degrees
 	bottomright->SetColorAll(color, alpha);
 	m_boxParts.push_back(bottomright);
-	_bottomRight = Vector3f(leftPos + width + 1 - 0.5f, bottomPos + 1 - 0.5f, -10.f);
+	_bottomRight = Vector3f(leftPos + width * size + 1 * size - 0.5f * size, bottomPos + 1 * size - 0.5f * size, -10.f);
 
 	m_MBO_instances = 1;
 

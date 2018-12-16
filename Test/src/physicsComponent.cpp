@@ -119,11 +119,16 @@ void PhysicsComponent::ActionMove(bool up, bool down, bool left, bool right, flo
 
 void PhysicsComponent::SetDefaults(std::string name)
 {
-	_ethereal = true;
+	_ethereal = false;
 
 	Model::GetInstance().loadModel(name);
 
 	m_vertices = std::vector<Vertex>(Model::GetInstance().getVertexVertices());
+	for (auto& x : m_vertices)
+	{
+		x.vertex.x *= 64.0f;
+		x.vertex.y *= 64.0f;
+	}
 
 	m_indices = std::vector<GLuint>(Model::GetInstance().getIndices());
 	assert(m_indices.size() % 3 == 0);
@@ -169,7 +174,8 @@ int PhysicsComponent::get_tile_expanse()
 
 int PhysicsComponent::get_tile_expanse(std::array<float, 6> bb)
 {
-	return ((int)bb[Up] - (int)bb[Down] + 1) * ((int)bb[Right] - (int)bb[Left] + 1);
+	//return ((int)bb[Up] - (int)bb[Down] + 1) * ((int)bb[Right] - (int)bb[Left] + 1);
+	return (((int)bb[Up] - (int)bb[Down]) / 64 + 1) * (((int)bb[Right] - (int)bb[Left]) / 64 + 1);
 }
 
 
@@ -241,10 +247,16 @@ void PhysicsComponent::SetBoundingBox()
 //numSquares = How big is the object in tiles (to determine how to centre the object)
 void PhysicsComponent::SetBoundingBoxSize(Vector3f size, Vector3f numSquares)
 {
+	numSquares.x *= 64.0f;
+	numSquares.y *= 64.0f;
+
 	//Side-Space, if you put 0, itll just stick it to the left/bottom/close(ground)
 	float sideX = numSquares.x > 0 ? (numSquares.x - size.x) / 2 : 0;
 	float sideY = numSquares.y > 0 ? (numSquares.y - size.y) / 2 : 0;
 	float sideZ = numSquares.z > 0 ? (numSquares.z - size.z) / 2 : 0;
+
+	//size.x *= 64;
+	//size.y *= 64;
 
 	if (size.x >= 0)
 	{

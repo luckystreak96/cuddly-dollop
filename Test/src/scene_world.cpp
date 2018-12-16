@@ -97,7 +97,7 @@ bool SceneWorld::Init()
 		}
 	}
 
-	//setup_physics_manager();
+	setup_physics_manager();
 
 	return true;
 }
@@ -183,7 +183,7 @@ void SceneWorld::Interact()
 		Vector3f pos = m_player->Physics()->GetCenter();
 		Direction dir = m_player->Graphics()->GetDirection();
 
-		float distance = 0.2f;
+		float distance = 0.2f * 64.0f;
 		if (dir == dir_Left || dir == dir_Right)
 			distance += m_player->Physics()->GetSize().x / 2;
 		else if (dir == dir_Up || dir == dir_Down)
@@ -299,7 +299,7 @@ void SceneWorld::UpdateHUD()
 	if (ElapsedTime::GetInstance().OneSecond())
 	{
       FontManager::GetInstance().SetText(m_fontFPS, std::to_string(ElapsedTime::GetInstance().GetFPS()),
-			Vector3f(0, OrthoProjInfo::GetRegularInstance().Top * 2.f / OrthoProjInfo::GetRegularInstance().Size - 0.5f, -10));
+			Vector3f(0, OrthoProjInfo::GetRegularInstance().Top * 2.f - 32.0f, -10));
       //std::cout << ElapsedTime::GetInstance().GetFPS() << std::endl;
 	}
 //#endif

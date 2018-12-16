@@ -31,10 +31,12 @@ Entity::Entity(unsigned int id, std::string spritesheet, bool playerInput, bool 
 		std::shared_ptr<InputComponent>(new InputComponent());
 	m_inputComponent->_id = id;
 	components.push_back(m_inputComponent);
+
 }
 
 Entity::~Entity()
 {
+
 }
 
 void Entity::AddEventQueue(std::shared_ptr<EventQueue> eq)

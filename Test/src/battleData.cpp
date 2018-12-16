@@ -6,7 +6,10 @@
 #include "statCurve.h"
 #include "passiveFactory.h"
 
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
+#else
 #undef GetObject
+#endif
 
 using namespace rapidjson;
 

@@ -40,7 +40,7 @@ std::shared_ptr<Entity> EntityFactory::BuildEntity(std::map<std::string, EntityA
 		result->Physics()->AbsolutePosition(Vector3f(x, y, z));
 	}
 	else
-		result->Physics()->AbsolutePosition(Vector3f(1.f, 1.f, 4.f));
+		result->Physics()->AbsolutePosition(Vector3f(1.f * 64, 1.f * 64, 4.f));
 
 	// Ethereal
 	bool ethereal = false;

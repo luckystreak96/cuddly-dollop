@@ -59,6 +59,12 @@ void Mesh::add_instanced_base_to_mesh(std::string model, std::string tex, bool u
 	//m_vertexList = Model::GetInstance().getVertexVertices();
 	//m_indices = Model::GetInstance().getIndices();
 
+	for (auto& x : verts)
+	{
+		x.vertex.x *= 64.0f;
+		x.vertex.y *= 64.0f;
+	}
+
 	if (use_global_tileset)
 		tex = "";
 	else
