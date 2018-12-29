@@ -310,6 +310,7 @@ void ParticleGenerator::Init(ParticleType c, unsigned int num_particles, Vector3
 	case PT_Leaf:
 		for (unsigned int i = 0; i < num_particles; i++)
 			m_particles.push_back(std::shared_ptr<Particle>(new Leaf(zoneSize, smooth)));
+        m_mesh.get_graphics()->SetColorAll(Vector3f(0, 0.9f, 0.03f));
 		break;
 	case PT_Rain:
 		for (unsigned int i = 0; i < num_particles; i++)
