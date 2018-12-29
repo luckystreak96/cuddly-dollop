@@ -53,7 +53,8 @@ void InputManager::SetupFrameKeys()
 	// If the button wasnt pressed before, lets make it be pressed
 	for (auto& x : keys)
 	{
-		if (!m_keyMap.count(x.first))
+		// != release because we don't want to receive release inputs if there was no press beforehand
+		if (!m_keyMap.count(x.first) && x.second != Release)
 		{
 			m_keyMap.emplace(x.first, std::pair<KeyStatus, float>(x.second, 1));
 			buttons.emplace(x.first);

@@ -424,14 +424,14 @@ void GLFWManager::HandleJoystickInput()
 		if (axes[0] < 0)
 		{
 			InputManager::GetInstance().Input(GameData::KeyMap.at(A_Left), true);
-			if (prevX > deadZone)
+			//if (prevX > deadZone)
 				InputManager::GetInstance().Input(GameData::KeyMap.at(A_Right), false);
 		}
 		// Right
 		else
 		{
 			InputManager::GetInstance().Input(GameData::KeyMap.at(A_Right), true);
-			if (abs(prevX) > deadZone)
+			//if (abs(prevX) > deadZone)
 				InputManager::GetInstance().Input(GameData::KeyMap.at(A_Left), false);
 		}
 		GLFWManager::_joyStickMode = true;
@@ -439,11 +439,11 @@ void GLFWManager::HandleJoystickInput()
 	else
 	{
 		// If there was a direction last frame, now its released
-		if (abs(prevX) > deadZone)
+		//if (abs(prevX) > deadZone)
 		{
-			if (prevX < 0)
+			//if (prevX < 0)
 				InputManager::GetInstance().Input(GameData::KeyMap.at(A_Left), false);
-			else
+			//else
 				InputManager::GetInstance().Input(GameData::KeyMap.at(A_Right), false);
 		}
 	}
@@ -456,24 +456,24 @@ void GLFWManager::HandleJoystickInput()
 		if (axes[1] < 0)
 		{
 			InputManager::GetInstance().Input(GameData::KeyMap.at(A_Down), true);
-			if (prevY >= deadZone)
+			//if (prevY >= deadZone)
 				InputManager::GetInstance().Input(GameData::KeyMap.at(A_Up), false);
 		}
 		else
 		{
 			InputManager::GetInstance().Input(GameData::KeyMap.at(A_Up), true);
-			if (abs(prevY) > deadZone && prevY < 0)
+			//if (abs(prevY) > deadZone && prevY < 0)
 				InputManager::GetInstance().Input(GameData::KeyMap.at(A_Down), false);
 		}
 		GLFWManager::_joyStickMode = true;
 	}
 	else
 	{
-		if (abs(prevY) > deadZone)
+		//if (abs(prevY) > deadZone)
 		{
-			if (prevY < 0)
+			//if (prevY < 0)
 				InputManager::GetInstance().Input(GameData::KeyMap.at(A_Down), false);
-			else
+			//else
 				InputManager::GetInstance().Input(GameData::KeyMap.at(A_Up), false);
 		}
 	}

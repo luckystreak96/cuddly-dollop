@@ -93,7 +93,7 @@ void PhysicsComponent::ActionMove(bool up, bool down, bool left, bool right, flo
 		yperc /= total;
 	}
 
-	float speed = 1.5f * 64.0f;
+	float speed = 1.5f * 52.0f;
 	float speedXPerc = speed * xperc;
 	float speedYPerc = speed * yperc;
 	if (left)
@@ -105,14 +105,15 @@ void PhysicsComponent::ActionMove(bool up, bool down, bool left, bool right, flo
 	if (down)
 		m_velocity.y -= speedYPerc;
 
-	if (m_velocity.x > speedXPerc * 2)
-		m_velocity.x = speedXPerc * 2;
-	if (m_velocity.x < speedXPerc * -2)
-		m_velocity.x = speedXPerc * -2;
-	if (m_velocity.y > speedYPerc * 2)
-		m_velocity.y = speedYPerc * 2;
-	if (m_velocity.y < speedYPerc * -2)
-		m_velocity.y = speedYPerc * -2;
+	//int maxCap = 3;
+	//if (m_velocity.x > speedXPerc * maxCap)
+	//	m_velocity.x = speedXPerc * maxCap;
+	//if (m_velocity.x < speedXPerc * -maxCap)
+	//	m_velocity.x = speedXPerc * -maxCap;
+	//if (m_velocity.y > speedYPerc * maxCap)
+	//	m_velocity.y = speedYPerc * maxCap;
+	//if (m_velocity.y < speedYPerc * -maxCap)
+	//	m_velocity.y = speedYPerc * -maxCap;
 
 	SetMovedBB();
 }
@@ -175,7 +176,8 @@ int PhysicsComponent::get_tile_expanse()
 int PhysicsComponent::get_tile_expanse(std::array<float, 6> bb)
 {
 	//return ((int)bb[Up] - (int)bb[Down] + 1) * ((int)bb[Right] - (int)bb[Left] + 1);
-	return (((int)bb[Up] - (int)bb[Down]) / 64 + 1) * (((int)bb[Right] - (int)bb[Left]) / 64 + 1);
+	//return (((int)bb[Up] - (int)bb[Down]) / 64 + 1) * (((int)bb[Right] - (int)bb[Left]) / 64 + 1);
+	return (((int)bb[Up] / 64 - (int)bb[Down] / 64) + 1) * (((int)bb[Right] / 64 - (int)bb[Left] / 64) + 1);
 }
 
 

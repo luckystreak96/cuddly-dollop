@@ -94,7 +94,8 @@ void PlayerGraphicsComponent::Update()
 	//Change the direction hes facing
 	if (m_vel != 0)
 	{
-		if (abs(m_vel.x) >= abs(m_vel.y))
+		// -0.1f here to prioritize left-right sprites when moving in diagonal
+		if (abs(m_vel.x) >= abs(m_vel.y) - 0.1f)
 		{
 			if (m_vel.x > 0)
 				m_direction = dir_Right;
@@ -133,8 +134,8 @@ void PlayerGraphicsComponent::Update()
 
 	if (_animation >= AE_LeftMove && _animation <= AE_UpMove)
 	{
-		float speed = abs(m_vel.x) + abs(m_vel.y);
-		m_delay = speed == 0 ? 1 : m_actualDelay / speed;
+		float speed = fmax(abs(m_vel.x), abs(m_vel.y)) + fmin(abs(m_vel.x), abs(m_vel.y)) / 2.0f;
+		m_delay = speed == 0 ? 1 : m_actualDelay / (speed / 64.0f);
 		if (_forceAnimation && m_delay == 1)
 			m_delay = m_actualDelay / 4;
 	}
