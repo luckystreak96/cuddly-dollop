@@ -23,6 +23,8 @@ public:
 	// The maximum amount by which the object can accelerate per frame (or
 	// deccelerate when changing direction)
 	float Acceleration;
+
+	bool LowerVelocity64;
 private:
 	Vector3f previous_velocity;
 };

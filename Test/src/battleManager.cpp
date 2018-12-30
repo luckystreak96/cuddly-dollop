@@ -444,7 +444,7 @@ bool BattleManager::ValidateTargets(Fighter_ptr f)
 
 void BattleManager::TurnStart()
 {
-	Camera::_currentCam->SetScale(Vector3f(1));
+	Camera::_currentCam->SetScale(Vector3f(1.2f));
 	Camera::_currentCam->SetFollow(Camera::_currentCam->MapCenter());
 
 	// Make sure enemy targets are still valid

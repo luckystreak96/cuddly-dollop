@@ -7,6 +7,11 @@ Camera::Camera() : Target(1), _followSpeed(0.005f), _scale(Vector3f(1)), _scaleT
 _scaleTarget(Vector3f(1)), _paused(false), _3dTarget(0, 0.5f, 1), _3dUp(0, 1, 0)
 {
 	_transform = std::make_unique<Transformation>(Transformation());
+	_lerperTrans.Amount = 0.025f * 64.f;
+	_lerperTrans.Acceleration = 0.002f * 64.f;
+	_lerperTrans.MinVelocity = 0;
+	_lerperTrans.MaxVelocity = 64.0f;
+	_lerperTrans.LowerVelocity64 = true;
 }
 
 Vector3f Camera::MapCenter()
@@ -19,10 +24,12 @@ Vector3f Camera::MapCenter()
 	Vector3f result;
 	// +1 otherwise it's not well centered
 	result.x = ((_mapsize.x + size) - ((abs(left) + abs(right)) / size)) / 2.f;
+	result.x = (_mapsize.x + size) / 2.f;
 	// didn't do a +1 cause the map looks good without it (xd)
 	result.y = ((_mapsize.y + size) - ((top * 2.f) / size)) / 2.f;
-	result.x += right / size;
-	result.y += top / size;
+	result.y = (_mapsize.y + size) / 2.f;
+	//result.x += right / size;
+	//result.y += top / size;
 	//result.z = _transform->GetTranslation().z;
 
 	return result;
@@ -161,8 +168,8 @@ void Camera::ExecuteFollow()
 		// If the pan would bring you left further than the left limit OR the map is too small to fit the screen width,
 		//  just pan at the left limit
 		if (_translate.x - ((left) ) / _scale.x > 0 ||
-			_mapsize.x < ((right) ) * 2)
-			_translate.x = ((left) ) / _scale.x;
+			_mapsize.x < (right * 2) / _scale.x)
+			_translate.x = left / _scale.x;
 		// If the map is big enough for the screen to pan it right and you would normally pass the limits,
 		//  set the pan to the exact right limit
 		else if (abs(_translate.x - ((right) ) / _scale.x) > _mapsize.x)
@@ -171,7 +178,7 @@ void Camera::ExecuteFollow()
 		// If the pan would bring you down further than the bottom OR the map isnt high enough to fill the screen,
 		//  just stay at the bottom
 		if (_translate.y - ((bottom)) / _scale.y > 0 ||
-			_mapsize.y < ((top) ) * 2)
+			_mapsize.y < (top * 2) / _scale.y)
 			_translate.y = ((bottom) ) / _scale.y;
 		// If the map is big enough for the screen to pan it upwards and you would normally pass the limits,
 		//  set the pan to the exact top
@@ -180,7 +187,8 @@ void Camera::ExecuteFollow()
 	}
 
 	//if (_translate.z != 0 || _extraTranslate.z != 0)
-	//	std::cout << "Camera is translating z!" << std::endl;
+	std::cout << "Dest: " << _followTarget << std::endl;
+	std::cout << "Curr: " << _translate << std::endl << std::endl;
 
 	//_translate.z = 4;
 
@@ -222,7 +230,7 @@ void Camera::SetFollowCenteredXY(Vector3f target)
 {
 	auto center = MapCenter();
 	target.x = center.x + ((target.x - center.x) / 2.f);
-	target.y = center.y + ((target.y - center.y) / 1.5f);
+	target.y = center.y + ((target.y - center.y) / 2.f);
 	SetFollow(target);
 }
 
@@ -243,7 +251,7 @@ namespace MathUtils
 		float x = ((endPoint.x - startPoint.x) * progressPercent) + startPoint.x;
 		Vector3f result;
 		result.x = x;
-		float a = -0.08f;
+		float a = -0.08f / 64.0f;// divide by 64 to adjust for larger distances 
 		float y1 = startPoint.y;
 		float y2 = endPoint.y;
 		float x1 = startPoint.x;

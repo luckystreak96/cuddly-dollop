@@ -12,13 +12,13 @@ namespace dollop_editor.Battle
     {
         public Dictionary<string, Dictionary<string, CurveStyle>> curves;
         public List<PassiveSkill> passives { get; set; }
-        public List<Actor> actors { get; set; }
+        public List<Fighter> fighters { get; set; }
 
         public BattleData()
         {
             passives = new List<PassiveSkill>();
             curves = new Dictionary<string, Dictionary<string, CurveStyle>>();
-            actors = new List<Actor>();
+            fighters = new List<Fighter>();
         }
 
         // Ensure a proper copy
@@ -37,9 +37,9 @@ namespace dollop_editor.Battle
             foreach (var x in data.passives)
                 passives.Add(new PassiveSkill(x));
 
-            actors = new List<Actor>();
-            foreach(Actor x in data.actors)
-                actors.Add(new Actor(x));
+            fighters = new List<Fighter>();
+            foreach(Fighter x in data.fighters)
+                fighters.Add(new Fighter(x));
         }
 
         public static BattleData LoadBattleData(string battledata)

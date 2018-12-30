@@ -62,15 +62,15 @@ void BattleHUD::GenerateBackground()
 	// Setup hudBackgrounds
 	GraphComp_ptr topBG = GraphComp_ptr(new FontGraphicsComponent("TILE", "res/sprites/special/dialogue.png"));
 	dynamic_cast<FontGraphicsComponent*>(topBG.get())->SetStatic(true);
-	topBG->SetPhysics(Vector3f(right * 0.68f / size, top * 2 / size - 0.75f, 0.5f));
-	topBG->GetModelMat()->SetScale(right * 2 / size, 0.75f, 1);
+	topBG->SetPhysics(Vector3f(right * 0.68f, top * 2 - 0.75f * size, 0.5f));
+	topBG->GetModelMat()->SetScale(right * 2, 0.75f, 1);
 	topBG->SetColorAll(Vector3f(1, 1, 0.5f), 1.1f);
 	topBG->Update();
 
 	GraphComp_ptr bottomBG = GraphComp_ptr(new FontGraphicsComponent("TILE", "res/sprites/special/dialogue.png"));
 	dynamic_cast<FontGraphicsComponent*>(bottomBG.get())->SetStatic(true);
 	bottomBG->SetPhysics(Vector3f(0, 0.0f, 0.5f));
-	bottomBG->GetModelMat()->SetScale(right * 1.35f / size, 0.75f, 1);
+	bottomBG->GetModelMat()->SetScale(right * 1.35f, 0.75f, 1);
 	bottomBG->SetColorAll(Vector3f(1, 1, 0.5f), 1.1f);
 	bottomBG->Update();
 

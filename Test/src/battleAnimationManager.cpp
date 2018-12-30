@@ -33,7 +33,7 @@ void BattleAnimationManager::update_skill_display(std::vector<Skill_ptr>* skills
 		for (auto& x : *skills)
 			moptions.push_back(x->GetName());
 
-		m_options.init(moptions, Vector3f(5.0f, 4.75f - 0.5f, 0));
+		m_options.init(moptions, Vector3f(8.0f, 8.f, 0) * 64.0f);
 
 		// Create a list of fonts that is long enough for all the skills
 		//while (m_fonts.size() < skills->size())
@@ -65,9 +65,10 @@ int BattleAnimationManager::get_menu_index()
 void BattleAnimationManager::MoveUp(int fighterid, bool foreward)
 {
 	Actor_ptr owner = m_actors.at(fighterid);
+	float size = 64.0f;
 	if (foreward)
 	{
-		Anim_ptr move1 = Anim_ptr(new AnimMoveTo(owner->GetPos() + Vector3f(fighterid < 4 ? 1.f : -1, 0, 0), owner));
+		Anim_ptr move1 = Anim_ptr(new AnimMoveTo(owner->ActivePosition, owner));
 		//if (m_singleFileAttacks) // We dont want async movement when there's too many attacks gonna happen
 		move1->_async = false;
 		m_animations.push_back(move1);
@@ -210,6 +211,8 @@ Anim_ptr BattleAnimationManager::CreateAnimation(triple ao)
 	int owner = _owner;
 	bool boolean = true;
 
+	float size = 64.0f;
+
 	switch (op)
 	{
 	case AS_JumpTo:
@@ -222,7 +225,7 @@ Anim_ptr BattleAnimationManager::CreateAnimation(triple ao)
 		{
 			actor = m_actors.at(args.at(0));
 		}
-		distance = actor->GetId() > 3 ? -0.7f : 0.7f;
+		distance = actor->GetId() > 3 ? -0.7f * size : 0.7f * size;
 		// if on same team, go behind them instead
 		if (m_actors.at(owner)->GetId() / 4 == actor->GetId() / 4 && args.size() <= 1)
 			distance = -distance;

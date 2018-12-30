@@ -36,7 +36,7 @@ namespace dollop_editor.Battle
 
         public void Setup()
         {
-            cmbActors.ItemsSource = battleData.actors;
+            cmbActors.ItemsSource = battleData.fighters;
             cmbActors.Items.Refresh();
             cmbCurve.ItemsSource = battleData.curves.Keys;
             cmbCurve.Items.Refresh();
@@ -53,11 +53,11 @@ namespace dollop_editor.Battle
                 if (txtLevel.Text == "")
                     throw new Exception("Level is required.");
 
-                Actor actor;
+                Fighter actor;
                 if (txtId.Text == "")
-                    actor = new Actor();
+                    actor = new Fighter();
                 else
-                    actor = battleData.actors.First(x => x.id == int.Parse(txtId.Text));
+                    actor = battleData.fighters.First(x => x.id == int.Parse(txtId.Text));
 
                 if (txtHealth.Text == "")
                     actor.health = 99999;
@@ -93,13 +93,13 @@ namespace dollop_editor.Battle
                 if (txtId.Text == "")
                 {
                     int max = 0;
-                    if(battleData.actors.Count > 0)
-                        max = battleData.actors.Max(x => x.id);
+                    if(battleData.fighters.Count > 0)
+                        max = battleData.fighters.Max(x => x.id);
                     max++;
                     actor.id = max;
                     txtId.Text = max.ToString();
 
-                    battleData.actors.Add(actor);
+                    battleData.fighters.Add(actor);
                     cmbActors.Items.Refresh();
                     cmbActors.SelectedItem = actor;
                 }
@@ -128,8 +128,8 @@ namespace dollop_editor.Battle
 
         private void btnNew_Click(object sender, RoutedEventArgs e)
         {
-            Actor actor = new Actor();
-            battleData.actors.Add(actor);
+            Fighter actor = new Fighter();
+            battleData.fighters.Add(actor);
             cmbActors.Items.Refresh();
             cmbActors.SelectedItem = actor;
 
@@ -146,7 +146,7 @@ namespace dollop_editor.Battle
             txtSprite.Text = "";
             chkDead.IsChecked = false;
 
-            int max = battleData.actors.Max(x => x.id);
+            int max = battleData.fighters.Max(x => x.id);
             max++;
             actor.id = max;
             txtId.Text = max.ToString();
@@ -166,7 +166,7 @@ namespace dollop_editor.Battle
         {
             if (e.AddedItems.Count < 1)
                 return;
-            Actor actor = (Actor)e.AddedItems[0];
+            Fighter actor = (Fighter)e.AddedItems[0];
             if (actor == null)
                 return;
 
@@ -225,11 +225,11 @@ namespace dollop_editor.Battle
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (cmbActors.SelectedIndex > -1 && MessageBox.Show("Delete this actor?", "Actor delete", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
+            if (cmbActors.SelectedIndex > -1 && MessageBox.Show("Delete this actor?", "Fighter delete", MessageBoxButton.OKCancel) == MessageBoxResult.OK)
             {
                 try
                 {
-                    battleData.actors.Remove((Actor)cmbActors.SelectedItem);
+                    battleData.fighters.Remove((Fighter)cmbActors.SelectedItem);
                     cmbActors.Items.Refresh();
                     cmbActors.SelectedIndex = -1;
                 }

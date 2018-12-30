@@ -439,7 +439,7 @@ void GLFWManager::HandleJoystickInput()
 	else
 	{
 		// If there was a direction last frame, now its released
-		//if (abs(prevX) > deadZone)
+		if (abs(prevX) > deadZone)
 		{
 			//if (prevX < 0)
 				InputManager::GetInstance().Input(GameData::KeyMap.at(A_Left), false);
@@ -469,7 +469,7 @@ void GLFWManager::HandleJoystickInput()
 	}
 	else
 	{
-		//if (abs(prevY) > deadZone)
+		if (abs(prevY) > deadZone)
 		{
 			//if (prevY < 0)
 				InputManager::GetInstance().Input(GameData::KeyMap.at(A_Down), false);

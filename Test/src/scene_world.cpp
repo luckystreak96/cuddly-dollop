@@ -302,7 +302,7 @@ void SceneWorld::UpdateHUD()
 			Vector3f(0, OrthoProjInfo::GetRegularInstance().Top * 2.f - 32.0f, -10));
       //std::cout << ElapsedTime::GetInstance().GetFPS() << std::endl;
 	}
-	std::cout << m_celist.at(1)->PhysicsRaw()->GetBoundingBox()[0] << std::endl;
+	//std::cout << m_celist.at(1)->PhysicsRaw()->GetBoundingBox()[0] << std::endl;
 //#endif
 
 	//srand(clock());

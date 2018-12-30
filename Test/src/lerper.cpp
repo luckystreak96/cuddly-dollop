@@ -2,21 +2,25 @@
 
 bool epsilon(float first, float second)
 {
-  return (abs(first - second) < 0.005f);
+	return (abs(first - second) < 0.005f);
 }
 
 Lerper::Lerper()
 {
-	Amount = 0.025f * 64.f;
-	Acceleration = 0.002f * 64.f;
+	LowerVelocity64 = false;
+	Amount = 0.025f;
+	Acceleration = 0.002f;
 	MinVelocity = 0;
-	MaxVelocity = 64.0f;
+	MaxVelocity = 1.0f;
 }
 
 
 Vector3f Lerper::LerpVelocity(Vector3f position, Vector3f target)
 {
-	return (target / 64.f - position / 64.f) * Amount;
+	if (LowerVelocity64)
+		return (target / 64.0f - position / 64.0f) * Amount;
+	else
+		return (target - position) * Amount;
 }
 
 // Returns the next position with lerp smoothing
@@ -107,9 +111,9 @@ Vector3f Lerper::Lerp(Vector3f position, Vector3f target)
 	if (epsilon(position.x, target.x) && epsilon(position.y, target.y))
 	{
 		// Target has been reached!
-      //position.x = target.x;
-      //position.y = target.y;
-      //previous_velocity = 0;
+	  //position.x = target.x;
+	  //position.y = target.y;
+	  //previous_velocity = 0;
 	}
 	return position;
 }

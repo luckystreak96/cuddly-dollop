@@ -57,7 +57,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Battle\Actor.cs" />
+    <Compile Include="Battle\Fighter.cs" />
     <Compile Include="Battle\BattleData.cs" />
     <Compile Include="Battle\PassiveSkill.cs" />
     <Compile Include="Battle\StatCurve.cs" />

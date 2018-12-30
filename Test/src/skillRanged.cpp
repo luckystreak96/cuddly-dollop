@@ -45,7 +45,7 @@ void SkillRanged::SetAnimations()
 	case 4:
 		m_state = SP_4_PostSkillAnim;
 		//m_animationBuffer.push_back(triple(AS_JumpBack, AARG_Target, floats())); // jump back using animJumpTo's new constructor that just jumps back to active position
-		m_animationBuffer.push_back(triple(AC_CameraScale, AARG_Float, floats({ 1.0f }))); // zoom 1.0 async
+		m_animationBuffer.push_back(triple(AC_CameraScale, AARG_Float, floats({ 1.2f }))); // zoom 1.0 async
 		m_animationBuffer.push_back(triple(AC_CameraFollow, AARG_Owner, floats()));; // follow owner
 		break;
 	case 5:

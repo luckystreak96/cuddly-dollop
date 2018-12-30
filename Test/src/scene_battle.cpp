@@ -73,13 +73,14 @@ bool SceneBattle::Init()
 	m_camera.SetFollow(m_camera.MapCenter());
 	m_camera.ForceScale(Vector3f(1.75f));
 	m_camera.SetScale(Vector3f(1.0f));
-	m_camera._lerperTrans.MaxVelocity = 0.1f;
+	//m_camera._lerperTrans.MaxVelocity = 0.1f;
 	m_camera._style = CAMSTYLE_FollowDad;
 
 	std::vector<Actor_ptr> party;
 	std::vector<Actor_ptr> enemies;
 	int a = 0;
 	int b = 4;
+	float size = OrthoProjInfo::GetRegularInstance().Size;
 
 	// Set battlefield position for proper iteration
 	for (auto& x : m_fighters)
@@ -111,12 +112,12 @@ bool SceneBattle::Init()
 
 	for (int i = 0; i < party.size(); i++)
 	{
-		Vector3f position = Vector3f(4.0f + i * 0.25f, startY + i * 1.25f, 4.0f);
+		Vector3f position = Vector3f((4.0f + i * 0.25f) * size, (startY + i * 1.25f) * size, 4.0f);
 		party.at(i)->SetPhysics(position, Vector3f());
 		//if (!Transformation::perspectiveOrtho)
 			party.at(i)->AdjustHeightForAngle();
 		party.at(i)->WaitPosition = party.at(i)->GetPos();
-		party.at(i)->ActivePosition = party.at(i)->GetPos() + Vector3f(1, 0, 0);
+		party.at(i)->ActivePosition = party.at(i)->GetPos() + Vector3f(1, 0, 0) * size;
 		party.at(i)->_row = AE_Right; // make player face right cuz girl looks bad looking down
 		party.at(i)->_default_animation = AE_Right; // make player face right cuz girl looks bad looking down
 	}
@@ -125,12 +126,12 @@ bool SceneBattle::Init()
 
 	for (int i = 0; i < enemies.size(); i++)
 	{
-		Vector3f position = Vector3f(13.5f - i * 0.25f, startY + i * 1.25f, 4.0f);
+		Vector3f position = Vector3f((13.5f - i * 0.25f) * size, (startY + i * 1.25f) * size, 4.0f);
 		enemies.at(i)->SetPhysics(position, Vector3f());
 		//if (!Transformation::perspectiveOrtho)
 			enemies.at(i)->AdjustHeightForAngle();
 		enemies.at(i)->WaitPosition = enemies.at(i)->GetPos();
-		enemies.at(i)->ActivePosition = enemies.at(i)->GetPos() + Vector3f(-1, 0, 0);
+		enemies.at(i)->ActivePosition = enemies.at(i)->GetPos() + Vector3f(-1, 0, 0) * size;
 		// Set to right cause the sprites are flipped
 		enemies.at(i)->_row = AE_Right;
 		enemies.at(i)->_default_animation = AE_Right;
@@ -260,7 +261,7 @@ SceneGenData SceneBattle::Update()
 	{
 
 		FontManager::GetInstance().SetText(m_fontFPS, /*std::to_string(m_celist.at(1)->PhysicsRaw()->PositionRef().z),*/std::to_string(curfps),
-			Vector3f(0, OrthoProjInfo::GetRegularInstance().Top * 2.f / OrthoProjInfo::GetRegularInstance().Size - 0.5f, -10));
+			Vector3f(0, OrthoProjInfo::GetRegularInstance().Top * 2.f - 0.5f * 64.0f, -10));
 
 		fps = curfps;
 	}

@@ -35,7 +35,7 @@ void AnimJumpTo::first_time()
 
 	// Square root and all to make shorter jumps not be too long or too short
 	// Divide by 8 so long jumps can be short-ish
-	_duration = sqrtf(_destination.Distance2D(_initialPos) / 8.0f);
+	_duration = sqrtf(_destination.Distance2D(_initialPos) / (8.0f * 64.0f));
 
 	_target->_specialAnimation = true;
 	_target->_forceAnimation = true;

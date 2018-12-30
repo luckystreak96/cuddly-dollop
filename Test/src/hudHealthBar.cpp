@@ -56,9 +56,12 @@ HudHealthBar::HudHealthBar(BattleUnit unit, Vector3f position)
 	dynamic_cast<FontGraphicsComponent*>(ptr2.get())->SetStatic(true);
 	dynamic_cast<FontGraphicsComponent*>(ptrExp.get())->SetStatic(true);
 
-	ptr->SetPhysics(position, Vector3f());
-	ptr2->SetPhysics(position + Vector3f(0, 0, 0.1f), Vector3f());
-	ptrExp->SetPhysics(position + Vector3f(0, -0.07f, 0.1f), Vector3f());
+	float size = 64.0f;
+	Vector3f size_offset = Vector3f(size, size, 0.0f);
+
+	ptr->SetPhysics(position * size_offset, Vector3f());
+	ptr2->SetPhysics(position * size_offset + Vector3f(0, 0, 0.1f), Vector3f());
+	ptrExp->SetPhysics(position * size_offset + Vector3f(0, -0.07f, 0.1f) * size_offset, Vector3f());
 	ptrExp->SetScale(fmax(((float)m_observedXP - (float)unit.stats->CalculateLevelExp(unit.stats->GetLevel() - 1)) / (float)m_xpMax, 0.005f), 0.1f, 1);
 
 	ptr2->SetColorAll(Vector3f(3), 0.05f);
@@ -71,24 +74,24 @@ HudHealthBar::HudHealthBar(BattleUnit unit, Vector3f position)
 	// health 
 	unsigned int font = FontManager::GetInstance().AddFont(true, false, true, "res/fonts/lowercase.png");
 	FontManager::GetInstance().SetScale(font, 0.25f, 0.25f);
-	FontManager::GetInstance().GetFont(font)->_letterSpacing = 0.55f;
+	FontManager::GetInstance().GetFont(font)->_letterSpacing = 0.55f * size;
 
 	// name
 	if (name == "")
 		name = "????";
 	unsigned int namefont = FontManager::GetInstance().AddFont(true, false, true, "res/fonts/lowercase.png");
 	FontManager::GetInstance().SetScale(namefont, 0.25f, 0.25f);
-	FontManager::GetInstance().GetFont(namefont)->_letterSpacing = 0.6f;
+	FontManager::GetInstance().GetFont(namefont)->_letterSpacing = 0.6f * size;
 	Vector3f offset = Vector3f(0.05f, 0.275f, -1);
-	FontManager::GetInstance().SetText(namefont, _(name), ptr->GetPos() + offset, false);
+	FontManager::GetInstance().SetText(namefont, _(name), ptr->GetPos() + offset * size_offset, false);
 	FontManager::GetInstance().GetFont(namefont)->Update(0);
 
 	// level
 	_levelFont = FontManager::GetInstance().AddFont(true, false, true, "res/fonts/lowercase.png");
 	FontManager::GetInstance().SetScale(_levelFont, 0.25f, 0.25f);
-	FontManager::GetInstance().GetFont(_levelFont)->_letterSpacing = 0.4f;
+	FontManager::GetInstance().GetFont(_levelFont)->_letterSpacing = 0.4f * size;
 	offset = Vector3f(1.45f, 0.275f, -1);
-	FontManager::GetInstance().SetText(_levelFont, "Lv " + std::to_string(m_currentLevel), ptr->GetPos() + offset, false);
+	FontManager::GetInstance().SetText(_levelFont, "Lv " + std::to_string(m_currentLevel), ptr->GetPos() + offset * size_offset, false);
 	FontManager::GetInstance().GetFont(_levelFont)->Update(0);
 
 	// Set everything
@@ -113,9 +116,10 @@ void HudHealthBar::Destroy()
 
 void HudHealthBar::UpdateSmallHPPosition()
 {
+	float size = 64.0f;
 	m_actorPrevPos = *_unit.position;
-	_smallForeground->SetPhysics(m_actorPrevPos + Vector3f(0.18f, -0.1f, -0.1f), Vector3f());
-	_smallBackground->SetPhysics(m_actorPrevPos + Vector3f(0.18f, -0.1f, 0.1f), Vector3f());
+	_smallForeground->SetPhysics(m_actorPrevPos + Vector3f(0.18f * size, -0.1f * size, -0.1f), Vector3f());
+	_smallBackground->SetPhysics(m_actorPrevPos + Vector3f(0.18f * size, -0.1f * size, 0.1f), Vector3f());
 	_smallForeground->Update();
 	_smallBackground->Update();
 }
@@ -128,6 +132,8 @@ void HudHealthBar::Update()
 	// Ensure that the value we're following actually changed to do something
 	if (m_prevValue == *m_observed && m_prevXP == m_observedXP && *m_observedMaxHP == m_prevMaxHP)
 		return;
+
+	float size = 64.0f;
 
 	// Handle updating text and health bar here
 	Vector3f color = Vector3f(0, 0.6f, 0.8f);
@@ -151,7 +157,7 @@ void HudHealthBar::Update()
 	else
 	{
 		FontManager::GetInstance().EnableFont(_healthFont);
-		Vector3f offset = Vector3f(0.075f, 0.0f, -1);
+		Vector3f offset = Vector3f(0.075f * size, 0.0f, -1);
 		//Vector3f offset = Vector3f(-0.75f, -0.7f, -1);
 		std::string text = std::to_string(health) + " / " + std::to_string(*m_observedMaxHP);
 		std::string current = FontManager::GetInstance().GetFont(_healthFont)->_text;
@@ -187,6 +193,7 @@ Anim_ptr HudHealthBar::SetupExpAnimation(int targetXP)
 
 bool HudHealthBar::UpdateExpAnimation(float newxp)
 {
+	float size = 64.0f;
 	float actualXP = newxp;
 	if (actualXP > m_targetXP)
 		actualXP = m_targetXP;
@@ -199,7 +206,7 @@ bool HudHealthBar::UpdateExpAnimation(float newxp)
 	{
 		// Update the level font
 		m_currentLevel++;
-		Vector3f offset = Vector3f(1.45f, 0.275f, -1);
+		Vector3f offset = Vector3f(1.45f * size, 0.275f * size, -1);
 		FontManager::GetInstance().SetText(_levelFont, "Lv " + std::to_string(m_currentLevel), _foreground->GetPos() + offset, false);
 
 		FontManager::GetInstance().CreateFloatingText(*_unit.position, "Level up!", Vector3f(0.95f, 0.8f, 0.05f));

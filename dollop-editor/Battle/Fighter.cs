@@ -8,9 +8,9 @@ namespace dollop_editor
 {
     public enum Skills { Smack, Heal, Protect, Bloody_Mess };
 
-    public class Actor
+    public class Fighter
     {
-        public Actor()
+        public Fighter()
         {
             skills = new List<string>();
             passives = new List<int>();
@@ -19,7 +19,7 @@ namespace dollop_editor
             name = "";
         }
 
-        public Actor(Actor x)
+        public Fighter(Fighter x)
         {
             name = x.name;
             sprite = x.sprite;
