@@ -4,7 +4,7 @@
 Camera* Camera::_currentCam = NULL;
 
 Camera::Camera() : Target(1), _followSpeed(0.005f), _scale(Vector3f(1)), _scaleTargetDad(Vector3f(1)), _style(CAMSTYLE_Follow),
-_scaleTarget(Vector3f(1)), _paused(false), _3dTarget(0, 0.5f, 1), _3dUp(0, 1, 0)
+_scaleTarget(Vector3f(1)), _paused(false), _3dTarget(0, 0.5f, 1), _3dUp(0, 1, 0), _dadSwitch(0)
 {
 	_transform = std::make_unique<Transformation>(Transformation());
 	_lerperTrans.Amount = 0.025f * 64.f;
@@ -98,15 +98,17 @@ void Camera::Update()
 	case CAMSTYLE_FollowDadNoScale:
 	case CAMSTYLE_FollowDad:
 		_dadCountdown++;
+		_dadSwitch++;
 
 		// If the translate is rlly close to target, start targeting random nearby places
 		// The lack of break will make the execute activate as well
 
 		// Gotta make the followTarget negative cause otherwise it doesnt register in the method
-		if (_dadCountdown > 60 * 10 &&
-			((!_followingDad && _translate.NearXY(-_followTarget, 0.075f)) || _followingDad && _translate.NearXY(-_followTargetDad, 0.075f)) &&
-			((!_followingDad && _scale.NearXY(_scaleTarget, 0.01f)) || _followingDad && _scale.NearXY(_scaleTargetDad, 0.01f)))
+		if (_dadCountdown > 60 * 10 && ((_followingDad && _dadSwitch > 60 * 4) ||
+			(((!_followingDad && _translate.NearXY(-_followTarget, 0.0075f)) || _followingDad && _translate.NearXY(-_followTargetDad, 0.0075f)) &&
+			((!_followingDad && _scale.NearXY(_scaleTarget, 0.01f)) || _followingDad && _scale.NearXY(_scaleTargetDad, 0.01f)))))
 		{
+			_dadSwitch = 0;
 			_followingDad = true;
 			//_lerperTrans.Amount = 0.010f;
 			//_lerperTrans.Acceleration = 0.0002f;
@@ -114,8 +116,9 @@ void Camera::Update()
 			_followTargetDad = _followTarget + Vector3f(RandomDad(), RandomDad(), 0); // set the random distance here
 			if (_style != CAMSTYLE_FollowDadNoScale)
 			{
-				Vector3f scale = RandomDad() / 6.f;
-				_scaleTargetDad = _scaleTarget + scale; // set the random distance here
+				Vector3f scale = RandomDadScale();
+				//_scaleTargetDad = _scaleTarget + scale; // set the random distance here
+				_scaleTargetDad = scale; // set the random distance here
 			}
 		}
 	case CAMSTYLE_Follow:
@@ -131,6 +134,15 @@ float Camera::RandomDad()
 {
   float size = OrthoProjInfo::GetRegularInstance().Size;
 	float result = fmod(rand(), 1.4f * size) - 0.7f * size;
+	return result;
+}
+
+float Camera::RandomDadScale()
+{
+	// Float between 0 and 1
+	float value = fmod((float)rand() / 10.f, 0.4f);
+
+	float result = 1.2f + value;
 	return result;
 }
 
@@ -215,6 +227,7 @@ void Camera::EnableNormalCam()
 	// Reset the dad-following check
 	_followingDad = false;
 	_dadCountdown = 0;
+	_dadSwitch = 0;
 	_lerperTrans.Amount = 0.025f * 64.f;
 	_lerperTrans.Acceleration = 0.02f * 64.f;
 }

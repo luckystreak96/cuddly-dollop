@@ -16,7 +16,7 @@ Font MenuFactory::BuildOption(OptionType type, std::string text, Vector3f locati
 
 void MenuFactory::UpdateTextOption(std::string text, Vector3f location, bool centered, Font* font)
 {
-	font->SetScale(0.3f, 0.3f);
+	font->SetScale(0.5f, 0.5f);
 	font->SetText(text, location, centered);
 	font->Update(100);
 }

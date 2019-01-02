@@ -100,7 +100,7 @@ void Leaf::ResetLocation(Vector3f& zoneSize, bool firstSpawn, bool smooth)
 	//position.x = fmod(((float)rand() / 1000.0f), zoneSize.x + 2.0f) - 2.0f;
 	position.x = rand() % ((int)zoneSize.x + 64) - 64;
 	//std::cout << position.x << std::endl;
-	position.y = fmod(rand() / 1000.0f, ((firstSpawn ? (int)zoneSize.y * 2 : (int)zoneSize.y))) + (firstSpawn ? 0 : zoneSize.y);
+	position.y = fmod(rand() / 10.0f, ((firstSpawn ? (int)zoneSize.y * 2 : (int)zoneSize.y))) + (firstSpawn ? 0 : zoneSize.y);
 	//velocity.y *= pow(size.x * 0.2f, 2);
 	float value = rand() % 16;
 	velocity.x = (rand() % 64) == 0 ? value : -value;
@@ -242,7 +242,7 @@ void Explosion::Update(Vector3f& spawnpos)
 		counter += 1.f;
 };
 
-Explosion::Explosion(Vector3f& spawnPos, std::string tex, bool smooth, float pow)
+Explosion::Explosion(Vector3f& spawnPos, std::string tex, bool smooth, float pow, Vector3f size)
 {
 	if (tex == "")
 		texture = "dust.png";
@@ -250,8 +250,10 @@ Explosion::Explosion(Vector3f& spawnPos, std::string tex, bool smooth, float pow
 		texture = tex;
 
 	power = pow;
+	this->size = size;
+	this->size.z = 1.f;
 	ResetLocation(spawnPos, true, smooth);
-	size = Vector3f(0.5f, 0.5f, 1.0f);
+	//size = Vector3f(0.5f, 0.5f, 1.0f);
 }
 
 void Explosion::SetTrans(Transformation& trans)
@@ -263,15 +265,16 @@ void Explosion::SetTrans(Transformation& trans)
 	float value = 0.1f * counter;
 	float scale = (60.0f - counter) / 60.0f; // 60 is the max counter before its done
 	scale *= 0.5f;
-	size.x = scale;
-	size.y = scale;
-	trans.SetScale(size);
+	Vector3f result(1.f);
+	result.x = scale * size.x;
+	result.y = scale * size.y;
+	trans.SetScale(result);
 }
 
 
 void Explosion::ResetLocation(Vector3f& spawnPos, bool firstSpawn, bool smooth)
 {
-	size = Vector3f(0.5f, 0.5f, 1.0f);
+	//size = Vector3f(1.5f, 1.5f, 1.0f);
 	counter = rand() % 10;
 	position.x = spawnPos.x;
 	position.y = spawnPos.y;
@@ -283,7 +286,7 @@ void Explosion::ResetLocation(Vector3f& spawnPos, bool firstSpawn, bool smooth)
 
 //========= PARTICLE GENERATOR ============
 
-void ParticleGenerator::Init(ParticleType c, unsigned int num_particles, Vector3f zoneSize, bool smooth, std::string tex)
+void ParticleGenerator::Init(ParticleType c, unsigned int num_particles, Vector3f zoneSize, bool smooth, std::string tex, Vector3f size)
 {
 	std::cout << "Zonesize: " << zoneSize.y << std::endl;
 	if (num_particles == 0)
@@ -326,7 +329,7 @@ void ParticleGenerator::Init(ParticleType c, unsigned int num_particles, Vector3
 		break;
 	case PT_Explosion:
 		for (unsigned int i = 0; i < num_particles; i++)
-			m_particles.push_back(std::shared_ptr<Particle>(new Explosion(zoneSize, tex, false, m_power)));
+			m_particles.push_back(std::shared_ptr<Particle>(new Explosion(zoneSize, tex, false, m_power, size)));
 		break;
 	default:
 		for (unsigned int i = 0; i < num_particles; i++)

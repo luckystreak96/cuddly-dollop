@@ -4,6 +4,7 @@
 #include "fighter.h"
 #include "battleUnit.h"
 #include "battle_info.h"
+#include "battleAnimationManager.h"
 
 #include <deque>
 #include <vector>
@@ -76,7 +77,7 @@ public:
 private:
 	std::shared_ptr<BattleAnimationManager> m_graphics;
 	battle_info m_info;
-	bool m_showingSkills;
+	skill_display_state m_showingSkills;
 };
 
 #endif

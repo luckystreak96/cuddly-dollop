@@ -31,7 +31,7 @@ void SkillRanged::SetAnimations()
 		m_state = SP_2_BeginAnim;
 		m_animationBuffer.push_back(triple(AC_CameraFollow, AARG_OwnerTargets, floats({ 0 }))); // follow the targets and player
 		m_animationBuffer.push_back(triple(AC_CameraScale, AARG_Float, floats({ 1.5f }))); // zoom 1.5
-		m_animationBuffer.push_back(triple(AS_MoveTo, AARG_Owner, floats({ 0, 1, 0 }))); // move self forward (1, 0)
+		m_animationBuffer.push_back(triple(AS_MoveTo, AARG_Owner, floats({ 0, 1.f * 64.f, 0 }))); // move self forward (1, 0)
 		m_animationBuffer.push_back(triple(AS_Animation, AARG_FloatAsync, floats({ AE_Attack, 1.0f }))); // smack animation async (animation, seconds)
 		m_animationBuffer.push_back(triple(AS_Wait, AARG_Float, floats({ 0.5f }))); // wait half the animation time
 		break;

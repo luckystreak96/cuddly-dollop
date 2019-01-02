@@ -7,9 +7,7 @@ struct colors
 {
 	static Vector3f black;
 	static Vector3f green;
+	static Vector3f purple;
 };
-
-Vector3f colors::black = Vector3f();
-Vector3f colors::green = Vector3f(0.2f, 0.9f, 0.3f);
 
 #endif

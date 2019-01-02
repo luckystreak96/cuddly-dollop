@@ -48,6 +48,7 @@ public:
 	void SetupHUD(BattleUnit unit);
 	void UpdateHUD();
 	void update_skill_display(std::vector<Skill_ptr>* skills, skill_display_state state);
+	void update_skill_display(Skill_ptr skill, skill_display_state state);
 	int get_menu_index();
 
 	void SetRender();

@@ -12,6 +12,7 @@ public:
 	HudHealthBar(BattleUnit unit, Vector3f pos);
 	~HudHealthBar();
 	void Update();
+	void Update(Observable* obs);
 	void Destroy();
 	void SetRender();
 

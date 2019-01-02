@@ -3,7 +3,6 @@
 #include "input_manager.h"
 #include "fontManager.h"
 #include "localizationData.h"
-#include "battleAnimationManager.h"
 #include "battleData.h"
 #include "passiveFactory.h"
 
@@ -16,6 +15,7 @@ using namespace std;
 
 BattleManager::BattleManager()
 {
+	m_showingSkills = SDS_none;
 }
 
 bool BattleManager::Animating()
@@ -408,22 +408,26 @@ void BattleManager::MoveToLight(bool moveup, bool turnEnd)
 // Display or stop displaying skills
 void BattleManager::UpdateSkillDisplay()
 {
-	if (m_showingSkills)
+	if (m_showingSkills == SDS_select_target)
 	{
-		if (m_info._state != BS_SelectAction)
+		if (m_info._state != BS_SelectTargets)
 		{
-			//RemoveChooseSkillText();
-			m_showingSkills = false;
+			m_showingSkills = SDS_none;
 			m_graphics->update_skill_display(&m_info._chooseSkill, SDS_none);
-
 		}
 	}
-	else if (m_info._owner->Team == 0 && !m_showingSkills && !Animating() && m_info._state == BS_SelectAction)
+	else if (m_info._owner->Team == 0 && !Animating() && (m_info._state == BS_SelectAction || m_info._state == BS_SelectTargets))
 	{
-		//SetChooseSkillText();
-		m_showingSkills = true;
-		//m_info.select_index(0);
-		m_graphics->update_skill_display(&m_info._chooseSkill, SDS_choose_skill);
+		if (m_info._state == BS_SelectAction && m_showingSkills != SDS_choose_skill)
+		{
+			m_graphics->update_skill_display(&m_info._chooseSkill, SDS_choose_skill);
+		m_showingSkills = SDS_choose_skill;
+		}
+		else if (m_info._state == BS_SelectTargets && m_showingSkills != SDS_select_target)
+		{
+			m_graphics->update_skill_display(m_info._selectedSkill, SDS_select_target);
+			m_showingSkills = SDS_select_target;
+		}
 	}
 }
 

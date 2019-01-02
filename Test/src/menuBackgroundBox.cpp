@@ -1,5 +1,7 @@
 #include "menuBackgroundBox.h"
 
+#include "colors.h"
+
 MenuBackgroundBox::MenuBackgroundBox(Vector3f position, int width, int height) : FontGraphicsComponent()
 {
 	float alpha = 0.95f;
@@ -124,6 +126,7 @@ MenuBackgroundBox::MenuBackgroundBox(Vector3f position, int width, int height) :
 	ClearMModels();
 	Update();
 	set_tex_coord_offsets(m_mesh.get_tex_coords());
+	SetColorAll(colors::purple);
 	SetNewBuffers(&m_vertices, &m_indices);
 	LoadGLResources();
 }

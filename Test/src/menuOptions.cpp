@@ -6,7 +6,7 @@
 
 MenuOptions::MenuOptions() : m_enabled(false), _selectedOption(-1) {}
 
-void MenuOptions::init(std::vector<std::string> options, Vector3f pos)
+void MenuOptions::init(std::vector<std::string> options, Vector3f pos, bool centered)
 {
 	// If the new strings are the same as the old ones, then dont bother changing anything
 	if (options.size() != 0 && options.size() == m_options.size() && pos == m_position)
@@ -29,12 +29,12 @@ void MenuOptions::init(std::vector<std::string> options, Vector3f pos)
 	{
 		while (m_fonts.size() > options.size())
 			m_fonts.pop_back();
-		MenuFactory::UpdateOptions(options, pos, true, &m_fonts);
+		MenuFactory::UpdateOptions(options, pos, centered, &m_fonts);
 	}
 	else
 	{
 		m_fonts.clear();
-		m_fonts = MenuFactory::BuildOptions(OT_Text, options, pos, true);
+		m_fonts = MenuFactory::BuildOptions(OT_Text, options, pos, centered);
 	}
 
 	//if(_selectedOption != -1 && _selectedOption < m_fonts.size())

@@ -83,7 +83,7 @@ struct Music : public Particle
 
 struct Explosion : public Particle
 {
-	Explosion(Vector3f& zoneSize, std::string texture = "dust.png", bool smooth = false, float pow = 2.0f);
+	Explosion(Vector3f& zoneSize, std::string texture = "dust.png", bool smooth = false, float pow = 2.0f, Vector3f size = Vector3f(0.75f));
 	void Update(Vector3f& mapSize);
 	void ResetLocation(Vector3f& mapSize, bool firstSpawn = false, bool smooth = false);
 	void SetTrans(Transformation& trans);
@@ -95,7 +95,7 @@ class ParticleGenerator
 public:
 	ParticleGenerator();
 	~ParticleGenerator();
-	void Init(ParticleType c, unsigned int num_particles = 1, Vector3f zoneSize = Vector3f(32, 16, 0), bool smooth = false, std::string tex = "snowflake.png");
+	void Init(ParticleType c, unsigned int num_particles = 1, Vector3f zoneSize = Vector3f(32, 16, 0), bool smooth = false, std::string tex = "snowflake.png", Vector3f size = Vector3f(1.f));
 	void FinalizeSetup();
 	void SetColor(Vector3f color, float alpha = 1.0f);
 	void SetRender();

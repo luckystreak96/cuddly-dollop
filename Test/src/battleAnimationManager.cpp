@@ -34,26 +34,23 @@ void BattleAnimationManager::update_skill_display(std::vector<Skill_ptr>* skills
 			moptions.push_back(x->GetName());
 
 		m_options.init(moptions, Vector3f(8.0f, 8.f, 0) * 64.0f);
-
-		// Create a list of fonts that is long enough for all the skills
-		//while (m_fonts.size() < skills->size())
-		//	m_fonts.push_back(FontManager::GetInstance().AddFont(true, false, true, "res/fonts/lowercase.png"));
-
-		// Set the text of each font according to skill text
-		//for (unsigned int i = 0; i < skills->size(); i++)
-		//{
-		//	FontManager::GetInstance().EnableFont(m_fonts[i]);
-		//	FontManager::GetInstance().SetScale(m_fonts[i], 0.5f, 0.5f);
-		//	FontManager::GetInstance().SetText(m_fonts[i], _(skills->at(i)->_name), Vector3f(5.0f, 4.75f - i * 0.5f, 0));
-		//	//FontManager::GetInstance().GetFont(m_info._fonts[i])->SetText(m_info._chooseSkill->at(i)->_name, Vector3f(6, 7 - i, 1));
-		//}
 	}
 	else
-	{
-		//for (unsigned int i = 0; i < m_fonts.size(); i++)
-		//	FontManager::GetInstance().GetFont(m_fonts[i])->_enabled = false;
 		m_options.disable();
+}
+
+void BattleAnimationManager::update_skill_display(Skill_ptr skill, skill_display_state state)
+{
+	if (state == SDS_select_target)
+	{
+		std::vector<std::string> moptions;
+		moptions.push_back(skill->GetName());
+
+		float top = OrthoProjInfo::GetRegularInstance().Top * 2;
+		m_options.init(moptions, Vector3f(64.f, top - 64.f, 0), false);
 	}
+	else
+		m_options.disable();
 }
 
 int BattleAnimationManager::get_menu_index()
@@ -121,8 +118,8 @@ void BattleAnimationManager::DamageAnimation(int target, Skill_ptr skill, Damage
 	// Particles
 	Vector3f pos = m_actors[target]->GetPos() + Vector3f(0.5f, 0.5f, 0.6f);
 	Particle_ptr particles = Particle_ptr(new ParticleGenerator());
-	particles->SetPowerLevel(0.3f);
-	particles->Init(PT_Explosion, abs(dmg._value), pos, false, SpriteFromEnum.at((ParticleSprite)m_particleSprite));
+	particles->SetPowerLevel(2.4f);
+	particles->Init(PT_Explosion, abs(dmg._value), pos, false, SpriteFromEnum.at((ParticleSprite)m_particleSprite), Vector3f(1.5f));
 	particles->SetColor(CalculateDamageColor(skill, dmg));
 	ParticleManager::GetInstance().AddParticles(particles);
 
@@ -136,7 +133,7 @@ void BattleAnimationManager::generate_particles(int amount, Vector3f color, Vect
 	Vector3f pos = position;
 	Particle_ptr particles = Particle_ptr(new ParticleGenerator());
 	particles->SetPowerLevel(0.3f);
-	particles->Init(PT_Explosion, amount, pos, false, SpriteFromEnum.at((ParticleSprite)m_particleSprite));
+	particles->Init(PT_Explosion, amount, pos, false, SpriteFromEnum.at((ParticleSprite)m_particleSprite)/*, Vector3f(1.5f)*/);
 	particles->SetColor(color);
 	ParticleManager::GetInstance().AddParticles(particles);
 }
@@ -245,7 +242,7 @@ Anim_ptr BattleAnimationManager::CreateAnimation(triple ao)
 		result = Anim_ptr(new AnimScreenShake(args[0], args[1]));
 		break;
 	case AS_ParticleEffect:
-		result = Anim_ptr(new anim_particle_effect(args[0], colors::green, &m_actors[owner]->GetPosRef(), "leaf.png"));
+		result = Anim_ptr(new anim_particle_effect(args[0], colors::green, &m_actors[owner]->GetPosRef(), "leaf.png", Vector3f(0.5f * 64.0f, 0, 0)));
 		//generate_particles(args[0], colors::black, m_actors[owner]->GetPosRef());
 		break;
 	case AS_BonusEffect:
@@ -317,7 +314,7 @@ void BattleAnimationManager::UpdateAnimations()
 
 void BattleAnimationManager::CreateFloatingText(int fighterid, std::string text)
 {
-	FontManager::GetInstance().CreateFloatingText(m_actors.at(fighterid)->GetPosRef(), text);
+	FontManager::GetInstance().CreateFloatingText(m_actors.at(fighterid)->GetPosRef() + Vector3f(64.0f), text);
 }
 
 void BattleAnimationManager::insert_animation(Anim_ptr anim)
@@ -357,7 +354,7 @@ void BattleAnimationManager::SpawnDamageText(Actor_ptr target, Damage dmg, Skill
 	Font_ptr font;
 
 	// Setup font
-	pos = target->GetPos() + Vector3f(0.5f, dmg._type == ST_Bonus ? 0.75f : 1.f, 0);
+	pos = target->GetPos() + Vector3f(0.75f * 64.0f, dmg._type == ST_Bonus ? 0.75f : 1.f, 0);
 	pos.z = 0;
 
 	// create font

@@ -124,6 +124,11 @@ void HudHealthBar::UpdateSmallHPPosition()
 	_smallBackground->Update();
 }
 
+void HudHealthBar::Update(Observable* obs)
+{
+	Update();
+}
+
 void HudHealthBar::Update()
 {
 	if (*_unit.position != m_actorPrevPos)

@@ -17,7 +17,7 @@ void FontFloat::SetText(std::string text, Vector3f location, bool centered, floa
 
 void FontFloat::Update(double elapsedTime)
 {
-	m_offset.y += elapsedTime * 0.8;
+	m_offset.y += elapsedTime * 0.8 * 64.0f;
 	Alpha = 1.f - (float)(m_elapsedTime / m_lifetime);
 	UpdateModel();
 	m_mesh.get_graphics()->SetColorAll(Color, Alpha);

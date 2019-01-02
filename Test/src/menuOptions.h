@@ -11,7 +11,7 @@ class MenuOptions
 {
 public:
 	MenuOptions();
-	void init(std::vector<std::string> options, Vector3f position);
+	void init(std::vector<std::string> options, Vector3f position, bool centered = true);
 
 	// Returns true if a choice was selected
 	bool Update();

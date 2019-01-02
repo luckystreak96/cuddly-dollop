@@ -13,8 +13,15 @@ struct BattleUnit
 	int id;
 	std::string name;
 	StatUser* stats;
+
+
+	// Fighter Observers
 	std::vector<Obs_ptr>* fobservers;
+
+	// Actor Observers
 	std::vector<Obs_ptr>* aobservers;
+
+
 	Vector3f* position;
 	int team;
 	int* turnOrder;

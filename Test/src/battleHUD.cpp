@@ -3,6 +3,7 @@
 #include "fontManager.h"
 #include "hudArrow.h"
 #include "hudTurnOrder.h"
+#include "hudStatusEffect.h"
 
 BattleHUD::BattleHUD()
 {
@@ -45,6 +46,9 @@ void BattleHUD::SetupUnit(int id)
 
 	// Attack prediction
 	AddActorAttackPrediction(id);
+
+	// Status hud
+	AddActorStatus(id);
 
 	// Attack prediction arrow
 	// Slight problem - sometimes an enemy can target an ally that hasnt been added yet
@@ -108,6 +112,16 @@ void BattleHUD::AddActorHealthBar(int id)
 	u.unit.fobservers->push_back(healthBar);
 	u.unit.aobservers->push_back(healthBar);
 	u.hud.push_back(healthBar);
+}
+
+void BattleHUD::AddActorStatus(int id)
+{
+	BattleUnit& u = _units.at(id).unit;
+	HudComp_ptr statusHud = std::shared_ptr<HudStatusEffect>(new HudStatusEffect(u));
+
+	u.aobservers->push_back(statusHud);
+	u.fobservers->push_back(statusHud);
+	_units.at(id).hud.push_back(statusHud);
 }
 
 void BattleHUD::AddActorAttackPrediction(int id)

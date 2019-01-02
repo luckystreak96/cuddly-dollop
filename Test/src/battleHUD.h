@@ -27,6 +27,7 @@ public:
 private:
 	void GenerateBackground();
 	void AddActorHealthBar(int id);
+	void AddActorStatus(int id);
 	void AddActorAttackPrediction(int id);
 	void AddActorAttackPredictionArrow(int id);
 

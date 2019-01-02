@@ -102,6 +102,9 @@ void Fighter::ReCalculateStats()
 	//ResetRealModified();
 
 	CurrentHealthCheck();
+	ApplyLethal();
+
+	UpdateObservers();
 }
 
 void Fighter::SetLevel(int level)
@@ -228,6 +231,8 @@ void Fighter::SetDefault()
 void Fighter::ApplyLethal()
 {
 	Dead = Health <= 0;
+	if (Dead)
+		_Statuses.clear();
 	UpdateObservers();
 	//UpdateColor();
 }

@@ -52,6 +52,7 @@ public:
 private:
 	// Returns the random values for DadCam
 	float RandomDad();
+	float RandomDadScale();
 
 public:
 	bool _paused;
@@ -79,6 +80,8 @@ public:
 private:
 	// used to track how long to wait till dadCam
 	int _dadCountdown;
+	// used to track how long to wait in between dad locations
+	int _dadSwitch;
 	// decides if dadcam is in progress
 	bool _followingDad;
 	// the current scale
