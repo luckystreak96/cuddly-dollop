@@ -32,7 +32,7 @@ EventUpdateResponse EventParticle::UpdateEvent(double elapsedTime, std::map<unsi
 	// If pos hasnt been set yet
 	if (m_firstSetup)
 	{
-		m_particles.Init(m_particleType, m_count, pos, false, m_sprite);
+      m_particles.Init(m_particleType, m_count, pos, false, m_sprite, Vector3f(0.5f));
 		m_firstSetup = false;
 	}
 

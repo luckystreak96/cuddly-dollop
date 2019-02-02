@@ -21,7 +21,7 @@ EventUpdateResponse EventWeather::UpdateEvent(double elapsedTime, std::map<unsig
 	// If pos hasnt been set yet
 	if (m_firstSetup)
 	{
-		m_particles.Init(m_particleType, m_count, m_mapSize, m_smooth, m_sprite);
+      m_particles.Init(m_particleType, m_count, m_mapSize, m_smooth, m_sprite, Vector3f(0.5f));
 		m_firstSetup = false;
 	}
 
