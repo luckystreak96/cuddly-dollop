@@ -63,6 +63,16 @@
       "_string": "max_health",
       "_int": 0,
       "_float": 6.0
+    },
+    {
+      "id": 1,
+      "name": "Thorns",
+      "priority": "PP_AfterDamage",
+      "type": "PT_Special",
+      "specifier": "PS_Flat",
+      "_string": "damage_attacker",
+      "_int": 2,
+      "_float": 0.0
     }
   ],
   "fighters": [

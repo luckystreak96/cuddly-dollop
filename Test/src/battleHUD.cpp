@@ -85,27 +85,27 @@ void BattleHUD::GenerateBackground()
 void BattleHUD::AddActorHealthBar(int id)
 {
 	Vector3f pos;
-	int right = (int)OrthoProjInfo::GetRegularInstance().Right * 2;
-	int up = (int)OrthoProjInfo::GetRegularInstance().Top * 2;
-	int size = (int)OrthoProjInfo::GetRegularInstance().Size;
-	float orthoWidth = (float)right / (float)size;
-	float orthoHeight = (float)up / (float)size;
+	float right = OrthoProjInfo::GetRegularInstance().Right * 2.f;
+	float up = OrthoProjInfo::GetRegularInstance().Top * 2.f;
+	float size = OrthoProjInfo::GetRegularInstance().Size;
+	float orthoWidth = right / size;
+	float orthoHeight = up / size;
 
 	HudBattleUnit& u = _units.at(id);
+
+	float barOffsets = (2.5f / 15.f) * orthoWidth;
 
 	if (u.unit.team == 0)
 	{
 		float xpos1 = (0.25f / 15.f) * orthoWidth;
-		float xpos2 = (2.5f / 15.f) * orthoWidth;
-		float ypos = (0.135f / 8.4375f) * orthoHeight;
-		pos = Vector3f(xpos1 + xpos2 * (u.unit.id % 4), ypos, 0);
+		float ypos = (0.1f / 8.4375f) * orthoHeight;
+		pos = Vector3f(xpos1 + (barOffsets * (3 - (u.unit.id % 4))) /*+ barOffsets * (u.unit.id % 4)*/, ypos, 0);
 	}
 	else
 	{
 		float xpos1 = (12.8f / 15.f) * orthoWidth;
-		float xpos2 = (2.5f / 15.f) * orthoWidth;
-		float ypos = 7.825f / 8.4375f;
-		pos = Vector3f(xpos1 - xpos2 * (u.unit.id % 4), ypos * orthoHeight, 0);
+		float ypos = 8.0f / 8.4375f;
+		pos = Vector3f(xpos1 - barOffsets * (u.unit.id % 4), ypos * orthoHeight, 0);
 	}
 
 	HudComp_ptr healthBar = std::shared_ptr<HudHealthBar>(new HudHealthBar(u.unit, pos));
