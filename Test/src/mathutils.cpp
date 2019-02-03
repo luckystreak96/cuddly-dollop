@@ -199,8 +199,8 @@ void Camera::ExecuteFollow()
 	}
 
 	//if (_translate.z != 0 || _extraTranslate.z != 0)
-	std::cout << "Dest: " << _followTarget << std::endl;
-	std::cout << "Curr: " << _translate << std::endl << std::endl;
+	//std::cout << "Dest: " << _followTarget << std::endl;
+	//std::cout << "Curr: " << _translate << std::endl << std::endl;
 
 	//_translate.z = 4;
 
