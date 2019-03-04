@@ -560,6 +560,9 @@
     <ClInclude Include="src\hudStatusEffect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\movementStates.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -971,6 +974,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\hudStatusEffect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\movementStates.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -5,6 +5,7 @@
 #include "iComponent.h"
 #include "vector3f.h"
 #include "vertex.h"
+#include "observable.h"
 #include "../res/include/GL/glew.h"
 
 #include <cassert>
@@ -19,7 +20,9 @@ class PhysicsComponent : public IComponent
 {
 public:
 	PhysicsComponent(Vector3f pos, std::string modelName = "TILE", Vector3f size = Vector3f(), Vector3f numTilesSize = Vector3f(-1, -1, -1));
+	virtual void init();
 	virtual void Update();
+	virtual void handle_input(Observable*) {}
 	void SetDefaults(std::string name = "TILE");
 	void ActionMove(bool up, bool down, bool left, bool right, float xperc, float yperc);
 	void SetEthereal(bool ethereal);
@@ -47,6 +50,7 @@ public:
 	Vector3f GetCenter() { return Vector3f(m_boundingBox[Left] + m_size.x / 2, m_boundingBox[Down] + m_size.y / 2, m_boundingBox[Far] + m_size.z / 2);/*return m_pos + (m_size / 2);*/ }
 	void SetPosition(Vector3f pos) { m_pos = pos; };
 	Vector3f Velocity() { return m_velocity; };
+	void PhysicsComponent::set_velocity(Vector3f vel);
 	Vector3f GetSize() { return m_size; }
 	Vector3f get_velocity_movement();
 	int get_tile_expanse();

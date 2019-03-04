@@ -5,18 +5,24 @@
 
 PhysicsComponent::PhysicsComponent() : m_conversationLock(false), walkOn(true), _collided_last_frame(-1), _unmoving(false)
 {
+	init();
 	m_velocity = Vector3f();
 }
 
 
 PhysicsComponent::PhysicsComponent(Vector3f pos, std::string modelName, Vector3f size, Vector3f numTiles) : PhysicsComponent()
 {
+	init();
 	m_size = (size);
 	m_BBcenter = (numTiles);
 	m_pos = pos;
 
 	SetDefaults(modelName);
 	Update();
+}
+
+void PhysicsComponent::init()
+{
 }
 
 void PhysicsComponent::Update()
@@ -115,6 +121,12 @@ void PhysicsComponent::ActionMove(bool up, bool down, bool left, bool right, flo
 	//if (m_velocity.y < speedYPerc * -maxCap)
 	//	m_velocity.y = speedYPerc * -maxCap;
 
+	SetMovedBB();
+}
+
+void PhysicsComponent::set_velocity(Vector3f vel)
+{
+	m_velocity = vel;
 	SetMovedBB();
 }
 

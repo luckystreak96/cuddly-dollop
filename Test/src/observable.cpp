@@ -1,6 +1,7 @@
 #include "observable.h"
 
 #include "observer.h"
+#include <iostream>
 
 void Observable::UpdateObservers()
 {
@@ -23,4 +24,14 @@ void Observable::UpdateObservers()
 void Observable::AddObserver(Obs_ptr obs)
 {
 	_observers.push_back(obs);
+}
+
+void Observable::RemoveObserver(Obs_ptr obs)
+{
+	auto it = std::find(_observers.begin(), _observers.end(), obs);
+	if (it != _observers.end())
+	{
+		_observers.erase(it);
+		std::cout << "ERASED" << std::endl;
+	}
 }

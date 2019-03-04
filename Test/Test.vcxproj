@@ -208,6 +208,7 @@
     <ClInclude Include="src\menuOptions.h" />
     <ClInclude Include="src\menuParty.h" />
     <ClInclude Include="src\menuSettings.h" />
+    <ClInclude Include="src\movementStates.h" />
     <ClInclude Include="src\nighttimeEffect.h" />
     <ClInclude Include="src\nighttimeProcessing.h" />
     <ClInclude Include="src\observable.h" />
@@ -354,6 +355,7 @@
     <ClCompile Include="src\menuOptions.cpp" />
     <ClCompile Include="src\menuParty.cpp" />
     <ClCompile Include="src\menuSettings.cpp" />
+    <ClCompile Include="src\movementStates.cpp" />
     <ClCompile Include="src\nighttimeEffect.cpp" />
     <ClCompile Include="src\nighttimeProcessing.cpp" />
     <ClCompile Include="src\observable.cpp" />

@@ -1,17 +1,16 @@
 #include "playerInputComponent.h"
 #include <GLFW/glfw3.h>
 
-PlayerInputComponent::PlayerInputComponent(std::shared_ptr<PhysicsComponent> phys, GraphComp_ptr graph)
+PlayerInputComponent::PlayerInputComponent(std::shared_ptr<PhysicsComponent> phys)
 {
 	m_phys = phys;
-	m_graph = graph;
+	
+	//InputManager::GetInstance().AddObserver(Obs_ptr(this));
 }
 
-//void PlayerInputComponent::Interact(std::shared_ptr<Entity> interactor = NULL)
-//{
-//
-//}
-
+PlayerInputComponent::~PlayerInputComponent()
+{
+}
 
 void PlayerInputComponent::Update()
 {
@@ -22,10 +21,24 @@ void PlayerInputComponent::Update()
 	//for (auto a : *keys)
 	//	keyMap.emplace(a, false);
 
-	bool up = InputManager::GetInstance().FrameKeyStatus(A_Up);
-	bool down = InputManager::GetInstance().FrameKeyStatus(A_Down);
-	bool left = InputManager::GetInstance().FrameKeyStatus(A_Left);
-	bool right = InputManager::GetInstance().FrameKeyStatus(A_Right);
+	if (false) {
+		bool up = InputManager::GetInstance().FrameKeyStatus(A_Up);
+		bool down = InputManager::GetInstance().FrameKeyStatus(A_Down);
+		bool left = InputManager::GetInstance().FrameKeyStatus(A_Left);
+		bool right = InputManager::GetInstance().FrameKeyStatus(A_Right);
 
-	m_phys->ActionMove(up, down, left, right, InputManager::GetInstance().GetKeyPercent(A_Left), InputManager::GetInstance().GetKeyPercent(A_Down));
+		m_phys->ActionMove(up, down, left, right, InputManager::GetInstance().GetKeyPercent(A_Left), InputManager::GetInstance().GetKeyPercent(A_Down));
+	}
+}
+
+void PlayerInputComponent::Update(Observable * obs)
+{
+	//InputManager* man = (InputManager*)obs;
+	//bool up = man->FrameKeyStatus(A_Up);
+	//bool down = man->FrameKeyStatus(A_Down);
+	//bool left = man->FrameKeyStatus(A_Left);
+	//bool right = man->FrameKeyStatus(A_Right);
+
+	//m_phys->ActionMove(up, down, left, right, InputManager::GetInstance().GetKeyPercent(A_Left), InputManager::GetInstance().GetKeyPercent(A_Down));
+	m_phys->handle_input(obs);
 }

@@ -27,11 +27,12 @@ Entity::Entity(unsigned int id, std::string spritesheet, bool playerInput, bool 
 	//m_physicsComponent->_unmoving = false;
 	components.push_back(m_physicsComponent);
 
-	m_inputComponent = playerInput ? std::shared_ptr<InputComponent>(new PlayerInputComponent(m_physicsComponent, m_graphicsComponent)) :
+	m_inputComponent = playerInput ? std::shared_ptr<InputComponent>(new PlayerInputComponent(m_physicsComponent)) :
 		std::shared_ptr<InputComponent>(new InputComponent());
 	m_inputComponent->_id = id;
 	components.push_back(m_inputComponent);
 
+	InputManager::GetInstance().AddObserver(m_inputComponent);
 }
 
 Entity::~Entity()
@@ -52,9 +53,9 @@ std::vector<std::shared_ptr<EventQueue>>* Entity::GetQueues()
 
 void Entity::Update()
 {
-	m_physicsComponent->Update();
-
 	m_inputComponent->Update();
+
+	m_physicsComponent->Update();
 
 	if (m_graphicsComponent)
 	{

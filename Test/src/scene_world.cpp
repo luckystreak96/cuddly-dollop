@@ -208,7 +208,8 @@ void SceneWorld::Interact()
 
 		if (inter != NULL)
 		{
-			inter->Graphics()->SetDirection(m_player->Graphics());
+			if(inter->Graphics())
+				inter->Graphics()->SetDirection(m_player->Graphics());
 			TriggerEvents(inter->GetID());
 		}
 	}

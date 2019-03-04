@@ -13,6 +13,7 @@ class Observable
 public:
 	virtual void UpdateObservers();
 	void AddObserver(Obs_ptr obs);
+	void RemoveObserver(Obs_ptr obs);
 
 public:
 	std::vector<Obs_ptr> _observers;
