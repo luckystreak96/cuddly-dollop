@@ -28,7 +28,6 @@ void Resize(GLFWwindow* window)
 	const int offsetY = 270;
 	const int width = 16;
 	const int height = 9;
-	const int size = 32;
 	float multiplierx = 1;
 	float multipliery = 1;
 	int multiplierFinal = 1;
@@ -76,13 +75,11 @@ void Resize(GLFWwindow* window)
 		std::cout << "Switched to windowed mode : Width - " << viewW << " Height - " << viewH << std::endl;
 	}
 	// The next comment centers the viewport if the window is too big for the resolution
-	//glViewport((screenW - viewW) / 2, (screenH - viewH) / 2, (GLsizei)(viewW), (GLsizei)(viewH));
 	glViewport(0, 0, (GLsizei)(viewW), (GLsizei)(viewH));
 	OrthoProjInfo::GetRegularInstance().Bottom = -(h / 2.0f);
 	OrthoProjInfo::GetRegularInstance().Top = (h / 2.0f);
 	OrthoProjInfo::GetRegularInstance().Left = -(w / 2.0f);
 	OrthoProjInfo::GetRegularInstance().Right = (w / 2.0f);
-	//OrthoProjInfo::GetRegularInstance().Size = /*Transformation::perspectiveOrtho ?*/ size * multiplierFinal /*: size*/;
 	OrthoProjInfo::GetRegularInstance().Size = 64;
 	OrthoProjInfo::GetRegularInstance().changed = true;
 

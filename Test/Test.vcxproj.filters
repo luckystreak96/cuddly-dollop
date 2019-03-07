@@ -563,6 +563,9 @@
     <ClInclude Include="src\movementStates.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\player_audio_component.h">
+      <Filter>Header Files\Entity-Component\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -978,6 +981,9 @@
     </ClCompile>
     <ClCompile Include="src\movementStates.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\player_audio_component.cpp">
+      <Filter>Source Files\Entity-Component\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

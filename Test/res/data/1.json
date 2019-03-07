@@ -6234,7 +6234,7 @@
                 "french": {
                   "dialogue 0": {
                     "id": 0,
-                    "text": "J'ai récemment écrit un un super beau poème!",
+                    "text": "J'ai récemment écrit un super beau poème!",
                     "next": 6,
                     "type": "simple"
                   },

@@ -82,6 +82,8 @@ void GraphicsComponent::Construct()
 	_must_update_vbo = false;
 	_outline = false;
 	m_direction = dir_Down;
+	m_prev_dir = dir_Down;
+	m_dir_determined = false;
 	m_lastInteraction = m_direction;
 	_instancedDraw = false;
 	_instanced_tex_coord_draw = false;
@@ -130,7 +132,39 @@ void GraphicsComponent::Update()
 		UpdateMModels();
 		m_updateMModels = false;
 	}
+
+	m_dir_determined = false;
 }
+
+void GraphicsComponent::update_direction(Vector3f vel)
+{
+	if (m_dir_determined)
+		return;
+
+	m_prev_dir = m_direction;
+	//Change the direction hes facing
+	if (abs(vel.x) > 20 || abs(vel.y) > 20)
+	{
+		// -0.1f here to prioritize left-right sprites when moving in diagonal
+		if (abs(vel.x) >= abs(vel.y) - 0.1f)
+		{
+			if (vel.x > 0)
+				m_direction = dir_Right;
+			else
+				m_direction = dir_Left;
+		}
+		else
+		{
+			if (vel.y > 0)
+				m_direction = dir_Up;
+			else
+				m_direction = dir_Down;
+		}
+	}
+
+	m_dir_determined = true;
+}
+
 
 void GraphicsComponent::SetScale(float x, float y, float z)
 {

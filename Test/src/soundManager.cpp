@@ -1,6 +1,8 @@
 #include "soundManager.h"
 #include "elapsedTime.h"
 
+// VERY IMPORTANT:
+// FILE FORMAT MUST HAVE A BIT-DEPTH OF 16
 
 SoundManager::SoundManager() : m_bgmSource(0), m_bgmState(BGM_Starting), m_bgmVolume(0), m_bgmMaxVolume(0.4f), m_masterVolume(1.0f)
 {

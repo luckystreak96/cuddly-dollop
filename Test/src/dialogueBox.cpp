@@ -76,23 +76,24 @@ void DialogueBox::SetText(std::string text)
 {
 	auto graph = GetLocalizedGraph();
 
-	float x = 1.5f * 64.0f;
-	float y = m_box->_topLeft.y - 0.6f * 64.0f;
+	float size = OrthoProjInfo::GetRegularInstance().Size;
+	float x = 1.5f * size;
+	float y = m_box->_topLeft.y - 0.5f * size;
 	// LOCALIZATION HERE
 	Font::SetText(_(text), Vector3f(x, y, -15.0f), false, m_maxWidth);
 	m_choices.clear();
 	if (graph && graph->ChoiceAvailable())
 	{
 		//m_y += m_yScale * 1.25f;
-		for (auto x : graph->GetChoices())
+		for (auto choice : graph->GetChoices())
 		{
 			// LOCALIZATION HERE
-			x = _(x);
-			m_y -= m_yScale * 1.25f;
+			choice = _(choice);
+			m_y -= m_yScale * size * 1.5f;
 			Font_ptr temp = Font_ptr(new Font(true));
 			temp->SetScale(m_xScale, m_yScale);
 			temp->SetTextSpeed(1);
-			temp->SetText(x, Vector3f(0.75f, y + m_y, -15), false, m_maxWidth);
+			temp->SetText("> " + choice, Vector3f(x + 0.25f * size, y + m_y, -15), false, m_maxWidth);
 			m_choices.push_back(temp);
 		}
 	}

@@ -21,9 +21,9 @@ MenuSettings::MenuSettings()
 
 	Vector3f pos;
 	pos.x = ((bg->_bottomRight - bg->_topLeft).x / 2) + bg->_topLeft.x;
-	pos.y = bg->_topLeft.y - 0.5f;
+	pos.y = bg->_topLeft.y - 64;
 	pos.z = bg->_topLeft.z - 1;
-	m_options.init(options, pos, false);
+	m_options.init(options, pos, true);
 	//m_options = MenuOptions(options, pos);
 }
 

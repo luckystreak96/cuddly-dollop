@@ -5,6 +5,7 @@
 #include "playerPhysicsComponent.h"
 #include "playerGraphicsComponent.h"
 #include "playerInputComponent.h"
+#include "player_audio_component.h"
 #include "physicsComponent.h"
 #include "graphicsComponent.h"
 
@@ -27,10 +28,18 @@ Entity::Entity(unsigned int id, std::string spritesheet, bool playerInput, bool 
 	//m_physicsComponent->_unmoving = false;
 	components.push_back(m_physicsComponent);
 
-	m_inputComponent = playerInput ? std::shared_ptr<InputComponent>(new PlayerInputComponent(m_physicsComponent)) :
+	m_inputComponent = playerInput ? std::shared_ptr<InputComponent>(new PlayerInputComponent(m_physicsComponent, m_graphicsComponent)) :
 		std::shared_ptr<InputComponent>(new InputComponent());
 	m_inputComponent->_id = id;
 	components.push_back(m_inputComponent);
+
+	m_audioComponent = playerInput ? std::shared_ptr<AudioComponent>(new PlayerAudioComponent()) : nullptr;
+	if (m_audioComponent)
+	{
+		m_audioComponent->_id = id;
+		static_cast<PlayerGraphicsComponent*>(m_graphicsComponent.get())->AddObserver(m_audioComponent);
+		components.push_back(m_audioComponent);
+	}
 
 	InputManager::GetInstance().AddObserver(m_inputComponent);
 }

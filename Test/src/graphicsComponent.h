@@ -40,6 +40,7 @@ public:
 	Transformation* GetModelMat() { return &m_modelMat; };
 	virtual void Draw(bool withTex = true);
 	virtual void Update();//Needs pos from physics component
+	void update_direction(Vector3f);
 	std::vector<Vertex>* GetVertices();
 	std::vector<GLuint> GetIndices();
 	std::string GetTexture();
@@ -97,6 +98,8 @@ protected:
 	GLuint m_TBO;
 	GLuint m_VAO;
 	Direction m_direction;
+	int m_prev_dir;
+	bool m_dir_determined;
 	Direction m_lastInteraction;
 	int m_MBO_instances = 1;
 	std::vector<GLuint> m_indices;

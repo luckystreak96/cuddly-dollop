@@ -12,16 +12,16 @@ void AudioComponent::ReceiveMessage(std::vector<std::string> message)
 
 AudioComponent::AudioComponent()
 {
-	SetupSource();
-	SetLoop(true);
-	PlaySound();
+	//SetupSource();
+	//SetLoop(true);
+	//PlaySound();
 }
 
 AudioComponent::~AudioComponent()
 {
 	//Free source
-	if (m_source.source != 0)
-		SoundManager::GetInstance().DeleteSource(m_source.source);
+	//if (m_source.source != 0)
+	//	SoundManager::GetInstance().DeleteSource(m_source.source);
 }
 
 void AudioComponent::PlaySound(std::string path)

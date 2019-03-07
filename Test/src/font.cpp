@@ -128,12 +128,17 @@ void Font::SetupMesh(float xBndry, float yBndry)
 		}
 	}
 
+	if (words.size() > 4)
+		int lol = 67;
+
+	float size = OrthoProjInfo::GetRegularInstance().Size;
+
 	// Letter position
 	float offset;
 	if (xBndry == -1)
 		offset = 0.f;
 	else
-		offset = m_yScale;
+		offset = m_yScale * size;
 	m_x = offset;
 	m_y = -offset;
 
@@ -151,7 +156,7 @@ void Font::SetupMesh(float xBndry, float yBndry)
 		// If the word is a \n, just start a new line
 		if (w == "\n")
 		{
-			m_y -= m_yScale;
+			m_y -= (m_yScale + 0.15f) * size;
 			m_x = offset;
 		}
 		// Is the word too big to fit in the first place?
@@ -165,7 +170,7 @@ void Font::SetupMesh(float xBndry, float yBndry)
 		else if (w.size() * _letterSpacing * m_xScale + m_x > xBndry)
 		{
 			// Increment y and start on new line
-			m_y -= m_yScale;
+			m_y -= (m_yScale + 0.15f) * size;
 			m_x = offset;
 
 			AddWordToMesh(w + " ", m_x, m_y);
@@ -196,7 +201,9 @@ void Font::SetupMesh(float xBndry, float yBndry)
 
 void Font::AddWordToMesh(std::string word, float x, float y)
 {
-	for (unsigned int i = 0; i < (int)word.size(); i++)
+	// We use the UTF8 size because otherwise the character count and letter position counts are off
+	auto vec = Utils::ConvertUTF8(word);
+	for (unsigned int i = 0; i < (int)vec.size(); i++)
 	{
 		uint32_t c = i >= m_messageProgress.size() ? ' ' : m_messageProgress.at(i);
 		unsigned int index = CharToCode(c);

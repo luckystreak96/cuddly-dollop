@@ -6,6 +6,7 @@
 #include "graphicsComponent.h"
 #include "physicsComponent.h"
 #include "inputComponent.h"
+#include "audioComponent.h"
 
 class EventQueue;
 
@@ -36,6 +37,7 @@ private:
 	std::shared_ptr<PhysicsComponent> m_physicsComponent;
 	GraphComp_ptr m_graphicsComponent;
 	std::shared_ptr<InputComponent> m_inputComponent;
+	std::shared_ptr<AudioComponent> m_audioComponent;
 };
 
 #endif

@@ -7,14 +7,16 @@
 #include <string>
 #include <AL/al.h>
 #include <AL/alc.h>
+#include "observer.h"
 
-class AudioComponent : public IComponent
+class AudioComponent : public IComponent, public Observer
 {
 public:
 	virtual void ReceiveMessage(std::vector<std::string> message);
 
 	AudioComponent();
 	~AudioComponent();
+	virtual void Update(Observable* obs) {}
 	void PlaySound(std::string path = "res/audio/fx/swish_2.wav");
 	void SetPitch(float pitch);
 	void SetGain(float gain);

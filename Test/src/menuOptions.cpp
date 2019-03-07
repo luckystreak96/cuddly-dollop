@@ -3,6 +3,7 @@
 #include "input_manager.h"
 #include "menuFactory.h"
 #include "renderer.h"
+#include "colors.h"
 
 MenuOptions::MenuOptions() : m_enabled(false), _selectedOption(-1) {}
 
@@ -73,9 +74,9 @@ bool MenuOptions::Update()
 		for (int i = 0; i < m_fonts.size(); i++)
 		{
 			if (i == _selectedOption)
-				m_fonts[i].GetGraphics()->SetColorAll(Vector3f(1, 0, 0));
+				m_fonts[i].GetGraphics()->SetColorAll(colors::mysterious_red);
 			else
-				m_fonts[i].GetGraphics()->SetColorAll();
+				m_fonts[i].GetGraphics()->SetColorAll(colors::davy_grey);
 		}
 
 		m_firstUpdate = false;

@@ -77,7 +77,6 @@ void PlayerGraphicsComponent::Draw(bool withTex)
 	}
 }
 
-
 void PlayerGraphicsComponent::Update()
 {
 	m_modelMat.SetRotation(GetProjectionRotation(), 0, 0);
@@ -89,34 +88,14 @@ void PlayerGraphicsComponent::Update()
 		UpdateObservers();
 	m_prevPosition = m_pos;
 
-
-	int dir = m_direction;
-	//Change the direction hes facing
-	if (m_vel != 0)
-	{
-		// -0.1f here to prioritize left-right sprites when moving in diagonal
-		if (abs(m_vel.x) >= abs(m_vel.y) - 0.1f)
-		{
-			if (m_vel.x > 0)
-				m_direction = dir_Right;
-			else
-				m_direction = dir_Left;
-		}
-		else
-		{
-			if (m_vel.y > 0)
-				m_direction = dir_Up;
-			else
-				m_direction = dir_Down;
-		}
-	}
+	update_direction(m_vel);
 
 	//use the backup to reset the texture coordinates for proper analysis from the animator
 	//m_vertices = std::vector<Vertex>(m_originalVertices);
 
 	//Change the sprite depending on direction
 	//m_animation = m_direction;
-	if ((dir != m_direction || (m_vel == 0 && _animation > 3) || (m_vel != 0 && _animation <= 3)) && !_specialAnimation && !_forceAnimation)
+	if ((m_prev_dir != m_direction || (m_vel == 0 && _animation > 3) || (m_vel != 0 && _animation <= 3)) && !_specialAnimation && !_forceAnimation)
 	{
 		Anim_Enum animation;
 		if (_default_animation != AE_Last)
@@ -140,7 +119,7 @@ void PlayerGraphicsComponent::Update()
 			m_delay = m_actualDelay / 4;
 	}
 
-	bool forceUpdate = (dir != m_direction && !_specialAnimation) || (m_direction != m_lastInteraction) || m_firstLoad || m_force_update;
+	bool forceUpdate = (m_prev_dir != m_direction && !_specialAnimation) || (m_direction != m_lastInteraction) || m_firstLoad || m_force_update;
 	if (SetTileModelTC(&m_vertices, forceUpdate))
 		ResetVBO();
 
