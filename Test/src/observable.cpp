@@ -2,6 +2,7 @@
 
 #include "observer.h"
 #include <iostream>
+#include <algorithm>
 
 void Observable::UpdateObservers()
 {

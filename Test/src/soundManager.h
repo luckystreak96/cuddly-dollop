@@ -41,6 +41,8 @@ public:
 	};
 
 	void SetMasterVolume(float volume);
+	void SetBGMVolume(float volume);
+	float GetBGMVolume();
 	void SetListenerPosition(Vector3f pos = Vector3f(), Vector3f vel = Vector3f());
 	unsigned int CreateSource();
 	void SetListenerOrientation(unsigned int dir);

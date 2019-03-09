@@ -1,5 +1,6 @@
 #include "soundManager.h"
 #include "elapsedTime.h"
+#include <algorithm>
 
 // VERY IMPORTANT:
 // FILE FORMAT MUST HAVE A BIT-DEPTH OF 16
@@ -374,4 +375,21 @@ void SoundManager::SetMasterVolume(float volume)
 	m_masterVolume = volume;
 	alListenerf(AL_GAIN, m_masterVolume);
 	CheckErrors();
+}
+
+void SoundManager::SetBGMVolume(float volume)
+{
+	m_bgmVolume = volume;
+
+	// Clamp
+	m_bgmVolume = fmin(m_bgmVolume, m_bgmMaxVolume);
+	m_bgmVolume = fmax(m_bgmVolume, 0);
+
+	alSourcef(m_bgmSource, AL_GAIN, m_bgmVolume);
+	CheckErrors();
+}
+
+float SoundManager::GetBGMVolume()
+{
+    return m_bgmVolume;
 }

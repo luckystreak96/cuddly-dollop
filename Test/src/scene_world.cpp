@@ -155,11 +155,11 @@ void SceneWorld::ManageInput()
 	if (InputManager::GetInstance().FrameKeyStatus(A_Menu, KeyPressed, 2U))
 	{
 		if (!m_menu)
-			m_menu = std::make_shared<Menu>(Menu());
+			m_menu = std::shared_ptr<Menu>(new Menu());
 
 		if (m_menu->_done)
 		{
-			m_menu->Open(std::make_shared<MenuSettings>(MenuSettings()));
+			m_menu->Open(std::shared_ptr<MenuSettings>(new MenuSettings()));
 			m_camera._paused = true;
 		}
 		else

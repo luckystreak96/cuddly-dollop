@@ -50,7 +50,7 @@ public:
 	Vector3f GetCenter() { return Vector3f(m_boundingBox[Left] + m_size.x / 2, m_boundingBox[Down] + m_size.y / 2, m_boundingBox[Far] + m_size.z / 2);/*return m_pos + (m_size / 2);*/ }
 	void SetPosition(Vector3f pos) { m_pos = pos; };
 	Vector3f Velocity() { return m_velocity; };
-	void PhysicsComponent::set_velocity(Vector3f vel);
+	void set_velocity(Vector3f vel);
 	Vector3f GetSize() { return m_size; }
 	Vector3f get_velocity_movement();
 	int get_tile_expanse();
