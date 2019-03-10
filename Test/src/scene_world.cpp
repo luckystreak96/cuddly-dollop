@@ -239,7 +239,10 @@ SceneGenData SceneWorld::Update()
 		m_eventManager.Update(ElapsedTime::GetInstance().GetElapsedTime());
 
 		if (next != NextScene)
+		{
 			m_fade.SetFade(false);
+			SoundManager::GetInstance().SetBGMFadeout();
+		}
 
 		for (auto it : m_celist)
 			it.second->Physics()->DesiredMove();

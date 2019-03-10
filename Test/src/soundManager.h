@@ -41,7 +41,9 @@ public:
 	};
 
 	void SetMasterVolume(float volume);
-	void SetBGMVolume(float volume);
+	void SetBGMMaxVolume(float volume);
+	void mute_BGM();
+	void SetBGMFadeout();
 	float GetBGMVolume();
 	void SetListenerPosition(Vector3f pos = Vector3f(), Vector3f vel = Vector3f());
 	unsigned int CreateSource();
@@ -63,6 +65,7 @@ public:
 private:
 	SoundManager();
 	~SoundManager();
+	void SetBGMVolume(float volume);
 	void SetSource(unsigned int source, unsigned int buffer);
 	void CheckErrors();
 
@@ -76,6 +79,7 @@ private:
 	std::string m_currentBGM;
 	BGM_State m_bgmState;
 	float m_bgmVolume;
+	bool m_bgm_muted;
 	ALCcontext* m_context;
 	ALCdevice* m_device;
 };

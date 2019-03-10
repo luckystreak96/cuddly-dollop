@@ -5,7 +5,7 @@
 // VERY IMPORTANT:
 // FILE FORMAT MUST HAVE A BIT-DEPTH OF 16
 
-SoundManager::SoundManager() : m_bgmSource(0), m_bgmState(BGM_Starting), m_bgmVolume(0), m_bgmMaxVolume(0.4f), m_masterVolume(1.0f)
+SoundManager::SoundManager() : m_bgmSource(0), m_bgmState(BGM_Starting), m_bgmVolume(0), m_bgmMaxVolume(0.4f), m_masterVolume(1.0f), m_bgm_muted(false)
 {
 	// Initialize Open AL
 	const char* device_name = alcGetString(NULL, ALC_DEVICE_SPECIFIER);
@@ -242,6 +242,7 @@ void SoundManager::DeleteSource(unsigned int source)
 
 void SoundManager::Update()
 {
+	// Handle sound fx
 	for (int i = 0; i < m_sfxSources.size(); i++)
 	{
 		ALuint source = m_sfxSources[i];
@@ -253,25 +254,29 @@ void SoundManager::Update()
 		}
 	}
 
+	// Handle BGM
 	if (m_bgmState == BGM_Starting)
 	{
-		if (m_bgmVolume < m_bgmMaxVolume)
+		if (m_bgmVolume < 1.0f)
 		{
-			m_bgmVolume += 0.6f * (float)ElapsedTime::GetInstance().GetElapsedTime();
-			m_bgmVolume = fmin(m_bgmMaxVolume, m_bgmVolume);
+			m_bgmVolume += 1.f / 60.0f;// How long in frames?
+			m_bgmVolume = fmin(m_bgmVolume, 1.0f);
+			//m_bgmVolume = fmin(m_bgmMaxVolume, m_bgmVolume);
+			SetBGMVolume(m_bgmVolume);
 		}
 		else
 		{
 			m_bgmState = BGM_Playing;
-			m_bgmVolume = m_bgmMaxVolume;
+			SetBGMVolume(m_bgmVolume);
 		}
 	}
 	else if (m_bgmState == BGM_Stopping)
 	{
 		if (m_bgmVolume > 0.0f)
 		{
-			m_bgmVolume -= 0.6f * (float)ElapsedTime::GetInstance().GetElapsedTime();
-			m_bgmVolume = fmax(0.0f, m_bgmVolume);
+			m_bgmVolume -= 1.0f / 60.0f;// How long in frames?
+			m_bgmVolume = fmax(m_bgmVolume, 0.0f);
+			SetBGMVolume(m_bgmVolume);
 		}
 		else
 		{
@@ -280,9 +285,8 @@ void SoundManager::Update()
 			ALint source_state;
 			alGetSourcei(m_bgmSource, AL_SOURCE_STATE, &source_state);
 			if (source_state == AL_PLAYING) {
-				alSourceStop(m_bgmSource);
+			    Stop(m_bgmSource);
 			}
-			CheckErrors();
 
 			if (m_nextBGM == "")
 				m_bgmState = BGM_Playing;
@@ -290,7 +294,6 @@ void SoundManager::Update()
 			{
 				m_bgmState = BGM_Starting;
 				SetSource(m_bgmSource, m_buffers.at(m_nextBGM).buffer);
-				CheckErrors();
 
 				alSourcePlay(m_bgmSource);
 				CheckErrors();
@@ -300,8 +303,10 @@ void SoundManager::Update()
 		}
 	}
 
-	alSourcef(m_bgmSource, AL_GAIN, m_bgmVolume);
-	CheckErrors();
+	//SetBGMVolume(m_bgmVolume);
+	//SetGain()
+	//alSourcef(m_bgmSource, AL_GAIN, m_bgmVolume);
+	//CheckErrors();
 }
 
 unsigned int SoundManager::CreateSource()
@@ -381,15 +386,41 @@ void SoundManager::SetBGMVolume(float volume)
 {
 	m_bgmVolume = volume;
 
-	// Clamp
-	m_bgmVolume = fmin(m_bgmVolume, m_bgmMaxVolume);
-	m_bgmVolume = fmax(m_bgmVolume, 0);
+	// Don't want division by 0
+	if (m_bgmMaxVolume > 0 && !m_bgm_muted)
+	    SetGain(m_bgmSource, m_bgmVolume * m_bgmMaxVolume);
+	else
+		SetGain(m_bgmSource, 0);
 
-	alSourcef(m_bgmSource, AL_GAIN, m_bgmVolume);
 	CheckErrors();
+}
+
+void SoundManager::SetBGMMaxVolume(float volume)
+{
+	m_bgmMaxVolume = volume;
+
+	// Clamp
+	m_bgmMaxVolume = fmin(m_bgmVolume, 0.4f);
+	m_bgmMaxVolume = fmax(m_bgmVolume, 0);
+
+	if(m_bgm_muted)
+		SetGain(m_bgmSource, 0);
+	else if (m_bgmState == BGM_Playing)
+	    SetBGMVolume(m_bgmVolume);
+}
+
+void SoundManager::mute_BGM()
+{
+	m_bgm_muted = !m_bgm_muted;
+	SetBGMVolume(m_bgmVolume);
 }
 
 float SoundManager::GetBGMVolume()
 {
     return m_bgmVolume;
+}
+
+void SoundManager::SetBGMFadeout()
+{
+    m_bgmState = BGM_Stopping;
 }

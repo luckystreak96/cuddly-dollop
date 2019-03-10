@@ -9,15 +9,9 @@
 
 MuteBGMCommand::MuteBGMCommand()
 {
-    m_volume = SoundManager::GetInstance().GetBGMVolume();
 }
 
 void MuteBGMCommand::execute()
 {
-    float vol = SoundManager::GetInstance().GetBGMVolume();
-
-    if(vol == 0.0f)
-        SoundManager::GetInstance().SetBGMVolume(m_volume);
-    else
-        SoundManager::GetInstance().SetBGMVolume(0.0f);
+    SoundManager::GetInstance().mute_BGM();
 }

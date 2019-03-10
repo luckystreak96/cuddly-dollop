@@ -13,7 +13,6 @@ public:
     MuteBGMCommand();
     void execute();
 private:
-    float m_volume;
 };
 
 #endif //CUDDLY_DOLLOP_MUTE_BGM_COMMAND_H
