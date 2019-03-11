@@ -32,7 +32,7 @@ link_directories(/usr/X11R6/lib)
 # here we add definitions for any package if requred.
 #add_definitions(${PCL_DEFINITIONS})
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_FLAGS "-std=c++17")
 
 # The following line is very important.
 # It specifies the executable name. Here the executable is the first parameter i.e. MyApp and a file MyApp.exe will be created on
