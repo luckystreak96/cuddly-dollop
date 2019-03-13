@@ -409,10 +409,11 @@ void SoundManager::SetBGMMaxVolume(float volume)
 	    SetBGMVolume(m_bgmVolume);
 }
 
-void SoundManager::mute_BGM()
+bool SoundManager::toggle_BGM_mute()
 {
 	m_bgm_muted = !m_bgm_muted;
 	SetBGMVolume(m_bgmVolume);
+	return m_bgm_muted;
 }
 
 float SoundManager::GetBGMVolume()
@@ -423,4 +424,8 @@ float SoundManager::GetBGMVolume()
 void SoundManager::SetBGMFadeout()
 {
     m_bgmState = BGM_Stopping;
+}
+
+bool SoundManager::get_BGM_muted() {
+    return m_bgm_muted;
 }

@@ -2,16 +2,17 @@
 // Created by yanik on 08/03/19.
 //
 
-#include "command.h"
-
 #ifndef CUDDLY_DOLLOP_MUTE_BGM_COMMAND_H
 #define CUDDLY_DOLLOP_MUTE_BGM_COMMAND_H
 
-class MuteBGMCommand : public Command
+#include "text_displaying_command.h"
+
+class MuteBGMCommand : public TextDisplayingCommand
 {
 public:
-    MuteBGMCommand();
+    MuteBGMCommand(std::string* str);
     void execute();
+    std::string get_current_text_state();
 private:
 };
 

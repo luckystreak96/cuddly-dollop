@@ -22,6 +22,7 @@ public:
 
 public:
 	virtual void SetText(std::string text, Vector3f location = Vector3f(0, 0, -1), bool centered = false, float xBoundry = -1);
+	void UpdateText(std::string text);
 	void ChangeLetter(unsigned int index, uint32_t newChar);
 	virtual void Draw();
 	virtual void Update(double elapsedTime);
@@ -74,6 +75,7 @@ protected:
 	const unsigned int m_lettersPerColumn;
 
 	Vector3f m_pos;
+	Vector3f m_basic_pos;
 	Transformation trans;
 
 	Vector3f m_basePosition;

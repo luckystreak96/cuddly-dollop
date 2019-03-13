@@ -86,7 +86,11 @@ bool MenuOptions::Update()
 
 	if (InputManager::GetInstance().FrameKeyStatus(A_Accept, KeyPressed, 2))
 	{
+		std::string before = m_options[_selectedOption]->_title;
 	    m_options[_selectedOption]->execute_command();
+		std::string after = m_options[_selectedOption]->_title;
+		if (before != after)
+			m_fonts[_selectedOption].UpdateText(after);
 		result = true;
 	}
 

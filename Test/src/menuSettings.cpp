@@ -17,8 +17,8 @@ MenuSettings::MenuSettings()
 	mo->store_command(CommandFactory::create_exit_menu_command(this));
 	options.push_back(mo);
 
-	mo = std::shared_ptr<MenuOption>(new MenuOption("Mute/Unmute BGM"));
-	mo->store_command(CommandFactory::create_mute_bgm_command());
+	mo = std::shared_ptr<MenuOption>(new MenuOption("Mute BGM"));
+	mo->store_command(CommandFactory::create_mute_bgm_command(&mo->_title));
 	options.push_back(mo);
 
 	mo = std::shared_ptr<MenuOption>(new MenuOption("Quit"));

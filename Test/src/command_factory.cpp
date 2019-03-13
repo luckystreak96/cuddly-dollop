@@ -8,9 +8,9 @@
 #include "menu_commands.h"
 #include "command_exit_game.h"
 
-std::shared_ptr<Command> CommandFactory::create_mute_bgm_command()
+std::shared_ptr<Command> CommandFactory::create_mute_bgm_command(std::string* text)
 {
-    return std::shared_ptr<Command>(new MuteBGMCommand());
+    return std::shared_ptr<Command>(new MuteBGMCommand(text));
 }
 
 std::shared_ptr<Command> CommandFactory::create_exit_game_command()

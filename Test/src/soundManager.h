@@ -42,7 +42,9 @@ public:
 
 	void SetMasterVolume(float volume);
 	void SetBGMMaxVolume(float volume);
-	void mute_BGM();
+	// Returns whether or not the BGM is currently muted
+	bool toggle_BGM_mute();
+	bool get_BGM_muted();
 	void SetBGMFadeout();
 	float GetBGMVolume();
 	void SetListenerPosition(Vector3f pos = Vector3f(), Vector3f vel = Vector3f());

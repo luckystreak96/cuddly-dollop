@@ -229,7 +229,7 @@ void Font::CreateHash() {
 		"OPQRSTUVWXYZ[\\]^"
 		"_`abcdefghijklmn"
 		"opqrstuvwxyz{|}~"
-		u8"\u001bé";
+		u8"\u001bï¿½";
 
 	std::vector<uint32_t> list = Utils::ConvertUTF8(charList);
 
@@ -243,10 +243,18 @@ void Font::Reset()
 	SetText(_text, m_basePosition, m_centered, m_xBndry);
 }
 
+void Font::UpdateText(std::string text)
+{
+	SetText(text, m_basic_pos, m_centered, m_xBndry);
+	Update(0);
+}
+
 void Font::SetText(std::string text, Vector3f location, bool centered, float xBoundry)
 {
 	if (text == _text/* && m_graphics*/)
 		return;
+
+	m_basic_pos = location;
 	m_xBndry = xBoundry;
 	m_centered = centered;
 	m_elapsedTime = 0;

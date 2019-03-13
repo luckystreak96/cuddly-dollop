@@ -7,11 +7,24 @@
 #include "soundManager.h"
 
 
-MuteBGMCommand::MuteBGMCommand()
+MuteBGMCommand::MuteBGMCommand(std::string *str) : TextDisplayingCommand(str)
 {
+    *m_text = get_current_text_state();
 }
 
 void MuteBGMCommand::execute()
 {
-    SoundManager::GetInstance().mute_BGM();
+    SoundManager::GetInstance().toggle_BGM_mute();
+    *m_text = get_current_text_state();
+}
+
+std::string MuteBGMCommand::get_current_text_state() {
+    std::string result;
+    bool muted = SoundManager::GetInstance().get_BGM_muted();
+    if(muted)
+        result = "Unmute BGM";
+    else
+        result = "Mute BGM";
+
+    return result;
 }
