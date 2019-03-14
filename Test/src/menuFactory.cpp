@@ -12,6 +12,14 @@ Font MenuFactory::BuildOption(OptionType type, std::string text, Vector3f locati
 		font.Update(100);
 		return font;
 	}
+	else
+	{
+		Font font = Font(true, false, true);
+		font.SetScale(0.5f, 0.5f);
+		font.SetText("MenuFactory::BuildOption error - OptionType not supported", location, centered);
+		font.Update(100);
+		return font;
+	}
 }
 
 void MenuFactory::UpdateTextOption(std::string text, Vector3f location, bool centered, Font* font)

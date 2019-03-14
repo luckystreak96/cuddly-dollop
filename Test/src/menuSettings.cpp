@@ -6,7 +6,7 @@
 
 MenuSettings::MenuSettings()
 {
-	std::shared_ptr<MenuBackgroundBox> bg = std::shared_ptr<MenuBackgroundBox>(new MenuBackgroundBox(Vector3f(-1), 4, 6));
+	std::shared_ptr<MenuBackgroundBox> bg = std::shared_ptr<MenuBackgroundBox>(new MenuBackgroundBox(Vector3f(-1), 6, 8));
 	m_backgrounds.push_back(bg);
 
 	// Build options

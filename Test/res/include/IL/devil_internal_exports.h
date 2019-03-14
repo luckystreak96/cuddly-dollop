@@ -18,7 +18,7 @@
 #ifdef DEBUG
 	#include <assert.h>
 #else
-	#define assert(x)
+	//#define assert(x)
 #endif
 
 
