@@ -566,6 +566,9 @@
     <ClInclude Include="src\player_audio_component.h">
       <Filter>Header Files\Entity-Component\Components</Filter>
     </ClInclude>
+    <ClInclude Include="src\command_line.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp">
@@ -984,6 +987,9 @@
     </ClCompile>
     <ClCompile Include="src\player_audio_component.cpp">
       <Filter>Source Files\Entity-Component\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="src\command_line.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

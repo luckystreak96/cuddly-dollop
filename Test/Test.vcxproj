@@ -177,6 +177,7 @@
     <ClInclude Include="src\battle_info.h" />
     <ClInclude Include="src\battle_state.h" />
     <ClInclude Include="src\colors.h" />
+    <ClInclude Include="src\command_line.h" />
     <ClInclude Include="src\fighterFactory.h" />
     <ClInclude Include="src\animBasic.h" />
     <ClInclude Include="src\animBonusEffect.h" />
@@ -324,6 +325,7 @@
     <ClCompile Include="src\battleHUD.cpp" />
     <ClCompile Include="src\battle_info.cpp" />
     <ClCompile Include="src\colors.cpp" />
+    <ClCompile Include="src\command_line.cpp" />
     <ClCompile Include="src\fighterFactory.cpp" />
     <ClCompile Include="src\animBasic.cpp" />
     <ClCompile Include="src\animBonusEffect.cpp" />
