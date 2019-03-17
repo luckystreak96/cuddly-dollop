@@ -9,9 +9,11 @@
 
 //#define CATCH_CONFIG_MAIN
 
-//TEST_CASE("1: All test cases reside in other .cpp files (empty)", "[multi-file:1]") {
-//	REQUIRE(1 == 0);
-//}
+/*
+TEST_CASE("1: All test cases reside in other .cpp files (empty)", "[multi-file:1]") {
+	REQUIRE(1 == 0);
+}
+ */
 
 int run_tests(int argc, char** argv)
 {
@@ -36,15 +38,31 @@ int run_tests(int argc, char** argv)
 	return numFailed;
 }
 
-int main(int argc, char** argv)
+int main(int argc, char* argv[])
 {
+	bool debug = false;
+	for(int i = 0; i < argc; ++i)
+    {
+		std::string arg = std::string(argv[i]);
+		if(arg == "-debug")
+		{
+			debug = true;
+			std::cout << "Starting in debug mode" << std::endl;
+		}
+    }
+
 	Game* game = new Game();
 	GLFWManager manager = GLFWManager();
 
-#ifdef NDEBUG
-	std::cout << run_tests(argc, argv) << " tests have failed." << std::endl;
-#endif
-	//FreeConsole();
+//#ifdef NDEBUG
+	if(debug) {
+		argc = 1;
+		std::cout << run_tests(argc, argv) << " tests have failed." << std::endl;
+	}
+//#endif
+	// Windows only
+	//else
+		//FreeConsole();
 
 
 	manager.GLFWMainLoop(game);

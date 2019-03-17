@@ -19,14 +19,14 @@ TEST_CASE("physics_rpg collision testing", "[physics_rpg]")
 	// Init
 	MapTile t1 = MapTile(Vector3f(0, 0, 5));
 	t1.PhysicsRaw()->_unmoving = true;
-	MapTile t2 = MapTile(Vector3f(1, 0, 5));
+	MapTile t2 = MapTile(Vector3f(1 * 64, 0, 5));
 	t2.PhysicsRaw()->_unmoving = true;
-	MapTile t3 = MapTile(Vector3f(1, 0, 4));
+	MapTile t3 = MapTile(Vector3f(1 * 64, 0, 4));
 	t3.PhysicsRaw()->_unmoving = true;
 
-	PhysicsComponent phys = PhysicsComponent(Vector3f(0.09, 0.15, 4.f), "TILE", Vector3f(0.8f, 0.4f, 0), Vector3f(1, 0, 0));
+	PhysicsComponent phys = PhysicsComponent(Vector3f(0.09 * 64.f, 0.15 * 64.f, 4.f), "TILE", Vector3f(0.8f * 64.f, 0.4f * 64.f, 0), Vector3f(1, 0, 0));
 	phys._id = 1;
-	PhysicsComponent phys2 = PhysicsComponent(Vector3f(0.9, 0.15, 4.f), "TILE", Vector3f(0.8f, 0.4f, 0), Vector3f(1, 0, 0));
+	PhysicsComponent phys2 = PhysicsComponent(Vector3f(0.9 * 64.f, 0.15 * 64.f, 4.f), "TILE", Vector3f(0.8f * 64.f, 0.4f * 64.f, 0), Vector3f(1, 0, 0));
 	phys2._id = 2;
 	phys.ActionMove(false, false, false, true, 10.0f, 0.0f);
 	phys.DesiredMove();

@@ -8,27 +8,79 @@
 #include "eventAddToFlag.h"
 #include "eventToggleFlag.h"
 
+#include <variant>
+
 int EventFactory::m_entity_id = 0;
 
-std::map<std::string, unsigned int> EventFactory::TypeDict =
+std::map<std::string, EventTypeInfo> EventFactory::TypeDict =
 {
-	{ "teleport", ET_Teleport },
-	{ "dialogue", ET_DialogueBox },
-	{ "move_right", ET_MoveRight },
-	{ "move_down", ET_MoveDown },
-	{ "move_up", ET_MoveUp },
-	{ "move_left", ET_MoveLeft },
-	{ "call_queue", ET_CallQueue },
-	{ "map_change", ET_MapChange },
-	{ "weather", ET_Weather },
-	{ "particle", ET_Particle },
-	{ "play_sound", ET_PlaySound },
-	{ "play_bgm", ET_PlayBGM },
-	{ "set_flag", ET_SetFlag },
-	{ "toggle_flag", ET_ToggleFlag },
-	{ "add_to_flag", ET_AddToFlag },
-	{ "sprite_change", ET_SpriteChange },
-	{ "battle", ET_Battle },
+	{ "teleport", EventTypeInfo(ET_Teleport,
+	       {{"id", BT_int}, {"x", BT_int},{"y", BT_int},{"z", BT_int},},
+	       "Teleports an *entity_id* to the desired *x* *y* *z* location.") },
+
+	{ "dialogue", EventTypeInfo(ET_DialogueBox,
+			{{"[strings]", BT_string}},
+			"Opens a series of text boxes with the specified text.") },
+
+	{ "move_right", EventTypeInfo(ET_MoveRight,
+			{{"id", BT_int}, {"distance", BT_int},},
+			"Makes an entity move right until they've moved *amount* distance.") },
+
+	{ "move_up", EventTypeInfo(ET_MoveUp,
+			{{"id", BT_int}, {"distance", BT_int},},
+			"Makes an entity move up until they've moved *amount* distance.") },
+
+	{ "move_left", EventTypeInfo(ET_MoveLeft,
+			{{"id", BT_int}, {"distance", BT_int},},
+			"Makes an entity move left until they've moved *amount* distance.") },
+
+	{ "move_down", EventTypeInfo(ET_MoveDown,
+			{{"id", BT_int}, {"distance", BT_int},},
+			"Makes an entity move down until they've moved *amount* distance.") },
+
+	{ "call_queue", EventTypeInfo(ET_CallQueue,
+			{{"id", BT_int}, {"queue_id", BT_int},},
+			"Calls the queue with the specified *queue_id*. Id is necessary but useless?") },
+
+	{ "map_change", EventTypeInfo(ET_MapChange,
+			{{"id", BT_int},},
+			"Changes to the map with the specified *id*.") },
+
+	{ "weather", EventTypeInfo(ET_Weather,
+			{{"type", BT_string},{"count", BT_int},{"smooth", BT_int},{"sprite", BT_string},},
+			"Starts weather effect. Ex: weather \"snow\" 50 1 \"snowflake.png\"") },
+
+	{ "particle", EventTypeInfo(ET_Particle,
+			{{"type", BT_string},{"count", BT_int},{"sprite", BT_string},{"power", BT_int},},
+			"Starts particle effect. Ex: particle \"music\" 10 \"snowflake.png\" 50") },
+
+	{ "play_sound", EventTypeInfo(ET_PlaySound,
+			{{"sound_file", BT_string}},
+			"Plays sound effect. Ex: play_sound \"res/audio/fx/swish_2.wav\"") },
+
+	{ "play_bgm", EventTypeInfo(ET_PlaySound,
+			{{"sound_file", BT_string}},
+			"Plays bgm. Ex: play_bgm \"res/audio/bgm/washeslow.wav\"") },
+
+	{ "set_flag", EventTypeInfo(ET_SetFlag,
+			{{"name", BT_string}, {"value", BT_int}},
+			"Sets flag named *name* to *value*.") },
+
+	{ "toggle_flag", EventTypeInfo(ET_ToggleFlag,
+			{{"name", BT_string},},
+			"Toggles flag named *name*.") },
+
+	{ "add_to_flag", EventTypeInfo(ET_AddToFlag,
+			{{"name", BT_string}, {"value", BT_int}},
+			"Adds *value* to flag named *name*.") },
+
+	{ "sprite_change", EventTypeInfo(ET_SpriteChange,
+			{{"id", BT_int}, {"sprite", BT_string}},
+			"Sets entity of *id* to the sprite *sprite*.") },
+
+	{ "battle", EventTypeInfo(ET_Battle,
+			{},
+			"No args. Starts the generic battle.") },
 };
 
 std::map<std::string, unsigned int> EventFactory::EEMDict =
@@ -51,6 +103,16 @@ float EventArgType::getFloat()
 EventArgType::EventArgType() : inner(true) {}
 EventArgType::EventArgType(EventArgInner eai) : inner(eai)
 {
+}
+
+EventArgInner EventArgType::str_to_eai(std::string str) {
+    BaseType bt = Utils::interpret_type(str);
+    if(bt == BT_int)
+    	return std::atoi(str.c_str());
+	else if(bt == BT_float)
+		return (float)std::atof(str.c_str());
+	else
+		return str;
 }
 
 
@@ -108,7 +170,7 @@ std::shared_ptr<IEvent> EventFactory::BuildEvent(EventTypes et, std::map<std::st
 		break;
 	case EventTypes::ET_PlayBGM:
 		result = std::shared_ptr<IEvent>(new EventBGM(
-			args.count("sound_file") ? args.at("sound_file").get<std::string>() : "res/audio/fx/washeslow.wav"));
+			args.count("sound_file") ? args.at("sound_file").get<std::string>() : "res/audio/bgm/washeslow.wav"));
 		break;
 	case EventTypes::ET_MoveRight:
 		result = std::shared_ptr<IEvent>(new EventMove(id,
@@ -155,6 +217,19 @@ std::shared_ptr<IEvent> EventFactory::BuildEvent(EventTypes et, std::map<std::st
 	{
 		std::map<std::string, std::shared_ptr<DialogueGraph>> graphs;
 
+		// If the dialogue is only a simple sequence of strings,
+		// Create it simply
+		// Does not support choices for now
+		if(std::holds_alternative<std::string>((*args.begin()).second.inner))
+		{
+			std::map<std::string, EventArgType> dialogues;
+			int counter = 0;
+			for(auto x : args)
+				dialogues.emplace("dialogue " + std::to_string(counter), x.second);
+
+			return std::shared_ptr<IEvent>(new DialogueBox(entity_id, CreateDialogueGraph(dialogues)));
+		}
+
 		std::string first = (*args.begin()).first;
 
 		// Ensure that languages are enabled
@@ -181,6 +256,8 @@ std::shared_ptr<DialogueGraph> EventFactory::CreateDialogueGraph(std::map<std::s
 {
 	std::vector<DialogueChoice> choices;
 	std::vector<Dialogue> dialogues;
+
+	int linear_dialogue_id_counter = 0;
 
 	// Add the choices and dialogues to the vectors
 	for (auto x : args)
@@ -212,20 +289,38 @@ std::shared_ptr<DialogueGraph> EventFactory::CreateDialogueGraph(std::map<std::s
 			{
 				Dialogue d;
 
-				// For each param in the dialogue
-				for (auto t : x.second.get<std::map<std::string, EventArgType>>())
+				// If the dialogue is linear, just add the stuff
+				if(std::holds_alternative<std::string>(x.second.inner))
 				{
-					// Dialogue id
-					if (t.first == "id")
-						d.Id = t.second.get<int>();
-					else if (t.first == "text")
-						d.Text = t.second.get<std::string>();
-					else if (t.first == "next")
-						d.NextTextId = t.second.get<int>();
-					else if (t.first == "queues")
-						d.Queue = t.second.get<std::vector<std::shared_ptr<EventQueue>>>().at(0);
-					else if (t.first == "type")
-						d.Type = DialogueGraph::StringToDialogueType(t.second.get<std::string>());
+					d.Id = linear_dialogue_id_counter++;
+					d.Text = x.second.get<std::string>();
+					if (linear_dialogue_id_counter >= args.size())
+					{
+						d.Type = DialogueType::End;
+						d.NextTextId = -1;
+					}
+					else {
+						d.NextTextId = linear_dialogue_id_counter + 1;
+						d.Type = DialogueType::Simple;
+					}
+				}
+				else
+				{
+					// For each param in the dialogue
+					for (auto t : x.second.get<std::map<std::string, EventArgType>>())
+					{
+						// Dialogue id
+						if (t.first == "id")
+							d.Id = t.second.get<int>();
+						else if (t.first == "text")
+							d.Text = t.second.get<std::string>();
+						else if (t.first == "next")
+							d.NextTextId = t.second.get<int>();
+						else if (t.first == "queues")
+							d.Queue = t.second.get<std::vector<std::shared_ptr<EventQueue>>>().at(0);
+						else if (t.first == "type")
+							d.Type = DialogueGraph::StringToDialogueType(t.second.get<std::string>());
+					}
 				}
 
 				dialogues.push_back(d);
@@ -323,7 +418,7 @@ std::vector<std::shared_ptr<EventQueue>> EventFactory::LoadEvent(int map_id, uns
 					args.emplace("queue", LoadEvent(val, map));
 				}
 
-				std::shared_ptr<IEvent> ev = EventFactory::BuildEvent((EventTypes)TypeDict.at(e["type"].GetString()), args, map, entity_id);
+				std::shared_ptr<IEvent> ev = EventFactory::BuildEvent((EventTypes)TypeDict.at(e["type"].GetString())._eventType, args, map, entity_id);
 
 				// Set execution mode if necessary
 				if (e.HasMember("execution_type") && EEMDict.find(e["execution_type"].GetString()) != EEMDict.end())
@@ -392,7 +487,7 @@ std::shared_ptr<EventQueue> EventFactory::LoadEvent(int map_id, unsigned int ent
 						args.emplace("queue", LoadEvent(val, map));
 					}
 
-					std::shared_ptr<IEvent> ev = EventFactory::BuildEvent((EventTypes)TypeDict.at(e["type"].GetString()), args, map, entity_id);
+					std::shared_ptr<IEvent> ev = EventFactory::BuildEvent((EventTypes)TypeDict.at(e["type"].GetString())._eventType, args, map, entity_id);
 
 					// Set execution mode if necessary
 					if (e.HasMember("execution_type") && EEMDict.find(e["execution_type"].GetString()) != EEMDict.end())
@@ -495,7 +590,7 @@ std::vector<std::shared_ptr<EventQueue>> EventFactory::LoadEvent(rapidjson::Valu
 					args.emplace("queue", LoadEvent(val, map));
 				}
 
-				std::shared_ptr<IEvent> ev = EventFactory::BuildEvent((EventTypes)TypeDict.at(e["type"].GetString()), args, map, m_entity_id);
+				std::shared_ptr<IEvent> ev = EventFactory::BuildEvent((EventTypes)TypeDict.at(e["type"].GetString())._eventType, args, map, m_entity_id);
 
 				// Set execution mode if necessary
 				if (e.HasMember("execution_type") && EEMDict.find(e["execution_type"].GetString()) != EEMDict.end())

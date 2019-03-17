@@ -59,3 +59,7 @@ EventTypes IEvent::GetEventType()
 {
 	return m_eventType;
 }
+
+EventTypeInfo::EventTypeInfo() {
+
+}

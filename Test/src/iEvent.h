@@ -3,6 +3,7 @@
 
 #include <map>
 #include "eventQueue.h"
+#include "utils.h"
 #include <rapidjson/document.h>
 #include <memory>
 
@@ -22,6 +23,15 @@ enum EventExecutionMode
 enum EventTypes { ET_Teleport, ET_DialogueBox, ET_MoveRight, ET_MoveUp, ET_MoveDown, ET_MoveLeft, 
 	ET_CallQueue, ET_MapChange, ET_Weather, ET_Particle, ET_PlaySound, ET_PlayBGM, ET_SetFlag, ET_ToggleFlag, ET_AddToFlag,
 	ET_SpriteChange, ET_Battle};
+
+struct EventTypeInfo
+{
+    EventTypeInfo();
+	EventTypeInfo(EventTypes type, std::vector<std::pair<std::string, BaseType>> args, std::string desc) : _eventType(type), _args(args), _description(desc) {}
+    EventTypes _eventType;
+    std::vector<std::pair<std::string, BaseType>> _args;
+    std::string _description;
+};
 
 class IEvent
 {

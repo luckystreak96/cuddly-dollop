@@ -41,8 +41,10 @@ set(CMAKE_CXX_FLAGS "-std=c++17")
 # All cpp fles will be clubbed into source folder and all .h files will be added to header files folder of the project.
 FILE(GLOB MyCSources ./src/*.cpp)
 FILE(GLOB MyHSources ./src/*.h)
+FILE(GLOB MyTestCSources ./tests/*.cpp)
+FILE(GLOB MyTestHSources ./tests/*.hpp)
 set(EXECUTABLE_OUTPUT_PATH ../)
-add_executable (cuddly_dollop ${MyCSources} ${MyHSources})
+add_executable (cuddly_dollop ${MyCSources} ${MyHSources} ${MyTestCSources} ${MyTestHSources})
 
 # There may be some additional dependencies which you may have to specify for the project, which you may do as in following lines.
 # Note that first parameter is the executable name.

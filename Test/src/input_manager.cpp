@@ -1,5 +1,6 @@
 #include "input_manager.h"
 #include <cassert>
+#include <algorithm>
 #include <set>
 #include "gameData.h"
 
@@ -29,6 +30,8 @@ InputManager::~InputManager()
 
 void InputManager::SetupFrameKeys()
 {
+	m_textKeys = std::move(m_textKeysBuffer);
+	m_textKeysBuffer.clear();
 	std::list<std::pair<unsigned int, KeyStatus>> keys = InputManager::GetInstance().GetKeys();
 
 	std::vector<unsigned int> toDelete = std::vector<unsigned int>();
@@ -222,5 +225,23 @@ InputAction InputManager::StringToInputAction(std::string str)
 			return x.first;
 
 	return A_Last;
+}
+
+std::vector<unsigned int> InputManager::FrameTypingKeys()
+{
+	std::vector<unsigned int> result;
+
+    for(auto x : m_textKeys)
+		result.push_back(x);
+
+    //for(auto x : result)
+    //	std::cout << x << std::endl;
+
+    return result;
+}
+
+void InputManager::InputText(unsigned int codepoint)
+{
+	m_textKeysBuffer.push_back(codepoint);
 }
 

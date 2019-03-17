@@ -33,6 +33,9 @@ public:
 	// Clears list of keys
 	void SetupFrameKeys();
 
+	// Gets UTF32 codepoint character
+	void InputText(unsigned int codepoint);
+
 	// Adds an input to the list, called when you press the key
 	void Input(unsigned int key, bool keydown);
 
@@ -45,7 +48,7 @@ public:
 	// Returns the list of keys, and resets it
 	std::list<std::pair<unsigned int, KeyStatus>> GetKeys();
 
-	// Returns the list of keys, and resets it
+	// Returns the list of keys, and doesnt reset it
 	std::list<std::pair<unsigned int, KeyStatus>> GetKeysNoReset();
 
 	// Does something, but its never used
@@ -57,6 +60,8 @@ public:
 	bool FrameKeyStatus(InputAction action, KeyStatus status = AnyPress, unsigned int accessLevel = 0);
 	// This version checks if any of the keys are down
 	bool FrameKeyStatus(std::vector<InputAction> action, KeyStatus status = AnyPress, unsigned int accessLevel = 0);
+
+	std::vector<unsigned int> FrameTypingKeys();
 
 	// percent goes from -1 to 1
 	void SetKeyPercent(InputAction action, float percent);
@@ -80,6 +85,8 @@ private:
 	std::deque<unsigned int> m_lockLevel;
 	std::map<unsigned int, float> m_powers;
 	std::map<unsigned int, std::pair<KeyStatus, float>> m_keyMap;
+	std::vector<unsigned int> m_textKeys;
+	std::vector<unsigned int> m_textKeysBuffer;
 	std::list<std::pair<unsigned int, KeyStatus>> m_inputQueue;
 };
 

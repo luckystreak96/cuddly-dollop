@@ -1,4 +1,8 @@
 #include "utils.h"
+
+#include <sstream>
+#include <string>
+
 #ifndef _WIN32
 #include <dirent.h>
 #else
@@ -135,4 +139,31 @@ void Utils::Pause()
 {
     std::string wait;
     std::getline(std::cin, wait);
+}
+
+BaseType Utils::interpret_type(std::string val) {
+
+    // Check if the value is a float
+	std::istringstream iss(val);
+    float f;
+    iss >> std::noskipws >> f; // noskipws considers leading whitespace invalid
+    // Check the entire string was consumed and if either failbit or badbit is set
+    bool is_number = iss.eof() && !iss.fail();
+
+	// ints are technically floats as well, so we need to see if the value could be a simple int
+	if(is_number)
+	{
+		int a;
+		std::stringstream stream(val);
+		if (!(stream >>a) || val.find('.') != std::string::npos ){
+			//it wasn't an integer
+			//so it's truly a float
+			return BT_float;
+		}
+		// it wasn't a float, so it's an int
+		return BT_int;
+	}
+
+	// not int or float so it's a string
+    return BT_string;
 }

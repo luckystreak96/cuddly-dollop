@@ -148,6 +148,12 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 	GLFWManager::_joyStickMode = false;
 }
 
+static void character_callback(GLFWwindow* window, unsigned int codepoint)
+{
+    InputManager::GetInstance().InputText(codepoint);
+	GLFWManager::_joyStickMode = false;
+}
+
 static void window_size_callback(GLFWwindow* window, int width, int height)
 {
 	Resize(window);
@@ -290,6 +296,7 @@ GLFWManager::GLFWManager()
 
 	// Key callback
 	glfwSetKeyCallback(m_window, key_callback);
+	glfwSetCharCallback(m_window, character_callback);
 	glfwSetWindowSizeCallback(m_window, window_size_callback);
 
 	// GLEW init

@@ -16,6 +16,8 @@
 #include "menuSettings.h"
 #include "physics_rpg.h"
 
+#include <algorithm>
+
 SceneWorld::SceneWorld(unsigned int map_id) : m_zoom(false), m_physics_manager(new physics_rpg())
 {
 	m_currentMap = map_id;
@@ -99,6 +101,8 @@ bool SceneWorld::Init()
 
 	setup_physics_manager();
 
+	m_event_command_line = EventCommandLine(&m_eventManager, m_mapHandler.get());
+
 	return true;
 }
 
@@ -127,6 +131,26 @@ SceneWorld::~SceneWorld()
 void SceneWorld::ManageInput()
 {
 	Scene::ManageInput();
+
+	std::vector<unsigned int> input = InputManager::GetInstance().FrameTypingKeys();
+
+	if(InputManager::GetInstance().FrameKeyStatus(GLFW_KEY_ENTER, KeyPressed))
+	{
+		input.push_back('\n');
+	}
+
+	for(auto x : input)
+		m_event_command_line.handle_input((char)x);
+
+	if(m_event_command_line.is_reading()) {
+		_pause = true;
+		return;
+	}
+	else if (_pause && std::find(input.begin(), input.end(), '\n') != input.end())
+	{
+		_pause = false;
+		return;
+	}
 
 	if (InputManager::GetInstance().FrameKeyStatus('[', KeyPressed))
 		Camera::_currentCam->SetScale(Vector3f(4.0f, 4.0f, 1.0f));

@@ -9,6 +9,7 @@
 #include "eventManager.h"
 #include "menu.h"
 #include "physics_manager.h"
+#include "event_command_line.h"
 
 class SceneWorld : public Scene
 {
@@ -36,6 +37,7 @@ private:
 	std::shared_ptr<Menu> m_menu = NULL;
 	EventManager m_eventManager;
 	//CollisionManager m_collisionManager;
+	EventCommandLine m_event_command_line;
 	physics_manager m_physics_manager;
 	bool m_zoom;
 	bool m_bloomEffect;

@@ -26,6 +26,8 @@ public:
 	EventArgType(EventArgInner);
 	EventArgInner inner;
 
+	static EventArgInner str_to_eai(std::string);
+
 	float getFloat();
 	template<typename T>
 	T get()
@@ -43,14 +45,15 @@ class EventFactory
 {
 public:
 	static std::shared_ptr<IEvent> BuildEvent(EventTypes et, std::map<std::string, EventArgType> args, MapHandler* map, unsigned int entity_id = 0);
-	static std::map<std::string, unsigned int> TypeDict;
-	static std::map<std::string, unsigned int> EEMDict;
 	static std::vector<std::shared_ptr<EventQueue>> LoadEvent(int map_id, unsigned int entity_id, std::shared_ptr<JsonHandler> jh, MapHandler* map);
 	static std::shared_ptr<EventQueue> LoadEvent(int map_id, unsigned int entity_id, unsigned int queue_id, std::shared_ptr<JsonHandler> jh, MapHandler* map);
 	static std::vector<std::shared_ptr<EventQueue>> LoadEvent(rapidjson::Value& v, MapHandler* map);
 	static EventArgType AddArg(rapidjson::Value::MemberIterator iter, MapHandler* map);
 	static void SetActivationType(std::shared_ptr<EventQueue> eq, std::string s);
 	static std::shared_ptr<DialogueGraph> CreateDialogueGraph(std::map<std::string, EventArgType> args);
+public:
+	static std::map<std::string, EventTypeInfo> TypeDict;
+	static std::map<std::string, unsigned int> EEMDict;
 private:
 	static int m_entity_id;
 };

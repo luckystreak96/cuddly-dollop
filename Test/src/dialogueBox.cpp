@@ -177,7 +177,7 @@ EventUpdateResponse DialogueBox::UpdateEvent(double elapsedTime, std::map<unsign
 			else
 			{
 				m_completed = true;
-				if (m_target <= ents->size())
+				if (m_target <= ents->size() && m_target != 0)
 					ents->at(m_target)->Physics()->SetConversationLock(false);
 				m_owner = NULL;
 				return eur;

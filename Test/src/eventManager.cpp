@@ -217,3 +217,17 @@ void EventManager::SetEntitiesMap(std::map<unsigned int, std::shared_ptr<Entity>
 	m_entities = ents;
 }
 
+void EventManager::force_push_front(std::shared_ptr<EventQueue> ev)
+{
+	if (ev->GetID() != -1)
+	{
+		for (unsigned int i = 0; i < ev->Count(); i++)
+			ev->Get(i)->ResetEvent();
+		m_queues.push_back(ev);
+	}
+	else
+	{
+		m_queues.push_back(ev->Clone());
+	}
+}
+

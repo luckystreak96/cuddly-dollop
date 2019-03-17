@@ -15,6 +15,7 @@ public:
 	EventManager();
 	~EventManager();
 	void PushBack(std::shared_ptr<EventQueue> ev);
+	void force_push_front(std::shared_ptr<EventQueue> ev);
 	void Update(double elapsedTime);
 	void SetEntitiesMap(std::map<unsigned int, std::shared_ptr<Entity>>* ents);
 	void SetFlag(unsigned int eventID);
