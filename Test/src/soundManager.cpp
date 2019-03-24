@@ -23,7 +23,7 @@ SoundManager::SoundManager() : m_bgmSource(0), m_bgmState(BGM_Starting), m_bgmVo
 
 	//Setup listener
 	SetListenerPosition();
-	alListenerf(AL_GAIN, 1.0f);
+	alListenerf(AL_GAIN, m_masterVolume);
 	ALfloat listenerOri[] = { 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f };
 	alListenerfv(AL_ORIENTATION, listenerOri);
 
@@ -124,10 +124,10 @@ void SoundManager::SetBGM(std::string sourceFile)
 		return;
 	if (sourceFile != "")
 	{
-		m_nextBGM = sourceFile;
-		CreateBuffer(sourceFile);
-		if(!m_buffers.count(sourceFile))
-			return;
+        m_nextBGM = sourceFile;
+        CreateBuffer(sourceFile);
+        if(!m_buffers.count(sourceFile))
+            return;
 	}
 
 	m_bgmState = BGM_Stopping;

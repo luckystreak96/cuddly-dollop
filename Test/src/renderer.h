@@ -32,6 +32,16 @@ public:
 	void Clear();
 	void SwapBuffers(GLFWwindow* window);
 	inline unsigned int Count() { return m_toDraw.size(); }
+
+	template<typename PP>
+	bool post_processing_present();
+	template<typename PP>
+	bool remove_post_processing();
+
+	void toggle_bloom();
+	void update_post_processing();
+
+	bool get_bloom_state();
 private:
 	Renderer();
 	void Sort();
@@ -46,10 +56,42 @@ private:
 	// Post processing variables
 	int m_width;
 	int m_height;
+	bool m_force_update;
 	FBO m_fbo;
 	Post_Processing_Screen pps;
+	bool m_bloom_enabled;
 	bool apply;
 };
 
+template<typename PP>
+bool Renderer::post_processing_present()
+{
+	bool present = false;
+	for(auto x : m_ppe)
+		if (dynamic_cast<PP*>(x.get()) != nullptr)
+			present = true;
+
+	return present;
+}
+
+template<typename PP>
+bool Renderer::remove_post_processing(){
+	int pos = -1;
+    for(int i = 0; i < m_ppe.size(); i++)
+	{
+		if (dynamic_cast<PP*>(m_ppe[i].get()) != nullptr)
+		{
+			pos = i;
+			break;
+		}
+	}
+
+    if(pos != -1)
+        m_ppe.erase(m_ppe.begin() + pos);
+    else
+		return false;
+
+    return true;
+}
 
 #endif

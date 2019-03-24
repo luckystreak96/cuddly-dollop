@@ -135,6 +135,13 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 		glfwSwapInterval(GLFWManager::_swapInterval);
 	}
 
+	if(action == GLFW_RELEASE) {
+		if (key == GLFW_KEY_ENTER)
+			InputManager::GetInstance().InputText((unsigned int) '\n');
+		else if (key == GLFW_KEY_BACKSPACE)
+			InputManager::GetInstance().InputText((unsigned int) '\b');
+	}
+
 	KeyStatus status;
 	if (action == GLFW_PRESS)
 		status = KeyPressed;

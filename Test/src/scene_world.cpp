@@ -132,21 +132,16 @@ void SceneWorld::ManageInput()
 {
 	Scene::ManageInput();
 
+	bool input_over = false;
 	std::vector<unsigned int> input = InputManager::GetInstance().FrameTypingKeys();
-
-	if(InputManager::GetInstance().FrameKeyStatus(GLFW_KEY_ENTER, KeyPressed))
-	{
-		input.push_back('\n');
-	}
-
 	for(auto x : input)
-		m_event_command_line.handle_input((char)x);
+		input_over = m_event_command_line.handle_input((char)x) || input_over;
 
 	if(m_event_command_line.is_reading()) {
 		_pause = true;
 		return;
 	}
-	else if (_pause && std::find(input.begin(), input.end(), '\n') != input.end())
+	else if (_pause && input_over)
 	{
 		_pause = false;
 		return;
@@ -160,6 +155,9 @@ void SceneWorld::ManageInput()
 		Camera::_currentCam->SetScale(Vector3f(0.1f, 0.1f, 1.0f));
 	if (InputManager::GetInstance().FrameKeyStatus(';', KeyPressed))
 		FontManager::GetInstance().CreateFloatingText(m_celist.at(1)->PhysicsRaw()->PositionRef(), std::to_string(m_celist.at(1)->PhysicsRaw()->PositionRef().x));
+	// Mute
+	if (InputManager::GetInstance().FrameKeyStatus(A_Mute, KeyStatus::Release))
+	    SoundManager::GetInstance().toggle_BGM_mute();
 
 	if (InputManager::GetInstance().FrameKeyStatus('T', KeyPressed))
 	{
@@ -205,6 +203,7 @@ void SceneWorld::Interact()
 {
 	if (InputManager::GetInstance().FrameKeyStatus(A_Accept, KeyStatus::KeyPressed) && m_player) {
 		Vector3f pos = m_player->Physics()->GetCenter();
+		pos.z = m_player->PhysicsRaw()->PositionRef().z;
 		Direction dir = m_player->Graphics()->GetDirection();
 
 		float distance = 0.2f * 64.0f;

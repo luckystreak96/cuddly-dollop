@@ -167,7 +167,8 @@ void Font::SetupMesh(float xBndry, float yBndry)
 			newmessage += w + " ";
 			m_x += (w.size() + 1) * _letterSpacing * m_xScale;
 		}
-		else if (w.size() * _letterSpacing * m_xScale + m_x > xBndry)
+		// If this word would extend too far
+		else if (w.size() * _letterSpacing * m_xScale + m_x + m_pos.x > xBndry)
 		{
 			// Increment y and start on new line
 			m_y -= (m_yScale + 0.15f) * size;

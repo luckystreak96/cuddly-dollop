@@ -26,9 +26,9 @@ done(false), size(Vector3f(1, 1, 1)), color(Vector3f(1.f)), alpha(1.f)
 
 void Snow::Update(Vector3f& zoneSize)
 {
-	velocity.x = sin(counter * 3.0f) / 20.0f;
+	velocity.x = sin(counter * 3) - 1;
 	position += velocity;
-	if (position.y < -1 || position.x < -2 || position.x > zoneSize.x + 2)
+	if (position.y < -1 * 64 || position.x < -2 * 64 || position.x > zoneSize.x + 2 * 64)
 		ResetLocation(zoneSize);
 	counter += 0.01f;
 };
@@ -55,10 +55,9 @@ void Snow::ResetLocation(Vector3f& zoneSize, bool firstSpawn, bool smooth)
 
 	position.x = fmod(((float)rand() / 1000.0f), zoneSize.x + 2.0f) - 2.0f;
 	position.y = fmod(rand() / 1000.0f, ((firstSpawn ? (int)zoneSize.y * 2 : (int)zoneSize.y))) + (firstSpawn ? 0 : zoneSize.y);
-	velocity.y = -fmod(((float)rand() / 1000.0f), 0.003f) - 0.003f;
-	velocity.y *= pow(size.x * 10.f, 2);
-	float value = fmod(((float)rand() / 1000.0f), 0.1f);
-	velocity.x = (rand() % 2) == 0 ? value : -value;
+	velocity.y = -(rand() % 4) - 1;
+//	velocity.y *= pow(size.x * 10.f, 2);
+	//velocity.x = -(rand() % 2) - 1;
 }
 
 void Snow::SetTrans(Transformation& trans)
@@ -74,7 +73,7 @@ void Leaf::Update(Vector3f& zoneSize)
 {
 	velocity.x = sin(counter * 3.0f) * 5.0f;
 	position += velocity;
-	if (position.y < -1 || position.x < -2 || position.x > zoneSize.x + 2.0f * 64.0f)
+	if (position.y < -1 * 64 || position.x < -2 * 64 || position.x > zoneSize.x + 2.0f * 64.0f)
 		ResetLocation(zoneSize);
 	counter += 0.01f;
 };

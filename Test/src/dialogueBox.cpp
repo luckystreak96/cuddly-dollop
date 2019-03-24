@@ -274,7 +274,8 @@ void DialogueBox::SetScale(float xScale, float yScale)
 
 	Font::SetScale(xScale, yScale);
 
-	m_maxWidth = (OrthoProjInfo::GetRegularInstance().Right * 2.f / OrthoProjInfo::GetRegularInstance().Size) - 1.5f/* / xScale*/;
+	m_maxWidth = (OrthoProjInfo::GetRegularInstance().Right * 2.f) - 3 * 32;
+//	std::cout << "MaxWidth" << m_maxWidth << std::endl;
 	m_maxHeight = 4.5f;
 
 	if (graph != NULL)

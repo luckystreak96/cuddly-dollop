@@ -19,6 +19,7 @@ public:
 	void SetTextSpeed(unsigned int font, double speed);
 	void ChangeLetter(unsigned int font, unsigned int index, char newChar);
 	void SetText(unsigned int& font, std::string text = std::string(" "), Vector3f location = Vector3f(), bool centered = false);
+	void UpdateText(unsigned int& font, std::string text);
 	unsigned int AddFont(bool sTatic = false, bool temporary = false, bool lightspeed = false, std::string texPath = "res/fonts/basic.png");
 	unsigned int AddFont(Font_ptr font);
 	void DisableFont(unsigned int font);

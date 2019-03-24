@@ -21,6 +21,10 @@ MenuSettings::MenuSettings()
 	mo->store_command(CommandFactory::create_mute_bgm_command(&mo->_title));
 	options.push_back(mo);
 
+	mo = std::shared_ptr<MenuOption>(new MenuOption("Bloom"));
+	mo->store_command(CommandFactory::create_bloom_command(&mo->_title));
+	options.push_back(mo);
+
 	mo = std::shared_ptr<MenuOption>(new MenuOption("Quit"));
 	mo->store_command(CommandFactory::create_exit_game_command());
 	options.push_back(mo);

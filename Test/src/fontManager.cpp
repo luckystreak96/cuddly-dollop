@@ -3,6 +3,7 @@
 
 FontManager::FontManager() : m_fonts(std::map<unsigned int, Font_ptr>())
 {
+	srand(666);
 }
 
 FontManager::~FontManager()
@@ -50,7 +51,7 @@ void FontManager::ClearFonts()
 void FontManager::SetScale(unsigned int font, float xScale, float yScale)
 {
 	Font_ptr temp = GetFont(font);
-	if (temp == NULL)
+	if (temp == nullptr)
 		return;
 
 	temp->SetScale(xScale, yScale);
@@ -59,7 +60,7 @@ void FontManager::SetScale(unsigned int font, float xScale, float yScale)
 void FontManager::SetText(unsigned int& font, std::string text, Vector3f location, bool centered)
 {
 	Font_ptr temp = GetFont(font);
-	if (temp == NULL)
+	if (temp == nullptr)
 		return;
 
 	temp->SetText(text, location, centered);
@@ -68,7 +69,7 @@ void FontManager::SetText(unsigned int& font, std::string text, Vector3f locatio
 void FontManager::SetTextSpeed(unsigned int font, double speed)
 {
 	Font_ptr temp = GetFont(font);
-	if (temp == NULL)
+	if (temp == nullptr)
 		return;
 
 	temp->SetTextSpeed(speed);
@@ -78,7 +79,7 @@ void FontManager::SetTextSpeed(unsigned int font, double speed)
 void FontManager::ChangeLetter(unsigned int font, unsigned int index, char newChar)
 {
 	Font_ptr temp = GetFont(font);
-	if (temp == NULL)
+	if (temp == nullptr)
 		return;
 
 	temp->ChangeLetter(index, newChar);
@@ -122,7 +123,6 @@ unsigned int FontManager::AddFont(Font_ptr font)
 	unsigned int key;
 	while (true)
 	{
-		srand(clock());
 		key = rand();
 		if (m_fonts.count(key) == 0)
 			break;
@@ -171,5 +171,14 @@ Font_ptr FontManager::GetFont(unsigned int key)
 	if (m_fonts.count(key) > 0)
 		return m_fonts.at(key);
 	else
-		return NULL;
+		return nullptr;
+}
+
+void FontManager::UpdateText(unsigned int &font, std::string text) {
+
+	Font_ptr temp = GetFont(font);
+	if (temp == nullptr)
+		return;
+
+	temp->UpdateText(text);
 }

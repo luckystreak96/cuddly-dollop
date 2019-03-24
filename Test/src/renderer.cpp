@@ -12,7 +12,7 @@
 #include "input_manager.h"
 
 // MAKE IT BE A CENTERED_TILE AND PLACE IT CORRECTLY OR ITLL BE DUMB AF
-Renderer::Renderer() : m_toDraw(std::vector<GraphicsComponent*>()), m_width(1), m_height(1), apply(true)
+Renderer::Renderer() : m_toDraw(std::vector<GraphicsComponent*>()), m_width(1), m_height(1), apply(true), m_bloom_enabled(true), m_force_update(true)
 {
 	//Setup the tile to draw
 	float size = OrthoProjInfo::GetRegularInstance().Size;
@@ -29,7 +29,7 @@ Renderer::Renderer() : m_toDraw(std::vector<GraphicsComponent*>()), m_width(1), 
 	// TEST ERASE ME MAYBE
 	//m_ppe.push_back(std::make_shared<NightTimeProcessing>(NightTimeProcessing()));
 	//m_ppe.push_back(std::make_shared<ContrastProcessing>(ContrastProcessing()));
-	m_ppe.push_back(std::shared_ptr<Bloom>(new Bloom()));
+	update_post_processing();
 }
 
 void Renderer::SwapBuffers(GLFWwindow* window)
@@ -45,13 +45,13 @@ void Renderer::Setup()
 {
 	//if (m_swapThread.joinable())
 	//	m_swapThread.join();
-	if (InputManager::GetInstance().FrameKeyStatus(A_Cancel, KeyStatus::KeyPressed))
-		apply = !apply;
+	//if (InputManager::GetInstance().FrameKeyStatus(A_Cancel, KeyStatus::KeyPressed))
+	//	apply = !apply;
 
 	glStencilMask(0xFF);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 	glStencilMask(0x00);
-	if (true || apply)
+	if (apply)
 	{
 		int w, h;
 		glfwGetWindowSize(GLFWManager::m_window, &w, &h);
@@ -59,8 +59,10 @@ void Renderer::Setup()
 		int current_window_height = h;
 
 		//If the window size changes, the fbo texture sizes need to adjust
-		if (m_width != current_window_width || m_height != current_window_height)
+		if (m_width != current_window_width || m_height != current_window_height || m_force_update)
 		{
+			m_force_update = false;
+
 			m_width = current_window_width;
 			m_height = current_window_height;
 			ResetTextureSizes();
@@ -149,4 +151,27 @@ void Renderer::Draw()
 	EffectManager::GetInstance().Enable(E_Basic);
 	glBindTexture(GL_TEXTURE_2D, m_fbo.GetColourTexture());
 	EffectManager::GetInstance().SetNoTranslateMode(false);
+}
+
+void Renderer::toggle_bloom() {
+	m_bloom_enabled = !m_bloom_enabled;
+	update_post_processing();
+}
+
+void Renderer::update_post_processing() {
+	if(m_bloom_enabled)
+	{
+		if (!post_processing_present<Bloom>())
+			m_ppe.push_back(std::shared_ptr<Bloom>(new Bloom()));
+	}
+	else
+	{
+	    remove_post_processing<Bloom>();
+	}
+
+	m_force_update = true;
+}
+
+bool Renderer::get_bloom_state() {
+    return m_bloom_enabled;
 }

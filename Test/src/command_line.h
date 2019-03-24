@@ -18,7 +18,7 @@ class CommandLine
 {
 public:
 	CommandLine();
-	virtual void handle_input(char c);
+	virtual bool handle_input(char c);
 
 	// Returns a CommandParam
 	// The _command will be an empty string if the command doesn't exist

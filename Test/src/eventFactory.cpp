@@ -58,7 +58,7 @@ std::map<std::string, EventTypeInfo> EventFactory::TypeDict =
 			{{"sound_file", BT_string}},
 			"Plays sound effect. Ex: play_sound \"res/audio/fx/swish_2.wav\"") },
 
-	{ "play_bgm", EventTypeInfo(ET_PlaySound,
+	{ "play_bgm", EventTypeInfo(ET_PlayBGM,
 			{{"sound_file", BT_string}},
 			"Plays bgm. Ex: play_bgm \"res/audio/bgm/washeslow.wav\"") },
 

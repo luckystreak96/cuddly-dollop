@@ -53,14 +53,15 @@ void Camera::SetCameraFollowSpeed(CameraSpeeds cs)
 
 bool Camera::IsOnCamera(Vector3f position, Vector3f size)
 {
-	float targetRightLimit = position.x + 0.5f * size.x;
-	float targetLeftLimit = position.x - 0.5f * size.x;
-	float targetTopLimit = position.y + 0.5f * size.y;
-	float targetBottomLimit = position.y - 0.5f * size.y;
+	float orthoSize = OrthoProjInfo::GetRegularInstance().Size;
+
+	float targetRightLimit = position.x + 0.5f * orthoSize * size.x;
+	float targetLeftLimit = position.x - 0.5f * orthoSize * size.x;
+	float targetTopLimit = position.y + 0.5f * orthoSize * size.y;
+	float targetBottomLimit = position.y - 0.5f * orthoSize * size.y;
 
 	float right = OrthoProjInfo::GetRegularInstance().Right;
 	float top = OrthoProjInfo::GetRegularInstance().Top;
-	float orthoSize = OrthoProjInfo::GetRegularInstance().Size;
 
 	float cameraRightLimit = -_translate.x + (right) / _scale.x;
 	float cameraLeftLimit = -_translate.x - (right) / _scale.x;

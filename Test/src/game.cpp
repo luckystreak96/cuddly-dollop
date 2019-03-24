@@ -135,8 +135,8 @@ void Game::HandleInput()
 	}
 
 	// Mute
-	if (InputManager::GetInstance().FrameKeyStatus(A_Mute, KeyStatus::KeyPressed))
-		MuteButton();
+//	if (InputManager::GetInstance().FrameKeyStatus(A_Mute, KeyStatus::KeyPressed))
+//		MuteButton();
 
 }
 

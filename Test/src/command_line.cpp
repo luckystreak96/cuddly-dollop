@@ -15,20 +15,28 @@ CommandLine::CommandLine()
     m_cur_command = CommandParams();
 }
 
-void CommandLine::handle_input(char c)
+bool CommandLine::handle_input(char c)
 {
-    if(m_buffer.size() == 0 && c != '/')
-        return;
+    if(m_buffer.empty() && c != '/')
+        return false;
 
     if(c == '\n')
     {
         m_cur_command = create_command();
         m_buffer = "";
+        return true;
+    }
+    else if (c == '\b')
+    {
+        m_buffer.pop_back();
+        if(m_buffer.empty())
+            return true;
     }
     else
         m_buffer += c;
 
-    std::cout << m_buffer << std::endl;
+//    std::cout << m_buffer << std::endl;
+    return false;
 }
 
 CommandParams CommandLine::get_command()
@@ -76,5 +84,5 @@ CommandParams CommandLine::create_command()
 }
 
 bool CommandLine::is_reading() {
-    return m_buffer.size() > 0;
+    return !m_buffer.empty();
 }

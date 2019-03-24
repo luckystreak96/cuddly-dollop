@@ -243,5 +243,6 @@ std::vector<unsigned int> InputManager::FrameTypingKeys()
 void InputManager::InputText(unsigned int codepoint)
 {
 	m_textKeysBuffer.push_back(codepoint);
+	//std::cout<< codepoint << std::endl;
 }
 

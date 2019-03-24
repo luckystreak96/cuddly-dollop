@@ -13,6 +13,7 @@ class CommandFactory
 {
 public:
     static std::shared_ptr<Command> create_mute_bgm_command(std::string* text);
+    static std::shared_ptr<Command> create_bloom_command(std::string* text);
     static std::shared_ptr<Command> create_exit_menu_command(MenuSettings* ms);
     static std::shared_ptr<Command> create_exit_game_command();
 };

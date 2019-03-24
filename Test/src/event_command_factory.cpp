@@ -33,7 +33,7 @@ std::shared_ptr<EventQueue> EventCommandFactory::create_events(CommandParams cp,
 
     if (EventFactory::TypeDict.find(cp._command) == EventFactory::TypeDict.end())
     {
-        std::cout << "ERROR - Command does not exist.";
+        std::cout << "ERROR - Command does not exist." << std::endl;
         return queue;
     }
 
