@@ -26,7 +26,7 @@ public:
 
 private:
 	// maxhp variables
-	int m_observedOrder;
+	int m_status_count;
 	int m_prevOrder;
 	Vector3f m_prevActorPos;
 

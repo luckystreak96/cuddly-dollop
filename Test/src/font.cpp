@@ -9,7 +9,8 @@
 
 Font::Font(bool sTatic, bool temporary, bool lightSpeed, std::string path) : m_texture(path),
 m_elapsedTime(0), m_textSpeed(1.0), m_timePerLetter(0.03), m_static(sTatic), m_temporary(temporary), m_lifetime(5.0), _letterSpacing(1.0f * 64.0f), MaxTime(30000),
-m_lettersPerRow(16), m_lettersPerColumn(16), m_xScale(1.0f), m_yScale(1.0f), m_lightSpeed(lightSpeed), _enabled(true), m_centered(false), m_xBndry(-1), m_x(0), m_y(0)
+m_lettersPerRow(16), m_lettersPerColumn(16), m_xScale(1.0f), m_yScale(1.0f), m_lightSpeed(lightSpeed), _enabled(true), m_centered(false), m_xBndry(-1), m_x(0), m_y(0),
+m_set_text_vars(true)
 {
 	std::shared_ptr<FontGraphicsComponent> graphics = std::shared_ptr<FontGraphicsComponent>(new FontGraphicsComponent("", path));
 	graphics->SetStatic(m_static);
@@ -300,9 +301,27 @@ void Font::SetTextVariables()
 			std::string result = temp.substr(0, location);
 			end = location + beginning + 2;
 			std::string var_name = result;//m_message.substr(beginning + 1, (end - 1) - beginning);
-			// If theres no illegal character, replace...
-			if (!(var_name.find(' ') != std::string::npos || var_name.find('\n') != std::string::npos))
-				_text.replace(beginning, end - beginning, GameData::Get(var_name));
+
+			// If the text var should be resolved...
+			if(m_set_text_vars) {
+				// If theres no illegal character, replace...
+				if (!(var_name.find(' ') != std::string::npos || var_name.find('\n') != std::string::npos))
+					_text.replace(beginning, end - beginning, GameData::Get(var_name));
+			}
+			// ...otherwise color the var if it's legit
+			else
+			{
+				// Color the text yellow if the variable is good
+				if(GameData::Get(var_name) != ">?<")
+				{
+
+				}
+				// Otherwise color it red
+				else
+				{
+
+				}
+			}
 
 			temp = _text;
 			// ...else do nothing, it was probably a regular % in the text
@@ -377,4 +396,8 @@ void Font::UpdateModel(Vector3f offset)
 			m_mesh.get_graphics()->InsertMModels(t);
 		}
 	}
+}
+
+void Font::set_text_var_resolution(bool resolve) {
+    m_set_text_vars = resolve;
 }

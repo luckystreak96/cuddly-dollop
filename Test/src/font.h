@@ -37,6 +37,7 @@ public:
 	void UpdateModel(Vector3f offset);
 	void Reset();
 	void SetOffset(Vector3f offset);
+	void set_text_var_resolution(bool resolve);
 
 public:
 	bool _enabled;
@@ -67,6 +68,7 @@ protected:
 	bool m_temporary;
 	bool m_lightSpeed;
 	bool m_centered;
+	bool m_set_text_vars;
 
 	std::vector<Vector3f> m_letterPositions;
 	std::map<uint32_t, unsigned int> m_letters;

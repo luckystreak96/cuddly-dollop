@@ -14,7 +14,7 @@ HudStatusEffect::HudStatusEffect(BattleUnit u)
 
 	m_prevActorPos = *u.position;//_actor.second->GetPosRef();
 
-	m_observedOrder = 0;//_actor.first->_OrderPosition;
+	m_status_count = 0;//_actor.first->_OrderPosition;
 
 	m_prevOrder = -43893893;// set this to a fucked up number so itll do it's first update
 
@@ -79,22 +79,22 @@ void HudStatusEffect::Update(Observable* obs)
 	}
 
 	if (fighter != nullptr)
-		m_observedOrder = (int)fighter->_Statuses.size();
+		m_status_count = (int)fighter->_Statuses.size();
 
 	// Ensure that the value we're following actually changed to do something
-	if (m_prevOrder == m_observedOrder && m_mustDisplayNextUpdate == m_mustDisplay)
+	if (m_prevOrder == m_status_count && m_mustDisplayNextUpdate == m_mustDisplay)
 		return;
 
-	m_prevOrder = m_observedOrder;
+	m_prevOrder = m_status_count;
 
-	// Show damage type
+	// Show status type
 	Vector3f color = Vector3f(0.5f, 0.10f, 0.025f);
 
 	_background->SetColorAll(color, 0.7f);
 
 	// Update the font
 	//pos = CalculateTextPosition();
-	std::string text = std::to_string(m_observedOrder);
+	std::string text = std::to_string(m_status_count);
 	std::string current = FontManager::GetInstance().GetFont(_turnFont)->_text;
 
 	// Only update font when it changes

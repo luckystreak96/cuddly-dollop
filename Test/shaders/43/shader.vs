@@ -7,6 +7,7 @@ layout(location = 2) in vec3 Color;
 layout(location = 3) in float Alpha;
 // World Position
 layout(location = 4) in mat4 Model;
+// Instance tex coordinates
 layout(location = 8) in vec2 TexCoord2;
 
 out vec2 TexCoord0;

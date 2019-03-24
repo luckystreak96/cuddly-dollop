@@ -90,11 +90,11 @@ void HudTurnOrder::Update()
 
 	// Show damage type
 	Vector3f color = Vector3f(0.5f, 0.10f, 0.025f);
-	//if (m_observedOrder._type == SkillType::ST_Physical)
+	//if (m_status_count._type == SkillType::ST_Physical)
 	//	color = Vector3f(0.5f, 0.10f, 0.025f);
-	//else if (m_observedOrder._type == SkillType::ST_Magical)
+	//else if (m_status_count._type == SkillType::ST_Magical)
 	//	color = Vector3f(0.3f, 0.05f, 0.5f);
-	//else if (m_observedOrder._type == SkillType::ST_Healing)
+	//else if (m_status_count._type == SkillType::ST_Healing)
 	//	color = Vector3f(0.05f, 0.5f, 0.1f);
 
 	_background->SetColorAll(color, 0.7f);

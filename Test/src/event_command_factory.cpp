@@ -18,14 +18,6 @@ std::shared_ptr<EventQueue> EventCommandFactory::create_events(CommandParams cp,
     queue->Flag = "";
     queue->FlagValue = 0;
     queue->Condition = FlagCondition::FC_Value;
-
-    // Set repeating if necessary
-    //if (x.HasMember("repeating") && x["repeating"].GetBool() == true)
-    //    queue->SetRepeating(true);
-
-    // Find activation type
-    //if (x.HasMember("activation") && x["activation"].GetType() == rapidjson::Type::kStringType)
-    //    SetActivationType(queue, std::string(x["activation"].GetString()));
     queue->SetActivationType(ActivationType::AT_Autorun);
 
     // Insert events
@@ -43,7 +35,7 @@ std::shared_ptr<EventQueue> EventCommandFactory::create_events(CommandParams cp,
     for (int i = 0; i < cp._args.size(); i++)
     {
         std::string title = "free param " + std::to_string(i);
-        if(info._args.size() < i)
+        if(info._args.size() <= i)
             eventArgs.emplace(title, EventArgType::str_to_eai(cp._args[i]));
         else
             eventArgs.emplace(info._args[i].first, EventArgType::str_to_eai(cp._args[i]));

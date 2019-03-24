@@ -225,7 +225,10 @@ std::shared_ptr<IEvent> EventFactory::BuildEvent(EventTypes et, std::map<std::st
 			std::map<std::string, EventArgType> dialogues;
 			int counter = 0;
 			for(auto x : args)
+			{
+			    counter++;
 				dialogues.emplace("dialogue " + std::to_string(counter), x.second);
+			}
 
 			return std::shared_ptr<IEvent>(new DialogueBox(entity_id, CreateDialogueGraph(dialogues)));
 		}
@@ -300,7 +303,7 @@ std::shared_ptr<DialogueGraph> EventFactory::CreateDialogueGraph(std::map<std::s
 						d.NextTextId = -1;
 					}
 					else {
-						d.NextTextId = linear_dialogue_id_counter + 1;
+						d.NextTextId = linear_dialogue_id_counter;
 						d.Type = DialogueType::Simple;
 					}
 				}

@@ -27,6 +27,7 @@ void EventCommandLine::create_events(CommandParams params)
     m_cur_command = CommandParams();
 }
 
+// Font is not instanciated here
 EventCommandLine::EventCommandLine() {
     m_font = std::numeric_limits<unsigned int>::max();
 }
@@ -37,6 +38,7 @@ bool EventCommandLine::handle_input(char c) {
         create_events(m_cur_command);
 
     FontManager::GetInstance().UpdateText(m_font, m_buffer);
+//    std::cout << m_buffer << std::endl;
 
     return finalize;
 }
@@ -68,7 +70,7 @@ void EventCommandLine::init_font() {
     m_font = FontManager::GetInstance().AddFont(true, false, true, "res/fonts/lowercase.png");
     FontManager::GetInstance().SetScale(m_font, 0.25f, 0.25f);
     FontManager::GetInstance().GetFont(m_font)->_letterSpacing = 48.f;
-//    FontManager::GetInstance().EnableFont(m_font);
+    FontManager::GetInstance().GetFont(m_font)->set_text_var_resolution(false);
     FontManager::GetInstance().SetText(m_font, " ", m_font_position);
 }
 
@@ -76,7 +78,9 @@ EventCommandLine &EventCommandLine::operator=(EventCommandLine &&other) {
     m_event_manager = other.m_event_manager;
     m_map_handler = other.m_map_handler;
     m_font = other.m_font;
-    other.m_font = std::numeric_limits<unsigned int>::max();
     m_font_position = other.m_font_position;
+
+    other.m_font = std::numeric_limits<unsigned int>::max();
+
     return *this;
 }

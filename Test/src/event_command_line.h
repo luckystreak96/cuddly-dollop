@@ -13,12 +13,15 @@ class EventCommandLine: public CommandLine
 {
 public:
     EventCommandLine();
-    ~EventCommandLine();
     EventCommandLine(EventManager* evtMngr, MapHandler* mapHandler);
+
+    // These "big five" are necessary to avoid garbage collecting the font
+    ~EventCommandLine();
     EventCommandLine(EventCommandLine&& other);
     EventCommandLine(const EventCommandLine& other);
     EventCommandLine& operator=(const EventCommandLine& other);
     EventCommandLine& operator=(EventCommandLine&& other);
+
     void init_font();
     void create_events(CommandParams params);
     bool handle_input(char c) override;

@@ -201,7 +201,7 @@ Music::Music(Vector3f& spawnPos, std::vector<std::string> tex, bool smooth)
 	size.z = 1.0f;
 	textures = tex;
 	ResetLocation(spawnPos, true, smooth);
-	velocity.x = fmod((float)rand() / 10.f, 1.0f) + 0.3f;
+	velocity.x = (rand() % 2) / 3.0f + 0.5f;
 }
 
 void Music::SetTrans(Transformation& trans)
@@ -224,7 +224,7 @@ void Music::ResetLocation(Vector3f& spawnPos, bool firstSpawn, bool smooth)
 		counter = (float)(rand() % 20);
 		position.x = spawnPos.x;
 		position.y = spawnPos.y;
-		velocity.y = fmod(((float)rand() / 10.0f), 1.0f);
+		velocity.y = (rand() % 6) / 6.0f + 0.25f;
 	}
 }
 

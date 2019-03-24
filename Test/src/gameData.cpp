@@ -34,7 +34,7 @@ std::string GameData::Get(std::string key)
 	else if (Flags.count(key))
 		return std::to_string(Flags.at(key));
 
-	return "Nothing";
+	return ">?<";
 }
 
 bool GameData::RespectsCondition(std::shared_ptr<EventQueue> ev)
