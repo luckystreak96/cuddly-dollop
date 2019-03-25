@@ -17,7 +17,7 @@ EventUpdateResponse EventSpriteChange::UpdateEvent(double elapsedTime, std::map<
 		GameData::PlayerSprite = m_newSprite;
 
 	if (ents->count(m_target))
-		ents->at(m_target)->Graphics()->SetTexture(m_newSprite);
+        ents->at(m_target)->Graphics()->set_texture(m_newSprite);
 
 	m_completed = true;
 	return eur;

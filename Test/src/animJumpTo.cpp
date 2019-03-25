@@ -29,7 +29,7 @@ void AnimJumpTo::first_time()
 {
 	_firstTime = false;
 
-	_initialPos = _target->GetPosRef() - Vector3f(0, 0, 0.5f);
+	_initialPos = _target->get_position_ref() - Vector3f(0, 0, 0.5f);
 	_speed = (_destination - _initialPos) / 30.0f;
 	_speed.z = 0;
 
@@ -41,7 +41,7 @@ void AnimJumpTo::first_time()
 	_target->_forceAnimation = true;
 	_target->_animation = AE_Jump;
 
-	auto data = Animation::GetMetaData(_target->GetTexture()).data;
+	auto data = Animation::GetMetaData(_target->get_texture()).data;
 	_target->_row = data.at(AE_Jump)._position;
 	_length = abs(data.at(AE_Jump)._end - data.at(AE_Jump)._start) + 1;
 	_start = data.at(AE_Jump)._start;
@@ -58,7 +58,7 @@ void AnimJumpTo::Update()
 
 	// Set position
 	Vector3f result = MathUtils::FindPositionInParabola((float)(_progress / _duration), _initialPos, _destination);
-	_target->SetPhysics(result, Vector3f());
+	_target->set_position(result);
 
 	// Set sprite
 	int sprite = 0;
@@ -74,9 +74,9 @@ void AnimJumpTo::Update()
 	if (_progress >= _duration)
 	{
 		_done = true;
-		_target->SetPhysics(_destination, Vector3f());
+		_target->set_position(_destination);
 
-		//auto& data = Animation::GetMetaData(_target->GetTexture()).data;
+		//auto& data = Animation::GetMetaData(_target->get_texture()).data;
 		//_target->_row = data.at(AE_Jump)._position;
 		//_target->SetAnimation(AE_)
 

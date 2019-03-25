@@ -278,7 +278,7 @@ void Explosion::ResetLocation(Vector3f& spawnPos, bool firstSpawn, bool smooth)
 	position.x = spawnPos.x;
 	position.y = spawnPos.y;
 	velocity.x = fmod((float)rand() / 10.f, (power * 10.f)) - (power * 10.f) / 2.0f;
-	// Velocity minimum clamp
+	// get_velocity minimum clamp
 	velocity.x = velocity.x < 0 ? std::min(velocity.x, -0.5f) : std::max(velocity.x, 0.5f);
 	velocity.y = fmod((float)rand() / 10.f, 2.0f) - 1.f;
 }

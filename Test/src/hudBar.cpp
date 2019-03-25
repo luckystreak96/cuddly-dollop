@@ -15,7 +15,7 @@ HudBar::HudBar(int* ap, int max, Vector3f position)
 	GraphComp_ptr ptr = GraphComp_ptr(new FontGraphicsComponent("BAR", "res/sprites/special/bar.png"));
 	dynamic_cast<FontGraphicsComponent*>(ptr.get())->SetStatic(true);
 
-	ptr->SetPhysics(position, Vector3f());
+    ptr->set_position(position);
 	ptr->Update();
 
 	// Set everything

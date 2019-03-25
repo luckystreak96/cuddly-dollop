@@ -12,11 +12,12 @@
 #include <memory>
 #include <array>
 #include <vector>
+#include "spatial_object.h"
 
 class PhysicsComponent;
 typedef std::shared_ptr<PhysicsComponent> Physics_ptr;
 
-class PhysicsComponent : public IComponent
+class PhysicsComponent : public IComponent, public SpatialObject
 {
 public:
 	PhysicsComponent(Vector3f pos, std::string modelName = "TILE", Vector3f size = Vector3f(), Vector3f numTilesSize = Vector3f(-1, -1, -1));
@@ -45,12 +46,7 @@ public:
 	void YCollide();
 	virtual void DesiredMove();
 	void SetMovedBB();
-	Vector3f Position() { return m_pos; };
-	Vector3f& PositionRef() { return m_pos; };
-	Vector3f GetCenter() { return Vector3f(m_boundingBox[Left] + m_size.x / 2, m_boundingBox[Down] + m_size.y / 2, m_boundingBox[Far] + m_size.z / 2);/*return m_pos + (m_size / 2);*/ }
-	void SetPosition(Vector3f pos) { m_pos = pos; };
-	Vector3f Velocity() { return m_velocity; };
-	void set_velocity(Vector3f vel);
+	Vector3f GetCenter() { return Vector3f(m_boundingBox[Left] + m_size.x / 2, m_boundingBox[Down] + m_size.y / 2, m_boundingBox[Far] + m_size.z / 2);/*return m_position + (m_size / 2);*/ }
 	Vector3f GetSize() { return m_size; }
 	Vector3f get_velocity_movement();
 	int get_tile_expanse();
@@ -58,7 +54,7 @@ public:
 	void set_velocity_zero();
 	void apply_natural_deceleration();
 	void SetConversationLock(bool locked);
-	//static inline bool SortFunc(Drawable* d, Drawable* d2) { return d->Position().z < d2->Position().z; }
+	//static inline bool SortFunc(Drawable* d, Drawable* d2) { return d->Position().z < d2->get_position().z; }
 
 private:
 	PhysicsComponent();
@@ -73,9 +69,6 @@ public:
 
 
 protected:
-	Vector3f m_pos;
-	Vector3f m_velocity;
-	std::vector<GLuint> m_indices;
 	std::vector<Vertex> m_vertices;
 	Vector3f m_size = Vector3f(-1, -1, -1);
 	Vector3f m_BBcenter = Vector3f(-1, -1, -1);

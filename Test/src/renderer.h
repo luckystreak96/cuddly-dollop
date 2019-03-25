@@ -46,7 +46,9 @@ private:
 	Renderer();
 	void Sort();
 	static inline bool PositionSort(Vector3f a, Vector3f b) { return a.z == b.z ? a.y > b.y : a.z > b.z; }
-	static inline bool ComponentSort(GraphicsComponent* i, GraphicsComponent* j) { return PositionSort(i->GetPosRef(), j->GetPosRef()); }
+	static inline bool ComponentSort(GraphicsComponent* i, GraphicsComponent* j) { return PositionSort(
+                i->get_position_ref(),
+                                                                                                       j->get_position_ref()); }
 private:
 	std::vector<GraphicsComponent*> m_toDraw;
 	std::vector<std::shared_ptr<PostProcessing>> m_ppe;

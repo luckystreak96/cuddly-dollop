@@ -81,26 +81,26 @@ void PlayerGraphicsComponent::Update()
 {
 	m_modelMat.SetRotation(GetProjectionRotation(), 0, 0);
 	//if (!Transformation::perspectiveOrtho)
-	//	m_pos.z -= MathUtils::HeightGivenLengthOfHypotenuseAndAngle(0.5f, -GetProjectionRotation());
+	//	m_position.z -= MathUtils::HeightGivenLengthOfHypotenuseAndAngle(0.5f, -GetProjectionRotation());
 	//std::cout << _persRotation << std::endl;
 	// When you need to update a component according to position
-	if (m_prevPosition != m_pos && _observers.size())
+	if (m_prevPosition != m_position && _observers.size())
 		UpdateObservers();
-	m_prevPosition = m_pos;
+	m_prevPosition = m_position;
 
-	update_direction(m_vel);
+	update_direction(m_velocity);
 
 	//use the backup to reset the texture coordinates for proper analysis from the animator
 	//m_vertices = std::vector<Vertex>(m_originalVertices);
 
 	//Change the sprite depending on direction
 	//m_animation = m_direction;
-	if ((m_prev_dir != m_direction || (m_vel == 0 && _animation > 3) || (m_vel != 0 && _animation <= 3)) && !_specialAnimation && !_forceAnimation)
+	if ((m_prev_dir != m_direction || (m_velocity == 0 && _animation > 3) || (m_velocity != 0 && _animation <= 3)) && !_specialAnimation && !_forceAnimation)
 	{
 		Anim_Enum animation;
 		if (_default_animation != AE_Last)
 			animation = _default_animation;
-		else if (m_vel == 0)
+		else if (m_velocity == 0)
 		{
 			animation = (Anim_Enum)((int)m_direction);
 		}
@@ -113,7 +113,7 @@ void PlayerGraphicsComponent::Update()
 
 	if (_animation >= AE_LeftMove && _animation <= AE_UpMove)
 	{
-		float speed = fmax(abs(m_vel.x), abs(m_vel.y)) + fmin(abs(m_vel.x), abs(m_vel.y)) / 2.0f;
+		float speed = fmax(abs(m_velocity.x), abs(m_velocity.y)) + fmin(abs(m_velocity.x), abs(m_velocity.y)) / 2.0f;
 		m_delay = speed == 0 ? 1 : m_actualDelay / (speed / 64.0f);
 		if (_forceAnimation && m_delay == 1)
 			m_delay = m_actualDelay / 4;
@@ -124,9 +124,9 @@ void PlayerGraphicsComponent::Update()
 		ResetVBO();
 
 	// Used so that the characters rotation doesnt mess up graphics
-	m_pos.z -= 0.25f;
+	m_position.z -= 0.25f;
 	GraphicsComponent::Update();
-	m_pos.z += 0.25f;
+	m_position.z += 0.25f;
 	m_force_update = false;
 }
 
@@ -140,11 +140,11 @@ void PlayerGraphicsComponent::SetAnimation(Anim_Enum anim, std::string spriteshe
 //{
 //	Anim_Enum result;
 //	if(m_direction)
-//	SetAnimation(result, GetTexture());
+//	SetAnimation(result, get_texture());
 //}
 
-void PlayerGraphicsComponent::SetTexture(std::string texture)
+void PlayerGraphicsComponent::set_texture(std::string texture)
 {
-	GraphicsComponent::SetTexture(texture);
+    GraphicsComponent::set_texture(texture);
 	SetWidthHeight(texture);
 }

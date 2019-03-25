@@ -41,5 +41,5 @@ void PlayerInputComponent::Update(Observable * obs)
 
 	//m_phys->ActionMove(up, down, left, right, InputManager::GetInstance().GetKeyPercent(A_Left), InputManager::GetInstance().GetKeyPercent(A_Down));
 	m_phys->handle_input(obs);
-	m_graph->update_direction(m_phys->Velocity());
+	m_graph->update_direction(m_phys->get_velocity());
 }

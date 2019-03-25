@@ -24,9 +24,9 @@ public:
 	void Update();
 	// Set the position to lerp towards
 	void SetFollow(Vector3f pos);
-	// Position is pulled toward MapCenter.y
+	// get_position is pulled toward MapCenter.y
 	void SetFollowCenteredY(Vector3f pos);
-	// Position is pulled toward MapCenter.xy
+	// get_position is pulled toward MapCenter.xy
 	void SetFollowCenteredXY(Vector3f pos);
 	// Set the scale to lerp toward
 	void SetScale(Vector3f scale);

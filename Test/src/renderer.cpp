@@ -19,7 +19,7 @@ Renderer::Renderer() : m_toDraw(std::vector<GraphicsComponent*>()), m_width(1), 
 	float right = OrthoProjInfo::GetRegularInstance().Right;
 	float top = OrthoProjInfo::GetRegularInstance().Top;
 
-	pps.SetPhysics(Vector3f(right, top, 0), Vector3f());
+	pps.set_position(Vector3f(right, top, 0));
 	pps.GetModelMat()->SetScale(Vector3f((right * 2) / size, (top * 2) / size, 1));
 	pps.Update();
 

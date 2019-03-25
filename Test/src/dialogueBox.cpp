@@ -44,7 +44,7 @@ void DialogueBox::Construct()
 		m_box = std::shared_ptr<MenuBackgroundBox>(new MenuBackgroundBox(Vector3f(-1, 0.25f * 64.0f, -10), 14, 3));
 		m_box->Update();
 	}
-	//m_box->SetPhysics(Vector3f(0.5f, 0.5f, 0.5f), Vector3f(0, 0, 0));
+	//m_box->set_position(Vector3f(0.5f, 0.5f, 0.5f), Vector3f(0, 0, 0));
 	//std::vector<float> verts = Model::GetInstance().getVertices();
 	//for (int i = 0; i < verts.size(); i++)
 	//	m_verts.push_back(Vertex(Vector3f(verts[i], verts[i + 1], verts[i + 2]), Vector2f()));
@@ -139,9 +139,9 @@ EventUpdateResponse DialogueBox::UpdateEvent(double elapsedTime, std::map<unsign
 	for (unsigned int i = 0; i < m_choices.size(); i++)
 	{
 		if (graph->SelectedChoice() == i)
-			m_choices.at(i)->GetGraphics()->SetTexture("res/fonts/lowercase_selected.png");
+            m_choices.at(i)->GetGraphics()->set_texture("res/fonts/lowercase_selected.png");
 		else
-			m_choices.at(i)->GetGraphics()->SetTexture("res/fonts/lowercase.png");
+            m_choices.at(i)->GetGraphics()->set_texture("res/fonts/lowercase.png");
 
 		if (TextDisplayDone())
 			m_choices.at(i)->Update(elapsedTime);

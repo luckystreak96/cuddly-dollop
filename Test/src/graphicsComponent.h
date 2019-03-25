@@ -10,8 +10,8 @@
 #include "define.h"
 #include "basicEffect.h"
 #include "elapsedTime.h"
-#include "resource_user.h"
-#include "resource_manager.h"
+#include "spatial_object.h"
+#include "textured_object.h"
 
 #include <iostream>
 #include <string>
@@ -23,7 +23,7 @@ enum Direction { dir_Left, dir_Down, dir_Right, dir_Up };
 class GraphicsComponent;
 typedef std::shared_ptr<GraphicsComponent> GraphComp_ptr;
 
-class GraphicsComponent : public IComponent, public ResourceUser
+class GraphicsComponent : public IComponent, public SpatialObject, public TexturedObject
 {
 public:
 	void ReceiveMessage(std::vector<std::string> msg);
@@ -43,19 +43,15 @@ public:
 	void update_direction(Vector3f);
 	std::vector<Vertex>* GetVertices();
 	std::vector<GLuint> GetIndices();
-	std::string GetTexture();
-	virtual void SetTexture(std::string newTex);
 	std::vector<Mat4f>& GetMModels();
 	void InsertMModels(Transformation& t);
-	// Position is zero-counted
+	// get_position is zero-counted
 	void InsertMModels(Transformation& t, int position);
 	void InsertMModels(Mat4f& mat, int position);
 	void UpdateMModels();
 	// Returns true if the position changed
 	bool UpdateTranslation();
-	Vector3f& GetPosRef() { return m_pos; }
 	GLuint GetMVBO() { return m_VBO; }
-	Vector3f GetPos();
 	Direction GetDirection();
 	void SetDirection(Direction dir);
 	void SetDirection(GraphComp_ptr graph);
@@ -67,11 +63,8 @@ public:
 	void SetupVAO();
 	void SetColorAll(Vector3f color = Vector3f(1, 1, 1), float alpha = 1.0f);
 	void ResetVBO();
-	bool LoadExternalResources();
-	bool UnloadExternalResources();
 	bool LoadGLResources();
 	bool UnloadGLResources();
-	void SetPhysics(Vector3f pos, Vector3f vel = Vector3f()) { m_pos = pos; m_vel = vel;/* m_modelMat.SetTranslation(pos);*/ };
 	void SetNewBuffers(std::vector<Vertex>* verts, std::vector<GLuint>* inds);
 	void ApplyModelToVertices();
 	bool will_not_draw();
@@ -109,18 +102,13 @@ protected:
 	std::vector<Mat4f> m_test;
 	Vector3f m_size = Vector3f(-1, -1, -1);
 	Vector3f m_normalSize = Vector3f(-1, -1, -1);
-	Vector3f m_pos;
 	Vector3f m_scale;
-	std::string m_texture;
 	std::string m_modelName;
-	bool m_external_loaded = false;
 	bool m_GL_loaded = false;
 	bool m_mmodelsUpdated;
 	bool m_updateMModels;
 	Transformation m_modelMat;
-	Vector3f m_vel;
 	Vector3f m_rot;
-	Texture* m_tex_ptr;
 
 	static int counter;
 };

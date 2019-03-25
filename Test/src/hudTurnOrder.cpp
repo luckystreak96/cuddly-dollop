@@ -12,7 +12,7 @@ HudTurnOrder::HudTurnOrder(BattleUnit u)
 	m_mustDisplay = false;
 	_unit = u;
 
-	m_prevActorPos = *u.position;//_actor.second->GetPosRef();
+	m_prevActorPos = *u.position;//_actor.second->get_position_ref();
 
 	m_observedOrder = *u.turnOrder;//_actor.first->_OrderPosition;
 
@@ -40,12 +40,12 @@ HudTurnOrder::HudTurnOrder(BattleUnit u)
 
 void HudTurnOrder::SetBoxPosition()
 {
-	_background->SetPhysics(m_prevActorPos.OnlyXY() - Vector3f(0.5f, -0.25f, -0.1f), Vector3f());
+    _background->set_position(m_prevActorPos.OnlyXY() - Vector3f(0.5f, -0.25f, -0.1f));
 }
 
 Vector3f HudTurnOrder::CalculateTextPosition()
 {
-	return _background->GetPosRef().OnlyXY() + Vector3f(0.5f, 0.375f, 0);
+	return _background->get_position_ref().OnlyXY() + Vector3f(0.5f, 0.375f, 0);
 }
 
 void HudTurnOrder::Destroy()

@@ -75,7 +75,7 @@ std::shared_ptr<GraphicsComponent> instance_mesh::get_graphics()
 
 void instance_mesh::set_graphics_position(Vector3f pos)
 {
-	m_graphics->SetPhysics(pos);
+	m_graphics->set_position(pos);
 }
 
 void instance_mesh::update_graphics_vbo()

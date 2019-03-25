@@ -8,6 +8,7 @@
 #include "player_audio_component.h"
 #include "physicsComponent.h"
 #include "graphicsComponent.h"
+#include "resource_manager.h"
 
 Entity::Entity(unsigned int id, std::string spritesheet, bool playerInput, bool fullSize)
 	: m_id(id), m_hasEvents(false), m_fullSize(fullSize), _justTouched(false), m_graphicsComponent(nullptr)
@@ -68,7 +69,9 @@ void Entity::Update()
 
 	if (m_graphicsComponent)
 	{
-		m_graphicsComponent->SetPhysics(m_physicsComponent->Position(), m_physicsComponent->Velocity());
+//		m_graphicsComponent->set_position(m_physicsComponent->get_position(), m_physicsComponent->get_velocity());
+		m_graphicsComponent->set_position(m_physicsComponent->get_position());
+		m_graphicsComponent->set_velocity(m_physicsComponent->get_velocity());
 		m_graphicsComponent->Update();
 	}
 }

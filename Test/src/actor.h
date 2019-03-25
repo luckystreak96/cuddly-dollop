@@ -29,9 +29,9 @@ public:
 	bool Selected;
 	bool ChoosingAction;
 
-	// Position when chilling in back
+	// get_position when chilling in back
 	Vector3f WaitPosition;
-	// Position after stepping up
+	// get_position after stepping up
 	Vector3f ActivePosition;
 
 protected:

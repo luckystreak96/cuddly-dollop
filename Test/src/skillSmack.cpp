@@ -58,7 +58,7 @@ Damage SkillSmack::CalculateDamage(StatUser& user)
 //	//_anims->push_front(Anim_ptr(new AnimScreenShake()));
 //
 //	Particle_ptr particles = Particle_ptr(new ParticleGenerator());
-//	Vector3f pos = _targets.at(0)->_Graphics->GetPos() + Vector3f(0.5f, 0.5f, 0.6f);
+//	Vector3f pos = _targets.at(0)->_Graphics->get_position() + Vector3f(0.5f, 0.5f, 0.6f);
 //	particles->SetPowerLevel(0.3f);
 //	particles->Init(PT_Explosion, dmg._value, pos, false, "star.png");
 //	Vector3f color = _critting ? Vector3f(0.35f, 0.31f, 0.87f) : Vector3f(1.0f, 0.2f, 0.2f);

@@ -110,14 +110,16 @@ bool physics_rpg::XY_collision(PhysicsComponent* p)
 
 bool physics_rpg::is_legal_floor(PhysicsComponent* actor, PhysicsComponent* tile)
 {
-	return (tile->PositionRef().z >= actor->PositionRef().z + 0.495f && tile->PositionRef().z <= actor->PositionRef().z + 1.505f);
+	return (tile->get_position_ref().z >= actor->get_position_ref().z + 0.495f && tile->get_position_ref().z <=
+																				actor->get_position_ref().z + 1.505f);
 }
 
 bool physics_rpg::is_obstacle(PhysicsComponent* actor, PhysicsComponent* tile)
 {
 	if (!tile->walkOn)
 		return true;
-	else if (tile->PositionRef().z > actor->PositionRef().z - 0.995f && tile->PositionRef().z <= actor->PositionRef().z + 0.25f)
+	else if (tile->get_position_ref().z > actor->get_position_ref().z - 0.995f && tile->get_position_ref().z <=
+																				actor->get_position_ref().z + 0.25f)
 		return true;
 
 	return false;
@@ -128,7 +130,7 @@ void physics_rpg::calculate_collision()
 {
 	for (auto& phys : m_comps_dynamic)
 	{
-		if (phys->Velocity() != 0)
+		if (phys->get_velocity() != 0)
 		{
 			if (XY_collision(phys))
 			{
@@ -206,16 +208,16 @@ void physics_rpg::handle_dynamic_collision(int i, int j)
 
 	if (i_left_of_j || i_right_of_j)
 	{
-		if ((m_comps_dynamic[i]->Velocity().x > 0 && i_left_of_j) || (m_comps_dynamic[i]->Velocity().x < 0 && i_right_of_j))
+		if ((m_comps_dynamic[i]->get_velocity().x > 0 && i_left_of_j) || (m_comps_dynamic[i]->get_velocity().x < 0 && i_right_of_j))
 			m_comps_dynamic[i]->XCollide();
-		if ((m_comps_dynamic[j]->Velocity().x > 0 && i_right_of_j) || (m_comps_dynamic[j]->Velocity().x < 0 && i_left_of_j))
+		if ((m_comps_dynamic[j]->get_velocity().x > 0 && i_right_of_j) || (m_comps_dynamic[j]->get_velocity().x < 0 && i_left_of_j))
 			m_comps_dynamic[j]->XCollide();
 	}
 	else if (i_under_of_j || i_over_of_j)
 	{
-		if ((m_comps_dynamic[i]->Velocity().y > 0 && i_under_of_j) || (m_comps_dynamic[i]->Velocity().y < 0 && i_over_of_j))
+		if ((m_comps_dynamic[i]->get_velocity().y > 0 && i_under_of_j) || (m_comps_dynamic[i]->get_velocity().y < 0 && i_over_of_j))
 			m_comps_dynamic[i]->YCollide();
-		if ((m_comps_dynamic[j]->Velocity().y > 0 && i_over_of_j) || (m_comps_dynamic[j]->Velocity().y < 0 && i_under_of_j))
+		if ((m_comps_dynamic[j]->get_velocity().y > 0 && i_over_of_j) || (m_comps_dynamic[j]->get_velocity().y < 0 && i_under_of_j))
 			m_comps_dynamic[j]->YCollide();
 	}
 }
@@ -229,25 +231,25 @@ bool fequals(float first, float second, float epsilon)
 void physics_rpg::calculate_position_adjustments()
 {
 	for (auto& phys : m_comps_dynamic)
-		if (phys->Velocity() != 0)
+		if (phys->get_velocity() != 0)
 		{
 			float tile_height = 100;
 			for (auto& tile : get_touching_tiles(phys))
 			{
 				// get highest legal block
-				if (is_legal_floor(phys, tile) && tile->PositionRef().z < tile_height)
-					tile_height = tile->PositionRef().z;
+				if (is_legal_floor(phys, tile) && tile->get_position_ref().z < tile_height)
+					tile_height = tile->get_position_ref().z;
 			}
 
-			if (tile_height != 100 && !fequals(tile_height - 1.f, phys->PositionRef().z, 0.05f))
+			if (tile_height != 100 && !fequals(tile_height - 1.f, phys->get_position_ref().z, 0.05f))
 			{
-				float backup = phys->PositionRef().z;
-				phys->PositionRef().z = tile_height - 1.f;
+				float backup = phys->get_position_ref().z;
+				phys->get_position_ref().z = tile_height - 1.f;
 				for (auto& tile : get_touching_tiles(phys))
 				{
 					if (is_obstacle(phys, tile))
 					{
-						phys->PositionRef().z = backup;
+						phys->get_position_ref().z = backup;
 						phys->XCollide();
 						phys->YCollide();
 						phys->_collided_last_frame = -2;
@@ -289,13 +291,13 @@ void physics_rpg::notify_ptr_removed(PhysicsComponent* ptr)
 
 int physics_rpg::get_x_list_position(PhysicsComponent* ptr)
 {
-	return get_list_position(ptr->PositionRef().x);
+	return get_list_position(ptr->get_position_ref().x);
 }
 
 
 int physics_rpg::get_y_list_position(PhysicsComponent* ptr)
 {
-	return get_list_position(ptr->PositionRef().y);
+	return get_list_position(ptr->get_position_ref().y);
 }
 
 int physics_rpg::get_list_position(float p)

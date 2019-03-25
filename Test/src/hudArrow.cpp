@@ -45,7 +45,7 @@ void HudArrow::SetPosition(Vector3f start, Vector3f end)
 
 	start.z = 0;
 
-	_graphic->SetPhysics(start);
+	_graphic->set_position(start);
 	_graphic->GetModelMat()->SetScale(1, distance, 1);
 	_graphic->GetModelMat()->SetRotation(0, 0, angle);
 	_graphic->Update();

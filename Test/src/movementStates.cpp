@@ -10,7 +10,7 @@ MovementStateDashing::MovementStateDashing()
 
 void MovementStateDashing::enter(PlayerPhysicsComponent& ppc)
 {
-	Vector3f vel = ppc.Velocity();
+	Vector3f vel = ppc.get_velocity();
 	vel *= _speed_multiplier;
 
 	ppc.set_velocity(vel);
@@ -18,7 +18,7 @@ void MovementStateDashing::enter(PlayerPhysicsComponent& ppc)
 
 void MovementStateDashing::exit(PlayerPhysicsComponent & ppc)
 {
-	Vector3f vel = ppc.Velocity();
+	Vector3f vel = ppc.get_velocity();
 	vel /= _speed_multiplier;
 
 	ppc.set_velocity(vel);

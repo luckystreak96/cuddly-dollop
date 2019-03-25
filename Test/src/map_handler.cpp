@@ -55,8 +55,8 @@ void MapHandler::OrderTiles()
 
 	for (auto& t : m_tiles)
 	{
-		int x = t->PhysicsRaw()->PositionRef().x / 64 / m_chunkSize;
-		int y = t->PhysicsRaw()->PositionRef().y / 64 / m_chunkSize;
+		int x = t->PhysicsRaw()->get_position_ref().x / 64 / m_chunkSize;
+		int y = t->PhysicsRaw()->get_position_ref().y / 64 / m_chunkSize;
 		m_OrderedTiles[x][y].push_back(&*t);
 	}
 }
@@ -73,13 +73,13 @@ void MapHandler::FinalizeSetup()
 	for (auto t : m_tiles)
 	{
 		t->Physics()->Update();
-		int tx = (int)t->Physics()->Position().x;
+		int tx = (int) t->Physics()->get_position().x;
 		if (tx > x)
 			x = tx;
-		int ty = (int)t->Physics()->Position().y;
+		int ty = (int) t->Physics()->get_position().y;
 		if (ty > y)
 			y = ty;
-		int tz = (int)t->Physics()->Position().z;
+		int tz = (int) t->Physics()->get_position().z;
 		if (tz > z)
 			z = tz;
 	}
@@ -131,7 +131,7 @@ void MapHandler::Update(bool forced)
 		m_mesh.get_graphics()->ClearMModels();
 		for (auto x : m_tiles)
 		{
-			Vector3f pos = x->Physics()->Position();
+			Vector3f pos = x->Physics()->get_position();
 			if (!Transformation::perspectiveOrtho)
 			{
 				// increase z by 1 to make people touch the tiles
@@ -198,15 +198,15 @@ Vector3f MapHandler::GetMapSize()
 
 bool MapHandler::TileSort(std::shared_ptr<MapTile> i, std::shared_ptr<MapTile> j)
 {
-	return (i->Physics()->Position() < j->Physics()->Position());
+	return (i->Physics()->get_position() < j->Physics()->get_position());
 }
 
 bool MapHandler::TileSortX(std::shared_ptr<MapTile> i, std::shared_ptr<MapTile> j)
 {
-	Vector3f r = j->Physics()->Position();
-	float x = i->Physics()->Position().x;
-	float y = i->Physics()->Position().y;
-	float z = i->Physics()->Position().z;
+	Vector3f r = j->Physics()->get_position();
+	float x = i->Physics()->get_position().x;
+	float y = i->Physics()->get_position().y;
+	float z = i->Physics()->get_position().z;
 	if (x == r.x)
 	{
 		if (y == r.y)

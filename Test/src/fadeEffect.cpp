@@ -16,7 +16,7 @@ bool FadeEffect::Init()
 
 	if (_efctGLVersion.x == 1.0f)
 	{
-		glBindAttribLocation(m_shaderProg, 0, "Position");
+		glBindAttribLocation(m_shaderProg, 0, "get_position");
 		glBindAttribLocation(m_shaderProg, 1, "TexCoord");
 		glBindAttribLocation(m_shaderProg, 5, "Model");
 	}

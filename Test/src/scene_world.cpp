@@ -65,14 +65,14 @@ bool SceneWorld::Init()
 	//m_collisionManager.SetMapTiles(m_mapHandler->OrderedTiles());
 
 	m_celist = EntityFactory::GetEntities(m_currentMap, m_jsonHandler);
-	m_camera.ForcePosition(m_celist.at(1)->PhysicsRaw()->PositionRef());
+	m_camera.ForcePosition(m_celist.at(1)->PhysicsRaw()->get_position_ref());
 	m_eventManager.SetEntitiesMap(&m_celist);
 	//m_collisionManager.SetEntities(&m_celist);
 
 	if (m_celist.count(1))
 	{
 		m_player = m_celist.at(1);
-		m_player->Graphics()->SetTexture(GameData::PlayerSprite);
+        m_player->Graphics()->set_texture(GameData::PlayerSprite);
 		if (GameData::Loading && GameData::Positions.count("player"))
 		{
 			GameData::Loading = false;
@@ -119,7 +119,7 @@ void SceneWorld::setup_physics_manager()
 void SceneWorld::ShowStats()
 {
 	for (auto& x : BattleData::Party)
-		FontManager::GetInstance().CreateFloatingText(m_celist.at(1)->PhysicsRaw()->PositionRef(), std::to_string(x->Strength.Real));
+		FontManager::GetInstance().CreateFloatingText(m_celist.at(1)->PhysicsRaw()->get_position_ref(), std::to_string(x->Strength.Real));
 }
 
 SceneWorld::~SceneWorld()
@@ -154,7 +154,8 @@ void SceneWorld::ManageInput()
 	if (InputManager::GetInstance().FrameKeyStatus('=', KeyPressed))
 		Camera::_currentCam->SetScale(Vector3f(0.1f, 0.1f, 1.0f));
 	if (InputManager::GetInstance().FrameKeyStatus(';', KeyPressed))
-		FontManager::GetInstance().CreateFloatingText(m_celist.at(1)->PhysicsRaw()->PositionRef(), std::to_string(m_celist.at(1)->PhysicsRaw()->PositionRef().x));
+		FontManager::GetInstance().CreateFloatingText(m_celist.at(1)->PhysicsRaw()->get_position_ref(), std::to_string(
+				m_celist.at(1)->PhysicsRaw()->get_position_ref().x));
 	// Mute
 	if (InputManager::GetInstance().FrameKeyStatus(A_Mute, KeyStatus::Release))
 	    SoundManager::GetInstance().toggle_BGM_mute();
@@ -163,12 +164,12 @@ void SceneWorld::ManageInput()
 	{
 		// Make sure GameData knows the player position
 		if (GameData::Positions.count("player"))
-			GameData::Positions.at("player") = m_player->PhysicsRaw()->PositionRef();
+			GameData::Positions.at("player") = m_player->PhysicsRaw()->get_position_ref();
 		else
-			GameData::Positions.emplace("player", m_player->PhysicsRaw()->PositionRef());
+			GameData::Positions.emplace("player", m_player->PhysicsRaw()->get_position_ref());
 
 		GameData::SaveToFile();
-		FontManager::GetInstance().CreateFloatingText(m_player->Physics()->Position(), "Game Saved!")->GetGraphics()->SetColorAll(Vector3f(0.1f, 0.65f, 1));
+		FontManager::GetInstance().CreateFloatingText(m_player->Physics()->get_position(), "Game Saved!")->GetGraphics()->SetColorAll(Vector3f(0.1f, 0.65f, 1));
 	}
 
 	if (InputManager::GetInstance().FrameKeyStatus('Y', KeyPressed))
@@ -195,7 +196,7 @@ void SceneWorld::ManageInput()
 	//	m_World->SetScale(value, value, 1);
 	//	if (m_celist.count(Camera::Target))
 	//		for (int i = 0; i < 30; i++)
-	//			Camera::Follow(m_celist.at(Camera::Target)->Physics()->Position(), m_World.get());
+	//			Camera::Follow(m_celist.at(Camera::Target)->Physics()->get_position(), m_World.get());
 	//}
 }
 
@@ -203,7 +204,7 @@ void SceneWorld::Interact()
 {
 	if (InputManager::GetInstance().FrameKeyStatus(A_Accept, KeyStatus::KeyPressed) && m_player) {
 		Vector3f pos = m_player->Physics()->GetCenter();
-		pos.z = m_player->PhysicsRaw()->PositionRef().z;
+		pos.z = m_player->PhysicsRaw()->get_position_ref().z;
 		Direction dir = m_player->Graphics()->GetDirection();
 
 		float distance = 0.2f * 64.0f;
@@ -279,7 +280,7 @@ SceneGenData SceneWorld::Update()
 		m_mapHandler->Update(OrthoProjInfo::GetRegularInstance().changed);
 
 		if (m_celist.count(m_camera.Target))
-			m_camera.SetFollow(m_celist.at(m_camera.Target)->Physics()->Position() + Vector3f(0.5f, 0.5f, 0));
+			m_camera.SetFollow(m_celist.at(m_camera.Target)->Physics()->get_position() + Vector3f(0.5f, 0.5f, 0));
 
 		SetAudioPosition();
 		SoundManager::GetInstance().Update();
@@ -359,7 +360,8 @@ void SceneWorld::Draw()
 void SceneWorld::SetAudioPosition()
 {
 	if (m_player != NULL)
-		SoundManager::GetInstance().SetListenerPosition(m_player->Physics()->Position(), m_player->Physics()->Velocity());
+		SoundManager::GetInstance().SetListenerPosition(m_player->Physics()->get_position(),
+                                                        m_player->Physics()->get_velocity());
 	else
 		SoundManager::GetInstance().SetListenerPosition();
 }

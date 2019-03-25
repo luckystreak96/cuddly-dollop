@@ -70,18 +70,18 @@ void SkillRanged::SetAnimations()
 //void SkillRanged::Start()
 //{
 //	Skill::Start();
-//	_basePos = _owner.lock()->_Graphics->GetPos();
+//	_basePos = _owner.lock()->_Graphics->get_position();
 //
-//	_anims->push_back(Anim_ptr(new AnimMoveTo(_owner.lock()->_Graphics->GetPosRef() + Vector3f(_owner.lock()->_Fighter->Team ? -1 : 1, 0, 0), _owner.lock())));
+//	_anims->push_back(Anim_ptr(new AnimMoveTo(_owner.lock()->_Graphics->get_position_ref() + Vector3f(_owner.lock()->_Fighter->Team ? -1 : 1, 0, 0), _owner.lock())));
 //
 //	// Reset for re-use
 //	_cameraTarget = Vector3f();
 //
 //	// Get average of all targets and attacker
 //	for (auto& x : _targets)
-//		_cameraTarget += x->_Graphics->GetPosRef();
+//		_cameraTarget += x->_Graphics->get_position_ref();
 //
-//	_cameraTarget.x += _owner.lock()->_Graphics->GetPosRef().x;
+//	_cameraTarget.x += _owner.lock()->_Graphics->get_position_ref().x;
 //	_cameraTarget /= (float)_targets.size();
 //
 //	_targetProgress = 0;
@@ -141,7 +141,7 @@ void SkillRanged::SetAnimations()
 //	case 2:
 //		// SET THIS SKILL TO DONE
 //		Camera::_currentCam->SetScale(Vector3f(1.f));
-//		Camera::_currentCam->SetFollowCenteredXY(_owner.lock()->_Graphics->GetPosRef());
+//		Camera::_currentCam->SetFollowCenteredXY(_owner.lock()->_Graphics->get_position_ref());
 //		if (!AnimationsDone())
 //			break;
 //		_done = true;

@@ -22,17 +22,17 @@ SkillMelee::SkillMelee() : Skill()
 //void SkillMelee::Start()
 //{
 //	Skill::Start();
-//	_basePos = _owner.lock()->_Graphics->GetPos();
+//	_basePos = _owner.lock()->_Graphics->get_position();
 //	// INSERT JUMP FOREWARD ANIMATION HERE
 //	float distance = _owner.lock()->_Fighter->Team == 0 ? 0.7f : -0.7f;
 //	bool protector = _targets.at(0)->_Fighter->Protector != NULL && !_targets.at(0)->_Fighter->Protector->_Fighter->Dead;
 //	if (protector)
 //		distance *= 2.0f;
-//	_anims->push_back(Anim_ptr(new AnimJumpTo(_targets.at(0)->_Graphics->GetPos() - Vector3f(distance, 0, 0), _owner.lock())));
+//	_anims->push_back(Anim_ptr(new AnimJumpTo(_targets.at(0)->_Graphics->get_position() - Vector3f(distance, 0, 0), _owner.lock())));
 //	if (protector)
 //	{
 //		Skill::SetupProtector();
-//		_anims->push_back(Anim_ptr(new AnimJumpTo(_targets.at(1)->_Graphics->GetPos() - Vector3f(distance / 2.0f, 0, 0), _targets.at(0))));
+//		_anims->push_back(Anim_ptr(new AnimJumpTo(_targets.at(1)->_Graphics->get_position() - Vector3f(distance / 2.0f, 0, 0), _targets.at(0))));
 //		_anims->back()->_duration = 0.2f;
 //		_anims->back()->_async = true;
 //	}
@@ -105,7 +105,7 @@ void SkillMelee::SetAnimations()
 //	switch (_animProg)
 //	{
 //	case 0:
-//		Camera::_currentCam->SetFollowCenteredXY(_targets.at(0)->_Graphics->GetPosRef());
+//		Camera::_currentCam->SetFollowCenteredXY(_targets.at(0)->_Graphics->get_position_ref());
 //		if (!AnimationsDone())
 //			break;
 //		Animate();
@@ -113,7 +113,7 @@ void SkillMelee::SetAnimations()
 //		break;
 //	case 1:
 //		// DEAL DMG
-//		Camera::_currentCam->SetFollowCenteredXY(_targets.at(0)->_Graphics->GetPosRef());
+//		Camera::_currentCam->SetFollowCenteredXY(_targets.at(0)->_Graphics->get_position_ref());
 //		if (AnimationsDone())
 //		{
 //			_animProg++;
@@ -132,7 +132,7 @@ void SkillMelee::SetAnimations()
 //	case 2:
 //		// JUMP BACK
 //		Camera::_currentCam->SetScale(Vector3f(1.f));
-//		Camera::_currentCam->SetFollowCenteredXY(_owner.lock()->_Graphics->GetPosRef());
+//		Camera::_currentCam->SetFollowCenteredXY(_owner.lock()->_Graphics->get_position_ref());
 //		//Camera::_currentCam->SetFollowCenteredXY(_owner->BasePosition);
 //		if (!AnimationsDone())
 //			break;
@@ -149,7 +149,7 @@ void SkillMelee::SetAnimations()
 //	case 3:
 //		// SET THIS SKILL TO DONE
 //		Camera::_currentCam->SetScale(Vector3f(1.f));
-//		Camera::_currentCam->SetFollowCenteredXY(_owner.lock()->_Graphics->GetPosRef());
+//		Camera::_currentCam->SetFollowCenteredXY(_owner.lock()->_Graphics->get_position_ref());
 //		if (!AnimationsDone())
 //			break;
 //		_done = true;

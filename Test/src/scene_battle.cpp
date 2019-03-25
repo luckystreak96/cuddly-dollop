@@ -86,7 +86,7 @@ bool SceneBattle::Init()
 	for (auto& x : m_fighters)
 	{
 		Actor_ptr actor = Actor_ptr(new Actor());
-		actor->SetTexture(x->GetSprite());
+        actor->set_texture(x->GetSprite());
 
 		if (x->Team == 0)
 		{
@@ -113,11 +113,11 @@ bool SceneBattle::Init()
 	for (int i = 0; i < party.size(); i++)
 	{
 		Vector3f position = Vector3f((4.0f + i * 0.25f) * size, (startY + i * 1.25f) * size, 4.0f);
-		party.at(i)->SetPhysics(position, Vector3f());
+        party.at(i)->set_position(position);
 		//if (!Transformation::perspectiveOrtho)
 			party.at(i)->AdjustHeightForAngle();
-		party.at(i)->WaitPosition = party.at(i)->GetPos();
-		party.at(i)->ActivePosition = party.at(i)->GetPos() + Vector3f(1, 0, 0) * size;
+		party.at(i)->WaitPosition = party.at(i)->get_position();
+		party.at(i)->ActivePosition = party.at(i)->get_position() + Vector3f(1, 0, 0) * size;
 		party.at(i)->_row = AE_Right; // make player face right cuz girl looks bad looking down
 		party.at(i)->_default_animation = AE_Right; // make player face right cuz girl looks bad looking down
 	}
@@ -127,11 +127,11 @@ bool SceneBattle::Init()
 	for (int i = 0; i < enemies.size(); i++)
 	{
 		Vector3f position = Vector3f((13.5f - i * 0.25f) * size, (startY + i * 1.25f) * size, 4.0f);
-		enemies.at(i)->SetPhysics(position, Vector3f());
+        enemies.at(i)->set_position(position);
 		//if (!Transformation::perspectiveOrtho)
 			enemies.at(i)->AdjustHeightForAngle();
-		enemies.at(i)->WaitPosition = enemies.at(i)->GetPos();
-		enemies.at(i)->ActivePosition = enemies.at(i)->GetPos() + Vector3f(-1, 0, 0) * size;
+		enemies.at(i)->WaitPosition = enemies.at(i)->get_position();
+		enemies.at(i)->ActivePosition = enemies.at(i)->get_position() + Vector3f(-1, 0, 0) * size;
 		// Set to right cause the sprites are flipped
 		enemies.at(i)->_row = AE_Right;
 		enemies.at(i)->_default_animation = AE_Right;
@@ -237,13 +237,13 @@ SceneGenData SceneBattle::Update()
 	for (auto it : m_celist)
 		it.second->Update();
 
-	//std::cout << m_actors.at(0)->GetPosRef().Print() << std::endl;
+	//std::cout << m_actors.at(0)->get_position_ref().Print() << std::endl;
 	for (auto a : m_actors)
 		a->Update();
 
-	//std::cout << "2 -- " << m_party.at(0)->_Graphics->GetPosRef().Print() << std::endl;
+	//std::cout << "2 -- " << m_party.at(0)->_Graphics->get_position_ref().Print() << std::endl;
 	m_mapHandler->Update(OrthoProjInfo::GetRegularInstance().changed);
-	//std::cout << m_mapHandler->Graphics()->GetPosRef().Print() << std::endl;
+	//std::cout << m_mapHandler->Graphics()->get_position_ref().Print() << std::endl;
 
 	SetAudioPosition();
 	SoundManager::GetInstance().Update();
@@ -260,7 +260,7 @@ SceneGenData SceneBattle::Update()
 	if (fps != curfps)
 	{
 
-		FontManager::GetInstance().SetText(m_fontFPS, /*std::to_string(m_celist.at(1)->PhysicsRaw()->PositionRef().z),*/std::to_string(curfps),
+		FontManager::GetInstance().SetText(m_fontFPS, /*std::to_string(m_celist.at(1)->PhysicsRaw()->get_position_ref().z),*/std::to_string(curfps),
 			Vector3f(0, OrthoProjInfo::GetRegularInstance().Top * 2.f - 0.5f * 64.0f, -10));
 
 		fps = curfps;

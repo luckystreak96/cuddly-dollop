@@ -70,12 +70,12 @@ void Actor::UpdateColor(bool dead, bool selected, int actionCommandLevel)
 void Actor::Update()
 {
 	if (!Transformation::perspectiveOrtho)
-		GetPosRef().z += MathUtils::HeightGivenLengthOfHypotenuseAndAngle(0.5f, -GraphicsComponent::_persRotation);
+        get_position_ref().z += MathUtils::HeightGivenLengthOfHypotenuseAndAngle(0.5f, -GraphicsComponent::_persRotation);
 	PlayerGraphicsComponent::Update();
 }
 
 void Actor::AdjustHeightForAngle()
 {
 	if (!Transformation::perspectiveOrtho)
-		GetPosRef().z -= MathUtils::HeightGivenLengthOfHypotenuseAndAngle(0.5f, -GraphicsComponent::_persRotation);
+        get_position_ref().z -= MathUtils::HeightGivenLengthOfHypotenuseAndAngle(0.5f, -GraphicsComponent::_persRotation);
 }

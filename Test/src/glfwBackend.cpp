@@ -72,7 +72,7 @@ void Resize(GLFWwindow* window)
 		glfwSetWindowSize(GLFWManager::m_window, viewW, viewH);
 		w = viewW;
 		h = viewH;
-		std::cout << "Switched to windowed mode : Width - " << viewW << " Height - " << viewH << std::endl;
+		std::cout << "Switched to windowed mode : Width - " << screenW << " Height - " << screenH << std::endl;
 	}
 	// The next comment centers the viewport if the window is too big for the resolution
 	glViewport(0, 0, (GLsizei)(viewW), (GLsizei)(viewH));
@@ -256,7 +256,7 @@ GLFWManager::GLFWManager()
 
 
 		// Create window
-		m_window = glfwCreateWindow(m_screenWidth - 10, m_screenHeight - 80, "Cuddly-Dollop", NULL, NULL);
+		m_window = glfwCreateWindow(500, 500, "Cuddly-Dollop", nullptr, nullptr);
 		if (!m_window)
 		{
 			std::cout << "Window failed to be created on context: " << x.x << "." << x.y << std::endl;
@@ -275,14 +275,14 @@ GLFWManager::GLFWManager()
 	}
 
 	// Fullscreen / windowed initialization
-	if (std::get<bool>(GameData::Options.at("fullscreen")) == true)
+	if (std::get<bool>(GameData::Options.at("fullscreen")))
 	{
 		glfwSetWindowMonitor(m_window, monitor, 5, 35, m_screenWidth - 10, m_screenHeight - 80, m_refreshRate);
 	}
 	else
 	{
 		glfwHideWindow(m_window);
-		glfwSetWindowPos(m_window, 5, 35);
+		glfwSetWindowPos(m_window, m_screenWidth / 5, m_screenHeight / 6);
 		glfwShowWindow(m_window);
 	}
 

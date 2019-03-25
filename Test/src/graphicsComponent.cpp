@@ -1,6 +1,7 @@
 #include "graphicsComponent.h"
 #include "model.h"
 #include <algorithm>
+#include "gl_vertex_array.h"
 
 float GraphicsComponent::_persRotation = -0.4f;
 float GraphicsComponent::_orthoRotation = -0.0325f;
@@ -78,7 +79,10 @@ void GraphicsComponent::Construct()
 	m_TBO = 0;
 	m_MMBO = 0;
 
-	m_tex_ptr = ResourceManager::GetInstance().GetTexture(m_texture);
+	GLVertexArray temp;
+
+//	m_tex_ptr = ResourceManager::GetInstance().get_texture(m_texture);
+    set_texture(m_texture);
 	_must_update_vbo = false;
 	_outline = false;
 	m_direction = dir_Down;
@@ -91,31 +95,33 @@ void GraphicsComponent::Construct()
 	m_mlMatLoc = 0;
 
 	//When this z is small - transparency fucks up????
-	m_pos = Vector3f(0.0f, 0.0f, 0.0f);
-	//m_modelMat.SetTranslation(m_pos);
+	m_position = Vector3f(0.0f, 0.0f, 0.0f);
+	//m_modelMat.SetTranslation(m_position);
 
 	SetDefaults(m_modelName);
 
 	while (m_texCoords.size() < m_vertices.size())
 		m_texCoords.push_back(Vector2f());
 
-	LoadExternalResources();
-	if (m_tex_ptr == nullptr)
-		m_tex_ptr = ResourceManager::GetInstance().GetTexture(m_texture);
+//	LoadExternalResources();
+//	if (m_tex_ptr == nullptr)
+//		m_tex_ptr = ResourceManager::GetInstance().get_texture(m_texture);
 
 	LoadGLResources();
 }
 
-GraphicsComponent::GraphicsComponent(std::string modelName, std::string texPath) : m_texture(texPath), m_modelName(modelName)
+GraphicsComponent::GraphicsComponent(std::string modelName, std::string texPath) : m_modelName(modelName)
 , _mModelsNoReplace(false)
 {
+	m_texture = texPath;
 	//std::cout << ++counter << " GraphicsComponents exist." << std::endl;
 	Construct();
 }
 
-GraphicsComponent::GraphicsComponent(std::vector<Vertex>* verts, std::vector<GLuint>* inds, std::string texPath) : m_texture(texPath), m_modelName("NONE"),
+GraphicsComponent::GraphicsComponent(std::vector<Vertex>* verts, std::vector<GLuint>* inds, std::string texPath) : m_modelName("NONE"),
 _mModelsNoReplace(false)
 {
+	m_texture = texPath;
 	//std::cout << ++counter << " GraphicsComponents exist." << std::endl;
 	m_vertices = std::vector<Vertex>(*verts);
 	m_indices = std::vector<GLuint>(*inds);
@@ -199,11 +205,11 @@ bool GraphicsComponent::UpdateTranslation()
 	if (m_modelName == "CENTERED_TILE")
 		offset = Vector3f(0.5f * size, 0.5f * size, 0.0f);
 	//else if (m_modelName == "SCREEN")
-	//	translation = m_pos/* + Vector3f(0.5f, 0.5f, 0)*/;
+	//	translation = m_position/* + Vector3f(0.5f, 0.5f, 0)*/;
 	//else
-	//	translation = m_pos;
+	//	translation = m_position;
 
-	translation = m_pos + offset;
+	translation = m_position + offset;
 
 	if (translation == m_modelMat.GetTranslation())
 		return false;
@@ -212,29 +218,6 @@ bool GraphicsComponent::UpdateTranslation()
 
 	return true;
 }
-
-bool GraphicsComponent::LoadExternalResources()
-{
-	if (!ResourceManager::GetInstance().LoadTexture(m_texture))
-	{
-		// If its not something stupid, send error message
-		if (!(m_texture == "" || m_texture[m_texture.size() - 1] == '\\' || m_texture[m_texture.size() - 1] == '/'))
-			std::cout << "Texture '" << m_texture << "' could not load" << std::endl;
-		m_external_loaded = false;
-		return false;
-	}
-
-	m_external_loaded = true;
-	return true;
-}
-
-bool GraphicsComponent::UnloadExternalResources()
-{
-	m_external_loaded = false;
-	std::cout << "UnloadExternalResources (GraphicsComponent) isn't implemented!" << std::endl;
-	return true;
-}
-
 
 bool GraphicsComponent::LoadGLResources()
 {
@@ -256,7 +239,7 @@ void GraphicsComponent::ApplyModelToVertices()
 	for (auto& x : m_vertices)
 	{
 		x.vertex *= m_modelMat.GetScale();
-		x.vertex += m_pos;
+		x.vertex += m_position;
 	}
 }
 
@@ -287,7 +270,7 @@ void GLErrorCheck()
 
 bool GraphicsComponent::will_not_draw()
 {
-	return (!m_external_loaded || !m_GL_loaded || !mustDraw || (m_modelName == "NONE" && m_vertices.size() <= 0));
+	return (!m_texture_loaded || !m_GL_loaded || !mustDraw || (m_modelName == "NONE" && m_vertices.size() <= 0));
 }
 
 
@@ -297,16 +280,16 @@ void GraphicsComponent::Draw(bool withTex)
 	if (will_not_draw())
 		return;
 
-	// Bind VAO (which binds vbo + IBO)
-	glBindVertexArray(m_VAO);
-
 	// Bind texture
 	if (withTex)
 	{
-		//Texture* tex = ResourceManager::GetInstance().GetTexture(m_texture);
+		//Texture* tex = ResourceManager::GetInstance().get_texture(m_texture);
 		if (m_tex_ptr)
 			m_tex_ptr->Bind(GL_TEXTURE0);
 	}
+
+    // Bind VAO (which binds vbo + IBO)
+    glBindVertexArray(m_VAO);
 
 	// Bind mmbo
 	glBindBuffer(GL_ARRAY_BUFFER, m_MMBO);
@@ -549,29 +532,15 @@ int GraphicsComponent::GetHighestIndex()
 	return highest;
 }
 
-std::string GraphicsComponent::GetTexture()
-{
-	return m_texture;
-}
-
-void GraphicsComponent::SetTexture(std::string newTex)
-{
-	m_texture = newTex;
-	LoadExternalResources();
-	m_tex_ptr = ResourceManager::GetInstance().GetTexture(m_texture);
-}
-
-Vector3f GraphicsComponent::GetPos() { return m_pos; }
-
 Direction GraphicsComponent::GetDirection() { return m_direction; }
 void GraphicsComponent::SetDirection(Direction dir) { m_direction = dir; }
 
 void GraphicsComponent::SetDirection(GraphComp_ptr graph)
 {
-	float x = m_pos.x;
-	float y = m_pos.y;
-	float ox = graph->GetPos().x;
-	float oy = graph->GetPos().y;
+	float x = m_position.x;
+	float y = m_position.y;
+	float ox = graph->get_position().x;
+	float oy = graph->get_position().y;
 
 	if (abs(x - ox) > abs(y - oy))
 	{

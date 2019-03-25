@@ -30,7 +30,7 @@ std::shared_ptr<Entity> EntityFactory::BuildEntity(std::map<std::string, EntityA
 		// Sketchy af
 		result = std::shared_ptr<Entity>(new Entity((unsigned int)rand() + (unsigned int)(9999 / 2), sprite));
 
-	// Position
+	// get_position
 	if (args.count("x"))
 	{
       float size = OrthoProjInfo::GetRegularInstance().Size;

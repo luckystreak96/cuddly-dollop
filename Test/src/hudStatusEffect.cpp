@@ -12,7 +12,7 @@ HudStatusEffect::HudStatusEffect(BattleUnit u)
 	m_mustDisplay = true;
 	_unit = u;
 
-	m_prevActorPos = *u.position;//_actor.second->GetPosRef();
+	m_prevActorPos = *u.position;//_actor.second->get_position_ref();
 
 	m_status_count = 0;//_actor.first->_OrderPosition;
 
@@ -41,13 +41,13 @@ HudStatusEffect::HudStatusEffect(BattleUnit u)
 void HudStatusEffect::SetBoxPosition()
 {
 	float size = 64.0f;
-	_background->SetPhysics(m_prevActorPos.OnlyXY() - Vector3f(0.5f * size, -0.25f * size, -0.1f), Vector3f());
+    _background->set_position(m_prevActorPos.OnlyXY() - Vector3f(0.5f * size, -0.25f * size, -0.1f));
 }
 
 Vector3f HudStatusEffect::CalculateTextPosition()
 {
 	float size = 64.0f;
-	return _background->GetPosRef().OnlyXY() + Vector3f(0.5f * size, 0.375f * size, 0);
+	return _background->get_position_ref().OnlyXY() + Vector3f(0.5f * size, 0.375f * size, 0);
 }
 
 void HudStatusEffect::Destroy()

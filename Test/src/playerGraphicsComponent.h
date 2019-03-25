@@ -15,7 +15,7 @@ public:
 	void Draw(bool withTex = true);
 	void NormalDraw(bool withTex = true);
 	void DrawOutline(bool withTex = true);
-	void SetTexture(std::string texture);
+	void set_texture(std::string texture);
 	void SetAnimation(Anim_Enum anim, std::string spritesheet);
 	//void reset_to_default_animation();
 

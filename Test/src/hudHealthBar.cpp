@@ -59,9 +59,9 @@ HudHealthBar::HudHealthBar(BattleUnit unit, Vector3f position)
 	float size = 64.0f;
 	Vector3f size_offset = Vector3f(size, size, 0.0f);
 
-	ptr->SetPhysics(position * size_offset, Vector3f());
-	ptr2->SetPhysics(position * size_offset + Vector3f(0, 0, 0.1f), Vector3f());
-	ptrExp->SetPhysics(position * size_offset + Vector3f(0, -0.07f, 0.1f) * size_offset, Vector3f());
+    ptr->set_position(position * size_offset);
+    ptr2->set_position(position * size_offset + Vector3f(0, 0, 0.1f));
+    ptrExp->set_position(position * size_offset + Vector3f(0, -0.07f, 0.1f) * size_offset);
 	ptrExp->SetScale(fmax(((float)m_observedXP - (float)unit.stats->CalculateLevelExp(unit.stats->GetLevel() - 1)) / (float)m_xpMax, 0.005f), 0.1f, 1);
 
 	ptr2->SetColorAll(Vector3f(3), 0.05f);
@@ -83,7 +83,7 @@ HudHealthBar::HudHealthBar(BattleUnit unit, Vector3f position)
 	FontManager::GetInstance().SetScale(namefont, 0.25f, 0.25f);
 	FontManager::GetInstance().GetFont(namefont)->_letterSpacing = 0.6f * size;
 	Vector3f offset = Vector3f(0.05f, 0.275f, -1);
-	FontManager::GetInstance().SetText(namefont, _(name), ptr->GetPos() + offset * size_offset, false);
+	FontManager::GetInstance().SetText(namefont, _(name), ptr->get_position() + offset * size_offset, false);
 	FontManager::GetInstance().GetFont(namefont)->Update(0);
 
 	// level
@@ -91,7 +91,8 @@ HudHealthBar::HudHealthBar(BattleUnit unit, Vector3f position)
 	FontManager::GetInstance().SetScale(_levelFont, 0.25f, 0.25f);
 	FontManager::GetInstance().GetFont(_levelFont)->_letterSpacing = 0.4f * size;
 	offset = Vector3f(1.45f, 0.275f, -1);
-	FontManager::GetInstance().SetText(_levelFont, "Lv " + std::to_string(m_currentLevel), ptr->GetPos() + offset * size_offset, false);
+	FontManager::GetInstance().SetText(_levelFont, "Lv " + std::to_string(m_currentLevel),
+									   ptr->get_position() + offset * size_offset, false);
 	FontManager::GetInstance().GetFont(_levelFont)->Update(0);
 
 	// Set everything
@@ -118,8 +119,8 @@ void HudHealthBar::UpdateSmallHPPosition()
 {
 	float size = 64.0f;
 	m_actorPrevPos = *_unit.position;
-	_smallForeground->SetPhysics(m_actorPrevPos + Vector3f(0.18f * size, -0.1f * size, -0.1f), Vector3f());
-	_smallBackground->SetPhysics(m_actorPrevPos + Vector3f(0.18f * size, -0.1f * size, 0.1f), Vector3f());
+    _smallForeground->set_position(m_actorPrevPos + Vector3f(0.18f * size, -0.1f * size, -0.1f));
+    _smallBackground->set_position(m_actorPrevPos + Vector3f(0.18f * size, -0.1f * size, 0.1f));
 	_smallForeground->Update();
 	_smallBackground->Update();
 }
@@ -170,7 +171,7 @@ void HudHealthBar::Update()
 		// Only update font when it changes
 		if (current.substr(0, current.length() - 1) != text)
 		{
-			FontManager::GetInstance().SetText(_healthFont, text, _foreground->GetPos() + offset, false);
+			FontManager::GetInstance().SetText(_healthFont, text, _foreground->get_position() + offset, false);
 			FontManager::GetInstance().GetFont(_healthFont)->GetGraphics()->SetColorAll(color + Vector3f(0.6f), 1.0f);
 		}
 
@@ -212,7 +213,8 @@ bool HudHealthBar::UpdateExpAnimation(float newxp)
 		// Update the level font
 		m_currentLevel++;
 		Vector3f offset = Vector3f(1.45f * size, 0.275f * size, -1);
-		FontManager::GetInstance().SetText(_levelFont, "Lv " + std::to_string(m_currentLevel), _foreground->GetPos() + offset, false);
+		FontManager::GetInstance().SetText(_levelFont, "Lv " + std::to_string(m_currentLevel),
+										   _foreground->get_position() + offset, false);
 
 		FontManager::GetInstance().CreateFloatingText(*_unit.position, "Level up!", Vector3f(0.95f, 0.8f, 0.05f));
 		return UpdateExpAnimation(actualXP);

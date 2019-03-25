@@ -15,7 +15,7 @@ PhysicsComponent::PhysicsComponent(Vector3f pos, std::string modelName, Vector3f
 	init();
 	m_size = (size);
 	m_BBcenter = (numTiles);
-	m_pos = pos;
+	m_position = pos;
 
 	SetDefaults(modelName);
 	Update();
@@ -124,12 +124,6 @@ void PhysicsComponent::ActionMove(bool up, bool down, bool left, bool right, flo
 	SetMovedBB();
 }
 
-void PhysicsComponent::set_velocity(Vector3f vel)
-{
-	m_velocity = vel;
-	SetMovedBB();
-}
-
 void PhysicsComponent::SetDefaults(std::string name)
 {
 	_ethereal = false;
@@ -142,11 +136,6 @@ void PhysicsComponent::SetDefaults(std::string name)
 		x.vertex.x *= 64.0f;
 		x.vertex.y *= 64.0f;
 	}
-
-	m_indices = std::vector<GLuint>(Model::GetInstance().getIndices());
-	assert(m_indices.size() % 3 == 0);
-
-	//MathUtils::CalcNormals(m_indices, m_vertices);
 
 	SetBoundingBox();
 }
@@ -253,7 +242,7 @@ void PhysicsComponent::SetBoundingBox()
 			else if (v.vertex.z < m_boundingBox[Close])
 				m_boundingBox[Close] = v.vertex.z;
 		}
-		MoveBB(m_pos);
+		MoveBB(m_position);
 	}
 }
 
@@ -306,7 +295,7 @@ void PhysicsComponent::SetBoundingBoxSize(Vector3f size, Vector3f numSquares)
 		m_boundingBox[Down] = size.y + sideY;
 	}
 
-	MoveBB(m_pos);
+	MoveBB(m_position);
 }
 
 void PhysicsComponent::MoveBB(Vector3f distance)
@@ -326,34 +315,24 @@ std::array<float, 6> PhysicsComponent::GetBoundingBox()
 
 void PhysicsComponent::RelativePosition(Vector3f movementPos)
 {
-	m_pos += movementPos;
+	m_position += movementPos;
 	MoveBB(movementPos);
 	SetMovedBB();
 }
 
 void PhysicsComponent::AbsolutePosition(Vector3f absolutePos, Vector3f useAxis)
 {
-	absolutePos.x = useAxis.x == 0 ? m_pos.x : absolutePos.x;
-	absolutePos.y = useAxis.y == 0 ? m_pos.y : absolutePos.y;
-	absolutePos.z = useAxis.z == 0 ? m_pos.z : absolutePos.z;
-	m_pos = absolutePos;
+	absolutePos.x = useAxis.x == 0 ? m_position.x : absolutePos.x;
+	absolutePos.y = useAxis.y == 0 ? m_position.y : absolutePos.y;
+	absolutePos.z = useAxis.z == 0 ? m_position.z : absolutePos.z;
+	m_position = absolutePos;
 	SetBoundingBox();
 	SetMovedBB();
-}
-
-std::vector<GLuint> PhysicsComponent::GetIndices()
-{
-	return m_indices;
 }
 
 std::vector<Vertex>& PhysicsComponent::GetVerticesRef()
 {
 	return m_vertices;
-}
-
-std::vector<GLuint>& PhysicsComponent::GetIndicesRef()
-{
-	return m_indices;
 }
 
 int PhysicsComponent::GetHighestIndex()

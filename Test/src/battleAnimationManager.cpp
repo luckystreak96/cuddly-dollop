@@ -116,7 +116,7 @@ void BattleAnimationManager::DamageAnimation(int target, Skill_ptr skill, Damage
 	m_animations.push_front(Anim_ptr(new AnimColorFlash(Vector3f(5, 3, 3), m_actors[target])));
 
 	// Particles
-	Vector3f pos = m_actors[target]->GetPos() + Vector3f(0.5f, 0.5f, 0.6f);
+	Vector3f pos = m_actors[target]->get_position() + Vector3f(0.5f, 0.5f, 0.6f);
 	Particle_ptr particles = Particle_ptr(new ParticleGenerator());
 	particles->SetPowerLevel(2.4f);
 	particles->Init(PT_Explosion, abs(dmg._value), pos, false, SpriteFromEnum.at((ParticleSprite)m_particleSprite), Vector3f(1.5f));
@@ -226,7 +226,7 @@ Anim_ptr BattleAnimationManager::CreateAnimation(triple ao)
 		// if on same team, go behind them instead
 		if (m_actors.at(owner)->GetId() / 4 == actor->GetId() / 4 && args.size() <= 1)
 			distance = -distance;
-		result = Anim_ptr(new AnimJumpTo(actor->GetPos() + Vector3f(distance, 0, 0), m_actors.at(owner)));
+		result = Anim_ptr(new AnimJumpTo(actor->get_position() + Vector3f(distance, 0, 0), m_actors.at(owner)));
 		break;
 	case AS_JumpBack:
 		if (aa == AARG_Passive_Applier2Owner)
@@ -242,8 +242,8 @@ Anim_ptr BattleAnimationManager::CreateAnimation(triple ao)
 		result = Anim_ptr(new AnimScreenShake(args[0], args[1]));
 		break;
 	case AS_ParticleEffect:
-		result = Anim_ptr(new anim_particle_effect(args[0], colors::green, &m_actors[owner]->GetPosRef(), "leaf.png", Vector3f(0.5f * 64.0f, 0, 0)));
-		//generate_particles(args[0], colors::black, m_actors[owner]->GetPosRef());
+		result = Anim_ptr(new anim_particle_effect(args[0], colors::green, &m_actors[owner]->get_position_ref(), "leaf.png", Vector3f(0.5f * 64.0f, 0, 0)));
+		//generate_particles(args[0], colors::black, m_actors[owner]->get_position_ref());
 		break;
 	case AS_BonusEffect:
 		break;
@@ -253,7 +253,7 @@ Anim_ptr BattleAnimationManager::CreateAnimation(triple ao)
 		else
 			actor = m_actors.at(args[0]);
 
-		result = Anim_ptr(new AnimMoveTo(actor->GetPos() + Vector3f(args[1], args[2], 0), actor));
+		result = Anim_ptr(new AnimMoveTo(actor->get_position() + Vector3f(args[1], args[2], 0), actor));
 		break;
 	case AS_Wait:
 		result = Anim_ptr(new AnimWait(args.at(0)));
@@ -266,7 +266,7 @@ Anim_ptr BattleAnimationManager::CreateAnimation(triple ao)
 		break;
 	case AC_CameraFollow:
 		for (auto& x : args)
-			pos += m_actors.at(x)->GetPosRef();
+			pos += m_actors.at(x)->get_position_ref();
 		pos /= args.size();
 		Camera::_currentCam->SetFollowCenteredXY(pos);
 		break;
@@ -314,7 +314,7 @@ void BattleAnimationManager::UpdateAnimations()
 
 void BattleAnimationManager::CreateFloatingText(int fighterid, std::string text)
 {
-	FontManager::GetInstance().CreateFloatingText(m_actors.at(fighterid)->GetPosRef() + Vector3f(64.0f), text);
+	FontManager::GetInstance().CreateFloatingText(m_actors.at(fighterid)->get_position_ref() + Vector3f(64.0f), text);
 }
 
 void BattleAnimationManager::insert_animation(Anim_ptr anim)
@@ -335,7 +335,7 @@ void BattleAnimationManager::SpawnStatusText(Actor_ptr target, std::string statu
 	Font_ptr font;
 
 	// Setup font
-	pos = target->GetPos() + Vector3f(0.5f, 1.f, 0);
+	pos = target->get_position() + Vector3f(0.5f, 1.f, 0);
 	pos.z = 0;
 
 	// create font
@@ -354,7 +354,7 @@ void BattleAnimationManager::SpawnDamageText(Actor_ptr target, Damage dmg, Skill
 	Font_ptr font;
 
 	// Setup font
-	pos = target->GetPos() + Vector3f(0.75f * 64.0f, dmg._type == ST_Bonus ? 0.75f : 1.f, 0);
+	pos = target->get_position() + Vector3f(0.75f * 64.0f, dmg._type == ST_Bonus ? 0.75f : 1.f, 0);
 	pos.z = 0;
 
 	// create font
@@ -372,7 +372,7 @@ void BattleAnimationManager::SpawnDamageText(Actor_ptr target, Damage dmg, Skill
 
 void BattleAnimationManager::SetupHUD(BattleUnit unit)
 {
-	unit.position = &m_actors.at(unit.id)->GetPosRef();
+	unit.position = &m_actors.at(unit.id)->get_position_ref();
 	unit.aobservers = &m_actors.at(unit.id)->_observers;
 	m_hud.AddUnit(unit);
 }
