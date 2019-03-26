@@ -13,10 +13,10 @@ void GLIndexBuffer::bind() {
 }
 
 void GLIndexBuffer::bind_and_update() {
-    bind();
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, GLBuffer<GLuint>::_buffer.size() * sizeof(GLuint), &GLBuffer<GLuint>::_buffer[0], GL_STATIC_DRAW);
+    BaseGLBuffer::bind_and_update();
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, GLBuffer<GLuint>::m_buffer.size() * sizeof(GLuint), &GLBuffer<GLuint>::m_buffer[0], GL_STATIC_DRAW);
 }
 
 void GLIndexBuffer::bind_for_draw() {
-    bind();
+    BaseGLBuffer::bind_for_draw();
 }

@@ -6,6 +6,7 @@
 #define PROJECT_GL_VERTEX_BUFFER_H
 
 #include "gl_buffer.h"
+#include "math.h"
 
 #include <iostream>
 
@@ -21,14 +22,16 @@ public:
     void bind_and_update();
     void bind_for_draw();
 
+    void set_instanced_draw(bool instanced);
+
 protected:
     std::vector<GLint> m_size_offsets;
     GLuint m_position;
-    bool m_needs_update;
+    bool m_instanced_draw;
 };
 
 template<class BufferClass>
-GLVertexBuffer<BufferClass>::GLVertexBuffer() : m_position(0), m_needs_update(true) {
+GLVertexBuffer<BufferClass>::GLVertexBuffer() : m_position(0), m_instanced_draw(false) {
 }
 
 template<class BufferClass>
@@ -45,7 +48,6 @@ template<class BufferClass>
 GLVertexBuffer<BufferClass>::GLVertexBuffer(GLuint pos, std::vector<GLint> offsets) {
     m_position = pos;
     m_size_offsets = offsets;
-    m_needs_update = true;
 }
 
 template<class BufferClass>
@@ -59,16 +61,13 @@ void GLVertexBuffer<BufferClass>::bind() {
 
 template<class BufferClass>
 void GLVertexBuffer<BufferClass>::bind_and_update() {
-    bind();
-    glBufferData(GL_ARRAY_BUFFER, GLBuffer<BufferClass>::_buffer.size() * sizeof(BufferClass), &GLBuffer<BufferClass>::_buffer[0], GL_STATIC_DRAW);
+    BaseGLBuffer::bind_and_update();
+    glBufferData(GL_ARRAY_BUFFER, GLBuffer<BufferClass>::m_buffer.size() * sizeof(BufferClass), &GLBuffer<BufferClass>::m_buffer[0], GL_STATIC_DRAW);
 }
 
 template<class BufferClass>
 void GLVertexBuffer<BufferClass>::bind_for_draw() {
-    if(m_needs_update)
-        bind_and_update();
-    else
-        bind();
+    BaseGLBuffer::bind_for_draw();
 
     // Set vertex attribs
     int acc = 0;
@@ -76,8 +75,16 @@ void GLVertexBuffer<BufferClass>::bind_for_draw() {
     {
         glEnableVertexAttribArray(m_position + i);
         glVertexAttribPointer(m_position + i, m_size_offsets[i], GL_FLOAT, GL_FALSE, sizeof(BufferClass), (const GLvoid*)acc);//vertex position
+        glVertexAttribDivisor(m_position + i, m_instanced_draw ? 1 : 0);
         acc += m_size_offsets[i];
     }
+
+    glVertexAttribDivisor(m_position, m_instanced_draw ? 1 : 0);
+}
+
+template<class BufferClass>
+void GLVertexBuffer<BufferClass>::set_instanced_draw(bool instanced) {
+    m_instanced_draw = instanced;
 }
 
 #endif //PROJECT_GL_VERTEX_BUFFER_H

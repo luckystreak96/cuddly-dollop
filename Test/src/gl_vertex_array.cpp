@@ -30,3 +30,7 @@ GLVertexArray::~GLVertexArray() {
 
     m_id = 0;
 }
+
+void GLVertexArray::set_buffers(std::vector<std::shared_ptr<BaseGLBuffer>> buffers) {
+    m_buffers = buffers;
+}

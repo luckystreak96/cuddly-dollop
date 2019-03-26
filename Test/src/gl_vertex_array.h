@@ -18,6 +18,7 @@ public:
 
     void setup_VAO();
     void gen_id();
+    void set_buffers(std::vector<std::shared_ptr<BaseGLBuffer>> buffers);
 
 private:
     std::vector<std::shared_ptr<BaseGLBuffer>> m_buffers;
