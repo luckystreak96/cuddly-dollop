@@ -2,7 +2,10 @@
 // Created by yanik on 24/03/19.
 //
 
+#include <iostream>
 #include "gl_buffer_object.h"
+
+int GLBufferObject::m_id_counter = 0;
 
 GLBufferObject::GLBufferObject() : m_id(0) {
 
@@ -35,7 +38,17 @@ GLBufferObject &GLBufferObject::operator=(GLBufferObject &&other) {
 }
 
 void GLBufferObject::gen_id() {
-    if(m_id == 0)
+    if(m_id == 0) {
         glGenBuffers(1, &m_id);
+        m_id_counter++;
+    }
+}
+
+GLuint GLBufferObject::get_id() {
+    return m_id;
+}
+
+int GLBufferObject::get_id_counter() {
+    return m_id_counter;
 }
 

@@ -21,9 +21,12 @@ public:
     GLBufferObject& operator=(GLBufferObject&& other);
 
     virtual void gen_id();
+    GLuint get_id();
+    static int get_id_counter();
 
 protected:
     GLuint m_id;
+    static int m_id_counter;
 };
 
 #endif //PROJECT_GL_BUFFER_OBJECT_H

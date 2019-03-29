@@ -16,6 +16,7 @@ class GLVertexBuffer : public GLBuffer<BufferClass>
 public:
     GLVertexBuffer();
     GLVertexBuffer(GLuint pos, std::vector<GLint> offsets);
+    GLVertexBuffer(std::vector<BufferClass> values);
     void set_position(GLuint pos);
     void set_size_offsets(std::vector<GLint> offsets);
     void bind();
@@ -85,6 +86,12 @@ void GLVertexBuffer<BufferClass>::bind_for_draw() {
 template<class BufferClass>
 void GLVertexBuffer<BufferClass>::set_instanced_draw(bool instanced) {
     m_instanced_draw = instanced;
+}
+
+template<class BufferClass>
+GLVertexBuffer<BufferClass>::GLVertexBuffer(std::vector<BufferClass> values) {
+    GLBuffer<BufferClass>::m_buffer = values;
+    this->gen_id();
 }
 
 #endif //PROJECT_GL_VERTEX_BUFFER_H

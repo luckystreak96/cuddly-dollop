@@ -16,7 +16,6 @@ public:
 
     virtual void bind() {}
     virtual void bind_and_update() { m_needs_update = false; this->bind(); }
-    // MAY BE BAD - NOT SURE IF CHILD METHODS WILL BE CALLED FROM HERE
     virtual void bind_for_draw() {
         if(m_needs_update)
             this->bind_and_update();
@@ -48,12 +47,12 @@ protected:
 };
 
 template<class BufferClass>
-GLBuffer<BufferClass>::GLBuffer(GLBuffer &&other) {
+GLBuffer<BufferClass>::GLBuffer(GLBuffer &&other) : GLBufferObject(other) {
     std::swap(m_buffer, other.m_buffer);
 }
 
 template<class BufferClass>
-GLBuffer<BufferClass>::GLBuffer(const GLBuffer &other) {
+GLBuffer<BufferClass>::GLBuffer(const GLBuffer &other) : GLBufferObject(other) {
     // Deep copy of all elements
     m_buffer = other.m_buffer;
 }
