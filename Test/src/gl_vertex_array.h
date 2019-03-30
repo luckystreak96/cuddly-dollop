@@ -5,10 +5,12 @@
 #ifndef PROJECT_GL_VERTEX_ARRAY_H
 #define PROJECT_GL_VERTEX_ARRAY_H
 
-#include <vector>
+#include <map>
 #include <memory>
 
 #include "gl_buffer.h"
+
+enum BufferTypes {BT_Index, BT_Vertices, BT_TextureCoordinates, BT_Color};
 
 class GLVertexArray : public GLBufferObject
 {
@@ -18,10 +20,15 @@ public:
 
     void setup_VAO();
     void gen_id();
-    void set_buffers(std::vector<std::shared_ptr<BaseGLBuffer>> buffers);
+    void bind();
+    bool has_buffer(BufferTypes bufferTypes);
+
+    void set_all_buffers(std::map<BufferTypes, std::shared_ptr<BaseGLBuffer>> buffers);
+    void set_buffer(BufferTypes bt, std::shared_ptr<BaseGLBuffer> buffer);
+    BaseGLBuffer* get_buffer(BufferTypes bt);
 
 private:
-    std::vector<std::shared_ptr<BaseGLBuffer>> m_buffers;
+    std::map<BufferTypes, std::shared_ptr<BaseGLBuffer>> m_buffers;
 };
 
 #endif //PROJECT_GL_VERTEX_ARRAY_H

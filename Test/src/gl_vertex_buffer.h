@@ -32,7 +32,7 @@ protected:
 };
 
 template<class BufferClass>
-GLVertexBuffer<BufferClass>::GLVertexBuffer() : m_position(0), m_instanced_draw(false) {
+GLVertexBuffer<BufferClass>::GLVertexBuffer() : m_position(0), m_instanced_draw(true) {
 }
 
 template<class BufferClass>
@@ -76,7 +76,8 @@ void GLVertexBuffer<BufferClass>::bind_for_draw() {
     {
         glEnableVertexAttribArray(m_position + i);
         glVertexAttribPointer(m_position + i, m_size_offsets[i], GL_FLOAT, GL_FALSE, sizeof(BufferClass), (const GLvoid*)acc);//vertex position
-        glVertexAttribDivisor(m_position + i, m_instanced_draw ? 1 : 0);
+        if(m_instanced_draw)
+            glVertexAttribDivisor(m_position + i, 1);
         acc += m_size_offsets[i];
     }
 
