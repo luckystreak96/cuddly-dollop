@@ -36,7 +36,7 @@ private:
 	//std::vector<HudComp_ptr> _hudComponents;
 	std::map<int, HudBattleUnit> _units;
 
-	std::vector<GraphComp_ptr> _hudBG;
+	std::vector<std::shared_ptr<GraphicsComponent>> _hudBG;
 };
 
 #endif // !BATTLE_HUD_H__

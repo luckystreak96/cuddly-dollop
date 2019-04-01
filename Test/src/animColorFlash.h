@@ -15,8 +15,8 @@ public:
 public:
 	Actor_ptr _target;
 	Vector3f _color;
-	Vector3f _prevColor;
-	Lerper _lerp;
+//	Vector3f _prevColor;
+//	Lerper _lerp;
 };
 
 #endif // !BATTLE_ANIMATION_H__

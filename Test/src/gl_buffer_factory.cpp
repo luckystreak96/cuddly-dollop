@@ -39,8 +39,8 @@ std::shared_ptr<EffectBuffer> GLBufferFactory::create_effect_buffer(std::string 
 
 void GLBufferFactory::set_vert_ind_buffers(EffectBuffer *buffer, std::string name) {
     // Create empty buffers to fetch and modify
-    add_empty_buffer<GLuint>(buffer->get_vab(), BT_Index);
-    add_empty_buffer<Vertex>(buffer->get_vab(), BT_Vertices);
+    add_empty_buffer(buffer->get_vab(), BT_Index);
+    add_empty_buffer(buffer->get_vab(), BT_Vertices);
 
     // Fill the buffers with the data
     std::vector<Vertex>* verts = buffer->update_vertex_buffer();
@@ -66,18 +66,54 @@ void GLBufferFactory::set_vert_ind_buffers(EffectBuffer *buffer, std::string nam
     BaseGLBuffer* temp = buffer->get_vab()->get_buffer(BT_Vertices);
     auto vert_buf = dynamic_cast<GLVertexBuffer<Vertex>*>(temp);
     vert_buf->set_size_offsets(std::vector<GLint> {3, 2, 3, 1});
-
+    vert_buf->set_instanced_draw(false);
 }
 
-template<class BufferClass>
+//template<class BufferClass>
+//void GLBufferFactory::add_empty_buffer(GLVertexArray *vab, BufferTypes bt) {
+//    std::shared_ptr<BaseGLBuffer> result;
+//
+//    // Create empty buffers depending on specification
+//    if(bt == BT_Index)
+//        result = create_index_buffer();
+//    else
+//        result = std::shared_ptr<BaseGLBuffer>(new GLVertexBuffer<BufferClass>());
+//
+//    // Sets the empty buffer
+//    vab->set_buffer(bt, result);
+//}
+
 void GLBufferFactory::add_empty_buffer(GLVertexArray *vab, BufferTypes bt) {
     std::shared_ptr<BaseGLBuffer> result;
 
     // Create empty buffers depending on specification
-    if(bt == BT_Index)
-        result = create_index_buffer();
-    else
-        result = std::shared_ptr<BaseGLBuffer>(new GLVertexBuffer<BufferClass>());
+    switch (bt)
+    {
+        case BT_Index:
+            result = create_index_buffer();
+            break;
+        case BT_Vertices:
+            result = std::shared_ptr<BaseGLBuffer>(new GLVertexBuffer<Vertex>());
+            dynamic_cast<GLVertexBuffer<Vertex>*>(result.get())->set_size_offsets(std::vector<GLint> {3, 2, 3, 1});
+            break;
+        case BT_TextureCoordinates:
+            result = std::shared_ptr<BaseGLBuffer>(new GLVertexBuffer<Vector2f>());
+            dynamic_cast<GLVertexBuffer<Vector2f>*>(result.get())->set_size_offsets(std::vector<GLint> {2});
+            dynamic_cast<GLVertexBuffer<Vector2f>*>(result.get())->set_position(8);
+            break;
+        case BT_Model:
+            result = std::shared_ptr<BaseGLBuffer>(new GLVertexBuffer<Mat4f>());
+            dynamic_cast<GLVertexBuffer<Mat4f>*>(result.get())->set_size_offsets(std::vector<GLint> {4, 4, 4, 4});
+            dynamic_cast<GLVertexBuffer<Mat4f>*>(result.get())->set_position(4);
+            break;
+        case BT_Color:
+            result = std::shared_ptr<BaseGLBuffer>(new GLVertexBuffer<Vector3f>());
+            dynamic_cast<GLVertexBuffer<Vector3f>*>(result.get())->set_size_offsets(std::vector<GLint> {3});
+            dynamic_cast<GLVertexBuffer<Vector3f>*>(result.get())->set_position(9);
+            break;
+        default:
+            std::cout << "BufferType not implemented in BufferFactory." << std::endl;
+    }
 
     // Sets the empty buffer
     vab->set_buffer(bt, result);

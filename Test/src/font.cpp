@@ -372,7 +372,7 @@ void Font::UpdateModel()
 {
 	if (m_mesh.get_graphics())
 	{
-		m_mesh.get_graphics()->ClearMModels();
+		m_mesh.get_graphics()->get_buffers()->update_model_buffer()->clear();
 		for (auto& x : m_letterPositions)
 		{
 			Transformation t;
@@ -387,7 +387,7 @@ void Font::UpdateModel(Vector3f offset)
 {
 	if (m_mesh.get_graphics())
 	{
-		m_mesh.get_graphics()->ClearMModels();
+		m_mesh.get_graphics()->get_buffers()->update_model_buffer()->clear();
 		for (auto& x : m_letterPositions)
 		{
 			Transformation t;

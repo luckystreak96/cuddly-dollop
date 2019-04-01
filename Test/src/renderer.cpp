@@ -88,7 +88,7 @@ void Renderer::ResetTextureSizes()
 	m_fbo.ResetTextures(m_width, m_height);
 }
 
-void Renderer::Add(GraphComp_ptr c)
+void Renderer::Add(std::shared_ptr<GraphicsComponent> c)
 {
 	if (c->will_not_draw())
 		return;
@@ -161,8 +161,8 @@ void Renderer::toggle_bloom() {
 void Renderer::update_post_processing() {
 	if(m_bloom_enabled)
 	{
-		if (!post_processing_present<Bloom>())
-			m_ppe.push_back(std::shared_ptr<Bloom>(new Bloom()));
+//		if (!post_processing_present<Bloom>())
+//			m_ppe.push_back(std::shared_ptr<Bloom>(new Bloom()));
 	}
 	else
 	{
@@ -174,4 +174,29 @@ void Renderer::update_post_processing() {
 
 bool Renderer::get_bloom_state() {
     return m_bloom_enabled;
+}
+
+void Renderer::init() {
+	Camera cam;
+
+	OrthoProjInfo* o = &OrthoProjInfo::GetRegularInstance();
+	cam._transform->SetOrthoProj(o);
+
+	EffectManager::GetInstance().SetAllTilePositions(OrthoProjInfo::GetRegularInstance().Size);
+
+	auto m_backupTrans = cam._transform->GetTranslation();
+
+	Vector3f temp = m_backupTrans;
+
+	// Floor so we dont move the camera half a pixel and fuck up the graphics
+	temp.x = floorf(temp.x);
+	temp.y = floorf(temp.y);
+	cam._transform->SetTranslation(temp);
+
+	EffectManager::GetInstance().SetWorldTrans(&cam._transform->GetWOTransCentered().m[0][0], &cam._transform->GetWOTransNoTranslate().m[0][0]);
+    EffectManager::GetInstance().ResetWorldUpdateFlag();
+
+	EffectManager::GetInstance().Enable(E_Basic);
+
+	Renderer::GetInstance().Setup();
 }

@@ -7,7 +7,7 @@ AnimColorFlash::AnimColorFlash(Vector3f color, Actor_ptr target, double duration
 	_done = false;
 	_progress = 0;
 	_color = color;
-	_prevColor = _target->GetVertices()->front().color;
+//	_prevColor = _target->GetVertices()->front().color;
 	_async = true;
 }
 

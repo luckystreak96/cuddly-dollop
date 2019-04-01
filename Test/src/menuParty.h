@@ -15,7 +15,7 @@ public:
 	virtual void Destroy();
 	virtual void SetRender();
 private:
-	std::vector<GraphComp_ptr> m_backgrounds;
+	std::vector<std::shared_ptr<GraphicsComponent>> m_backgrounds;
 };
 
 #endif // !MENU_PARTY_H__

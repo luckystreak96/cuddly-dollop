@@ -462,7 +462,7 @@ void BattleManager::TurnStart()
 			print_attack_prediction(x);
 		}
 	}
-	std::cout << std::endl;
+//	std::cout << std::endl;
 
 	if (m_info._owner->Team != 0)
 	{

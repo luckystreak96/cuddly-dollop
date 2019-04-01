@@ -5,7 +5,7 @@
 
 class GraphicsComponent;
 
-// Class that wraps the graphics_component and mesh classes into one
+// Class that wraps the GraphicsComponent and mesh classes into one
 // Takes care of most of the annoying settings and keeps things smoothe
 // This class takes care of keeping the graphics component up-to-date when it is requested
 class instance_mesh

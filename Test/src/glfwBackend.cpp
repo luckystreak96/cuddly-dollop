@@ -360,16 +360,6 @@ GLFWManager::GLFWManager()
 
 void GLFWManager::GLFWMainLoop(Game* game)
 {
-	// Game init
-	if (!game->init(_mngrGLVersion))
-	{
-		std::cout << "Game class init failed" << std::endl;
-		std::getchar();
-		exit(1);
-	}
-
-	//std::thread draw_thread;
-
 	// Main loop
 	while (!glfwWindowShouldClose(m_window))
 	{
@@ -530,4 +520,14 @@ void GLFWManager::HandleJoystickInput()
 		buttonStates[i] = buttons[i];
 	//buttonStates[0] = buttons[0];
 	//buttonStates[1] = buttons[1];
+}
+
+void GLFWManager::init_game(Game* game) {
+	// Game init
+	if (!game->init(_mngrGLVersion))
+	{
+		std::cout << "Game class init failed" << std::endl;
+		std::getchar();
+		exit(1);
+	}
 }

@@ -2,7 +2,7 @@
 #define HUD_ARROW_H__
 
 #include "hudComponent.h"
-#include "graphicsComponent.h"
+#include "graphics_component.h"
 #include "battleUnit.h"
 
 class HudArrow : public HudComponent
@@ -27,7 +27,7 @@ protected:
 	bool _showing;
 
 	// Arrow image
-	GraphComp_ptr _graphic;
+	std::shared_ptr<GraphicsComponent> _graphic;
 };
 
 #endif // !HUD_BAR_H__

@@ -4,6 +4,10 @@
 
 #include "gl_index_buffer.h"
 
+GLIndexBuffer::GLIndexBuffer() {
+
+}
+
 void GLIndexBuffer::bind() {
     // Bind IBO
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, GLBuffer<GLuint>::m_id);
@@ -15,8 +19,14 @@ void GLIndexBuffer::bind() {
 void GLIndexBuffer::bind_and_update() {
     BaseGLBuffer::bind_and_update();
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, GLBuffer<GLuint>::m_buffer.size() * sizeof(GLuint), &GLBuffer<GLuint>::m_buffer[0], GL_STATIC_DRAW);
+
+
 }
 
 void GLIndexBuffer::bind_for_draw() {
     BaseGLBuffer::bind_for_draw();
+}
+
+GLsizei GLIndexBuffer::get_index_count() {
+    return (GLsizei)m_buffer.size();
 }

@@ -19,7 +19,7 @@ HudStatusEffect::HudStatusEffect(BattleUnit u)
 	m_prevOrder = -43893893;// set this to a fucked up number so itll do it's first update
 
 	// Box
-	_background = GraphComp_ptr(new GraphicsComponent("CENTERED_TILE", "res/sprites/special/blank.png"));
+	_background = std::shared_ptr<GraphicsComponent>(new GraphicsComponent("CENTERED_TILE", "res/sprites/special/blank.png"));
 	//dynamic_cast<FontGraphicsComponent*>(ptr.get())->SetStatic(true);
 
 	SetBoxPosition();

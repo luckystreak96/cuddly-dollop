@@ -1,4 +1,5 @@
 #include "playerInputComponent.h"
+#include "playerGraphicsComponent.h"
 #include <GLFW/glfw3.h>
 
 PlayerInputComponent::PlayerInputComponent(std::shared_ptr<PhysicsComponent> phys, std::shared_ptr<GraphicsComponent> graph)
@@ -41,5 +42,7 @@ void PlayerInputComponent::Update(Observable * obs)
 
 	//m_phys->ActionMove(up, down, left, right, InputManager::GetInstance().GetKeyPercent(A_Left), InputManager::GetInstance().GetKeyPercent(A_Down));
 	m_phys->handle_input(obs);
-	m_graph->update_direction(m_phys->get_velocity());
+	PlayerGraphicsComponent* g = dynamic_cast<PlayerGraphicsComponent*>(m_graph.get());
+	if(g)
+		g->update_direction(m_phys->get_velocity());
 }

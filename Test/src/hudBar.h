@@ -2,7 +2,7 @@
 #define HUD_BAR_H__
 
 #include "hudComponent.h"
-#include "graphicsComponent.h"
+#include "graphics_component.h"
 
 class HudBar : public HudComponent
 {
@@ -23,7 +23,7 @@ protected:
 	int m_max;
 
 	// Health bar image
-	GraphComp_ptr _foreground;
+	std::shared_ptr<GraphicsComponent> _foreground;
 };
 
 #endif // !HUD_BAR_H__

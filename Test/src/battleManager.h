@@ -15,6 +15,7 @@ enum PostBattleState { PBS_FightingInProgress, PBS_FightingDone, PBS_ExpAnimatio
 
 class BattleAnimationManager;
 
+// Integrates battle graphics and logic
 class BattleManager
 {
 public:

@@ -10,6 +10,7 @@
 #include "scene_manager.h"
 #include "scene_world.h"
 #include "animation.h"
+#include "renderer.h"
 
 #include <GLFW/glfw3.h>
 #ifndef _WIN32
@@ -51,6 +52,9 @@ bool Game::init(Vector2f version)
 	OrthoProjInfo::GetRegularInstance().zNear = 100.f;
 	OrthoProjInfo::GetRegularInstance().zFar = -100.f;
 	OrthoProjInfo::GetRegularInstance().changed = true;
+
+	// Init gl classes
+	Renderer::GetInstance().init();
 
 	return true;
 }

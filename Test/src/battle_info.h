@@ -8,6 +8,7 @@
 #include <vector>
 #include <memory>
 
+// Handles battle logic
 class battle_info
 {
 public:

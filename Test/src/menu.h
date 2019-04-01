@@ -2,7 +2,7 @@
 #define MENU_H__
 
 #include "menuComponent.h"
-#include "graphicsComponent.h"
+#include "graphics_component.h"
 #include <deque>
 #include <vector>
 
@@ -43,7 +43,7 @@ protected:
 	std::vector<MenuComp_ptr> m_components;
 	std::deque<MenuComp_ptr> m_activeStack;
 
-	std::vector<GraphComp_ptr> _hudBG;
+	std::vector<std::shared_ptr<GraphicsComponent>> _hudBG;
 };
 
 #endif // !MENU_H__

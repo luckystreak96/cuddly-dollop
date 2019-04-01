@@ -18,7 +18,7 @@ public:
 
 protected:
 	Mesh m_mesh;
-	std::vector<GraphComp_ptr> m_boxParts;
+	std::vector<std::shared_ptr<GraphicsComponent>> m_boxParts;
 };
 
 #endif

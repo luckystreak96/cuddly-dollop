@@ -4,14 +4,18 @@
 
 PlayerGraphicsComponent::PlayerGraphicsComponent(std::string tex, std::string model) : GraphicsComponent(model, tex), m_firstLoad(true)
 {
-	_mModelsNoReplace = true;
+	//_mModelsNoReplace = true;
 	m_modelName = model;
 	m_texture = tex;
 	SetWidthHeight(tex);
-	//Construct();
-	Update();
-	m_firstLoad = false;
+
 	_outline = false;
+	m_direction = dir_Down;
+	m_dir_determined = false;
+
+	Update();
+
+	m_firstLoad = false;
 }
 
 void PlayerGraphicsComponent::NormalDraw(bool withTex)
@@ -46,7 +50,7 @@ void PlayerGraphicsComponent::DrawOutline(bool withTex)
 
 	//InsertMModels(m_modelMat, 0);
 	UpdateTranslation();
-	GraphicsComponent::UpdateMModels();
+	UpdateMModels();
 	//GraphicsComponent::ResetVBO();
 	GraphicsComponent::Draw(withTex);
 	//InsertMModels(m_modelMat, 0);
@@ -57,7 +61,7 @@ void PlayerGraphicsComponent::DrawOutline(bool withTex)
 	glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
 	Vector3f scale = Vector3f(xsize, 1, 1);
 	m_modelMat.SetScale(scale);
-	InsertMModels(m_modelMat, 0);
+	UpdateMModels();
 
 	Effect::SetDrawType(DrawType::DT_FLAT);
 	EffectManager::GetInstance().EnablePrevious();
@@ -111,6 +115,7 @@ void PlayerGraphicsComponent::Update()
 		m_force_update = true;
 	}
 
+	// If walking
 	if (_animation >= AE_LeftMove && _animation <= AE_UpMove)
 	{
 		float speed = fmax(abs(m_velocity.x), abs(m_velocity.y)) + fmin(abs(m_velocity.x), abs(m_velocity.y)) / 2.0f;
@@ -119,15 +124,16 @@ void PlayerGraphicsComponent::Update()
 			m_delay = m_actualDelay / 4;
 	}
 
-	bool forceUpdate = (m_prev_dir != m_direction && !_specialAnimation) || (m_direction != m_lastInteraction) || m_firstLoad || m_force_update;
-	if (SetTileModelTC(&m_vertices, forceUpdate))
-		ResetVBO();
+	bool forceUpdate = (m_prev_dir != m_direction && !_specialAnimation) || m_firstLoad || m_force_update;
+	SetTileModelTC(m_buffers.update_vertex_buffer(), forceUpdate);
+		//ResetVBO();
 
 	// Used so that the characters rotation doesnt mess up graphics
 	m_position.z -= 0.25f;
 	GraphicsComponent::Update();
 	m_position.z += 0.25f;
 	m_force_update = false;
+	m_dir_determined = false;
 }
 
 void PlayerGraphicsComponent::SetAnimation(Anim_Enum anim, std::string spritesheet)
@@ -148,3 +154,68 @@ void PlayerGraphicsComponent::set_texture(std::string texture)
     GraphicsComponent::set_texture(texture);
 	SetWidthHeight(texture);
 }
+
+void PlayerGraphicsComponent::update_direction(Vector3f vel)
+{
+	if (m_dir_determined)
+		return;
+
+	m_prev_dir = m_direction;
+	//Change the direction hes facing
+	if (abs(vel.x) > 20 || abs(vel.y) > 20)
+	{
+		// -0.1f here to prioritize left-right sprites when moving in diagonal
+		if (abs(vel.x) >= abs(vel.y) - 0.1f)
+		{
+			if (vel.x > 0)
+				m_direction = dir_Right;
+			else
+				m_direction = dir_Left;
+		}
+		else
+		{
+			if (vel.y > 0)
+				m_direction = dir_Up;
+			else
+				m_direction = dir_Down;
+		}
+	}
+
+	m_dir_determined = true;
+}
+
+Direction PlayerGraphicsComponent::GetDirection() { return m_direction; }
+void PlayerGraphicsComponent::SetDirection(Direction dir) { m_direction = dir; }
+
+void PlayerGraphicsComponent::SetDirection(GraphicsComponent* graph)
+{
+	float x = m_position.x;
+	float y = m_position.y;
+	float ox = graph->get_position().x;
+	float oy = graph->get_position().y;
+
+	if (abs(x - ox) > abs(y - oy))
+	{
+		//x is closer
+
+		if (x - ox < 0)
+			m_direction = dir_Right;
+		else
+			m_direction = dir_Left;
+
+	}
+	else
+	{
+		//y is closer
+
+		//your under the other guy, turn up
+		if (y - oy < 0)
+			m_direction = dir_Up;
+		else
+			m_direction = dir_Down;
+	}
+
+	m_force_update = true;
+	m_dir_determined = true;
+}
+

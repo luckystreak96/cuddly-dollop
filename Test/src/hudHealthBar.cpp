@@ -38,20 +38,20 @@ HudHealthBar::HudHealthBar(BattleUnit unit, Vector3f position)
 	{
 		Vector3f scale(0.33, 0.3, 1);
 
-		_smallForeground = GraphComp_ptr(new FontGraphicsComponent("BAR", "res/sprites/special/bar_foreground.png"));
-		_smallBackground = GraphComp_ptr(new FontGraphicsComponent("BAR", "res/sprites/special/bar_background.png"));
+		_smallForeground = std::shared_ptr<GraphicsComponent>(new FontGraphicsComponent("BAR", "res/sprites/special/bar_foreground.png"));
+		_smallBackground = std::shared_ptr<GraphicsComponent>(new FontGraphicsComponent("BAR", "res/sprites/special/bar_background.png"));
 
 		m_actorPrevPos = *unit.position;
-		_smallForeground->SetScale(scale);
-		_smallBackground->SetScale(scale);
+		_smallForeground->set_scale(scale);
+		_smallBackground->set_scale(scale);
 		_smallBackground->SetColorAll(Vector3f(0.08f, 0.4f, 1.0f));
 		UpdateSmallHPPosition();
 	}
 
 	// Bar
-	GraphComp_ptr ptr = GraphComp_ptr(new FontGraphicsComponent("BAR", "res/sprites/special/bar.png"));
-	GraphComp_ptr ptr2 = GraphComp_ptr(new FontGraphicsComponent("BAR", "res/sprites/special/bar.png"));
-	GraphComp_ptr ptrExp = GraphComp_ptr(new FontGraphicsComponent("BAR", "res/sprites/special/blank.png"));
+	std::shared_ptr<GraphicsComponent> ptr = std::shared_ptr<GraphicsComponent>(new FontGraphicsComponent("BAR", "res/sprites/special/bar.png"));
+	std::shared_ptr<GraphicsComponent> ptr2 = std::shared_ptr<GraphicsComponent>(new FontGraphicsComponent("BAR", "res/sprites/special/bar.png"));
+	std::shared_ptr<GraphicsComponent> ptrExp = std::shared_ptr<GraphicsComponent>(new FontGraphicsComponent("BAR", "res/sprites/special/blank.png"));
 	dynamic_cast<FontGraphicsComponent*>(ptr.get())->SetStatic(true);
 	dynamic_cast<FontGraphicsComponent*>(ptr2.get())->SetStatic(true);
 	dynamic_cast<FontGraphicsComponent*>(ptrExp.get())->SetStatic(true);
@@ -62,7 +62,7 @@ HudHealthBar::HudHealthBar(BattleUnit unit, Vector3f position)
     ptr->set_position(position * size_offset);
     ptr2->set_position(position * size_offset + Vector3f(0, 0, 0.1f));
     ptrExp->set_position(position * size_offset + Vector3f(0, -0.07f, 0.1f) * size_offset);
-	ptrExp->SetScale(fmax(((float)m_observedXP - (float)unit.stats->CalculateLevelExp(unit.stats->GetLevel() - 1)) / (float)m_xpMax, 0.005f), 0.1f, 1);
+	ptrExp->set_scale(Vector3f(fmax(((float)m_observedXP - (float)unit.stats->CalculateLevelExp(unit.stats->GetLevel() - 1)) / (float)m_xpMax, 0.005f), 0.1f, 1));
 
 	ptr2->SetColorAll(Vector3f(3), 0.05f);
 	ptrExp->SetColorAll(Vector3f(0.6f, 0.5f, 0.05f), 1.f);
@@ -179,11 +179,11 @@ void HudHealthBar::Update()
 	}
 
 	_smallBackground->SetColorAll(color * Vector3f(1.5f), 0.9f);
-	_smallBackground->SetScale(fmax((float)health / (float)m_max, 0) / 3.0f, 0.3f, 1);
+	_smallBackground->set_scale(Vector3f(fmax((float)health / (float)m_max, 0) / 3.0f, 0.3f, 1));
 	_smallBackground->Update();
 
 	_foreground->SetColorAll(color, 0.9f);
-	_foreground->SetScale(fmax((float)health / (float)m_max, 0), 1, 1);
+	_foreground->set_scale(Vector3f(fmax((float)health / (float)m_max, 0), 1, 1));
 	_foreground->Update();
 	_background->Update();
 }
@@ -220,7 +220,7 @@ bool HudHealthBar::UpdateExpAnimation(float newxp)
 		return UpdateExpAnimation(actualXP);
 	}
 
-	_xpBar->SetScale(fmax(newxp / (float)max, 0.005f), 0.1f, 1);
+	_xpBar->set_scale(Vector3f(fmax(newxp / (float)max, 0.005f), 0.1f, 1));
 	_xpBar->Update();
 
 	_unit.stats->SetExp((int)actualXP);

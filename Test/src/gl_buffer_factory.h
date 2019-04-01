@@ -18,8 +18,9 @@ public:
     static std::shared_ptr<EffectBuffer> create_effect_buffer(std::string model_name);
     static void set_vert_ind_buffers(EffectBuffer* buffer, std::string name);
 
-    template <class BufferClass>
-    static void add_empty_buffer(GLVertexArray* vab, BufferTypes bt);
+//    template <class BufferClass>
+//    static void add_empty_buffer(GLVertexArray* vab, BufferTypes bt);
+    static void add_empty_buffer(GLVertexArray *vab, BufferTypes bt);
 
     template <class BufferClass>
     static std::shared_ptr<BaseGLBuffer> create_vertex_buffer(std::vector<BufferClass> vertices, std::vector<GLuint> offsets, GLuint position, bool instanced);

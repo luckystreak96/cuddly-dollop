@@ -7,7 +7,7 @@
 #include "playerInputComponent.h"
 #include "player_audio_component.h"
 #include "physicsComponent.h"
-#include "graphicsComponent.h"
+#include "graphics_component.h"
 #include "resource_manager.h"
 
 Entity::Entity(unsigned int id, std::string spritesheet, bool playerInput, bool fullSize)
@@ -15,8 +15,8 @@ Entity::Entity(unsigned int id, std::string spritesheet, bool playerInput, bool 
 {
 	if (ResourceManager::GetInstance().LoadTexture(spritesheet))
 	{
-		m_graphicsComponent = !playerInput ? GraphComp_ptr(new PlayerGraphicsComponent(spritesheet, "CENTERED_TILE")) :
-			GraphComp_ptr(new PlayerGraphicsComponent(spritesheet, "CENTERED_TILE"));
+		m_graphicsComponent = !playerInput ? std::shared_ptr<GraphicsComponent>(new PlayerGraphicsComponent(spritesheet, "CENTERED_TILE")) :
+			std::shared_ptr<GraphicsComponent>(new PlayerGraphicsComponent(spritesheet, "CENTERED_TILE"));
 		m_graphicsComponent->_id = id;
 		components.push_back(m_graphicsComponent);
 	}

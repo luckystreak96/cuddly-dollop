@@ -8,7 +8,7 @@
 #include "math.h"
 #include "vector3f.h"
 #include <vector>
-#include "graphicsComponent.h"
+#include "graphics_component.h"
 
 
 class Post_Processing_Screen : public GraphicsComponent

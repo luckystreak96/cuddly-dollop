@@ -2,9 +2,9 @@
 
 Transformation FontGraphicsComponent::m_staticityTrans = Transformation();
 
-FontGraphicsComponent::FontGraphicsComponent(std::vector<Vertex>* verts, std::vector<GLuint>* inds, std::string texPath) : GraphicsComponent(verts, inds, texPath)
-{
-}
+//FontGraphicsComponent::FontGraphicsComponent(std::vector<Vertex>* verts, std::vector<GLuint>* inds, std::string texPath) : GraphicsComponent(verts, inds, texPath)
+//{
+//}
 
 FontGraphicsComponent::FontGraphicsComponent(std::string model, std::string path) : GraphicsComponent(model, path)
 {

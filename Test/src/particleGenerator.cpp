@@ -1,7 +1,7 @@
 #include "particleGenerator.h"
 
 #include "renderer.h"
-#include "graphicsComponent.h"
+#include "graphics_component.h"
 
 #include <time.h>
 #include <algorithm>
@@ -12,7 +12,7 @@
 ParticleGenerator::ParticleGenerator() : m_power(2.0f), completed(false)
 {
 	m_texture = "res/tiles.png";
-	m_mesh.init_static_atlas(GraphComp_ptr(new GraphicsComponent("", m_texture)), "CENTERED_PARTICLE_TILE");
+	m_mesh.init_static_atlas(std::shared_ptr<GraphicsComponent>(new GraphicsComponent("", m_texture)), "CENTERED_PARTICLE_TILE");
 	m_mesh.set_graphics_position(Vector3f(0, 0, 0.6f));
 }
 
@@ -287,7 +287,7 @@ void Explosion::ResetLocation(Vector3f& spawnPos, bool firstSpawn, bool smooth)
 
 void ParticleGenerator::Init(ParticleType c, unsigned int num_particles, Vector3f zoneSize, bool smooth, std::string tex, Vector3f size)
 {
-	std::cout << "Zonesize: " << zoneSize.y << std::endl;
+//	std::cout << "Zonesize: " << zoneSize.y << std::endl;
 	if (num_particles == 0)
 	{
 		num_particles = 1;
@@ -386,7 +386,7 @@ void ParticleGenerator::LogicUpdate()
 	//int total = m_particles.size();
 
 	// if the number of particles is still the same, update the mmodels instead of re-inserting them
-	m_prevModels = m_mesh.get_graphics()->GetMModels().size();
+	m_prevModels = m_mesh.get_graphics()->get_buffers()->get_models_gl_buffer()->size();
 	if (m_prevModels == m_particles.size())
 	{
 		Transformation t;
@@ -417,7 +417,8 @@ void ParticleGenerator::LogicUpdate()
 	// Update all the particle models
 	else
 	{
-		m_mesh.get_graphics()->ClearMModels();
+//		m_mesh.get_graphics()->ClearMModels();
+		m_mesh.get_graphics()->get_buffers()->update_model_buffer()->clear();
 
 		Transformation t;
 		for (auto &x : m_particles)

@@ -66,7 +66,7 @@ public:
 	Anim_Enum _default_animation;
 
 protected:
-	void SetAnimation(Anim_Enum anim, std::string spritesheet);
+    virtual void SetAnimation(Anim_Enum anim, std::string spritesheet);
 
 	//ElapsedTime progress
 	static int m_progress;

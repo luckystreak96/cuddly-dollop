@@ -3,7 +3,7 @@
 
 #include <vector>
 #include <memory>
-#include "graphicsComponent.h"
+#include "graphics_component.h"
 #include "physicsComponent.h"
 #include "inputComponent.h"
 #include "audioComponent.h"
@@ -23,7 +23,7 @@ public:
 	std::vector<std::shared_ptr<EventQueue>>* GetQueues();
 	std::shared_ptr<PhysicsComponent>& Physics() { return m_physicsComponent; }
 	PhysicsComponent* PhysicsRaw() { return m_physicsComponent.get(); }
-	GraphComp_ptr Graphics() { return m_graphicsComponent; }
+	std::shared_ptr<GraphicsComponent> Graphics() { return m_graphicsComponent; }
 	std::vector<std::shared_ptr<IComponent>> components;
 
 public:
@@ -35,7 +35,7 @@ private:
 	bool m_fullSize;
 	std::vector<std::shared_ptr<EventQueue>> m_events;
 	std::shared_ptr<PhysicsComponent> m_physicsComponent;
-	GraphComp_ptr m_graphicsComponent;
+	std::shared_ptr<GraphicsComponent> m_graphicsComponent;
 	std::shared_ptr<InputComponent> m_inputComponent;
 	std::shared_ptr<AudioComponent> m_audioComponent;
 };

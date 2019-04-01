@@ -12,7 +12,7 @@
 class BaseGLBuffer
 {
 public:
-    BaseGLBuffer() : m_needs_update(true) {}
+    BaseGLBuffer() : m_needs_update(true), m_instance_count(0) {}
 
     virtual void bind() {}
     virtual void bind_and_update() { m_needs_update = false; this->bind(); }
@@ -23,8 +23,17 @@ public:
             this->bind();
     }
 
+    bool needs_update() {
+        return m_needs_update;
+    }
+
+    unsigned long get_instance_count() {
+        return m_instance_count;
+    }
+
 protected:
     bool m_needs_update;
+    unsigned long m_instance_count;
 };
 
 // This class encapsulates the templating of the buffer list itself
@@ -41,6 +50,8 @@ public:
     GLBuffer& operator=(GLBuffer&& other);
 
     std::vector<BufferClass>* get_and_modify_buffer();
+
+    unsigned long size();
 
 protected:
     std::vector<BufferClass> m_buffer;
@@ -77,6 +88,11 @@ std::vector<BufferClass> *GLBuffer<BufferClass>::get_and_modify_buffer() {
         this->gen_id();
     m_needs_update = true;
     return &m_buffer;
+}
+
+template<class BufferClass>
+unsigned long GLBuffer<BufferClass>::size() {
+    return m_buffer.size();
 }
 
 #endif //PROJECT_GL_BUFFER_H

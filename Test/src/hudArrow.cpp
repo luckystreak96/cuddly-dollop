@@ -11,7 +11,7 @@ HudArrow::HudArrow(BattleUnit unit, std::map<int, HudBattleUnit>* units)
 	_units = units;
 
 	// arrow
-	_graphic = GraphComp_ptr(new GraphicsComponent("CENTERED_TILE_X", "res/sprites/special/arrow.png"));
+	_graphic = std::shared_ptr<GraphicsComponent>(new GraphicsComponent("CENTERED_TILE_X", "res/sprites/special/arrow.png"));
 	//_graphic->SetColorAll(Vector3f(targeter.second->WaitPosition).Normalize(), 0.5f);
 	_graphic->Update();
 

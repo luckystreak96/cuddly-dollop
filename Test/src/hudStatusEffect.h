@@ -31,7 +31,7 @@ private:
 	Vector3f m_prevActorPos;
 
 	// AttackType image
-	GraphComp_ptr _background;
+	std::shared_ptr<GraphicsComponent> _background;
 
 	// Font ID's
 

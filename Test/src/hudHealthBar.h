@@ -43,13 +43,13 @@ private:
 	int m_targetLevel;
 
 	// Health bar images
-	GraphComp_ptr _background;
-	GraphComp_ptr _xpBar;
+	std::shared_ptr<GraphicsComponent> _background;
+	std::shared_ptr<GraphicsComponent> _xpBar;
 
 	// Smaller health bar
 	Vector3f m_actorPrevPos;
-	GraphComp_ptr _smallForeground;
-	GraphComp_ptr _smallBackground;
+	std::shared_ptr<GraphicsComponent> _smallForeground;
+	std::shared_ptr<GraphicsComponent> _smallBackground;
 
 	// Font ID's
 	unsigned int _healthFont;

@@ -3,7 +3,7 @@
 
 #include "GL/glew.h"
 #include <GLFW/glfw3.h>
-#include "graphicsComponent.h"
+#include "graphics_component.h"
 #include "FBO.h"
 #include "post_processing_screen.h"
 #include "postProcessing.h"
@@ -28,10 +28,12 @@ public:
 
 	// Draw everything and handle post-processing
 	void Draw();
-	void Add(GraphComp_ptr c);
+	void Add(std::shared_ptr<GraphicsComponent> c);
 	void Clear();
 	void SwapBuffers(GLFWwindow* window);
 	inline unsigned int Count() { return m_toDraw.size(); }
+
+	void init();
 
 	template<typename PP>
 	bool post_processing_present();

@@ -1,6 +1,6 @@
 #include "instance_mesh.h"
 
-#include "graphicsComponent.h"
+#include "graphics_component.h"
 
 instance_mesh::instance_mesh() : m_changed(false)
 {
@@ -11,10 +11,12 @@ void instance_mesh::init_static_atlas(std::shared_ptr<GraphicsComponent> graph, 
 	m_graphics = graph;
 
 	m_mesh.add_instanced_base_to_mesh_static_atlas(model);
-	m_graphics->SetNewBuffers(m_mesh.GetMeshVertices(), m_mesh.GetMeshIndices());
+//	m_graphics->SetNewBuffers(m_mesh.GetMeshVertices(), m_mesh.GetMeshIndices());
+	m_graphics->get_buffers()->update_vertex_buffer()->assign(m_mesh.GetMeshVertices()->begin(), m_mesh.GetMeshVertices()->end());
+	m_graphics->get_buffers()->update_index_buffer()->assign(m_mesh.GetMeshIndices()->begin(), m_mesh.GetMeshIndices()->end());
 
-	m_graphics->_instancedDraw = true;
-	m_graphics->_instanced_tex_coord_draw = true;
+//	m_graphics->_instancedDraw = true;
+//	m_graphics->_instanced_tex_coord_draw = true;
 
 	m_is_static_atlas = true;
 }
@@ -25,10 +27,12 @@ void instance_mesh::init_specific_atlas(std::shared_ptr<GraphicsComponent> graph
 
 	m_mesh = Mesh(atlas_surface_area);
 	m_mesh.add_instanced_base_to_mesh_specific_atlas(model, texture);
-	m_graphics->SetNewBuffers(m_mesh.GetMeshVertices(), m_mesh.GetMeshIndices());
+//	m_graphics->SetNewBuffers(m_mesh.GetMeshVertices(), m_mesh.GetMeshIndices());
+	m_graphics->get_buffers()->update_vertex_buffer()->assign(m_mesh.GetMeshVertices()->begin(), m_mesh.GetMeshVertices()->end());
+	m_graphics->get_buffers()->update_index_buffer()->assign(m_mesh.GetMeshIndices()->begin(), m_mesh.GetMeshIndices()->end());
 
-	m_graphics->_instancedDraw = true;
-	m_graphics->_instanced_tex_coord_draw = true;
+//	m_graphics->_instancedDraw = true;
+//	m_graphics->_instanced_tex_coord_draw = true;
 
 	m_is_static_atlas = false;
 }
@@ -80,7 +84,8 @@ void instance_mesh::set_graphics_position(Vector3f pos)
 
 void instance_mesh::update_graphics_vbo()
 {
-	m_graphics->set_tex_coord_offsets(m_mesh.get_tex_coords());
-	m_graphics->SetupVAO();
+//	m_graphics->set_tex_coord_offsets(m_mesh.get_tex_coords());
+	m_graphics->get_buffers()->update_tex_coord_buffer()->assign(m_mesh.get_tex_coords()->begin(), m_mesh.get_tex_coords()->end());
+	//m_graphics->SetupVAO();
 	//m_graphics->ResetVBO();
 }

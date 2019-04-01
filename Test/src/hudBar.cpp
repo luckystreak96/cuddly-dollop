@@ -12,7 +12,7 @@ HudBar::HudBar(int* ap, int max, Vector3f position)
 	m_max = max;
 
 	// Bar
-	GraphComp_ptr ptr = GraphComp_ptr(new FontGraphicsComponent("BAR", "res/sprites/special/bar.png"));
+	std::shared_ptr<GraphicsComponent> ptr = std::shared_ptr<GraphicsComponent>(new FontGraphicsComponent("BAR", "res/sprites/special/bar.png"));
 	dynamic_cast<FontGraphicsComponent*>(ptr.get())->SetStatic(true);
 
     ptr->set_position(position);

@@ -53,11 +53,13 @@ int main(int argc, char* argv[])
 
 	Game* game = new Game();
 	GLFWManager manager = GLFWManager();
+	manager.init_game(game);
 
 //#ifdef NDEBUG
 	if(debug) {
 		argc = 1;
-		std::cout << run_tests(argc, argv) << " tests have failed." << std::endl;
+//		std::cout << run_tests(argc, argv) << " tests have failed." << std::endl;
+		run_tests(argc, argv);
 	}
 //#endif
 	// Windows only

@@ -3,7 +3,7 @@
 
 #include "inputComponent.h"
 #include "physicsComponent.h"
-#include "graphicsComponent.h"
+#include "graphics_component.h"
 #include "input_manager.h"
 #include "observer.h"
 

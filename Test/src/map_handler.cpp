@@ -102,7 +102,7 @@ void MapHandler::SetupMesh()
 {
 	m_texture = "res/tiles.png";
 
-	m_mesh.init_static_atlas(GraphComp_ptr(new GraphicsComponent("", m_texture)), COMPOSITION);
+	m_mesh.init_static_atlas(std::shared_ptr<GraphicsComponent>(new GraphicsComponent("", m_texture)), COMPOSITION);
 	m_mesh.set_graphics_position(Vector3f(0, 0, 20.0f));
 
     float size = OrthoProjInfo::GetRegularInstance().Size;
@@ -125,10 +125,10 @@ void MapHandler::Update(bool forced)
 	//	THE Z ACCORDINGLY. THIS IS DONE THIS WAY BECAUSE OF MESHES, THEY CALCULATE POS AHEAD OF
 	//	TIME AND CHANGE THE VERTEX POSITIONS -- BUT NOT ANY OTHER OBJECT. TO KEEP THE Z CONSISTENT,
 	//	I USE THE MATRIX INSTEAD OF MULTIPLYING THE OTHER OBJECTS VERTEX POS BY THEIR POS.
-	bool firstTime = m_mesh.get_graphics()->GetMModels().size() == 0;
-	if (m_mesh.get_graphics()->GetMModels().size() == 0 || forced)
+	bool firstTime = m_mesh.get_graphics()->get_buffers()->get_models_gl_buffer()->size() == 0;
+	if (m_mesh.get_graphics()->get_buffers()->get_models_gl_buffer()->size() == 0 || forced)
 	{
-		m_mesh.get_graphics()->ClearMModels();
+		m_mesh.get_graphics()->get_buffers()->update_model_buffer()->clear();
 		for (auto x : m_tiles)
 		{
 			Vector3f pos = x->Physics()->get_position();
@@ -145,21 +145,21 @@ void MapHandler::Update(bool forced)
 	}
 }
 
-void MapHandler::AdjustSprite(std::string sprite, Transformation& t, int index, bool firstTime)
-{
-	if (sprite == "sapin_b.png")
-	{
-		t.SetRotation(GraphicsComponent::GetProjectionRotation(), 0, 0);
-		t.SetScale(Vector3f(1, 2, 1));
-		if (firstTime)
-		{
-			float y = m_mesh.get_graphics()->GetVertices()->at(index + 2).tex.y;
-			float increase = TextureAtlas::m_textureAtlas.GetTexCoordWH().y;
-			m_mesh.get_graphics()->GetVertices()->at(index + 2).tex.y += TextureAtlas::m_textureAtlas.GetTexCoordWH().y;
-			m_mesh.get_graphics()->GetVertices()->at(index + 3).tex.y += TextureAtlas::m_textureAtlas.GetTexCoordWH().y;
-		}
-	}
-}
+//void MapHandler::AdjustSprite(std::string sprite, Transformation& t, int index, bool firstTime)
+//{
+//	if (sprite == "sapin_b.png")
+//	{
+//		t.SetRotation(GraphicsComponent::GetProjectionRotation(), 0, 0);
+//		t.SetScale(Vector3f(1, 2, 1));
+//		if (firstTime)
+//		{
+//			float y = m_mesh.get_graphics()->GetVertices()->at(index + 2).tex.y;
+//			float increase = TextureAtlas::m_textureAtlas.GetTexCoordWH().y;
+//			m_mesh.get_graphics()->GetVertices()->at(index + 2).tex.y += TextureAtlas::m_textureAtlas.GetTexCoordWH().y;
+//			m_mesh.get_graphics()->GetVertices()->at(index + 3).tex.y += TextureAtlas::m_textureAtlas.GetTexCoordWH().y;
+//		}
+//	}
+//}
 
 void MapHandler::SetRender()
 {

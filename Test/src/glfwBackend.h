@@ -13,6 +13,7 @@ class GLFWManager
 public:
 	GLFWManager();
 	void GLFWMainLoop(Game* game);
+	void init_game(Game* game);
 	void HandleJoystickInput();
 	static void Exit();
 public:

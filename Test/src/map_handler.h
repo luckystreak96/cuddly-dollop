@@ -11,7 +11,7 @@
 //#include "mesh.h"
 #include "instance_mesh.h"
 #include "map_tile.h"
-#include "graphicsComponent.h"
+#include "graphics_component.h"
 #include "jsonHandler.h"
 
 
@@ -32,8 +32,8 @@ public:
 	static int GetYChunk(int y) { return y / m_chunkSize; }
 	unsigned int Size();
 	void SetupMesh();
-	GraphComp_ptr Graphics() { return m_mesh.get_graphics(); }
-	void AdjustSprite(std::string sprite, Transformation& t, int index, bool firstTime);
+	std::shared_ptr<GraphicsComponent> Graphics() { return m_mesh.get_graphics(); }
+//	void AdjustSprite(std::string sprite, Transformation& t, int index, bool firstTime);
 
 	// Returns the farthest reaches of the map in  x, y and z
 	Vector3f GetMapSize();

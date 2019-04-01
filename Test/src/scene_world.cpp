@@ -205,7 +205,11 @@ void SceneWorld::Interact()
 	if (InputManager::GetInstance().FrameKeyStatus(A_Accept, KeyStatus::KeyPressed) && m_player) {
 		Vector3f pos = m_player->Physics()->GetCenter();
 		pos.z = m_player->PhysicsRaw()->get_position_ref().z;
-		Direction dir = m_player->Graphics()->GetDirection();
+
+		Direction dir = dir_Down;
+		PlayerGraphicsComponent* pgc = dynamic_cast<PlayerGraphicsComponent*>(m_player->Graphics().get());
+		if(pgc)
+			dir = pgc->GetDirection();
 
 		float distance = 0.2f * 64.0f;
 		if (dir == dir_Left || dir == dir_Right)
@@ -233,7 +237,11 @@ void SceneWorld::Interact()
 		if (inter != NULL)
 		{
 			if(inter->Graphics())
-				inter->Graphics()->SetDirection(m_player->Graphics());
+			{
+				pgc = dynamic_cast<PlayerGraphicsComponent*>(inter->Graphics().get());
+				if(pgc)
+					pgc->SetDirection(m_player->Graphics().get());
+			}
 			TriggerEvents(inter->GetID());
 		}
 	}
