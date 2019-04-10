@@ -7,6 +7,11 @@ out vec4 FragColor;
 
 uniform sampler2D gSampler;
 
+uniform vec3 gLightColor = vec3(0.9, 0.9, 0.98);//sunlight
+uniform float gAmbientLight = 1.2;
+uniform float gLightIntensity = 1;
+
+// Functions
 vec3 rgb2hsv(vec3 c)
 {
     vec4 K = vec4(0.0, -1.0 / 3.0, 2.0 / 3.0, -1.0);
@@ -25,12 +30,13 @@ vec3 hsv2rgb(vec3 c)
     return c.z * mix(K.xxx, clamp(p - K.xxx, 0.0, 1.0), c.y);
 }
 
+// Main
 void main()
 {
 	vec4 color = texture2D(gSampler, TexCoord0.st);
 
-	//if(color.a < 0.1)
-	//	discard;
+	if(color.a < 0.05)
+		discard;
 
 
 	//vec3 toneMapped = color.rgb / (color.rgb + vec3(1.0));
@@ -50,6 +56,20 @@ void main()
 
 	//vec3 LightColor = vec3(0.4, 0.6, 0.4);//greenlight
 	//color.rgb *= LightColor;
+
+
+
+	vec2 textureSize = textureSize(gSampler, 0);
+
+	//if(abs(gl_FragCoord.x - textureSize.x / 2) < 10)
+	//	discard;
+
+	float a2 = pow(((textureSize.x / 2) - gl_FragCoord.x) / textureSize.x, 2);
+	float b2 = pow(((textureSize.y / 2) - gl_FragCoord.y) / textureSize.y, 2);
+
+	float distance = sqrt(a2 + b2);
+	float intensity = 1 - clamp(pow(distance * 1.1, 2), 0, 1);
+	color.rgb *= gAmbientLight * gLightIntensity * intensity * gLightColor;
 
 	FragColor = color;
 }

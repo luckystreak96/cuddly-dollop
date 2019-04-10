@@ -14,6 +14,7 @@
 #include <map>
 #include "textureatlas.h"
 #include "resource_manager.h"
+#include "color_generator.h"
 
 class Mesh
 {
@@ -37,6 +38,8 @@ public:
 	//std::vector<Transformation> GetMeshModels() { return m_models; };
 	TextureAtlas* GetAtlas() { return &m_texAtlas; }
 	Vector2f get_uv_offset_coords(std::string tex, int index = -1);
+	void generate_colors(ColorGenerator* gen, float alpha);
+	std::vector<Vector3f>* get_colors();
 
 private:
 	void add_instanced_base_to_mesh(std::string model, std::string tex, bool use_global_tileset);
@@ -50,6 +53,7 @@ private:
 	std::vector<Vertex> m_vertexList;
 	std::vector<GLuint> m_indices;
 	std::vector<Vector2f> m_texCoords;
+    std::vector<Vector3f> m_colors;
 	//std::vector<Transformation> m_models;
 	int m_indexProgress;
 	TextureAtlas m_texAtlas;

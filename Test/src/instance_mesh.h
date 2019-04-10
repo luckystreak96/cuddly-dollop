@@ -6,7 +6,7 @@
 class GraphicsComponent;
 
 // Class that wraps the GraphicsComponent and mesh classes into one
-// Takes care of most of the annoying settings and keeps things smoothe
+// Takes care of most of the annoying settings and keeps things smooth
 // This class takes care of keeping the graphics component up-to-date when it is requested
 class instance_mesh
 {
@@ -23,9 +23,10 @@ public:
 	void add_tex_offset_static_atlas(std::string tex);
 	void add_tex_offset_specific_atlas(std::string tex, int index);
 
+	void generate_colors(ColorGenerator* gen, float alpha);
+
 	std::shared_ptr<GraphicsComponent> get_graphics();
 	void set_graphics_position(Vector3f pos);
-	void update_graphics_vbo();
 
 private:
 	std::shared_ptr<GraphicsComponent> m_graphics;

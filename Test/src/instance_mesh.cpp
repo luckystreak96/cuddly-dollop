@@ -71,7 +71,7 @@ std::shared_ptr<GraphicsComponent> instance_mesh::get_graphics()
 	if (m_changed)
 	{
 		m_changed = false;
-		update_graphics_vbo();
+		m_graphics->get_buffers()->update_tex_coord_buffer()->assign(m_mesh.get_tex_coords()->begin(), m_mesh.get_tex_coords()->end());
 	}
 
 	return m_graphics;
@@ -82,10 +82,10 @@ void instance_mesh::set_graphics_position(Vector3f pos)
 	m_graphics->set_position(pos);
 }
 
-void instance_mesh::update_graphics_vbo()
-{
-//	m_graphics->set_tex_coord_offsets(m_mesh.get_tex_coords());
-	m_graphics->get_buffers()->update_tex_coord_buffer()->assign(m_mesh.get_tex_coords()->begin(), m_mesh.get_tex_coords()->end());
-	//m_graphics->SetupVAO();
-	//m_graphics->ResetVBO();
+void instance_mesh::generate_colors(ColorGenerator *gen, float alpha) {
+	m_mesh.generate_colors(gen, alpha);
+	m_graphics->SetColorAll(Vector3f(0), 1.0f);
+	m_graphics->get_buffers()->update_vector3f_buffer(BT_Color)->assign(m_mesh.get_colors()->begin(), m_mesh.get_colors()->end());
+
 }
+

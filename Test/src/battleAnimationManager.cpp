@@ -115,12 +115,19 @@ void BattleAnimationManager::DamageAnimation(int target, Skill_ptr skill, Damage
 	// Color flash
 	m_animations.push_front(Anim_ptr(new AnimColorFlash(Vector3f(5, 3, 3), m_actors[target])));
 
+	// Create color generator
+	Vector3f dmg_col = CalculateDamageColor(skill, dmg);
+	Vector3f min_col = dmg_col + Vector3f(-0.2f, 0, -0.2f);
+	Vector3f max_col = dmg_col + Vector3f(0.2f, 0, 0.2f);
+	UniformColorDistribution gen = UniformColorDistribution(min_col, max_col);
+
 	// Particles
 	Vector3f pos = m_actors[target]->get_position() + Vector3f(0.5f, 0.5f, 0.6f);
 	Particle_ptr particles = Particle_ptr(new ParticleGenerator());
 	particles->SetPowerLevel(2.4f);
 	particles->Init(PT_Explosion, abs(dmg._value), pos, false, SpriteFromEnum.at((ParticleSprite)m_particleSprite), Vector3f(1.5f));
-	particles->SetColor(CalculateDamageColor(skill, dmg));
+	//particles->SetColor(dmg_col);
+	particles->generate_colors(&gen);
 	ParticleManager::GetInstance().AddParticles(particles);
 
 	// Sound fx
@@ -150,16 +157,16 @@ Vector3f BattleAnimationManager::CalculateDamageColor(Skill_ptr skill, Damage dm
 	{
 		if (skill->_ac._success && skill->_ac._type != ACT_Defend ||
 			!skill->_ac._success && skill->_ac._type == ACT_Defend)
-			color += Vector3f(1.0f, 0.0f, 0.0f);
+			color += Vector3f(0.8f, 0.0f, 0.0f);
 		else
-			color += Vector3f(1.0f, 0.2f, 0.2f);
+			color += Vector3f(0.8f, 0.2f, 0.2f);
 	}
 	else
 	{
 		if (skill->_ac._success)
-			color += Vector3f(0, 1, 0);
+			color += Vector3f(0, 0.8f, 0);
 		else
-			color += Vector3f(0.2f, 1, 0.2f);
+			color += Vector3f(0.2f, 0.8f, 0.2f);
 	}
 
 	if (dmg._type == ST_Bonus)

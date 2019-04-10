@@ -277,10 +277,10 @@ void Explosion::ResetLocation(Vector3f& spawnPos, bool firstSpawn, bool smooth)
 	counter = rand() % 10;
 	position.x = spawnPos.x;
 	position.y = spawnPos.y;
-	velocity.x = fmod((float)rand() / 10.f, (power * 10.f)) - (power * 10.f) / 2.0f;
+	velocity.x = fmod((float)rand() / 100.f, (power * 10.f)) - (power * 10.f) / 2.0f;
 	// get_velocity minimum clamp
-	velocity.x = velocity.x < 0 ? std::min(velocity.x, -0.5f) : std::max(velocity.x, 0.5f);
-	velocity.y = fmod((float)rand() / 10.f, 2.0f) - 1.f;
+	velocity.x < 0 ? velocity.x -= 0.25f : velocity.x += 0.25f;
+	velocity.y = fmod((float)rand() / 100.f, 3.0f) - 2.f;
 }
 
 //========= PARTICLE GENERATOR ============
@@ -475,4 +475,8 @@ void ParticleGenerator::SetPowerLevel(float power)
 void ParticleGenerator::SetColor(Vector3f color, float alpha)
 {
 	m_mesh.get_graphics()->SetColorAll(color, alpha);
+}
+
+void ParticleGenerator::generate_colors(ColorGenerator *gen, float alpha) {
+    m_mesh.generate_colors(gen, alpha);
 }

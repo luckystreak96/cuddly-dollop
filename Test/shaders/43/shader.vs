@@ -9,6 +9,7 @@ layout(location = 3) in float Alpha;
 layout(location = 4) in mat4 Model;
 // Instance tex coordinates
 layout(location = 8) in vec2 TexCoord2;
+layout(location = 9) in vec3 Color2;
 
 out vec2 TexCoord0;
 out vec3 Color0;
@@ -22,6 +23,6 @@ void main()
 	gl_Position = gWorld * transpose(Model) * vec4(Position.x, Position.y, Position.z, 1.0);
 
     TexCoord0 = TexCoord + TexCoord2;
-	Color0 = Color;
+	Color0 = max(Color, Color2);
 	Alpha0 = Alpha;
 }

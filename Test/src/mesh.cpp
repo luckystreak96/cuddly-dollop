@@ -191,3 +191,13 @@ Vector2f Mesh::get_uv_offset_coords(std::string tex, int index)
 
 	return Vector2f(u, v);
 }
+
+void Mesh::generate_colors(ColorGenerator *gen, float alpha) {
+	m_colors.clear();
+    for(int i = 0; i < m_texCoords.size(); i++)
+    	m_colors.push_back(gen->next());
+}
+
+std::vector<Vector3f> *Mesh::get_colors() {
+    return &m_colors;
+}

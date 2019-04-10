@@ -10,7 +10,7 @@ uniform sampler2D gSampler;
 uniform vec3 gLightColor = vec3(1.0, 0.98, 0.95);//sunlight
 //uniform vec3 gLightColor = vec3(1.0, 1.2, 0.65);//greenlight
 uniform float gAmbientLight = 1.2;
-uniform float gLightIntensity;
+uniform float gLightIntensity = 1;
 
 
 
@@ -25,9 +25,20 @@ void main()
 	if(color.a < 0.1)
 		discard;
 
-	float distance = sqrt(pow(960 - gl_FragCoord.x, 2) + pow(540 - gl_FragCoord.y, 2));
-	float intensity = 1 - clamp(pow(distance * 0.0008, 2) + 0.0000125 * distance, 0, 1);
-	color.rgb *= gAmbientLight * gLightIntensity * intensity * gLightColor;
+
+
+	//vec2 textureSize = textureSize(gSampler, 0);
+
+	//if(abs(gl_FragCoord.x - textureSize.x / 2) < 10)
+	//	discard;
+
+	//float a2 = pow((textureSize.x) - gl_FragCoord.x, 2);
+	//float b2 = pow((textureSize.y) - gl_FragCoord.y, 2);
+
+	//float distance = sqrt(a2 + b2);
+	//float intensity = 1 - clamp(pow(distance * 0.00125, 2) - 0.000925 * distance, 0, 1);
+	//color.rgb *= gAmbientLight * gLightIntensity * intensity * gLightColor;
+	color.rgb *= gLightIntensity;
 
 	FragColor = color;
 }

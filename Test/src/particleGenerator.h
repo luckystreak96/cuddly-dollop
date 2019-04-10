@@ -2,6 +2,7 @@
 #define PARTICLE_GENERATOR_H__
 
 #include "instance_mesh.h"
+#include "color_generator.h"
 //#include "graphicsComponent.h"
 //#include "mesh.h"
 
@@ -98,6 +99,7 @@ public:
 	void Init(ParticleType c, unsigned int num_particles = 1, Vector3f zoneSize = Vector3f(32, 16, 0), bool smooth = false, std::string tex = "snowflake.png", Vector3f size = Vector3f(1.f));
 	void FinalizeSetup();
 	void SetColor(Vector3f color, float alpha = 1.0f);
+	void generate_colors(ColorGenerator* gen, float alpha = 1.0f);
 	void SetRender();
 	void Draw();
 	void LogicUpdate();
