@@ -40,8 +40,9 @@ bool Game::init(Vector2f version)
 	Effect::_efctGLVersion = version;
 	SetupTextureAtlas();
 
-	// Mute by default
-	SoundManager::GetInstance().SetMasterVolume(std::get<bool>(GameData::Options.at("mute")) ? 0.f : 1.f);
+	// if the current mute setting isn't equal to the config setting, change it
+	if(SoundManager::GetInstance().get_BGM_muted() != std::get<bool>(GameData::Options.at("mute")))
+		SoundManager::GetInstance().toggle_BGM_mute();
 
 	std::shared_ptr<SceneWorld> world = std::shared_ptr<SceneWorld>(new SceneWorld(GameData::Flags.count("map") ? GameData::Flags.at("map") : 1));
 	SceneManager::GetInstance().SetScene(world);

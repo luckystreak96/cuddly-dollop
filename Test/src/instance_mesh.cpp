@@ -83,9 +83,13 @@ void instance_mesh::set_graphics_position(Vector3f pos)
 }
 
 void instance_mesh::generate_colors(ColorGenerator *gen, float alpha) {
+    // fills the color vector in mesh
 	m_mesh.generate_colors(gen, alpha);
-	m_graphics->SetColorAll(Vector3f(0), 1.0f);
-	m_graphics->get_buffers()->update_vector3f_buffer(BT_Color)->assign(m_mesh.get_colors()->begin(), m_mesh.get_colors()->end());
 
+	// sets the vertex colors to black (the shader does a max on the vertex color value and the color_buffer value
+	m_graphics->SetColorAll(Vector3f(0), 1.0f);
+
+	// set the buffer
+	m_graphics->get_buffers()->update_vector3f_buffer(BT_Color)->assign(m_mesh.get_colors()->begin(), m_mesh.get_colors()->end());
 }
 
