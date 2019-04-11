@@ -12,8 +12,9 @@
 ParticleGenerator::ParticleGenerator() : m_power(2.0f), completed(false)
 {
 	m_texture = "res/tiles.png";
-	m_mesh.init_static_atlas(std::shared_ptr<GraphicsComponent>(new GraphicsComponent("", m_texture)), "CENTERED_PARTICLE_TILE");
-	m_mesh.set_graphics_position(Vector3f(0, 0, 0.6f));
+	m_graphics = std::shared_ptr<GraphicsComponent>(new GraphicsComponent("", m_texture));
+	m_mesh.init_static_atlas(m_graphics.get(), "CENTERED_PARTICLE_TILE");
+	m_mesh.get_graphics()->set_position(Vector3f(0, 0, 0.6f));
 }
 
 Particle::Particle() : texture("snowflake.png"), position(Vector3f(0, 0, 0.6f)),
@@ -444,7 +445,7 @@ void ParticleGenerator::Update(Vector3f pos)
 
 void ParticleGenerator::SetRender()
 {
-	Renderer::GetInstance().Add(m_mesh.get_graphics());
+	Renderer::GetInstance().Add(m_graphics);
 }
 
 void ParticleGenerator::Draw()

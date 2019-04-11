@@ -21,7 +21,6 @@ public:
 	void ResetEvent();
 	EventUpdateResponse UpdateEvent(double elapsedTime, std::map<unsigned int, std::shared_ptr<Entity>>* ents);
 	std::shared_ptr<IEvent> Clone();
-	void Draw();
 	void SetRender();
 	void SetText(std::string text);
 	void SetScale(float xScale, float yScale);

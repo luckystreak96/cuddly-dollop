@@ -102,8 +102,9 @@ void MapHandler::SetupMesh()
 {
 	m_texture = "res/tiles.png";
 
-	m_mesh.init_static_atlas(std::shared_ptr<GraphicsComponent>(new GraphicsComponent("", m_texture)), COMPOSITION);
-	m_mesh.set_graphics_position(Vector3f(0, 0, 20.0f));
+	m_graphics = std::shared_ptr<GraphicsComponent>(new GraphicsComponent("", m_texture));
+	m_mesh.init_static_atlas(m_graphics.get(), COMPOSITION);
+	m_mesh.get_graphics()->set_position(Vector3f(0, 0, 20.0f));
 
     float size = OrthoProjInfo::GetRegularInstance().Size;
     //for(auto& vert : *m_mesh.get_graphics()->GetVertices())
@@ -163,7 +164,7 @@ void MapHandler::Update(bool forced)
 
 void MapHandler::SetRender()
 {
-	Renderer::GetInstance().Add(m_mesh.get_graphics());
+	Renderer::GetInstance().Add(m_graphics);
 }
 
 void MapHandler::Draw()

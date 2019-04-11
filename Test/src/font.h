@@ -2,7 +2,7 @@
 #define FONT_H__
 
 #include "vector3f.h"
-#include "instance_mesh.h"
+#include "mesh.h"
 
 #include <string>
 #include <sstream>
@@ -24,12 +24,11 @@ public:
 	virtual void SetText(std::string text, Vector3f location = Vector3f(0, 0, -1), bool centered = false, float xBoundry = -1);
 	void UpdateText(std::string text);
 	void ChangeLetter(unsigned int index, uint32_t newChar);
-	virtual void Draw();
 	virtual void Update(double elapsedTime);
 	virtual void SetRender();
 	void SetTextVariables();
 	void SetTextSpeed(double speed);
-	std::shared_ptr<GraphicsComponent> GetGraphics() { return m_mesh.get_graphics(); }
+	std::shared_ptr<GraphicsComponent> GetGraphics() { return m_graphics; }
 	bool IsDead();
 	virtual void SetScale(float xScale, float yScale);
 	bool TextDisplayDone();
@@ -72,7 +71,10 @@ protected:
 
 	std::vector<Vector3f> m_letterPositions;
 	std::map<uint32_t, unsigned int> m_letters;
-	instance_mesh m_mesh;
+
+	Mesh m_mesh;
+	std::shared_ptr<GraphicsComponent> m_graphics;
+
 	const unsigned int m_lettersPerRow;
 	const unsigned int m_lettersPerColumn;
 

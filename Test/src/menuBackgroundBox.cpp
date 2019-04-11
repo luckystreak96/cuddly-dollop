@@ -1,6 +1,7 @@
 #include "menuBackgroundBox.h"
 
 #include "colors.h"
+#include "resource_manager.h"
 
 MenuBackgroundBox::MenuBackgroundBox(Vector3f position, int width, int height) : FontGraphicsComponent()
 {
@@ -107,7 +108,8 @@ MenuBackgroundBox::MenuBackgroundBox(Vector3f position, int width, int height) :
 
 //	m_MBO_instances = 1;
 
-	m_mesh.add_instanced_base_to_mesh_static_atlas("CENTERED_TILE");
+	m_mesh.init_static_atlas(this, "CENTERED_TILE");
+//	m_mesh.add_instanced_base_to_mesh_static_atlas("CENTERED_TILE");
 //	_instancedDraw = true;
 //	_instanced_tex_coord_draw = true;
 
@@ -121,17 +123,17 @@ MenuBackgroundBox::MenuBackgroundBox(Vector3f position, int width, int height) :
 	m_tex_ptr = ResourceManager::GetInstance().GetTexture(m_texture);
 	SetStatic(true);
 
-//	m_vertices = std::vector<Vertex>(*m_mesh.GetMeshVertices());
-//	m_indices = std::vector<GLuint>(*m_mesh.GetMeshIndices());
-	m_buffers.update_vertex_buffer()->assign(m_mesh.GetMeshVertices()->begin(), m_mesh.GetMeshVertices()->end());
-	m_buffers.update_index_buffer()->assign(m_mesh.GetMeshIndices()->begin(), m_mesh.GetMeshIndices()->end());
-//	ClearMModels();
+//	m_buffers.update_vertex_buffer()->assign(m_mesh.GetMeshVertices()->begin(), m_mesh.GetMeshVertices()->end());
+//	m_buffers.update_index_buffer()->assign(m_mesh.GetMeshIndices()->begin(), m_mesh.GetMeshIndices()->end());
+
 	m_buffers.update_model_buffer()->clear();
 	m_buffers.get_models_gl_buffer()->set_instanced_draw(true);
 	Update();
 //	set_tex_coord_offsets(m_mesh.get_tex_coords());
-	m_buffers.update_tex_coord_buffer()->assign(m_mesh.get_tex_coords()->begin(), m_mesh.get_tex_coords()->end());
+
+//	m_buffers.update_tex_coord_buffer()->assign(m_mesh.get_tex_coords()->begin(), m_mesh.get_tex_coords()->end());
 	m_buffers.get_tex_gl_buffer()->set_instanced_draw(true);
+
 	SetColorAll(colors::purple);
 //	SetNewBuffers(&m_vertices, &m_indices);
 //	LoadGLResources();

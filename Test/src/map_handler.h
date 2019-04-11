@@ -8,8 +8,7 @@
 
 #include "texture.h"
 #include "math.h"
-//#include "mesh.h"
-#include "instance_mesh.h"
+#include "mesh.h"
 #include "map_tile.h"
 #include "graphics_component.h"
 #include "jsonHandler.h"
@@ -32,7 +31,7 @@ public:
 	static int GetYChunk(int y) { return y / m_chunkSize; }
 	unsigned int Size();
 	void SetupMesh();
-	std::shared_ptr<GraphicsComponent> Graphics() { return m_mesh.get_graphics(); }
+	std::shared_ptr<GraphicsComponent> Graphics() { return m_graphics; }
 //	void AdjustSprite(std::string sprite, Transformation& t, int index, bool firstTime);
 
 	// Returns the farthest reaches of the map in  x, y and z
@@ -43,7 +42,8 @@ public:
 private:
 	std::vector<std::shared_ptr<MapTile>> m_tiles;
 	std::vector<std::vector<std::vector<MapTile*>>> m_OrderedTiles;
-	instance_mesh m_mesh;
+	Mesh m_mesh;
+	std::shared_ptr<GraphicsComponent> m_graphics;
 	//GraphComp_ptr m_graphics = NULL;
 	std::shared_ptr<JsonHandler> m_jsonHandler;
 	int m_MBO_instances;

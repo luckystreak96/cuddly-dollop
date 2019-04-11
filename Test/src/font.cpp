@@ -12,15 +12,12 @@ m_elapsedTime(0), m_textSpeed(1.0), m_timePerLetter(0.03), m_static(sTatic), m_t
 m_lettersPerRow(16), m_lettersPerColumn(16), m_xScale(1.0f), m_yScale(1.0f), m_lightSpeed(lightSpeed), _enabled(true), m_centered(false), m_xBndry(-1), m_x(0), m_y(0),
 m_set_text_vars(true)
 {
-	std::shared_ptr<FontGraphicsComponent> graphics = std::shared_ptr<FontGraphicsComponent>(new FontGraphicsComponent("", path));
+	auto graphics = std::shared_ptr<FontGraphicsComponent>(new FontGraphicsComponent("", path));
 	graphics->SetStatic(m_static);
 
-	m_mesh.init_specific_atlas(graphics, "TEXT", path, m_lettersPerRow * m_lettersPerColumn);
-	//for (auto& x : *m_mesh.get_graphics()->GetVertices())
-	//{
-	//	x.vertex.x *= 64.0f;
-	//	x.vertex.y *= 64.0f;
-	//}
+	m_graphics = graphics;
+	m_mesh.init_specific_atlas(m_graphics.get(), "TEXT", path, m_lettersPerRow * m_lettersPerColumn);
+
 
 	CreateHash();
 	ResourceManager::GetInstance().LoadTexture(path);
@@ -334,11 +331,6 @@ void Font::SetTextVariables()
 	}
 }
 
-void Font::Draw()
-{
-	m_mesh.get_graphics()->Draw();
-}
-
 void Font::SetTextSpeed(double speed)
 {
 	m_textSpeed = speed;
@@ -357,7 +349,7 @@ inline unsigned int Font::CharToCode(uint32_t c)
 void Font::SetRender()
 {
 	if (m_mesh.get_graphics() != NULL)
-		Renderer::GetInstance().Add(m_mesh.get_graphics());
+		Renderer::GetInstance().Add(m_graphics);
 }
 
 void Font::SetScale(float xScale, float yScale)

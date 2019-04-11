@@ -63,15 +63,6 @@ DialogueBox::~DialogueBox()
 {
 }
 
-
-void DialogueBox::Draw()
-{
-	m_box->Draw();
-	m_mesh.get_graphics()->Draw();
-	for (auto x : m_choices)
-		x->Draw();
-}
-
 void DialogueBox::SetText(std::string text)
 {
 	auto graph = GetLocalizedGraph();
@@ -262,7 +253,7 @@ void DialogueBox::SetRender()
 	if (m_box != NULL)
 		Renderer::GetInstance().Add(m_box);
 	if (m_mesh.get_graphics() != NULL)
-		Renderer::GetInstance().Add(m_mesh.get_graphics());
+		Renderer::GetInstance().Add(m_graphics);
 	for (auto x : m_choices)
 		x->SetRender();
 }

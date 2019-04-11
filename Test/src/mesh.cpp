@@ -1,23 +1,25 @@
 #include "mesh.h"
-#include "define.h"
 
-Mesh::Mesh(unsigned int atlasSize) : m_texAtlas(TextureAtlas(atlasSize)), _instancedDraw(false)
+#include <sys/stat.h>
+#include <iostream>
+#include "resource_manager.h"
+#include "model.h"
+
+Mesh::Mesh() : m_texAtlas(TextureAtlas(8)), m_indexProgress(0)
 {
-	m_indexProgress = 0;
-	m_texture = NULL;
-	m_progess = 0;
 }
 
-Mesh::~Mesh()
-{
-	if (m_texture)
-		delete m_texture;
+void Mesh::init_static_atlas(GraphicsComponent* graph, std::string model) {
+	m_graphics = graph;
+	add_instanced_base_to_mesh_static_atlas(model);
 }
 
-//void Mesh::init_instanced_tex_drawing(std::vector<Vertex>* verts, std::vector<GLuint>* inds, std::string tex)
-//{
-//	AddToMesh(*verts, *inds, 3, Vector3f(), tex, 0);
-//}
+void Mesh::init_specific_atlas(GraphicsComponent* graph, std::string model, std::string texture,
+							   int atlas_surface_area) {
+	m_graphics = graph;
+	m_texAtlas = TextureAtlas(atlas_surface_area);
+	add_instanced_base_to_mesh_specific_atlas(model, texture);
+}
 
 void Mesh::set_placeholder_uv_offset(bool static_atlas)
 {
@@ -28,17 +30,9 @@ void Mesh::set_placeholder_uv_offset(bool static_atlas)
 		atlas = &m_texAtlas;
 	std::vector<Vector2f> tex = atlas->get_placeholder_uv_offset();
 
+	std::vector<Vertex>* verts = m_graphics->get_buffers()->update_vertex_buffer();
 	for (int i = 0; i < tex.size(); i++)
-		m_vertexList[i].tex = tex[i];
-}
-
-void Mesh::Reset()
-{
-	m_progess = 0;
-	m_vertexList = std::vector<Vertex>();
-	m_indices = std::vector<GLuint>();
-	m_indexProgress = 0;
-	m_textures.clear();
+		verts->at(i).tex = tex[i];
 }
 
 void Mesh::add_instanced_base_to_mesh_specific_atlas(std::string model, std::string tex)
@@ -56,8 +50,10 @@ void Mesh::add_instanced_base_to_mesh(std::string model, std::string tex, bool u
 	Model::GetInstance().loadModel(model);
 	std::vector<Vertex> verts = Model::GetInstance().getVertexVertices();
 	std::vector<GLuint> inds = Model::GetInstance().getIndices();
-	//m_vertexList = Model::GetInstance().getVertexVertices();
-	//m_indices = Model::GetInstance().getIndices();
+
+	// Clear the buffers in case the default values are incorrect
+	m_graphics->get_buffers()->update_vertex_buffer()->clear();
+	m_graphics->get_buffers()->update_index_buffer()->clear();
 
 	for (auto& x : verts)
 	{
@@ -110,6 +106,7 @@ void Mesh::AddToMesh(std::vector<Vertex>& verts, const std::vector<GLuint>& inds
 	};
 
 	int counter = 0;
+	std::vector<Vertex>* vert_buf = m_graphics->get_buffers()->update_vertex_buffer();
 	for (auto v : verts)
 	{
 		Vector2f temp = Vector2f(vecs[counter % 4].x, vecs[counter % 4].y);
@@ -117,15 +114,16 @@ void Mesh::AddToMesh(std::vector<Vertex>& verts, const std::vector<GLuint>& inds
 
 		v.tex = temp;
 
-		if (!_instancedDraw || m_indexProgress < 4)
-			m_vertexList.push_back(v);
+		if (m_indexProgress < 4)
+			vert_buf->push_back(v);
 
 		counter++;
 	}
 
+	std::vector<GLuint>* ind_buf = m_graphics->get_buffers()->update_index_buffer();
 	for (auto i : inds)
-		if (!_instancedDraw || m_indexProgress < 4)
-			m_indices.push_back(i + m_indexProgress);
+		if (m_indexProgress < 4)
+			ind_buf->push_back(i + m_indexProgress);
 
 	//m_models.push_back(t);
 
@@ -134,12 +132,14 @@ void Mesh::AddToMesh(std::vector<Vertex>& verts, const std::vector<GLuint>& inds
 
 void Mesh::add_tex_offset(std::string tex, int index)
 {
-	m_texCoords.push_back(get_uv_offset_coords(tex, index));
+	std::vector<Vector2f>* tex_buf = m_graphics->get_buffers()->update_tex_coord_buffer();
+	tex_buf->push_back(get_uv_offset_coords(tex, index));
 }
 
 void Mesh::change_tex_offset(int pos, std::string tex, int index)
 {
-	m_texCoords[pos] = get_uv_offset_coords(tex, index);
+	std::vector<Vector2f>* tex_buf = m_graphics->get_buffers()->update_tex_coord_buffer();
+	tex_buf->at(pos) = get_uv_offset_coords(tex, index);
 }
 
 void Mesh::Finalize(std::string name)
@@ -152,21 +152,6 @@ void Mesh::Finalize(std::string name)
 		TextureAtlas::m_textureAtlas.Generate(32, false, name);
 
 	ResourceManager::GetInstance().LoadTexture(name);
-}
-
-std::vector<Vertex>* Mesh::GetMeshVertices()
-{
-	return &m_vertexList;
-}
-
-std::vector<GLuint>* Mesh::GetMeshIndices()
-{
-	return &m_indices;
-}
-
-std::vector<Vector2f>* Mesh::get_tex_coords()
-{
-	return &m_texCoords;
 }
 
 Vector2f Mesh::get_uv_offset_coords(std::string tex, int index)
@@ -193,11 +178,29 @@ Vector2f Mesh::get_uv_offset_coords(std::string tex, int index)
 }
 
 void Mesh::generate_colors(ColorGenerator *gen, float alpha) {
-	m_colors.clear();
-    for(int i = 0; i < m_texCoords.size(); i++)
-    	m_colors.push_back(gen->next());
+	std::vector<Vector3f>* col_buf = m_graphics->get_buffers()->update_vector3f_buffer(BT_Color);
+	std::vector<Vector2f>* tex_buf = m_graphics->get_buffers()->update_tex_coord_buffer();
+
+	// sets the vertex colors to black (the shader does a max on the vertex color value and the color_buffer value
+	m_graphics->SetColorAll(Vector3f(0), 1.0f);
+
+	// Clear colors
+	col_buf->clear();
+
+	// Fill buffer with new colors
+    for(int i = 0; i < tex_buf->size(); i++)
+    	col_buf->push_back(gen->next());
 }
 
-std::vector<Vector3f> *Mesh::get_colors() {
-    return &m_colors;
+size_t Mesh::tex_size() {
+    return m_graphics->get_buffers()->update_tex_coord_buffer()->size();
 }
+
+void Mesh::tex_clear() {
+    m_graphics->get_buffers()->update_tex_coord_buffer()->clear();
+}
+
+GraphicsComponent* Mesh::get_graphics() {
+    return m_graphics;
+}
+
