@@ -2,6 +2,9 @@
 
 An ongoing project for a few years, many aspects of the engine need remodeling.
 
+Currently should be compiled with *CMAKE*.
+Most libraries are statically linked so the project should run almost out of the box (needs verification).
+
 Notable aspects:
 - Use of "scenes" to easily swap between different logical states of gameplay.
 - OpenGL wrapper to handle buffers cleanly
