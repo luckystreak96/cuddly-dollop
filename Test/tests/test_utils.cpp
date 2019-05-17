@@ -83,3 +83,15 @@ TEST_CASE("Utils::interpret_type() tests", "[Utils]")
 			REQUIRE(Utils::interpret_type(x) == BT_string);
 	}
 }
+
+TEST_CASE("string_split", "[Utils]")
+{
+	// Init
+	std::string path1 = "xd";
+
+	SECTION("splitting when char doesn't exist returns that string")
+	{
+	    auto x = Utils::Split(path1, '/');
+		REQUIRE(x.size() == 1);
+	}
+}
