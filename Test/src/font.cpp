@@ -16,6 +16,7 @@ m_set_text_vars(true)
 	graphics->SetStatic(m_static);
 
 	m_graphics = graphics;
+	m_graphics->mustDraw = false;
 	m_mesh.init_specific_atlas(m_graphics.get(), "TEXT", path, m_lettersPerRow * m_lettersPerColumn);
 
 
@@ -52,6 +53,7 @@ void Font::Update(double elapsedTime)
 		{
 			m_messageProgress.at(i) = m_message.at(i);
 			ChangeLetter(i, m_message.at(i));
+			m_graphics->mustDraw = true;
 		}
 	}
 }
@@ -252,6 +254,9 @@ void Font::SetText(std::string text, Vector3f location, bool centered, float xBo
 {
 	if (text == _text/* && m_graphics*/)
 		return;
+
+	// Draw is prevented until at least 1 character is ready to be drawn in update()
+	m_graphics->mustDraw = false;
 
 	m_basic_pos = location;
 	m_xBndry = xBoundry;
