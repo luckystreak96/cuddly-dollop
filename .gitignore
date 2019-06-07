@@ -7,6 +7,13 @@ cuddly_dollop
 *.user
 *.userosscache
 *.sln.docstates
+*.ninja_log
+*.ninja_deps
+*/cmake_install.cmake
+*/CMakeCache.txt
+*/rules.ninja
+*/CMakeFiles/*
+*/cmake-build-debug/*
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

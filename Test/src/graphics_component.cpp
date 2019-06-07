@@ -90,7 +90,6 @@ void GraphicsComponent::Draw(bool withTex)
     // Draw
     if (m_buffers.get_instance_count() > 0)
     {
-//        std::cout << m_buffers.get_instance_count() << std::endl;
         glDrawElementsInstanced(GL_TRIANGLES, m_buffers.get_index_count(), GL_UNSIGNED_INT, nullptr, (int)m_buffers.get_instance_count());
     }
     else
