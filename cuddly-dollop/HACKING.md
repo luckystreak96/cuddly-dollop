@@ -5,11 +5,12 @@ BUILDING AND RUNNING UNDER CLION 2019
 1. Edit build configuration working directory to the path with res/
 2. In Settings -> Toolchains, set CMake to 'cmake_python.py' file
 
-#### WINDOWS
+#### WINDOWS (DOESN'T WORK RIGHT NOW)
 
+Windows can't run with ninja and CLion, so we just use the default MakeFile setting.  
+**Prerequisites**:
+- MinGW (g++, gcc, make)
 1. Edit build configuration working directory to the path with res/
-2. In Settings -> Toolchains, set CMake to 'cmake_python.py' file
-3. Make sure 'cmake_python.py' file has the correct path to ninja executable
 
 DEPENDENCIES
 ---
