@@ -23,15 +23,14 @@ std::vector<std::string> Utils::GetAllFiles(std::string directory, std::string e
 {
 	std::vector<std::string> vs;
 #ifdef _WIN32
-	std::wstring ws(directory.begin(), directory.end());
 	HANDLE hFind;
 	WIN32_FIND_DATA FindFileData;
-	hFind = FindFirstFile((ws + L"/*." + std::wstring(extension.begin(), extension.end())).c_str(), &FindFileData);
+	hFind = FindFirstFile((directory + "/*." + extension).c_str(), &FindFileData);
 	if (hFind != INVALID_HANDLE_VALUE)
 	{
 		do {
-			std::wstring w = FindFileData.cFileName;
-			vs.push_back(/*"res/sprites/tiles/" + */std::string(w.begin(), w.end()));
+			std::string filename = FindFileData.cFileName;
+			vs.push_back(filename);
 		} while (FindNextFile(hFind, &FindFileData));
 		FindClose(hFind);
 	}

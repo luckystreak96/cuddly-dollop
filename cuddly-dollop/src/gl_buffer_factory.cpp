@@ -35,6 +35,7 @@ GLBufferFactory::create_vertex_array(std::map<BufferTypes, std::shared_ptr<BaseG
 std::shared_ptr<EffectBuffer> GLBufferFactory::create_effect_buffer(std::string model_name) {
     std::shared_ptr<EffectBuffer> result = std::shared_ptr<EffectBuffer>(new EffectBuffer());
     set_vert_ind_buffers(result.get(), model_name);
+	return result;
 }
 
 void GLBufferFactory::set_vert_ind_buffers(EffectBuffer *buffer, std::string name) {

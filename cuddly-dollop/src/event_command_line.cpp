@@ -12,6 +12,8 @@
 #include <utility>
 #include <algorithm>
 
+#undef max
+
 EventCommandLine::EventCommandLine(EventManager *evtMngr, MapHandler* mapHandler)
 {
     m_event_manager = evtMngr;

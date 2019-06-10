@@ -6,6 +6,7 @@
 #include <vector>
 #include <deque>
 #include <utility>
+#include <string>
 //#include <iostream>
 #include "key_status.h"
 #include "observable.h"
