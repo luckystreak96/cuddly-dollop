@@ -17,7 +17,7 @@ SET(sampleName cuddly_dollop)
 # project.
 # either the variable values from package like ${PCL_INCLUDE_DIRS} or absolute paths as shown in second and third line may be used.
 include_directories(/usr/include)
-include_directories(res/include)
+include_directories(${CMAKE_CURRENT_LIST_DIR}/res/include)
 include_directories(/usr/local/include)
 include_directories(/usr/X11R6/include)
 
@@ -29,12 +29,16 @@ link_directories(/usr/lib/x86_64-linux-gnu/)
 link_directories(/usr/lib64)
 link_directories(/usr/local/lib)
 link_directories(/usr/X11R6/lib)
-link_directories(${CMAKE_SOURCE_DIR}/res/lib)
+link_directories(${CMAKE_CURRENT_LIST_DIR}/res/lib)
 
 # here we add definitions for any package if requred.
 #add_definitions(${PCL_DEFINITIONS})
+if(CMAKE_HOST_WIN32)
+	set(CMAKE_CXX_FLAGS "-std:c++17")
+else()
+	set(CMAKE_CXX_FLAGS "-std=c++17")
+endif()
 
-set(CMAKE_CXX_FLAGS "-std=c++17")
 
 # The following line is very important.
 # It specifies the executable name. Here the executable is the first parameter i.e. MyApp and a file MyApp.exe will be created on
@@ -50,7 +54,12 @@ add_executable (cuddly_dollop ${MyCSources} ${MyHSources} ${MyTestCSources} ${My
 
 # There may be some additional dependencies which you may have to specify for the project, which you may do as in following lines.
 # Note that first parameter is the executable name.
-target_link_libraries (cuddly_dollop GLEW openal GLU GL pthread dl IL ILU ILUT glfw alut)
+if(CMAKE_HOST_WIN32)
+	target_link_libraries (cuddly_dollop glew32 openal32 opengl32 glu32 ILU ILUT glfw3 alut)
+else()
+	target_link_libraries (cuddly_dollop glew openal GLU GL pthread dl IL ILU ILUT glfw alut)
+endif()
+
 # Add the required libraries for linking:
 TARGET_LINK_LIBRARIES(${sampleName}
 #${MRPT_LIBS} # This is filled by FIND_PACKAGE(MRPT ...)

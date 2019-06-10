@@ -1,16 +1,14 @@
 BUILDING AND RUNNING UNDER CLION 2019 
 ---
-#### UBUNTU
+#### UBUNTU (CLion)
 
 1. Edit build configuration working directory to the path with res/
 2. In Settings -> Toolchains, set CMake to 'cmake_python.py' file
 
-#### WINDOWS (DOESN'T WORK RIGHT NOW)
+#### WINDOWS (Visual Studio)
 
-Windows can't run with ninja and CLion, so we just use the default MakeFile setting.  
-**Prerequisites**:
-- MinGW (g++, gcc, make)
-1. Edit build configuration working directory to the path with res/
+- Install Visual Studio (Preferably VS2019)
+- That's all the necessary config, see dependancies below
 
 DEPENDENCIES
 ---
@@ -23,5 +21,4 @@ sudo apt-get install libdevil-dev libglu1-mesa-dev libglew-dev libalut-dev \
 
 #### WINDOWS
 
-1. Install MingW
-2. Might be all that's necessary?
+- Download and install c++ parts of Windows SDK (or equivalent): https://developer.microsoft.com/en-US/windows/downloads/windows-10-sdk
