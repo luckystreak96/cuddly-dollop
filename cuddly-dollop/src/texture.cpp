@@ -1,14 +1,18 @@
 #include "texture.h"
 
-Texture::Texture(GLuint texID, GLenum target) : m_textureTarget(target), m_filename(""), m_isValid(true), m_texId(texID), loaded(true), m_filenameS("")
+
+Texture::Texture(GLuint texID, GLenum target) : m_textureTarget(target), m_filename(""),
+m_isValid(true), m_texId(texID), loaded(true), m_filenameS(""), _width(0), _height(0), m_textureId(0)
 {
 }
 
-Texture::Texture(GLenum TextureTarget, char* FileName) : m_textureTarget(TextureTarget), m_filename(FileName), m_isValid(false), m_filenameS(std::string(FileName))
+Texture::Texture(GLenum TextureTarget, char* FileName) : m_textureTarget(TextureTarget),
+m_filename(FileName), m_isValid(false), m_filenameS(std::string(FileName)), _width(0), _height(0), m_textureId(0)
 {
 }
 
-Texture::Texture(GLenum TextureTarget, const char* FileName) : m_textureTarget(TextureTarget), m_filename(FileName), m_isValid(false), m_filenameS(std::string(FileName))
+Texture::Texture(GLenum TextureTarget, const char* FileName) : m_textureTarget(TextureTarget),
+m_filename(FileName), m_isValid(false), m_filenameS(std::string(FileName)), _width(0), _height(0), m_textureId(0)
 {
 }
 

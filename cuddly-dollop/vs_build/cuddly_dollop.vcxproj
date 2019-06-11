@@ -1,0 +1,660 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x86</PreferredToolArchitecture>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|Win32">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|Win32">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{A582F5DB-C823-300C-A973-785831781C39}</ProjectGuid>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <Keyword>Win32Proj</Keyword>
+    <Platform>Win32</Platform>
+    <ProjectName>cuddly_dollop</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Users\yanik\cuddly-dollop\cuddly-dollop\vs_build\Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">cuddly_dollop.dir\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">cuddly_dollop</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Users\yanik\cuddly-dollop\cuddly-dollop\vs_build\Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">cuddly_dollop.dir\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">cuddly_dollop</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">C:\Users\yanik\cuddly-dollop\cuddly-dollop\vs_build\MinSizeRel\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">cuddly_dollop.dir\MinSizeRel\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">cuddly_dollop</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">true</GenerateManifest>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">C:\Users\yanik\cuddly-dollop\cuddly-dollop\vs_build\RelWithDebInfo\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">cuddly_dollop.dir\RelWithDebInfo\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">cuddly_dollop</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">.exe</TargetExt>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">true</LinkIncremental>
+    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">true</GenerateManifest>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>\usr\include;C:\Users\yanik\cuddly-dollop\cuddly-dollop\res\include;\usr\local\include;\usr\X11R6\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>Debug/</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <ExceptionHandling>
+      </ExceptionHandling>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <SupportJustMyCode>true</SupportJustMyCode>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>CMAKE_INTDIR="Debug";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;_DEBUG;CMAKE_INTDIR=\"Debug\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>\usr\include;C:\Users\yanik\cuddly-dollop\cuddly-dollop\res\include;\usr\local\include;\usr\X11R6\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>\usr\include;C:\Users\yanik\cuddly-dollop\cuddly-dollop\res\include;\usr\local\include;\usr\X11R6\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalDependencies>glew32.lib;openal32.lib;opengl32.lib;glu32.lib;ILU.lib;ILUT.lib;glfw3.lib;alut.lib;devil.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>/usr/lib/x86_64-linux-gnu;/usr/lib/x86_64-linux-gnu/$(Configuration);/usr/lib64;/usr/lib64/$(Configuration);/usr/local/lib;/usr/local/lib/$(Configuration);/usr/X11R6/lib;/usr/X11R6/lib/$(Configuration);C:/Users/yanik/cuddly-dollop/cuddly-dollop/res/lib;C:/Users/yanik/cuddly-dollop/cuddly-dollop/res/lib/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:X86</AdditionalOptions>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>C:/Users/yanik/cuddly-dollop/cuddly-dollop/vs_build/Debug/cuddly_dollop.lib</ImportLibrary>
+      <ProgramDataBaseFile>C:/Users/yanik/cuddly-dollop/cuddly-dollop/vs_build/Debug/cuddly_dollop.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>\usr\include;C:\Users\yanik\cuddly-dollop\cuddly-dollop\res\include;\usr\local\include;\usr\X11R6\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>Release/</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <ExceptionHandling>
+      </ExceptionHandling>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>NDEBUG;CMAKE_INTDIR="Release";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;NDEBUG;CMAKE_INTDIR=\"Release\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>\usr\include;C:\Users\yanik\cuddly-dollop\cuddly-dollop\res\include;\usr\local\include;\usr\X11R6\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>\usr\include;C:\Users\yanik\cuddly-dollop\cuddly-dollop\res\include;\usr\local\include;\usr\X11R6\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalDependencies>glew32.lib;openal32.lib;opengl32.lib;glu32.lib;ILU.lib;ILUT.lib;glfw3.lib;alut.lib;devil.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>/usr/lib/x86_64-linux-gnu;/usr/lib/x86_64-linux-gnu/$(Configuration);/usr/lib64;/usr/lib64/$(Configuration);/usr/local/lib;/usr/local/lib/$(Configuration);/usr/X11R6/lib;/usr/X11R6/lib/$(Configuration);C:/Users/yanik/cuddly-dollop/cuddly-dollop/res/lib;C:/Users/yanik/cuddly-dollop/cuddly-dollop/res/lib/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:X86</AdditionalOptions>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>C:/Users/yanik/cuddly-dollop/cuddly-dollop/vs_build/Release/cuddly_dollop.lib</ImportLibrary>
+      <ProgramDataBaseFile>C:/Users/yanik/cuddly-dollop/cuddly-dollop/vs_build/Release/cuddly_dollop.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>\usr\include;C:\Users\yanik\cuddly-dollop\cuddly-dollop\res\include;\usr\local\include;\usr\X11R6\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>MinSizeRel/</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <ExceptionHandling>
+      </ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>NDEBUG;CMAKE_INTDIR="MinSizeRel";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;NDEBUG;CMAKE_INTDIR=\"MinSizeRel\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>\usr\include;C:\Users\yanik\cuddly-dollop\cuddly-dollop\res\include;\usr\local\include;\usr\X11R6\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>\usr\include;C:\Users\yanik\cuddly-dollop\cuddly-dollop\res\include;\usr\local\include;\usr\X11R6\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalDependencies>glew32.lib;openal32.lib;opengl32.lib;glu32.lib;ILU.lib;ILUT.lib;glfw3.lib;alut.lib;devil.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>/usr/lib/x86_64-linux-gnu;/usr/lib/x86_64-linux-gnu/$(Configuration);/usr/lib64;/usr/lib64/$(Configuration);/usr/local/lib;/usr/local/lib/$(Configuration);/usr/X11R6/lib;/usr/X11R6/lib/$(Configuration);C:/Users/yanik/cuddly-dollop/cuddly-dollop/res/lib;C:/Users/yanik/cuddly-dollop/cuddly-dollop/res/lib/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:X86</AdditionalOptions>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>C:/Users/yanik/cuddly-dollop/cuddly-dollop/vs_build/MinSizeRel/cuddly_dollop.lib</ImportLibrary>
+      <ProgramDataBaseFile>C:/Users/yanik/cuddly-dollop/cuddly-dollop/vs_build/MinSizeRel/cuddly_dollop.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>\usr\include;C:\Users\yanik\cuddly-dollop\cuddly-dollop\res\include;\usr\local\include;\usr\X11R6\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AssemblerListingLocation>RelWithDebInfo/</AssemblerListingLocation>
+      <CompileAs>CompileAsCpp</CompileAs>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <ExceptionHandling>
+      </ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>NDEBUG;CMAKE_INTDIR="RelWithDebInfo";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>WIN32;NDEBUG;CMAKE_INTDIR=\"RelWithDebInfo\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>\usr\include;C:\Users\yanik\cuddly-dollop\cuddly-dollop\res\include;\usr\local\include;\usr\X11R6\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>\usr\include;C:\Users\yanik\cuddly-dollop\cuddly-dollop\res\include;\usr\local\include;\usr\X11R6\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Link>
+      <AdditionalDependencies>glew32.lib;openal32.lib;opengl32.lib;glu32.lib;ILU.lib;ILUT.lib;glfw3.lib;alut.lib;devil.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>/usr/lib/x86_64-linux-gnu;/usr/lib/x86_64-linux-gnu/$(Configuration);/usr/lib64;/usr/lib64/$(Configuration);/usr/local/lib;/usr/local/lib/$(Configuration);/usr/X11R6/lib;/usr/X11R6/lib/$(Configuration);C:/Users/yanik/cuddly-dollop/cuddly-dollop/res/lib;C:/Users/yanik/cuddly-dollop/cuddly-dollop/res/lib/$(Configuration);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /machine:X86</AdditionalOptions>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <ImportLibrary>C:/Users/yanik/cuddly-dollop/cuddly-dollop/vs_build/RelWithDebInfo/cuddly_dollop.lib</ImportLibrary>
+      <ProgramDataBaseFile>C:/Users/yanik/cuddly-dollop/cuddly-dollop/vs_build/RelWithDebInfo/cuddly_dollop.pdb</ProgramDataBaseFile>
+      <SubSystem>Console</SubSystem>
+    </Link>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\CMakeLists.txt">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Building Custom Rule C:/Users/yanik/cuddly-dollop/cuddly-dollop/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">setlocal
+"C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/yanik/cuddly-dollop/cuddly-dollop -BC:/Users/yanik/cuddly-dollop/cuddly-dollop/vs_build --check-stamp-file C:/Users/yanik/cuddly-dollop/cuddly-dollop/vs_build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:/Users/yanik/cuddly-dollop/cuddly-dollop/CMakeLists.txt;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeCInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeCXXInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeGenericSystem.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeInitializeConfigs.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeLanguageInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeRCInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Compiler\MSVC-C.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Platform\Windows-MSVC.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Platform\Windows.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Platform\WindowsPaths.cmake;C:\Users\yanik\cuddly-dollop\cuddly-dollop\CMakeLists.txt;C:\Users\yanik\cuddly-dollop\cuddly-dollop\vs_build\CMakeFiles\3.14.19050301-MSVC_2\CMakeCCompiler.cmake;C:\Users\yanik\cuddly-dollop\cuddly-dollop\vs_build\CMakeFiles\3.14.19050301-MSVC_2\CMakeCXXCompiler.cmake;C:\Users\yanik\cuddly-dollop\cuddly-dollop\vs_build\CMakeFiles\3.14.19050301-MSVC_2\CMakeRCCompiler.cmake;C:\Users\yanik\cuddly-dollop\cuddly-dollop\vs_build\CMakeFiles\3.14.19050301-MSVC_2\CMakeSystem.cmake;C:\Users\yanik\cuddly-dollop\cuddly-dollop\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Users\yanik\cuddly-dollop\cuddly-dollop\vs_build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Building Custom Rule C:/Users/yanik/cuddly-dollop/cuddly-dollop/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">setlocal
+"C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/yanik/cuddly-dollop/cuddly-dollop -BC:/Users/yanik/cuddly-dollop/cuddly-dollop/vs_build --check-stamp-file C:/Users/yanik/cuddly-dollop/cuddly-dollop/vs_build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:/Users/yanik/cuddly-dollop/cuddly-dollop/CMakeLists.txt;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeCInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeCXXInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeGenericSystem.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeInitializeConfigs.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeLanguageInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeRCInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Compiler\MSVC-C.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Platform\Windows-MSVC.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Platform\Windows.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Platform\WindowsPaths.cmake;C:\Users\yanik\cuddly-dollop\cuddly-dollop\CMakeLists.txt;C:\Users\yanik\cuddly-dollop\cuddly-dollop\vs_build\CMakeFiles\3.14.19050301-MSVC_2\CMakeCCompiler.cmake;C:\Users\yanik\cuddly-dollop\cuddly-dollop\vs_build\CMakeFiles\3.14.19050301-MSVC_2\CMakeCXXCompiler.cmake;C:\Users\yanik\cuddly-dollop\cuddly-dollop\vs_build\CMakeFiles\3.14.19050301-MSVC_2\CMakeRCCompiler.cmake;C:\Users\yanik\cuddly-dollop\cuddly-dollop\vs_build\CMakeFiles\3.14.19050301-MSVC_2\CMakeSystem.cmake;C:\Users\yanik\cuddly-dollop\cuddly-dollop\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Users\yanik\cuddly-dollop\cuddly-dollop\vs_build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">Building Custom Rule C:/Users/yanik/cuddly-dollop/cuddly-dollop/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">setlocal
+"C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/yanik/cuddly-dollop/cuddly-dollop -BC:/Users/yanik/cuddly-dollop/cuddly-dollop/vs_build --check-stamp-file C:/Users/yanik/cuddly-dollop/cuddly-dollop/vs_build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">C:/Users/yanik/cuddly-dollop/cuddly-dollop/CMakeLists.txt;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeCInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeCXXInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeGenericSystem.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeInitializeConfigs.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeLanguageInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeRCInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Compiler\MSVC-C.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Platform\Windows-MSVC.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Platform\Windows.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Platform\WindowsPaths.cmake;C:\Users\yanik\cuddly-dollop\cuddly-dollop\CMakeLists.txt;C:\Users\yanik\cuddly-dollop\cuddly-dollop\vs_build\CMakeFiles\3.14.19050301-MSVC_2\CMakeCCompiler.cmake;C:\Users\yanik\cuddly-dollop\cuddly-dollop\vs_build\CMakeFiles\3.14.19050301-MSVC_2\CMakeCXXCompiler.cmake;C:\Users\yanik\cuddly-dollop\cuddly-dollop\vs_build\CMakeFiles\3.14.19050301-MSVC_2\CMakeRCCompiler.cmake;C:\Users\yanik\cuddly-dollop\cuddly-dollop\vs_build\CMakeFiles\3.14.19050301-MSVC_2\CMakeSystem.cmake;C:\Users\yanik\cuddly-dollop\cuddly-dollop\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">C:\Users\yanik\cuddly-dollop\cuddly-dollop\vs_build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|Win32'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">Building Custom Rule C:/Users/yanik/cuddly-dollop/cuddly-dollop/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">setlocal
+"C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/yanik/cuddly-dollop/cuddly-dollop -BC:/Users/yanik/cuddly-dollop/cuddly-dollop/vs_build --check-stamp-file C:/Users/yanik/cuddly-dollop/cuddly-dollop/vs_build/CMakeFiles/generate.stamp
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">C:/Users/yanik/cuddly-dollop/cuddly-dollop/CMakeLists.txt;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeCInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeCXXInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeGenericSystem.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeInitializeConfigs.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeLanguageInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeRCInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Compiler\MSVC-C.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Platform\Windows-MSVC-C.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Platform\Windows-MSVC.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Platform\Windows.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.14\Modules\Platform\WindowsPaths.cmake;C:\Users\yanik\cuddly-dollop\cuddly-dollop\CMakeLists.txt;C:\Users\yanik\cuddly-dollop\cuddly-dollop\vs_build\CMakeFiles\3.14.19050301-MSVC_2\CMakeCCompiler.cmake;C:\Users\yanik\cuddly-dollop\cuddly-dollop\vs_build\CMakeFiles\3.14.19050301-MSVC_2\CMakeCXXCompiler.cmake;C:\Users\yanik\cuddly-dollop\cuddly-dollop\vs_build\CMakeFiles\3.14.19050301-MSVC_2\CMakeRCCompiler.cmake;C:\Users\yanik\cuddly-dollop\cuddly-dollop\vs_build\CMakeFiles\3.14.19050301-MSVC_2\CMakeSystem.cmake;C:\Users\yanik\cuddly-dollop\cuddly-dollop\CMakeLists.txt;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">C:\Users\yanik\cuddly-dollop\cuddly-dollop\vs_build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|Win32'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\FBO.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\actor.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\animBasic.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\animBonusEffect.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\animColorFlash.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\animJumpTo.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\animMoveTo.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\animScreenShake.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\animWait.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\animXpBar.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\anim_particle_effect.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\animation.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\audioComponent.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\basicEffect.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\battleAnimation.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\battleAnimationManager.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\battleData.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\battleHUD.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\battleManager.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\battle_info.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\bloom.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\bloomEffect.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\blurEffect.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\blur_framebuffer.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\color_generator.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\colors.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\combineEffect.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\command_executor.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\command_exit_game.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\command_factory.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\command_line.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\contrastEffect.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\contrastProcessing.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\define.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\dialogueBox.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\dialogueGraph.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\effect.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\effectManager.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\effect_buffer.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\elapsedTime.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\entity.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\entityFactory.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventAddToFlag.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventBGM.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventBattle.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventCaller.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventFactory.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventManager.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventMapChange.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventMove.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventParticle.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventQueue.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventSetFlag.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventSound.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventSpriteChange.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventTeleport.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventToggleFlag.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventWeather.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\event_command_factory.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\event_command_line.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\fade.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\fadeEffect.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\fighter.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\fighterFactory.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\font.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\fontFloat.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\fontGraphicsComponent.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\fontManager.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\game.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\gameData.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\gl_buffer_factory.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\gl_buffer_object.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\gl_index_buffer.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\gl_vertex_array.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\glfwBackend.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\graphics_component.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\hudArrow.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\hudBar.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\hudComponent.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\hudHealthBar.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\hudStatusEffect.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\hudTurnOrder.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\iComponent.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\iEvent.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\inputComponent.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\input_manager.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\jsonHandler.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\lerper.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\localizationData.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\main.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\map_handler.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\map_tile.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\mat4f.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\mathutils.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\menu.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\menuBackgroundBox.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\menuComponent.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\menuFactory.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\menuOptions.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\menuParty.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\menuSettings.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\menu_commands.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\mesh.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\model.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\movementStates.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\mute_bgm_command.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\nighttimeEffect.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\nighttimeProcessing.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\observable.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\observer.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\particleGenerator.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\particleManager.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\passiveFactory.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\passiveSkill.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\physics.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\physicsComponent.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\physics_manager.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\physics_rpg.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\playerGraphicsComponent.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\playerInputComponent.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\playerPhysicsComponent.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\player_audio_component.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\postProcessing.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\post_processing_screen.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\projection.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\renderer.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\resource_loader.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\resource_manager.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\scene.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\scene_battle.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\scene_manager.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\scene_world.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\shadowMapFBO.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\singleColorEffect.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\skill.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\skillBloodyMess.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\skillHeal.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\skillMelee.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\skillProtect.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\skillRanged.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\skillSmack.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\soundManager.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\spatial_object.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\statCurve.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\statUser.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\statusEffect.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\text_displaying_command.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\texture.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\textureatlas.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\textured_object.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\toggle_bloom_command.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\transform.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\utils.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\vector3f.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\vertex.cpp" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\FBO.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\actor.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\animBasic.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\animBonusEffect.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\animColorFlash.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\animJumpTo.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\animMoveTo.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\animScreenShake.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\animWait.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\animXpBar.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\anim_particle_effect.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\animation.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\array2d.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\array3d.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\audioComponent.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\basicEffect.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\battleAnimation.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\battleAnimationManager.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\battleData.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\battleHUD.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\battleManager.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\battleUnit.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\battle_info.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\battle_state.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\bloom.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\bloomEffect.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\blurEffect.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\blur_framebuffer.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\color_generator.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\colors.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\combineEffect.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\command.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\command_executor.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\command_exit_game.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\command_factory.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\command_line.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\contrastEffect.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\contrastProcessing.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\define.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\dialogueBox.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\dialogueGraph.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\effect.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\effectManager.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\effect_buffer.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\elapsedTime.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\entity.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\entityFactory.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventAddToFlag.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventBGM.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventBattle.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventCaller.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventFactory.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventManager.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventMapChange.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventMove.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventParticle.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventQueue.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventSetFlag.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventSound.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventSpriteChange.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventTeleport.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventToggleFlag.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventWeather.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\event_command_factory.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\event_command_line.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\fade.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\fadeEffect.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\fighter.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\fighterFactory.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\font.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\fontFloat.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\fontGraphicsComponent.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\fontManager.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\game.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\gameData.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\gl_buffer.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\gl_buffer_factory.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\gl_buffer_object.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\gl_index_buffer.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\gl_vertex_array.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\gl_vertex_buffer.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\glfwBackend.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\graphics_component.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\hudArrow.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\hudBar.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\hudComponent.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\hudHealthBar.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\hudStatusEffect.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\hudTurnOrder.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\iComponent.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\iEvent.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\inputComponent.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\input_manager.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\jsonHandler.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\key_status.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\lerper.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\localizationData.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\map_handler.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\map_tile.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\mat4f.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\math.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\mathutils.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\menu.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\menuBackgroundBox.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\menuComponent.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\menuFactory.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\menuOptions.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\menuParty.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\menuSettings.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\menu_commands.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\mesh.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\model.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\movementStates.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\mute_bgm_command.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\nighttimeEffect.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\nighttimeProcessing.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\observable.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\observer.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\particleGenerator.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\particleManager.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\passiveFactory.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\passiveSkill.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\physics.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\physicsComponent.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\physics_manager.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\physics_rpg.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\physics_type.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\playerGraphicsComponent.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\playerInputComponent.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\playerPhysicsComponent.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\player_audio_component.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\postProcessing.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\post_processing_screen.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\projection.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\renderer.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\resource_loader.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\resource_manager.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\resource_user.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\scene.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\scene_battle.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\scene_manager.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\scene_world.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\shadowMapFBO.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\singleColorEffect.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\skill.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\skillBloodyMess.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\skillHeal.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\skillMelee.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\skillProtect.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\skillRanged.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\skillSmack.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\soundManager.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\spatial_object.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\statCurve.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\statUser.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\statusEffect.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\text_displaying_command.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\texture.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\textureatlas.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\textured_object.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\toggle_bloom_command.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\transform.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\triple.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\utils.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\vector3f.h" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\vertex.h" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\tests\test_command_line.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\tests\test_effect_buffer.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\tests\test_gl_buffers.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\tests\test_graphics_component.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\tests\test_physics.cpp" />
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\tests\test_utils.cpp" />
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\tests\catch.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\vs_build\ZERO_CHECK.vcxproj">
+      <Project>{3B3472F4-62E5-3316-B753-B7981396EC89}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

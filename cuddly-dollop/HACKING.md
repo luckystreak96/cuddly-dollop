@@ -8,7 +8,24 @@ BUILDING AND RUNNING UNDER CLION 2019
 #### WINDOWS (Visual Studio)
 
 - Install Visual Studio (Preferably VS2019)
-- That's all the necessary config, see dependancies below
+- Run in git bash:
+```bash
+mkdir vs_build
+cd vs_build
+"C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -G "Visual Studio 16 2019" -A Win32 ../
+```
+  Where "Visual Studio 16 2019" is the VS generator, -A Win32 says "build 32-bit", and the ../ means "CMakeLists.txt is here"
+- This creates an .sln file to start working
+- Build once - then copy the 32-bit dll files to .../Debug/
+- Right click project -> properties -> debugging -> working directory -> ${Project}/..
+  - This makes it so res/ and shaders/ are found without having to copy-paste them around
+
+##### So what's up with BUILD_ALL and ZERO_CHECK projects?
+According to https://cmake.org/pipermail/cmake/2008-November/025448.html :
+```
+ZERO_CHECK will rerun cmake. You can/should execute this after changing something on your CMake files.
+ALL_BUILD is simply a target which builds all and everything project in the active solution, I guess one can compare it to "make all".
+```
 
 DEPENDENCIES
 ---
@@ -21,4 +38,6 @@ sudo apt-get install libdevil-dev libglu1-mesa-dev libglew-dev libalut-dev \
 
 #### WINDOWS
 
-- Download and install c++ parts of Windows SDK (or equivalent): https://developer.microsoft.com/en-US/windows/downloads/windows-10-sdk
+- Download and install Windows SDK:
+	- **Comes bundled with Visual Studio**, or...
+    	- ...get this or equivalent SDK: https://developer.microsoft.com/en-US/windows/downloads/windows-10-sdk

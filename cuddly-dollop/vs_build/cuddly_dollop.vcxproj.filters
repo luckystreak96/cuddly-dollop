@@ -1,0 +1,1002 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\FBO.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\actor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\animBasic.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\animBonusEffect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\animColorFlash.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\animJumpTo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\animMoveTo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\animScreenShake.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\animWait.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\animXpBar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\anim_particle_effect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\animation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\audioComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\basicEffect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\battleAnimation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\battleAnimationManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\battleData.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\battleHUD.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\battleManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\battle_info.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\bloom.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\bloomEffect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\blurEffect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\blur_framebuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\color_generator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\colors.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\combineEffect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\command_executor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\command_exit_game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\command_factory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\command_line.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\contrastEffect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\contrastProcessing.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\define.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\dialogueBox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\dialogueGraph.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\effect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\effectManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\effect_buffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\elapsedTime.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\entity.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\entityFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventAddToFlag.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventBGM.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventBattle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventCaller.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventMapChange.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventMove.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventParticle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventQueue.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventSetFlag.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventSound.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventSpriteChange.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventTeleport.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventToggleFlag.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventWeather.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\event_command_factory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\event_command_line.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\fade.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\fadeEffect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\fighter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\fighterFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\font.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\fontFloat.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\fontGraphicsComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\fontManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\gameData.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\gl_buffer_factory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\gl_buffer_object.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\gl_index_buffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\gl_vertex_array.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\glfwBackend.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\graphics_component.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\hudArrow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\hudBar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\hudComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\hudHealthBar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\hudStatusEffect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\hudTurnOrder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\iComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\iEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\inputComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\input_manager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\jsonHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\lerper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\localizationData.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\map_handler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\map_tile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\mat4f.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\mathutils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\menu.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\menuBackgroundBox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\menuComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\menuFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\menuOptions.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\menuParty.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\menuSettings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\menu_commands.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\mesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\model.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\movementStates.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\mute_bgm_command.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\nighttimeEffect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\nighttimeProcessing.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\observable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\observer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\particleGenerator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\particleManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\passiveFactory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\passiveSkill.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\physics.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\physicsComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\physics_manager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\physics_rpg.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\playerGraphicsComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\playerInputComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\playerPhysicsComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\player_audio_component.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\postProcessing.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\post_processing_screen.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\projection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\renderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\resource_loader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\resource_manager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\scene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\scene_battle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\scene_manager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\scene_world.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\shadowMapFBO.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\singleColorEffect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\skill.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\skillBloodyMess.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\skillHeal.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\skillMelee.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\skillProtect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\skillRanged.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\skillSmack.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\soundManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\spatial_object.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\statCurve.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\statUser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\statusEffect.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\text_displaying_command.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\textureatlas.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\textured_object.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\toggle_bloom_command.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\transform.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\utils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\vector3f.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\vertex.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\tests\test_command_line.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\tests\test_effect_buffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\tests\test_gl_buffers.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\tests\test_graphics_component.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\tests\test_physics.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\tests\test_utils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\FBO.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\actor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\animBasic.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\animBonusEffect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\animColorFlash.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\animJumpTo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\animMoveTo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\animScreenShake.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\animWait.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\animXpBar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\anim_particle_effect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\animation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\array2d.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\array3d.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\audioComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\basicEffect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\battleAnimation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\battleAnimationManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\battleData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\battleHUD.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\battleManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\battleUnit.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\battle_info.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\battle_state.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\bloom.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\bloomEffect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\blurEffect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\blur_framebuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\color_generator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\colors.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\combineEffect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\command.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\command_executor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\command_exit_game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\command_factory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\command_line.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\contrastEffect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\contrastProcessing.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\define.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\dialogueBox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\dialogueGraph.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\effect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\effectManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\effect_buffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\elapsedTime.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\entity.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\entityFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventAddToFlag.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventBGM.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventBattle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventCaller.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventMapChange.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventMove.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventParticle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventQueue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventSetFlag.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventSound.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventSpriteChange.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventTeleport.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventToggleFlag.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\eventWeather.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\event_command_factory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\event_command_line.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\fade.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\fadeEffect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\fighter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\fighterFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\font.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\fontFloat.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\fontGraphicsComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\fontManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\gameData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\gl_buffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\gl_buffer_factory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\gl_buffer_object.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\gl_index_buffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\gl_vertex_array.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\gl_vertex_buffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\glfwBackend.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\graphics_component.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\hudArrow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\hudBar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\hudComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\hudHealthBar.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\hudStatusEffect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\hudTurnOrder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\iComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\iEvent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\inputComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\input_manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\jsonHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\key_status.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\lerper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\localizationData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\map_handler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\map_tile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\mat4f.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\math.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\mathutils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\menu.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\menuBackgroundBox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\menuComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\menuFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\menuOptions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\menuParty.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\menuSettings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\menu_commands.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\mesh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\model.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\movementStates.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\mute_bgm_command.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\nighttimeEffect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\nighttimeProcessing.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\observable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\observer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\particleGenerator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\particleManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\passiveFactory.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\passiveSkill.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\physics.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\physicsComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\physics_manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\physics_rpg.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\physics_type.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\playerGraphicsComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\playerInputComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\playerPhysicsComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\player_audio_component.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\postProcessing.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\post_processing_screen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\projection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\renderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\resource_loader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\resource_manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\resource_user.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\scene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\scene_battle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\scene_manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\scene_world.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\shadowMapFBO.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\singleColorEffect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\skill.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\skillBloodyMess.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\skillHeal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\skillMelee.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\skillProtect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\skillRanged.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\skillSmack.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\soundManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\spatial_object.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\statCurve.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\statUser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\statusEffect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\text_displaying_command.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\textureatlas.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\textured_object.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\toggle_bloom_command.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\transform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\triple.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\utils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\vector3f.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\src\vertex.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\tests\catch.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\yanik\cuddly-dollop\cuddly-dollop\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{DBEB2251-8477-33F1-BC10-ACD41D2DE20D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{1EF268F7-B9A1-3A72-BCA2-120A71737B63}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

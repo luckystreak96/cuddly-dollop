@@ -14,7 +14,13 @@ cuddly_dollop
 */rules.ninja
 */CMakeFiles/*
 */cmake-build-debug/*
-*cuddly-dollop/out/*
+
+# The Visual Studio files must all be ignored except the cuddly-dollop project
+# The other files will be rebuilt and do not need to added to git
+cuddly-dollop/vs_build/*
+!cuddly-dollop/vs_build/cuddly_dollop.vcxproj
+!cuddly-dollop/vs_build/cuddly_dollop.vcxproj.filters
+!cuddly-dollop/vs_build/Project.sln
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs

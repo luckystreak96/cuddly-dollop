@@ -1,5 +1,6 @@
 #include "textureatlas.h"
-#include "define.h"
+
+#include <GL/glew.h>
 
 TextureAtlas TextureAtlas::m_textureAtlas = TextureAtlas(128);
 

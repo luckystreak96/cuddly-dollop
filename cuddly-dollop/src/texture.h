@@ -1,11 +1,8 @@
 #ifndef TEXTURE_H__
 #define TEXTURE_H__
 
-#include "GL/glew.h"
-#include <IL/il.h>
-#include <IL/ilu.h>
+#include <GL/glew.h>
 #include <IL/ilut.h>
-#include <IL/devil_internal_exports.h>
 #include <iostream>
 #include <string>
 #include <cassert>

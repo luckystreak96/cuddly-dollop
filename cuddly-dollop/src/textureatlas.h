@@ -1,16 +1,18 @@
 #ifndef TEXTUREATLAS_H__
 #define TEXTUREATLAS_H__
+
 #include <string>
 #include <map>
 #include <IL/ilu.h>
-#include "GL/glew.h"
 #include <cmath>
 #include <iostream>
 #include <sstream>
 #include <cassert>
+
 #include "utils.h"
 #include "vector3f.h"
 
+typedef unsigned int GLuint;
 
 class TextureAtlas
 {
