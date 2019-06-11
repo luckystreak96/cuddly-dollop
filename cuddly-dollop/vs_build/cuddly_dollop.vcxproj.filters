@@ -999,4 +999,7 @@
       <UniqueIdentifier>{1EF268F7-B9A1-3A72-BCA2-120A71737B63}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\HACKING.md" />
+  </ItemGroup>
 </Project>
