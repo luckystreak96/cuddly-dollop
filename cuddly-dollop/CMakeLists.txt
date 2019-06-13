@@ -56,7 +56,7 @@ add_executable (cuddly_dollop ${MyCSources} ${MyHSources} ${MyTestCSources} ${My
 if(CMAKE_HOST_WIN32)
 	target_link_libraries (cuddly_dollop glew32 openal32 opengl32 glu32 ILU ILUT glfw3 alut devil)
 else()
-	target_link_libraries (cuddly_dollop glew openal GLU GL pthread dl IL ILU ILUT glfw alut)
+	target_link_libraries (cuddly_dollop GLEW openal GLU GL pthread dl IL ILU ILUT glfw alut)
 endif()
 
 # Add the required libraries for linking:
