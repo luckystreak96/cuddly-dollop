@@ -18,3 +18,10 @@ Libraries used:
 - GLEW
 - rapidJSON
 - GLFW
+
+## Screenshots
+
+<img src="screenshots/snowman.png" style="align='middle'" />
+<img src="screenshots/protect.png" style="align='middle'" />
+<img src="screenshots/under_bridge.png" style="align='middle'" />
+<img src="screenshots/slime_friend.png" style="align='middle'" />
