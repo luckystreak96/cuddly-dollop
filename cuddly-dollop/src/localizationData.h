@@ -1,6 +1,7 @@
 #ifndef LOCALIZATION_DATA_H__
 #define LOCALIZATION_DATA_H__
 
+#include <string>
 #include <vector>
 #include <map>
 #include <rapidjson/writer.h>
